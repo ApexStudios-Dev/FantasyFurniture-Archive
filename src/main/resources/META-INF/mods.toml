@@ -1,14 +1,15 @@
 modLoader="javafml"
 loaderVersion="${forge_version_range}"
-license="All rights reserved"
+license="GNU General Public License v3.0"
+issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 
 [[mods]]
 	modId="${mod_id}"
 	version="${mod_version}"
 	displayName="${mod_name}"
-	# updateJSONURL=""
-	# displayURL=""
-	# logoFile=""
+	updateJSONURL="https://raw.githubusercontent.com/ApexModder/Version/master/fantasyfurniture.json"
+	# displayURL="https://www.curseforge.com/minecraft/mc-mods/fantasys-furniture"
+	# logoFile="banner.png"
 	# credits=""
 	authors="${mod_authors}"
 	description=""
@@ -23,5 +24,17 @@ license="All rights reserved"
 	modId="minecraft"
 	mandatory=true
 	versionRange="${minecraft_version_range}"
+	ordering="NONE"
+	side="BOTH"
+[[dependencies.${mod_id}]]
+	modId="apexcore"
+	mandatory=true
+	versionRange="${apexcore_version_range}"
+	ordering="NONE"
+	side="BOTH"
+[[dependencies.${mod_id}]]
+	modId="registrator"
+	mandatory=true
+	versionRange="${registrator_version_range}"
 	ordering="NONE"
 	side="BOTH"

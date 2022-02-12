@@ -7,9 +7,13 @@ buildscript {
 	}
 	dependencies {
 		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forge_gradle_version}", changing: true
-		classpath 'org.parchmentmc:librarian:1.+'
+		classpath "org.parchmentmc:librarian:${librarian_version}"
 		classpath "org.spongepowered:mixingradle:${mixin_gradle_version}"
 	}
+}
+
+plugins {
+	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -105,6 +109,42 @@ repositories {
 		url 'https://cursemaven.com'
 		content { includeGroup 'curse.maven' }
 	}
+
+	// GitHub Packages require read access
+	if(project.hasProperty('apex_git_package_token')) {
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
+			credentials {
+				username = 'Apex-GitHub-PackagesToken'
+				password = project.getProperty('apex_git_package_token')
+			}
+		}
+
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
+			credentials {
+				username = 'Apex-GitHub-PackagesToken'
+				password = project.getProperty('apex_git_package_token')
+			}
+		}
+	} else if(System.getenv('GITHUB_TOKEN') != null) {
+		// github workflows have a different set of credentials
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
+			credentials {
+				username = System.getenv('GITHUB_ACTOR')
+				password = System.getenv('GITHUB_TOKEN')
+			}
+		}
+
+		maven {
+			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
+			credentials {
+				username = System.getenv('GITHUB_ACTOR')
+				password = System.getenv('GITHUB_TOKEN')
+			}
+		}
+	}
 }
 
 dependencies {
@@ -129,6 +169,23 @@ dependencies {
 		// runtimeOnly fg.deobf('xyz.apex.forge:devworld:1.16.5-2.0.0')
 		runtimeOnly fg.deobf("xyz.apex.forge:smoothboot:${minecraft_version}-${smooth_boot_version}")
 	}
+
+	// Registrator versions must be equal to or higher than version used in ApexCore
+	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
+		// we have access to Apex's GH Packages pull from there
+		compileOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+
+		compileOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+		runtimeOnly fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+	} else {
+		// we dont have access to Apex's GH Packages, pull from CurseForge
+		compileOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+		runtimeOnly fg.deobf("curse.maven:registrator-${apexcore_cf_project}:${apexcore_cf_file}")
+
+		compileOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
+		runtimeOnly fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
+	}
 }
 
 def resourceTargets = [ 'META-INF/mods.toml', 'pack.mcmeta', "${mod_id}.mixins.json".toString() ]
@@ -142,6 +199,8 @@ def replaceProperties = [
 	forge_version_range: forge_version_range,
 	forge_gradle_version: forge_gradle_version,
 
+	librarian_version: librarian_version,
+
 	mixin_gradle_version: mixin_gradle_version,
 	mixin_ap_version: mixin_ap_version,
 	
@@ -153,7 +212,19 @@ def replaceProperties = [
 	mod_version: mod_version,
 	mod_base_package: mod_base_package,
 	mod_authors: mod_authors,
+	mod_curseforge_id: mod_curseforge_id,
+
+	registrator_version: registrator_version,
+	registrator_version_range: registrator_version_range,
+	registrator_cf_project: registrator_cf_project,
+	registrator_cf_file: registrator_cf_file,
+
+	apexcore_version: apexcore_version,
+	apexcore_version_range: apexcore_version_range,
+	apexcore_cf_project: apexcore_cf_project,
+	apexcore_cf_file: apexcore_cf_file,
 	
+	cursegradle_version: cursegradle_version,
 	jei_version: jei_version,
 	top_version: top_version,
 	smooth_boot_version: smooth_boot_version
@@ -218,3 +289,70 @@ tasks.withType(Jar) {
 }
 
 jar.finalizedBy('reobfJar') 
+
+if(System.getenv('GITHUB_TOKEN') != null) {
+	publishing {
+		publications {
+			gpr(MavenPublication) {
+				groupId = "${mod_base_package}"
+				artifactId = "${mod_id}"
+				version = "${minecraft_version}-${mod_version}"
+
+				artifact jar
+				artifact sourcesJar
+				artifact deobfJar
+			}
+		}
+		repositories {
+			maven {
+				name = 'GitHubPackages'
+				url = uri('https://maven.pkg.github.com/ApexModder/FantasyFurniture')
+
+				credentials {
+					username = System.getenv('GITHUB_ACTOR')
+					password = System.getenv('GITHUB_TOKEN')
+				}
+			}
+		}
+	}
+}
+
+if(project.hasProperty('apex_curse_gradle_token')) {
+	curseforge {
+		apiKey = project.getProperty('apex_curse_gradle_token')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
+			}
+		}
+	}
+} else if(System.getenv('CURSEFORGE_TOKEN') != null) {
+	curseforge {
+		apiKey = System.getenv('CURSEFORGE_TOKEN')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = 'release'
+			addGameVersion "${minecraft_version}"
+
+			mainArtifact jar
+			addArtifact deobfJar
+			addArtifact sourcesJar
+
+			relations {
+				requiredDependency 'registrator'
+				requiredDependency 'apexcore'
+			}
+		}
+	}
+}
