@@ -67,11 +67,6 @@ public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 
 			ItemGroupCategoryManager.getInstance(this).addCategories(
 					FFItemGroupCategories.NORDIC,
-					FFItemGroupCategories.BEDS,
-					FFItemGroupCategories.SHELVES,
-					FFItemGroupCategories.CHAIRS,
-					FFItemGroupCategories.TABLES,
-					FFItemGroupCategories.CUSHIONS,
 					FFItemGroupCategories.DECORATIONS
 			);
 		}

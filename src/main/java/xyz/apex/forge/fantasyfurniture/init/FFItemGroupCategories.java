@@ -9,31 +9,6 @@ public final class FFItemGroupCategories
 				.tagged(FFTags.Items.NORDIC)
 			.build();
 
-	public static final ItemGroupCategory BEDS = ItemGroupCategory
-			.builder("beds")
-				.tagged(FFTags.Items.BEDS)
-			.build();
-
-	public static final ItemGroupCategory SHELVES = ItemGroupCategory
-			.builder("shelves")
-				.tagged(FFTags.Items.SHELVES)
-			.build();
-
-	public static final ItemGroupCategory CHAIRS = ItemGroupCategory
-			.builder("chairs")
-				.tagged(FFTags.Items.CHAIRS)
-			.build();
-
-	public static final ItemGroupCategory TABLES = ItemGroupCategory
-			.builder("tables")
-				.tagged(FFTags.Items.TABLES)
-			.build();
-
-	public static final ItemGroupCategory CUSHIONS = ItemGroupCategory
-			.builder("cushions")
-				.tagged(FFTags.Items.CUSHIONS)
-			.build();
-
 	public static final ItemGroupCategory DECORATIONS = ItemGroupCategory
 			.builder("decorations")
 				.tagged(FFTags.Items.DECORATIONS)
