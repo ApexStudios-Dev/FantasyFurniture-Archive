@@ -12,7 +12,7 @@ public final class FFItems
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 
-	public static final ItemEntry<BedItem> NORDIC_BED = fromBlock(FFBlocks.NORDIC_BED);
+	public static final ItemEntry<BedItem> NORDIC_BED_SINGLE = fromBlock(FFBlocks.NORDIC_BED_SINGLE);
 
 	static void bootstrap()
 	{

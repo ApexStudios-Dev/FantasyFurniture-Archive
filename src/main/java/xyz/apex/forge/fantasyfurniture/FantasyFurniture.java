@@ -85,7 +85,7 @@ public final class FantasyFurniture
 		if(villagerProfession == VillagerProfession.SHEPHERD)
 		{
 			List<VillagerTrades.ITrade> newTrades = Lists.newArrayList();
-			newTrades.add(new BasicTrade(3, FFBlocks.NORDIC_BED.asItemStack(), 12, 10, .05F));
+			newTrades.add(new BasicTrade(3, FFBlocks.NORDIC_BED_SINGLE.asItemStack(), 12, 10, .05F));
 			trades.get(1).addAll(newTrades);
 		}
 	}

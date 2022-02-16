@@ -4,9 +4,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "${mod_id}.refmap.json",
 	"mixins": [ ],
-	"client": [
-		"client.LivingRendererMixin"
-	],
+	"client": [ ],
 	"server": [ ],
 	"minVersion": "0.8.4"
 }
