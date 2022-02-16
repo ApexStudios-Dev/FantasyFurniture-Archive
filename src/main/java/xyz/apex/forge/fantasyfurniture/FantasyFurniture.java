@@ -43,6 +43,26 @@ public final class FantasyFurniture
 
 		ForgeEventBusHelper.addListener(EventPriority.HIGH, this::onVillagerTrades);
 		ModEventBusHelper.addEnqueuedListener(this::onCommonSetup);
+
+		// Debug code, spawns seat & sits player in it
+		// at block they right clicked (with empty hand)
+		/*ForgeEventBusHelper.addListener(PlayerInteractEvent.RightClickBlock.class, event -> {
+			if(event.getItemStack().isEmpty() && !event.getWorld().isEmptyBlock(event.getPos()))
+			{
+				BlockState blockState = event.getWorld().getBlockState(event.getPos());
+				VoxelShape visualShape = blockState.getVisualShape(event.getWorld(), event.getPos(), ISelectionContext.of(event.getPlayer()));
+				double height = visualShape.max(Direction.Axis.Y);
+
+				ActionResultType result = SeatEntity.create(event.getWorld(), event.getPos(), height, event.getPlayer());
+
+				if(result.consumesAction())
+				{
+					event.setUseItem(Event.Result.DENY);
+					event.setUseBlock(Event.Result.DENY);
+					event.setCancellationResult(result);
+				}
+			}
+		});*/
 	}
 
 	private void onCommonSetup(FMLCommonSetupEvent event)

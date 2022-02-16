@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.client.renderer;
+package xyz.apex.forge.fantasyfurniture.client.renderer.block;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

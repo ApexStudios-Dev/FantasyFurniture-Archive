@@ -25,7 +25,7 @@ import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.NordicBedBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicBedBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.CustomItemStackTileEntityRenderer;
-import xyz.apex.forge.fantasyfurniture.client.renderer.NordicBedBlockEntityRenderer;
+import xyz.apex.forge.fantasyfurniture.client.renderer.block.NordicBedBlockEntityRenderer;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import java.util.Set;
