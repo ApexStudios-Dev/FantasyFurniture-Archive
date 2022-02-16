@@ -2,11 +2,13 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import org.apache.commons.lang3.Validate;
 
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
-import xyz.apex.forge.utility.registrator.helper.RegistratorItemGroup;
 import xyz.apex.java.utility.Lazy;
 
 import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
@@ -23,7 +25,7 @@ public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 
 		//skipErrors();
 
-		itemGroup(() -> RegistratorItemGroup.create(this), "Fantasy's Furniture");
+		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
 
 		addDataGenerator(LANG, provider -> {
 
@@ -47,11 +49,37 @@ public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 		FFEntities.bootstrap();
 		FFTags.bootstrap();
 
+		FFItemGroupCategories.bootstrap();
+
 		bootstrap = true;
 	}
 
 	public static FFRegistry getInstance()
 	{
 		return REGISTRY.get();
+	}
+
+	public static final class ModItemGroup extends ItemGroup
+	{
+		private ModItemGroup()
+		{
+			super(FantasyFurniture.ID);
+
+			ItemGroupCategoryManager.getInstance(this).addCategories(
+					FFItemGroupCategories.NORDIC,
+					FFItemGroupCategories.BEDS,
+					FFItemGroupCategories.SHELVES,
+					FFItemGroupCategories.CHAIRS,
+					FFItemGroupCategories.TABLES,
+					FFItemGroupCategories.CUSHIONS,
+					FFItemGroupCategories.DECORATIONS
+			);
+		}
+
+		@Override
+		public ItemStack makeIcon()
+		{
+			return FFItems.NORDIC_BED_SINGLE.asItemStack();
+		}
 	}
 }
