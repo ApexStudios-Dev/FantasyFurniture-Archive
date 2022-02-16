@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"table_wide": "fantasyfurniture:models/noridc/table_wide",
-		"particle": "fantasyfurniture:block/noridc/particle"
+		"table_wide": "fantasyfurniture:models/nordic/table_wide",
+		"particle": "fantasyfurniture:block/nordic/particle"
 	},
 	"elements": [
 		{
@@ -240,8 +240,8 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 225, 0],
-			"translation": [-2.5, -1.5, 0],
+			"rotation": [30, 145, 0],
+			"translation": [-3, 1, 0],
 			"scale": [0.45, 0.45, 0.45]
 		},
 		"head": {

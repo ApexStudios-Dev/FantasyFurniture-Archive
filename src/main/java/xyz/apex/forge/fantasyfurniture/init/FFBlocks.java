@@ -36,10 +36,11 @@ public final class FFBlocks
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 
 	// region: Nordic
-	// region: Bed Single
-	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = singleBed("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC)
-			.register();
-	// endregion
+	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_CHAIR = chair("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_CUSHION = cushion("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_SHELF = shelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_TABLE_WIDE = tableWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 
 	static void bootstrap()
@@ -47,7 +48,7 @@ public final class FFBlocks
 		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_SINGLE, blockState -> blockState.getValue(NordicBedSingleBlock.PART) == BedPart.HEAD);
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> singleBed(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedSingle(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_bed_singe", blockFactory)
@@ -59,9 +60,7 @@ public final class FFBlocks
 					.strength(.2F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
-						provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/bed_single")), 0);
-					})
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/bed_single")), 0))
 					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, NordicBedSingleBlock.PART, BedPart.HEAD)))
 					.recipe((ctx, provider) -> {
 						// TODO:
@@ -75,6 +74,138 @@ public final class FFBlocks
 
 						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/bed_single")))
 						.tag(itemTag, FFTags.Items.BEDS)
+					.build()
+				;
+	}
+
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> chair(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return REGISTRY
+				.block(type + "_chair", blockFactory)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Chair")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Chair")
+
+					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.sound(SoundType.WOOD)
+					.strength(.2F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")), 0);
+						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")));
+					})
+					.loot(BlockLootTables::dropSelf) // TODO:
+					.recipe((ctx, provider) -> {
+						// TODO:
+					})
+					.tag(blockTag, FFTags.Blocks.CHAIRS)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(BedItem::new)
+						.stacksTo(1)
+
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/chair")))
+						.tag(itemTag, FFTags.Items.CHAIRS)
+					.build()
+				;
+	}
+
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> cushion(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return REGISTRY
+				.block(type + "_cushion", blockFactory)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Cushion")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Cushion")
+
+					.initialProperties(Material.WOOL, MaterialColor.WOOL)
+					.sound(SoundType.WOOL)
+					.strength(.2F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")), 0);
+						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")));
+					})
+					.loot(BlockLootTables::dropSelf) // TODO:
+					.recipe((ctx, provider) -> {
+						// TODO:
+					})
+					.tag(blockTag, FFTags.Blocks.CUSHIONS)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(BedItem::new)
+						.stacksTo(1)
+
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/cushion")))
+						.tag(itemTag, FFTags.Items.CUSHIONS)
+					.build()
+				;
+	}
+
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> shelf(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return REGISTRY
+				.block(type + "_shelf", blockFactory)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Shelf")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Shelf")
+
+					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.sound(SoundType.WOOD)
+					.strength(.2F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf")), 0);
+						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf")));
+					})
+					.loot(BlockLootTables::dropSelf) // TODO:
+					.recipe((ctx, provider) -> {
+						// TODO:
+					})
+					.tag(blockTag, FFTags.Blocks.SHELVES)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(BedItem::new)
+						.stacksTo(1)
+
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/shelf")))
+						.tag(itemTag, FFTags.Items.SHELVES)
+					.build()
+				;
+	}
+
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> tableWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return REGISTRY
+				.block(type + "_table_wide", blockFactory)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Table Wide")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Table Wide")
+
+					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.sound(SoundType.WOOD)
+					.strength(.2F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/table_wide")), 0);
+						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/table_wide")));
+					})
+					.loot(BlockLootTables::dropSelf) // TODO:
+					.recipe((ctx, provider) -> {
+						// TODO:
+					})
+					.tag(blockTag, FFTags.Blocks.TABLES)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(BedItem::new)
+						.stacksTo(1)
+
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/table_wide")))
+						.tag(itemTag, FFTags.Items.TABLES)
 					.build()
 				;
 	}
