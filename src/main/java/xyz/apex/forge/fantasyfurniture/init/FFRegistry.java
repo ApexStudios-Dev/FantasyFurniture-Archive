@@ -11,8 +11,6 @@ import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.java.utility.Lazy;
 
-import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
-
 public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 {
 	private static final Lazy<FFRegistry> REGISTRY = create(FFRegistry::new);
@@ -26,14 +24,6 @@ public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 		//skipErrors();
 
 		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
-
-		addDataGenerator(LANG, provider -> {
-
-		});
-
-		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-
-		});
 	}
 
 	public static void bootstrap()
