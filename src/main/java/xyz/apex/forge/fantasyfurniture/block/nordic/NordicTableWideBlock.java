@@ -1,22 +1,64 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.fantasyfurniture.block.BaseTableWideBlock;
-import xyz.apex.java.utility.Lazy;
+import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
 
 public final class NordicTableWideBlock extends BaseTableWideBlock
 {
-	public static final Lazy<VoxelShape> SHAPE_MAIN_NORTH = Lazy.of(NordicTableWideBlock::createMainNorthShape);
-	public static final Lazy<VoxelShape> SHAPE_MAIN_EAST = Lazy.of(NordicTableWideBlock::createMainEastShape);
-	public static final Lazy<VoxelShape> SHAPE_MAIN_SOUTH = Lazy.of(NordicTableWideBlock::createMainSouthShape);
-	public static final Lazy<VoxelShape> SHAPE_MAIN_WEST = Lazy.of(NordicTableWideBlock::createMainWestShape);
-	public static final Lazy<VoxelShape> SHAPE_OTHER_NORTH = Lazy.of(NordicTableWideBlock::createOtherNorthShape);
-	public static final Lazy<VoxelShape> SHAPE_OTHER_EAST = Lazy.of(NordicTableWideBlock::createOtherEastShape);
-	public static final Lazy<VoxelShape> SHAPE_OTHER_SOUTH = Lazy.of(NordicTableWideBlock::createOtherSouthShape);
-	public static final Lazy<VoxelShape> SHAPE_OTHER_WEST = Lazy.of(NordicTableWideBlock::createOtherWestShape);
+	public static final VoxelShape SHAPE_NORTH = BlockHelper.makeShape(
+			box(14D, 0D, 13D, 16D, 9D, 15D),
+			box(13D, 7D, 13D, 15D, 13D, 15D),
+			box(1D, 7D, 13D, 3D, 13D, 15D),
+			box(1D, 7D, -15D, 3D, 13D, -13D),
+			box(13D, 7D, -15D, 15D, 13D, -13D),
+			box(14D, 0D, -15D, 16D, 9D, -13D),
+			box(0D, 0D, -15D, 2D, 9D, -13D),
+			box(0D, 0D, 13D, 2D, 9D, 15D),
+			box(0D, 13D, -16D, 16D, 16D, 16D)
+	);
+
+	public static final VoxelShape SHAPE_EAST = BlockHelper.makeShape(
+			box(29D, 0D, 0D, 31D, 9D, 2D),
+			box(29D, 7D, 1D, 31D, 13D, 3D),
+			box(29D, 7D, 13D, 31D, 13D, 15D),
+			box(1D, 7D, 13D, 3D, 13D, 15D),
+			box(1D, 7D, 1D, 3D, 13D, 3D),
+			box(1D, 0D, 0D, 3D, 9D, 2D),
+			box(1D, 0D, 14D, 3D, 9D, 16D),
+			box(29D, 0D, 14D, 31D, 9D, 16D),
+			box(0D, 13D, 0D, 32D, 16D, 16D)
+	);
+
+	public static final VoxelShape SHAPE_SOUTH = BlockHelper.makeShape(
+			box(14D, 0D, 29D, 16D, 9D, 31D),
+			box(13D, 7D, 29D, 15D, 13D, 31D),
+			box(1D, 7D, 29D, 3D, 13D, 31D),
+			box(1D, 7D, 1D, 3D, 13D, 3D),
+			box(13D, 7D, 1D, 15D, 13D, 3D),
+			box(14D, 0D, 1D, 16D, 9D, 3D),
+			box(0D, 0D, 1D, 2D, 9D, 3D),
+			box(0D, 0D, 29D, 2D, 9D, 31D),
+			box(0D, 13D, 0D, 16D, 16D, 32D)
+	);
+
+	public static final VoxelShape SHAPE_WEST = BlockHelper.makeShape(
+			box(13D, 0D, 0D, 15D, 9D, 2D),
+			box(13D, 7D, 1D, 15D, 13D, 3D),
+			box(13D, 7D, 13D, 15D, 13D, 15D),
+			box(-15D, 7D, 13D, -13D, 13D, 15D),
+			box(-15D, 0D, 0D, -13D, 9D, 2D),
+			box(-15D, 0D, 14D, -13D, 9D, 16D),
+			box(13D, 0D, 14D, 15D, 9D, 16D),
+			box(-16D, 13D, 0D, 16D, 16D, 16D)
+	);
 
 	public NordicTableWideBlock(Properties properties)
 	{
@@ -25,43 +67,19 @@ public final class NordicTableWideBlock extends BaseTableWideBlock
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
-	private static VoxelShape createMainNorthShape()
+	@Override
+	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
-		return VoxelShapes.empty();
-	}
+		Direction connectedDirection = getConnectedDirection(blockState);
 
-	private static VoxelShape createMainEastShape()
-	{
-		return VoxelShapes.empty();
-	}
+		switch(connectedDirection)
+		{
+			case NORTH: return SHAPE_NORTH;
+			case EAST: return SHAPE_EAST;
+			case SOUTH: return SHAPE_SOUTH;
+			case WEST: return SHAPE_WEST;
+		}
 
-	private static VoxelShape createMainSouthShape()
-	{
-		return VoxelShapes.empty();
-	}
-
-	private static VoxelShape createMainWestShape()
-	{
-		return VoxelShapes.empty();
-	}
-
-	private static VoxelShape createOtherNorthShape()
-	{
-		return VoxelShapes.empty();
-	}
-
-	private static VoxelShape createOtherEastShape()
-	{
-		return VoxelShapes.empty();
-	}
-
-	private static VoxelShape createOtherSouthShape()
-	{
-		return VoxelShapes.empty();
-	}
-
-	private static VoxelShape createOtherWestShape()
-	{
 		return VoxelShapes.empty();
 	}
 }
