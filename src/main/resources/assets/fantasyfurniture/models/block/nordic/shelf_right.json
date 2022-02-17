@@ -2,14 +2,15 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"shelf": "fantasyfurniture:shelf",
+		"shelf": "fantasyfurniture:models/nordic/shelf",
 		"particle": "fantasyfurniture:block/nordic/particle"
 	},
 	"elements": [
 		{
 			"name": "shelf",
-			"from": [0, 15, 0],
-			"to": [16, 17, 16],
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
 			"faces": {
 				"north": {"uv": [4, 0, 8, 0.5], "texture": "#shelf"},
 				"east": {"uv": [4, 0.5, 8, 1], "texture": "#shelf"},
@@ -21,8 +22,9 @@
 		},
 		{
 			"name": "support_3",
-			"from": [0.5, 10, 2],
-			"to": [2.5, 15, 4],
+			"from": [0.5, 9, 2],
+			"to": [2.5, 14, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
 			"faces": {
 				"north": {"uv": [7.5, 7.5, 8, 8.75], "texture": "#shelf"},
 				"east": {"uv": [7.75, 4, 8.25, 5.25], "texture": "#shelf"},
@@ -34,8 +36,9 @@
 		},
 		{
 			"name": "support_4",
-			"from": [0, 7, 13],
-			"to": [3, 15, 16],
+			"from": [0, 6, 13],
+			"to": [3, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
 			"faces": {
 				"north": {"uv": [6.5, 2, 7.25, 4], "texture": "#shelf"},
 				"east": {"uv": [4, 7, 4.75, 9], "texture": "#shelf"},
@@ -47,9 +50,9 @@
 		},
 		{
 			"name": "arch_3",
-			"from": [1, 11.76956, 8.15851],
-			"to": [2, 13.76956, 14.15851],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [1.5, 11.76956, 9.15851]},
+			"from": [1, 10.76956, 8.15851],
+			"to": [2, 12.76956, 14.15851],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [1.5, 10.76956, 9.15851]},
 			"faces": {
 				"north": {"uv": [8.5, 4, 8.75, 4.5], "texture": "#shelf"},
 				"east": {"uv": [7.25, 3.5, 8.75, 4], "texture": "#shelf"},
@@ -61,9 +64,9 @@
 		},
 		{
 			"name": "arch_4",
-			"from": [1, 12, 2],
-			"to": [2, 14, 9],
-			"rotation": {"angle": 0, "axis": "y", "origin": [1.5, 11.76537, 10.15224]},
+			"from": [1, 11, 2],
+			"to": [2, 13, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [1.5, 10.76537, 10.15224]},
 			"faces": {
 				"north": {"uv": [8.5, 5, 8.75, 5.5], "texture": "#shelf"},
 				"east": {"uv": [7, 6.5, 8.75, 7], "texture": "#shelf"},
@@ -75,8 +78,9 @@
 		},
 		{
 			"name": "panel_2",
-			"from": [1.5, 12, 4],
-			"to": [1.5, 15, 14],
+			"from": [1.5, 11, 4],
+			"to": [1.5, 14, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
 			"faces": {
 				"north": {"uv": [0, 0, 0, 0.75], "texture": "#shelf"},
 				"east": {"uv": [4, 3.5, 6.5, 4.25], "texture": "#shelf"},

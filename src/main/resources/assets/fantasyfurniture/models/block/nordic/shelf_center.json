@@ -8,8 +8,8 @@
 	"elements": [
 		{
 			"name": "shelf",
-			"from": [0, 15, 0],
-			"to": [16, 17, 16],
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [4, 0, 8, 0.5], "texture": "#shelf"},
 				"east": {"uv": [4, 0.5, 8, 1], "texture": "#shelf"},

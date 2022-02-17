@@ -22,14 +22,8 @@ import net.minecraft.village.PointOfInterestType;
 
 import xyz.apex.forge.apexcore.lib.util.reflection.FieldHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.block.BaseBedBlock;
-import xyz.apex.forge.fantasyfurniture.block.BaseSeatBlock;
-import xyz.apex.forge.fantasyfurniture.block.BaseSeatDoubleBlock;
-import xyz.apex.forge.fantasyfurniture.block.BaseTableWideBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicBedSingleBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicChairBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicCushionBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicTableWideBlock;
+import xyz.apex.forge.fantasyfurniture.block.*;
+import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -50,7 +44,7 @@ public final class FFBlocks
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicChairBlock> NORDIC_CHAIR = chair("nordic", NordicChairBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_SHELF = shelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 
@@ -152,7 +146,6 @@ public final class FFBlocks
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")), 0))
-					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatBlock.HALF, DoubleBlockHalf.LOWER)))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})
@@ -169,7 +162,7 @@ public final class FFBlocks
 				;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> shelf(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseShelfBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> shelf(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_shelf", blockFactory)
@@ -180,12 +173,21 @@ public final class FFBlocks
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
+					.randomTicks()
 
-					.blockState((ctx, provider) -> {
-						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf")), 0);
-						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf")));
-					})
-					.loot(BlockLootTables::dropSelf) // TODO:
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
+						BaseShelfBlock.ConnectionType connectionType = blockState.getValue(BaseShelfBlock.CONNECTION_TYPE);
+						String suffix;
+
+						if(connectionType == BaseShelfBlock.ConnectionType.LEFT || connectionType == BaseShelfBlock.ConnectionType.RIGHT)
+							suffix = "_" + connectionType.getSerializedName();
+						else if(connectionType == BaseShelfBlock.ConnectionType.BOTH)
+							suffix = "_center";
+						else
+							suffix = "";
+
+						return provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf" + suffix));
+					}, 0))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})
@@ -193,7 +195,7 @@ public final class FFBlocks
 
 					.addRenderType(() -> RenderType::cutout)
 
-					.item(BedItem::new)
+					.item()
 						.stacksTo(1)
 
 						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/shelf")))

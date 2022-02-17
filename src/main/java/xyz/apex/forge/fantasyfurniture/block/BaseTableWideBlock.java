@@ -23,7 +23,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
 
 public class BaseTableWideBlock extends SimpleFourWayBlock
 {
@@ -43,7 +42,6 @@ public class BaseTableWideBlock extends SimpleFourWayBlock
 			return super.updateShape(blockState, facing, facingBlockState, level, currentPos, facingPos);
 	}
 
-	@SuppressWarnings("ConstantConditions") // super is non null
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx)
@@ -162,13 +160,20 @@ public class BaseTableWideBlock extends SimpleFourWayBlock
 
 	public enum Type implements IStringSerializable
 	{
-		MAIN,
-		OTHER;
+		MAIN("main"),
+		OTHER("other");
+
+		private final String serializedName;
+
+		Type(String serializedName)
+		{
+			this.serializedName = serializedName;
+		}
 
 		@Override
 		public String getSerializedName()
 		{
-			return name().toLowerCase(Locale.ROOT);
+			return serializedName;
 		}
 	}
 }
