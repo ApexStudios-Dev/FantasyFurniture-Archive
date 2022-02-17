@@ -3,13 +3,11 @@ package xyz.apex.forge.fantasyfurniture.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
@@ -28,9 +26,8 @@ import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
 
 import javax.annotation.Nullable;
 
-public class BaseSeatBlock extends HorizontalBlock
+public class BaseSeatBlock extends SimpleFourWayBlock
 {
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 	public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
 
 	public BaseSeatBlock(Properties properties)
@@ -74,17 +71,18 @@ public class BaseSeatBlock extends HorizontalBlock
 		return 0D;
 	}
 
+	@SuppressWarnings("ConstantConditions") // super is non null
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx)
 	{
-		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection()).setValue(OCCUPIED, false);
+		return super.getStateForPlacement(ctx).setValue(OCCUPIED, false);
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
-		builder.add(FACING, OCCUPIED);
+		builder.add(OCCUPIED);
 		super.createBlockStateDefinition(builder);
 	}
 

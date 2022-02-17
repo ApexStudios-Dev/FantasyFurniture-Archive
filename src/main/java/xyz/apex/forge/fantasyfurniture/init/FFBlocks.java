@@ -25,9 +25,11 @@ import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.BaseBedBlock;
 import xyz.apex.forge.fantasyfurniture.block.BaseSeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.BaseSeatDoubleBlock;
+import xyz.apex.forge.fantasyfurniture.block.BaseTableWideBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicBedSingleBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicChairBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicCushionBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicTableWideBlock;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -49,7 +51,7 @@ public final class FFBlocks
 	public static final BlockEntry<NordicChairBlock> NORDIC_CHAIR = chair("nordic", NordicChairBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_SHELF = shelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_TABLE_WIDE = tableWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 
 	static void bootstrap()
@@ -116,7 +118,7 @@ public final class FFBlocks
 
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
 					.sound(SoundType.WOOD)
-					.strength(.2F)
+					.strength(2F, 3F)
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")), 0))
@@ -146,7 +148,7 @@ public final class FFBlocks
 
 					.initialProperties(Material.WOOL, MaterialColor.WOOL)
 					.sound(SoundType.WOOL)
-					.strength(.2F)
+					.strength(2F, 3F)
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")), 0))
@@ -176,7 +178,7 @@ public final class FFBlocks
 
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
 					.sound(SoundType.WOOD)
-					.strength(.2F)
+					.strength(2F, 3F)
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> {
@@ -200,7 +202,7 @@ public final class FFBlocks
 				;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> tableWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseTableWideBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> tableWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_table_wide", blockFactory)
@@ -209,14 +211,11 @@ public final class FFBlocks
 
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
 					.sound(SoundType.WOOD)
-					.strength(.2F)
+					.strength(2F, 3F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
-						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/table_wide")), 0);
-						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/table_wide")));
-					})
-					.loot(BlockLootTables::dropSelf) // TODO:
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/table_wide")), 90))
+					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})
