@@ -14,6 +14,7 @@ import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.conditions.SurvivesExplosion;
 import net.minecraft.state.Property;
 import net.minecraft.state.properties.BedPart;
+import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.IStringSerializable;
@@ -21,7 +22,9 @@ import net.minecraft.village.PointOfInterestType;
 
 import xyz.apex.forge.apexcore.lib.util.reflection.FieldHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.fantasyfurniture.block.BaseSeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.NordicBedSingleBlock;
+import xyz.apex.forge.fantasyfurniture.block.NordicChairBlock;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -30,6 +33,7 @@ import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 import java.util.Set;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class FFBlocks
 {
@@ -37,7 +41,7 @@ public final class FFBlocks
 
 	// region: Nordic
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_CHAIR = chair("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicChairBlock> NORDIC_CHAIR = chair("nordic", NordicChairBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_CUSHION = cushion("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_SHELF = shelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_WIDE = tableWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -46,6 +50,17 @@ public final class FFBlocks
 	static void bootstrap()
 	{
 		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_SINGLE, blockState -> blockState.getValue(NordicBedSingleBlock.PART) == BedPart.HEAD);
+
+		REGISTRY.addDataGenerator(LANG, provider -> {
+			BaseSeatBlock[] chairs = new BaseSeatBlock[] {
+					NORDIC_CHAIR.asBlock()
+			};
+
+			for(BaseSeatBlock block : chairs)
+			{
+				provider.add(block.getDescriptionId() + ".occupied", "This seat is occupied");
+			}
+		});
 	}
 
 	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedSingle(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
@@ -90,11 +105,8 @@ public final class FFBlocks
 					.strength(.2F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
-						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")), 0);
-						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")));
-					})
-					.loot(BlockLootTables::dropSelf) // TODO:
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")), 0))
+					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatBlock.HALF, DoubleBlockHalf.LOWER)))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})

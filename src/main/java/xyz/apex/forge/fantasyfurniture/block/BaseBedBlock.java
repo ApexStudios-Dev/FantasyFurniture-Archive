@@ -310,9 +310,9 @@ public class BaseBedBlock extends HorizontalBlock
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState blockState)
+	public BlockRenderType getRenderShape(BlockState pState)
 	{
-		return BlockRenderType.ENTITYBLOCK_ANIMATED;
+		return pState.getValue(PART) == BedPart.HEAD ? BlockRenderType.INVISIBLE : BlockRenderType.MODEL;
 	}
 
 	@Override

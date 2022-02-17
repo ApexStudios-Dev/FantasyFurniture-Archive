@@ -5,12 +5,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import xyz.apex.forge.fantasyfurniture.block.BaseSeatBlock;
 import xyz.apex.forge.fantasyfurniture.init.FFEntities;
 
 import javax.annotation.Nullable;
@@ -55,6 +55,7 @@ public final class SeatEntity extends Entity
 
 				remove(false);
 				level.updateNeighbourForOutputSignal(pos, level.getBlockState(pos).getBlock());
+				BaseSeatBlock.setSeatOccupied(level, source, false);
 			}
 		}
 	}
@@ -92,33 +93,35 @@ public final class SeatEntity extends Entity
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static ActionResultType create(World level, BlockPos pos, double yOffset, PlayerEntity player)
+	public static boolean create(World level, BlockPos pos, double yOffset, PlayerEntity player)
 	{
-		if(!level.isClientSide)
+		if(level.isClientSide)
+			return true;
+
+		EntityType<SeatEntity> seatType = FFEntities.SEAT.asEntityType();
+
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+
+		List<SeatEntity> seats = level.getEntities(seatType, new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D), e -> true);
+
+		if(seats.isEmpty())
 		{
-			EntityType<SeatEntity> seatType = FFEntities.SEAT.asEntityType();
+			SeatEntity seat = seatType.create(level);
 
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-
-			List<SeatEntity> seats = level.getEntities(seatType, new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D), e -> true);
-
-			if(seats.isEmpty())
+			if(seat != null)
 			{
-				SeatEntity seat = seatType.create(level);
+				seat.source = pos;
+				seat.setPos(x + .5D, y + yOffset, z + .5D);
 
-				if(seat != null)
-				{
-					seat.source = pos;
-					seat.setPos(x + .5D, y + yOffset, z + .5D);
+				level.addFreshEntity(seat);
+				player.startRiding(seat, false);
 
-					level.addFreshEntity(seat);
-					player.startRiding(seat, false);
-				}
+				return true;
 			}
 		}
 
-		return ActionResultType.sidedSuccess(level.isClientSide);
+		return false;
 	}
 }
