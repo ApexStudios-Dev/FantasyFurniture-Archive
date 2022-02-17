@@ -22,16 +22,21 @@ import net.minecraft.village.PointOfInterestType;
 
 import xyz.apex.forge.apexcore.lib.util.reflection.FieldHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.fantasyfurniture.block.BaseBedBlock;
 import xyz.apex.forge.fantasyfurniture.block.BaseSeatBlock;
-import xyz.apex.forge.fantasyfurniture.block.NordicBedSingleBlock;
-import xyz.apex.forge.fantasyfurniture.block.NordicChairBlock;
+import xyz.apex.forge.fantasyfurniture.block.BaseSeatDoubleBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicBedSingleBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicChairBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicCushionBlock;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
+import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
 import java.util.Set;
 
+import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
 
@@ -42,7 +47,7 @@ public final class FFBlocks
 	// region: Nordic
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicChairBlock> NORDIC_CHAIR = chair("nordic", NordicChairBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_CUSHION = cushion("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_SHELF = shelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_WIDE = tableWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
@@ -52,18 +57,27 @@ public final class FFBlocks
 		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_SINGLE, blockState -> blockState.getValue(NordicBedSingleBlock.PART) == BedPart.HEAD);
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
-			BaseSeatBlock[] chairs = new BaseSeatBlock[] {
-					NORDIC_CHAIR.asBlock()
-			};
+			REGISTRY.getAll(Block.class)
+			        .stream()
+			        .filter(RegistryEntry::isPresent)
+			        .map(RegistryEntry::get)
+			        .filter(BaseSeatBlock.class::isInstance)
+			        .map(Block::getDescriptionId)
+			        .forEach(s -> provider.add(s + ".occupied", "This seat is occupied"));
+		});
 
-			for(BaseSeatBlock block : chairs)
-			{
-				provider.add(block.getDescriptionId() + ".occupied", "This seat is occupied");
-			}
+		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+			REGISTRY.getAll(Block.class)
+			        .stream()
+			        .filter(RegistryEntry::isPresent)
+			        .map(RegistryEntry::get)
+			        .filter(BaseSeatBlock.class::isInstance)
+			        .map(Block::getDescriptionId)
+			        .forEach(s -> provider.add(EN_GB, s + ".occupied", "This seat is occupied"));
 		});
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedSingle(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseBedBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedSingle(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_bed_singe", blockFactory)
@@ -93,7 +107,7 @@ public final class FFBlocks
 				;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> chair(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseSeatBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> chair(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_chair", blockFactory)
@@ -106,7 +120,7 @@ public final class FFBlocks
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/chair")), 0))
-					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatBlock.HALF, DoubleBlockHalf.LOWER)))
+					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})
@@ -123,7 +137,7 @@ public final class FFBlocks
 				;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> cushion(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseSeatBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> cushion(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return REGISTRY
 				.block(type + "_cushion", blockFactory)
@@ -135,11 +149,8 @@ public final class FFBlocks
 					.strength(.2F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
-						// provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")), 0);
-						provider.simpleBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")));
-					})
-					.loot(BlockLootTables::dropSelf) // TODO:
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/" + type + "/cushion")), 0))
+					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatBlock.HALF, DoubleBlockHalf.LOWER)))
 					.recipe((ctx, provider) -> {
 						// TODO:
 					})

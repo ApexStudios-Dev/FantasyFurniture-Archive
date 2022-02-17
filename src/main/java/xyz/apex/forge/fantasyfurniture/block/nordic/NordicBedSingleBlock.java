@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block;
+package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.BedPart;
@@ -7,6 +7,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+
+import xyz.apex.forge.fantasyfurniture.block.BaseBedBlock;
+import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
 
 public final class NordicBedSingleBlock extends BaseBedBlock
 {

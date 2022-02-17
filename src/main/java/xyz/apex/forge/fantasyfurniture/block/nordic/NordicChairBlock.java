@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block;
+package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.state.properties.DoubleBlockHalf;
@@ -9,7 +9,10 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
-public final class NordicChairBlock extends BaseSeatBlock
+import xyz.apex.forge.fantasyfurniture.block.BaseSeatDoubleBlock;
+import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
+
+public final class NordicChairBlock extends BaseSeatDoubleBlock
 {
 	public static final VoxelShape SHAPE_UPPER_NORTH = BlockHelper.makeShape(
 			box(12D, -16D, 12D, 14D, -9D, 14D),

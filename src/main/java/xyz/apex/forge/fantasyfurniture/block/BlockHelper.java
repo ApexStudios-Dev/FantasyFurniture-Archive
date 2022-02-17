@@ -6,9 +6,9 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 
 import java.util.stream.Stream;
 
-final class BlockHelper
+public final class BlockHelper
 {
-	static VoxelShape makeShape(VoxelShape... shapes)
+	public static VoxelShape makeShape(VoxelShape... shapes)
 	{
 		return Stream.of(shapes).reduce((a, b) -> VoxelShapes.join(a, b, IBooleanFunction.OR)).orElseThrow(NullPointerException::new);
 	}
