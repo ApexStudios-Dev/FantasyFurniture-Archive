@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasyfurniture.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -111,6 +112,12 @@ public class BaseSeatBlock extends SimpleFourWayBlock
 	public boolean isPathfindable(BlockState blockState, IBlockReader level, BlockPos pos, PathType pathType)
 	{
 		return false;
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.DESTROY;
 	}
 
 	public static void setSeatOccupied(IWorld level, BlockPos pos, boolean occupied)

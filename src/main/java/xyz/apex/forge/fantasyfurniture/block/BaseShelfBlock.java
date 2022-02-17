@@ -16,8 +16,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import xyz.apex.forge.fantasyfurniture.init.FFTags;
-
 import javax.annotation.Nullable;
 
 public class BaseShelfBlock extends SimpleFourWayBlock
@@ -27,11 +25,6 @@ public class BaseShelfBlock extends SimpleFourWayBlock
 	public BaseShelfBlock(Properties properties)
 	{
 		super(properties);
-	}
-
-	protected boolean canShelfConnect(BlockState blockState)
-	{
-		return blockState.is(FFTags.Blocks.SHELVES);
 	}
 
 	@Override

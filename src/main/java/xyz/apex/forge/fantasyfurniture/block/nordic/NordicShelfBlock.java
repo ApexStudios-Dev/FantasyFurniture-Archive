@@ -10,7 +10,6 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.fantasyfurniture.block.BaseShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
-import xyz.apex.forge.fantasyfurniture.init.FFTags;
 
 public final class NordicShelfBlock extends BaseShelfBlock
 {
@@ -101,12 +100,6 @@ public final class NordicShelfBlock extends BaseShelfBlock
 		super(properties);
 
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(CONNECTION_TYPE, ConnectionType.NONE));
-	}
-
-	@Override
-	protected boolean canShelfConnect(BlockState blockState)
-	{
-		return super.canShelfConnect(blockState) && blockState.is(FFTags.Blocks.NORDIC);
 	}
 
 	@Override

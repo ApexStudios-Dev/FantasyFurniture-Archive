@@ -23,6 +23,7 @@ import net.minecraft.village.PointOfInterestType;
 import xyz.apex.forge.apexcore.lib.util.reflection.FieldHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
+import xyz.apex.forge.fantasyfurniture.block.decorations.BerryBasketBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
@@ -46,6 +47,10 @@ public final class FFBlocks
 	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	// endregion
+
+	// region: Decorations
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET = berryBasket();
 	// endregion
 
 	static void bootstrap()
@@ -231,6 +236,37 @@ public final class FFBlocks
 						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/table_wide")))
 						.tag(itemTag, FFTags.Items.TABLES)
 					.build()
+				;
+	}
+
+	private static BlockEntry<BerryBasketBlock> berryBasket()
+	{
+		return REGISTRY
+				.block("berry_basket", BerryBasketBlock::new)
+					.lang("Berry Basket")
+					.lang(EN_GB, "Berry Basket")
+
+					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.sound(SoundType.WOOD)
+					.strength(2F, 3F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(REGISTRY.id("block/decorations/berry_basket"))))
+					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
+					.recipe((ctx, provider) -> {
+						// TODO:
+					})
+					.tag(FFTags.Blocks.DECORATIONS)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.stacksTo(1)
+
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/decorations/berry_basket")))
+						.tag(FFTags.Items.DECORATIONS)
+					.build()
+				.register()
 				;
 	}
 

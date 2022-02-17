@@ -18,6 +18,8 @@ public final class FFItems
 	public static final ItemEntry<BlockItem> NORDIC_SHELF = fromBlock(FFBlocks.NORDIC_SHELF);
 	public static final ItemEntry<BlockItem> NORDIC_TABLE_WIDE = fromBlock(FFBlocks.NORDIC_TABLE_WIDE);
 
+	public static final ItemEntry<BlockItem> BERRY_BASKET = fromBlock(FFBlocks.BERRY_BASKET);
+
 	static void bootstrap()
 	{
 	}
