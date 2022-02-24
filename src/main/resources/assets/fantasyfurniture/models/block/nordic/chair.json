@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"chair": "fantasyfurniture:models/nordic/chair",
-		"particle": "fantasyfurniture:block/nordic/particle"
+		"particle": "fantasyfurniture:models/nordic/particle"
 	},
 	"elements": [
 		{
@@ -298,7 +298,7 @@
 	},
 	"groups": [
 		{
-			"name": "nordic_chair",
+			"name": "chair",
 			"origin": [0, 0, 0],
 			"color": 0,
 			"children": [

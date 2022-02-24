@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"shelf": "fantasyfurniture:models/nordic/shelf",
-		"particle": "fantasyfurniture:block/nordic/particle"
+		"particle": "fantasyfurniture:models/nordic/particle"
 	},
 	"elements": [
 		{
@@ -54,7 +54,7 @@
 	},
 	"groups": [
 		{
-			"name": "nordic_shelf",
+			"name": "shelf",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0]
