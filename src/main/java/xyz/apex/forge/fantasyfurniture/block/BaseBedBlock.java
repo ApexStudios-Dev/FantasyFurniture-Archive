@@ -163,7 +163,7 @@ public class BaseBedBlock extends HorizontalBlock
 			return super.updateShape(blockState, facing, facingBlockState, level, currentPos, facingPos);
 	}
 
-	private static Direction getNeighbourDirection(BedPart bedPart, Direction direction)
+	protected static Direction getNeighbourDirection(BedPart bedPart, Direction direction)
 	{
 		return bedPart == BedPart.FOOT ? direction : direction.getOpposite();
 	}

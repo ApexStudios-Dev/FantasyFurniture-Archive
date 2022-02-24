@@ -67,7 +67,7 @@ public final class FFBlocks
 	*/
 
 	// region: Nordic
-	public static final BlockEntry<Block> NORDIC_BED_DOUBLE = bedDouble("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicBedDoubleBlock> NORDIC_BED_DOUBLE = bedDouble("nordic", NordicBedDoubleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_BOOKSHELF = bookShelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -93,7 +93,8 @@ public final class FFBlocks
 
 	static void bootstrap()
 	{
-		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_SINGLE, blockState -> blockState.getValue(NordicBedSingleBlock.PART) == BedPart.HEAD);
+		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_SINGLE, blockState -> blockState.getValue(BaseBedBlock.PART) == BedPart.HEAD);
+		FantasyFurniture.registerPoiBlock(PointOfInterestType.HOME, NORDIC_BED_DOUBLE, blockState -> blockState.getValue(BaseBedBlock.PART) == BedPart.HEAD);
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
 			REGISTRY.getAll(Block.class)
@@ -152,7 +153,7 @@ public final class FFBlocks
 		return baseTypedBlock(type, blockType, blockFactory, itemFactory, blockTag, itemTag, NonnullUnaryOperator.identity());
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedDouble(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseBedBlockDouble> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedDouble(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, "bed_double", blockFactory, BedItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.BEDS_DOUBLE))
 					.initialProperties(Material.WOOL, MaterialColor.WOOL)
@@ -160,8 +161,8 @@ public final class FFBlocks
 					.strength(.2F)
 					.noOcclusion()
 
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "bed_double", 0))
-					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, NordicBedSingleBlock.PART, BedPart.HEAD)))
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "bed_double", 0))
+					.loot((lootTables, block) -> lootTables.add(block, createBedDoubleConditionTable(block)))
 					.tag(FFTags.Blocks.BEDS_DOUBLE)
 		;
 	}
@@ -175,7 +176,7 @@ public final class FFBlocks
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "bed_single", 0))
-					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, NordicBedSingleBlock.PART, BedPart.HEAD)))
+					.loot((lootTables, block) -> lootTables.add(block, createSingleBedConditionTable(block)))
 					.tag(FFTags.Blocks.BEDS_SINGLE)
 		;
 	}
@@ -475,6 +476,37 @@ public final class FFBlocks
 																		StatePropertiesPredicate.Builder
 																				.properties()
 																				.hasProperty(property, value)
+																)
+												)
+								)
+						)
+				);
+	}
+
+	private static LootTable.Builder createSingleBedConditionTable(BaseBedBlock block)
+	{
+		return createSinglePropConditionTable(block, BaseBedBlock.PART, BedPart.FOOT);
+	}
+
+	private static LootTable.Builder createBedDoubleConditionTable(BaseBedBlockDouble block)
+	{
+		return LootTable
+				.lootTable()
+				.withPool(
+						applyExplosionCondition(block, LootPool
+								.lootPool()
+								.setRolls(ConstantRange.exactly(1))
+								.add(
+										ItemLootEntry
+												.lootTableItem(block)
+												.when(
+														BlockStateProperty
+																.hasBlockStateProperties(block)
+																.setProperties(
+																		StatePropertiesPredicate.Builder
+																				.properties()
+																				.hasProperty(BaseBedBlock.PART, BedPart.FOOT)
+																				.hasProperty(BaseBedBlockDouble.BED_SIDE, BaseBedBlockDouble.BedSide.MAIN)
 																)
 												)
 								)
