@@ -8,7 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.BLOCK_ENTITY_TAGS_PROVIDER;
-import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.*;
+import static com.tterrag.registrate.providers.ProviderType.*;
 
 @SuppressWarnings("unchecked")
 public final class FFTags

@@ -18,23 +18,23 @@ issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 	modId="forge"
 	mandatory=true
 	versionRange="${forge_version_range}"
-	ordering="NONE"
+	ordering="AFTER"
 	side="BOTH"
 [[dependencies.${mod_id}]]
 	modId="minecraft"
 	mandatory=true
 	versionRange="${minecraft_version_range}"
-	ordering="NONE"
+	ordering="AFTER"
 	side="BOTH"
 [[dependencies.${mod_id}]]
-	modId="apexcore"
-	mandatory=true
-	versionRange="${apexcore_version_range}"
-	ordering="NONE"
-	side="BOTH"
-[[dependencies.${mod_id}]]
-	modId="registrator"
+	modId="${registrator_mod_id}"
 	mandatory=true
 	versionRange="${registrator_version_range}"
-	ordering="NONE"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies.${mod_id}]]
+	modId="${apexcore_mod_id}"
+	mandatory=true
+	versionRange="${apexcore_version_range}"
+	ordering="AFTER"
 	side="BOTH"

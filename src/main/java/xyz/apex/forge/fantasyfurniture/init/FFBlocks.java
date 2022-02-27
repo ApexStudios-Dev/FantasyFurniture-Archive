@@ -1,5 +1,10 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.tterrag.registrate.util.entry.RegistryEntry;
+
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.HorizontalBlock;
@@ -34,16 +39,12 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 import xyz.apex.forge.utility.registrator.factory.item.BlockItemFactory;
 import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
-import xyz.apex.repack.com.tterrag.registrate.providers.DataGenContext;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
-import xyz.apex.repack.com.tterrag.registrate.util.entry.RegistryEntry;
 
 import java.util.Set;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
-import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class FFBlocks
 {
@@ -456,7 +457,7 @@ public final class FFBlocks
 		horizontalBlockState(ctx, provider, modelLocation, angleOffset);
 	}
 
-	private static final Set<Item> EXPLOSION_RESISTANT = FieldHelper.getPrivateValue(BlockLootTables.class, null, "EXPLOSION_RESISTANT");
+	private static final Set<Item> EXPLOSION_RESISTANT = FieldHelper.getPrivateValue(BlockLootTables.class, null, "field_218578_f");
 
 	private static <T extends Comparable<T> & IStringSerializable> LootTable.Builder createSinglePropConditionTable(Block block, Property<T> property, T value)
 	{

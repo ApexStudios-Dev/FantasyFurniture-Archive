@@ -1,11 +1,12 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.providers.RegistrateLangProvider;
+
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
-import xyz.apex.repack.com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
-import static xyz.apex.repack.com.tterrag.registrate.providers.ProviderType.LANG;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class FFItemGroupCategories
 {
