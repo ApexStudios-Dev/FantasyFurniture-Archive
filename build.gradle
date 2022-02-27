@@ -271,17 +271,17 @@ dependencies {
 	if(findProject(':Registrator')) {
 		implementation project(':Registrator')
 	} else if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}")
+		implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
 	} else {
-		implementation fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}")
+		implementation fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}:deobf")
 	}
 
 	if(findProject(':ApexCore')) {
 		implementation project(':ApexCore')
 	} else if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}")
+		implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
 	} else {
-		implementation fg.deobf("curse.maven:apexcore-${apexcore_cf_project}:${apexcore_cf_file}")
+		implementation fg.deobf("curse.maven:apexcore-${apexcore_cf_project}:${apexcore_cf_file}:deobf")
 	}
 }
 
