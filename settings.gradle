@@ -1,16 +1,59 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.security.MessageDigest
+
 rootProject.name = "${mod_name}-${minecraft_version}"
 
 gradle.rootProject { root ->
-	// download latest AT file
-	println('Downloading AccessTransformer file...')
+	// download latest AT file (only if its outdated and needs downloading)
+	// Note: after at file has been update you occasionally have to double import
+	// the gradle project as it doesnt pick up the changes during the first import all the time
+	// TL;DR: if you see `Downloading new AccessTransformer file (Outdated)...` or `Downloading AccessTransformer file...` wait for import to finish and refresh the gradle project
 
-	if(root.file('accesstransformer.cfg').exists()) {
-		delete root.file('accesstransformer.cfg')
+	def newATFile = File.createTempFile('accesstransformer', '.cfg.tmp')
+	newATFile.deleteOnExit()
+
+	def currentATFile = root.file('accesstransformer.cfg')
+
+	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/accesstransformers/1.16.5.cfg').readLines().forEach { line ->
+		newATFile.withWriterAppend { writer ->
+			writer.println line
+		}
 	}
 
-	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/accesstransformers/1.16.5.cfg').withInputStream { is ->
-		root.file('accesstransformer.cfg').withOutputStream { os ->
-			os << is
+	if(currentATFile.exists()) {
+		try {
+			def digest = MessageDigest.getInstance('SHA-256')
+
+			digest.update(Files.readAllBytes(Paths.get(currentATFile.absolutePath)))
+			def currentHash = digest.digest().encodeHex().toString()
+
+			digest.update(Files.readAllBytes(Paths.get(newATFile.absolutePath)))
+			def newHash = digest.digest().encodeHex().toString()
+
+			if(!currentHash.equals(newHash)) {
+				println('Downloading new AccessTransformer file (Outdated)...')
+
+				copy {
+					from newATFile
+					into root.projectDir
+					rename {
+						'accesstransformer.cfg'
+					}
+				}
+			}
+		} catch(IOException e) {
+			throw new GradleScriptException('Error occurred while validating file hashes', e)
+		}
+	} else {
+		println('Downloading AccessTransformer file...')
+
+		copy {
+			from newATFile
+			into root.projectDir
+			rename {
+				'accesstransformer.cfg'
+			}
 		}
 	}
 }
