@@ -1,1 +1,28 @@
 rootProject.name = "${mod_name}-${minecraft_version}"
+
+gradle.rootProject { root ->
+	// download latest AT file
+	println('Downloading AccessTransformer file...')
+	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/accesstransformers/1.16.5.cfg').withInputStream { is ->
+		root.file('accesstransformer.cfg').withOutputStream { os ->
+			os << is
+		}
+	}
+}
+
+gradle.beforeProject { prj ->
+	// ensure required properties exist
+	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/properties/1.16.5.properties').readLines().forEach { line ->
+		def split = line.split('=', 2)
+
+		if(split.length == 2) {
+			def key = split[0]
+			if(!prj.hasProperty(key)) {
+				def value = split[1]
+				println("[${prj.name}] Missing required property '${key}', Using default from remote (${value}). [Override by specificing in some `gradle.properties` file]")
+				prj.properties.put(key, value)
+				prj.ext.set(key, value)
+			}
+		}
+	}
+}
