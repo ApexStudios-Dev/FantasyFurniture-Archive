@@ -75,7 +75,7 @@ public final class FFBlocks
 	public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_PAINTING_WIDE = paintingWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_STOOL = stool("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_SMALL = tableSmall("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -315,16 +315,15 @@ public final class FFBlocks
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> stool(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseSeatBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> stool(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, "stool", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.STOOLS))
-					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.initialProperties(Material.WOOD, MaterialColor.WOOD)
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chest", 0))
-					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "stool", 0))
 					.tag(FFTags.Blocks.STOOLS)
 		;
 	}
