@@ -117,7 +117,7 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+			args '--mod', mod_id, '--client', '--server', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
