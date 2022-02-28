@@ -16,19 +16,17 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.BedItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.loot.*;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.SurvivesExplosion;
-import net.minecraft.state.Property;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.PointOfInterestType;
 
-import xyz.apex.forge.apexcore.lib.util.reflection.FieldHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
 import xyz.apex.forge.fantasyfurniture.block.decorations.BerryBasketBlock;
@@ -39,8 +37,6 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 import xyz.apex.forge.utility.registrator.factory.item.BlockItemFactory;
 import xyz.apex.java.utility.nullness.NonnullUnaryOperator;
-
-import java.util.Set;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -219,7 +215,7 @@ public final class FFBlocks
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chair", 0))
-					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
+					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
 					.tag(FFTags.Blocks.CHAIRS)
 		;
 	}
@@ -384,7 +380,7 @@ public final class FFBlocks
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "table_wide", 90))
-					.loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
+					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.TABLES_WIDE)
 		;
 	}
@@ -457,36 +453,9 @@ public final class FFBlocks
 		horizontalBlockState(ctx, provider, modelLocation, angleOffset);
 	}
 
-	private static final Set<Item> EXPLOSION_RESISTANT = FieldHelper.getPrivateValue(BlockLootTables.class, null, "field_218578_f");
-
-	private static <T extends Comparable<T> & IStringSerializable> LootTable.Builder createSinglePropConditionTable(Block block, Property<T> property, T value)
-	{
-		return LootTable
-				.lootTable()
-				.withPool(
-						applyExplosionCondition(block, LootPool
-								.lootPool()
-								.setRolls(ConstantRange.exactly(1))
-								.add(
-										ItemLootEntry
-												.lootTableItem(block)
-												.when(
-														BlockStateProperty
-																.hasBlockStateProperties(block)
-																.setProperties(
-																		StatePropertiesPredicate.Builder
-																				.properties()
-																				.hasProperty(property, value)
-																)
-												)
-								)
-						)
-				);
-	}
-
 	private static LootTable.Builder createSingleBedConditionTable(BaseBedBlock block)
 	{
-		return createSinglePropConditionTable(block, BaseBedBlock.PART, BedPart.FOOT);
+		return BlockLootTables.createSinglePropConditionTable(block, BaseBedBlock.PART, BedPart.FOOT);
 	}
 
 	private static LootTable.Builder createBedDoubleConditionTable(BaseBedBlockDouble block)
@@ -494,7 +463,7 @@ public final class FFBlocks
 		return LootTable
 				.lootTable()
 				.withPool(
-						applyExplosionCondition(block, LootPool
+						BlockLootTables.applyExplosionCondition(block, LootPool
 								.lootPool()
 								.setRolls(ConstantRange.exactly(1))
 								.add(
@@ -513,10 +482,5 @@ public final class FFBlocks
 								)
 						)
 				);
-	}
-
-	private static <T> T applyExplosionCondition(IItemProvider item, ILootConditionConsumer<T> condition)
-	{
-		return EXPLOSION_RESISTANT.contains(item.asItem()) ? condition.unwrap() : condition.when(SurvivesExplosion.survivesExplosion());
 	}
 }
