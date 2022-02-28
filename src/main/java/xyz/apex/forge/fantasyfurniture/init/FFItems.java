@@ -14,11 +14,9 @@ public final class FFItems
 	public static final ItemEntry<BlockItem> NORDIC_BED_DOUBLE = fromBlock(FFBlocks.NORDIC_BED_DOUBLE);
 	public static final ItemEntry<BlockItem> NORDIC_BED_SINGLE = fromBlock(FFBlocks.NORDIC_BED_SINGLE);
 	public static final ItemEntry<BlockItem> NORDIC_BENCH = fromBlock(FFBlocks.NORDIC_BENCH);
-	public static final ItemEntry<BlockItem> NORDIC_BOOKSHELF = fromBlock(FFBlocks.NORDIC_BOOKSHELF);
 	public static final ItemEntry<BlockItem> NORDIC_CHAIR = fromBlock(FFBlocks.NORDIC_CHAIR);
 	public static final ItemEntry<BlockItem> NORDIC_CHEST = fromBlock(FFBlocks.NORDIC_CHEST);
 	public static final ItemEntry<BlockItem> NORDIC_CUSHION = fromBlock(FFBlocks.NORDIC_CUSHION);
-	public static final ItemEntry<BlockItem> NORDIC_DESK = fromBlock(FFBlocks.NORDIC_DESK);
 	public static final ItemEntry<BlockItem> NORDIC_DRAWER = fromBlock(FFBlocks.NORDIC_DRAWER);
 	public static final ItemEntry<BlockItem> NORDIC_PAINTING_WIDE = fromBlock(FFBlocks.NORDIC_PAINTING_WIDE);
 	public static final ItemEntry<BlockItem> NORDIC_SHELF = fromBlock(FFBlocks.NORDIC_SHELF);
