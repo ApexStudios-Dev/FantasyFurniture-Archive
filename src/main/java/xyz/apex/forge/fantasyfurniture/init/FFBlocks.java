@@ -78,7 +78,7 @@ public final class FFBlocks
 	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_TABLE_SMALL = tableSmall("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicTableSmall> NORDIC_TABLE_SMALL = tableSmall("nordic", NordicTableSmall::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_WARDROBE = wardrobe("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -363,9 +363,6 @@ public final class FFBlocks
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
-
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "table_small", 0))
-					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.TABLES_SMALL)
 		;
 	}
