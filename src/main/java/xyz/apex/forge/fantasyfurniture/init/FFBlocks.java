@@ -80,7 +80,7 @@ public final class FFBlocks
 	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_SMALL = tableSmall("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_WALL_LIGHT = wallLight("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_WARDROBE = wardrobe("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 
@@ -384,15 +384,17 @@ public final class FFBlocks
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> wallLight(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseWallLight> BlockBuilder<FFRegistry, BLOCK, FFRegistry> wallLight(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, "wall_light", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.TORCHES))
-					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.initialProperties(Material.DECORATION)
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
-					.noOcclusion()
-
+					.noCollission()
+					.instabreak()
+					.lightLevel(blockState -> 14)
 					.tag(FFTags.Blocks.TORCHES)
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "wall_light", 180))
 		;
 	}
 
