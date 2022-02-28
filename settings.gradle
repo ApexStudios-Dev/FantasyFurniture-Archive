@@ -3,6 +3,11 @@ rootProject.name = "${mod_name}-${minecraft_version}"
 gradle.rootProject { root ->
 	// download latest AT file
 	println('Downloading AccessTransformer file...')
+
+	if(root.file('accesstransformer.cfg').exists()) {
+		delete root.file('accesstransformer.cfg')
+	}
+
 	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/accesstransformers/1.16.5.cfg').withInputStream { is ->
 		root.file('accesstransformer.cfg').withOutputStream { os ->
 			os << is
