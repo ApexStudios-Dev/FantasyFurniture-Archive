@@ -45,6 +45,7 @@ public final class FFTags
 		public static final ITag.INamedTag<Block> CHAIRS = REGISTRY.blockTagModded("chairs");
 		public static final ITag.INamedTag<Block> CUSHIONS = REGISTRY.blockTagModded("cushions");
 		public static final ITag.INamedTag<Block> STOOLS = REGISTRY.blockTagModded("stools");
+		public static final ITag.INamedTag<Block> SOFAS = REGISTRY.blockTagModded("sofas");
 
 		public static final ITag.INamedTag<Block> CHESTS = REGISTRY.blockTagModded("chests");
 		public static final ITag.INamedTag<Block> CHESTS_WOODEN = REGISTRY.blockTagModded("chests/wooden");
@@ -78,7 +79,8 @@ public final class FFTags
 				provider.tag(CHAIRS);
 				provider.tag(CUSHIONS);
 				provider.tag(STOOLS);
-				provider.tag(SEATS).addTags(BENCHES, CHAIRS, CUSHIONS, STOOLS);
+				provider.tag(SOFAS);
+				provider.tag(SEATS).addTags(BENCHES, CHAIRS, CUSHIONS, STOOLS, SOFAS);
 
 				provider.tag(CHESTS_WOODEN);
 				provider.tag(CHESTS).addTag(CHESTS_WOODEN);
@@ -116,6 +118,7 @@ public final class FFTags
 		public static final ITag.INamedTag<Item> CHAIRS = REGISTRY.itemTagModded("chairs");
 		public static final ITag.INamedTag<Item> CUSHIONS = REGISTRY.itemTagModded("cushions");
 		public static final ITag.INamedTag<Item> STOOLS = REGISTRY.itemTagModded("stools");
+		public static final ITag.INamedTag<Item> SOFAS = REGISTRY.itemTagModded("sofas");
 
 		public static final ITag.INamedTag<Item> CHESTS = REGISTRY.itemTagModded("chests");
 		public static final ITag.INamedTag<Item> CHESTS_WOODEN = REGISTRY.itemTagModded("chests/wooden");
@@ -151,7 +154,8 @@ public final class FFTags
 				provider.tag(CHAIRS);
 				provider.tag(CUSHIONS);
 				provider.tag(STOOLS);
-				provider.tag(SEATS).addTags(BENCHES, CHAIRS, CUSHIONS, STOOLS);
+				provider.tag(SOFAS);
+				provider.tag(SEATS).addTags(BENCHES, CHAIRS, CUSHIONS, STOOLS, SOFAS);
 
 				provider.tag(CHESTS_WOODEN);
 				provider.tag(CHESTS).addTag(CHESTS_WOODEN);

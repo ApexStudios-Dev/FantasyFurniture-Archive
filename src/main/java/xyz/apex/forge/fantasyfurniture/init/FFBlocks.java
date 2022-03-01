@@ -24,8 +24,10 @@ import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tags.ITag;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.PointOfInterestType;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
@@ -46,23 +48,6 @@ public final class FFBlocks
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 
-	/*
-		TODO:
-			Bed Double
-			Bench
-			Bookshelf
-			Chest
-			Desk
-			Drawer
-			Painting Wide
-			Stool
-			Table Large
-			Table Long
-			Table Small
-			Wall Light
-			Wardrobe
-	*/
-
 	// region: Nordic
 	public static final BlockEntry<NordicBedDoubleBlock> NORDIC_BED_DOUBLE = bedDouble("nordic", NordicBedDoubleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -76,6 +61,7 @@ public final class FFBlocks
 	public static final BlockEntry<Block> NORDIC_PAINTING_WIDE = paintingWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicSofaBlock> NORDIC_SOFA = sofa("nordic", NordicSofaBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableSmall> NORDIC_TABLE_SMALL = tableSmall("nordic", NordicTableSmall::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -406,6 +392,31 @@ public final class FFBlocks
 					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "table_wide", 0))
 					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.WARDROBES)
+		;
+	}
+
+	private static <BLOCK extends BaseSofaBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> sofa(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return baseTypedBlock(type, "sofa", blockFactory, BlockItem::new, blockTag, itemTag, item -> item
+						.tag(FFTags.Items.SOFAS)
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/sofa_single")))
+					)
+					.initialProperties(Material.WOOD, MaterialColor.WOOD)
+					.sound(SoundType.WOOD)
+					.strength(2F, 3F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+						Direction facing = blockState.getValue(BaseSofaBlock.FACING);
+						BaseSofaBlock.ConnectionType connectionType = blockState.getValue(BaseSofaBlock.CONNECTION_TYPE);
+
+						return ConfiguredModel
+								.builder()
+									.modelFile(provider.models().getExistingFile(REGISTRY.id("block/" + type + "/sofa_" + connectionType.getSerializedName())))
+									.rotationY(((int) facing.toYRot() + 180) % 360)
+								.build();
+					}))
+					.tag(FFTags.Blocks.SOFAS)
 		;
 	}
 
