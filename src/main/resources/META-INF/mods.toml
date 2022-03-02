@@ -38,3 +38,9 @@ issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 	versionRange="${apexcore_version_range}"
 	ordering="AFTER"
 	side="BOTH"
+[[dependencies.${mod_id}]]
+	modId="${jei_mod_id}"
+	mandatory=false
+	versionRange="${jei_version_range}"
+	ordering="AFTER"
+	side="BOTH"
