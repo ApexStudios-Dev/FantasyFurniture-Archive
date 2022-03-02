@@ -51,23 +51,25 @@ public final class FFBlocks
 	// region: Nordic
 	public static final BlockEntry<NordicBedDoubleBlock> NORDIC_BED_DOUBLE = bedDouble("nordic", NordicBedDoubleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	// public static final BlockEntry<Block> NORDIC_BOOKSHELF = bookShelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicChairBlock> NORDIC_CHAIR = chair("nordic", NordicChairBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_CHEST = chest("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	// public static final BlockEntry<Block> NORDIC_DESK = desk("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicPaintingWideBlock> NORDIC_PAINTING_WIDE = paintingWide("nordic", NordicPaintingWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicPaintingSmallBlock> NORDIC_PAINTING_SMALL = paintingSmall("nordic", NordicPaintingSmallBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicSofaBlock> NORDIC_SOFA = sofa("nordic", NordicSofaBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableSmall> NORDIC_TABLE_SMALL = tableSmall("nordic", NordicTableSmall::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+
+	// WIP
+	public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	// public static final BlockEntry<Block> NORDIC_BOOKSHELF = bookShelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_CHEST = chest("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	// public static final BlockEntry<Block> NORDIC_DESK = desk("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_WARDROBE = wardrobe("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 

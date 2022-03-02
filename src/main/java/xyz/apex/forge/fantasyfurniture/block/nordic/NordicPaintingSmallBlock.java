@@ -12,9 +12,9 @@ import xyz.apex.forge.fantasyfurniture.block.BasePaintingBlock;
 public final class NordicPaintingSmallBlock extends BasePaintingBlock
 {
 	public static final VoxelShape SHAPE_NORTH = box(0D, 0D, 14D, 16D, 16D, 16D);
-	public static final VoxelShape SHAPE_EAST = box(14D, 0D, 0D, 16D, 16D, 16D);
+	public static final VoxelShape SHAPE_EAST = box(0D, 0D, 0D, 2D, 16D, 16D);
 	public static final VoxelShape SHAPE_SOUTH = box(0D, 0D, 0D, 16D, 16D, 2D);
-	public static final VoxelShape SHAPE_WEST = box(0D, 0D, 0D, 2D, 16D, 16D);
+	public static final VoxelShape SHAPE_WEST = box(14D, 0D, 0D, 16D, 16D, 16D);
 
 	public NordicPaintingSmallBlock(Properties properties)
 	{
