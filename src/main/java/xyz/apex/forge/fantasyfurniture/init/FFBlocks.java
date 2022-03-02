@@ -28,6 +28,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.event.RegistryEvent;
 
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
@@ -105,9 +106,9 @@ public final class FFBlocks
 
 	private static <BLOCK extends Block, ITEM extends BlockItem> BlockBuilder<FFRegistry, BLOCK, FFRegistry> baseTypedBlock(String type, String blockType, BlockFactory<BLOCK> blockFactory, BlockItemFactory<BLOCK, ITEM> itemFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag, NonnullUnaryOperator<ItemBuilder<FFRegistry, ITEM, BlockBuilder<FFRegistry, BLOCK, FFRegistry>>> itemModifier)
 	{
-		String internalName = type + '_' + blockType;
-		String englishName = RegistrateLangProvider.toEnglishName(internalName);
-		ResourceLocation modelLocation = REGISTRY.id("block/" + type + '/' + blockType);
+		String internalName = type + '/' + blockType;
+		String englishName = RegistrateLangProvider.toEnglishName(internalName.replace('/', '_'));
+		ResourceLocation modelLocation = REGISTRY.id("block/" + internalName);
 
 		BlockBuilder<FFRegistry, BLOCK, FFRegistry> blockBuilder = REGISTRY
 				.block(internalName, blockFactory)
@@ -120,12 +121,14 @@ public final class FFBlocks
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(modelLocation)))
 					.tag(blockTag)
 					.addRenderType(() -> RenderType::cutout)
+
+					.mapping("1.16.5", internalName.replace('/', '_'), RegistryEvent.MissingMappings.Action.REMAP)
 		;
 
 		ItemBuilder<FFRegistry, ITEM, BlockBuilder<FFRegistry, BLOCK, FFRegistry>> itemBuilder = blockBuilder
 				.item(itemFactory)
 					.stacksTo(1)
-					.model((ctx, provder) -> provder.withExistingParent(ctx.getName(), modelLocation))
+					.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), modelLocation))
 					.tag(itemTag)
 		;
 
@@ -417,7 +420,7 @@ public final class FFBlocks
 	{
 		return baseTypedBlock(type, "sofa", blockFactory, BlockItem::new, blockTag, itemTag, item -> item
 						.tag(FFTags.Items.SOFAS)
-						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), REGISTRY.id("block/" + type + "/sofa_single")))
+						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), REGISTRY.id("block/" + type + "/sofa_single")))
 					)
 					.initialProperties(Material.WOOD, MaterialColor.WOOD)
 					.sound(SoundType.WOOD)
