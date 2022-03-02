@@ -200,7 +200,7 @@ public final class FFBlocks
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chair", 0))
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chair", 180))
 					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
 					.tag(FFTags.Blocks.CHAIRS)
 		;
@@ -296,7 +296,7 @@ public final class FFBlocks
 							suffix = "";
 
 						return provider.models().getExistingFile(REGISTRY.id("block/" + type + "/shelf" + suffix));
-					}, 0))
+					}, 180))
 					.tag(FFTags.Blocks.SHELVES)
 		;
 	}

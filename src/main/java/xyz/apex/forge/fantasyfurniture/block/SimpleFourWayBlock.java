@@ -22,7 +22,7 @@ public class SimpleFourWayBlock extends HorizontalBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx)
 	{
-		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection());
+		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
 	}
 
 	@Override

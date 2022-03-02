@@ -40,7 +40,7 @@ public class BaseSofaBlock extends BaseSeatBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx)
 	{
-		BlockState blockState = super.getStateForPlacement(ctx).setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+		BlockState blockState = super.getStateForPlacement(ctx);
 		return getBlockState(ctx.getLevel(), ctx.getClickedPos(), blockState, this);
 	}
 

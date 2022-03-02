@@ -91,8 +91,8 @@ public class BaseShelfBlock extends SimpleFourWayBlock
 	{
 		Direction facing = blockState.getValue(FACING);
 
-		BlockPos leftPos = pos.relative(facing.getClockWise());
-		BlockPos rightPos = pos.relative(facing.getCounterClockWise());
+		BlockPos leftPos = pos.relative(facing.getCounterClockWise());
+		BlockPos rightPos = pos.relative(facing.getClockWise());
 
 		boolean hasLeft = hasConnection(level, leftPos, baseShelfBlock);
 		boolean hasRight = hasConnection(level, rightPos, baseShelfBlock);

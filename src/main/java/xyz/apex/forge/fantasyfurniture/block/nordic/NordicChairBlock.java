@@ -14,7 +14,7 @@ import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
 
 public final class NordicChairBlock extends BaseSeatDoubleBlock
 {
-	public static final VoxelShape SHAPE_UPPER_NORTH = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_UPPER_SOUTH = BlockHelper.makeShape(
 			box(12D, -16D, 12D, 14D, -9D, 14D),
 			box(2D, -16D, 12D, 4D, -9D, 14D),
 			box(2D, -16D, 2D, 4D, -9D, 4D),
@@ -23,7 +23,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(2D, -7D, 2D, 14D, 9D, 3D)
 	);
 
-	public static final VoxelShape SHAPE_UPPER_EAST = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_UPPER_WEST = BlockHelper.makeShape(
 			box(2D, -16D, 12D, 4D, -9D, 14D),
 			box(2D, -16D, 2D, 4D, -9D, 4D),
 			box(12D, -16D, 2D, 14D, -9D, 4D),
@@ -32,7 +32,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(13D, -7D, 2D, 14D, 9D, 14D)
 	);
 
-	public static final VoxelShape SHAPE_UPPER_SOUTH = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_UPPER_NORTH = BlockHelper.makeShape(
 			box(2D, -16D, 2D, 4D, -9D, 4D),
 			box(12D, -16D, 2D, 14D, -9D, 4D),
 			box(12D, -16D, 12D, 14D, -9D, 14D),
@@ -41,7 +41,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(2D, -7D, 13D, 14D, 9D, 14D)
 	);
 
-	public static final VoxelShape SHAPE_UPPER_WEST = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_UPPER_EAST = BlockHelper.makeShape(
 			box(12D, -16D, 2D, 14D, -9D, 4D),
 			box(12D, -16D, 12D, 14D, -9D, 14D),
 			box(2D, -16D, 12D, 4D, -9D, 14D),
@@ -50,7 +50,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(2D, -7D, 2D, 3D, 9D, 14D)
 	);
 
-	public static final VoxelShape SHAPE_LOWER_NORTH = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_LOWER_SOUTH = BlockHelper.makeShape(
 			box(12D, 0D, 12D, 14D, 7D, 14D),
 			box(2D, 0D, 12D, 4D, 7D, 14D),
 			box(2D, 0D, 2D, 4D, 7D, 4D),
@@ -59,7 +59,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(2D, 9D, 2D, 14D, 25D, 3D)
 	);
 
-	public static final VoxelShape SHAPE_LOWER_EAST = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_LOWER_WEST = BlockHelper.makeShape(
 			box(2D, 0D, 12D, 4D, 7D, 14D),
 			box(2D, 0D, 2D, 4D, 7D, 4D),
 			box(12D, 0D, 2D, 14D, 7D, 4D),
@@ -68,7 +68,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(13D, 9D, 2D, 14D, 25D, 14D)
 	);
 
-	public static final VoxelShape SHAPE_LOWER_SOUTH = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_LOWER_NORTH = BlockHelper.makeShape(
 			box(2D, 0D, 2D, 4D, 7D, 4D),
 			box(12D, 0D, 2D, 14D, 7D, 4D),
 			box(2D, 0D, 12D, 4D, 7D, 14D),
@@ -76,7 +76,7 @@ public final class NordicChairBlock extends BaseSeatDoubleBlock
 			box(2D, 9D, 13D, 14D, 25D, 14D)
 	);
 
-	public static final VoxelShape SHAPE_LOWER_WEST = BlockHelper.makeShape(
+	public static final VoxelShape SHAPE_LOWER_EAST = BlockHelper.makeShape(
 			box(12D, 0D, 2D, 14D, 7D, 4D),
 			box(12D, 0D, 12D, 14D, 7D, 14D),
 			box(2D, 0D, 12D, 4D, 7D, 14D),
