@@ -58,7 +58,8 @@ public final class FFBlocks
 	public static final BlockEntry<NordicCushionBlock> NORDIC_CUSHION = cushion("nordic", NordicCushionBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_DESK = desk("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<Block> NORDIC_PAINTING_WIDE = paintingWide("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicPaintingWideBlock> NORDIC_PAINTING_WIDE = paintingWide("nordic", NordicPaintingWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicPaintingSmallBlock> NORDIC_PAINTING_SMALL = paintingSmall("nordic", NordicPaintingSmallBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicShelfBlock> NORDIC_SHELF = shelf("nordic", NordicShelfBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicSofaBlock> NORDIC_SOFA = sofa("nordic", NordicSofaBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -261,7 +262,20 @@ public final class FFBlocks
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> paintingWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BasePaintingBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> paintingSmall(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return baseTypedBlock(type, "painting_small", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.PAINTINGS))
+					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+					.sound(SoundType.WOOD)
+					.strength(2F, 3F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "painting_small", 180))
+					.tag(FFTags.Blocks.PAINTINGS)
+		;
+	}
+
+	private static <BLOCK extends BasePaintingDoubleBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> paintingWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, "painting_wide", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.PAINTINGS))
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
@@ -269,8 +283,8 @@ public final class FFBlocks
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chest", 0))
-					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "painting_wide", 180))
+					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BasePaintingDoubleBlock.TYPE, BasePaintingDoubleBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.PAINTINGS)
 		;
 	}
