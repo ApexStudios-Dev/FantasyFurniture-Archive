@@ -269,6 +269,7 @@ public final class FFBlocks
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
+					.noCollission()
 
 					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "painting_small", 180))
 					.tag(FFTags.Blocks.PAINTINGS)
@@ -282,6 +283,7 @@ public final class FFBlocks
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
+					.noCollission()
 
 					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "painting_wide", 180))
 					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BasePaintingDoubleBlock.TYPE, BasePaintingDoubleBlock.Type.MAIN)))
