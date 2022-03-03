@@ -22,29 +22,57 @@ jobs:
       - uses: olegtarasov/get-tag@v2.1
         id: tagName
 
-      # Setup caching
-      - uses: actions/cache@v2
-        id: cache-setup
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-      # Checkout repository, Validate Gradle Wrapper & Setup JDK
+      # Checkout repository & Setup JDK
       - uses: actions/checkout@v2
-      - uses: gradle/wrapper-validation-action@v1
       - uses: actions/setup-java@v2
         with:
           distribution: adopt
           java-version: 8
-      - run: chmod +x ./gradlew
 
-      # Disable MinecraftForge warning notice
-      # - name: Disable MinecraftForge copyright notice
-      #   if: steps.cache-setup.outputs.cache-hit != 'true'
-      #   run: ./gradlew hideOfficialWarningUntilChanged
+      # Setup & Restore caches
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ./accesstransformer.cfg
+            ./build
+          key: ${{ runner.os }}-gradle
+
+      # Remove problematic files
+      - name: Cleanup Gradle Cache
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
+          if [ -d ./build/_applyBinpatches_2/ ]; then rm -r ./build/_applyBinpatches_2/; fi
+          if [ -d ./build/tmp/sourcesJar/ ]; then rm -r ./build/tmp/sourcesJar/; fi
+          if [ -d ./build/_applyBinpatches_3/ ]; then rm -r ./build/_applyBinpatches_3/; fi
+          if [ -d ./build/_atJar_5/ ]; then rm -r ./build/_atJar_5/; fi
+          if [ -d ./build/_RenameSrg2Mcp_*/ ]; then rm -r ./build/_RenameSrg2Mcp_*/; fi
+          if [ -d ./build/classes/ ]; then rm -r ./build/classes/; fi
+          if [ -d ./build/downloadMCMeta/ ]; then rm -r ./build/downloadMCMeta/; fi
+          if [ -d ./build/downloadMcpConfig/ ]; then rm -r ./build/downloadMcpConfig/; fi
+          if [ -d ./build/generated/ ]; then rm -r ./build/generated/; fi
+          if [ -d ./build/libs/ ]; then rm -r ./build/libs/; fi
+          if [ -d ./build/natives/ ]; then rm -r ./build/natives/; fi
+          if [ -d ./build/reobfJar/ ]; then rm -r ./build/reobfJar/; fi
+          if [ -d ./build/reobfShadowJar/ ]; then rm -r ./build/reobfShadowJar/; fi
+          if [ -d ./build/resources/ ]; then rm -r ./build/resources/; fi
+          if [ -d ./build/tmp/_compileJava_2/ ]; then rm -r ./build/tmp/_compileJava_2/; fi
+          if [ -d ./build/tmp/_compileJava_4/ ]; then rm -r ./build/tmp/_compileJava_4/; fi
+          if [ -d ./build/tmp/compileJava/ ]; then rm -r ./build/tmp/compileJava/; fi
+          if [ -d ./build/tmp/deobfJar/ ]; then rm -r ./build/tmp/deobfJar/; fi
+          if [ -d ./build/tmp/jar/ ]; then rm -r ./build/tmp/jar/; fi
+          if [ -d ./build/tmp/reobfJar/ ]; then rm -r ./build/tmp/reobfJar/; fi
+          if [ -d ./build/tmp/shadowJar/ ]; then rm -r ./build/tmp/shadowJar/; fi
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-wrapper
+
+      # Validate Gradle Wrapper
+      - uses: gradle/wrapper-validation-action@v1
+      - run: chmod +x ./gradlew
 
       # Generate Minecraft Assets & Data files
       - run: ./gradlew Data # `Data` should match the `runData` gradle task name
@@ -72,10 +100,37 @@ jobs:
           files: ./build/libs/*.jar
 
       # Publish to CurseForge
-#      - run: ./gradlew curseforge
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      - run: ./gradlew curseforge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
       # Kill gradlew deamon (caching requires gradle to not be running)
       - run: ./gradlew --stop
+
+      # Remove problematic files
+      - name: Cleanup Gradle Cache
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
+          if [ -d ./build/_applyBinpatches_2/ ]; then rm -r ./build/_applyBinpatches_2/; fi
+          if [ -d ./build/tmp/sourcesJar/ ]; then rm -r ./build/tmp/sourcesJar/; fi
+          if [ -d ./build/_applyBinpatches_3/ ]; then rm -r ./build/_applyBinpatches_3/; fi
+          if [ -d ./build/_atJar_5/ ]; then rm -r ./build/_atJar_5/; fi
+          if [ -d ./build/_RenameSrg2Mcp_*/ ]; then rm -r ./build/_RenameSrg2Mcp_*/; fi
+          if [ -d ./build/classes/ ]; then rm -r ./build/classes/; fi
+          if [ -d ./build/downloadMCMeta/ ]; then rm -r ./build/downloadMCMeta/; fi
+          if [ -d ./build/downloadMcpConfig/ ]; then rm -r ./build/downloadMcpConfig/; fi
+          if [ -d ./build/generated/ ]; then rm -r ./build/generated/; fi
+          if [ -d ./build/libs/ ]; then rm -r ./build/libs/; fi
+          if [ -d ./build/natives/ ]; then rm -r ./build/natives/; fi
+          if [ -d ./build/reobfJar/ ]; then rm -r ./build/reobfJar/; fi
+          if [ -d ./build/reobfShadowJar/ ]; then rm -r ./build/reobfShadowJar/; fi
+          if [ -d ./build/resources/ ]; then rm -r ./build/resources/; fi
+          if [ -d ./build/tmp/_compileJava_2/ ]; then rm -r ./build/tmp/_compileJava_2/; fi
+          if [ -d ./build/tmp/_compileJava_4/ ]; then rm -r ./build/tmp/_compileJava_4/; fi
+          if [ -d ./build/tmp/compileJava/ ]; then rm -r ./build/tmp/compileJava/; fi
+          if [ -d ./build/tmp/deobfJar/ ]; then rm -r ./build/tmp/deobfJar/; fi
+          if [ -d ./build/tmp/jar/ ]; then rm -r ./build/tmp/jar/; fi
+          if [ -d ./build/tmp/reobfJar/ ]; then rm -r ./build/tmp/reobfJar/; fi
+          if [ -d ./build/tmp/shadowJar/ ]; then rm -r ./build/tmp/shadowJar/; fi
