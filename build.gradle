@@ -193,56 +193,7 @@ repositories {
 	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
-
-	if(project.hasProperty('apex_git_package_token')) {
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/JavaUtilities")
-			credentials {
-				username = 'Apex-GitHub-PackagesToken'
-				password = project.getProperty('apex_git_package_token')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
-			credentials {
-				username = 'Apex-GitHub-PackagesToken'
-				password = project.getProperty('apex_git_package_token')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
-			credentials {
-				username = 'Apex-GitHub-PackagesToken'
-				password = project.getProperty('apex_git_package_token')
-			}
-		}
-	} else if(System.getenv('GITHUB_TOKEN') != null) {
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/JavaUtilities")
-			credentials {
-				username = System.getenv('GITHUB_ACTOR')
-				password = System.getenv('GITHUB_TOKEN')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/Registrator")
-			credentials {
-				username = System.getenv('GITHUB_ACTOR')
-				password = System.getenv('GITHUB_TOKEN')
-			}
-		}
-
-		maven {
-			url = uri("https://maven.pkg.github.com/ApexModder/ApexCore")
-			credentials {
-				username = System.getenv('GITHUB_ACTOR')
-				password = System.getenv('GITHUB_TOKEN')
-			}
-		}
-	}
+	maven { url 'https://apexmodder.jfrog.io/artifactory/mods-maven/' }
 }
 
 dependencies {
@@ -255,33 +206,19 @@ dependencies {
 	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
 
-	if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
-		shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
-	} else {
-		// currently there is no public location
-		// this may change in the future
-		// as of now, to be able to load this project yourself
-		// locally you also have to clone my JavaUtilities repo, build & publish it to your local maven
-		// git clone https://github.com/ApexModder/JavaUtilities --branch J8
-		// gradlew publish
-		// after this has finished, the project should import and detect JavaUtilities just fine
-	}
+	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
+	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
 	if(findProject(':Registrator')) {
 		implementation project(':Registrator')
-	} else if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
 	} else {
-		implementation fg.deobf("curse.maven:registrator-${registrator_cf_project}:${registrator_cf_file}:deobf")
+		implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
 	}
 
 	if(findProject(':ApexCore')) {
 		implementation project(':ApexCore')
-	} else if(project.hasProperty('apex_git_package_token') || System.getenv('GITHUB_TOKEN') != null) {
-		implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
 	} else {
-		implementation fg.deobf("curse.maven:apexcore-${apexcore_cf_project}:${apexcore_cf_file}:deobf")
+		implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
 	}
 }
 
@@ -372,10 +309,10 @@ reobf {
 
 jar.finalizedBy('reobfJar')
 
-if(System.getenv('GITHUB_TOKEN') != null) {
+if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
 	publishing {
 		publications {
-			gpr(MavenPublication) {
+			mavenJava(MavenPublication) {
 				groupId = "${mod_base_package}"
 				artifactId = "${mod_id}"
 				version = "${minecraft_version}-${mod_version}"
@@ -388,39 +325,19 @@ if(System.getenv('GITHUB_TOKEN') != null) {
 		}
 		repositories {
 			maven {
-				name = 'GitHubPackages'
-				url = uri('https://maven.pkg.github.com/ApexModder/FantasyFurniture')
+				name 'ApexMods-Maven'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
 
 				credentials {
-					username = System.getenv('GITHUB_ACTOR')
-					password = System.getenv('GITHUB_TOKEN')
+					username System.getenv('APEX_MODS_MAVEN_USERNAME')
+					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
 			}
 		}
 	}
 }
 
-if(project.hasProperty('apex_curse_gradle_token')) {
-	curseforge {
-		apiKey = project.getProperty('apex_curse_gradle_token')
-
-		project {
-			id = "${mod_curseforge_id}"
-			releaseType = 'release'
-			addGameVersion "${minecraft_version}"
-
-			mainArtifact shadowJar
-			addArtifact jar
-			addArtifact deobfJar
-			addArtifact sourcesJar
-
-			relations {
-				requiredDependency 'registrator'
-				requiredDependency 'apexcore'
-			}
-		}
-	}
-} else if(System.getenv('CURSEFORGE_TOKEN') != null) {
+if(System.getenv('CURSEFORGE_TOKEN') != null) {
 	curseforge {
 		apiKey = System.getenv('CURSEFORGE_TOKEN')
 
