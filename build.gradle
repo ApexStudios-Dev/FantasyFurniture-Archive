@@ -178,9 +178,9 @@ mixin {
 	setupModMixins('Registrator', consumer)
 	setupModMixins('ApexCore', consumer)
 
-	debug = true
+	/*debug = true
 	debug.export = true
-	hotSwap = true
+	hotSwap = true*/
 }
 
 sourceSets.main.resources {
