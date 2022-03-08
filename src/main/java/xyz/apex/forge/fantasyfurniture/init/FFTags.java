@@ -25,36 +25,36 @@ public final class FFTags
 
 	public static final class Blocks
 	{
-		public static final ITag.INamedTag<Block> NORDIC = REGISTRY.blockTagModded("nordic");
-		public static final ITag.INamedTag<Block> DECORATIONS = REGISTRY.blockTagModded("decorations");
+		public static final ITag.INamedTag<Block> NORDIC = REGISTRY.moddedBlockTag("nordic");
+		public static final ITag.INamedTag<Block> DECORATIONS = REGISTRY.moddedBlockTag("decorations");
 
-		public static final ITag.INamedTag<Block> BOOKSHELVES = REGISTRY.blockTagModded("bookshelves");
-		public static final ITag.INamedTag<Block> DESKS = REGISTRY.blockTagModded("desks");
-		public static final ITag.INamedTag<Block> DRAWERS = REGISTRY.blockTagModded("drawers");
-		public static final ITag.INamedTag<Block> PAINTINGS = REGISTRY.blockTagModded("paintings");
-		public static final ITag.INamedTag<Block> SHELVES = REGISTRY.blockTagModded("shelves");
-		public static final ITag.INamedTag<Block> TORCHES = REGISTRY.blockTagModded("torches");
-		public static final ITag.INamedTag<Block> WARDROBES = REGISTRY.blockTagModded("wardrobes");
+		public static final ITag.INamedTag<Block> BOOKSHELVES = REGISTRY.moddedBlockTag("bookshelves");
+		public static final ITag.INamedTag<Block> DESKS = REGISTRY.moddedBlockTag("desks");
+		public static final ITag.INamedTag<Block> DRAWERS = REGISTRY.moddedBlockTag("drawers");
+		public static final ITag.INamedTag<Block> PAINTINGS = REGISTRY.moddedBlockTag("paintings");
+		public static final ITag.INamedTag<Block> SHELVES = REGISTRY.moddedBlockTag("shelves");
+		public static final ITag.INamedTag<Block> TORCHES = REGISTRY.moddedBlockTag("torches");
+		public static final ITag.INamedTag<Block> WARDROBES = REGISTRY.moddedBlockTag("wardrobes");
 
-		public static final ITag.INamedTag<Block> BEDS = REGISTRY.blockTagModded("beds");
-		public static final ITag.INamedTag<Block> BEDS_SINGLE = REGISTRY.blockTagModded("beds/single");
-		public static final ITag.INamedTag<Block> BEDS_DOUBLE = REGISTRY.blockTagModded("beds/double");
+		public static final ITag.INamedTag<Block> BEDS = REGISTRY.moddedBlockTag("beds");
+		public static final ITag.INamedTag<Block> BEDS_SINGLE = REGISTRY.moddedBlockTag("beds/single");
+		public static final ITag.INamedTag<Block> BEDS_DOUBLE = REGISTRY.moddedBlockTag("beds/double");
 
-		public static final ITag.INamedTag<Block> SEATS = REGISTRY.blockTagModded("seats");
-		public static final ITag.INamedTag<Block> BENCHES = REGISTRY.blockTagModded("benches");
-		public static final ITag.INamedTag<Block> CHAIRS = REGISTRY.blockTagModded("chairs");
-		public static final ITag.INamedTag<Block> CUSHIONS = REGISTRY.blockTagModded("cushions");
-		public static final ITag.INamedTag<Block> STOOLS = REGISTRY.blockTagModded("stools");
-		public static final ITag.INamedTag<Block> SOFAS = REGISTRY.blockTagModded("sofas");
+		public static final ITag.INamedTag<Block> SEATS = REGISTRY.moddedBlockTag("seats");
+		public static final ITag.INamedTag<Block> BENCHES = REGISTRY.moddedBlockTag("benches");
+		public static final ITag.INamedTag<Block> CHAIRS = REGISTRY.moddedBlockTag("chairs");
+		public static final ITag.INamedTag<Block> CUSHIONS = REGISTRY.moddedBlockTag("cushions");
+		public static final ITag.INamedTag<Block> STOOLS = REGISTRY.moddedBlockTag("stools");
+		public static final ITag.INamedTag<Block> SOFAS = REGISTRY.moddedBlockTag("sofas");
 
-		public static final ITag.INamedTag<Block> CHESTS = REGISTRY.blockTagModded("chests");
-		public static final ITag.INamedTag<Block> CHESTS_WOODEN = REGISTRY.blockTagModded("chests/wooden");
+		public static final ITag.INamedTag<Block> CHESTS = REGISTRY.moddedBlockTag("chests");
+		public static final ITag.INamedTag<Block> CHESTS_WOODEN = REGISTRY.moddedBlockTag("chests/wooden");
 
-		public static final ITag.INamedTag<Block> TABLES_LARGE = REGISTRY.blockTagModded("tables/large");
-		public static final ITag.INamedTag<Block> TABLES_LONG = REGISTRY.blockTagModded("tables/long");
-		public static final ITag.INamedTag<Block> TABLES_SMALL = REGISTRY.blockTagModded("tables/small");
-		public static final ITag.INamedTag<Block> TABLES_WIDE = REGISTRY.blockTagModded("tables/wide");
-		public static final ITag.INamedTag<Block> TABLES = REGISTRY.blockTagModded("tables");
+		public static final ITag.INamedTag<Block> TABLES_LARGE = REGISTRY.moddedBlockTag("tables/large");
+		public static final ITag.INamedTag<Block> TABLES_LONG = REGISTRY.moddedBlockTag("tables/long");
+		public static final ITag.INamedTag<Block> TABLES_SMALL = REGISTRY.moddedBlockTag("tables/small");
+		public static final ITag.INamedTag<Block> TABLES_WIDE = REGISTRY.moddedBlockTag("tables/wide");
+		public static final ITag.INamedTag<Block> TABLES = REGISTRY.moddedBlockTag("tables");
 
 		private static void bootstrap()
 		{
@@ -98,36 +98,36 @@ public final class FFTags
 
 	public static final class Items
 	{
-		public static final ITag.INamedTag<Item> NORDIC = REGISTRY.itemTagModded("nordic");
-		public static final ITag.INamedTag<Item> DECORATIONS = REGISTRY.itemTagModded("decorations");
+		public static final ITag.INamedTag<Item> NORDIC = REGISTRY.moddedItemTag("nordic");
+		public static final ITag.INamedTag<Item> DECORATIONS = REGISTRY.moddedItemTag("decorations");
 
-		public static final ITag.INamedTag<Item> BOOKSHELVES = REGISTRY.itemTagModded("bookshelves");
-		public static final ITag.INamedTag<Item> DESKS = REGISTRY.itemTagModded("desks");
-		public static final ITag.INamedTag<Item> DRAWERS = REGISTRY.itemTagModded("drawers");
-		public static final ITag.INamedTag<Item> PAINTINGS = REGISTRY.itemTagModded("paintings");
-		public static final ITag.INamedTag<Item> SHELVES = REGISTRY.itemTagModded("shelves");
-		public static final ITag.INamedTag<Item> TORCHES = REGISTRY.itemTagModded("torches");
-		public static final ITag.INamedTag<Item> WARDROBES = REGISTRY.itemTagModded("wardrobes");
+		public static final ITag.INamedTag<Item> BOOKSHELVES = REGISTRY.moddedItemTag("bookshelves");
+		public static final ITag.INamedTag<Item> DESKS = REGISTRY.moddedItemTag("desks");
+		public static final ITag.INamedTag<Item> DRAWERS = REGISTRY.moddedItemTag("drawers");
+		public static final ITag.INamedTag<Item> PAINTINGS = REGISTRY.moddedItemTag("paintings");
+		public static final ITag.INamedTag<Item> SHELVES = REGISTRY.moddedItemTag("shelves");
+		public static final ITag.INamedTag<Item> TORCHES = REGISTRY.moddedItemTag("torches");
+		public static final ITag.INamedTag<Item> WARDROBES = REGISTRY.moddedItemTag("wardrobes");
 
-		public static final ITag.INamedTag<Item> BEDS = REGISTRY.itemTagModded("beds");
-		public static final ITag.INamedTag<Item> BEDS_SINGLE = REGISTRY.itemTagModded("beds/single");
-		public static final ITag.INamedTag<Item> BEDS_DOUBLE = REGISTRY.itemTagModded("beds/double");
+		public static final ITag.INamedTag<Item> BEDS = REGISTRY.moddedItemTag("beds");
+		public static final ITag.INamedTag<Item> BEDS_SINGLE = REGISTRY.moddedItemTag("beds/single");
+		public static final ITag.INamedTag<Item> BEDS_DOUBLE = REGISTRY.moddedItemTag("beds/double");
 
-		public static final ITag.INamedTag<Item> SEATS = REGISTRY.itemTagModded("seats");
-		public static final ITag.INamedTag<Item> BENCHES = REGISTRY.itemTagModded("benches");
-		public static final ITag.INamedTag<Item> CHAIRS = REGISTRY.itemTagModded("chairs");
-		public static final ITag.INamedTag<Item> CUSHIONS = REGISTRY.itemTagModded("cushions");
-		public static final ITag.INamedTag<Item> STOOLS = REGISTRY.itemTagModded("stools");
-		public static final ITag.INamedTag<Item> SOFAS = REGISTRY.itemTagModded("sofas");
+		public static final ITag.INamedTag<Item> SEATS = REGISTRY.moddedItemTag("seats");
+		public static final ITag.INamedTag<Item> BENCHES = REGISTRY.moddedItemTag("benches");
+		public static final ITag.INamedTag<Item> CHAIRS = REGISTRY.moddedItemTag("chairs");
+		public static final ITag.INamedTag<Item> CUSHIONS = REGISTRY.moddedItemTag("cushions");
+		public static final ITag.INamedTag<Item> STOOLS = REGISTRY.moddedItemTag("stools");
+		public static final ITag.INamedTag<Item> SOFAS = REGISTRY.moddedItemTag("sofas");
 
-		public static final ITag.INamedTag<Item> CHESTS = REGISTRY.itemTagModded("chests");
-		public static final ITag.INamedTag<Item> CHESTS_WOODEN = REGISTRY.itemTagModded("chests/wooden");
+		public static final ITag.INamedTag<Item> CHESTS = REGISTRY.moddedItemTag("chests");
+		public static final ITag.INamedTag<Item> CHESTS_WOODEN = REGISTRY.moddedItemTag("chests/wooden");
 
-		public static final ITag.INamedTag<Item> TABLES_LARGE = REGISTRY.itemTagModded("tables/large");
-		public static final ITag.INamedTag<Item> TABLES_LONG = REGISTRY.itemTagModded("tables/long");
-		public static final ITag.INamedTag<Item> TABLES_SMALL = REGISTRY.itemTagModded("tables/small");
-		public static final ITag.INamedTag<Item> TABLES_WIDE = REGISTRY.itemTagModded("tables/wide");
-		public static final ITag.INamedTag<Item> TABLES = REGISTRY.itemTagModded("tables");
+		public static final ITag.INamedTag<Item> TABLES_LARGE = REGISTRY.moddedItemTag("tables/large");
+		public static final ITag.INamedTag<Item> TABLES_LONG = REGISTRY.moddedItemTag("tables/long");
+		public static final ITag.INamedTag<Item> TABLES_SMALL = REGISTRY.moddedItemTag("tables/small");
+		public static final ITag.INamedTag<Item> TABLES_WIDE = REGISTRY.moddedItemTag("tables/wide");
+		public static final ITag.INamedTag<Item> TABLES = REGISTRY.moddedItemTag("tables");
 
 		private static void bootstrap()
 		{
