@@ -25,4 +25,5 @@ run
 forge*changelog.txt
 
 # Ignore generated data files
+accesstransformer.cfg
 src/generated

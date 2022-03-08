@@ -1,10 +1,8 @@
-import java.util.function.BiConsumer
-
 buildscript {
 	repositories {
-		maven { url = 'https://maven.minecraftforge.net' }
-		maven { url = 'https://maven.parchmentmc.org' }
-		maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+		maven { url 'https://maven.minecraftforge.net' }
+		maven { url 'https://maven.parchmentmc.org' }
+		maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
@@ -36,147 +34,70 @@ configurations {
 }
 
 minecraft {
-	if(findProject(':Registrator')) {
-		evaluationDependsOn(':Registrator')
-	}
-	if(findProject(':ApexCore')) {
-		evaluationDependsOn(':ApexCore')
-	}
-
 	mappings channel: "${mappings_channel}", version: "${mappings_version}"
-	accessTransformer = rootProject.file('accesstransformer.cfg')
+	accessTransformer = file('accesstransformer.cfg')
 
 	runs {
-		if(rootProject.name == project.name) {
-			client {
-				taskName 'Client'
-				workingDirectory rootProject.file('run/client')
-				// property 'forge.logging.markers', 'REGISTRIES'
-				// property 'forge.logging.console.level', 'debug'
-				property 'fml.earlyprogresswindow', 'false'
+		client {
+			taskName 'Client'
+			workingDirectory file('run/client')
+			// property 'forge.logging.markers', 'REGISTRIES'
+			// property 'forge.logging.console.level', 'debug'
+			property 'fml.earlyprogresswindow', 'false'
 
-				mods {
-					"${mod_id}" {
-						source sourceSets.main
-					}
-
-					if(findProject(':Registrator')) {
-						Registrator {
-							source project(':Registrator').sourceSets.main
-						}
-					}
-
-					if(findProject(':ApexCore')) {
-						ApexCore {
-							source project(':ApexCore').sourceSets.main
-						}
-					}
+			mods {
+				"${mod_id}" {
+					source sourceSets.main
 				}
 			}
+		}
 
-			if(project.hasProperty('mc_uuid') & project.hasProperty('mc_username')) {
-				clientAuthed {
-					parent runs.client
-					taskName 'Client-Authed'
-					args '--uuid', project.getProperty('mc_uuid'), '--username', project.getProperty('mc_username')
-				}
+		if(project.hasProperty('mc_uuid') & project.hasProperty('mc_username')) {
+			clientAuthed {
+				parent runs.client
+				taskName 'Client-Authed'
+				args '--uuid', project.getProperty('mc_uuid'), '--username', project.getProperty('mc_username')
 			}
+		}
 
-			server {
-				taskName 'Server'
-				workingDirectory rootProject.file('run/server')
-				// property 'forge.logging.markers', 'REGISTRIES'
-				// property 'forge.logging.console.level', 'debug'
-				property 'fml.earlyprogresswindow', 'false'
-				args 'nogui'
+		server {
+			taskName 'Server'
+			workingDirectory file('run/server')
+			// property 'forge.logging.markers', 'REGISTRIES'
+			// property 'forge.logging.console.level', 'debug'
+			property 'fml.earlyprogresswindow', 'false'
+			args 'nogui'
 
-				mods {
-					"${mod_id}" {
-						source sourceSets.main
-					}
-
-					if(findProject(':Registrator')) {
-						Registrator {
-							source project(':Registrator').sourceSets.main
-						}
-					}
-
-					if(findProject(':ApexCore')) {
-						ApexCore {
-							source project(':ApexCore').sourceSets.main
-						}
-					}
+			mods {
+				"${mod_id}" {
+					source sourceSets.main
 				}
 			}
 		}
 
 		data {
 			taskName 'Data'
-			workingDirectory rootProject.file('run/client')
+			workingDirectory file('run/client')
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--client', '--server', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+			args '--mod', mod_id, '--client', '--server', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', registrator_mod_id, '--existing-mod', apexcore_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
 
-			if(rootProject.name != project.name) {
-				ideaModule "${rootProject.name}.${project.name}.main"
-			}
-
-			if(findProject(':Registrator')) {
-				args '--existing', project(':Registrator').file('stc/main/resources')
-			} else {
-				args '--existing-mod', registrator_mod_id
-			}
-
-			if(findProject(':ApexCore')) {
-				args '--existing', project(':ApexCore').file('stc/main/resources')
-			} else {
-				args '--existing-mod', apexcore_mod_id
-			}
-
 			mods {
 				"${mod_id}" {
 					source sourceSets.main
-				}
-
-				if(findProject(':Registrator')) {
-					Registrator {
-						source project(':Registrator').sourceSets.main
-					}
-				}
-
-				if(findProject(':ApexCore')) {
-					ApexCore {
-						source project(':ApexCore').sourceSets.main
-					}
 				}
 			}
 		}
 	}
 }
 
-def setupModMixins(String name, BiConsumer<Project, String> consumer) {
-	if(findProject(":${name}")) {
-		def modProject = project(":${name}")
-		def modProject_modId = modProject.property('mod_id')
-		consumer.accept(modProject, modProject_modId)
-	}
-}
-
 mixin {
 	add sourceSets.main, "${mod_id}.refmap.json"
 	config "${mod_id}.mixins.json"
-
-	BiConsumer<Project, String> consumer = (a, b) -> {
-		add a.sourceSets.main, "${b}.refmap.json"
-		config "${b}.mixins.json"
-	}
-
-	setupModMixins('Registrator', consumer)
-	setupModMixins('ApexCore', consumer)
 
 	/*debug = true
 	debug.export = true
@@ -202,27 +123,22 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
+	// CTM for 1.16.1 works for 1.16.5 (there is no 1.16.5 specific release)
+	runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC1.16.1-${ctm_version}")
+	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC${mc_version}-${ctm_version}")
+
 	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
 
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
-	if(findProject(':Registrator')) {
-		implementation project(':Registrator')
-	} else {
-		implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
-	}
-
-	if(findProject(':ApexCore')) {
-		implementation project(':ApexCore')
-	} else {
-		implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
-	}
+	implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
+	implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
 }
 
 def resourceTargets = [ 'META-INF/mods.toml', 'pack.mcmeta', "${mod_id}.mixins.json".toString() ]
-def intoTargets = [ "${rootDir}/out/production/resources/", "${rootDir}/out/production/${project.name}.main/", "${rootDir}/bin/main/" ]
+def intoTargets = [ "${projectDir}/out/production/resources/", "${projectDir}/out/production/${project.name}.main/", "${projectDir}/bin/main/" ]
 def replaceProperties = project.properties
 
 processResources {
@@ -285,7 +201,7 @@ artifacts {
 }
 
 tasks.withType(Jar) {
-	from(rootProject.file('accesstransformer.cfg')) {
+	from(file('accesstransformer.cfg')) {
 		into '/META-INF'
 	}
 
