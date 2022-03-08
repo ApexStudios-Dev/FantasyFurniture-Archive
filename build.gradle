@@ -16,7 +16,6 @@ buildscript {
 
 plugins {
 	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
-	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -248,6 +247,7 @@ processResources {
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier 'sources'
 	from sourceSets.main.allJava
+	from sourceSets.main.resources
 }
 
 task deobfJar(type: Jar) {
@@ -332,28 +332,6 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 					username System.getenv('APEX_MODS_MAVEN_USERNAME')
 					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
-			}
-		}
-	}
-}
-
-if(System.getenv('CURSEFORGE_TOKEN') != null) {
-	curseforge {
-		apiKey = System.getenv('CURSEFORGE_TOKEN')
-
-		project {
-			id = "${mod_curseforge_id}"
-			releaseType = 'release'
-			addGameVersion "${minecraft_version}"
-
-			mainArtifact shadowJar
-			addArtifact jar
-			addArtifact deobfJar
-			addArtifact sourcesJar
-
-			relations {
-				requiredDependency 'registrator'
-				requiredDependency 'apexcore'
 			}
 		}
 	}
