@@ -59,3 +59,12 @@ issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 	[dependencies.${mod_id}.custom.mc-publish]
 		ignore=false
 		curseforge="${jei_mod_id}"
+[[dependencies.${mod_id}]]
+	modId="${ctm_mod_id}"
+	mandatory=false
+	versionRange="*" # ctm versions are funky, just allow all versions
+	ordering="AFTER"
+	side="BOTH"
+	[dependencies.${mod_id}.custom.mc-publish]
+		ignore=false
+		curseforge="${ctm_mod_id}"
