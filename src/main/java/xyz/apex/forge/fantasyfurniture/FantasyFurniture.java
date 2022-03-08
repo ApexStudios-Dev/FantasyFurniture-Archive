@@ -17,8 +17,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-import xyz.apex.forge.apexcore.lib.util.ForgeEventBusHelper;
-import xyz.apex.forge.apexcore.lib.util.ModEventBusHelper;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.init.FFBlocks;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.java.utility.nullness.NonnullPredicate;
@@ -41,8 +40,8 @@ public final class FantasyFurniture
 	{
 		FFRegistry.bootstrap();
 
-		ForgeEventBusHelper.addListener(EventPriority.HIGH, this::onVillagerTrades);
-		ModEventBusHelper.addEnqueuedListener(this::onCommonSetup);
+		EventBusHelper.addListener(EventPriority.HIGH, this::onVillagerTrades);
+		EventBusHelper.addEnqueuedListener(this::onCommonSetup);
 
 		// Debug code, spawns seat & sits player in it
 		// at block they right clicked (with empty hand)
