@@ -18,7 +18,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BedPart;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.TileEntityMerger;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +36,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: Should maybe be moved into ApexCore
 // Copy of BedBlock but not using BlockEntities
 public class BaseBedBlock extends HorizontalBlock
 {
@@ -112,7 +110,6 @@ public class BaseBedBlock extends HorizontalBlock
 		}
 	}
 
-	// TODO: Remove
 	public static boolean canSetSpawn(World level)
 	{
 		return BedBlock.canSetSpawn(level);
@@ -215,17 +212,9 @@ public class BaseBedBlock extends HorizontalBlock
 		}
 	}
 
-	// TODO: Remove
 	public static Direction getConnectedDirection(BlockState blockState)
 	{
 		return BedBlock.getConnectedDirection(blockState);
-	}
-
-	// TODO: Remove
-	@OnlyIn(Dist.CLIENT)
-	public static TileEntityMerger.Type getBlockType(BlockState blockState)
-	{
-		return BedBlock.getBlockType(blockState);
 	}
 
 	private static boolean isBunkBed(IBlockReader level, BlockPos pos)
