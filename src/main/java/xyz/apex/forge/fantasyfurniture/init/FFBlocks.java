@@ -62,6 +62,8 @@ public final class FFBlocks
 	public static final BlockEntry<NordicTableSmall> NORDIC_TABLE_SMALL = tableSmall("nordic", NordicTableSmall::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<BaseCarpetBlock> NORDIC_CARPET = carpet("nordic", BaseCarpetBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 
 	// WIP
 	public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -438,6 +440,55 @@ public final class FFBlocks
 								.build();
 					}))
 					.tag(FFTags.Blocks.SOFAS)
+		;
+	}
+
+	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> wool(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		String internalName = type + "/wool";
+		String englishName = RegistrateLangProvider.toEnglishName(internalName.replace('/', '_'));
+		String location = REGISTRY.idString("block/" + internalName);
+
+		return REGISTRY
+				.block(internalName, blockFactory)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+					.initialProperties(Material.WOOL, MaterialColor.WOOL)
+					.sound(SoundType.WOOL)
+					.strength(.8F)
+
+					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().cubeAll(location, new ResourceLocation(location))))
+					.tag(FFTags.Blocks.WOOLS)
+
+					.item()
+						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), location))
+						.tag(FFTags.Items.WOOLS)
+					.build()
+		;
+	}
+
+	private static <BLOCK extends BaseCarpetBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> carpet(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		String internalName = type + "/carpet";
+		String englishName = RegistrateLangProvider.toEnglishName(internalName.replace('/', '_'));
+		ResourceLocation locationWool = REGISTRY.id("block/" + type + "/wool");
+		String location = REGISTRY.idString("block/" + internalName);
+
+		return REGISTRY
+				.block(internalName, blockFactory)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+					.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
+					.sound(SoundType.WOOL)
+					.strength(.1F)
+
+					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
+					.tag(FFTags.Blocks.CARPETS)
+
+					.item()
+						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), location))
+						.tag(FFTags.Items.CARPETS)
+					.build()
 		;
 	}
 

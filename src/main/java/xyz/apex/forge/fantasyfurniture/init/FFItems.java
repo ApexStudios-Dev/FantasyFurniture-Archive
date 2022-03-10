@@ -29,6 +29,8 @@ public final class FFItems
 	public static final ItemEntry<BlockItem> NORDIC_TABLE_WIDE = fromBlock(FFBlocks.NORDIC_TABLE_WIDE);
 	public static final ItemEntry<BlockItem> NORDIC_WALL_LIGHT = fromBlock(FFBlocks.NORDIC_WALL_LIGHT);
 	public static final ItemEntry<BlockItem> NORDIC_WARDROBE = fromBlock(FFBlocks.NORDIC_WARDROBE);
+	public static final ItemEntry<BlockItem> NORDIC_WOOL = fromBlock(FFBlocks.NORDIC_WOOL);
+	public static final ItemEntry<BlockItem> NORDIC_CARPET = fromBlock(FFBlocks.NORDIC_CARPET);
 
 	public static final ItemEntry<BlockItem> BERRY_BASKET = fromBlock(FFBlocks.BERRY_BASKET);
 

@@ -7,6 +7,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 
+import xyz.apex.forge.apexcore.core.init.ACTags;
+
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.BLOCK_ENTITY_TAGS_PROVIDER;
 import static com.tterrag.registrate.providers.ProviderType.*;
 
@@ -35,6 +37,8 @@ public final class FFTags
 		public static final ITag.INamedTag<Block> SHELVES = REGISTRY.moddedBlockTag("shelves");
 		public static final ITag.INamedTag<Block> TORCHES = REGISTRY.moddedBlockTag("torches");
 		public static final ITag.INamedTag<Block> WARDROBES = REGISTRY.moddedBlockTag("wardrobes");
+		public static final ITag.INamedTag<Block> CARPETS = REGISTRY.moddedBlockTag("carpets");
+		public static final ITag.INamedTag<Block> WOOLS = REGISTRY.moddedBlockTag("wools");
 
 		public static final ITag.INamedTag<Block> BEDS = REGISTRY.moddedBlockTag("beds");
 		public static final ITag.INamedTag<Block> BEDS_SINGLE = REGISTRY.moddedBlockTag("beds/single");
@@ -69,6 +73,13 @@ public final class FFTags
 				provider.tag(SHELVES);
 				provider.tag(TORCHES);
 				provider.tag(WARDROBES);
+
+				provider.tag(WOOLS);
+				provider.tag(ACTags.Blocks.WOOLS).addTags(WOOLS);
+				provider.tag(BlockTags.WOOL).addTags(WOOLS);
+
+				provider.tag(CARPETS);
+				provider.tag(BlockTags.CARPETS).addTags(CARPETS);
 
 				provider.tag(BEDS_SINGLE);
 				provider.tag(BEDS_DOUBLE);
@@ -108,6 +119,8 @@ public final class FFTags
 		public static final ITag.INamedTag<Item> SHELVES = REGISTRY.moddedItemTag("shelves");
 		public static final ITag.INamedTag<Item> TORCHES = REGISTRY.moddedItemTag("torches");
 		public static final ITag.INamedTag<Item> WARDROBES = REGISTRY.moddedItemTag("wardrobes");
+		public static final ITag.INamedTag<Item> CARPETS = REGISTRY.moddedItemTag("carpets");
+		public static final ITag.INamedTag<Item> WOOLS = REGISTRY.moddedItemTag("wools");
 
 		public static final ITag.INamedTag<Item> BEDS = REGISTRY.moddedItemTag("beds");
 		public static final ITag.INamedTag<Item> BEDS_SINGLE = REGISTRY.moddedItemTag("beds/single");
@@ -141,6 +154,13 @@ public final class FFTags
 				provider.tag(SHELVES);
 				provider.tag(TORCHES);
 				provider.tag(WARDROBES);
+
+				provider.tag(CARPETS);
+				provider.tag(ItemTags.CARPETS).addTags(CARPETS);
+
+				provider.tag(WOOLS);
+				provider.tag(ACTags.Items.WOOLS).addTags(WOOLS);
+				provider.tag(ItemTags.WOOL).addTags(CARPETS);
 
 				provider.tag(BOOKSHELVES);
 				provider.tag(Tags.Items.BOOKSHELVES).addTags(BOOKSHELVES);
