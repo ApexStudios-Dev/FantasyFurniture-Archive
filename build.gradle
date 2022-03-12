@@ -110,7 +110,6 @@ sourceSets.main.resources {
 
 repositories {
 	mavenCentral()
-	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://apexmodder.jfrog.io/artifactory/mods-maven/' }
@@ -133,8 +132,10 @@ dependencies {
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
-	implementation fg.deobf("xyz.apex.forge.utility:registrator:${minecraft_version}-${registrator_version}:deobf")
-	implementation fg.deobf("xyz.apex.forge:apexcore:${minecraft_version}-${apexcore_version}:deobf")
+	runtimeOnly fg.deobf("xyz.apex.forge.utility:${devworld_mod_id}:${minecraft_version}-${devworld_version}:deobf")
+	runtimeOnly fg.deobf("xyz.apex.forge.utility:${smoothboot_mod_id}:${minecraft_version}-${smoothboot_version}:deobf")
+	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
+	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
 }
 
 def resourceTargets = [ 'META-INF/mods.toml', '**/*.mcmeta', "${mod_id}.mixins.json".toString() ]
