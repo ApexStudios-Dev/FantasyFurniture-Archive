@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+// TODO: Figure out why survival doesnt break partner side
 public class BaseBedBlockDouble extends BaseBedBlock
 {
 	public static final EnumProperty<BedSide> BED_SIDE = EnumProperty.create("bed_side", BedSide.class);

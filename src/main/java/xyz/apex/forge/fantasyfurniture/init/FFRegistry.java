@@ -37,6 +37,7 @@ public final class FFRegistry extends AbstractRegistrator<FFRegistry>
 		FFItems.bootstrap();
 		FFBlockEntities.bootstrap();
 		FFEntities.bootstrap();
+		FFContainers.bootstrap();
 		FFTags.bootstrap();
 
 		FFItemGroupCategories.bootstrap();

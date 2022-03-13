@@ -33,6 +33,7 @@ import net.minecraftforge.event.RegistryEvent;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
 import xyz.apex.forge.fantasyfurniture.block.decorations.BerryBasketBlock;
+import xyz.apex.forge.fantasyfurniture.block.entity.DrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.utility.registrator.builder.BlockBuilder;
 import xyz.apex.forge.utility.registrator.builder.ItemBuilder;
@@ -45,6 +46,16 @@ import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PR
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
+/*
+ * TODO: Look into using this system for multi blocks
+ *  Credit goes to `50ap5ud5#8701` from Forge Discord
+ *
+ * https://gitlab.com/Spectre0987/TardisMod-1-14/-/blob/1.16/src/main/java/net/tardis/mod/blocks/MultiblockBlock.java
+ * https://gitlab.com/Spectre0987/TardisMod-1-14/-/blob/1.16/src/main/java/net/tardis/mod/tileentities/MultiblockTile.java
+ * https://gitlab.com/Spectre0987/TardisMod-1-14/-/blob/1.16/src/main/java/net/tardis/mod/items/MultiblockBlockItem.java
+ * https://gitlab.com/Spectre0987/TardisMod-1-14/-/blob/1.16/src/main/java/net/tardis/mod/tileentities/MultiblockMasterTile.java
+ * https://gitlab.com/Spectre0987/TardisMod-1-14/-/blob/1.16/src/main/java/net/tardis/mod/blocks/multiblock/MultiblockPatterns.java
+ */
 public final class FFBlocks
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
@@ -64,12 +75,12 @@ public final class FFBlocks
 	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<BaseCarpetBlock> NORDIC_CARPET = carpet("nordic", BaseCarpetBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicDrawerBlock> NORDIC_DRAWER = drawer("nordic", NordicDrawerBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 
 	// WIP
 	// public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_BOOKSHELF = bookShelf("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_CHEST = chest("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	// public static final BlockEntry<Block> NORDIC_DESK = desk("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -129,7 +140,7 @@ public final class FFBlocks
 
 		ItemBuilder<FFRegistry, ITEM, BlockBuilder<FFRegistry, BLOCK, FFRegistry>> itemBuilder = blockBuilder
 				.item(itemFactory)
-					.stacksTo(1)
+					// .stacksTo(1)
 					.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), modelLocation))
 					.tag(itemTag)
 		;
@@ -255,7 +266,7 @@ public final class FFBlocks
 		;
 	}*/
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> drawer(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends SimpleFourWayBlockEntityBlock<DrawerBlockEntity>> BlockBuilder<FFRegistry, BLOCK, FFRegistry> drawer(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, "drawer", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.DRAWERS))
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
@@ -263,9 +274,11 @@ public final class FFBlocks
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "chest", 0))
+					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "drawer", 180))
 					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseSeatDoubleBlock.HALF, DoubleBlockHalf.LOWER)))
 					.tag(FFTags.Blocks.DRAWERS)
+
+					.simpleBlockEntity(DrawerBlockEntity::new)
 		;
 	}
 
