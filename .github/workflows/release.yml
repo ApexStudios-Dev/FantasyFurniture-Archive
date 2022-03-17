@@ -86,7 +86,13 @@ jobs:
       # Build package
       - run: ./gradlew build
 
-      # Publish to GitHub Packages
+      # Upload artifacts to GitHub Actions
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./build/libs
+
+      # Publish to Maven
       - run: ./gradlew publish
         env:
           APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}

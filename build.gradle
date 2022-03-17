@@ -224,6 +224,9 @@ reobf {
 	shadowJar { }
 }
 
+build.dependsOn shadowJar
+build.dependsOn reobfShadowJar
+
 jar.finalizedBy('reobfJar')
 
 if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
