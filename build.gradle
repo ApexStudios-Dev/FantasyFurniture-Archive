@@ -261,7 +261,7 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 
 if(System.getenv('CURSEFORGE_TOKEN') != null) {
 	curseforge {
-		apikey = System.getenv('CURSEFORGE_TOKEN')
+		apiKey = System.getenv('CURSEFORGE_TOKEN')
 
 		project {
 			id = "${mod_curseforge_id}"
