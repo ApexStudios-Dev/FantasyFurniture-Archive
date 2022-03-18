@@ -302,8 +302,8 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		gameVersions = [ "${minecraft_version}" ]
 		loaders = [ 'forge' ]
 		dependencies = [
-				new ModDependency("${registrator_mod_id}", 'required'),
-				new ModDependency("${apexcore_mod_id}", 'required')
+				new ModDependency("${registrator_modrinth_slug}", 'required'),
+				new ModDependency("${apexcore_modrinth_slug}", 'required')
 		]
 	}
 }*/
