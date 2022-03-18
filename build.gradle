@@ -295,6 +295,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		token = System.getenv('MODRINTH_TOKEN')
 		projectId = "${mod_modrinth_id}"
 		versionNumber = "${mod_version}"
+		versionName = "${mod_name}-${minecraft_version}-${mod_version}"
 		versionType = "${mod_release_type}"
 		uploadFile = shadowJar
 		additionalFiles = [ jar, sourcesJar, deobfJar ]
