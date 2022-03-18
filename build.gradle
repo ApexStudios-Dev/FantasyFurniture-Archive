@@ -14,6 +14,8 @@ buildscript {
 
 plugins {
 	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
+	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+	id 'com.modrinth.minotaur' version "${minotaur_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -254,5 +256,54 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 				}
 			}
 		}
+	}
+}
+
+if(System.getenv('CURSEFORGE_TOKEN') != null) {
+	curseforge {
+		apikey = System.getenv('CURSEFORGE_TOKEN')
+
+		project {
+			id = "${mod_curseforge_id}"
+			releaseType = "${mod_release_type}"
+			addGameVersion "${minecraft_version}"
+
+			relations {
+				requiredDependency "${registrator_mod_id}"
+				requiredDependency "${apexcore_mod_id}"
+				optionalDependency "${jei_mod_id}"
+				optionalDependency "${ctm_mod_id}"
+			}
+
+			mainArtifact shadowJar
+			addArtifact jar
+			addArtifact sourcesJar
+			addArtifact deobfJar
+		}
+
+		options {
+			debug = true
+			detectNewerJava = true
+		}
+	}
+}
+
+import com.modrinth.minotaur.dependencies.ModDependency
+
+if(System.getenv('MODRINTH_TOKEN') != null) {
+	modrinth {
+		token = System.getenv('MODRINTH_TOKEN')
+		projectId = "${mod_modrinth_id}"
+		versionNumber = "${mod_version}"
+		versionType = "${mod_release_type}"
+		uploadFile = shadowJar
+		additionalFiles = [ jar, sourcesJar, deobfJar ]
+		gameVersions = [ "${minecraft_version}" ]
+		loaders = [ 'forge' ]
+		dependencies = [
+				new ModDependency("${registrator_mod_id}", 'required'),
+				new ModDependency("${apexcore_mod_id}", 'required')
+		]
+		debugMode = true
 	}
 }

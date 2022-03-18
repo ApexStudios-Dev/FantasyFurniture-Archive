@@ -20,67 +20,45 @@ issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 	versionRange="${forge_version_range}"
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=true
 [[dependencies.${mod_id}]]
 	modId="minecraft"
 	mandatory=true
 	versionRange="${minecraft_version_range}"
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=true
 [[dependencies.${mod_id}]]
     modId="${devworld_mod_id}"
     mandatory=false
     versionRange="${devworld_version_range}"
     ordering="AFTER"
     side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=true
 [[dependencies.${mod_id}]]
     modId="${smoothboot_mod_id}"
     mandatory=false
     versionRange="${smoothboot_version_range}"
     ordering="AFTER"
     side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=true
 [[dependencies.${mod_id}]]
 	modId="${registrator_mod_id}"
 	mandatory=true
 	versionRange="${registrator_version_range}"
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=false
-		modrinth="${registrator_mod_id}"
-		curseforge="${registrator_mod_id}"
 [[dependencies.${mod_id}]]
 	modId="${apexcore_mod_id}"
 	mandatory=true
 	versionRange="${apexcore_version_range}"
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=false
-		modrinth="${apexcore_mod_id}"
-		curseforge="${apexcore_mod_id}"
 [[dependencies.${mod_id}]]
 	modId="${jei_mod_id}"
 	mandatory=false
 	versionRange="${jei_version_range}"
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=false
-		curseforge="${jei_mod_id}"
 [[dependencies.${mod_id}]]
 	modId="${ctm_mod_id}"
 	mandatory=false
 	versionRange="*" # ctm versions are funky, just allow all versions
 	ordering="AFTER"
 	side="BOTH"
-	[dependencies.${mod_id}.custom.mc-publish]
-		ignore=false
-		curseforge="${ctm_mod_id}"
