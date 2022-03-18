@@ -14,8 +14,8 @@ buildscript {
 
 plugins {
 	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
-	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-	id 'com.modrinth.minotaur' version "${minotaur_version}"
+	// id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+	// id 'com.modrinth.minotaur' version "${minotaur_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -259,7 +259,7 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 	}
 }
 
-if(System.getenv('CURSEFORGE_TOKEN') != null) {
+/*if(System.getenv('CURSEFORGE_TOKEN') != null) {
 	curseforge {
 		apiKey = System.getenv('CURSEFORGE_TOKEN')
 
@@ -282,12 +282,12 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 		}
 
 		options {
-			debug = true
 			detectNewerJava = true
 		}
 	}
-}
+}*/
 
+/*
 import com.modrinth.minotaur.dependencies.ModDependency
 
 if(System.getenv('MODRINTH_TOKEN') != null) {
@@ -304,6 +304,5 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 				new ModDependency("${registrator_mod_id}", 'required'),
 				new ModDependency("${apexcore_mod_id}", 'required')
 		]
-		debugMode = true
 	}
-}
+}*/
