@@ -72,24 +72,3 @@ jobs:
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
-          if [ -d ./build/_applyBinpatches_2/ ]; then rm -r ./build/_applyBinpatches_2/; fi
-          if [ -d ./build/tmp/sourcesJar/ ]; then rm -r ./build/tmp/sourcesJar/; fi
-          if [ -d ./build/_applyBinpatches_3/ ]; then rm -r ./build/_applyBinpatches_3/; fi
-          if [ -d ./build/_atJar_5/ ]; then rm -r ./build/_atJar_5/; fi
-          if [ -d ./build/_RenameSrg2Mcp_*/ ]; then rm -r ./build/_RenameSrg2Mcp_*/; fi
-          if [ -d ./build/classes/ ]; then rm -r ./build/classes/; fi
-          if [ -d ./build/downloadMCMeta/ ]; then rm -r ./build/downloadMCMeta/; fi
-          if [ -d ./build/downloadMcpConfig/ ]; then rm -r ./build/downloadMcpConfig/; fi
-          if [ -d ./build/generated/ ]; then rm -r ./build/generated/; fi
-          if [ -d ./build/libs/ ]; then rm -r ./build/libs/; fi
-          if [ -d ./build/natives/ ]; then rm -r ./build/natives/; fi
-          if [ -d ./build/reobfJar/ ]; then rm -r ./build/reobfJar/; fi
-          if [ -d ./build/reobfShadowJar/ ]; then rm -r ./build/reobfShadowJar/; fi
-          if [ -d ./build/resources/ ]; then rm -r ./build/resources/; fi
-          if [ -d ./build/tmp/_compileJava_2/ ]; then rm -r ./build/tmp/_compileJava_2/; fi
-          if [ -d ./build/tmp/_compileJava_4/ ]; then rm -r ./build/tmp/_compileJava_4/; fi
-          if [ -d ./build/tmp/compileJava/ ]; then rm -r ./build/tmp/compileJava/; fi
-          if [ -d ./build/tmp/deobfJar/ ]; then rm -r ./build/tmp/deobfJar/; fi
-          if [ -d ./build/tmp/jar/ ]; then rm -r ./build/tmp/jar/; fi
-          if [ -d ./build/tmp/reobfJar/ ]; then rm -r ./build/tmp/reobfJar/; fi
-          if [ -d ./build/tmp/shadowJar/ ]; then rm -r ./build/tmp/shadowJar/; fi
