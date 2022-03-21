@@ -30,6 +30,7 @@ import net.minecraft.village.PointOfInterestType;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.event.RegistryEvent;
 
+import xyz.apex.forge.apexcore.lib.multiblock.*;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.*;
 import xyz.apex.forge.fantasyfurniture.block.decorations.BerryBasketBlock;
@@ -60,6 +61,23 @@ public final class FFBlocks
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 
+	public static final MultiBlockPattern PATTERN_1X2 = MultiBlockPattern
+			.builder()
+				.layer("##")
+
+				.setSpacesFor4Way()
+				.placeSoundPerBlock()
+			.build();
+
+	public static final MultiBlockPattern PATTERN_2X2 = MultiBlockPattern
+			.builder()
+				.layer("##")
+				.layer("##")
+
+				.setSpacesFor4Way()
+				.placeSoundPerBlock()
+			.build();
+
 	// region: Nordic
 	public static final BlockEntry<NordicBedDoubleBlock> NORDIC_BED_DOUBLE = bedDouble("nordic", NordicBedDoubleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicBedSingleBlock> NORDIC_BED_SINGLE = bedSingle("nordic", NordicBedSingleBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -71,11 +89,13 @@ public final class FFBlocks
 	public static final BlockEntry<NordicStoolBlock> NORDIC_STOOL = stool("nordic", NordicStoolBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicSofaBlock> NORDIC_SOFA = sofa("nordic", NordicSofaBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicTableSmall> NORDIC_TABLE_SMALL = tableSmall("nordic", NordicTableSmall::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicTableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", PATTERN_1X2, NordicTableWideBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicWallLight> NORDIC_WALL_LIGHT = wallLight("nordic", NordicWallLight::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<BaseCarpetBlock> NORDIC_CARPET = carpet("nordic", BaseCarpetBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	public static final BlockEntry<NordicDrawerBlock> NORDIC_DRAWER = drawer("nordic", NordicDrawerBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicWardrobeBlock> NORDIC_WARDROBE = wardrobe("nordic", PATTERN_2X2, NordicWardrobeBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
+	public static final BlockEntry<NordicWardrobeTopperBlock> NORDIC_WARDROBE_TOPPER = wardrobeTopper("nordic", PATTERN_1X2, NordicWardrobeTopperBlock::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 
 	// WIP
 	// public static final BlockEntry<Block> NORDIC_BENCH = bench("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
@@ -84,7 +104,6 @@ public final class FFBlocks
 	// public static final BlockEntry<Block> NORDIC_DRAWER = drawer("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_TABLE_LARGE = tableLarge("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// public static final BlockEntry<Block> NORDIC_TABLE_LONG = tableLong("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
-	// public static final BlockEntry<Block> NORDIC_WARDROBE = wardrobe("nordic", Block::new, FFTags.Blocks.NORDIC, FFTags.Items.NORDIC).register();
 	// endregion
 
 	// region: Decorations
@@ -153,6 +172,44 @@ public final class FFBlocks
 	private static <BLOCK extends Block, ITEM extends BlockItem> BlockBuilder<FFRegistry, BLOCK, FFRegistry> baseTypedBlock(String type, String blockType, BlockFactory<BLOCK> blockFactory, BlockItemFactory<BLOCK, ITEM> itemFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
 		return baseTypedBlock(type, blockType, blockFactory, itemFactory, blockTag, itemTag, NonnullUnaryOperator.identity());
+	}
+
+	private static <BLOCK extends MultiBlock, ITEM extends BlockItem> MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> baseTypedMultiBlock(String type, String blockType, MultiBlockPattern pattern, MultiBlockFactory<BLOCK> blockFactory, BlockItemFactory<BLOCK, ITEM> itemFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag, NonnullUnaryOperator<ItemBuilder<FFRegistry, ITEM, MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry>>> itemModifier)
+	{
+		String internalName = type + '/' + blockType;
+		String englishName = RegistrateLangProvider.toEnglishName(internalName.replace('/', '_'));
+		ResourceLocation modelLocation = REGISTRY.id("block/" + internalName);
+
+		MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> blockBuilder = REGISTRY
+				.multiBlock(internalName, blockFactory, pattern)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+					.initialProperties(Material.WOOD, MaterialColor.WOOD)
+					.sound(SoundType.WOOD)
+					.strength(2F, 3F)
+
+					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(modelLocation)))
+					.tag(blockTag)
+					.addRenderType(() -> RenderType::cutout)
+
+					.mapping("1.16.5", internalName.replace('/', '_'), RegistryEvent.MissingMappings.Action.REMAP)
+		;
+
+		ItemBuilder<FFRegistry, ITEM, MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry>> itemBuilder = blockBuilder
+				.item(itemFactory)
+					// .stacksTo(1)
+					.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), modelLocation))
+					.tag(itemTag)
+		;
+
+		itemBuilder = itemModifier.apply(itemBuilder);
+		blockBuilder = itemBuilder.build();
+		return blockBuilder;
+	}
+
+	private static <BLOCK extends MultiBlock, ITEM extends BlockItem> MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> baseTypedMultiBlock(String type, String blockType, MultiBlockPattern pattern, MultiBlockFactory<BLOCK> blockFactory, BlockItemFactory<BLOCK, ITEM> itemFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return baseTypedMultiBlock(type, blockType, pattern, blockFactory, itemFactory, blockTag, itemTag, NonnullUnaryOperator.identity());
 	}
 
 	private static <BLOCK extends BaseBedBlockDouble> BlockBuilder<FFRegistry, BLOCK, FFRegistry> bedDouble(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
@@ -389,16 +446,16 @@ public final class FFBlocks
 		;
 	}
 
-	private static <BLOCK extends BaseTableWideBlock> BlockBuilder<FFRegistry, BLOCK, FFRegistry> tableWide(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseTableWideBlock> MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> tableWide(String type, MultiBlockPattern pattern, MultiBlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
-		return baseTypedBlock(type, "table_wide", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.TABLES_WIDE))
+		return baseTypedMultiBlock(type, "table_wide", pattern, blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.TABLES_WIDE))
 					.initialProperties(Material.WOOD, MaterialColor.WOOL)
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "table_wide", 90))
-					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
+					.blockState((ctx, provider) -> horizontalMultiBlockState(ctx, provider, type, "table_wide", 180))
+					// .loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.TABLES_WIDE)
 		;
 	}
@@ -417,17 +474,31 @@ public final class FFBlocks
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<FFRegistry, BLOCK, FFRegistry> wardrobe(String type, BlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	private static <BLOCK extends BaseWardrobeBlock> MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> wardrobe(String type, MultiBlockPattern pattern, MultiBlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
 	{
-		return baseTypedBlock(type, "wardrobe", blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.WARDROBES))
-					.initialProperties(Material.WOOD, MaterialColor.WOOL)
+		return baseTypedMultiBlock(type, "wardrobe", pattern, blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.WARDROBES))
+					.initialProperties(Material.WOOD, MaterialColor.WOOD)
 					.sound(SoundType.WOOD)
 					.strength(2F, 3F)
 					.noOcclusion()
 
-					// .blockState((ctx, provider) -> horizontalBlockState(ctx, provider, type, "table_wide", 0))
+					.blockState((ctx, provider) -> horizontalMultiBlockState(ctx, provider, type, "wardrobe", 180))
 					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
 					.tag(FFTags.Blocks.WARDROBES)
+		;
+	}
+
+	private static <BLOCK extends BaseWardrobeTopperBlock> MultiBlockBuilder<FFRegistry, BLOCK, FFRegistry> wardrobeTopper(String type, MultiBlockPattern pattern, MultiBlockFactory<BLOCK> blockFactory, ITag.INamedTag<Block> blockTag, ITag.INamedTag<Item> itemTag)
+	{
+		return baseTypedMultiBlock(type, "wardrobe_topper", pattern, blockFactory, BlockItem::new, blockTag, itemTag, item -> item.tag(FFTags.Items.WARDROBE_TOPPERS))
+					.initialProperties(Material.WOOD, MaterialColor.WOOD)
+					.sound(SoundType.WOOD)
+					.strength(2F, 3F)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> horizontalMultiBlockState(ctx, provider, type, "wardrobe_topper", 180))
+					// .loot((lootTables, block) -> lootTables.add(block, createSinglePropConditionTable(block, BaseTableWideBlock.TYPE, BaseTableWideBlock.Type.MAIN)))
+					.tag(FFTags.Blocks.WARDROBE_TOPPERS)
 		;
 	}
 
@@ -545,6 +616,17 @@ public final class FFBlocks
 	{
 		ResourceLocation modelLocation = REGISTRY.id("block/" + type + '/' + blockType);
 		horizontalBlockState(ctx, provider, modelLocation, angleOffset);
+	}
+
+	private static <BLOCK extends MultiBlockFourWay> void horizontalMultiBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider, ResourceLocation modelLocation, int angleOffset)
+	{
+		provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(modelLocation), angleOffset);
+	}
+
+	private static <BLOCK extends MultiBlockFourWay> void horizontalMultiBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider, String type, String blockType, int angleOffset)
+	{
+		ResourceLocation modelLocation = REGISTRY.id("block/" + type + '/' + blockType);
+		horizontalMultiBlockState(ctx, provider, modelLocation, angleOffset);
 	}
 
 	private static LootTable.Builder createSingleBedConditionTable(BaseBedBlock block)

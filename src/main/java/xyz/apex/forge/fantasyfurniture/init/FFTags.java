@@ -36,9 +36,11 @@ public final class FFTags
 		public static final ITag.INamedTag<Block> PAINTINGS = REGISTRY.moddedBlockTag("paintings");
 		public static final ITag.INamedTag<Block> SHELVES = REGISTRY.moddedBlockTag("shelves");
 		public static final ITag.INamedTag<Block> TORCHES = REGISTRY.moddedBlockTag("torches");
-		public static final ITag.INamedTag<Block> WARDROBES = REGISTRY.moddedBlockTag("wardrobes");
 		public static final ITag.INamedTag<Block> CARPETS = REGISTRY.moddedBlockTag("carpets");
 		public static final ITag.INamedTag<Block> WOOLS = REGISTRY.moddedBlockTag("wools");
+
+		public static final ITag.INamedTag<Block> WARDROBES = REGISTRY.moddedBlockTag("wardrobes");
+		public static final ITag.INamedTag<Block> WARDROBE_TOPPERS = REGISTRY.moddedBlockTag("wardrobe/toppers");
 
 		public static final ITag.INamedTag<Block> BEDS = REGISTRY.moddedBlockTag("beds");
 		public static final ITag.INamedTag<Block> BEDS_SINGLE = REGISTRY.moddedBlockTag("beds/single");
@@ -72,7 +74,9 @@ public final class FFTags
 				provider.tag(PAINTINGS);
 				provider.tag(SHELVES);
 				provider.tag(TORCHES);
+
 				provider.tag(WARDROBES);
+				provider.tag(WARDROBE_TOPPERS);
 
 				provider.tag(WOOLS);
 				provider.tag(ACTags.Blocks.WOOLS).addTags(WOOLS);
@@ -118,9 +122,11 @@ public final class FFTags
 		public static final ITag.INamedTag<Item> PAINTINGS = REGISTRY.moddedItemTag("paintings");
 		public static final ITag.INamedTag<Item> SHELVES = REGISTRY.moddedItemTag("shelves");
 		public static final ITag.INamedTag<Item> TORCHES = REGISTRY.moddedItemTag("torches");
-		public static final ITag.INamedTag<Item> WARDROBES = REGISTRY.moddedItemTag("wardrobes");
 		public static final ITag.INamedTag<Item> CARPETS = REGISTRY.moddedItemTag("carpets");
 		public static final ITag.INamedTag<Item> WOOLS = REGISTRY.moddedItemTag("wools");
+
+		public static final ITag.INamedTag<Item> WARDROBES = REGISTRY.moddedItemTag("wardrobes");
+		public static final ITag.INamedTag<Item> WARDROBE_TOPPERS = REGISTRY.moddedItemTag("wardrobe/toppers");
 
 		public static final ITag.INamedTag<Item> BEDS = REGISTRY.moddedItemTag("beds");
 		public static final ITag.INamedTag<Item> BEDS_SINGLE = REGISTRY.moddedItemTag("beds/single");
@@ -145,6 +151,35 @@ public final class FFTags
 		private static void bootstrap()
 		{
 			REGISTRY.addDataGenerator(ITEM_TAGS, provider -> {
+				provider.copy(Blocks.NORDIC, NORDIC);
+				provider.copy(Blocks.DECORATIONS, DECORATIONS);
+				provider.copy(Blocks.BOOKSHELVES, BOOKSHELVES);
+				provider.copy(Blocks.DESKS, DESKS);
+				provider.copy(Blocks.DRAWERS, DRAWERS);
+				provider.copy(Blocks.PAINTINGS, PAINTINGS);
+				provider.copy(Blocks.SHELVES, SHELVES);
+				provider.copy(Blocks.TORCHES, TORCHES);
+				provider.copy(Blocks.CARPETS, CARPETS);
+				provider.copy(Blocks.WOOLS, WOOLS);
+				provider.copy(Blocks.WARDROBES, WARDROBES);
+				provider.copy(Blocks.WARDROBE_TOPPERS, WARDROBE_TOPPERS);
+				provider.copy(Blocks.BEDS, BEDS);
+				provider.copy(Blocks.BEDS_SINGLE, BEDS_SINGLE);
+				provider.copy(Blocks.BEDS_DOUBLE, BEDS_DOUBLE);
+				provider.copy(Blocks.SEATS, SEATS);
+				provider.copy(Blocks.BENCHES, BENCHES);
+				provider.copy(Blocks.CHAIRS, CHAIRS);
+				provider.copy(Blocks.CUSHIONS, CUSHIONS);
+				provider.copy(Blocks.STOOLS, STOOLS);
+				provider.copy(Blocks.SOFAS, SOFAS);
+				provider.copy(Blocks.CHESTS, CHESTS);
+				provider.copy(Blocks.CHESTS_WOODEN, CHESTS_WOODEN);
+				provider.copy(Blocks.TABLES_LARGE, TABLES_LARGE);
+				provider.copy(Blocks.TABLES_LONG, TABLES_LONG);
+				provider.copy(Blocks.TABLES_SMALL, TABLES_SMALL);
+				provider.copy(Blocks.TABLES_WIDE, TABLES_WIDE);
+				provider.copy(Blocks.TABLES, TABLES);
+
 				provider.tag(NORDIC);
 				provider.tag(DECORATIONS);
 
@@ -153,7 +188,9 @@ public final class FFTags
 				provider.tag(PAINTINGS);
 				provider.tag(SHELVES);
 				provider.tag(TORCHES);
+
 				provider.tag(WARDROBES);
+				provider.tag(WARDROBE_TOPPERS);
 
 				provider.tag(CARPETS);
 				provider.tag(ItemTags.CARPETS).addTags(CARPETS);

@@ -1,13 +1,8 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
 
+import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.BaseTableWideBlock;
 import xyz.apex.forge.fantasyfurniture.block.BlockHelper;
 
@@ -60,14 +55,14 @@ public final class NordicTableWideBlock extends BaseTableWideBlock
 			box(-16D, 13D, 0D, 16D, 16D, 16D)
 	);
 
-	public NordicTableWideBlock(Properties properties)
+	public NordicTableWideBlock(Properties properties, MultiBlockPattern pattern)
 	{
-		super(properties);
+		super(properties, pattern);
 
-		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
+		// registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
-	@Override
+	/*@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction connectedDirection = getConnectedDirection(blockState);
@@ -81,5 +76,5 @@ public final class NordicTableWideBlock extends BaseTableWideBlock
 		}
 
 		return VoxelShapes.empty();
-	}
+	}*/
 }

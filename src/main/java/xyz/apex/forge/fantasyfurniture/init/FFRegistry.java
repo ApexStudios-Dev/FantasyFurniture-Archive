@@ -6,12 +6,12 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
+import xyz.apex.forge.apexcore.lib.ApexRegistrator;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.utility.registrator.AbstractRegistrator;
 import xyz.apex.java.utility.Lazy;
 
-public final class FFRegistry extends AbstractRegistrator<FFRegistry>
+public final class FFRegistry extends ApexRegistrator<FFRegistry>
 {
 	private static final Lazy<FFRegistry> REGISTRY = create(FFRegistry::new);
 

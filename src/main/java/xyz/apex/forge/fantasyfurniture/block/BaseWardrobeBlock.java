@@ -11,9 +11,9 @@ import net.minecraft.world.IBlockReader;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFourWay;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
-public class BaseTableWideBlock extends MultiBlockFourWay
+public class BaseWardrobeBlock extends MultiBlockFourWay
 {
-	public BaseTableWideBlock(Properties properties, MultiBlockPattern pattern)
+	public BaseWardrobeBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}
