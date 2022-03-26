@@ -16,6 +16,7 @@ plugins {
 	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
 	// id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
 	// id 'com.modrinth.minotaur' version "${minotaur_version}"
+	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version "${gradle_changelog_version}"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -203,10 +204,35 @@ artifacts {
 	archives shadowJar
 }
 
+def previousGitTag = { ->
+	def code = new ByteArrayOutputStream()
+
+	exec {
+		commandLine 'git', 'describe', '--tags', '--match', 'v*', '--exclude', "v${mod_version}"
+		standardOutput code
+	}
+
+	return code.toString().trim().split('-')[0]
+}
+
+task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
+	file = file("CHANGELOG.md")
+	fromRepo = file('.')
+	fromRef = "${previousGitTag}"
+	// toRef = "v${mod_version}"
+	templateContent = file('.github/changelog.mustache').text
+			.replace('{mod_version}', "${mod_version}")
+			.replace('{mod_name}', "${mod_name}")
+			.replace('{last_tag}', "${previousGitTag}")
+}
+
 tasks.withType(Jar) {
 	from(file('accesstransformer.cfg')) {
 		into '/META-INF'
 	}
+
+	from file('CHANGELOG.md')
+	from file('LICENSE')
 
 	manifest {
 		attributes([
@@ -267,6 +293,8 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 			id = "${mod_curseforge_id}"
 			releaseType = "${mod_release_type}"
 			addGameVersion "${minecraft_version}"
+			changelogType = 'markdown'
+			changelog = file('CHANGELOG.md').text
 
 			relations {
 				requiredDependency "${registrator_mod_id}"
@@ -300,6 +328,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		uploadFile = shadowJar
 		additionalFiles = [ jar, sourcesJar, deobfJar ]
 		gameVersions = [ "${minecraft_version}" ]
+		changelog = file('CHANGELOG.md').text
 		loaders = [ 'forge' ]
 		dependencies = [
 				new ModDependency("${registrator_modrinth_slug}", 'required'),

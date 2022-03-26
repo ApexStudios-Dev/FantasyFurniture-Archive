@@ -1,0 +1,16 @@
+{{#tags}}
+## {{name}}
+{{#issues}}
+{{#hasIssue}}
+{{#hasLink}}
+### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
+{{/hasLink}}
+{{/hasIssue}}
+{{#commits}}
+* {{messageTitle}}
+{{/commits}}
+{{/issues}}
+
+{{/tags}}
+
+*For more details, see [v{mod_version}..{last_tag}](https://github.com/ApexModder/{mod_name}/compare/v{mod_version}...{last_tag})*
