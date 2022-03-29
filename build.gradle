@@ -98,13 +98,11 @@ minecraft {
 	}
 }
 
-mixin {
-	add sourceSets.main, "${mod_id}.refmap.json"
-	config "${mod_id}.mixins.json"
-
-	/*debug = true
-	debug.export = true
-	hotSwap = true*/
+if(file("./src/main/resources/${mod_id}.mixins.json").exists()) {
+	mixin {
+		add sourceSets.main, "${mod_id}.refmap.json"
+		config "${mod_id}.mixins.json"
+	}
 }
 
 sourceSets.main.resources {
