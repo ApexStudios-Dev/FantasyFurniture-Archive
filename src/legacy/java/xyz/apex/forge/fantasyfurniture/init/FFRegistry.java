@@ -4,10 +4,10 @@ import org.apache.commons.lang3.Validate;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.java.utility.Lazy;
 
@@ -55,12 +55,17 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		private ModItemGroup()
 		{
 			super(FantasyFurniture.ID);
+
+			ItemGroupCategoryManager.getInstance(this).addCategories(
+					FFItemGroupCategories.NORDIC,
+					FFItemGroupCategories.DECORATIONS
+			);
 		}
 
 		@Override
 		public ItemStack makeIcon()
 		{
-			return Items.STONE.getDefaultInstance();
+			return FFItems.NORDIC_BED_SINGLE.asItemStack();
 		}
 	}
 }

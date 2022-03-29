@@ -8,11 +8,15 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import xyz.apex.forge.fantasyfurniture.client.screen.DrawerContainerScreen;
+import xyz.apex.forge.fantasyfurniture.container.DrawerContainer;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 
 public final class FFContainers
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
+
+	public static final ContainerEntry<DrawerContainer> DRAWER_CONTAINER = container("drawer", DrawerContainer.ROWS, DrawerContainer.COLS, DrawerContainer::new, DrawerContainerScreen::new);
 
 	static void bootstrap()
 	{
