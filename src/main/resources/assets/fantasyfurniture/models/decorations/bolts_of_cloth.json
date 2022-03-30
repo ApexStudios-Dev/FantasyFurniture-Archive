@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"particle": "fantasyfurniture:models/decorations/bolts_of_cloth",
-		"bolts_of_cloth": "fantasyfurniture:models/decorations/bolts_of_cloth"
+		"bolts_of_cloth": "fantasyfurniture:models/decorations/bolts_of_cloth",
+		"particle": "fantasyfurniture:particles/bolts_of_cloth"
 	},
 	"elements": [
 		{
