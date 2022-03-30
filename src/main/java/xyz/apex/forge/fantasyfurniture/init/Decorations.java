@@ -18,7 +18,7 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.BerryBasketBlock;
 import xyz.apex.forge.fantasyfurniture.block.BoiledCremeTreatsBlock;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayBlock;
+import xyz.apex.forge.fantasyfurniture.block.BoltsOfClothBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import javax.annotation.Nullable;
@@ -104,12 +104,12 @@ public final class Decorations
 	// endregion
 
 	// region: Bolts of Cloth
-	public static final BlockEntry<SimpleFourWayBlock> BOLTS_OF_CLOTH = boltsOfCloth();
+	public static final BlockEntry<BoltsOfClothBlock> BOLTS_OF_CLOTH = boltsOfCloth();
 
-	private static BlockEntry<SimpleFourWayBlock> boltsOfCloth()
+	private static BlockEntry<BoltsOfClothBlock> boltsOfCloth()
 	{
 		return REGISTRY
-				.block("bolts_of_cloth", SimpleFourWayBlock::new)
+				.block("bolts_of_cloth", BoltsOfClothBlock::new)
 					.lang("Bolts of Cloth")
 					.lang(EN_GB,"Bolts of Cloth")
 

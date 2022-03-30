@@ -9,14 +9,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.Property;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
 import xyz.apex.java.utility.Lazy;
 import xyz.apex.java.utility.nullness.NonnullSupplier;
@@ -25,12 +26,26 @@ import java.util.Map;
 
 public final class BerryBasketBlock extends SimpleFourWayBlock
 {
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(2D, 0D, 3.5D, 14D, 5D, 12.5D),
+			box(1.5D, 5D, 3D, 14.5D, 6D, 13D),
+			box(7D, 6D, 3.25D, 9D, 11.75D, 12.75D)
+	);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
+
 	private static final Map<ResourceLocation, Lazy<BerryBasketBlock>> basketMap = Maps.newHashMap();
 	private static final Map<ResourceLocation, Lazy<Item>> berryMap = Maps.newHashMap();
 
 	public BerryBasketBlock(Properties properties)
 	{
 		super(properties);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	{
+		Direction facing = blockState.getValue(FACING);
+		return SHAPER.get(facing);
 	}
 
 	@Override
