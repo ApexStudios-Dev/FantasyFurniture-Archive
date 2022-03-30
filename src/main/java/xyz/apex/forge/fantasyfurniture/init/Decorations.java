@@ -18,6 +18,7 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.BerryBasketBlock;
 import xyz.apex.forge.fantasyfurniture.block.BoiledCremeTreatsBlock;
+import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import javax.annotation.Nullable;
@@ -97,6 +98,37 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), new ModelBuilder(ctx.getId()).suffix("_0").getCompiledPath()))
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Bolts of Cloth
+	public static final BlockEntry<SimpleFourWayBlock> BOLTS_OF_CLOTH = boltsOfCloth();
+
+	private static BlockEntry<SimpleFourWayBlock> boltsOfCloth()
+	{
+		return REGISTRY
+				.block("bolts_of_cloth", SimpleFourWayBlock::new)
+					.lang("Bolts of Cloth")
+					.lang(EN_GB,"Bolts of Cloth")
+
+					.initialProperties(Material.WOOL)
+					.strength(2.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), new ModelBuilder(ctx).getFile(provider)))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> provider.withExistingParent(ctx.getName(), new ModelBuilder(ctx.getId()).getCompiledPath()))
 					.build()
 		.register();
 	}
