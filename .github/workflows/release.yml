@@ -38,13 +38,13 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - run: chmod +x ./gradlew
 
+      # Generate Minecraft Assets & Data files
+      - run: ./gradlew Data # `Data` should match the `runData` gradle task name
+
       # Generate Changelog
       - run: ./gradlew gitChangelogTask
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Generate Minecraft Assets & Data files
-      - run: ./gradlew Data # `Data` should match the `runData` gradle task name
 
       # Build package
       - run: ./gradlew build
