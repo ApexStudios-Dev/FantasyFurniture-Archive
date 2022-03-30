@@ -33,14 +33,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyFurniture.ID), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
 
-		FFBlocks.bootstrap();
-		FFItems.bootstrap();
-		FFBlockEntities.bootstrap();
-		FFEntities.bootstrap();
-		FFContainers.bootstrap();
-		FFTags.bootstrap();
-
-		FFItemGroupCategories.bootstrap();
+		Decorations.bootstrap();
 
 		bootstrap = true;
 	}
