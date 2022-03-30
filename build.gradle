@@ -272,7 +272,7 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 		repositories {
 			maven {
 				name 'ApexMods-Maven'
-				url 'https://maven.apexmods.xyz/'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
 
 				credentials {
 					username System.getenv('APEX_MODS_MAVEN_USERNAME')
