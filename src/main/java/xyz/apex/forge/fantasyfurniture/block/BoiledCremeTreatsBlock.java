@@ -6,9 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -76,9 +74,14 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 		if(newCount <= 2 && newCount >= 0)
 		{
 			if(newCount < count)
+			{
+				level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundCategory.BLOCKS, 1F, 1F);
 				popResource(level, pos, Decorations.BOILED_CREME_TREATS.asItemStack());
+			}
 			else
 			{
+				level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundCategory.BLOCKS, 1F, 1F);
+
 				if(!player.isCreative())
 					stack.shrink(1);
 			}

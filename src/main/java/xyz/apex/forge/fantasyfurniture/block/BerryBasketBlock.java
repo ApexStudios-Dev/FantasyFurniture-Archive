@@ -68,6 +68,7 @@ public final class BerryBasketBlock extends SimpleFourWayBlock
 			popResource(level, pos, berry.getDefaultInstance());
 			BlockState emptyBlockState = Decorations.BERRY_BASKET_EMPTY.defaultBlockState();
 			emptyBlockState = copyBlockProperties(blockState, emptyBlockState);
+			level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundCategory.BLOCKS, 1F, 1F);
 			level.setBlockAndUpdate(pos, emptyBlockState);
 			return ActionResultType.sidedSuccess(level.isClientSide);
 		}
@@ -83,6 +84,7 @@ public final class BerryBasketBlock extends SimpleFourWayBlock
 					BerryBasketBlock basket = basketMap.get(berryName).get();
 					BlockState filledBlockState = basket.defaultBlockState();
 					filledBlockState = copyBlockProperties(blockState, filledBlockState);
+					level.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundCategory.BLOCKS, 1F, 1F);
 					level.setBlockAndUpdate(pos, filledBlockState);
 					return ActionResultType.sidedSuccess(level.isClientSide);
 				}
