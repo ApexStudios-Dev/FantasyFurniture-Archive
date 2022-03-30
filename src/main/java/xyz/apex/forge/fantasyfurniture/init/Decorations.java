@@ -76,8 +76,8 @@ public final class Decorations
 	{
 		return REGISTRY
 				.block("boiled_creme_treats", BoiledCremeTreatsBlock::new)
-					.lang("Boiled Crème Treats")
-					.lang(EN_GB, "Boiled Crème Treats")
+					.lang("Boiled Creme Treats")
+					.lang(EN_GB, "Boiled Creme Treats")
 
 					.initialProperties(Material.CAKE)
 					.strength(2.5F)
