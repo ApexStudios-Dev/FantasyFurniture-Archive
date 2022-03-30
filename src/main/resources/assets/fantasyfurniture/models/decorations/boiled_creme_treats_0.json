@@ -1,0 +1,87 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"boiled_creme_treats": "fantasyfurniture:models/decorations/boiled_creme_treats",
+		"particle": "fantasyfurniture:particles/boiled_creme_treats"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [6, 0, 6],
+			"to": [10, 1.5, 10],
+			"faces": {
+				"north": {"uv": [4, 0, 8, 2], "texture": "#boiled_creme_treats"},
+				"east": {"uv": [4, 2, 8, 4], "texture": "#boiled_creme_treats"},
+				"south": {"uv": [4, 4, 8, 6], "texture": "#boiled_creme_treats"},
+				"west": {"uv": [4, 6, 8, 8], "texture": "#boiled_creme_treats"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#boiled_creme_treats"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#boiled_creme_treats"}
+			}
+		},
+		{
+			"name": "butter",
+			"from": [7.25, 1.5, 7.25],
+			"to": [8.75, 2, 8.75],
+			"faces": {
+				"north": {"uv": [2, 8, 4, 9], "texture": "#boiled_creme_treats"},
+				"east": {"uv": [8, 2, 10, 3], "texture": "#boiled_creme_treats"},
+				"south": {"uv": [8, 3, 10, 4], "texture": "#boiled_creme_treats"},
+				"west": {"uv": [4, 8, 6, 9], "texture": "#boiled_creme_treats"},
+				"up": {"uv": [2, 10, 0, 8], "texture": "#boiled_creme_treats"},
+				"down": {"uv": [10, 0, 8, 2], "texture": "#boiled_creme_treats"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 3],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 3],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 5.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 5.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, 5, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -8]
+		}
+	},
+	"groups": [
+		{
+			"name": "boiled_creme_treats",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "1",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"children": [0, 1]
+				}
+			]
+		}
+	]
+}

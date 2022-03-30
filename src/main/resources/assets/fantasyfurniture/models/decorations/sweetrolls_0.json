@@ -1,0 +1,164 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"sweetrolls": "fantasyfurniture:models/decorations/sweetrolls",
+		"particle": "fantasyfurniture:particles/sweetrolls"
+	},
+	"elements": [
+		{
+			"name": "sweetroll_base",
+			"from": [6, 0, 6],
+			"to": [10, 2, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [4, 6, 8, 8], "texture": "#sweetrolls"},
+				"east": {"uv": [7, 0, 11, 2], "texture": "#sweetrolls"},
+				"south": {"uv": [7, 2, 11, 4], "texture": "#sweetrolls"},
+				"west": {"uv": [7, 4, 11, 6], "texture": "#sweetrolls"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#sweetrolls"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_middle",
+			"from": [6.5, 2, 6.5],
+			"to": [9.5, 3, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [0, 8, 3, 9], "texture": "#sweetrolls"},
+				"east": {"uv": [3, 8, 6, 9], "texture": "#sweetrolls"},
+				"south": {"uv": [6, 8, 9, 9], "texture": "#sweetrolls"},
+				"west": {"uv": [8, 6, 11, 7], "texture": "#sweetrolls"},
+				"up": {"uv": [7, 3, 4, 0], "texture": "#sweetrolls"},
+				"down": {"uv": [7, 3, 4, 6], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_top_north",
+			"from": [6.5, 3, 6.5],
+			"to": [9.5, 4, 7.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [8, 7, 11, 8], "texture": "#sweetrolls"},
+				"east": {"uv": [6, 10, 7, 11], "texture": "#sweetrolls"},
+				"south": {"uv": [0, 9, 3, 10], "texture": "#sweetrolls"},
+				"west": {"uv": [7, 10, 8, 11], "texture": "#sweetrolls"},
+				"up": {"uv": [6, 10, 3, 9], "texture": "#sweetrolls"},
+				"down": {"uv": [9, 9, 6, 10], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_top_south",
+			"from": [6.5, 3, 8.5],
+			"to": [9.5, 4, 9.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [9, 8, 12, 9], "texture": "#sweetrolls"},
+				"east": {"uv": [8, 10, 9, 11], "texture": "#sweetrolls"},
+				"south": {"uv": [9, 9, 12, 10], "texture": "#sweetrolls"},
+				"west": {"uv": [9, 10, 10, 11], "texture": "#sweetrolls"},
+				"up": {"uv": [3, 11, 0, 10], "texture": "#sweetrolls"},
+				"down": {"uv": [6, 10, 3, 11], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_top_west",
+			"from": [6.5, 3, 7.5],
+			"to": [7.5, 4, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [10, 10, 11, 11], "texture": "#sweetrolls"},
+				"east": {"uv": [0, 11, 1, 12], "texture": "#sweetrolls"},
+				"south": {"uv": [11, 0, 12, 1], "texture": "#sweetrolls"},
+				"west": {"uv": [1, 11, 2, 12], "texture": "#sweetrolls"},
+				"up": {"uv": [12, 2, 11, 1], "texture": "#sweetrolls"},
+				"down": {"uv": [3, 11, 2, 12], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_top_east",
+			"from": [8.5, 3, 7.5],
+			"to": [9.5, 4, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [11, 2, 12, 3], "texture": "#sweetrolls"},
+				"east": {"uv": [3, 11, 4, 12], "texture": "#sweetrolls"},
+				"south": {"uv": [11, 3, 12, 4], "texture": "#sweetrolls"},
+				"west": {"uv": [4, 11, 5, 12], "texture": "#sweetrolls"},
+				"up": {"uv": [12, 5, 11, 4], "texture": "#sweetrolls"},
+				"down": {"uv": [6, 11, 5, 12], "texture": "#sweetrolls"}
+			}
+		},
+		{
+			"name": "sweetroll_center",
+			"from": [7.5, 3, 7.5],
+			"to": [8.5, 3.5, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-4, 0, -3]},
+			"faces": {
+				"north": {"uv": [11, 5, 12, 6], "texture": "#sweetrolls"},
+				"east": {"uv": [6, 11, 7, 12], "texture": "#sweetrolls"},
+				"south": {"uv": [11, 6, 12, 7], "texture": "#sweetrolls"},
+				"west": {"uv": [7, 11, 8, 12], "texture": "#sweetrolls"},
+				"up": {"uv": [12, 8, 11, 7], "texture": "#sweetrolls"},
+				"down": {"uv": [9, 11, 8, 12], "texture": "#sweetrolls"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 3],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 3],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 4, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 4, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [2.25, 5.5, 0]
+		},
+		"head": {
+			"translation": [0, 14.5, 0.25]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -8]
+		}
+	},
+	"groups": [
+		{
+			"name": "sweetrolls",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "1",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": []
+				},
+				{
+					"name": "2",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [0, 1, 2, 3, 4, 5, 6]
+				}
+			]
+		}
+	]
+}
