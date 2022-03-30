@@ -83,6 +83,7 @@ public final class Decorations
 					.strength(2.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
+					.noCollission()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
 						int count = blockState.getValue(BoiledCremeTreatsBlock.COUNT);
