@@ -1,0 +1,113 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"mead_bottles": "fantasyfurniture:models/decorations/mead_bottles",
+		"particle": "fantasyfurniture:particles/mead_bottle"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [6.5, 0, 6.5],
+			"to": [9.5, 6, 9.5],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 6], "texture": "#mead_bottles"},
+				"east": {"uv": [3, 0, 6, 6], "texture": "#mead_bottles"},
+				"south": {"uv": [0, 6, 3, 12], "texture": "#mead_bottles"},
+				"west": {"uv": [6, 0, 9, 6], "texture": "#mead_bottles"},
+				"up": {"uv": [6, 9, 3, 6], "texture": "#mead_bottles"},
+				"down": {"uv": [9, 6, 6, 9], "texture": "#mead_bottles"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [7, 6, 7],
+			"to": [9, 9, 9],
+			"faces": {
+				"north": {"uv": [9, 3, 11, 6], "texture": "#mead_bottles"},
+				"east": {"uv": [6, 9, 8, 12], "texture": "#mead_bottles"},
+				"south": {"uv": [9, 6, 11, 9], "texture": "#mead_bottles"},
+				"west": {"uv": [8, 9, 10, 12], "texture": "#mead_bottles"},
+				"up": {"uv": [12, 11, 10, 9], "texture": "#mead_bottles"},
+				"down": {"uv": [13, 3, 11, 5], "texture": "#mead_bottles"}
+			}
+		},
+		{
+			"name": "rim",
+			"from": [6.75, 9, 6.75],
+			"to": [9.25, 10, 9.25],
+			"faces": {
+				"north": {"uv": [10, 11, 13, 12], "texture": "#mead_bottles"},
+				"east": {"uv": [0, 12, 3, 13], "texture": "#mead_bottles"},
+				"south": {"uv": [12, 0, 15, 1], "texture": "#mead_bottles"},
+				"west": {"uv": [12, 1, 15, 2], "texture": "#mead_bottles"},
+				"up": {"uv": [12, 3, 9, 0], "texture": "#mead_bottles"},
+				"down": {"uv": [6, 9, 3, 12], "texture": "#mead_bottles"}
+			}
+		},
+		{
+			"name": "cork",
+			"from": [7.25, 10, 7.25],
+			"to": [8.75, 10.5, 8.75],
+			"faces": {
+				"north": {"uv": [12, 2, 14, 3], "texture": "#mead_bottles"},
+				"east": {"uv": [3, 12, 5, 13], "texture": "#mead_bottles"},
+				"south": {"uv": [5, 12, 7, 13], "texture": "#mead_bottles"},
+				"west": {"uv": [7, 12, 9, 13], "texture": "#mead_bottles"},
+				"up": {"uv": [13, 7, 11, 5], "texture": "#mead_bottles"},
+				"down": {"uv": [13, 7, 11, 9], "texture": "#mead_bottles"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 3, 0],
+			"scale": [-0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 145, 0],
+			"translation": [0.5, 2, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -8]
+		}
+	},
+	"groups": [
+		{
+			"name": "mead_bottles",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "1",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"children": [0, 1, 2, 3]
+				}
+			]
+		}
+	]
+}
