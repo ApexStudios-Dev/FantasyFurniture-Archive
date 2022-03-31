@@ -70,6 +70,19 @@
 				"up": {"uv": [12, 3.5, 8.5, 3], "texture": "#bowl_mushroom_stew"},
 				"down": {"uv": [12, 3.5, 8.5, 4], "texture": "#bowl_mushroom_stew"}
 			}
+		},
+		{
+			"name": "side_south",
+			"from": [4.5, 2.5, 4.5],
+			"to": [11.5, 2.5, 11.5],
+			"faces": {
+				"north": {"uv": [0, 14.5, 3.5, 16], "texture": "#bowl_mushroom_stew"},
+				"east": {"uv": [1, 14.5, 1.5, 16], "texture": "#bowl_mushroom_stew"},
+				"south": {"uv": [0, 14.5, 3.5, 16], "texture": "#bowl_mushroom_stew"},
+				"west": {"uv": [0.5, 14.5, 1, 16], "texture": "#bowl_mushroom_stew"},
+				"up": {"uv": [16, 12.5, 12.5, 9], "texture": "#bowl_mushroom_stew"},
+				"down": {"uv": [3.5, 14.5, 0, 15], "texture": "#bowl_mushroom_stew"}
+			}
 		}
 	],
 	"display": {
@@ -114,7 +127,7 @@
 			"name": "bowl_empty",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4]
+			"children": [0, 1, 2, 3, 4, 5]
 		}
 	]
 }

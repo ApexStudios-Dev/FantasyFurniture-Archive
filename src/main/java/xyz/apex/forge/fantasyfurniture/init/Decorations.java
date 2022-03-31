@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootPool;
@@ -24,14 +23,9 @@ import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
-import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.fantasyfurniture.block.BerryBasketBlock;
-import xyz.apex.forge.fantasyfurniture.block.BoiledCremeTreatsBlock;
-import xyz.apex.forge.fantasyfurniture.block.BoltsOfClothBlock;
-import xyz.apex.forge.fantasyfurniture.block.BookStackBlock;
+import xyz.apex.forge.fantasyfurniture.block.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -177,11 +171,49 @@ public final class Decorations
 	}
 	// endregion
 
+	// region: Bowl
+	public static final BlockEntry<BowlBlock> BOWL_EMPTY = bowl("empty");
+	public static final BlockEntry<BowlBlock> BOWL_BEETROOT_SOUP = bowl("beetroot_soup");
+	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW = bowl("mushroom_stew");
+
+	private static BlockEntry<BowlBlock> bowl(String type)
+	{
+		String codeName = "decorations/bowl_" + type;
+		String englishName;
+
+		if(type.equals("empty"))
+			englishName = "Bowl";
+		else
+			englishName = RegistrateLangProvider.toEnglishName(type) + " Bowl";
+
+		return REGISTRY
+				.block(codeName, BowlBlock::new)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Decorations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Decorations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
+
 	static void bootstrap()
 	{
-		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
-			BerryBasketBlock.registerBasketMapping(Items.SWEET_BERRIES, BERRY_BASKET_SWEETBERRY);
-		});
 	}
 
 	private static <BLOCK extends Block> void droppingStacked(RegistrateBlockLootTables lootTables, BLOCK block, IItemProvider drop, IntegerProperty property)

@@ -9,7 +9,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -17,6 +16,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
 
@@ -78,12 +78,12 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 		{
 			if(newCount < count)
 			{
-				level.playSound(null, pos, soundType.getBreakSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1F) / 2F, soundType.getPitch() * .8F);
+				BlockHelper.playBreakSound(level, pos, player);
 				popResource(level, pos, Decorations.BOILED_CREME_TREATS.asItemStack());
 			}
 			else
 			{
-				level.playSound(null, pos, soundType.getPlaceSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1F) / 2F, soundType.getPitch() * .8F);
+				BlockHelper.playPlaceSound(level, pos, player);
 
 				if(!player.isCreative())
 					stack.shrink(1);
