@@ -20,36 +20,30 @@ import net.minecraft.world.World;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
 
-public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
+public final class BookStackBlock extends SimpleFourWayBlock
 {
-	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 10D, 2D, 10D);
-	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
-			box(9D, 0D, 8D, 13D, 2D, 12D),
-			box(3D, 0D, 4D, 7D, 2D, 8D)
-	);
-	public static final VoxelShape SHAPE_2 = VoxelShaper.or(
-			box(8D, 0D, 10D, 12D, 2D, 14D),
-			box(2D, 0D, 6D, 6D, 2D, 10D),
-			box(10D, 0D, 3D, 14D, 2D, 7D)
-	);
+	public static final VoxelShape SHAPE_0 = box(4D, 0D, 3D, 11D, 3D, 13D);
+	public static final VoxelShape SHAPE_1 = VoxelShaper.or(SHAPE_0, box(4.05233282139849D, 3D, 3.263094859751D, 11.05233282139849D, 6D, 13.263094859751D));
+	public static final VoxelShape SHAPE_2 = VoxelShaper.or(SHAPE_1, box(4.05233282139849D, 6D, 2.736905140249D, 11.05233282139849D, 9D, 12.736905140249D));
 
-	public static final IntegerProperty COUNT = IntegerProperty.create("treats", 0, 2);
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);
 	public static final VoxelShaper SHAPER_1 = VoxelShaper.forHorizontal(SHAPE_1, Direction.NORTH);
 	public static final VoxelShaper SHAPER_2 = VoxelShaper.forHorizontal(SHAPE_2, Direction.NORTH);
 
-	public BoiledCremeTreatsBlock(Properties properties)
+	public static final IntegerProperty BOOKS = IntegerProperty.create("books", 0, 2);
+
+	public BookStackBlock(Properties properties)
 	{
 		super(properties);
 
-		registerDefaultState(defaultBlockState().setValue(COUNT, 0));
+		registerDefaultState(defaultBlockState().setValue(BOOKS, 0));
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
-		int count = blockState.getValue(COUNT);
+		int count = blockState.getValue(BOOKS);
 		VoxelShaper shaper;
 
 		if(count == 1)
@@ -66,10 +60,10 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		int count = blockState.getValue(COUNT);
+		int count = blockState.getValue(BOOKS);
 		int newCount;
 
-		if(Decorations.BOILED_CREME_TREATS.isInStack(stack))
+		if(Decorations.BOOK_STACK.isInStack(stack))
 			newCount = count + 1;
 		else
 			newCount = count - 1;
@@ -79,7 +73,7 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 			if(newCount < count)
 			{
 				level.playSound(null, pos, soundType.getBreakSound(), SoundCategory.BLOCKS, (soundType.getVolume() + 1F) / 2F, soundType.getPitch() * .8F);
-				popResource(level, pos, Decorations.BOILED_CREME_TREATS.asItemStack());
+				popResource(level, pos, Decorations.BOOK_STACK.asItemStack());
 			}
 			else
 			{
@@ -89,7 +83,7 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 					stack.shrink(1);
 			}
 
-			level.setBlockAndUpdate(pos, blockState.setValue(COUNT, newCount));
+			level.setBlockAndUpdate(pos, blockState.setValue(BOOKS, newCount));
 			return ActionResultType.sidedSuccess(level.isClientSide);
 		}
 
@@ -99,7 +93,7 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayBlock
 	@Override
 	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
-		builder.add(COUNT);
+		builder.add(BOOKS);
 		super.createBlockStateDefinition(builder);
 	}
 }
