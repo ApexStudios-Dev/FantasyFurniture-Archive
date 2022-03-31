@@ -258,7 +258,6 @@ public final class Decorations
 					.strength(2.5F)
 					.sound(SoundType.GLASS)
 					.noOcclusion()
-					.noCollission()
 
 					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
 					.loot((lootTables, block) -> droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
