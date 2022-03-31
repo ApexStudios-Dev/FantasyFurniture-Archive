@@ -17,8 +17,8 @@ import xyz.apex.java.utility.Lazy;
 
 public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
 {
-	private final Lazy<Integer> minValue = Lazy.of(() -> getStackSizeProperty().getPossibleValues().stream().mapToInt(i -> i).filter(i -> i <= 0).min().orElse(0));
-	private final Lazy<Integer> maxValue = Lazy.of(() -> getStackSizeProperty().getPossibleValues().stream().mapToInt(i -> i).filter(i -> i >= 0).max().orElse(0));
+	private final Lazy<Integer> minValue = Lazy.of(() -> getMinValue(getStackSizeProperty()));
+	private final Lazy<Integer> maxValue = Lazy.of(() -> getMaxValue(getStackSizeProperty()));
 
 	public SimpleFourWayStackedBlock(Properties properties)
 	{
@@ -85,5 +85,15 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
 	{
 		builder.add(getStackSizeProperty());
 		super.createBlockStateDefinition(builder);
+	}
+
+	public static int getMinValue(IntegerProperty property)
+	{
+		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i <= 0).min().orElse(0);
+	}
+
+	public static int getMaxValue(IntegerProperty property)
+	{
+		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i >= 0).max().orElse(0);
 	}
 }

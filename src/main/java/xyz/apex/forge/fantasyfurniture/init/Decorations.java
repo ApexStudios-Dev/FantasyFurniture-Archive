@@ -100,7 +100,7 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItemStacked)
+						.model((ctx, provider) -> blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 					.build()
 		.register();
 	}
@@ -164,7 +164,7 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItemStacked)
+						.model((ctx, provider) -> blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
 					.build()
 		.register();
 	}
@@ -238,7 +238,7 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItemStacked)
+						.model((ctx, provider) -> blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
 					.build()
 		.register();
 	}
@@ -271,7 +271,51 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItemStacked)
+						.model((ctx, provider) -> blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Tankards
+	public static final BlockEntry<TankardsBlock> TANKARD_EMPTY = tankards("empty");
+	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD = tankards("honeymead");
+	public static final BlockEntry<TankardsBlock> TANKARD_MILK = tankards("milk");
+	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY = tankards("sweetberry");
+
+	private static BlockEntry<TankardsBlock> tankards(String type)
+	{
+		String codeName = "decorations/tankards_" + type;
+		String englishName;
+
+		if(type.equals("empty"))
+			englishName = "Tankards";
+		else
+			englishName = RegistrateLangProvider.toEnglishName(type) + " Tankards";
+
+		return REGISTRY
+				.block(codeName, TankardsBlock::new)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.noCollission()
+
+					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
+					.loot((lootTables, block) -> droppingStacked(lootTables, block, TankardsBlock.TANKARDS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
 					.build()
 		.register();
 	}
@@ -314,10 +358,11 @@ public final class Decorations
 		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, ""));
 	}
 
-	private static <ITEM extends BlockItem> void blockItemStacked(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)
+	private static <ITEM extends BlockItem> void blockItemStacked(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider, IntegerProperty property)
 	{
 		ResourceLocation id = ctx.getId();
-		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, "_2"));
+		int maxValue = SimpleFourWayStackedBlock.getMaxValue(property);
+		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, "_" + maxValue));
 	}
 
 	private static <BLOCK extends Block> void horizontalBlock(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
