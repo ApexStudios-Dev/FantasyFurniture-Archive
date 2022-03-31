@@ -89,8 +89,8 @@ public final class Decorations
 					.noOcclusion()
 					.noCollission()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.COUNT))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, BoiledCremeTreatsBlock.COUNT))
+					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+					.loot((lootTables, block) -> droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -229,6 +229,39 @@ public final class Decorations
 
 					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
 					.loot((lootTables, block) -> droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Decorations::blockItemStacked)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Mead Bottles
+	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES = meadBottles();
+
+	private static BlockEntry<MeadBottlesBlock> meadBottles()
+	{
+		return REGISTRY
+				.block("decorations/mead_bottles", MeadBottlesBlock::new)
+					.lang("Mead Bottles")
+					.lang(EN_GB, "Mead Bottles")
+
+					.initialProperties(Material.GLASS)
+					.strength(2.5F)
+					.sound(SoundType.GLASS)
+					.noOcclusion()
+					.noCollission()
+
+					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
+					.loot((lootTables, block) -> droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
