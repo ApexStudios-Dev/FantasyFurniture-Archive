@@ -21,7 +21,6 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.conditions.BlockStateProperty;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
@@ -91,7 +90,7 @@ public final class Decorations
 					.noCollission()
 
 					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.COUNT))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, block, BoiledCremeTreatsBlock.COUNT))
+					.loot((lootTables, block) -> droppingStacked(lootTables, block, BoiledCremeTreatsBlock.COUNT))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -155,7 +154,7 @@ public final class Decorations
 
 					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
 					// .loot((lootTables, block) -> droppingStacked(lootTables, block, Items.BOOK, BookStackBlock.BOOKS))
-				.loot((lootTables, block) -> droppingStacked(lootTables, block, block, BookStackBlock.BOOKS))
+				.loot((lootTables, block) -> droppingStacked(lootTables, block, BookStackBlock.BOOKS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -212,11 +211,44 @@ public final class Decorations
 	}
 	// endregion
 
+	// region: Sweetrolls
+	public static final BlockEntry<SweetRollsBlock> SWEETROLLS = sweetRolls();
+
+	private static BlockEntry<SweetRollsBlock> sweetRolls()
+	{
+		return REGISTRY
+				.block("decorations/sweetrolls", SweetRollsBlock::new)
+					.lang("Sweetrolls")
+					.lang(EN_GB, "Sweetrolls")
+
+					.initialProperties(Material.CAKE)
+					.strength(2.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+					.noCollission()
+
+					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
+					.loot((lootTables, block) -> droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Decorations::blockItemStacked)
+					.build()
+		.register();
+	}
+	// endregion
+
 	static void bootstrap()
 	{
 	}
 
-	private static <BLOCK extends Block> void droppingStacked(RegistrateBlockLootTables lootTables, BLOCK block, IItemProvider drop, IntegerProperty property)
+	private static <BLOCK extends Block> void droppingStacked(RegistrateBlockLootTables lootTables, BLOCK block, IntegerProperty property)
 	{
 		LootTable.Builder lootTable = LootTable.lootTable();
 
@@ -227,7 +259,7 @@ public final class Decorations
 							.applyExplosionCondition(block, LootPool
 									.lootPool()
 									.setRolls(ConstantRange.exactly(1))
-									.add(ItemLootEntry.lootTableItem(drop))
+									.add(ItemLootEntry.lootTableItem(block))
 									.when(BlockStateProperty
 											.hasBlockStateProperties(block)
 											.setProperties(StatePropertiesPredicate.Builder
