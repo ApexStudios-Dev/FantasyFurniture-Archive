@@ -70,6 +70,14 @@
 				"up": {"uv": [12, 3.5, 8.5, 3], "texture": "#bowl_beetroot_soup"},
 				"down": {"uv": [12, 3.5, 8.5, 4], "texture": "#bowl_beetroot_soup"}
 			}
+		},
+		{
+			"name": "contents",
+			"from": [4.5, 3, 4.5],
+			"to": [11.5, 3, 11.5],
+			"faces": {
+				"up": {"uv": [12.5, 9, 16, 12.5], "texture": "#bowl_beetroot_soup"}
+			}
 		}
 	],
 	"display": {
@@ -114,7 +122,7 @@
 			"name": "bowl_empty",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4]
+			"children": [0, 1, 2, 3, 4, 5]
 		}
 	]
 }
