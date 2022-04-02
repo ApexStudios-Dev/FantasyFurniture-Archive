@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"sweetrolls": "fantasyfurniture:models/decorations/sweetrolls",
-		"particle": "fantasyfurniture:particles/sweetrolls"
+		"particle": "fantasyfurniture:particles/decorations/sweetrolls"
 	},
 	"elements": [
 		{
@@ -224,6 +224,7 @@
 			"scale": [0.4, 0.4, 0.4]
 		},
 		"ground": {
+			"translation": [0, 3, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {

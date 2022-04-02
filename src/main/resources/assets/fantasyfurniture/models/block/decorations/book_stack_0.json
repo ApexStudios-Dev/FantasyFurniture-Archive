@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"book_stack": "fantasyfurniture:models/decorations/book_stack",
-		"particle": "fantasyfurniture:particles/book_stack"
+		"particle": "fantasyfurniture:particles/decorations/book_stack"
 	},
 	"elements": [
 		{

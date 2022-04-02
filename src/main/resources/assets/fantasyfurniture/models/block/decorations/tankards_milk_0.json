@@ -3,7 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"tankards_milk": "fantasyfurniture:models/decorations/tankards_milk",
-		"particle": "fantasyfurniture:particles/tankards"
+		"particle": "fantasyfurniture:particles/decorations/tankards"
 	},
 	"elements": [
 		{
@@ -278,6 +278,7 @@
 			"translation": [0, 6, 0]
 		},
 		"ground": {
+			"translation": [0, 3, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {

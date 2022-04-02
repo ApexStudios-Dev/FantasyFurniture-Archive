@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"boiled_creme_treats": "fantasyfurniture:models/decorations/boiled_creme_treats",
-		"particle": "fantasyfurniture:particles/boiled_creme_treats"
+		"particle": "fantasyfurniture:particles/decorations/boiled_creme_treats"
 	},
 	"elements": [
 		{

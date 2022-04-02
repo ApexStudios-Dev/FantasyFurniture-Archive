@@ -12,8 +12,8 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 
 public final class TankardsBlock extends SimpleFourWayStackedBlock
 {
-	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 10D, 6D, 10D);
-	public static final VoxelShape SHAPE_1 = box(2D, 0D, 4D, 13D, 6D, 12D);
+	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 12D, 6D, 10D);
+	public static final VoxelShape SHAPE_1 = box(1.1879195559200255D, -2.6490953430879927e-8D, 3.3239826453649517D, 14.687919555920026D, 5.999999973509047D, 13.323982645364952D);
 
 	public static final IntegerProperty TANKARDS = IntegerProperty.create("tankards", 0, 1);
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);

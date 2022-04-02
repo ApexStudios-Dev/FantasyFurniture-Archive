@@ -3,7 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"bowl_empty": "fantasyfurniture:models/decorations/bowl_empty",
-		"particle": "fantasyfurniture:particles/bowl"
+		"particle": "fantasyfurniture:particles/decorations/bowl"
 	},
 	"elements": [
 		{

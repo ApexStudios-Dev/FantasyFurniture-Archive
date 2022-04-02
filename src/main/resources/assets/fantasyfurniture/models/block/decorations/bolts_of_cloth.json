@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"bolts_of_cloth": "fantasyfurniture:models/decorations/bolts_of_cloth",
-		"particle": "fantasyfurniture:particles/bolts_of_cloth"
+		"particle": "fantasyfurniture:particles/decorations/bolts_of_cloth"
 	},
 	"elements": [
 		{

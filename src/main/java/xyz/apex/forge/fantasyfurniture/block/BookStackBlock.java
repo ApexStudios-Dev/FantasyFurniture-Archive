@@ -13,8 +13,8 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 public final class BookStackBlock extends SimpleFourWayStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(4D, 0D, 3D, 11D, 3D, 13D);
-	public static final VoxelShape SHAPE_1 = VoxelShaper.or(SHAPE_0, box(4.05233282139849D, 3D, 3.263094859751D, 11.05233282139849D, 6D, 13.263094859751D));
-	public static final VoxelShape SHAPE_2 = VoxelShaper.or(SHAPE_1, box(4.05233282139849D, 6D, 2.736905140249D, 11.05233282139849D, 9D, 12.736905140249D));
+	public static final VoxelShape SHAPE_1 = box(2D, 0D, 2D, 13D, 6D, 14.25D);
+	public static final VoxelShape SHAPE_2 = box(2D, 0D, 1.75D, 13D, 9D, 14.25D);
 
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);
 	public static final VoxelShaper SHAPER_1 = VoxelShaper.forHorizontal(SHAPE_1, Direction.NORTH);

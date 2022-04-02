@@ -13,15 +13,8 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 public final class BoiledCremeTreatsBlock extends SimpleFourWayStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 10D, 2D, 10D);
-	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
-			box(9D, 0D, 8D, 13D, 2D, 12D),
-			box(3D, 0D, 4D, 7D, 2D, 8D)
-	);
-	public static final VoxelShape SHAPE_2 = VoxelShaper.or(
-			box(8D, 0D, 10D, 12D, 2D, 14D),
-			box(2D, 0D, 6D, 6D, 2D, 10D),
-			box(10D, 0D, 3D, 14D, 2D, 7D)
-	);
+	public static final VoxelShape SHAPE_1 = box(2D, 0D, 3D, 13D, 2D, 12D);
+	public static final VoxelShape SHAPE_2 = box(1D, 0D, 2D, 15D, 2D, 14D);
 
 	public static final IntegerProperty TREATS = IntegerProperty.create("treats", 0, 2);
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);
