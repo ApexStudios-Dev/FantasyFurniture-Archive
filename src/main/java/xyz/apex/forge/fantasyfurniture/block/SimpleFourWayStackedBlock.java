@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -71,6 +73,11 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
 
 				if(!player.isCreative())
 					stack.shrink(1);
+			}
+
+			for(int i = 0; i < 5; i++)
+			{
+				level.addParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
 			}
 
 			level.setBlockAndUpdate(pos, blockState.setValue(stackSizeProperty, newCount));
