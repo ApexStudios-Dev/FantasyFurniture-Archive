@@ -1,32 +1,16 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
+import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 
@@ -35,8 +19,11 @@ public final class Decorations
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 
 	// region: Berry Basket
-	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY = berryBasket("empty");
-	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY = berryBasket("sweetberry");
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY_BLOCK = berryBasket("empty");
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY_BLOCK = berryBasket("sweetberry");
+
+	public static final ItemEntry<BlockItem> BERRY_BASKET_EMPTY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_EMPTY_BLOCK);
+	public static final ItemEntry<BlockItem> BERRY_BASKET_SWEETBERRY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_SWEETBERRY_BLOCK);
 
 	private static BlockEntry<BerryBasketBlock> berryBasket(String type)
 	{
@@ -58,7 +45,7 @@ public final class Decorations
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Decorations::horizontalBlock)
+					.blockState(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -68,14 +55,16 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItem)
+						.model(Registrations::blockItem)
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Boiled Crème Treats
-	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS = boiledCremeTreats();
+	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats();
+
+	public static final ItemEntry<BlockItem> BOILED_CREME_TREATS_BLOCK_ITEM = Registrations.blockItem(BOILED_CREME_TREATS_BLOCK);
 
 	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats()
 	{
@@ -90,8 +79,8 @@ public final class Decorations
 					.noOcclusion()
 					.noCollission()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -101,14 +90,16 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Bolts of Cloth
-	public static final BlockEntry<BoltsOfClothBlock> BOLTS_OF_CLOTH = boltsOfCloth();
+	public static final BlockEntry<BoltsOfClothBlock> BOLTS_OF_CLOTH_BLOCK = boltsOfCloth();
+
+	public static final ItemEntry<BlockItem> BOLTS_OF_CLOTH_BLOCK_ITEM = Registrations.blockItem(BOLTS_OF_CLOTH_BLOCK);
 
 	private static BlockEntry<BoltsOfClothBlock> boltsOfCloth()
 	{
@@ -122,7 +113,7 @@ public final class Decorations
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState(Decorations::horizontalBlock)
+					.blockState(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -132,14 +123,16 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItem)
+						.model(Registrations::blockItem)
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Book Stack
-	public static final BlockEntry<BookStackBlock> BOOK_STACK = bookStack();
+	public static final BlockEntry<BookStackBlock> BOOK_STACK_BLOCK = bookStack();
+
+	public static final ItemEntry<BlockItem> BOOK_STACK_BLOCK_ITEM = Registrations.blockItem(BOOK_STACK_BLOCK);
 
 	private static BlockEntry<BookStackBlock> bookStack()
 	{
@@ -153,9 +146,9 @@ public final class Decorations
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
 					// .loot((lootTables, block) -> droppingStacked(lootTables, block, Items.BOOK, BookStackBlock.BOOKS))
-				.loot((lootTables, block) -> droppingStacked(lootTables, block, BookStackBlock.BOOKS))
+				.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BookStackBlock.BOOKS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -165,16 +158,20 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Bowl
-	public static final BlockEntry<BowlBlock> BOWL_EMPTY = bowl("empty");
-	public static final BlockEntry<BowlBlock> BOWL_BEETROOT_SOUP = bowl("beetroot_soup");
-	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW = bowl("mushroom_stew");
+	public static final BlockEntry<BowlBlock> BOWL_EMPTY_BLOCK = bowl("empty");
+	public static final BlockEntry<BowlBlock> BOWL_BEETROOT_SOUP_BLOCK = bowl("beetroot_soup");
+	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW_BLOCK = bowl("mushroom_stew");
+
+	public static final ItemEntry<BlockItem> BOWL_EMPTY_BLOCK_ITEM = Registrations.blockItem(BOWL_EMPTY_BLOCK);
+	public static final ItemEntry<BlockItem> BOWL_BEETROOT_SOUP_BLOCK_ITEM = Registrations.blockItem(BOWL_BEETROOT_SOUP_BLOCK);
+	public static final ItemEntry<BlockItem> BOWL_MUSHROOM_STEW_BLOCK_ITEM = Registrations.blockItem(BOWL_MUSHROOM_STEW_BLOCK);
 
 	private static BlockEntry<BowlBlock> bowl(String type)
 	{
@@ -196,7 +193,7 @@ public final class Decorations
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Decorations::horizontalBlock)
+					.blockState(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -206,14 +203,16 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model(Decorations::blockItem)
+						.model(Registrations::blockItem)
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Sweetrolls
-	public static final BlockEntry<SweetRollsBlock> SWEETROLLS = sweetRolls();
+	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls();
+
+	public static final ItemEntry<BlockItem> SWEETROLLS_BLOCK_ITEM = Registrations.blockItem(SWEETROLLS_BLOCK);
 
 	private static BlockEntry<SweetRollsBlock> sweetRolls()
 	{
@@ -228,8 +227,8 @@ public final class Decorations
 					.noOcclusion()
 					.noCollission()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -239,14 +238,16 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Mead Bottles
-	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES = meadBottles();
+	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles();
+
+	public static final ItemEntry<BlockItem> MEAD_BOTTLES_BLOCK_ITEM = Registrations.blockItem(MEAD_BOTTLES_BLOCK);
 
 	private static BlockEntry<MeadBottlesBlock> meadBottles()
 	{
@@ -260,8 +261,8 @@ public final class Decorations
 					.sound(SoundType.GLASS)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -271,17 +272,22 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
 					.build()
 		.register();
 	}
 	// endregion
 
 	// region: Tankards
-	public static final BlockEntry<TankardsBlock> TANKARD_EMPTY = tankards("empty");
-	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD = tankards("honeymead");
-	public static final BlockEntry<TankardsBlock> TANKARD_MILK = tankards("milk");
-	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY = tankards("sweetberry");
+	public static final BlockEntry<TankardsBlock> TANKARD_EMPTY_BLOCK = tankards("empty");
+	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD_BLOCK = tankards("honeymead");
+	public static final BlockEntry<TankardsBlock> TANKARD_MILK_BLOCK = tankards("milk");
+	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY_BLOCK = tankards("sweetberry");
+
+	public static final ItemEntry<BlockItem> TANKARD_EMPTY_BLOCK_ITEM = Registrations.blockItem(TANKARD_EMPTY_BLOCK);
+	public static final ItemEntry<BlockItem> TANKARD_HONEYMEAD_BLOCK_ITEM = Registrations.blockItem(TANKARD_HONEYMEAD_BLOCK);
+	public static final ItemEntry<BlockItem> TANKARD_MILK_BLOCK_ITEM = Registrations.blockItem(TANKARD_MILK_BLOCK);
+	public static final ItemEntry<BlockItem> TANKARD_SWEETBERRY_BLOCK_ITEM = Registrations.blockItem(TANKARD_SWEETBERRY_BLOCK);
 
 	private static BlockEntry<TankardsBlock> tankards(String type)
 	{
@@ -304,8 +310,8 @@ public final class Decorations
 					.noOcclusion()
 					.noCollission()
 
-					.blockState((ctx, provider) -> horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
-					.loot((lootTables, block) -> droppingStacked(lootTables, block, TankardsBlock.TANKARDS))
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TankardsBlock.TANKARDS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -315,7 +321,7 @@ public final class Decorations
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
 					.build()
 		.register();
 	}
@@ -323,68 +329,5 @@ public final class Decorations
 
 	static void bootstrap()
 	{
-	}
-
-	private static <BLOCK extends Block> void droppingStacked(RegistrateBlockLootTables lootTables, BLOCK block, IntegerProperty property)
-	{
-		LootTable.Builder lootTable = LootTable.lootTable();
-
-		for(int value : property.getPossibleValues())
-		{
-			lootTable = lootTable
-					.withPool(BlockLootTables
-							.applyExplosionCondition(block, LootPool
-									.lootPool()
-									.setRolls(ConstantRange.exactly(1))
-									.add(ItemLootEntry.lootTableItem(block))
-									.when(BlockStateProperty
-											.hasBlockStateProperties(block)
-											.setProperties(StatePropertiesPredicate.Builder
-													.properties()
-													.hasProperty(property, value)
-											)
-									)
-									.apply(SetCount.setCount(ConstantRange.exactly(value + 1)))
-							)
-					);
-		}
-
-		lootTables.add(block, lootTable);
-	}
-
-	private static <ITEM extends BlockItem> void blockItem(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)
-	{
-		ResourceLocation id = ctx.getId();
-		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, ""));
-	}
-
-	private static <ITEM extends BlockItem> void blockItemStacked(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider, IntegerProperty property)
-	{
-		ResourceLocation id = ctx.getId();
-		int maxValue = SimpleFourWayStackedBlock.getMaxValue(property);
-		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, "_" + maxValue));
-	}
-
-	private static <BLOCK extends Block> void horizontalBlock(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
-	{
-		ResourceLocation id = ctx.getId();
-		provider.horizontalBlock(ctx.get(), provider.models().getExistingFile(getExistingModelPath(id, "")));
-	}
-
-	private static <BLOCK extends Block> void horizontalBlock(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider, IntegerProperty countProperty)
-	{
-		ResourceLocation id = ctx.getId();
-
-		provider.horizontalBlock(ctx.get(), blockState -> {
-			int count = blockState.getValue(countProperty);
-			return provider.models().getExistingFile(getExistingModelPath(id, "_" + count));
-		});
-	}
-
-	private static ResourceLocation getExistingModelPath(ResourceLocation registryName, String suffix)
-	{
-		String namespace = registryName.getNamespace();
-		String path = registryName.getPath();
-		return new ResourceLocation(namespace, "block/" + path + suffix);
 	}
 }
