@@ -24,7 +24,8 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
-import xyz.apex.forge.fantasyfurniture.block.*;
+import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;

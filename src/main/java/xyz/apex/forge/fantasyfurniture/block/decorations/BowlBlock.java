@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block;
+package xyz.apex.forge.fantasyfurniture.block.decorations;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -8,6 +8,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayBlock;
 
 public final class BowlBlock extends SimpleFourWayBlock
 {
