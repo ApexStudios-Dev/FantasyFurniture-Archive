@@ -133,8 +133,6 @@ dependencies {
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
-	runtimeOnly fg.deobf("xyz.apex.forge.utility:${devworld_mod_id}:${minecraft_version}-${devworld_version}:deobf")
-	runtimeOnly fg.deobf("xyz.apex.forge.utility:${smoothboot_mod_id}:${minecraft_version}-${smoothboot_version}:deobf")
 	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
 	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
 }
