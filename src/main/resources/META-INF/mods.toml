@@ -27,18 +27,6 @@ issueTrackerURL="https://github.com/ApexModder/FantasyFurniture/issues"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.${mod_id}]]
-    modId="${devworld_mod_id}"
-    mandatory=false
-    versionRange="${devworld_version_range}"
-    ordering="AFTER"
-    side="BOTH"
-[[dependencies.${mod_id}]]
-    modId="${smoothboot_mod_id}"
-    mandatory=false
-    versionRange="${smoothboot_version_range}"
-    ordering="AFTER"
-    side="BOTH"
-[[dependencies.${mod_id}]]
 	modId="${registrator_mod_id}"
 	mandatory=true
 	versionRange="${registrator_version_range}"
