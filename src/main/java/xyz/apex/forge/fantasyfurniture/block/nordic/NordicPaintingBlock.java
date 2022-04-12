@@ -8,18 +8,15 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.WallLightBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.PaintingBlock;
 
-public final class NordicWallLightBlock extends WallLightBlock
+public final class NordicPaintingBlock extends PaintingBlock
 {
-	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(6D, 5D, 15D, 10D, 11D, 16D),
-			box(6D, 2D, 8D, 10D, 15D, 15D)
-	);
+	public static final VoxelShape SHAPE = box(0D, 0D, 14D, 16D, 16D, 16D);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NordicWallLightBlock(Properties properties)
+	public NordicPaintingBlock(Properties properties)
 	{
 		super(properties);
 	}

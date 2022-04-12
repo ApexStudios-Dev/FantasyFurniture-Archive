@@ -10,7 +10,7 @@ import net.minecraft.world.IBlockReader;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.SeatBlock;
 
-public class NordicCushionBlock extends SeatBlock
+public final class NordicCushionBlock extends SeatBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(2D, 0D, 2D, 4D, 2D, 4D),

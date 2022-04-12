@@ -10,10 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicCushionBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicStoolBlock;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicTableSmall;
-import xyz.apex.forge.fantasyfurniture.block.nordic.NordicWallLightBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
@@ -131,7 +128,6 @@ public final class Nordic
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
-					.instabreak()
 
 					.blockState(Registrations::horizontalBlock)
 
@@ -165,7 +161,6 @@ public final class Nordic
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
-					.instabreak()
 
 					.blockState(Registrations::horizontalBlock)
 
@@ -199,7 +194,40 @@ public final class Nordic
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Painting Small
+	public static final BlockEntry<NordicPaintingBlock> PAINTING_SMALL_BLOCK = paintingSmall();
+
+	public static final ItemEntry<BlockItem> PAINTING_SMALL_BLOCK_ITEM = Registrations.blockItem(PAINTING_SMALL_BLOCK);
+
+	private static BlockEntry<NordicPaintingBlock> paintingSmall()
+	{
+		return REGISTRY
+				.block("nordic/painting_small", NordicPaintingBlock::new)
+					.lang("Nordic Painting Small")
+					.lang(EN_GB, "Nordic Painting Small")
+
+					.initialProperties(Material.WOOD)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
 					.instabreak()
+					.noCollission()
 
 					.blockState(Registrations::horizontalBlock)
 
