@@ -14,7 +14,7 @@ import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
 import xyz.apex.forge.fantasyfurniture.init.Nordic;
 
-public final class NodircDrawerBlock extends SimpleFourWayWaterLoggedContainerBlock<NordicDrawerBlockEntity, NordicDrawerContainer>
+public final class NordicDrawerBlock extends SimpleFourWayWaterLoggedContainerBlock<NordicDrawerBlockEntity, NordicDrawerContainer>
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(1D, 0D, 1D, 15D, 13D, 15D),
@@ -23,7 +23,7 @@ public final class NodircDrawerBlock extends SimpleFourWayWaterLoggedContainerBl
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NodircDrawerBlock(Properties properties)
+	public NordicDrawerBlock(Properties properties)
 	{
 		super(properties);
 	}
