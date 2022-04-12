@@ -9,9 +9,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedStackedBlock;
 
-public final class TankardsBlock extends SimpleFourWayStackedBlock
+public final class TankardsBlock extends SimpleFourWayWaterLoggedStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 12D, 6D, 10D);
 	public static final VoxelShape SHAPE_1 = box(1.1879195559200255D, -2.6490953430879927e-8D, 3.3239826453649517D, 14.687919555920026D, 5.999999973509047D, 13.323982645364952D);
@@ -26,7 +26,7 @@ public final class TankardsBlock extends SimpleFourWayStackedBlock
 	}
 
 	@Override
-	protected IntegerProperty getStackSizeProperty()
+	public IntegerProperty getStackSizeProperty()
 	{
 		return TANKARDS;
 	}

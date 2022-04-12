@@ -8,9 +8,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedBlock;
 
-public final class BerryBasketBlock extends SimpleFourWayBlock
+public final class BerryBasketBlock extends SimpleFourWayWaterLoggedBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(2D, 0D, 3.5D, 14D, 5D, 12.5D),

@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block;
+package xyz.apex.forge.fantasyfurniture.block.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

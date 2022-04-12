@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block;
+package xyz.apex.forge.fantasyfurniture.block.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,10 +17,10 @@ import net.minecraft.world.World;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.java.utility.Lazy;
 
-public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
+public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock implements IStackedBlock
 {
-	private final Lazy<Integer> minValue = Lazy.of(() -> getMinValue(getStackSizeProperty()));
-	private final Lazy<Integer> maxValue = Lazy.of(() -> getMaxValue(getStackSizeProperty()));
+	private final Lazy<Integer> minValue = Lazy.of(() -> IStackedBlock.getMinValue(getStackSizeProperty()));
+	private final Lazy<Integer> maxValue = Lazy.of(() -> IStackedBlock.getMaxValue(getStackSizeProperty()));
 
 	public SimpleFourWayStackedBlock(Properties properties)
 	{
@@ -29,9 +29,11 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
 		registerDefaultState(defaultBlockState().setValue(getStackSizeProperty(), 0));
 	}
 
-	protected abstract IntegerProperty getStackSizeProperty();
+	@Override
+	public abstract IntegerProperty getStackSizeProperty();
 
-	protected boolean isForStack(ItemStack stack)
+	@Override
+	public boolean isForStack(ItemStack stack)
 	{
 		return stack.getItem() == asItem();
 	}
@@ -92,15 +94,5 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock
 	{
 		builder.add(getStackSizeProperty());
 		super.createBlockStateDefinition(builder);
-	}
-
-	public static int getMinValue(IntegerProperty property)
-	{
-		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i <= 0).min().orElse(0);
-	}
-
-	public static int getMaxValue(IntegerProperty property)
-	{
-		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i >= 0).max().orElse(0);
 	}
 }

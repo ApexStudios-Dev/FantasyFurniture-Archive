@@ -9,9 +9,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedStackedBlock;
 
-public final class BookStackBlock extends SimpleFourWayStackedBlock
+public final class BookStackBlock extends SimpleFourWayWaterLoggedStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(4D, 0D, 3D, 11D, 3D, 13D);
 	public static final VoxelShape SHAPE_1 = box(2D, 0D, 2D, 13D, 6D, 14.25D);
@@ -29,7 +29,7 @@ public final class BookStackBlock extends SimpleFourWayStackedBlock
 	}
 
 	@Override
-	protected IntegerProperty getStackSizeProperty()
+	public IntegerProperty getStackSizeProperty()
 	{
 		return BOOKS;
 	}

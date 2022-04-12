@@ -9,9 +9,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedStackedBlock;
 
-public final class BoiledCremeTreatsBlock extends SimpleFourWayStackedBlock
+public final class BoiledCremeTreatsBlock extends SimpleFourWayWaterLoggedStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 10D, 2D, 10D);
 	public static final VoxelShape SHAPE_1 = box(2D, 0D, 3D, 13D, 2D, 12D);
@@ -28,7 +28,7 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayStackedBlock
 	}
 
 	@Override
-	protected IntegerProperty getStackSizeProperty()
+	public IntegerProperty getStackSizeProperty()
 	{
 		return TREATS;
 	}

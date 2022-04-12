@@ -19,7 +19,7 @@ import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.ResourceLocation;
 
-import xyz.apex.forge.fantasyfurniture.block.SimpleFourWayStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.IStackedBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
@@ -66,7 +66,7 @@ public final class Registrations
 	static <ITEM extends BlockItem> void blockItemStacked(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider, IntegerProperty property)
 	{
 		ResourceLocation id = ctx.getId();
-		int maxValue = SimpleFourWayStackedBlock.getMaxValue(property);
+		int maxValue = IStackedBlock.getMaxValue(property);
 		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, "_" + maxValue));
 	}
 

@@ -4,10 +4,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.ResourceLocation;
 
-import xyz.apex.forge.fantasyfurniture.block.BaseCarpetBlock;
+import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicWallLightBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
@@ -66,6 +69,41 @@ public final class Nordic
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Wall Light
+	public static final BlockEntry<NordicWallLightBlock> WALL_LIGHT_BLOCK = wallLight();
+
+	public static final ItemEntry<BlockItem> WALL_LIGHT_BLOCK_ITEM = Registrations.blockItem(WALL_LIGHT_BLOCK);
+
+	private static BlockEntry<NordicWallLightBlock> wallLight()
+	{
+		return REGISTRY
+				.block("nordic/wall_light", NordicWallLightBlock::new)
+					.lang("Nordic Wall Light")
+					.lang(EN_GB, "Nordic Wall Light")
+
+					.initialProperties(Material.DECORATION)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.instabreak()
+					.noCollission()
+					.lightLevel(blockState -> 14)
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)

@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block.decorations;
+package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -8,19 +8,18 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.WallLightBlock;
 
-public final class BoltsOfClothBlock extends SimpleFourWayWaterLoggedBlock
+public class NordicWallLightBlock extends WallLightBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(1D, 0D, 2.5D, 15D, 5D, 7.5D),
-			box(1D, 0D, 8.5D, 15D, 5D, 13.5D),
-			box(1D, 5D, 5.5D, 15D, 10D, 10.5D)
+			box(6D, 5D, 15D, 10D, 11D, 16D),
+			box(6D, 2D, 8D, 10D, 15D, 15D)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public BoltsOfClothBlock(Properties properties)
+	public NordicWallLightBlock(Properties properties)
 	{
 		super(properties);
 	}
