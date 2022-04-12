@@ -7,7 +7,9 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.loot.ConstantRange;
@@ -20,11 +22,38 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.block.base.IStackedBlock;
+import xyz.apex.forge.fantasyfurniture.client.renderer.entity.SeatEntityRenderer;
+import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
+import xyz.apex.forge.utility.registrator.entry.EntityEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
+
+import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 
 public final class Registrations
 {
+	// region: Seat Entity
+	public static final EntityEntry<SeatEntity> SEAT_ENTITY = FFRegistry
+			.getInstance()
+			.<SeatEntity>entity("seat", EntityClassification.MISC, SeatEntity::new)
+				.lang("Seat")
+				.lang(EN_GB, "Seat")
+
+				.sized(0F, 0F)
+				.setCustomClientFactory((spawnEntity, level) -> new SeatEntity(level))
+
+				.noSummon()
+				.fireImmune()
+				.immuneTo(() -> Blocks.TNT, () -> Blocks.LAVA)
+
+				.renderer(() -> SeatEntityRenderer::new)
+			.register();
+	// endregion
+
+	static void bootstrap()
+	{
+	}
+
 	static <BLOCK extends Block, BLOCK_ITEM extends BlockItem> ItemEntry<BLOCK_ITEM> blockItem(BlockEntry<BLOCK> block)
 	{
 		return ItemEntry.cast(block.getSibling(Item.class));

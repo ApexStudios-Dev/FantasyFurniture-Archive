@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicStoolBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicTableSmall;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicWallLightBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
@@ -116,7 +117,7 @@ public final class Nordic
 	// region: Table Small
 	public static final BlockEntry<NordicTableSmall> TABLE_SMALL_BLOCK = tableSmall();
 
-	public static final ItemEntry<BlockItem> TABLE_SMALL_BLOCK_ITEM = Registrations.blockItem(WALL_LIGHT_BLOCK);
+	public static final ItemEntry<BlockItem> TABLE_SMALL_BLOCK_ITEM = Registrations.blockItem(TABLE_SMALL_BLOCK);
 
 	private static BlockEntry<NordicTableSmall> tableSmall()
 	{
@@ -147,6 +148,39 @@ public final class Nordic
 	}
 	// endregion
 
+	// region: Stool
+	public static final BlockEntry<NordicStoolBlock> STOOL_BLOCK = stool();
+
+	public static final ItemEntry<BlockItem> STOOL_BLOCK_ITEM = Registrations.blockItem(STOOL_BLOCK);
+
+	private static BlockEntry<NordicStoolBlock> stool()
+	{
+		return REGISTRY
+				.block("nordic/stool", NordicStoolBlock::new)
+					.lang("Nordic Stool")
+					.lang(EN_GB, "Nordic Stool")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.instabreak()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
 
 	static void bootstrap()
 	{

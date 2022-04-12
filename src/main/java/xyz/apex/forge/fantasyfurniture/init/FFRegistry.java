@@ -1,7 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import org.apache.commons.lang3.Validate;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -9,7 +11,11 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.fantasyfurniture.block.base.SeatBlock;
 import xyz.apex.java.utility.Lazy;
+
+import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class FFRegistry extends ApexRegistrator<FFRegistry>
 {
@@ -24,6 +30,26 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		//skipErrors();
 
 		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
+
+		addDataGenerator(LANG, provider -> {
+			getAll(Block.class)
+			        .stream()
+			        .filter(RegistryEntry::isPresent)
+			        .map(RegistryEntry::get)
+			        .filter(SeatBlock.class::isInstance)
+			        .map(Block::getDescriptionId)
+			        .forEach(s -> provider.add(s + ".occupied", "This seat is occupied"));
+		});
+
+		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+			getAll(Block.class)
+			        .stream()
+			        .filter(RegistryEntry::isPresent)
+			        .map(RegistryEntry::get)
+			        .filter(SeatBlock.class::isInstance)
+			        .map(Block::getDescriptionId)
+			        .forEach(s -> provider.add(EN_GB, s + ".occupied", "This seat is occupied"));
+		});
 	}
 
 	public static void bootstrap()
@@ -33,6 +59,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyFurniture.ID), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
 
+		Registrations.bootstrap();
 		Nordic.bootstrap();
 		Decorations.bootstrap();
 
