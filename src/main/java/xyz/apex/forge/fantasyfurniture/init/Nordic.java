@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.nordic.NordicCushionBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicStoolBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicTableSmall;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicWallLightBlock;
@@ -159,6 +160,40 @@ public final class Nordic
 				.block("nordic/stool", NordicStoolBlock::new)
 					.lang("Nordic Stool")
 					.lang(EN_GB, "Nordic Stool")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.instabreak()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Cushion
+	public static final BlockEntry<NordicCushionBlock> CUSHION_BLOCK = cushion();
+
+	public static final ItemEntry<BlockItem> CUSHION_BLOCK_ITEM = Registrations.blockItem(CUSHION_BLOCK);
+
+	private static BlockEntry<NordicCushionBlock> cushion()
+	{
+		return REGISTRY
+				.block("nordic/cushion", NordicCushionBlock::new)
+					.lang("Nordic Cushion")
+					.lang(EN_GB, "Nordic Cushion")
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
