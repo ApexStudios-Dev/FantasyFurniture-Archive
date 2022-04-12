@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -25,6 +26,12 @@ public final class NordicTableSmall extends SimpleFourWayWaterLoggedBlock
 	public NordicTableSmall(Properties properties)
 	{
 		super(properties);
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.DESTROY;
 	}
 
 	@Override

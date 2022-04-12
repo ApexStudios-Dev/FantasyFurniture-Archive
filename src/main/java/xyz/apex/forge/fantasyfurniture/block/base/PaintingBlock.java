@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.block.base;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.util.BlockVoxelShape;
 import net.minecraft.util.Direction;
@@ -40,6 +41,12 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 	public boolean canSurvive(BlockState blockState, IWorldReader level, BlockPos pos)
 	{
 		return canSupportPainting(level, pos);
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.DESTROY;
 	}
 
 	public static boolean canSupportPainting(IBlockReader level, BlockPos pos)
