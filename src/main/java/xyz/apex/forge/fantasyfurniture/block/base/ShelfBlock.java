@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.EnumProperty;
@@ -50,15 +49,6 @@ public class ShelfBlock extends SimpleFourWayWaterLoggedBlock
 	{
 		builder.add(CONNECTION_TYPE);
 		super.createBlockStateDefinition(builder);
-	}
-
-	@Override
-	public void playerWillDestroy(World level, BlockPos pos, BlockState blockState, PlayerEntity player)
-	{
-		if(!level.isClientSide && !player.isCreative())
-			dropResources(blockState, level, pos, null, player, player.getMainHandItem());
-
-		super.playerWillDestroy(level, pos, blockState, player);
 	}
 
 	@Override
