@@ -63,7 +63,6 @@ public final class Decorations
 
 	// region: Boiled Crème Treats
 	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats();
-
 	public static final ItemEntry<BlockItem> BOILED_CREME_TREATS_BLOCK_ITEM = Registrations.blockItem(BOILED_CREME_TREATS_BLOCK);
 
 	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats()
@@ -98,7 +97,6 @@ public final class Decorations
 
 	// region: Bolts of Cloth
 	public static final BlockEntry<BoltsOfClothBlock> BOLTS_OF_CLOTH_BLOCK = boltsOfCloth();
-
 	public static final ItemEntry<BlockItem> BOLTS_OF_CLOTH_BLOCK_ITEM = Registrations.blockItem(BOLTS_OF_CLOTH_BLOCK);
 
 	private static BlockEntry<BoltsOfClothBlock> boltsOfCloth()
@@ -131,7 +129,6 @@ public final class Decorations
 
 	// region: Book Stack
 	public static final BlockEntry<BookStackBlock> BOOK_STACK_BLOCK = bookStack();
-
 	public static final ItemEntry<BlockItem> BOOK_STACK_BLOCK_ITEM = Registrations.blockItem(BOOK_STACK_BLOCK);
 
 	private static BlockEntry<BookStackBlock> bookStack()
@@ -211,7 +208,6 @@ public final class Decorations
 
 	// region: Sweetrolls
 	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls();
-
 	public static final ItemEntry<BlockItem> SWEETROLLS_BLOCK_ITEM = Registrations.blockItem(SWEETROLLS_BLOCK);
 
 	private static BlockEntry<SweetRollsBlock> sweetRolls()
@@ -246,7 +242,6 @@ public final class Decorations
 
 	// region: Mead Bottles
 	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles();
-
 	public static final ItemEntry<BlockItem> MEAD_BOTTLES_BLOCK_ITEM = Registrations.blockItem(MEAD_BOTTLES_BLOCK);
 
 	private static BlockEntry<MeadBottlesBlock> meadBottles()

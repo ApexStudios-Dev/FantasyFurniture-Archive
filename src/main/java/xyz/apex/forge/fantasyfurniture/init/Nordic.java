@@ -10,8 +10,13 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
+import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
+import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
+import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
+import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -22,7 +27,6 @@ public final class Nordic
 
 	// region: Wool
 	public static final BlockEntry<Block> WOOL_BLOCK = wool();
-
 	public static final ItemEntry<BlockItem> WOOL_BLOCK_ITEM = Registrations.blockItem(WOOL_BLOCK);
 
 	private static BlockEntry<Block> wool()
@@ -50,7 +54,6 @@ public final class Nordic
 
 	// region: Carpet
 	public static final BlockEntry<BaseCarpetBlock> CARPET_BLOCK = carpet();
-
 	public static final ItemEntry<BlockItem> CARPET_BLOCK_ITEM = Registrations.blockItem(CARPET_BLOCK);
 
 	private static BlockEntry<BaseCarpetBlock> carpet()
@@ -79,7 +82,6 @@ public final class Nordic
 
 	// region: Wall Light
 	public static final BlockEntry<NordicWallLightBlock> WALL_LIGHT_BLOCK = wallLight();
-
 	public static final ItemEntry<BlockItem> WALL_LIGHT_BLOCK_ITEM = Registrations.blockItem(WALL_LIGHT_BLOCK);
 
 	private static BlockEntry<NordicWallLightBlock> wallLight()
@@ -114,7 +116,6 @@ public final class Nordic
 
 	// region: Table Small
 	public static final BlockEntry<NordicTableSmall> TABLE_SMALL_BLOCK = tableSmall();
-
 	public static final ItemEntry<BlockItem> TABLE_SMALL_BLOCK_ITEM = Registrations.blockItem(TABLE_SMALL_BLOCK);
 
 	private static BlockEntry<NordicTableSmall> tableSmall()
@@ -147,7 +148,6 @@ public final class Nordic
 
 	// region: Stool
 	public static final BlockEntry<NordicStoolBlock> STOOL_BLOCK = stool();
-
 	public static final ItemEntry<BlockItem> STOOL_BLOCK_ITEM = Registrations.blockItem(STOOL_BLOCK);
 
 	private static BlockEntry<NordicStoolBlock> stool()
@@ -180,7 +180,6 @@ public final class Nordic
 
 	// region: Cushion
 	public static final BlockEntry<NordicCushionBlock> CUSHION_BLOCK = cushion();
-
 	public static final ItemEntry<BlockItem> CUSHION_BLOCK_ITEM = Registrations.blockItem(CUSHION_BLOCK);
 
 	private static BlockEntry<NordicCushionBlock> cushion()
@@ -213,7 +212,6 @@ public final class Nordic
 
 	// region: Painting Small
 	public static final BlockEntry<NordicPaintingBlock> PAINTING_SMALL_BLOCK = paintingSmall();
-
 	public static final ItemEntry<BlockItem> PAINTING_SMALL_BLOCK_ITEM = Registrations.blockItem(PAINTING_SMALL_BLOCK);
 
 	private static BlockEntry<NordicPaintingBlock> paintingSmall()
@@ -241,6 +239,42 @@ public final class Nordic
 					.item()
 						.model(Registrations::blockItem)
 					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Drawer
+	public static final BlockEntry<NodircDrawerBlock> DRAWER_BLOCK = drawer();
+	public static final ItemEntry<BlockItem> DRAWER_BLOCK_ITEM = Registrations.blockItem(DRAWER_BLOCK);
+	public static final ContainerEntry<NordicDrawerContainer> DRAWER_CONTAINER = Registrations.container(DRAWER_BLOCK, NordicDrawerContainer.ROWS, NordicDrawerContainer.COLS, NordicDrawerContainer::new, NordicDrawerContainerScreen::new);
+	public static final BlockEntityEntry<NordicDrawerBlockEntity> DRAWER_BLOCK_ENTITY = Registrations.blockEntity(DRAWER_BLOCK);
+
+	private static BlockEntry<NodircDrawerBlock> drawer()
+	{
+		return REGISTRY
+				.block("nordic/drawer", NodircDrawerBlock::new)
+					.lang("Nordic Drawer")
+					.lang(EN_GB, "Nordic Drawer")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
+
+					.simpleBlockEntity(NordicDrawerBlockEntity::new)
 		.register();
 	}
 	// endregion
