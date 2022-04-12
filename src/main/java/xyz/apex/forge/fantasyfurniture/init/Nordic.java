@@ -6,11 +6,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
@@ -319,6 +322,47 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Shelf
+	public static final BlockEntry<NordicSofaBlock> SOFA_BLOCK = sofa();
+	public static final ItemEntry<BlockItem> SOFA_BLOCK_ITEM = Registrations.blockItem(SOFA_BLOCK);
+
+	private static BlockEntry<NordicSofaBlock> sofa()
+	{
+		return REGISTRY
+				.block("nordic/sofa", NordicSofaBlock::new)
+					.lang("Nordic Sofa")
+					.lang(EN_GB, "Nordic Sofa")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+						Direction facing = blockState.getValue(SofaBlock.FACING);
+						SofaBlock.ConnectionType connectionType = blockState.getValue(SofaBlock.CONNECTION_TYPE);
+
+						return ConfiguredModel
+								.builder()
+									.modelFile(provider.models().getExistingFile(REGISTRY.id("block/nordic/sofa_" + connectionType.getSerializedName())))
+									.rotationY(((int) facing.toYRot() + 180) % 360)
+								.build();
+					}))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), REGISTRY.id("block/nordic/sofa_single")))
 					.build()
 		.register();
 	}
