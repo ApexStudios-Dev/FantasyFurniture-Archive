@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
@@ -275,6 +276,50 @@ public final class Nordic
 					.build()
 
 					.simpleBlockEntity(NordicDrawerBlockEntity::new)
+		.register();
+	}
+	// endregion
+
+	// region: Shelf
+	public static final BlockEntry<NordicShelfBlock> SHELF_BLOCK = shelf();
+	public static final ItemEntry<BlockItem> SHELF_BLOCK_ITEM = Registrations.blockItem(SHELF_BLOCK);
+
+	private static BlockEntry<NordicShelfBlock> shelf()
+	{
+		return REGISTRY
+				.block("nordic/shelf", NordicShelfBlock::new)
+					.lang("Nordic Shelf")
+					.lang(EN_GB, "Nordic Shelf")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
+						ShelfBlock.ConnectionType connectionType = blockState.getValue(ShelfBlock.CONNECTION_TYPE);
+						String suffix;
+
+						if(connectionType == ShelfBlock.ConnectionType.LEFT || connectionType == ShelfBlock.ConnectionType.RIGHT)
+							suffix = "_" + connectionType.getSerializedName();
+						else if(connectionType == ShelfBlock.ConnectionType.BOTH)
+							suffix = "_center";
+						else
+							suffix = "";
+
+						return provider.models().getExistingFile(REGISTRY.id("block/nordic/shelf" + suffix));
+					}, 180))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+					.build()
 		.register();
 	}
 	// endregion
