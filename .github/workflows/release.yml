@@ -1,86 +1,116 @@
-# GitHub Action to auto-magically publish versions
-# for tagged commits
 name: release
 
-# Run on every push (with version tag)
 on:
+  workflow_dispatch:
   push:
     tags:
-      - 'v*'
+      - v*
 
 jobs:
   publish:
-    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        java: [ 8 ]
+
+    name: Publish Mod
+    runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout repository & Setup JDK
-      - uses: actions/checkout@
-      - run: git fetch --prune --unshallow
-      - uses: actions/setup-java@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Unshallow Repository
+        run: git fetch --prune --unshallow
+
+      - name: Read Properties
+        uses: christian-draeger/read-properties@1.0.1
+        id: mod_version
+        with:
+          path: ./gradle.properties
+          property: mod_version
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
         with:
           distribution: adopt
-          java-version: 8
+          java-version: ${{ matrix.java }}
 
-      # Setup & Restore caches
-      - uses: actions/cache@v2
+      - name: Setup Gradle Caching
+        uses: burrunan/gradle-cache-action@v1
         with:
-          path: |
-            ~/.gradle/caches
-            ./accesstransformer.cfg
-            ./build
-          key: ${{ runner.os }}-gradle
+          job-id: java-${{ matrix.java }}
+          gradle-version: wrapper
+          save-generated-gradle-jars: true
+          save-local-build-cache: true
+          save-gradle-dependencies-cache: true
+          save-maven-dependencies-cache: true
 
-      - uses: actions/cache@v2
-        with:
-          path: ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-wrapper
+          gradle-dependencies-cache-key: |
+            ~/.gradle/caches/forge_gradle/
+            ~/.gradle/caches/parchmentgradle/
+            accesstransformer.cfg
 
-      # Validate Gradle Wrapper
-      - uses: gradle/wrapper-validation-action@v1
-      - run: chmod +x ./gradlew
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
 
-      # Generate Minecraft Assets & Data files
-      - run: ./gradlew Data # `Data` should match the `runData` gradle task name
+      - name: Give Gradle Execute Permissions
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: chmod +x ./gradlew
 
-      # Generate Changelog
-      - run: ./gradlew gitChangelogTask
+      - name: Generate Mod Data & Asset Files
+        run: ./gradlew data
+
+      - name: Generate Changelog File
+        run: ./gradlew gitChangelogTask
         env:
+          GENERATE_CHANGELOG: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build package
-      - run: ./gradlew build
+      - name: Build Mod JARs
+        run: ./gradlew build
 
-      # Upload artifacts to GitHub Actions
-      - uses: actions/upload-artifact@v3
+      - name: Upload Artifacts to GitHub Actions
+        uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts
+          name: Mod-Jars
           path: ./build/libs
 
-      # Upload changelog to GitHub Actions
-      - uses: actions/upload-artifact@v3
+      - name: Upload Changelog to GitHub Actions
+        uses: actions/upload-artifact@v3
         with:
-          name: changelog
+          name: Changelog
           path: ./CHANGELOG.md
 
-      # Publish mod
-      - run: ./gradlew publish
-        env:
-          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
-          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
+#      - name: Publish Mod to Maven
+#        run: ./gradlew publish
+#        env:
+#          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
+#          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
 
-#      - run: ./gradlew curseforge
+#      - name: Publish Mod to CurseForge
+#        run: ./gradlew curseforge
 #        env:
 #          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
-#      - run: ./gradlew modrinth
+#      - name: Publish Mod to Modrinth
+#        run: ./gradlew modrinth
 #        env:
 #          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
 
-      # Kill gradlew deamon (caching requires gradle to not be running)
-      - run: ./gradlew --stop
+#      - name: Send Version Release Announcement Messages
+#        uses: appleboy/discord-action@0.0.3
+#        with:
+#          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+#          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+#          color: '#97C6E7'
+#          file: ./CHANGELOG.md
+#          message: "**Fantasy's Furniture** has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
 
-      # Remove problematic files
+      - name: Stop Gradle Deamons
+        run: ./gradlew --stop
+
       - name: Cleanup Gradle Cache
         run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
+          rm -f ~./gradle/caches/modules-2/modules-2.lock
+          rm -f ~./gradle/caches/modules-2/gc.properties
