@@ -51,6 +51,12 @@ public class SofaBlock extends SeatBlock
 	}
 
 	@Override
+	public void fallOn(World level, BlockPos pos, Entity entity, float distance)
+	{
+		super.fallOn(level, pos, entity, distance * .5F);
+	}
+
+	@Override
 	public void updateEntityAfterFallOn(IBlockReader level, Entity entity)
 	{
 		if(entity.isSuppressingBounce())

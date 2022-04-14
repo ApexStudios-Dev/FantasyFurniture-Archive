@@ -3,8 +3,10 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class CushionBlock extends SeatBlock
 {
@@ -17,6 +19,12 @@ public class CushionBlock extends SeatBlock
 	protected double getSeatYOffset(BlockState blockState)
 	{
 		return .2D;
+	}
+
+	@Override
+	public void fallOn(World level, BlockPos pos, Entity entity, float distance)
+	{
+		super.fallOn(level, pos, entity, distance * .5F);
 	}
 
 	@Override
