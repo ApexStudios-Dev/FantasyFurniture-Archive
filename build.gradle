@@ -84,7 +84,7 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--client', '--server', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', registrator_mod_id, '--existing-mod', apexcore_mod_id
+			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', registrator_mod_id, '--existing-mod', apexcore_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
