@@ -34,6 +34,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.IStackedBlock;
 import xyz.apex.forge.fantasyfurniture.client.renderer.entity.SeatEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
 import xyz.apex.forge.utility.registrator.entry.*;
+import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 
@@ -139,16 +140,16 @@ public final class Registrations
 		return new ResourceLocation(namespace, "block/" + path + suffix);
 	}
 
-	static <CONTAINER extends Container, SCREEN extends Screen & IHasContainer<CONTAINER>> ContainerEntry<CONTAINER> container(String registryName, int rows, int cols, ContainerFactory<CONTAINER> containerFactory, xyz.apex.forge.utility.registrator.factory.ContainerFactory.ScreenFactory<CONTAINER, SCREEN> screenFactory)
+	static <CONTAINER extends Container, SCREEN extends Screen & IHasContainer<CONTAINER>> ContainerEntry<CONTAINER> container(String registryName, int rows, int cols, ContainerFactory<CONTAINER> containerFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.ContainerFactory.ScreenFactory<CONTAINER, SCREEN>> screenFactory)
 	{
 		return REGISTRY.container(
 				registryName,
 				(containerType, windowId, playerInventory, buffer) -> containerFactory.create(containerType, windowId, playerInventory, new ItemStackHandler(rows * cols)),
-				() -> screenFactory
+				screenFactory
 		).register();
 	}
 
-	static <BLOCK extends Block, CONTAINER extends Container, SCREEN extends Screen & IHasContainer<CONTAINER>> ContainerEntry<CONTAINER> container(BlockEntry<BLOCK> block, int rows, int cols, ContainerFactory<CONTAINER> containerFactory, xyz.apex.forge.utility.registrator.factory.ContainerFactory.ScreenFactory<CONTAINER, SCREEN> screenFactory)
+	static <BLOCK extends Block, CONTAINER extends Container, SCREEN extends Screen & IHasContainer<CONTAINER>> ContainerEntry<CONTAINER> container(BlockEntry<BLOCK> block, int rows, int cols, ContainerFactory<CONTAINER> containerFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.ContainerFactory.ScreenFactory<CONTAINER, SCREEN>> screenFactory)
 	{
 		String blockName = block.getId().getPath();
 		return container(blockName, rows, cols, containerFactory, screenFactory);

@@ -250,7 +250,7 @@ public final class Nordic
 	// region: Drawer
 	public static final BlockEntry<NordicDrawerBlock> DRAWER_BLOCK = drawer();
 	public static final ItemEntry<BlockItem> DRAWER_BLOCK_ITEM = Registrations.blockItem(DRAWER_BLOCK);
-	public static final ContainerEntry<NordicDrawerContainer> DRAWER_CONTAINER = Registrations.container(DRAWER_BLOCK, NordicDrawerContainer.ROWS, NordicDrawerContainer.COLS, NordicDrawerContainer::new, NordicDrawerContainerScreen::new);
+	public static final ContainerEntry<NordicDrawerContainer> DRAWER_CONTAINER = Registrations.container(DRAWER_BLOCK, NordicDrawerContainer.ROWS, NordicDrawerContainer.COLS, NordicDrawerContainer::new, () -> NordicDrawerContainerScreen::new);
 	public static final BlockEntityEntry<NordicDrawerBlockEntity> DRAWER_BLOCK_ENTITY = Registrations.blockEntity(DRAWER_BLOCK);
 
 	private static BlockEntry<NordicDrawerBlock> drawer()
