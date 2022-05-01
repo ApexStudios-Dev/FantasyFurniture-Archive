@@ -327,7 +327,7 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Shelf
+	// region: Sofa
 	public static final BlockEntry<NordicSofaBlock> SOFA_BLOCK = sofa();
 	public static final ItemEntry<BlockItem> SOFA_BLOCK_ITEM = Registrations.blockItem(SOFA_BLOCK);
 
