@@ -1,14 +1,19 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
+import com.tterrag.registrate.util.DataIngredient;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.SmithingRecipeBuilder;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.FurnitureStationBlock;
@@ -39,10 +44,26 @@ public final class FurnitureStation
 
 	// items with this tag can be crafted from the furniture station
 	public static final ITag.INamedTag<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
+	// used to support any axe type, we tag the vanilla axes
+	// unsure if a community accepted name exists for this
+	// used common name space and similar naming to ores
+	// forge:tools/axe
+	public static final ITag.INamedTag<Item> TOOLS_AXE = REGISTRY.forgeItemTag("tools/axe");
 
 	static void bootstrap()
 	{
-		REGISTRY.addDataGenerator(ProviderType.ITEM_TAGS, provider -> provider.tag(CRAFTABLE));
+		REGISTRY.addDataGenerator(ProviderType.ITEM_TAGS, provider -> {
+			provider.tag(CRAFTABLE);
+
+			provider.tag(TOOLS_AXE).add(
+					Items.WOODEN_AXE,
+					Items.STONE_AXE,
+					Items.IRON_AXE,
+					Items.GOLDEN_AXE,
+					Items.DIAMOND_AXE,
+					Items.NETHERITE_AXE
+			);
+		});
 	}
 
 	private static BlockEntry<FurnitureStationBlock> block()
@@ -58,6 +79,13 @@ public final class FurnitureStation
 				.noOcclusion()
 
 				.blockState(Registrations::horizontalBlock)
+
+				.recipe((ctx, provider) -> SmithingRecipeBuilder
+						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(Tags.Items.LEATHER), ctx.get().asItem())
+						.unlocks("has_crafting_table", RegistrateRecipeProvider.hasItem(Items.CRAFTING_TABLE))
+						.unlocks("has_leather", RegistrateRecipeProvider.hasItem(Tags.Items.LEATHER))
+						.save(provider, ctx.getId())
+				)
 
 				.isValidSpawn(BlockHelper::never)
 				.isRedstoneConductor(BlockHelper::never)
