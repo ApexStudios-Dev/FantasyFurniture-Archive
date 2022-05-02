@@ -14,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.common.Tags;
@@ -30,7 +29,6 @@ public final class FurnitureStationContainer extends Container
 	private final IWorldPosCallable access;
 	private final IInventory inputInventory;
 	private final CraftResultInventory resultInventory;
-	private final IntReferenceHolder selectedResultIndex = IntReferenceHolder.standalone();
 
 	private final Slot claySlot;
 	private final Slot redDyeSlot;
@@ -77,8 +75,6 @@ public final class FurnitureStationContainer extends Container
 		{
 			addSlot(new Slot(playerInventory, i, 8 + i * 18, 198));
 		}
-
-		addDataSlot(selectedResultIndex);
 	}
 
 	public Slot getClaySlot()
@@ -127,8 +123,7 @@ public final class FurnitureStationContainer extends Container
 		if(claySlot.hasItem() && redDyeSlot.hasItem() && yellowDyeSlot.hasItem() && blueDyeSlot.hasItem())
 			FurnitureStation.CRAFTABLE.getValues().stream().map(Item::getDefaultInstance).forEach(results::add);
 
-		int current = selectedResultIndex.get();
-		setupResultSlot(current);
+		setupResultSlot(-1);
 	}
 
 	@Override
@@ -218,43 +213,27 @@ public final class FurnitureStationContainer extends Container
 
 	private void setupResultSlot(int button)
 	{
-		if(results.isEmpty())
+		int size = results.size();
+
+		if(size == 0 || button < 0 || button > size - 1)
 		{
 			resultSlot.set(ItemStack.EMPTY);
-			selectedResultIndex.set(-1);
-
 			broadcastChanges();
 			return;
 		}
 
-		int index = button;
-		int size = results.size();
-
-		if(index < 0 || index > size)
-		{
-			int current = selectedResultIndex.get();
-
-			if(current >= 0 && current < size)
-				index = current;
-		}
-
-		if(index >= 0 && index < size)
-		{
-			ItemStack stack = results.get(index).copy();
-			stack.setCount(1);
-			resultSlot.set(stack);
-			selectedResultIndex.set(index);
-
-			broadcastChanges();
-		}
+		ItemStack stack = results.get(button).copy();
+		stack.setCount(1);
+		resultSlot.set(stack);
+		broadcastChanges();
 	}
 
-	private void decrementInput(int amount)
+	private void decrementInput()
 	{
-		claySlot.remove(amount);
-		redDyeSlot.remove(amount);
-		blueDyeSlot.remove(amount);
-		yellowDyeSlot.remove(amount);
+		claySlot.remove(1);
+		redDyeSlot.remove(1);
+		blueDyeSlot.remove(1);
+		yellowDyeSlot.remove(1);
 	}
 
 	public final class InputSlot extends Slot
@@ -291,11 +270,10 @@ public final class FurnitureStationContainer extends Container
 		@Override
 		public ItemStack onTake(PlayerEntity player, ItemStack stack)
 		{
-			int stackSize = stack.getCount();
-			stack.onCraftedBy(player.level, player, stackSize);
+			stack.getItem().onCraftedBy(stack, player.level, player);
 			resultInventory.awardUsedRecipes(player);
 
-			decrementInput(stackSize);
+			decrementInput();
 			setupResultSlot(-1);
 
 			access.execute((world, pos) -> {
