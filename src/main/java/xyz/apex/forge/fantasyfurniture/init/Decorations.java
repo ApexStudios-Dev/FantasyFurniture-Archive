@@ -56,6 +56,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -90,6 +91,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -122,6 +124,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -156,6 +159,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -201,6 +205,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -235,6 +240,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -268,6 +274,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -317,6 +324,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}

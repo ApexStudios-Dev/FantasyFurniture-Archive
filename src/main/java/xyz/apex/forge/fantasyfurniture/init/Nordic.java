@@ -51,6 +51,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -79,6 +80,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -113,6 +115,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -145,6 +148,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -177,6 +181,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -209,6 +214,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -242,6 +248,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -276,6 +283,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 
 					.simpleBlockEntity(NordicDrawerBlockEntity::new)
@@ -322,6 +330,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
@@ -363,6 +372,7 @@ public final class Nordic
 
 					.item()
 						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), REGISTRY.id("block/nordic/sofa_single")))
+						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
 	}
