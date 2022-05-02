@@ -56,10 +56,10 @@ public final class FurnitureStationContainer extends Container
 
 		resultInventory = new CraftResultInventory();
 
-		claySlot = addSlot(new InputSlot(FurnitureStation.CLAY_SLOT, 35, 21, stack -> stack.getItem() == Items.CLAY_BALL));
-		redDyeSlot = addSlot(new InputSlot(FurnitureStation.RED_DYE_SLOT, 71, 21, stack -> stack.getItem().is(Tags.Items.DYES_RED)));
-		yellowDyeSlot = addSlot(new InputSlot(FurnitureStation.YELLOW_DYE_SLOT, 89, 21, stack -> stack.getItem().is(Tags.Items.DYES_YELLOW)));
-		blueDyeSlot = addSlot(new InputSlot(FurnitureStation.BLUE_DYE_SLOT, 107, 21, stack -> stack.getItem().is(Tags.Items.DYES_BLUE)));
+		claySlot = addSlot(new InputSlot(FurnitureStation.CLAY_SLOT, 25, 21, stack -> stack.getItem() == Items.CLAY_BALL));
+		redDyeSlot = addSlot(new InputSlot(FurnitureStation.RED_DYE_SLOT, 61, 21, stack -> stack.getItem().is(Tags.Items.DYES_RED)));
+		yellowDyeSlot = addSlot(new InputSlot(FurnitureStation.YELLOW_DYE_SLOT, 79, 21, stack -> stack.getItem().is(Tags.Items.DYES_YELLOW)));
+		blueDyeSlot = addSlot(new InputSlot(FurnitureStation.BLUE_DYE_SLOT, 97, 21, stack -> stack.getItem().is(Tags.Items.DYES_BLUE)));
 		resultSlot = addSlot(new ResultSlot());
 
 		// player inventory slots
@@ -258,7 +258,7 @@ public final class FurnitureStationContainer extends Container
 	{
 		private ResultSlot()
 		{
-			super(resultInventory, FurnitureStation.RESULT_SLOT, 134, 72);
+			super(resultInventory, FurnitureStation.RESULT_SLOT, 148, 72);
 		}
 
 		@Override

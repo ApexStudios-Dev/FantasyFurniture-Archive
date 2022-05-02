@@ -75,8 +75,6 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);
 		renderTooltip(pose, mouseX, mouseY);
-
-		drawString(pose, font, "" + startIndex, leftPos - 32, topPos - 32, -1);
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		blit(pose, i, j, 0, 0, imageWidth, imageHeight);
 
 		int k = (int) (57F * scrollOffset);
-		blit(pose, i + 111, j + 45 + k, 194 + (scrollbarActive() ? 0 : 12), 0, 12, 15);
+		blit(pose, i + 127, j + 45 + k, 194 + (scrollbarActive() ? 0 : 12), 0, 12, 15);
 	}
 
 	@Override
@@ -102,10 +100,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 		if(!menu.getResults().isEmpty())
 		{
-			int x = leftPos + 112;
+			int x = leftPos + 128;
 			int y = topPos + 46;
 			int w = 12;
-			int h = 72;
+			int h = 71;
 
 			if(mouseX >= x && mouseY >= y && mouseX < x + w && mouseY < y + h)
 			{
@@ -126,13 +124,13 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(scrolling && scrollbarActive())
 		{
 			int i = topPos + 44;
-			int j = i + 74;
+			int j = i + 73;
 
-			int offscreenRows = (size + 4 - 1) / 4 - 4;
+			int offscreenRows = (size + 6 - 1) / 4 - 4;
 
 			scrollOffset = ((float) mouseY - (float) i - 7.5F) / ((float) (j - i) - 15F);
 			scrollOffset = MathHelper.clamp(scrollOffset, 0F, 1F);
-			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 4;
+			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 6;
 
 			return true;
 		}
@@ -148,11 +146,11 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			List<ItemStack> results = menu.getResults();
 			int size = results.size();
 
-			int offscreenRows = (size + 4 - 1) / 4 - 4;
+			int offscreenRows = (size + 6 - 1) / 4 - 4;
 
 			scrollOffset = (float) ((double) scrollOffset - scrollDelta / (double) offscreenRows);
 			scrollOffset = MathHelper.clamp(scrollOffset, 0F, 1F);
-			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 4;
+			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 6;
 
 			return true;
 		}
@@ -236,10 +234,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			{
 				ItemStack resultItem = results.get(i);
 
-				int resultItemX = centerX + 36 + 18 * (i % 4);
+				int resultItemX = centerX + 17 + 18 * (i % 6);
 				int resultItemY = centerY + 46 + yOffset;
 
-				if(i % 4 == 3)
+				if(i % 6 == 5)
 					yOffset += 18;
 				if(resultItemY >= maxY)
 					break;
@@ -291,10 +289,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 			for(int i = startIndex; i < results.size(); i++)
 			{
-				int resultItemX = centerX + 36 + 18 * (i % 4);
+				int resultItemX = centerX + 17 + 18 * (i % 6);
 				int resultItemY = centerY + 46 + yOffset;
 
-				if(i % 4 == 3)
+				if(i % 6 == 5)
 					yOffset += 18;
 				if(resultItemY >= maxY)
 					break;
@@ -361,6 +359,6 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 	private boolean scrollbarActive()
 	{
-		return menu.getResults().size() > 4 * 4;
+		return menu.getResults().size() > 6 * 4;
 	}
 }
