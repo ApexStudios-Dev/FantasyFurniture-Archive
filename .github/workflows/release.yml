@@ -105,7 +105,7 @@ jobs:
 #          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
 #          color: '#97C6E7'
 #          file: ./CHANGELOG.md
-#          message: "<@&963676451616460860> has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
+#          message: "Fantasy's Furniture has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop
