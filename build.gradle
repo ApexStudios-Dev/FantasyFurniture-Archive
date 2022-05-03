@@ -288,7 +288,7 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 	}
 }
 
-/*if(System.getenv('CURSEFORGE_TOKEN') != null) {
+if(System.getenv('CURSEFORGE_TOKEN') != null) {
 	curseforge {
 		apiKey = System.getenv('CURSEFORGE_TOKEN')
 
@@ -316,9 +316,8 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 			detectNewerJava = true
 		}
 	}
-}*/
+}
 
-/*
 import com.modrinth.minotaur.dependencies.ModDependency
 
 if(System.getenv('MODRINTH_TOKEN') != null) {
@@ -338,4 +337,4 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 				new ModDependency("${apexcore_modrinth_slug}", 'required')
 		]
 	}
-}*/
+}

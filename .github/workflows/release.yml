@@ -82,30 +82,30 @@ jobs:
           name: Changelog
           path: ./CHANGELOG.md
 
-#      - name: Publish Mod to Maven
-#        run: ./gradlew publish
-#        env:
-#          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
-#          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
+      - name: Publish Mod to Maven
+        run: ./gradlew publish
+        env:
+          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
+          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
 
-#      - name: Publish Mod to CurseForge
-#        run: ./gradlew curseforge
-#        env:
-#          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      - name: Publish Mod to CurseForge
+        run: ./gradlew curseforge
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
-#      - name: Publish Mod to Modrinth
-#        run: ./gradlew modrinth
-#        env:
-#          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      - name: Publish Mod to Modrinth
+        run: ./gradlew modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
 
-#      - name: Send Version Release Announcement Messages
-#        uses: appleboy/discord-action@0.0.3
-#        with:
-#          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
-#          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-#          color: '#97C6E7'
-#          file: ./CHANGELOG.md
-#          message: "Fantasy's Furniture has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
+      - name: Send Version Release Announcement Messages
+        uses: appleboy/discord-action@0.0.3
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          color: '#97C6E7'
+          file: ./CHANGELOG.md
+          message: "Fantasy's Furniture has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop
