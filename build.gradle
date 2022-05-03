@@ -14,8 +14,8 @@ buildscript {
 
 plugins {
 	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
-	// id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-	// id 'com.modrinth.minotaur' version "${minotaur_version}"
+	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+	id 'com.modrinth.minotaur' version "${minotaur_version}"
 	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version "${gradle_changelog_version}"
 }
 
