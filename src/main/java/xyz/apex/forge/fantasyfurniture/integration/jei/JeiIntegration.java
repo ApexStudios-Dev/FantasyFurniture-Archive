@@ -12,7 +12,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
-import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
@@ -47,14 +46,7 @@ public final class JeiIntegration implements IModPlugin
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration)
 	{
-		registration.addRecipeTransferHandler(
-				FurnitureStationContainer.class,
-				FURNITURE_STATION_RECIPES,
-				0,
-				4,
-				5,
-				(9 * 3) + 9
-		);
+		registration.addRecipeTransferHandler(new FurnitureStationRecipeTransferHandler(registration), FURNITURE_STATION_RECIPES);
 	}
 
 	@Override
