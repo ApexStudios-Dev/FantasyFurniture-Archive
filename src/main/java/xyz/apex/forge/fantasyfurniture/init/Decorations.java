@@ -74,7 +74,7 @@ public final class Decorations
 					.lang(EN_GB, "Boiled Creme Treats")
 
 					.initialProperties(Material.CAKE)
-					.strength(2.5F)
+					.strength(.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
@@ -222,7 +222,7 @@ public final class Decorations
 					.lang(EN_GB, "Sweetrolls")
 
 					.initialProperties(Material.CAKE)
-					.strength(2.5F)
+					.strength(.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
