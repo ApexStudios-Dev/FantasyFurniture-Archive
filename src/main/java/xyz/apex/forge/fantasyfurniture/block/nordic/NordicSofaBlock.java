@@ -78,6 +78,12 @@ public final class NordicSofaBlock extends SofaBlock
 	}
 
 	@Override
+	protected double getSeatYOffset(BlockState blockState)
+	{
+		return .1D;
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
