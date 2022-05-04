@@ -6,7 +6,6 @@ import org.apache.commons.lang3.Validate;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
@@ -82,7 +81,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		@Override
 		public ItemStack makeIcon()
 		{
-			return Items.STONE.getDefaultInstance();
+			return FurnitureStation.BLOCK.asItemStack();
 		}
 	}
 }
