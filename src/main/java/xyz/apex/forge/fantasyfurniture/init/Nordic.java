@@ -6,9 +6,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.common.ToolType;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
@@ -43,15 +46,17 @@ public final class Nordic
 					.lang(EN_GB, "Nordic Wool")
 
 					.initialProperties(Material.WOOL, MaterialColor.WOOL)
-					.strength(2.5F)
+					.strength(.8F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().cubeAll(location, new ResourceLocation(location))))
 
+					.tag(BlockTags.WOOL)
+
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.WOOL)
 					.build()
 		.register();
 	}
@@ -72,15 +77,17 @@ public final class Nordic
 					.lang(EN_GB, "Nordic Carpet")
 
 					.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
-					.strength(2.5F)
-					.sound(SoundType.WOOL)
+					.strength(.1F)
+					.harvestTool(ToolType.get("shears"))
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
 
+					.tag(BlockTags.CARPETS)
+
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.CARPETS)
 					.build()
 		.register();
 	}
