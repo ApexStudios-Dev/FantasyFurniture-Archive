@@ -11,7 +11,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.common.ToolType;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
@@ -78,7 +77,7 @@ public final class Nordic
 
 					.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 					.strength(.1F)
-					.harvestTool(ToolType.get("shears"))
+					.sound(SoundType.WOOL)
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
