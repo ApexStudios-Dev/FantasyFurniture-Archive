@@ -256,7 +256,7 @@ public final class Decorations
 					.lang(EN_GB, "Mead Bottles")
 
 					.initialProperties(Material.GLASS)
-					.strength(2.5F)
+					.strength(.3F)
 					.sound(SoundType.GLASS)
 					.noOcclusion()
 
