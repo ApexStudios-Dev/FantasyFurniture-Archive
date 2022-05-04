@@ -77,7 +77,6 @@ public final class Decorations
 					.strength(2.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
-					.noCollission()
 
 					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
@@ -226,7 +225,6 @@ public final class Decorations
 					.strength(2.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
-					.noCollission()
 
 					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
@@ -310,7 +308,6 @@ public final class Decorations
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
-					.noCollission()
 
 					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TankardsBlock.TANKARDS))
