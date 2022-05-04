@@ -108,7 +108,7 @@ public final class Decorations
 					.lang(EN_GB,"Bolts of Cloth")
 
 					.initialProperties(Material.WOOL)
-					.strength(2.5F)
+					.strength(.8F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
