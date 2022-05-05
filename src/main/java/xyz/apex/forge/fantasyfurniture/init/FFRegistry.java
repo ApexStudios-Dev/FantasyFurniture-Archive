@@ -20,6 +20,9 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 {
 	private static final Lazy<FFRegistry> REGISTRY = create(FFRegistry::new);
 
+	public static final String TXT_JEI_INGREDIENTS_KEY = "text." + FantasyFurniture.ID + ".jei.ingredients";
+	public static final String TXT_JEI_RESULTS_KEY = "text." + FantasyFurniture.ID + ".jei.results";
+
 	private static boolean bootstrap = false;
 
 	private FFRegistry()
@@ -31,6 +34,9 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
 
 		addDataGenerator(LANG, provider -> {
+			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
+			provider.add(TXT_JEI_RESULTS_KEY, "Results");
+
 			getAll(Block.class)
 			        .stream()
 			        .filter(RegistryEntry::isPresent)
@@ -41,6 +47,9 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+			provider.add(EN_GB, TXT_JEI_INGREDIENTS_KEY, "Ingredients");
+			provider.add(EN_GB, TXT_JEI_RESULTS_KEY, "Results");
+
 			getAll(Block.class)
 			        .stream()
 			        .filter(RegistryEntry::isPresent)

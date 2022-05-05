@@ -4,22 +4,26 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.registration.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
+import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public final class JeiIntegration implements IModPlugin
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 	private static final ResourceLocation PLUGIN_ID = REGISTRY.id("jei_integration");
 	public static final ResourceLocation FURNITURE_STATION_RECIPES = REGISTRY.id("recipes/furniture_station");
@@ -40,13 +44,23 @@ public final class JeiIntegration implements IModPlugin
 	@Override
 	public void registerRecipes(IRecipeRegistration registration)
 	{
-		registration.addRecipes(FurnitureStation.CRAFTABLE.getValues(), FURNITURE_STATION_RECIPES);
+		IJeiHelpers jei = registration.getJeiHelpers();
+		List<ItemStack> results = FurnitureStation.CRAFTABLE.getValues().stream().map(Item::getDefaultInstance).collect(Collectors.toList());
+		Set<FurnitureStationRecipes> recipes = Collections.singleton(new FurnitureStationRecipes(results, jei));
+		registration.addRecipes(recipes, FURNITURE_STATION_RECIPES);
 	}
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration)
 	{
-		registration.addRecipeTransferHandler(new FurnitureStationRecipeTransferHandler(registration), FURNITURE_STATION_RECIPES);
+		registration.addRecipeTransferHandler(
+				FurnitureStationContainer.class,
+				FURNITURE_STATION_RECIPES,
+				0,
+				4,
+				5,
+				(9 * 3) + 9
+		);
 	}
 
 	@Override
