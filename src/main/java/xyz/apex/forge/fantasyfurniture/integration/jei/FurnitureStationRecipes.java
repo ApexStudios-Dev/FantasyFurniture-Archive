@@ -44,21 +44,15 @@ public final class FurnitureStationRecipes
 {
 	private final List<ItemStack> outputs;
 	private final List<Ingredient> inputs;
-	private final IJeiHelpers jei;
-	private final IGuiHelper gui;
-	private final IDrawable funitureSlotRenderer;
+	private final IDrawable furnitureSlotRenderer;
 	private final IDrawable vanillaSlotRenderer;
-
-	private float blockRotation = 0F;
-	private float blockBobOffset = 0F;
 
 	FurnitureStationRecipes(Collection<ItemStack> outputs, IJeiHelpers jei)
 	{
 		this.outputs = ImmutableList.copyOf(outputs);
-		this.jei = jei;
 
-		gui = jei.getGuiHelper();
-		funitureSlotRenderer = gui.createDrawable(FurnitureStationContainerScreen.TEXTURE, 176, 18, 18, 18);
+		IGuiHelper gui = jei.getGuiHelper();
+		furnitureSlotRenderer = gui.createDrawable(FurnitureStationContainerScreen.TEXTURE, 176, 18, 18, 18);
 		vanillaSlotRenderer = gui.getSlotDrawable();
 
 		inputs = Arrays.asList(
@@ -128,8 +122,8 @@ public final class FurnitureStationRecipes
 		int itemsPerRow = 6;
 		int itemsPerCol = 4;
 
-		int xSize = funitureSlotRenderer.getWidth() + 2;
-		int ySize = funitureSlotRenderer.getHeight() + 2;
+		int xSize = furnitureSlotRenderer.getWidth() + 2;
+		int ySize = furnitureSlotRenderer.getHeight() + 2;
 
 		int xSpacing = xSize + 1;
 		int ySpacing = ySize + 1;
@@ -174,7 +168,7 @@ public final class FurnitureStationRecipes
 		slotMap.forEach((slot, slotData) -> {
 			groups.init(slot, false, slotData.getLeft(), slotData.getMiddle());
 			groups.set(slot, slotData.getRight());
-			groups.setBackground(slot, funitureSlotRenderer);
+			groups.setBackground(slot, furnitureSlotRenderer);
 		});
 	}
 
@@ -185,11 +179,12 @@ public final class FurnitureStationRecipes
 		IBakedModel model = mc.getBlockRenderer().getBlockModel(blockState);
 
 		float frameTime = mc.getFrameTime();
+		float blockBobOffset = 0F;
 		float f1 = MathHelper.sin((mc.player.tickCount + frameTime) / 5F + blockBobOffset) * .5F + .5F;
 		float f2 = model.getTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y();
 
 		double blockYOffset = f1 + .25F * f2;
-		blockRotation = (mc.player.tickCount + frameTime) / 1.25F + blockBobOffset;
+		float blockRotation = (mc.player.tickCount + frameTime) / 1.25F + blockBobOffset;
 
 		int width = background.getWidth();
 		int height = background.getHeight();
