@@ -12,11 +12,9 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.java.utility.nullness.NonnullPredicate;
@@ -31,12 +29,11 @@ public final class FurnitureStationContainer extends Container
 	private final CraftResultInventory resultInventory;
 
 	private final Slot claySlot;
-	private final Slot redDyeSlot;
-	private final Slot yellowDyeSlot;
-	private final Slot blueDyeSlot;
+	private final Slot woodSlot;
+	private final Slot stoneSlot;
 	private final Slot resultSlot;
 
-	private List<ItemStack> results = Lists.newArrayList();
+	private final List<ItemStack> results = Lists.newArrayList();
 	private long lastSoundTime = 0L;
 
 	public FurnitureStationContainer(@Nullable ContainerType<?> menuType, int windowId, PlayerInventory playerInventory, IWorldPosCallable access)
@@ -56,10 +53,9 @@ public final class FurnitureStationContainer extends Container
 
 		resultInventory = new CraftResultInventory();
 
-		claySlot = addSlot(new InputSlot(FurnitureStation.CLAY_SLOT, 25, 21, stack -> stack.getItem() == Items.CLAY_BALL));
-		redDyeSlot = addSlot(new InputSlot(FurnitureStation.RED_DYE_SLOT, 61, 21, stack -> stack.getItem().is(Tags.Items.DYES_RED)));
-		yellowDyeSlot = addSlot(new InputSlot(FurnitureStation.YELLOW_DYE_SLOT, 79, 21, stack -> stack.getItem().is(Tags.Items.DYES_YELLOW)));
-		blueDyeSlot = addSlot(new InputSlot(FurnitureStation.BLUE_DYE_SLOT, 97, 21, stack -> stack.getItem().is(Tags.Items.DYES_BLUE)));
+		claySlot = addSlot(new InputSlot(FurnitureStation.CLAY_SLOT, 16, 21, FurnitureStation::isValidClay));
+		woodSlot = addSlot(new InputSlot(FurnitureStation.WOOD_SLOT, 34, 21, FurnitureStation::isValidWood));
+		stoneSlot = addSlot(new InputSlot(FurnitureStation.STONE_SLOT, 52, 21, FurnitureStation::isValidStone));
 		resultSlot = addSlot(new ResultSlot());
 
 		// player inventory slots
@@ -82,19 +78,14 @@ public final class FurnitureStationContainer extends Container
 		return claySlot;
 	}
 
-	public Slot getRedDyeSlot()
+	public Slot getWoodSlot()
 	{
-		return redDyeSlot;
+		return woodSlot;
 	}
 
-	public Slot getBlueDyeSlot()
+	public Slot getStoneSlot()
 	{
-		return blueDyeSlot;
-	}
-
-	public Slot getYellowDyeSlot()
-	{
-		return yellowDyeSlot;
+		return stoneSlot;
 	}
 
 	public Slot getResultSlot()
@@ -120,7 +111,7 @@ public final class FurnitureStationContainer extends Container
 
 		results.clear();
 
-		if(claySlot.hasItem() && redDyeSlot.hasItem() && yellowDyeSlot.hasItem() && blueDyeSlot.hasItem())
+		if(claySlot.hasItem() && woodSlot.hasItem() && stoneSlot.hasItem())
 			FurnitureStation.CRAFTABLE.getValues().stream().map(Item::getDefaultInstance).forEach(results::add);
 
 		setupResultSlot(-1);
@@ -158,10 +149,10 @@ public final class FurnitureStationContainer extends Container
 			ItemStack stack1 = slot.getItem();
 			stack = stack1.copy();
 
-			int inputStart = 0;
-			int inputEnd = 3;
+			int inputStart = Math.min(FurnitureStation.CLAY_SLOT, Math.min(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
+			int inputEnd = Math.max(FurnitureStation.CLAY_SLOT, Math.max(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
 
-			int resultSlot = 4;
+			int resultSlot = FurnitureStation.RESULT_SLOT;
 
 			int playerStart = 5;
 			int playerEnd = 31;
@@ -231,9 +222,8 @@ public final class FurnitureStationContainer extends Container
 	private void decrementInput()
 	{
 		claySlot.remove(1);
-		redDyeSlot.remove(1);
-		blueDyeSlot.remove(1);
-		yellowDyeSlot.remove(1);
+		woodSlot.remove(1);
+		stoneSlot.remove(1);
 	}
 
 	public final class InputSlot extends Slot

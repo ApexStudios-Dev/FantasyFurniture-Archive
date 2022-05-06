@@ -56,9 +56,9 @@ public final class JeiIntegration implements IModPlugin
 		registration.addRecipeTransferHandler(
 				FurnitureStationContainer.class,
 				FURNITURE_STATION_RECIPES,
-				0,
-				4,
-				5,
+				FurnitureStation.CLAY_SLOT,
+				3,
+				FurnitureStation.RESULT_SLOT + 1,
 				(9 * 3) + 9
 		);
 	}

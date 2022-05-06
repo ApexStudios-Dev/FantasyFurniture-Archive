@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -18,17 +19,15 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
+import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import java.util.List;
 
@@ -38,9 +37,9 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 {
 	public static final ResourceLocation TEXTURE = FFRegistry.getInstance().id("textures/gui/container/furniture_station.png");
 
-	private int redDyeIndex = 0;
-	private int blueDyeIndex = 0;
-	private int yellowDyeIndex = 0;
+	private int clayIndex = 0;
+	private int woodIndex = 0;
+	private int stoneIndex = 0;
 	private int cycleCounter = 0;
 
 	private float scrollOffset = 0F;
@@ -161,14 +160,12 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	private void renderSlotBackgrounds(MatrixStack pose, int mouseX, int mouseY)
 	{
 		Slot claySlot = menu.getClaySlot();
-		Slot redDyeSlot = menu.getRedDyeSlot();
-		Slot blueDyeSlot = menu.getBlueDyeSlot();
-		Slot yellowDyeSlot = menu.getYellowDyeSlot();
+		Slot woodSlot = menu.getWoodSlot();
+		Slot stoneSlot = menu.getStoneSlot();
 
-		renderSlotBackground(claySlot, Items.CLAY_BALL, pose, mouseX, mouseY);
-		redDyeIndex = renderSlotBackground(redDyeSlot, Tags.Items.DYES_RED, pose, mouseX, mouseY, redDyeIndex);
-		blueDyeIndex = renderSlotBackground(blueDyeSlot, Tags.Items.DYES_BLUE, pose, mouseX, mouseY, blueDyeIndex);
-		yellowDyeIndex = renderSlotBackground(yellowDyeSlot, Tags.Items.DYES_YELLOW, pose, mouseX, mouseY, yellowDyeIndex);
+		clayIndex = renderSlotBackground(claySlot, FurnitureStation.CLAY, pose, mouseX, mouseY, clayIndex);
+		woodIndex = renderSlotBackground(woodSlot, FurnitureStation.WOOD, pose, mouseX, mouseY, woodIndex);
+		stoneIndex = renderSlotBackground(stoneSlot, FurnitureStation.STONE, pose, mouseX, mouseY, stoneIndex);
 
 		cycleCounter++;
 
@@ -176,14 +173,26 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			cycleCounter = 0;
 	}
 
-	private void renderSlotBackground(Slot slot, IItemProvider backgroundItem, MatrixStack pose, int mouseX, int mouseY)
+	private int renderSlotBackground(Slot slot, ITag.INamedTag<Item> backgroundTag, MatrixStack pose, int mouseX, int mouseY, int counter)
 	{
+		int index  = counter;
+
 		if(!slot.hasItem())
 		{
+			List<Item> values = backgroundTag.getValues();
+
+			if(cycleCounter == 125)
+			{
+				index++;
+
+				if(index >= values.size())
+					index = 0;
+			}
+
 			int x = leftPos + slot.x;
 			int y = topPos + slot.y;
 
-			Item item = backgroundItem.asItem();
+			Item item = values.get(index);
 			ItemStack stack = item.getDefaultInstance();
 
 			FontRenderer stackFont = item.getFontRenderer(stack);
@@ -191,24 +200,19 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 			renderTranslucentItem(stack, x, y);
 			itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y);
+
+			// TODO: Maybe this should be a config?
+			//  Show tooltip theres more than 1 valid input item
+			if(/*backgroundTag.getValues().size() > 1 &&*/ minecraft.player.inventory.getCarried().isEmpty())
+			{
+				if(mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16)
+				{
+					ITextComponent name = stack.getHoverName();
+					ITextComponent accepts = FurnitureStation.buildAcceptsAnyComponent(backgroundTag);
+					renderWrappedToolTip(pose, Lists.newArrayList(name, accepts), mouseX, mouseY, stackFont);
+				}
+			}
 		}
-	}
-
-	private int renderSlotBackground(Slot slot, ITag<Item> backgroundTag, MatrixStack pose, int mouseX, int mouseY, int counter)
-	{
-		List<Item> values = backgroundTag.getValues();
-		int index  = counter;
-
-		if(cycleCounter == 125)
-		{
-			index++;
-
-			if(index >= values.size())
-				index = 0;
-		}
-
-		Item item = values.get(index);
-		renderSlotBackground(slot, item, pose, mouseX, mouseY);
 
 		return index;
 	}
@@ -343,8 +347,15 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(flag)
 			RenderHelper.setupForFlatItems();
 
-		int color = (191 << 24) | 0xf000f0;
-		itemRenderer.render(stack, ItemCameraTransforms.TransformType.GUI, false, pose, buffer, color, OverlayTexture.NO_OVERLAY, model);
+		int color = 15728880;
+		int overlay = OverlayTexture.NO_OVERLAY;
+
+		if(flag)
+			color = (191 << 24) | 0xf000f0;
+		else
+			overlay = OverlayTexture.pack(.45F, false);
+
+		itemRenderer.render(stack, ItemCameraTransforms.TransformType.GUI, false, pose, buffer, color, overlay, model);
 		buffer.endBatch();
 
 		RenderSystem.enableDepthTest();

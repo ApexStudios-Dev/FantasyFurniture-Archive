@@ -23,13 +23,11 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.model.data.EmptyModelData;
-import net.minecraftforge.common.Tags;
 
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
@@ -64,10 +62,9 @@ public final class FurnitureStationRecipes
 		vanillaSlotRenderer = gui.getSlotDrawable();
 
 		inputs = Arrays.asList(
-				Ingredient.of(Items.CLAY_BALL),
-				Ingredient.of(Tags.Items.DYES_RED),
-				Ingredient.of(Tags.Items.DYES_YELLOW),
-				Ingredient.of(Tags.Items.DYES_BLUE)
+				Ingredient.of(FurnitureStation.CLAY),
+				Ingredient.of(FurnitureStation.WOOD),
+				Ingredient.of(FurnitureStation.STONE)
 		);
 	}
 
@@ -85,7 +82,7 @@ public final class FurnitureStationRecipes
 		setupInputSlots(groups);
 		setupOutputSlots(groups, focus);
 
-		recipeLayout.moveRecipeTransferButton(110, 0);
+		recipeLayout.moveRecipeTransferButton(110, 68);
 
 		// blockRotation = 45F;
 		// blockBobOffset = (float) (Math.random() * Math.PI * 2D);
@@ -112,7 +109,7 @@ public final class FurnitureStationRecipes
 	{
 		int xSize = vanillaSlotRenderer.getWidth() + 2;
 		int xSpacing = xSize + 1;
-		int x = xSpacing;
+		int x = 0;
 
 		for(int i = 0; i < inputs.size(); i++)
 		{
