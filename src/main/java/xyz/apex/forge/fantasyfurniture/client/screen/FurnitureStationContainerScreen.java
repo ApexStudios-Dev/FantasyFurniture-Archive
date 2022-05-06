@@ -4,11 +4,14 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.model.IBakedModel;
@@ -24,14 +27,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import static org.lwjgl.glfw.GLFW.*;
 
 public final class FurnitureStationContainerScreen extends ContainerScreen<FurnitureStationContainer>
 {
@@ -46,6 +53,9 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	private int startIndex = 0;
 	private boolean scrolling = false;
 
+	@Nullable private TextFieldWidget searchBox;
+	private boolean focusSearchBoxNextTick = false;
+
 	public FurnitureStationContainerScreen(FurnitureStationContainer container, PlayerInventory playerInventory, ITextComponent title)
 	{
 		super(container, playerInventory, title);
@@ -57,13 +67,78 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		imageWidth = 176;
 		imageHeight = 222;
 
+		minecraft.keyboardHandler.setSendRepeatsToGui(true);
+
+		super.init();
+
 		inventoryLabelY = imageHeight - 94;
 
 		scrolling = false;
 		startIndex = 0;
 		scrollOffset = 0F;
 
-		super.init();
+		String text = searchBox == null ? "" : searchBox.getValue();
+
+		int s = 15 + (16 * 3) + 10;
+		int e = imageWidth - 12;
+
+		int w = e - s;
+		int h = 16;
+		int x = leftPos + s;
+		int y = topPos + titleLabelY + font.lineHeight + 6;
+
+		searchBox = addButton(new TextFieldWidget(font, x, y, w, h, new TranslationTextComponent("gui.recipebook.search_hint")));
+		searchBox.setMaxLength(50);
+		searchBox.setBordered(true);
+		searchBox.setVisible(true);
+		searchBox.setTextColor(16777215);
+		searchBox.setValue(text);
+		searchBox.setCanLoseFocus(true);
+	}
+
+	@Override
+	public void tick()
+	{
+		if(searchBox != null)
+		{
+			Slot claySlot = menu.getClaySlot();
+			Slot woodSlot = menu.getWoodSlot();
+			Slot stoneSlot = menu.getStoneSlot();
+
+			if(!claySlot.hasItem() || !woodSlot.hasItem() || !stoneSlot.hasItem())
+			{
+				searchBox.active = false;
+				searchBox.setValue("");
+				focusSearchBoxNextTick =  false;
+				searchBox.setFocus(false);
+				setFocused(null);
+			}
+			else
+				searchBox.active = true;
+
+			searchBox.tick();
+
+			if(focusSearchBoxNextTick)
+			{
+				if(!searchBox.isFocused())
+				{
+					setFocused(searchBox);
+					searchBox.setFocus(true);
+				}
+
+				focusSearchBoxNextTick = false;
+			}
+		}
+
+		super.tick();
+	}
+
+	@Override
+	public void removed()
+	{
+		searchBox = null;
+		minecraft.keyboardHandler.setSendRepeatsToGui(false);
+		super.removed();
 	}
 
 	@Override
@@ -71,6 +146,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	{
 		renderBackground(pose);
 		super.render(pose, mouseX, mouseY, partialTicks);
+
+		if(searchBox != null && searchBox.isVisible() && !searchBox.isFocused() && searchBox.getValue().isEmpty())
+			drawString(pose, font, searchBox.getMessage().copy().withStyle(TextFormatting.GRAY, TextFormatting.ITALIC), searchBox.x + 2, searchBox.y + (font.lineHeight / 2), searchBox.getFGColor());
+
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);
 		renderTooltip(pose, mouseX, mouseY);
@@ -93,6 +172,18 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
 	{
 		scrolling = false;
+
+		if(searchBox != null && searchBox.active && searchBox.isVisible())
+		{
+			if(searchBox.mouseClicked(mouseX, mouseY, mouseButton))
+				return true;
+
+			if(mouseButton == GLFW_MOUSE_BUTTON_RIGHT && searchBox.isMouseOver(mouseX, mouseY))
+			{
+				searchBox.setValue("");
+				return true;
+			}
+		}
 
 		if(clickedResult(mouseX, mouseY, mouseButton))
 			return true;
@@ -157,6 +248,58 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		return super.mouseScrolled(mouseX, mouseY, scrollDelta);
 	}
 
+	@Override
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers)
+	{
+		if(searchBox != null && searchBox.active && searchBox.isVisible())
+		{
+			if(searchBox.isFocused())
+			{
+				if(searchBox.keyPressed(keyCode, scanCode, modifiers))
+					return true;
+
+				if(keyCode == GLFW_KEY_ESCAPE)
+				{
+					focusSearchBoxNextTick = false;
+					searchBox.setFocus(false);
+					return true;
+				}
+			}
+			else
+			{
+				if(minecraft.options.keyChat.matches(keyCode, scanCode))
+				{
+					focusSearchBoxNextTick = true;
+					return true;
+				}
+			}
+		}
+
+		return super.keyPressed(keyCode, scanCode, modifiers);
+	}
+
+	@Override
+	public boolean charTyped(char typedChar, int modifiers)
+	{
+		if(searchBox != null && searchBox.active && searchBox.isFocused() && searchBox.isVisible() && searchBox.charTyped(typedChar, modifiers))
+			return true;
+
+		return super.charTyped(typedChar, modifiers);
+	}
+
+	@Override
+	public List<? extends IGuiEventListener> children()
+	{
+		if(searchBox != null && !searchBox.active)
+		{
+			ArrayList<IGuiEventListener> kids = Lists.newArrayList(children);
+			kids.remove(searchBox);
+			return kids;
+		}
+
+		return children;
+	}
+
 	private void renderSlotBackgrounds(MatrixStack pose, int mouseX, int mouseY)
 	{
 		Slot claySlot = menu.getClaySlot();
@@ -217,6 +360,22 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		return index;
 	}
 
+	private boolean isItemValid(ItemStack stack)
+	{
+		if(searchBox != null && searchBox.isVisible())
+		{
+			String value = searchBox.getValue();
+
+			if(!value.isEmpty())
+			{
+				ITextComponent displayName = stack.getHoverName();
+				return StringUtils.containsIgnoreCase(displayName.getString(), value);
+			}
+		}
+
+		return true;
+	}
+
 	private void renderResults(MatrixStack pose, int mouseX, int mouseY)
 	{
 		List<ItemStack> results = menu.getResults();
@@ -233,15 +392,19 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			int maxY = centerY + 46 + (18 * 4);
 
 			ItemStack selectedResult = menu.getResultSlot().getItem();
+			int visibleItemIndex = 0;
 
-			for(int i = startIndex; i < results.size(); i++)
+			for(int j = startIndex; j < results.size(); j++)
 			{
-				ItemStack resultItem = results.get(i);
+				ItemStack resultItem = results.get(j);
 
-				int resultItemX = centerX + 17 + 18 * (i % 6);
+				if(!isItemValid(resultItem))
+					continue;
+
+				int resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
 				int resultItemY = centerY + 46 + yOffset;
 
-				if(i % 6 == 5)
+				if(visibleItemIndex % 6 == 5)
 					yOffset += 18;
 				if(resultItemY >= maxY)
 					break;
@@ -272,6 +435,8 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 				if(isHovered)
 					renderTooltip(pose, resultItem, mouseX, mouseY);
+
+				visibleItemIndex++;
 			}
 		}
 	}
@@ -285,18 +450,28 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 		if(!results.isEmpty())
 		{
+			ItemStack selectedItem = menu.getResultSlot().getItem();
+
 			int centerX = (width - imageWidth) / 2;
 			int centerY = (height - imageHeight) / 2;
 
 			int yOffset = 0;
 			int maxY = centerY + 46 + (18 * 4);
+			int visibleItemIndex = 0;
 
-			for(int i = startIndex; i < results.size(); i++)
+			for(int j = startIndex; j < results.size(); j++)
 			{
-				int resultItemX = centerX + 17 + 18 * (i % 6);
+				ItemStack resultItem = results.get(j);
+
+				if(!isItemValid(resultItem))
+					continue;
+				if(!selectedItem.isEmpty() && ItemStack.isSame(selectedItem, resultItem))
+					continue;
+
+				int resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
 				int resultItemY = centerY + 46 + yOffset;
 
-				if(i % 6 == 5)
+				if(visibleItemIndex % 6 == 5)
 					yOffset += 18;
 				if(resultItemY >= maxY)
 					break;
@@ -305,9 +480,11 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 				{
 					Minecraft mc = getMinecraft();
 					mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
-					mc.gameMode.handleInventoryButtonClick(menu.containerId, i);
+					mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
 					return true;
 				}
+
+				visibleItemIndex++;
 			}
 		}
 

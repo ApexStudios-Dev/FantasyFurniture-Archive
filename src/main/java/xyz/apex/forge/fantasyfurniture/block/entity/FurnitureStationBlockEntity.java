@@ -10,6 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -83,6 +84,6 @@ public final class FurnitureStationBlockEntity extends TileEntity implements INa
 	@Override
 	public ITextComponent getName()
 	{
-		return getBlockState().getBlock().getName();
+		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
 	}
 }
