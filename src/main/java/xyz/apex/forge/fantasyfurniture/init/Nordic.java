@@ -127,7 +127,8 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Table Small
+	// region: Table
+	// region: Small
 	public static final BlockEntry<NordicTableSmall> TABLE_SMALL_BLOCK = tableSmall();
 	public static final ItemEntry<BlockItem> TABLE_SMALL_BLOCK_ITEM = Registrations.blockItem(TABLE_SMALL_BLOCK);
 
@@ -158,6 +159,40 @@ public final class Nordic
 					.build()
 		.register();
 	}
+	// endregion
+
+	// region: Wide
+	public static final BlockEntry<NordicTableWide> TABLE_WIDE_BLOCK = tableWide();
+	public static final ItemEntry<BlockItem> TABLE_WIDE_BLOCK_ITEM = Registrations.blockItem(TABLE_WIDE_BLOCK);
+
+	private static BlockEntry<NordicTableWide> tableWide()
+	{
+		return REGISTRY
+				.multiBlock("nordic/table_wide", NordicTableWide::new, FFPatterns.PATTERN_1x2)
+					.lang("Nordic Table Wide")
+					.lang(EN_GB, "Nordic Table Wide")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Stool
