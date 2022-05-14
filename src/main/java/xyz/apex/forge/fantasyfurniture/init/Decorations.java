@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
 
@@ -321,6 +322,43 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Red Mushrooms
+	public static final BlockEntry<MushroomsRedBlock> MUSHROOMS_RED_BLOCK = mushroomsRed();
+	public static final ItemEntry<BlockItem> MUSHROOMS_RED_BLOCK_ITEM = Registrations.blockItem(MUSHROOMS_RED_BLOCK);
+
+	private static BlockEntry<MushroomsRedBlock> mushroomsRed()
+	{
+		return REGISTRY
+				.block("decorations/mushrooms_red", MushroomsRedBlock::new)
+					.lang("Red Mushrooms")
+					.lang(EN_GB, "Red Mushrooms")
+
+					.initialProperties(Material.PLANT, MaterialColor.COLOR_RED)
+					.sound(SoundType.GRASS)
+					.noOcclusion()
+					.noCollission()
+					.randomTicks()
+					.instabreak()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MushroomsRedBlock.MUSHROOMS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MushroomsRedBlock.MUSHROOMS))
+
+					.hasPostProcess(BlockHelper::always)
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MushroomsRedBlock.MUSHROOMS))
 						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
