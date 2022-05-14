@@ -14,8 +14,8 @@ import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedStacke
 public final class BookStackBlock extends SimpleFourWayWaterLoggedStackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(4D, 0D, 3D, 11D, 3D, 13D);
-	public static final VoxelShape SHAPE_1 = box(2D, 0D, 2D, 13D, 6D, 14.25D);
-	public static final VoxelShape SHAPE_2 = box(2D, 0D, 1.75D, 13D, 9D, 14.25D);
+	public static final VoxelShape SHAPE_1 = box(2.4000000000000004D, 0D, 2.25D, 12.75D, 6D, 14.3D);
+	public static final VoxelShape SHAPE_2 = box(2D, 0D, 1.75D, 13D, 9D, 14.5D);
 
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);
 	public static final VoxelShaper SHAPER_1 = VoxelShaper.forHorizontal(SHAPE_1, Direction.NORTH);

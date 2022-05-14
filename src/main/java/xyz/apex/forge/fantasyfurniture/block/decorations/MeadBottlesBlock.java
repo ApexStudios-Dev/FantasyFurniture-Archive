@@ -13,9 +13,16 @@ import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedStacke
 
 public final class MeadBottlesBlock extends SimpleFourWayWaterLoggedStackedBlock
 {
-	public static final VoxelShape SHAPE_0 = box(6.5D, 0D, 6.5D, 9.5D, 11D, 9.5D);
-	public static final VoxelShape SHAPE_1 = box(3.75D, 0D, 4D, 12D, 11D, 12D);
-	public static final VoxelShape SHAPE_2 = box(1.75D, 0D, 2D, 14.5D, 11D, 13D);
+	public static final VoxelShape SHAPE_0 = box(6.5D, 0D, 6.5D, 9.5D, 10.5D, 9.5D);
+	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
+			box(9D, 0D, 9D, 12D, 10.5D, 12D),
+			box(3.8065629880438667D, 0D, 3.958803906224312D, 7.806562988043867D, 10.5D, 7.958803906224312D)
+	);
+	public static final VoxelShape SHAPE_2 = VoxelShaper.or(
+			box(7D, 0D, 10D, 10D, 10.5D, 13D),
+			box(1.8065629880438667D, 0D, 4.958803906224312D, 5.806562988043867D, 10.5D, 8.958803906224311D),
+			box(10.456562988043867D, 0D, 2.458803906224312D, 14.456562988043867D, 10.5D, 6.458803906224311D)
+	);
 
 	public static final IntegerProperty BOTTLES = IntegerProperty.create("bottles", 0, 2);
 	public static final VoxelShaper SHAPER_0 = VoxelShaper.forHorizontal(SHAPE_0, Direction.NORTH);
