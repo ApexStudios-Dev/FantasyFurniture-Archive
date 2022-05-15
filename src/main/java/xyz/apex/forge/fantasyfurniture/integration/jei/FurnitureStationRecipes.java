@@ -134,7 +134,8 @@ public final class FurnitureStationRecipes
 		int x = xStart;
 		int y = yStart;
 
-		int slotCounter = FurnitureStation.RESULT_SLOT;
+		int slotCounterStart = FurnitureStation.RESULT_SLOT;
+		int slotCounter = slotCounterStart;
 
 		Map<Integer, Triple<Integer, Integer, List<ItemStack>>> slotMap = Maps.newHashMap();
 
@@ -159,7 +160,7 @@ public final class FurnitureStationRecipes
 
 				if(y >= yStart + ySpacing * itemsPerCol)
 				{
-					slotCounter = 0;
+					slotCounter = slotCounterStart;
 					y = yStart;
 				}
 			}
