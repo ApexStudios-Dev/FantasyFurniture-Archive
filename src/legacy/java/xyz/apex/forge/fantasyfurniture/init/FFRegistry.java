@@ -21,8 +21,6 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 	{
 		super(FantasyFurniture.ID);
 
-		//skipErrors();
-
 		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
 	}
 

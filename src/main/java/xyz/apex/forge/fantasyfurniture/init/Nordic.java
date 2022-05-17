@@ -1,5 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.providers.RegistrateLangProvider;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -194,7 +196,7 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Wide
+	// region: Large
 	public static final BlockEntry<NordicTableLarge> TABLE_LARGE_BLOCK = tableLarge();
 	public static final ItemEntry<BlockItem> TABLE_LARGE_BLOCK_ITEM = Registrations.blockItem(TABLE_LARGE_BLOCK);
 
@@ -446,6 +448,44 @@ public final class Nordic
 
 					.item()
 						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), REGISTRY.id("block/nordic/sofa_single")))
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Desk
+	public static final BlockEntry<NordicDesk> DESK_LEFT_BLOCK = desk("left");
+	public static final ItemEntry<BlockItem> DESK_LEFT_BLOCK_ITEM = Registrations.blockItem(DESK_LEFT_BLOCK);
+
+	public static final BlockEntry<NordicDesk> DESK_RIGHT_BLOCK = desk("right");
+	public static final ItemEntry<BlockItem> DESK_RIGHT_BLOCK_ITEM = Registrations.blockItem(DESK_RIGHT_BLOCK);
+
+	private static BlockEntry<NordicDesk> desk(String side)
+	{
+		String engName = RegistrateLangProvider.toEnglishName(side);
+
+		return REGISTRY
+				.multiBlock("nordic/desk_" + side, NordicDesk::new, FFPatterns.PATTERN_1x2)
+					.lang("Nordic Desk " + engName)
+					.lang(EN_GB, "Nordic Desk " + engName)
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
