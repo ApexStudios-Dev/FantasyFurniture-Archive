@@ -41,6 +41,13 @@ public final class FFPatterns
 			.setSpacesFor4Way()
 			.build();
 
+	public static final MultiBlockPattern PATTERN_2x2_VERTICAL = MultiBlockPattern
+			.builder()
+			.layer("XX")
+			.layer("XX")
+			.setSpacesFor4Way()
+			.build();
+
 	static void bootstrap()
 	{
 	}

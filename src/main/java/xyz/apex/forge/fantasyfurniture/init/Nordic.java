@@ -628,6 +628,39 @@ public final class Nordic
 	}
 	// endregion
 
+	// region: Shelf
+	public static final BlockEntry<NordicBookshelfBlock> BOOKSHELF_BLOCK = bookshelf();
+	public static final ItemEntry<BlockItem> BOOKSHELF_BLOCK_ITEM = Registrations.blockItem(BOOKSHELF_BLOCK);
+
+	private static BlockEntry<NordicBookshelfBlock> bookshelf()
+	{
+		return REGISTRY
+				.multiBlock("nordic/bookshelf", NordicBookshelfBlock::new, FFPatterns.PATTERN_2x2_VERTICAL)
+					.lang("Nordic Bookshelf")
+					.lang(EN_GB, "Nordic Bookshelf")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
 	static void bootstrap()
 	{
 	}
