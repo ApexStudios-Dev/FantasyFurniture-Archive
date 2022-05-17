@@ -13,5 +13,8 @@ public class NordicDrawerContainer extends InventoryContainer
 	public NordicDrawerContainer(ContainerType<?> menuType, int windowId, PlayerInventory playerInventory, IItemHandler itemHandler)
 	{
 		super(menuType, windowId, playerInventory, itemHandler, ROWS, COLS);
+
+		addInventorySlots(this::addSlot, itemHandler, ROWS, COLS, 44, 18);
+		addPlayerInventorySlots(this::addSlot, playerInventory, 8, 84);
 	}
 }

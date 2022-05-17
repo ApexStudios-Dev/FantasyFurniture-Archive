@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import xyz.apex.java.utility.nullness.NonnullConsumer;
+
 public class InventoryContainer extends Container
 {
 	protected final PlayerEntity player;
@@ -21,29 +23,6 @@ public class InventoryContainer extends Container
 		this.itemHandler = itemHandler;
 
 		player = playerInventory.player;
-
-		// inventory slots
-		for(int j = 0; j < rows; j++)
-		{
-			for(int k = 0; k < cols; k++)
-			{
-				addSlot(new SlotItemHandler(itemHandler, k + j * cols, 44 + k * 18, 18 + j * 18));
-			}
-		}
-
-		// player inventory slots
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j < 9; j++)
-			{
-				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-			}
-		}
-
-		for(int i = 0; i < 9; ++i)
-		{
-			addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-		}
 	}
 
 	@Override
@@ -79,5 +58,32 @@ public class InventoryContainer extends Container
 		}
 
 		return stack;
+	}
+
+	protected static void addInventorySlots(NonnullConsumer<Slot> addSlot, IItemHandler itemHandler, int rows, int cols, int xStart, int yStart)
+	{
+		for(int j = 0; j < rows; j++)
+		{
+			for(int k = 0; k < cols; k++)
+			{
+				addSlot.accept(new SlotItemHandler(itemHandler, k + j * cols, xStart + k * 18, yStart + j * 18));
+			}
+		}
+	}
+
+	protected static void addPlayerInventorySlots(NonnullConsumer<Slot> addSlot, PlayerInventory playerInventory, int xStart, int yStart)
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 9; j++)
+			{
+				addSlot.accept(new Slot(playerInventory, j + i * 9 + 9, xStart + j * 18, yStart + i * 18));
+			}
+		}
+
+		for(int i = 0; i < 9; ++i)
+		{
+			addSlot.accept(new Slot(playerInventory, i, xStart + i * 18, yStart + 58));
+		}
 	}
 }

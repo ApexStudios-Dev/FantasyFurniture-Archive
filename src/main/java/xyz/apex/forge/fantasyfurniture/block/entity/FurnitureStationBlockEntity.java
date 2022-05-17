@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IWorldPosCallable;
@@ -85,5 +86,26 @@ public final class FurnitureStationBlockEntity extends TileEntity implements INa
 	public ITextComponent getName()
 	{
 		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
+	}
+
+	@Nullable
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		return new SUpdateTileEntityPacket(worldPosition, 3, getUpdateTag());
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		CompoundNBT updateTag = super.getUpdateTag();
+
+		if(customName != null)
+		{
+			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			updateTag.putString(NBT_CUSTOM_NAME, customNameJson);
+		}
+
+		return updateTag;
 	}
 }

@@ -9,6 +9,7 @@ import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -156,5 +157,32 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	@Override
 	public void setContainerData(Container container, int varToUpdate, int newValue)
 	{
+	}
+
+	@Nullable
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		return new SUpdateTileEntityPacket(worldPosition, 3, getUpdateTag());
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		CompoundNBT updateTag = super.getUpdateTag();
+
+		if(inventory != null)
+		{
+			CompoundNBT inventoryTag = inventory.serializeNBT();
+			updateTag.put(NBT_INVENTORY, inventoryTag);
+		}
+
+		if(customName != null)
+		{
+			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			updateTag.putString(NBT_CUSTOM_NAME, customNameJson);
+		}
+
+		return updateTag;
 	}
 }

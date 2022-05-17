@@ -18,9 +18,12 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
+import xyz.apex.forge.fantasyfurniture.block.entity.NordicChestBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
+import xyz.apex.forge.fantasyfurniture.client.screen.NordicChestContainerScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
+import xyz.apex.forge.fantasyfurniture.container.NordicChestContainer;
 import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
@@ -657,6 +660,43 @@ public final class Nordic
 						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE)
 					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Wide
+	public static final BlockEntry<NordicChestBlock> CHEST_BLOCK = chest();
+	public static final ItemEntry<BlockItem> CHEST_BLOCK_ITEM = Registrations.blockItem(CHEST_BLOCK);
+	public static final ContainerEntry<NordicChestContainer> CHEST_CONTAINER = Registrations.container(CHEST_BLOCK, NordicChestContainer.ROWS, NordicChestContainer.COLS, NordicChestContainer::new, () -> NordicChestContainerScreen::new);
+	public static final BlockEntityEntry<NordicChestBlockEntity> CHEST_BLOCK_ENTITY = Registrations.blockEntity(CHEST_BLOCK);
+
+	private static BlockEntry<NordicChestBlock> chest()
+	{
+		return REGISTRY
+				.multiBlock("nordic/chest", NordicChestBlock::new, FFPatterns.PATTERN_1x2)
+					.lang("Nordic Chest")
+					.lang(EN_GB, "Nordic Chest")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+
+					.simpleBlockEntity(NordicChestBlockEntity::new)
 		.register();
 	}
 	// endregion

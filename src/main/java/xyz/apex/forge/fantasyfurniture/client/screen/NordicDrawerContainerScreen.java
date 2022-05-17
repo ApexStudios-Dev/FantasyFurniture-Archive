@@ -12,4 +12,13 @@ public final class NordicDrawerContainerScreen extends InventoryContainerScreen<
 	{
 		super(menu, playerInventory, titleComponent, Registrations.SMALL_STORAGE_TEXTURE);
 	}
+
+	@Override
+	protected void init()
+	{
+		imageWidth = 176;
+		imageHeight = 166;
+
+		super.init();
+	}
 }
