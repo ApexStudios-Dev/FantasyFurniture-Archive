@@ -16,7 +16,7 @@ public class CushionBlock extends SeatBlock
 	}
 
 	@Override
-	protected double getSeatYOffset(BlockState blockState)
+	public double getSeatYOffset(BlockState blockState)
 	{
 		return .2D;
 	}

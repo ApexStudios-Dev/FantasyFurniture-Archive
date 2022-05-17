@@ -5,6 +5,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.PaintingMultiBlock;
 
 public final class FFPatterns
 {
+	public static final MultiBlockPattern PATTERN_2x1 = MultiBlockPattern
+			.builder()
+			.layer("X")
+			.layer("X")
+			.setSpacesFor4Way()
+			.build();
+
 	public static final MultiBlockPattern PATTERN_1x2 = MultiBlockPattern
 			.builder()
 			.layer("XX")

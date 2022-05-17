@@ -528,6 +528,39 @@ public final class Nordic
 	}
 	// endregion
 
+	// region: Shair
+	public static final BlockEntry<NordicChairBlock> CHAIR_BLOCK = chair();
+	public static final ItemEntry<BlockItem> CHAIR_BLOCK_ITEM = Registrations.blockItem(CHAIR_BLOCK);
+
+	private static BlockEntry<NordicChairBlock> chair()
+	{
+		return REGISTRY
+				.multiBlock("nordic/chair", NordicChairBlock::new, FFPatterns.PATTERN_2x1)
+					.lang("Nordic Chair")
+					.lang(EN_GB, "Nordic Chair")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
 	static void bootstrap()
 	{
 	}

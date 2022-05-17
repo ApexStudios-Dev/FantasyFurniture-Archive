@@ -9,11 +9,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class SeatBlock extends SimpleFourWayWaterLoggedBlock implements ISeatBlock
+import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
+
+public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implements ISeatBlock
 {
-	public SeatBlock(Properties properties)
+	public SeatMultiBlock(Properties properties, MultiBlockPattern pattern)
 	{
-		super(properties);
+		super(properties, pattern);
 	}
 
 	@Override

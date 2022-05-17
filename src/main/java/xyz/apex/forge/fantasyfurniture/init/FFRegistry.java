@@ -10,7 +10,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.block.base.SeatBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.ISeatBlock;
 import xyz.apex.java.utility.Lazy;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -39,9 +39,10 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 			        .stream()
 			        .filter(RegistryEntry::isPresent)
 			        .map(RegistryEntry::get)
-			        .filter(SeatBlock.class::isInstance)
-			        .map(Block::getDescriptionId)
-			        .forEach(s -> provider.add(s + ".occupied", "This seat is occupied"));
+			        .filter(ISeatBlock.class::isInstance)
+					.map(ISeatBlock.class::cast)
+			        .map(ISeatBlock::getOccupiedTranslationKey)
+			        .forEach(s -> provider.add(s, "This seat is occupied"));
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
@@ -52,9 +53,10 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 			        .stream()
 			        .filter(RegistryEntry::isPresent)
 			        .map(RegistryEntry::get)
-			        .filter(SeatBlock.class::isInstance)
-			        .map(Block::getDescriptionId)
-			        .forEach(s -> provider.add(EN_GB, s + ".occupied", "This seat is occupied"));
+			        .filter(ISeatBlock.class::isInstance)
+			        .map(ISeatBlock.class::cast)
+			        .map(ISeatBlock::getOccupiedTranslationKey)
+			        .forEach(s -> provider.add(EN_GB, s, "This seat is occupied"));
 		});
 	}
 

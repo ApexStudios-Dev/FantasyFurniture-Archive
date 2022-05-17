@@ -78,7 +78,7 @@ public final class NordicSofaBlock extends SofaBlock
 	}
 
 	@Override
-	protected double getSeatYOffset(BlockState blockState)
+	public double getSeatYOffset(BlockState blockState)
 	{
 		return .1D;
 	}
