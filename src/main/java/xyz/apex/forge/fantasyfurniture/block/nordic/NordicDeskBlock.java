@@ -13,7 +13,7 @@ import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedMultiBlock;
 import xyz.apex.forge.fantasyfurniture.init.Nordic;
 
-public final class NordicDesk extends SimpleFourWayWaterLoggedMultiBlock
+public final class NordicDeskBlock extends SimpleFourWayWaterLoggedMultiBlock
 {
 	public static final VoxelShape SHAPE_LEFT_A = VoxelShaper.or(
 			box(13D, 0D, 0D, 15D, 9D, 2D),
@@ -72,7 +72,7 @@ public final class NordicDesk extends SimpleFourWayWaterLoggedMultiBlock
 	public static final VoxelShaper SHAPER_RIGHT_A = VoxelShaper.forHorizontal(SHAPE_RIGHT_A, Direction.NORTH);
 	public static final VoxelShaper SHAPER_RIGHT_B = VoxelShaper.forHorizontal(SHAPE_RIGHT_B, Direction.NORTH);
 
-	public NordicDesk(Properties properties, MultiBlockPattern pattern)
+	public NordicDeskBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}

@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockReader;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedBlock;
 
-public final class NordicTableSmall extends SimpleFourWayWaterLoggedBlock
+public final class NordicTableSmallBlock extends SimpleFourWayWaterLoggedBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(1D, 0D, 1D, 3D, 13D, 3D),
@@ -23,7 +23,7 @@ public final class NordicTableSmall extends SimpleFourWayWaterLoggedBlock
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NordicTableSmall(Properties properties)
+	public NordicTableSmallBlock(Properties properties)
 	{
 		super(properties);
 	}

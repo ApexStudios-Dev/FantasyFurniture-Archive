@@ -131,13 +131,13 @@ public final class Nordic
 
 	// region: Table
 	// region: Small
-	public static final BlockEntry<NordicTableSmall> TABLE_SMALL_BLOCK = tableSmall();
+	public static final BlockEntry<NordicTableSmallBlock> TABLE_SMALL_BLOCK = tableSmall();
 	public static final ItemEntry<BlockItem> TABLE_SMALL_BLOCK_ITEM = Registrations.blockItem(TABLE_SMALL_BLOCK);
 
-	private static BlockEntry<NordicTableSmall> tableSmall()
+	private static BlockEntry<NordicTableSmallBlock> tableSmall()
 	{
 		return REGISTRY
-				.block("nordic/table_small", NordicTableSmall::new)
+				.block("nordic/table_small", NordicTableSmallBlock::new)
 					.lang("Nordic Table Small")
 					.lang(EN_GB, "Nordic Table Small")
 
@@ -164,13 +164,13 @@ public final class Nordic
 	// endregion
 
 	// region: Wide
-	public static final BlockEntry<NordicTableWide> TABLE_WIDE_BLOCK = tableWide();
+	public static final BlockEntry<NordicTableWideBlock> TABLE_WIDE_BLOCK = tableWide();
 	public static final ItemEntry<BlockItem> TABLE_WIDE_BLOCK_ITEM = Registrations.blockItem(TABLE_WIDE_BLOCK);
 
-	private static BlockEntry<NordicTableWide> tableWide()
+	private static BlockEntry<NordicTableWideBlock> tableWide()
 	{
 		return REGISTRY
-				.multiBlock("nordic/table_wide", NordicTableWide::new, FFPatterns.PATTERN_1x2)
+				.multiBlock("nordic/table_wide", NordicTableWideBlock::new, FFPatterns.PATTERN_1x2)
 					.lang("Nordic Table Wide")
 					.lang(EN_GB, "Nordic Table Wide")
 
@@ -197,13 +197,13 @@ public final class Nordic
 	// endregion
 
 	// region: Large
-	public static final BlockEntry<NordicTableLarge> TABLE_LARGE_BLOCK = tableLarge();
+	public static final BlockEntry<NordicTableLargeBlock> TABLE_LARGE_BLOCK = tableLarge();
 	public static final ItemEntry<BlockItem> TABLE_LARGE_BLOCK_ITEM = Registrations.blockItem(TABLE_LARGE_BLOCK);
 
-	private static BlockEntry<NordicTableLarge> tableLarge()
+	private static BlockEntry<NordicTableLargeBlock> tableLarge()
 	{
 		return REGISTRY
-				.multiBlock("nordic/table_large", NordicTableLarge::new, FFPatterns.PATTERN_2x2)
+				.multiBlock("nordic/table_large", NordicTableLargeBlock::new, FFPatterns.PATTERN_2x2)
 					.lang("Nordic Table Large")
 					.lang(EN_GB, "Nordic Table Large")
 
@@ -491,18 +491,18 @@ public final class Nordic
 	// endregion
 
 	// region: Desk
-	public static final BlockEntry<NordicDesk> DESK_LEFT_BLOCK = desk("left");
+	public static final BlockEntry<NordicDeskBlock> DESK_LEFT_BLOCK = desk("left");
 	public static final ItemEntry<BlockItem> DESK_LEFT_BLOCK_ITEM = Registrations.blockItem(DESK_LEFT_BLOCK);
 
-	public static final BlockEntry<NordicDesk> DESK_RIGHT_BLOCK = desk("right");
+	public static final BlockEntry<NordicDeskBlock> DESK_RIGHT_BLOCK = desk("right");
 	public static final ItemEntry<BlockItem> DESK_RIGHT_BLOCK_ITEM = Registrations.blockItem(DESK_RIGHT_BLOCK);
 
-	private static BlockEntry<NordicDesk> desk(String side)
+	private static BlockEntry<NordicDeskBlock> desk(String side)
 	{
 		String engName = RegistrateLangProvider.toEnglishName(side);
 
 		return REGISTRY
-				.multiBlock("nordic/desk_" + side, NordicDesk::new, FFPatterns.PATTERN_1x2)
+				.multiBlock("nordic/desk_" + side, NordicDeskBlock::new, FFPatterns.PATTERN_1x2)
 					.lang("Nordic Desk " + engName)
 					.lang(EN_GB, "Nordic Desk " + engName)
 
