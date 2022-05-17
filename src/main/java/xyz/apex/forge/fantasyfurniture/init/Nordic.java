@@ -21,13 +21,16 @@ import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicChestBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDresserBlockEntity;
+import xyz.apex.forge.fantasyfurniture.block.entity.NordicWardrobeBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicChestContainerScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDresserContainerScreen;
+import xyz.apex.forge.fantasyfurniture.client.screen.NordicWardrobeContainerScreen;
 import xyz.apex.forge.fantasyfurniture.container.NordicChestContainer;
 import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
 import xyz.apex.forge.fantasyfurniture.container.NordicDresserContainer;
+import xyz.apex.forge.fantasyfurniture.container.NordicWardrobeContainer;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
@@ -634,7 +637,7 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Shelf
+	// region: Bookshelf
 	public static final BlockEntry<NordicBookshelfBlock> BOOKSHELF_BLOCK = bookshelf();
 	public static final ItemEntry<BlockItem> BOOKSHELF_BLOCK_ITEM = Registrations.blockItem(BOOKSHELF_BLOCK);
 
@@ -739,6 +742,78 @@ public final class Nordic
 					.simpleBlockEntity(NordicDresserBlockEntity::new)
 		.register();
 	}
+	// endregion
+
+	// region: Wardrobe
+	// region: Bottom
+	public static final BlockEntry<NordicWardrobeBlock> WARDROBE_BLOCK = wardrobeBottom();
+	public static final ItemEntry<BlockItem> WARDROBE_BLOCK_ITEM = Registrations.blockItem(WARDROBE_BLOCK);
+	public static final ContainerEntry<NordicWardrobeContainer> WARDROBE_CONTAINER = Registrations.container(WARDROBE_BLOCK, NordicWardrobeContainer.ROWS, NordicWardrobeContainer.COLS, NordicWardrobeContainer::new, () -> NordicWardrobeContainerScreen::new);
+	public static final BlockEntityEntry<NordicWardrobeBlockEntity> WARDROBE_BLOCK_ENTITY = Registrations.blockEntity(WARDROBE_BLOCK);
+
+	private static BlockEntry<NordicWardrobeBlock> wardrobeBottom()
+	{
+		return REGISTRY
+				.multiBlock("nordic/wardrobe_bottom", NordicWardrobeBlock::new, FFPatterns.PATTERN_2x2_VERTICAL)
+					.lang("Nordic Wardrobe")
+					.lang(EN_GB, "Nordic Wardrobe")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+
+					.simpleBlockEntity(NordicWardrobeBlockEntity::new)
+		.register();
+	}
+	// endregion
+
+	// region: Top
+	public static final BlockEntry<NordicWardrobeTopperBlock> WARDROBE_TOPPER_BLOCK = wardrobeTop();
+	public static final ItemEntry<BlockItem> WARDROBE_TOPPER_BLOCK_ITEM = Registrations.blockItem(WARDROBE_TOPPER_BLOCK);
+
+	private static BlockEntry<NordicWardrobeTopperBlock> wardrobeTop()
+	{
+		return REGISTRY
+				.multiBlock("nordic/wardrobe_top", NordicWardrobeTopperBlock::new, FFPatterns.PATTERN_1x2)
+					.lang("Nordic Wardrobe Top")
+					.lang(EN_GB, "Nordic Wardrobe Top")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	static void bootstrap()
