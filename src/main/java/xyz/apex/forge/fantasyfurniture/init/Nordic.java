@@ -20,11 +20,14 @@ import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicChestBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
+import xyz.apex.forge.fantasyfurniture.block.entity.NordicDresserBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicChestContainerScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.NordicDrawerContainerScreen;
+import xyz.apex.forge.fantasyfurniture.client.screen.NordicDresserContainerScreen;
 import xyz.apex.forge.fantasyfurniture.container.NordicChestContainer;
 import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
+import xyz.apex.forge.fantasyfurniture.container.NordicDresserContainer;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
@@ -664,7 +667,7 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Wide
+	// region: Chest
 	public static final BlockEntry<NordicChestBlock> CHEST_BLOCK = chest();
 	public static final ItemEntry<BlockItem> CHEST_BLOCK_ITEM = Registrations.blockItem(CHEST_BLOCK);
 	public static final ContainerEntry<NordicChestContainer> CHEST_CONTAINER = Registrations.container(CHEST_BLOCK, NordicChestContainer.ROWS, NordicChestContainer.COLS, NordicChestContainer::new, () -> NordicChestContainerScreen::new);
@@ -697,6 +700,43 @@ public final class Nordic
 					.build()
 
 					.simpleBlockEntity(NordicChestBlockEntity::new)
+		.register();
+	}
+	// endregion
+
+	// region: Dresser
+	public static final BlockEntry<NordicDresserBlock> DRESSER_BLOCK = dresser();
+	public static final ItemEntry<BlockItem> DRESSER_BLOCK_ITEM = Registrations.blockItem(DRESSER_BLOCK);
+	public static final ContainerEntry<NordicDresserContainer> DRESSER_CONTAINER = Registrations.container(DRESSER_BLOCK, NordicDresserContainer.ROWS, NordicDresserContainer.COLS, NordicDresserContainer::new, () -> NordicDresserContainerScreen::new);
+	public static final BlockEntityEntry<NordicDresserBlockEntity> DRESSER_BLOCK_ENTITY = Registrations.blockEntity(DRESSER_BLOCK);
+
+	private static BlockEntry<NordicDresserBlock> dresser()
+	{
+		return REGISTRY
+				.multiBlock("nordic/dresser", NordicDresserBlock::new, FFPatterns.PATTERN_1x2)
+					.lang("Nordic Dresser")
+					.lang(EN_GB, "Nordic Dresser")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+
+					.simpleBlockEntity(NordicDresserBlockEntity::new)
 		.register();
 	}
 	// endregion
