@@ -296,14 +296,15 @@ public final class Nordic
 	}
 	// endregion
 
-	// region: Painting Small
-	public static final BlockEntry<NordicPaintingBlock> PAINTING_SMALL_BLOCK = paintingSmall();
+	// region: Painting
+	// region: Small
+	public static final BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL_BLOCK = paintingSmall();
 	public static final ItemEntry<BlockItem> PAINTING_SMALL_BLOCK_ITEM = Registrations.blockItem(PAINTING_SMALL_BLOCK);
 
-	private static BlockEntry<NordicPaintingBlock> paintingSmall()
+	private static BlockEntry<NordicPaintingSmallBlock> paintingSmall()
 	{
 		return REGISTRY
-				.block("nordic/painting_small", NordicPaintingBlock::new)
+				.block("nordic/painting_small", NordicPaintingSmallBlock::new)
 					.lang("Nordic Painting Small")
 					.lang(EN_GB, "Nordic Painting Small")
 
@@ -328,6 +329,41 @@ public final class Nordic
 					.build()
 		.register();
 	}
+	// endregion
+
+	// region: Wide
+	public static final BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE_BLOCK = paintingWide();
+	public static final ItemEntry<BlockItem> PAINTING_WIDE_BLOCK_ITEM = Registrations.blockItem(PAINTING_WIDE_BLOCK);
+
+	private static BlockEntry<NordicPaintingWideBlock> paintingWide()
+	{
+		return REGISTRY
+				.multiBlock("nordic/painting_wide", NordicPaintingWideBlock::new, FFPatterns.PATTERN_1x2_PAINTING)
+					.lang("Nordic Painting Wide")
+					.lang(EN_GB, "Nordic Painting Wide")
+
+					.initialProperties(Material.WOOD)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.instabreak()
+					.noCollission()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Drawer

@@ -10,13 +10,13 @@ import net.minecraft.world.IBlockReader;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.PaintingBlock;
 
-public final class NordicPaintingBlock extends PaintingBlock
+public final class NordicPaintingSmallBlock extends PaintingBlock
 {
 	public static final VoxelShape SHAPE = box(0D, 0D, 14D, 16D, 16D, 16D);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NordicPaintingBlock(Properties properties)
+	public NordicPaintingSmallBlock(Properties properties)
 	{
 		super(properties);
 	}
