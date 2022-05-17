@@ -193,6 +193,39 @@ public final class Nordic
 		.register();
 	}
 	// endregion
+
+	// region: Wide
+	public static final BlockEntry<NordicTableLarge> TABLE_LARGE_BLOCK = tableLarge();
+	public static final ItemEntry<BlockItem> TABLE_LARGE_BLOCK_ITEM = Registrations.blockItem(TABLE_LARGE_BLOCK);
+
+	private static BlockEntry<NordicTableLarge> tableLarge()
+	{
+		return REGISTRY
+				.multiBlock("nordic/table_large", NordicTableLarge::new, FFPatterns.PATTERN_2x2)
+					.lang("Nordic Table Large")
+					.lang(EN_GB, "Nordic Table Large")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Stool
