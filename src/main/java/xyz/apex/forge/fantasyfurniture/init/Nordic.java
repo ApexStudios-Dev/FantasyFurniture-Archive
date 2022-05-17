@@ -129,6 +129,40 @@ public final class Nordic
 	}
 	// endregion
 
+	// region: Floor Light
+	public static final BlockEntry<NordicFloorLightBlock> FLOOR_LIGHT_BLOCK = floorLight();
+	public static final ItemEntry<BlockItem> FLOOR_LIGHT_BLOCK_ITEM = Registrations.blockItem(FLOOR_LIGHT_BLOCK);
+
+	private static BlockEntry<NordicFloorLightBlock> floorLight()
+	{
+		return REGISTRY
+				.multiBlock("nordic/floor_light", NordicFloorLightBlock::new, FFPatterns.PATTERN_2x1_FLOOR_LIGHT)
+					.lang("Nordic Floor Light")
+					.lang(EN_GB, "Nordic Floor Light")
+
+					.initialProperties(Material.DECORATION)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.instabreak()
+					.lightLevel(blockState -> blockState.getValue(NordicFloorLightBlock.SIDE) == NordicFloorLightBlock.Side.TOP ? 14 : 0)
+
+					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(Registrations.getExistingModelPath(ctx.getId(), ""))))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
 	// region: Table
 	// region: Small
 	public static final BlockEntry<NordicTableSmallBlock> TABLE_SMALL_BLOCK = tableSmall();
