@@ -52,6 +52,12 @@ public final class NordicChairBlock extends SeatMultiBlock
 	}
 
 	@Override
+	public double getSeatYOffset(BlockState blockState)
+	{
+		return .3D;
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
