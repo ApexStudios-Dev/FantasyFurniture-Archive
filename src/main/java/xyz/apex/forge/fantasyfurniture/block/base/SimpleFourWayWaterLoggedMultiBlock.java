@@ -18,6 +18,8 @@ import net.minecraft.world.IWorld;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFourWay;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
+import javax.annotation.Nullable;
+
 public class SimpleFourWayWaterLoggedMultiBlock extends MultiBlockFourWay
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -56,12 +58,20 @@ public class SimpleFourWayWaterLoggedMultiBlock extends MultiBlockFourWay
 		return super.updateShape(blockState, facing, facingBlockState, level, pos, facingPos);
 	}
 
+	@Nullable
 	@Override
 	protected BlockState getPlacementState(BlockItemUseContext ctx, BlockState defaultBlockState)
 	{
-		FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-		boolean waterLogged = fluidState.is(FluidTags.WATER);
-		return super.getPlacementState(ctx, defaultBlockState).setValue(WATERLOGGED, waterLogged);
+		BlockState placementState = super.getPlacementState(ctx, defaultBlockState);
+
+		if(placementState != null)
+		{
+			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+			boolean waterLogged = fluidState.is(FluidTags.WATER);
+			return placementState.setValue(WATERLOGGED, waterLogged);
+		}
+
+		return null;
 	}
 
 	@Override
