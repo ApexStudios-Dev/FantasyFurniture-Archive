@@ -297,6 +297,8 @@ public final class Decorations
 
 		if(type.equals("empty"))
 			englishName = "Tankards";
+		else if(type.equals("honeymead"))
+			englishName = "Honeyed Tankards";
 		else
 			englishName = RegistrateLangProvider.toEnglishName(type) + " Tankards";
 
@@ -359,6 +361,39 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MushroomsRedBlock.MUSHROOMS))
+						.tag(FurnitureStation.CRAFTABLE)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Coin Stack Gold
+	public static final BlockEntry<CoinStackBlock> COIN_STOCK_GOLD_BLOCK = coinStackGold();
+	public static final ItemEntry<BlockItem> COIN_STOCK_GOLD_BLOCK_ITEM = Registrations.blockItem(COIN_STOCK_GOLD_BLOCK);
+
+	private static BlockEntry<CoinStackBlock> coinStackGold()
+	{
+		return REGISTRY
+				.block("decorations/coin_stack_gold", CoinStackBlock::new)
+					.lang("Coin Stack Gold")
+					.lang(EN_GB, "Coin Stack Gold")
+
+					.initialProperties(Material.METAL)
+					.strength(2.5F)
+					.sound(SoundType.METAL)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE)
 					.build()
 		.register();
