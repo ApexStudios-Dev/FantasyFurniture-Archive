@@ -36,7 +36,9 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
+import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class Nordic
 {
@@ -890,5 +892,13 @@ public final class Nordic
 
 	static void bootstrap()
 	{
+		REGISTRY.addDataGenerator(LANG, provider -> {
+			provider.add(BED_DOUBLE_BLOCK_ITEM.asItem().getDescriptionId() + ".warning", "Only Supports 1 Player");
+		});
+
+		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+			provider.add(EN_GB, BED_DOUBLE_BLOCK_ITEM.asItem().getDescriptionId() + ".warning", "Only Supports 1 Player");
+		});
+
 	}
 }

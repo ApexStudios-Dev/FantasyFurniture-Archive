@@ -5,13 +5,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -22,14 +20,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.init.Nordic;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -125,15 +119,6 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public boolean isPathfindable(BlockState blockState, IBlockReader level, BlockPos pos, PathType pathType)
 	{
 		return false;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, @Nullable IBlockReader level, List<ITextComponent> tooltip, ITooltipFlag flag)
-	{
-		super.appendHoverText(stack, level, tooltip, flag);
-
-		if(Nordic.BED_DOUBLE_BLOCK_ITEM.isInStack(stack))
-			tooltip.add(new StringTextComponent("Only Supports 1 Player (On either side)").withStyle(style -> style.withItalic(true).withColor(TextFormatting.GRAY)));
 	}
 
 	protected ActionResultType onBadBedSetSpawn(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)

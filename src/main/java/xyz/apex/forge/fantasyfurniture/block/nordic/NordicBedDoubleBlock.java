@@ -1,15 +1,23 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.BedBlock;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public final class NordicBedDoubleBlock extends BedBlock
 {
@@ -80,5 +88,13 @@ public final class NordicBedDoubleBlock extends BedBlock
 		}
 
 		return shaper.get(facing);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable IBlockReader level, List<ITextComponent> tooltip, ITooltipFlag flag)
+	{
+		super.appendHoverText(stack, level, tooltip, flag);
+
+		tooltip.add(new TranslationTextComponent(getDescriptionId() + ".warning").withStyle(style -> style.withItalic(true).withColor(TextFormatting.GRAY)));
 	}
 }
