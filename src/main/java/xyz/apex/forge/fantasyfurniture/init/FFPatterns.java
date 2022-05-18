@@ -48,6 +48,12 @@ public final class FFPatterns
 			.setSpacesFor4Way()
 			.build();
 
+	public static final MultiBlockPattern PATTERN_BED_SINGLE = MultiBlockPattern
+			.builder()
+			.layer("X", "X")
+			.setSpacesFor4Way()
+			.build();
+
 	static void bootstrap()
 	{
 	}

@@ -816,6 +816,78 @@ public final class Nordic
 	// endregion
 	// endregion
 
+	// region: Bed
+	// region: Single
+	public static final BlockEntry<NordicBedSingleBlock> BED_SINGLE_BLOCK = bedSingle();
+	public static final ItemEntry<BlockItem> BED_SINGLE_BLOCK_ITEM = Registrations.blockItem(BED_SINGLE_BLOCK);
+
+	private static BlockEntry<NordicBedSingleBlock> bedSingle()
+	{
+		return REGISTRY
+				.multiBlock("nordic/bed_single", NordicBedSingleBlock::new, FFPatterns.PATTERN_BED_SINGLE)
+					.lang("Nordic Bed Single")
+					.lang(EN_GB, "Nordic Bed Single")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.tag(BlockTags.BEDS)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Double
+	public static final BlockEntry<NordicBedDoubleBlock> BED_DOUBLE_BLOCK = bedDouble();
+	public static final ItemEntry<BlockItem> BED_DOUBLE_BLOCK_ITEM = Registrations.blockItem(BED_DOUBLE_BLOCK);
+
+	private static BlockEntry<NordicBedDoubleBlock> bedDouble()
+	{
+		return REGISTRY
+				.multiBlock("nordic/bed_double", NordicBedDoubleBlock::new, FFPatterns.PATTERN_2x2)
+					.lang("Nordic Bed Double")
+					.lang(EN_GB, "Nordic Bed Double")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.tag(BlockTags.BEDS)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS)
+					.build()
+		.register();
+	}
+	// endregion
+	// endregion
+
 	static void bootstrap()
 	{
 	}
