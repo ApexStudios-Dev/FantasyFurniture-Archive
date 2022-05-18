@@ -7,8 +7,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
@@ -18,6 +24,7 @@ import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvi
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
+	public static final ITag.INamedTag<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
 
 	// region: Berry Basket
 	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY_BLOCK = berryBasket("empty");
@@ -57,7 +64,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -91,7 +98,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -124,7 +131,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -159,7 +166,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -205,7 +212,7 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -239,7 +246,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -273,7 +280,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -324,7 +331,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -361,7 +368,7 @@ public final class Decorations
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MushroomsRedBlock.MUSHROOMS))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -394,13 +401,29 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
 	// endregion
 
+	// region: Item Group Category
+	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
+			.builder(ITEM_GROUP_CATEGORY_TAG.getName().toString())
+				.tagged(ITEM_GROUP_CATEGORY_TAG)
+				.defaultIcon(SWEETROLLS_BLOCK::asItemStack)
+			.build();
+	// endregion
+
 	static void bootstrap()
 	{
+		ITEM_GROUP_CATEGORY
+				.addTranslationGenerator(REGISTRY, "Decorations")
+				.addTranslationGenerator(REGISTRY, EN_GB, "Decorations");
+
+		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
+			ItemGroupCategoryManager instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
+			instance.addCategory(ITEM_GROUP_CATEGORY);
+		});
 	}
 }
