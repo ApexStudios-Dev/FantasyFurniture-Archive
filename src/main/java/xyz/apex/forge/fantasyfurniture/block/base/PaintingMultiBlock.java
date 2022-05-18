@@ -45,7 +45,7 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	public boolean canSurvive(BlockState blockState, IWorldReader level, BlockPos pos)
+	public boolean canSurviveAdditional(IWorldReader level, BlockPos pos, BlockState blockState)
 	{
 		return canSupportPainting(level, pos);
 	}
