@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.util.BlockVoxelShape;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -65,7 +64,8 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 		if(!facing.getAxis().isHorizontal())
 			return false;
 
-		BlockPos facingPos = pos.relative(facing);
-		return level.getBlockState(facingPos).isFaceSturdy(level, facingPos, facing.getOpposite(), BlockVoxelShape.RIGID);
+		return true;
+		/*BlockPos facingPos = pos.relative(facing);
+		return level.getBlockState(facingPos).isFaceSturdy(level, facingPos, facing.getOpposite(), BlockVoxelShape.RIGID);*/
 	}
 }
