@@ -97,9 +97,10 @@ public final class NordicBedDoubleBlock extends BedBlock
 	@Override
 	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
 	{
+		pose.scale(.9F, .9F, .9F);
 		pose.mulPose(Vector3f.XP.rotationDegrees(180));
 		pose.mulPose(Vector3f.ZP.rotationDegrees(180));
-		pose.translate(3D, .1125D, 0D);
+		pose.translate(3.25D, 0D, 0D);
 	}
 
 	@Override
