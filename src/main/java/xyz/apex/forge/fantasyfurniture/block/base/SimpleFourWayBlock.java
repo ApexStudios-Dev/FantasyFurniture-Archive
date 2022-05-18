@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.IWaterLoggable;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.DirectionProperty;
@@ -12,7 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
-public class SimpleFourWayBlock extends HorizontalBlock implements IWaterLoggable
+public class SimpleFourWayBlock extends HorizontalBlock
 {
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
