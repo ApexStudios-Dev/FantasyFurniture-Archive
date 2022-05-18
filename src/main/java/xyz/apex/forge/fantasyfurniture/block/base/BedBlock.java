@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.base;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import org.apache.commons.lang3.ArrayUtils;
 
 import net.minecraft.block.Block;
@@ -119,6 +120,10 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public boolean isPathfindable(BlockState blockState, IBlockReader level, BlockPos pos, PathType pathType)
 	{
 		return false;
+	}
+
+	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
+	{
 	}
 
 	protected ActionResultType onBadBedSetSpawn(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)

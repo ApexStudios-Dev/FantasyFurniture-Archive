@@ -1,12 +1,16 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -88,6 +92,14 @@ public final class NordicBedDoubleBlock extends BedBlock
 		}
 
 		return shaper.get(facing);
+	}
+
+	@Override
+	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
+	{
+		pose.mulPose(Vector3f.XP.rotationDegrees(180));
+		pose.mulPose(Vector3f.ZP.rotationDegrees(180));
+		pose.translate(3D, .1125D, 0D);
 	}
 
 	@Override
