@@ -30,7 +30,6 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 		{
 			World level = ctx.getLevel();
 			BlockPos pos = ctx.getClickedPos();
-			Direction dir = ctx.getNearestLookingDirection();
 
 			for(Direction facing : ctx.getNearestLookingDirections())
 			{
