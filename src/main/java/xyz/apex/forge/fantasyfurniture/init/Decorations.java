@@ -375,8 +375,8 @@ public final class Decorations
 	{
 		return REGISTRY
 				.block("decorations/coin_stack_gold", CoinStackBlock::new)
-					.lang("Coin Stack Gold")
-					.lang(EN_GB, "Coin Stack Gold")
+					.lang("Gold Coin Stack")
+					.lang(EN_GB, "Gold Coin Stack")
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
