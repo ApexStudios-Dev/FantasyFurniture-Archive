@@ -261,7 +261,7 @@
 		{
 			"name": "behind_lattice_1",
 			"from": [-12.25, 2, 2],
-			"to": [12.25, 10, 2],
+			"to": [12.25, 11, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 7, 1]},
 			"faces": {
 				"north": {"uv": [3.125, 14.75, 6.1875, 15.75], "texture": "#wardrobe"},
@@ -275,7 +275,7 @@
 		{
 			"name": "behind_lattice_2",
 			"from": [-12.25, 2, 14],
-			"to": [12.25, 10, 14],
+			"to": [12.25, 11, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 7, 13]},
 			"faces": {
 				"north": {"uv": [0, 14.75, 3.0625, 15.75], "texture": "#wardrobe"},
