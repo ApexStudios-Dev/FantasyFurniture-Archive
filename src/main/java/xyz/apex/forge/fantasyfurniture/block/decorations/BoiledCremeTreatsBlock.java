@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.block.decorations;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -55,5 +56,11 @@ public final class BoiledCremeTreatsBlock extends SimpleFourWayWaterLoggedStacke
 			shaper = SHAPER_2;
 
 		return shaper.get(facing);
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.NORMAL;
 	}
 }
