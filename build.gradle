@@ -111,6 +111,7 @@ sourceSets.main.resources {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://maven.apexmods.xyz/' }
@@ -286,6 +287,23 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
 			}
+		}
+	}
+} else {
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				groupId = "${mod_base_package}"
+				artifactId = "${mod_id}"
+				version = "${minecraft_version}-${mod_version}"
+				artifact jar
+				artifact sourcesJar
+				artifact deobfJar
+				artifact shadowJar
+			}
+		}
+		repositories {
+			mavenLocal()
 		}
 	}
 }
