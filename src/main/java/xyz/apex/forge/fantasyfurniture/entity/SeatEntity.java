@@ -13,12 +13,8 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import xyz.apex.forge.fantasyfurniture.block.base.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.init.Registrations;
 
-import javax.annotation.Nullable;
-
 public class SeatEntity extends Entity
 {
-	@Nullable private BlockPos source;
-
 	// default constructor for registration, do not call manually
 	@Deprecated
 	public SeatEntity(EntityType<? extends SeatEntity> entityType, World level)
@@ -40,18 +36,12 @@ public class SeatEntity extends Entity
 	{
 		super.tick();
 
-		if(source == null)
-		{
-			source = blockPosition();
-			setPos(source.getX() + .5D, source.getY() + .5D, source.getZ() + .5D);
-		}
-
 		if(!level.isClientSide)
 		{
-			if(getPassengers().isEmpty() || level.isEmptyBlock(source))
-			{
-				BlockPos pos = blockPosition();
+			BlockPos pos = blockPosition();
 
+			if(getPassengers().isEmpty() || level.isEmptyBlock(pos))
+			{
 				remove(false);
 				level.updateNeighbourForOutputSignal(pos, level.getBlockState(pos).getBlock());
 				ISeatBlock.setSeatOccupied(level, pos, false);
@@ -111,7 +101,6 @@ public class SeatEntity extends Entity
 		{
 			double seatYOffset = seatBlock.getSeatYOffset(blockState);
 
-			seat.source = pos;
 			seat.setPos(x + .5D, y + seatYOffset, z + .5D);
 
 			level.addFreshEntity(seat);
