@@ -1,8 +1,10 @@
 package xyz.apex.forge.fantasyfurniture.block.base;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +16,8 @@ public class SeatBlock extends SimpleFourWayWaterLoggedBlock implements ISeatBlo
 	public SeatBlock(Properties properties)
 	{
 		super(properties);
+
+		registerDefaultState(defaultBlockState().setValue(OCCUPIED, false));
 	}
 
 	@Override
@@ -32,5 +36,12 @@ public class SeatBlock extends SimpleFourWayWaterLoggedBlock implements ISeatBlo
 	public String getOccupiedTranslationKey()
 	{
 		return getDescriptionId() + ".occupied";
+	}
+
+	@Override
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	{
+		builder.add(OCCUPIED);
+		super.createBlockStateDefinition(builder);
 	}
 }

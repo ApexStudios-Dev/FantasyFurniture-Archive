@@ -54,6 +54,7 @@ public class SeatEntity extends Entity
 
 				remove(false);
 				level.updateNeighbourForOutputSignal(pos, level.getBlockState(pos).getBlock());
+				ISeatBlock.setSeatOccupied(level, pos, false);
 			}
 		}
 	}
