@@ -7,7 +7,6 @@ import mezz.jei.api.registration.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -19,7 +18,6 @@ import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @JeiPlugin
 public final class JeiIntegration implements IModPlugin
@@ -45,7 +43,7 @@ public final class JeiIntegration implements IModPlugin
 	public void registerRecipes(IRecipeRegistration registration)
 	{
 		IJeiHelpers jei = registration.getJeiHelpers();
-		List<ItemStack> results = FurnitureStation.CRAFTABLE.getValues().stream().map(Item::getDefaultInstance).collect(Collectors.toList());
+		List<ItemStack> results = FurnitureStation.getCraftingResults();
 		Set<FurnitureStationRecipes> recipes = Collections.singleton(new FurnitureStationRecipes(results, jei));
 		registration.addRecipes(recipes, FURNITURE_STATION_RECIPES);
 	}
