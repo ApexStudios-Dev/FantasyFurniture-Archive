@@ -258,6 +258,9 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 				if(searchBox.keyPressed(keyCode, scanCode, modifiers))
 					return true;
 
+				if(minecraft.options.keyInventory.matches(keyCode, scanCode))
+					return false;
+
 				if(keyCode == GLFW_KEY_ESCAPE)
 				{
 					focusSearchBoxNextTick = false;
