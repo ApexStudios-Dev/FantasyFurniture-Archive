@@ -424,7 +424,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 					vOffset = 18F * 2F;
 				}
 
-				if(!selectedResult.isEmpty() && ItemStack.isSame(selectedResult, resultItem))
+				if(!selectedResult.isEmpty() && ItemStack.matches(selectedResult, resultItem))
 					vOffset = 18F;
 
 				mc.textureManager.bind(TEXTURE);
@@ -468,8 +468,11 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 				if(!isItemValid(resultItem))
 					continue;
-				if(!selectedItem.isEmpty() && ItemStack.isSame(selectedItem, resultItem))
-					continue;
+
+				boolean isSelected = false;
+
+				if(!selectedItem.isEmpty() && ItemStack.matches(selectedItem, resultItem))
+					isSelected = true;
 
 				int resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
 				int resultItemY = centerY + 46 + yOffset;
@@ -479,12 +482,15 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 				if(resultItemY >= maxY)
 					break;
 
-				if(mouseX >= resultItemX && mouseY >= resultItemY && mouseX < resultItemX + 18 && mouseY < resultItemY + 18)
+				if(!isSelected)
 				{
-					Minecraft mc = getMinecraft();
-					mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
-					mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
-					return true;
+					if(mouseX >= resultItemX && mouseY >= resultItemY && mouseX < resultItemX + 18 && mouseY < resultItemY + 18)
+					{
+						Minecraft mc = getMinecraft();
+						mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
+						mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
+						return true;
+					}
 				}
 
 				visibleItemIndex++;

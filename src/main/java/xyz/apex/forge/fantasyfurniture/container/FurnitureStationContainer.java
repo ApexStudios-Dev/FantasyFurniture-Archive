@@ -10,7 +10,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.SoundCategory;
@@ -112,7 +111,7 @@ public final class FurnitureStationContainer extends Container
 		results.clear();
 
 		if(claySlot.hasItem() && woodSlot.hasItem() && stoneSlot.hasItem())
-			FurnitureStation.CRAFTABLE.getValues().stream().map(Item::getDefaultInstance).forEach(results::add);
+			results.addAll(FurnitureStation.getCraftingResults());
 
 		setupResultSlot(-1);
 	}

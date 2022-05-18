@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
@@ -32,6 +33,8 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
+import java.util.List;
+
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.ITEM_TAGS;
@@ -60,6 +63,7 @@ public final class FurnitureStation
 	public static final ITag.INamedTag<Item> CLAY = REGISTRY.forgeItemTagOptional("clay_ball", Sets.newHashSet(() -> Items.CLAY_BALL));
 	public static final ITag.INamedTag<Item> WOOD = ItemTags.PLANKS;
 	public static final ITag.INamedTag<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
+	private static final List<ItemStack> craftingResults = Lists.newArrayList();
 
 	public static boolean isValidClay(ItemStack stack)
 	{
@@ -76,6 +80,31 @@ public final class FurnitureStation
 		return stack.getItem().is(STONE);
 	}
 
+	public static List<ItemStack> getCraftingResults()
+	{
+		List<ItemStack> results = Lists.newArrayList();
+		craftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
+
+		for(Item item : CRAFTABLE.getValues())
+		{
+			boolean flag = false;
+
+			for(ItemStack result : results)
+			{
+				if(result.getItem() == item)
+				{
+					flag = true;
+					break;
+				}
+			}
+
+			if(!flag)
+				results.add(item.getDefaultInstance());
+		}
+
+		return results;
+	}
+
 	public static ITextComponent buildAcceptsAnyComponent(ITag.INamedTag<Item> tag)
 	{
 		return new TranslationTextComponent(TXT_ACCEPTS_ANY, new StringTextComponent(tag.getName().toString())
@@ -83,6 +112,11 @@ public final class FurnitureStation
 		)
 				.withStyle(TextFormatting.GRAY)
 		;
+	}
+
+	public static void registerAdditionalCraftingResult(ItemStack stack)
+	{
+		craftingResults.add(stack.copy());
 	}
 
 	static void bootstrap()
