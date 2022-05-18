@@ -2,6 +2,7 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
@@ -14,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class WallLightBlock extends SimpleFourWayBlock
+public class WallLightBlock extends SimpleFourWayWaterLoggedBlock
 {
 	public WallLightBlock(Properties properties)
 	{
@@ -24,20 +25,24 @@ public class WallLightBlock extends SimpleFourWayBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx)
 	{
-		BlockState defaultBlockState = defaultBlockState();
-		World level = ctx.getLevel();
-		BlockPos pos = ctx.getClickedPos();
-		Direction[] nearestLookingDirections = ctx.getNearestLookingDirections();
+		BlockState defaultBlockState = super.getStateForPlacement(ctx);
 
-		for(Direction direction : nearestLookingDirections)
+		if(defaultBlockState != null)
 		{
-			if(direction.getAxis().isHorizontal())
-			{
-				Direction opposite = direction.getOpposite();
-				BlockState blockState = defaultBlockState.setValue(FACING, opposite);
+			World level = ctx.getLevel();
+			BlockPos pos = ctx.getClickedPos();
+			Direction[] nearestLookingDirections = ctx.getNearestLookingDirections();
 
-				if(blockState.canSurvive(level, pos))
-					return blockState;
+			for(Direction direction : nearestLookingDirections)
+			{
+				if(direction.getAxis().isHorizontal())
+				{
+					Direction opposite = direction.getOpposite();
+					BlockState blockState = defaultBlockState.setValue(FACING, opposite);
+
+					if(blockState.canSurvive(level, pos))
+						return blockState;
+				}
 			}
 		}
 
@@ -47,7 +52,15 @@ public class WallLightBlock extends SimpleFourWayBlock
 	@Override
 	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, IWorld level, BlockPos pos, BlockPos facingPos)
 	{
-		return facing.getOpposite() == blockState.getValue(FACING) && !blockState.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(blockState, facing, facingBlockState, level, pos, facingPos);
+		if(facing.getOpposite() == blockState.getValue(FACING) && !blockState.canSurvive(level, pos))
+		{
+			if(blockState.getValue(WATERLOGGED))
+				level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+
+			return Blocks.AIR.defaultBlockState();
+		}
+
+		return super.updateShape(blockState, facing, facingBlockState, level, pos, facingPos);
 	}
 
 	@Override

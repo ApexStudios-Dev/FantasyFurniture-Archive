@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasyfurniture.block.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItemUseContext;
@@ -20,7 +21,7 @@ import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
 import javax.annotation.Nullable;
 
-public class SimpleFourWayWaterLoggedMultiBlock extends MultiBlockFourWay
+public class SimpleFourWayWaterLoggedMultiBlock extends MultiBlockFourWay implements IWaterLoggable
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
