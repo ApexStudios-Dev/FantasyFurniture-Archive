@@ -25,11 +25,13 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 	private static boolean bootstrap = false;
 
+	public static final ItemGroup MOD_ITEM_GROUP = new ModItemGroup();
+
 	private FFRegistry()
 	{
 		super(FantasyFurniture.ID);
 
-		itemGroup(ModItemGroup::new, "Fantasy's Furniture");
+		itemGroup(() -> MOD_ITEM_GROUP, "Fantasy's Furniture");
 
 		addDataGenerator(LANG, provider -> {
 			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");

@@ -8,13 +8,19 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
+import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.BaseCarpetBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
@@ -43,7 +49,8 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 public final class Nordic
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
+	public static final ITag.INamedTag<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/nordic");
+	
 	// region: Wool
 	public static final BlockEntry<Block> WOOL_BLOCK = wool();
 	public static final ItemEntry<BlockItem> WOOL_BLOCK_ITEM = Registrations.blockItem(WOOL_BLOCK);
@@ -68,7 +75,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.WOOL)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.WOOL, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -99,7 +106,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.CARPETS)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.CARPETS, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -134,7 +141,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -168,7 +175,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -202,7 +209,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -235,7 +242,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -268,7 +275,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -302,7 +309,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -335,7 +342,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -370,7 +377,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -404,7 +411,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -440,7 +447,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 
 					.simpleBlockEntity(NordicDrawerBlockEntity::new)
@@ -487,7 +494,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -529,7 +536,7 @@ public final class Nordic
 
 					.item()
 						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), REGISTRY.id("block/nordic/sofa_single")))
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -567,7 +574,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -600,7 +607,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -633,7 +640,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -666,7 +673,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -701,7 +708,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 
 					.simpleBlockEntity(NordicChestBlockEntity::new)
@@ -738,7 +745,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 
 					.simpleBlockEntity(NordicDresserBlockEntity::new)
@@ -776,7 +783,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 
 					.simpleBlockEntity(NordicWardrobeBlockEntity::new)
@@ -811,7 +818,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -848,7 +855,7 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
@@ -883,11 +890,19 @@ public final class Nordic
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
 	}
 	// endregion
+	// endregion
+
+	// region: Item Group Category
+	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
+			.builder(ITEM_GROUP_CATEGORY_TAG.getName().toString())
+				.tagged(ITEM_GROUP_CATEGORY_TAG)
+				.defaultIcon(BED_SINGLE_BLOCK::asItemStack)
+			.build();
 	// endregion
 
 	static void bootstrap()
@@ -900,5 +915,13 @@ public final class Nordic
 			provider.add(EN_GB, BED_DOUBLE_BLOCK_ITEM.asItem().getDescriptionId() + ".warning", "Only Supports 1 Player");
 		});
 
+		ITEM_GROUP_CATEGORY
+				.addTranslationGenerator(REGISTRY, "Nordic")
+				.addTranslationGenerator(REGISTRY, EN_GB, "Nordic");
+
+		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
+			ItemGroupCategoryManager instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
+			instance.addCategory(ITEM_GROUP_CATEGORY);
+		});
 	}
 }
