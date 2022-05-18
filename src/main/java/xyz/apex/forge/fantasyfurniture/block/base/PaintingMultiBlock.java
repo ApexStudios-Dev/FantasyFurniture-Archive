@@ -30,12 +30,13 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 		{
 			World level = ctx.getLevel();
 			BlockPos pos = ctx.getClickedPos();
+			Direction dir = ctx.getNearestLookingDirection();
 
 			for(Direction facing : ctx.getNearestLookingDirections())
 			{
 				Direction opposite = facing.getOpposite();
 
-				if(canSupportPainting(level, pos, facing))
+				if(canSupportPainting(level, pos, opposite))
 					return blockState.setValue(FACING, opposite);
 			}
 		}
@@ -57,11 +58,17 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	public static boolean canSupportPainting(IBlockReader level, BlockPos pos)
 	{
-		return PaintingBlock.canSupportPainting(level, pos);
+		for(Direction facing : Direction.Plane.HORIZONTAL)
+		{
+			if(canSupportPainting(level, pos, facing))
+				return true;
+		}
+
+		return false;
 	}
 
 	public static boolean canSupportPainting(IBlockReader level, BlockPos pos, Direction facing)
 	{
-		return PaintingBlock.canSupportPainting(level, pos, facing);
+		return facing.getAxis().isHorizontal();
 	}
 }
