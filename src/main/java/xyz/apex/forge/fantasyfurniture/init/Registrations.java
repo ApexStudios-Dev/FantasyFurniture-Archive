@@ -7,11 +7,9 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.IHasContainer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
@@ -30,38 +28,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-import xyz.apex.forge.fantasyfurniture.block.base.IStackedBlock;
-import xyz.apex.forge.fantasyfurniture.client.renderer.entity.SeatEntityRenderer;
-import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
-import xyz.apex.forge.utility.registrator.entry.*;
+import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
+import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
+import xyz.apex.forge.utility.registrator.entry.BlockEntry;
+import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
+import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.java.utility.nullness.NonnullSupplier;
-
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 
 public final class Registrations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
-	// region: Seat Entity
-	public static final EntityEntry<SeatEntity> SEAT_ENTITY = REGISTRY
-			.<SeatEntity>entity("seat", EntityClassification.MISC, SeatEntity::new)
-				.lang("Seat")
-				.lang(EN_GB, "Seat")
-
-				.sized(0F, 0F)
-				.setCustomClientFactory((spawnEntity, level) -> new SeatEntity(level))
-
-				.noSummon()
-				.fireImmune()
-				.immuneTo(() -> Blocks.TNT, () -> Blocks.LAVA)
-
-				.renderer(() -> SeatEntityRenderer::new)
-			.register();
-	// endregion
-
-	public static final ResourceLocation SMALL_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/small_storage.png");
-	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/medium_storage.png");
-	public static final ResourceLocation LARGE_STORGE_TEXTURE = REGISTRY.id("textures/gui/container/large_storage.png");
 
 	static void bootstrap()
 	{

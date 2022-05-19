@@ -10,7 +10,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.block.base.ISeatBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.java.utility.Lazy;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -69,11 +69,15 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyFurniture.ID), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
 
-		FFPatterns.bootstrap();
 		Registrations.bootstrap();
-		FurnitureStation.bootstrap();
-		Nordic.bootstrap();
+		FFPatterns.bootstrap();
+
+		FurnitureSet.bootstrap();
 		Decorations.bootstrap();
+
+		FurnitureStation.bootstrap();
+
+		FFElements.bootstrap();
 
 		bootstrap = true;
 	}

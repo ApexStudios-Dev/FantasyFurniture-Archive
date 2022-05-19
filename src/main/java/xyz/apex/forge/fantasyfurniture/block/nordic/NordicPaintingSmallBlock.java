@@ -8,9 +8,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.PaintingBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingSmallBlock;
 
-public final class NordicPaintingSmallBlock extends PaintingBlock
+public final class NordicPaintingSmallBlock extends SetPaintingSmallBlock
 {
 	public static final VoxelShape SHAPE = box(0D, 0D, 14D, 16D, 16D, 16D);
 

@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -9,12 +8,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedContainerBlock;
-import xyz.apex.forge.fantasyfurniture.block.entity.NordicDrawerBlockEntity;
-import xyz.apex.forge.fantasyfurniture.container.NordicDrawerContainer;
-import xyz.apex.forge.fantasyfurniture.init.Nordic;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetDrawerBlock;
 
-public final class NordicDrawerBlock extends SimpleFourWayWaterLoggedContainerBlock<NordicDrawerBlockEntity, NordicDrawerContainer>
+public final class NordicDrawerBlock extends SetDrawerBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(1D, 0D, 1D, 15D, 13D, 15D),
@@ -26,12 +22,6 @@ public final class NordicDrawerBlock extends SimpleFourWayWaterLoggedContainerBl
 	public NordicDrawerBlock(Properties properties)
 	{
 		super(properties);
-	}
-
-	@Override
-	protected TileEntityType<NordicDrawerBlockEntity> getBlockEntityType()
-	{
-		return Nordic.DRAWER_BLOCK_ENTITY.asBlockEntityType();
 	}
 
 	@Override

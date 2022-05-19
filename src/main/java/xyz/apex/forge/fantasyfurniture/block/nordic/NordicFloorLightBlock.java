@@ -1,27 +1,16 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.WaterLoggedMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetFloorLightBlock;
 
-import java.util.Random;
-
-public final class NordicFloorLightBlock extends WaterLoggedMultiBlock
+public final class NordicFloorLightBlock extends SetFloorLightBlock
 {
 	public static final VoxelShape SHAPE_LOWER = VoxelShaper.or(
 			box(6D, 0D, 6D, 10D, 2D, 10D),
@@ -57,73 +46,14 @@ public final class NordicFloorLightBlock extends WaterLoggedMultiBlock
 			box(7, 0.75, 9, 9, 4.75, 13)
 	);
 
-	public static final EnumProperty<Side> SIDE = EnumProperty.create("side", Side.class);
-
 	public NordicFloorLightBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
-
-		registerDefaultState(defaultBlockState().setValue(SIDE, Side.BOTTOM));
-	}
-
-	@Override
-	public BlockRenderType getRenderShape(BlockState blockState)
-	{
-		return pattern.isOrigin(blockState) ? BlockRenderType.MODEL : BlockRenderType.INVISIBLE;
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		return pattern.isOrigin(blockState) ? SHAPE_LOWER : SHAPE_UPPER;
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
-	{
-		builder.add(SIDE);
-		super.createBlockStateDefinition(builder);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public void animateTick(BlockState blockState, World level, BlockPos pos, Random rng)
-	{
-		if(blockState.getValue(SIDE) == Side.TOP)
-		{
-			double x = pos.getX() + .5D;
-			double y = pos.getY() + .5D + .34D;
-			double z = pos.getZ() + .5D;
-
-			onLightParticle(level, pos, blockState, x + .27D, y, z, rng);
-			onLightParticle(level, pos, blockState, x - .27D, y, z, rng);
-			onLightParticle(level, pos, blockState, x, y, z + .27D, rng);
-			onLightParticle(level, pos, blockState, x, y, z - .27D, rng);
-		}
-	}
-
-	private void onLightParticle(World level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
-	{
-		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
-		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
-	}
-
-	public enum Side implements IStringSerializable
-	{
-		TOP("top"),
-		BOTTOM("bottom");
-
-		private final String serializedName;
-
-		Side(String serializedName)
-		{
-			this.serializedName = serializedName;
-		}
-
-		@Override
-		public String getSerializedName()
-		{
-			return serializedName;
-		}
 	}
 }

@@ -10,8 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import xyz.apex.forge.fantasyfurniture.block.base.ISeatBlock;
-import xyz.apex.forge.fantasyfurniture.init.Registrations;
+import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
+import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public class SeatEntity extends Entity
 {
@@ -28,7 +28,7 @@ public class SeatEntity extends Entity
 	@Deprecated
 	public SeatEntity(World level)
 	{
-		this(Registrations.SEAT_ENTITY.asEntityType(), level);
+		this(FFElements.SEAT_ENTITY.asEntityType(), level);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class SeatEntity extends Entity
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		SeatEntity seat = Registrations.SEAT_ENTITY.create(level);
+		SeatEntity seat = FFElements.SEAT_ENTITY.create(level);
 
 		if(seat != null)
 		{

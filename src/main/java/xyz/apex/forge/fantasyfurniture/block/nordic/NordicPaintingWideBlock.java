@@ -9,9 +9,9 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.PaintingMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingWideBlock;
 
-public final class NordicPaintingWideBlock extends PaintingMultiBlock
+public final class NordicPaintingWideBlock extends SetPaintingWideBlock
 {
 	public static final VoxelShape SHAPE_A = box(-16D, 0D, 14D, 16D, 16D, 16D);
 	public static final VoxelShape SHAPE_B = box(0D, 0D, 14D, 32D, 16D, 16D);

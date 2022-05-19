@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -10,9 +9,9 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetWardrobeTopperBlock;
 
-public final class NordicWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
+public final class NordicWardrobeTopperBlock extends SetWardrobeTopperBlock
 {
 	public static final VoxelShape SHAPE_A = VoxelShaper.or(
 			box(-15D, 3D, 0D, 15D, 14D, 16D),
@@ -30,12 +29,6 @@ public final class NordicWardrobeTopperBlock extends SimpleFourWayWaterLoggedMul
 	public NordicWardrobeTopperBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

@@ -9,9 +9,9 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.SeatMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetChairBlock;
 
-public final class NordicChairBlock extends SeatMultiBlock
+public final class NordicChairBlock extends SetChairBlock
 {
 	public static final VoxelShape SHAPE_UPPER = VoxelShaper.or(
 			box(2D, 0D, 2D, 4D, 4D, 4D),
@@ -49,12 +49,6 @@ public final class NordicChairBlock extends SeatMultiBlock
 	public NordicChairBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
-	}
-
-	@Override
-	public double getSeatYOffset(BlockState blockState)
-	{
-		return .3D;
 	}
 
 	@Override

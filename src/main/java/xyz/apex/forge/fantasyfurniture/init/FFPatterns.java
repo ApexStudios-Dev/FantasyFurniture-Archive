@@ -1,7 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.PaintingMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.core.PaintingMultiBlock;
 import xyz.apex.forge.fantasyfurniture.block.nordic.NordicFloorLightBlock;
 
 public final class FFPatterns

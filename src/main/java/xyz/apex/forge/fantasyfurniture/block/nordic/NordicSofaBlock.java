@@ -8,9 +8,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.SofaBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetSofaBlock;
 
-public final class NordicSofaBlock extends SofaBlock
+public final class NordicSofaBlock extends SetSofaBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(1D, 0D, 1D, 3D, 3D, 3D),
@@ -75,12 +75,6 @@ public final class NordicSofaBlock extends SofaBlock
 	public NordicSofaBlock(Properties properties)
 	{
 		super(properties);
-	}
-
-	@Override
-	public double getSeatYOffset(BlockState blockState)
-	{
-		return .1D;
 	}
 
 	@Override

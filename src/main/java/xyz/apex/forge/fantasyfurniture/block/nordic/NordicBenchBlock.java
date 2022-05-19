@@ -9,10 +9,10 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.SeatMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetBenchBlock;
 
 // TODO: Support multiple sitting slots
-public final class NordicBenchBlock extends SeatMultiBlock
+public final class NordicBenchBlock extends SetBenchBlock
 {
 	public static final VoxelShape SHAPE_A = VoxelShaper.or(
 			box(12D, 0D, 2D, 14D, 3D, 4D),
@@ -48,18 +48,6 @@ public final class NordicBenchBlock extends SeatMultiBlock
 	public NordicBenchBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
-	}
-
-	@Override
-	public double getSeatYOffset(BlockState blockState)
-	{
-		return .2D;
-	}
-
-	@Override
-	public BlockPos getSeatSitPos(BlockState blockState, BlockPos pos)
-	{
-		return super.getSeatSitPos(blockState, pos);
 	}
 
 	@Override

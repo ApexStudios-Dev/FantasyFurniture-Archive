@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -11,9 +9,9 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.SimpleFourWayWaterLoggedMultiBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableLargeBlock;
 
-public final class NordicTableLargeBlock extends SimpleFourWayWaterLoggedMultiBlock
+public final class NordicTableLargeBlock extends SetTableLargeBlock
 {
 	public static final VoxelShape SHAPE_A = VoxelShaper.or(
 			box(12D, 0D, 2D, 14D, 13D, 4D),
@@ -24,27 +22,27 @@ public final class NordicTableLargeBlock extends SimpleFourWayWaterLoggedMultiBl
 	);
 
 	public static final VoxelShape SHAPE_B = VoxelShaper.or(
-			Block.box(12, 0, -14, 14, 13, -12),
-			Block.box(-14, 0, -14, -12, 13, -12),
-			Block.box(-14, 0, 12, -12, 13, 14),
-			Block.box(12, 0, 12, 14, 13, 14),
-			Block.box(-16, 13, -16, 16, 16, 16)
+			box(12D, 0D, -14D, 14D, 13D, -12D),
+			box(-14D, 0D, -14D, -12D, 13D, -12D),
+			box(-14D, 0D, 12D, -12D, 13D, 14D),
+			box(12D, 0D, 12D, 14D, 13D, 14D),
+			box(-16D, 13D, -16D, 16D, 16D, 16D)
 	);
 
 	public static final VoxelShape SHAPE_C = VoxelShaper.or(
-			Block.box(28, 0, 2, 30, 13, 4),
-			Block.box(2, 0, 2, 4, 13, 4),
-			Block.box(2, 0, 28, 4, 13, 30),
-			Block.box(28, 0, 28, 30, 13, 30),
-			Block.box(0, 13, 0, 32, 16, 32)
+			box(28D, 0D, 2D, 30D, 13D, 4D),
+			box(2D, 0D, 2D, 4D, 13D, 4D),
+			box(2D, 0D, 28D, 4D, 13D, 30D),
+			box(28D, 0D, 28D, 30D, 13D, 30D),
+			box(0D, 13D, 0D, 32D, 16D, 32D)
 	);
 
 	public static final VoxelShape SHAPE_D = VoxelShaper.or(
-			Block.box(28, 0, -14, 30, 13, -12),
-			Block.box(2, 0, -14, 4, 13, -12),
-			Block.box(2, 0, 12, 4, 13, 14),
-			Block.box(28, 0, 12, 30, 13, 14),
-			Block.box(0, 13, -16, 32, 16, 16)
+			box(28D, 0D, -14D, 30D, 13D, -12D),
+			box(2D, 0D, -14D, 4D, 13D, -12D),
+			box(2D, 0D, 12D, 4D, 13D, 14D),
+			box(28D, 0D, 12D, 30D, 13D, 14D),
+			box(0D, 13D, -16D, 32D, 16D, 16D)
 	);
 
 	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
@@ -55,12 +53,6 @@ public final class NordicTableLargeBlock extends SimpleFourWayWaterLoggedMultiBl
 	public NordicTableLargeBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

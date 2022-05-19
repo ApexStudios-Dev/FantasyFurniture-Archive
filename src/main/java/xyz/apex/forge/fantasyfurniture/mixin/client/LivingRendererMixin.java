@@ -13,7 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import xyz.apex.forge.fantasyfurniture.block.base.BedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 
 @Mixin(LivingRenderer.class)
 public class LivingRendererMixin

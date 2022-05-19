@@ -8,9 +8,9 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.ShelfBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetShelfBlock;
 
-public final class NordicShelfBlock extends ShelfBlock
+public final class NordicShelfBlock extends SetShelfBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(1.5D, 9D, 2D, 2.5D, 14D, 13D),

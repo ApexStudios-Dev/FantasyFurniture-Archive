@@ -20,6 +20,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.util.ContainerHelper;
+import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayBlockEntityBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
