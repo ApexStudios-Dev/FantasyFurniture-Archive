@@ -26,6 +26,6 @@ public class SetDresserBlock extends SimpleFourWayMultiBlockContainerBlock<SetDr
 	@Override
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
-		return PushReaction.DESTROY;
+		return PushReaction.BLOCK;
 	}
 }

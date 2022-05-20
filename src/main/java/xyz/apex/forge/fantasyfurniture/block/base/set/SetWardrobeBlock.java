@@ -26,6 +26,6 @@ public class SetWardrobeBlock extends SimpleFourWayMultiBlockContainerBlock<SetW
 	@Override
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
-		return PushReaction.DESTROY;
+		return PushReaction.BLOCK;
 	}
 }

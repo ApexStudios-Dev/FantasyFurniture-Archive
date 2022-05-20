@@ -26,6 +26,6 @@ public class SetChestBlock extends SimpleFourWayMultiBlockContainerBlock<SetChes
 	@Override
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
-		return PushReaction.DESTROY;
+		return PushReaction.BLOCK;
 	}
 }
