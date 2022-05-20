@@ -25,6 +25,7 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -91,6 +92,21 @@ public final class Registrations
 		ResourceLocation id = ctx.getId();
 		int maxValue = IStackedBlock.getMaxValue(property);
 		provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), getExistingModelPath(id, "_" + maxValue));
+	}
+
+	static <BLOCK extends Block> void simpleBlockWithStates(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
+	{
+		ResourceLocation id = ctx.getId();
+
+		provider.getVariantBuilder(ctx.get())
+		        .forAllStates(blockState -> ConfiguredModel
+				        .builder()
+				        .modelFile(provider
+						        .models()
+						        .getExistingFile(getExistingModelPath(id, ""))
+				        )
+				        .build()
+		        );
 	}
 
 	static <BLOCK extends Block> void horizontalBlock(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)

@@ -62,7 +62,8 @@ public enum FurnitureSet
 			NordicWardrobeBlock::new,
 			NordicWardrobeTopperBlock::new,
 			NordicBedSingleBlock::new,
-			NordicBedDoubleBlock::new
+			NordicBedDoubleBlock::new,
+			NordicChandelierBlock::new
 	),
 	// endregion
 	;
@@ -124,6 +125,8 @@ public enum FurnitureSet
 	public final ItemEntry<BlockItem> bedSingleBlockItem;
 	public final BlockEntry<? extends SetBedDoubleBlock> bedDoubleBlock;
 	public final ItemEntry<BlockItem> bedDoubleBlockItem;
+	public final BlockEntry<? extends SetChandelierBlock> chandelierBlock;
+	public final ItemEntry<BlockItem> chandelierBlockItem;
 	// endregion
 
 	FurnitureSet(
@@ -151,7 +154,8 @@ public enum FurnitureSet
 			MultiBlockFactory<SetWardrobeBlock> wardrobeBlockFactory,
 			MultiBlockFactory<SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
 			MultiBlockFactory<SetBedSingleBlock> bedSingleBlockFactory,
-			MultiBlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory
+			MultiBlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory,
+			BlockFactory<SetChandelierBlock> chandelierBlockFactory
 	)
 	{
 		this.serializedName = serializedName;
@@ -233,6 +237,9 @@ public enum FurnitureSet
 
 		bedDoubleBlock = bedDouble(bedDoubleBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		bedDoubleBlockItem = Registrations.blockItem(bedDoubleBlock);
+
+		chandelierBlock = chandelier(chandelierBlockFactory, serializedName, englishName, itemGroupCategoryTag);
+		chandelierBlockItem = Registrations.blockItem(chairBlock);
 
 		itemGroupCategory = ItemGroupCategory
 			.builder(itemGroupCategoryTag.getName().toString())
@@ -1020,5 +1027,36 @@ public enum FurnitureSet
 		.register();
 	}
 	// endregion
+	// endregion
+
+	// region: Chandelier
+	private static <BLOCK extends SetChandelierBlock> BlockEntry<BLOCK> chandelier(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.getInstance()
+				.block(serializedName + "/chandelier", blockFactory)
+					.lang(englishName + " Chandelier")
+					.lang(EN_GB, englishName + " Chandelier")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+					.lightLevel(blockState -> 14)
+
+					.blockState(Registrations::simpleBlockWithStates)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+					.build()
+		.register();
+	}
 	// endregion
 }
