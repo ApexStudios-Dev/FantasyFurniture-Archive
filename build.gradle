@@ -221,7 +221,7 @@ if(System.getenv('GENERATE_CHANGELOG') != null) {
     task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
         file = file("CHANGELOG.md")
         fromRepo = file('.')
-        fromRef = "${previousGitTag}-BETA" // TODO: Remove once we leave alpha
+        fromRef = "${previousGitTag}"
         toRef = "v${mod_version}"
         templateContent = file('.github/changelog.mustache').text
 		        .replace('{mod_version}', "${mod_version}")
