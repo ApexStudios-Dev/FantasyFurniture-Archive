@@ -45,7 +45,7 @@ public class SetFloorLightBlock extends WaterLoggedMultiBlock
 	@Override
 	public void animateTick(BlockState blockState, World level, BlockPos pos, Random rng)
 	{
-		if(blockState.getValue(SIDE) == Side.TOP)
+		if(!blockState.getValue(WATERLOGGED) && blockState.getValue(SIDE) == Side.TOP)
 		{
 			double x = pos.getX() + .5D;
 			double y = pos.getY() + .5D + .34D;

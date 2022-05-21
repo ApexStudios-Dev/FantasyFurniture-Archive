@@ -76,16 +76,19 @@ public class WallLightBlock extends SimpleFourWayWaterLoggedBlock
 	@Override
 	public void animateTick(BlockState blockState, World level, BlockPos pos, Random rng)
 	{
-		Direction facing = blockState.getValue(FACING).getOpposite();
+		if(!blockState.getValue(WATERLOGGED))
+		{
+			Direction facing = blockState.getValue(FACING).getOpposite();
 
-		double hStep = .145D;
-		double vStep = .24D;
+			double hStep = .12D;
+			double vStep = .24D;
 
-		double x = pos.getX() + .5D + (hStep * facing.getStepX());
-		double y = pos.getY() + .7D + vStep;
-		double z = pos.getZ() + .5D + (hStep * facing.getStepZ());
+			double x = pos.getX() + .5D + (hStep * facing.getStepX());
+			double y = pos.getY() + .7D + vStep;
+			double z = pos.getZ() + .5D + (hStep * facing.getStepZ());
 
-		onLightParticle(level, pos, blockState, x, y, z, rng);
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+		}
 	}
 
 	protected void onLightParticle(World level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
