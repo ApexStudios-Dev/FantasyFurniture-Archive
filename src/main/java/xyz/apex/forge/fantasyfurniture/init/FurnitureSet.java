@@ -30,9 +30,7 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 
-import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
-import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public enum FurnitureSet
 {
@@ -254,9 +252,6 @@ public enum FurnitureSet
 
 		for(FurnitureSet furnitureSet : values())
 		{
-			registry.addDataGenerator(LANG, provider -> provider.add(furnitureSet.bedDoubleBlockItem.asItem().getDescriptionId() + ".warning", "Only Supports 1 Player"));
-			registry.addDataGenerator(LANG_EXT_PROVIDER, provider -> provider.add(EN_GB, furnitureSet.bedDoubleBlockItem.asItem().getDescriptionId() + ".warning", "Only Supports 1 Player"));
-
 			furnitureSet.itemGroupCategory
 					.addTranslationGenerator(registry, furnitureSet.englishName)
 					.addTranslationGenerator(registry, EN_GB, furnitureSet.englishName);
