@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
-public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implements ISeatMultiBlock
+public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implements ISeatBlock
 {
 	public SeatMultiBlock(Properties properties, MultiBlockPattern pattern)
 	{
