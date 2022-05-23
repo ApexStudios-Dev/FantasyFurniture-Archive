@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -23,6 +24,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
@@ -41,7 +44,19 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		registerDefaultState(defaultBlockState().setValue(OCCUPIED, false));
 	}
 
-	protected abstract int getBedHeadMultiBlockIndex(BlockState blockState);
+	@Nullable
+	@Override
+	protected BlockState getPlacementState(BlockItemUseContext ctx, BlockState defaultBlockState)
+	{
+		BlockState blockState = super.getPlacementState(ctx, defaultBlockState);
+
+		if(blockState != null)
+			return blockState.setValue(FACING, ctx.getHorizontalDirection());
+
+		return null;
+	}
+
+	protected abstract int getBedFootMultiBlockIndex(BlockState blockState);
 
 	@Override
 	public PushReaction getPistonPushReaction(BlockState blockState)
@@ -62,18 +77,21 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		if(level.isClientSide)
 			return ActionResultType.CONSUME;
 
-		BlockPos headPos = getBedHedPos(this, blockState, pos);
-		BlockState headBlockState = level.getBlockState(headPos);
+		BlockPos footPos = getBedFootPos(this, blockState, pos);
+		BlockState footBlockState = blockState;
 
-		if(!headBlockState.is(this))
+		if(!footPos.equals(pos))
+			footBlockState = level.getBlockState(footPos);
+
+		if(!footBlockState.is(this))
 			return ActionResultType.CONSUME;
 
 		if(!canSetSpawn(level))
-			return onBadBedSetSpawn(level, headBlockState, headPos, player, hand);
-		else if(headBlockState.getValue(OCCUPIED))
-			return onBedOccupied(level, blockState, pos, player, hand);
+			return onBadBedSetSpawn(level, footBlockState, footPos, player, hand);
+		else if(footBlockState.getValue(OCCUPIED))
+			return onBedOccupied(level, footBlockState, footPos, player, hand);
 		else
-			return onSleepInBed(level, blockState, pos, player, hand);
+			return onSleepInBed(level, footBlockState, footPos, player, hand);
 	}
 
 	@Override
@@ -100,8 +118,13 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	@Override
 	public void setBedOccupied(BlockState blockState, World level, BlockPos pos, LivingEntity sleeper, boolean occupied)
 	{
-		BlockPos headPos = getBedHedPos(this, blockState, pos);
+		BlockPos footPos = getBedFootPos(this, blockState, pos);
+		BlockState footBlockState = level.getBlockState(footPos);
+
+		BlockPos headPos = footPos.relative(footBlockState.getValue(FACING));
 		BlockState headBlockState = level.getBlockState(headPos);
+
+		super.setBedOccupied(footBlockState, level, footPos, sleeper, occupied);
 		super.setBedOccupied(headBlockState, level, headPos, sleeper, occupied);
 	}
 
@@ -122,6 +145,7 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		return false;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
 	{
 	}
@@ -144,9 +168,10 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	protected ActionResultType onSleepInBed(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)
 	{
-		BlockPos headPos = getBedHedPos(this, blockState, pos);
+		Direction facing = blockState.getValue(FACING);
+		BlockPos sleepPos = pos.relative(facing);
 
-		player.startSleepInBed(headPos).ifLeft(result -> {
+		player.startSleepInBed(sleepPos).ifLeft(result -> {
 			if(result != null)
 				player.displayClientMessage(result.getMessage(), true);
 		});
@@ -178,20 +203,20 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		}
 	}
 
-	public static BlockPos getBedHedPos(BedBlock bed, BlockState blockState, BlockPos pos)
+	public static BlockPos getBedFootPos(BedBlock bed, BlockState blockState, BlockPos pos)
 	{
-		int headIndex = bed.getBedHeadMultiBlockIndex(blockState);
+		int footIndex = bed.getBedFootMultiBlockIndex(blockState);
 		MultiBlockPattern pattern = bed.getMultiBlockPattern();
 		int currentIndex = pattern.getIndex(blockState);
 
-		if(currentIndex == headIndex)
+		if(currentIndex == footIndex)
 			return pos;
 
 		List<BlockPos> localPositions = pattern.getLocalPositions();
 		BlockPos localSpace = localPositions.get(currentIndex);
 		BlockPos origin = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
-		BlockPos headLocalSPace = localPositions.get(headIndex);
-		return pattern.getWorldSpaceFromLocalSpace(blockState, origin, headLocalSPace);
+		BlockPos footLocalSPace = localPositions.get(footIndex);
+		return pattern.getWorldSpaceFromLocalSpace(blockState, origin, footLocalSPace);
 	}
 
 	public static boolean canSetSpawn(World level)
