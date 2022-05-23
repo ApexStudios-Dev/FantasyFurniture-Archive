@@ -9,8 +9,6 @@ import net.minecraft.inventory.container.IContainerListener;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
@@ -22,13 +20,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import xyz.apex.forge.apexcore.lib.block.entity.BaseBlockEntity;
 import xyz.apex.forge.apexcore.lib.util.INameableMutable;
 import xyz.apex.forge.fantasyfurniture.init.Registrations;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class InventoryBlockEntity<CONTAINER extends Container> extends TileEntity implements INamedContainerProvider, INameableMutable, IContainerListener
+public abstract class InventoryBlockEntity<CONTAINER extends Container> extends BaseBlockEntity implements INamedContainerProvider, INameableMutable, IContainerListener
 {
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_CUSTOM_NAME = "CustomName";
@@ -159,30 +158,41 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	{
 	}
 
-	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
+	protected CompoundNBT writeUpdateTag(CompoundNBT tagCompound)
 	{
-		return new SUpdateTileEntityPacket(worldPosition, 3, getUpdateTag());
-	}
-
-	@Override
-	public CompoundNBT getUpdateTag()
-	{
-		CompoundNBT updateTag = super.getUpdateTag();
-
 		if(inventory != null)
 		{
 			CompoundNBT inventoryTag = inventory.serializeNBT();
-			updateTag.put(NBT_INVENTORY, inventoryTag);
+			tagCompound.put(NBT_INVENTORY, inventoryTag);
 		}
 
 		if(customName != null)
 		{
 			String customNameJson = ITextComponent.Serializer.toJson(customName);
-			updateTag.putString(NBT_CUSTOM_NAME, customNameJson);
+			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
-		return updateTag;
+		return super.writeUpdateTag(tagCompound);
+	}
+
+	@Override
+	protected void readeUpdateTag(CompoundNBT tagCompound)
+	{
+		if(tagCompound.contains(NBT_INVENTORY, Constants.NBT.TAG_COMPOUND))
+		{
+			itemHandlerCapability.invalidate();
+			inventory = createInventoryHandler();
+			CompoundNBT inventoryTag = tagCompound.getCompound(NBT_INVENTORY);
+			inventory.deserializeNBT(inventoryTag);
+		}
+
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		{
+			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = ITextComponent.Serializer.fromJson(customNameJson);
+		}
+
+		super.readeUpdateTag(tagCompound);
 	}
 }

@@ -6,8 +6,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.text.ITextComponent;
@@ -15,13 +13,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
+import xyz.apex.forge.apexcore.lib.block.entity.BaseBlockEntity;
 import xyz.apex.forge.apexcore.lib.util.INameableMutable;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import javax.annotation.Nullable;
 
-public final class FurnitureStationBlockEntity extends TileEntity implements INamedContainerProvider, INameableMutable
+public final class FurnitureStationBlockEntity extends BaseBlockEntity implements INamedContainerProvider, INameableMutable
 {
 	public static final String NBT_CUSTOM_NAME = InventoryBlockEntity.NBT_CUSTOM_NAME;
 
@@ -88,24 +87,27 @@ public final class FurnitureStationBlockEntity extends TileEntity implements INa
 		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
 	}
 
-	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
+	protected CompoundNBT writeUpdateTag(CompoundNBT tagCompound)
 	{
-		return new SUpdateTileEntityPacket(worldPosition, 3, getUpdateTag());
-	}
-
-	@Override
-	public CompoundNBT getUpdateTag()
-	{
-		CompoundNBT updateTag = super.getUpdateTag();
-
 		if(customName != null)
 		{
 			String customNameJson = ITextComponent.Serializer.toJson(customName);
-			updateTag.putString(NBT_CUSTOM_NAME, customNameJson);
+			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
-		return updateTag;
+		return super.writeUpdateTag(tagCompound);
+	}
+
+	@Override
+	protected void readeUpdateTag(CompoundNBT tagCompound)
+	{
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		{
+			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = ITextComponent.Serializer.fromJson(customNameJson);
+		}
+
+		super.readeUpdateTag(tagCompound);
 	}
 }
