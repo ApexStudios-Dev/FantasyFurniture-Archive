@@ -28,6 +28,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
+import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrCarpetBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -66,6 +67,37 @@ public enum FurnitureSet
 			NordicBedSingleBlock::new,
 			NordicBedDoubleBlock::new,
 			NordicChandelierBlock::new
+	),
+	// endregion
+
+	// region: Venthyr
+	VENTHYR(
+			"venthyr",
+
+			VenthyrCarpetBlock::new,
+			NordicWallLightBlock::new, // TODO
+			NordicFloorLightBlock::new, // TODO
+			NordicTableSmallBlock::new, // TODO
+			NordicTableWideBlock::new, // TODO
+			NordicTableLargeBlock::new, // TODO
+			NordicStoolBlock::new, // TODO
+			NordicCushionBlock::new, // TODO
+			NordicPaintingSmallBlock::new, // TODO
+			NordicPaintingWideBlock::new, // TODO
+			NordicDrawerBlock::new, // TODO
+			NordicShelfBlock::new, // TODO
+			NordicSofaBlock::new, // TODO
+			NordicDeskBlock::new, // TODO
+			NordicChairBlock::new, // TODO
+			NordicBenchBlock::new, // TODO
+			NordicBookshelfBlock::new, // TODO
+			NordicChestBlock::new, // TODO
+			NordicDresserBlock::new, // TODO
+			NordicWardrobeBlock::new, // TODO
+			NordicWardrobeTopperBlock::new, // TODO
+			NordicBedSingleBlock::new, // TODO
+			NordicBedDoubleBlock::new, // TODO
+			NordicChandelierBlock::new // TODO
 	),
 	// endregion
 	;
