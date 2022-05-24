@@ -11,7 +11,6 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetBenchBlock;
 
-// TODO: Support multiple sitting slots
 public final class NordicBenchBlock extends SetBenchBlock
 {
 	public static final VoxelShape SHAPE_A = VoxelShaper.or(

@@ -22,6 +22,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.*;
 import net.minecraftforge.api.distmarker.Dist;
@@ -159,9 +160,8 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	protected ActionResultType onBedOccupied(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)
 	{
-		// TODO: Custom occupied messages like seats
 		if(!kickVillagerOutOfBed(level, pos))
-			player.displayClientMessage(new TranslationTextComponent("block.minecraft.bed.occupied"), true);
+			player.displayClientMessage(getOccupiedTranslation(), true);
 
 		return ActionResultType.SUCCESS;
 	}
@@ -177,6 +177,16 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		});
 
 		return ActionResultType.SUCCESS;
+	}
+
+	public String getOccupiedTranslationKey()
+	{
+		return getDescriptionId() + ".occupied";
+	}
+
+	public IFormattableTextComponent getOccupiedTranslation()
+	{
+		return new TranslationTextComponent(getOccupiedTranslationKey());
 	}
 
 	public static boolean kickVillagerOutOfBed(World level, BlockPos pos)

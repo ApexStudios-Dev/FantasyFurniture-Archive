@@ -22,6 +22,8 @@ import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFactory;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
@@ -30,7 +32,9 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 
+import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public enum FurnitureSet
 {
@@ -72,6 +76,9 @@ public enum FurnitureSet
 
 	public final ITag.INamedTag<Item> itemGroupCategoryTag;
 	public final ItemGroupCategory itemGroupCategory;
+
+	public final BlockEntry<?>[] blocks;
+	public final ItemEntry<?>[] items;
 
 	public final BlockEntry<Block> woolBlock;
 	public final ItemEntry<BlockItem> woolBlockItem;
@@ -239,6 +246,64 @@ public enum FurnitureSet
 		chandelierBlock = chandelier(chandelierBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		chandelierBlockItem = Registrations.blockItem(chairBlock);
 
+		blocks = new BlockEntry<?>[] {
+				woolBlock,
+				carpetBlock,
+				wallLightBlock,
+				floorLightBlock,
+				tableSmallBlock,
+				tableWideBlock,
+				tableLargeBlock,
+				stoolBlock,
+				cushionBlock,
+				paintingSmallBlock,
+				paintingWideBlock,
+				drawerBlock,
+				shelfBlock,
+				sofaBlock,
+				deskLeftBlock,
+				deskRightBlock,
+				chairBlock,
+				benchBlock,
+				bookshelfBlock,
+				chestBlock,
+				dresserBlock,
+				wardrobeBlock,
+				wardrobeTopperBlock,
+				bedSingleBlock,
+				bedDoubleBlock,
+				chandelierBlock
+		};
+
+		items = new ItemEntry<?>[] {
+				woolBlockItem,
+				carpetBlockItem,
+				wallLightBlockItem,
+				floorLightBlockItem,
+				tableSmallBlockItem,
+				tableWideBlockItem,
+				tableLargeBlockItem,
+				stoolBlockItem,
+				cushionBlockItem,
+				paintingSmallBlockItem,
+				paintingWideBlockItem,
+				drawerBlockItem,
+				shelfBlockItem,
+				sofaBlockItem,
+				deskLeftBlockItem,
+				deskRightBlockItem,
+				chairBlockItem,
+				benchBlockItem,
+				bookshelfBlockItem,
+				chestBlockItem,
+				dresserBlockItem,
+				wardrobeBlockItem,
+				wardrobeTopperBlockItem,
+				bedSingleBlockItem,
+				bedDoubleBlockItem,
+				chandelierBlockItem
+		};
+
 		itemGroupCategory = ItemGroupCategory
 			.builder(itemGroupCategoryTag.getName().toString())
 				.tagged(itemGroupCategoryTag)
@@ -252,9 +317,47 @@ public enum FurnitureSet
 
 		for(FurnitureSet furnitureSet : values())
 		{
+			registry.addDataGenerator(LANG, provider -> {
+				for(BlockEntry<?> entry : furnitureSet.blocks)
+				{
+					entry.ifPresent(block -> {
+						if(block instanceof ISeatBlock)
+						{
+							ISeatBlock seat = (ISeatBlock) block;
+							provider.add(seat.getOccupiedTranslationKey(), "This seat is occupied");
+						}
+
+						if(block instanceof BedBlock)
+						{
+							BedBlock bed = (BedBlock) block;
+							provider.add(bed.getOccupiedTranslationKey(), "This bed is occupied");
+						}
+					});
+				}
+			});
+
 			furnitureSet.itemGroupCategory
 					.addTranslationGenerator(registry, furnitureSet.englishName)
 					.addTranslationGenerator(registry, EN_GB, furnitureSet.englishName);
+
+			registry.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+				for(BlockEntry<?> entry : furnitureSet.blocks)
+				{
+					entry.ifPresent(block -> {
+						if(block instanceof ISeatBlock)
+						{
+							ISeatBlock seat = (ISeatBlock) block;
+							provider.add(EN_GB, seat.getOccupiedTranslationKey(), "This seat is occupied");
+						}
+
+						if(block instanceof BedBlock)
+						{
+							BedBlock bed = (BedBlock) block;
+							provider.add(EN_GB, bed.getOccupiedTranslationKey(), "This bed is occupied");
+						}
+					});
+				}
+			});
 
 			EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
 				ItemGroupCategoryManager instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);

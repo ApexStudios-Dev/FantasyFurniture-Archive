@@ -1,16 +1,13 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.java.utility.Lazy;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -36,29 +33,11 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		addDataGenerator(LANG, provider -> {
 			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 			provider.add(TXT_JEI_RESULTS_KEY, "Results");
-
-			getAll(Block.class)
-			        .stream()
-			        .filter(RegistryEntry::isPresent)
-			        .map(RegistryEntry::get)
-			        .filter(ISeatBlock.class::isInstance)
-					.map(ISeatBlock.class::cast)
-			        .map(ISeatBlock::getOccupiedTranslationKey)
-			        .forEach(s -> provider.add(s, "This seat is occupied"));
 		});
 
 		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
 			provider.add(EN_GB, TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 			provider.add(EN_GB, TXT_JEI_RESULTS_KEY, "Results");
-
-			getAll(Block.class)
-			        .stream()
-			        .filter(RegistryEntry::isPresent)
-			        .map(RegistryEntry::get)
-			        .filter(ISeatBlock.class::isInstance)
-			        .map(ISeatBlock.class::cast)
-			        .map(ISeatBlock::getOccupiedTranslationKey)
-			        .forEach(s -> provider.add(EN_GB, s, "This seat is occupied"));
 		});
 	}
 

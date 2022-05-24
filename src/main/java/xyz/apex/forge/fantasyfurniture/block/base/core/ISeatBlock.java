@@ -10,6 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -21,6 +22,11 @@ public interface ISeatBlock
 
 	String getOccupiedTranslationKey();
 
+	default IFormattableTextComponent getOccupiedTranslation()
+	{
+		return new TranslationTextComponent(getOccupiedTranslationKey());
+	}
+
 	default ActionResultType useSeatBlock(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
 	{
 		if(level.isClientSide)
@@ -30,7 +36,7 @@ public interface ISeatBlock
 
 		if(isSeatOccupied(level, sitPos, player, this))
 		{
-			player.displayClientMessage(new TranslationTextComponent(getOccupiedTranslationKey()), true);
+			player.displayClientMessage(getOccupiedTranslation(), true);
 			return ActionResultType.SUCCESS;
 		}
 

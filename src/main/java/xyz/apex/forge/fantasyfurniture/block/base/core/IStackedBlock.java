@@ -2,11 +2,20 @@ package xyz.apex.forge.fantasyfurniture.block.base.core;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 public interface IStackedBlock extends IForgeBlock
 {
 	IntegerProperty getStackSizeProperty();
+
+	String getStackableTranslationKey();
+
+	default IFormattableTextComponent getStackableTranslation()
+	{
+		return new TranslationTextComponent(getStackableTranslationKey());
+	}
 
 	default boolean isForStack(ItemStack stack)
 	{

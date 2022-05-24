@@ -15,11 +15,14 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
+import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class Decorations
 {
@@ -420,6 +423,70 @@ public final class Decorations
 		ITEM_GROUP_CATEGORY
 				.addTranslationGenerator(REGISTRY, "Decorations")
 				.addTranslationGenerator(REGISTRY, EN_GB, "Decorations");
+
+		BlockEntry<?>[] blocks = new BlockEntry[] {
+				BERRY_BASKET_EMPTY_BLOCK,
+				BERRY_BASKET_SWEETBERRY_BLOCK,
+				BOILED_CREME_TREATS_BLOCK,
+				BOLTS_OF_CLOTH_BLOCK,
+				BOOK_STACK_BLOCK,
+				BOWL_EMPTY_BLOCK,
+				BOWL_BEETROOT_SOUP_BLOCK,
+				BOWL_MUSHROOM_STEW_BLOCK,
+				SWEETROLLS_BLOCK,
+				MEAD_BOTTLES_BLOCK,
+				TANKARD_EMPTY_BLOCK,
+				TANKARD_HONEYMEAD_BLOCK,
+				TANKARD_MILK_BLOCK,
+				TANKARD_SWEETBERRY_BLOCK,
+				MUSHROOMS_RED_BLOCK,
+				COIN_STOCK_GOLD_BLOCK
+		};
+
+		ItemEntry<?>[] items = new ItemEntry[] {
+				BERRY_BASKET_EMPTY_BLOCK_ITEM,
+				BERRY_BASKET_SWEETBERRY_BLOCK_ITEM,
+				BOILED_CREME_TREATS_BLOCK_ITEM,
+				BOLTS_OF_CLOTH_BLOCK_ITEM,
+				BOOK_STACK_BLOCK_ITEM,
+				BOWL_EMPTY_BLOCK_ITEM,
+				BOWL_BEETROOT_SOUP_BLOCK_ITEM,
+				BOWL_MUSHROOM_STEW_BLOCK_ITEM,
+				SWEETROLLS_BLOCK_ITEM,
+				MEAD_BOTTLES_BLOCK_ITEM,
+				TANKARD_EMPTY_BLOCK_ITEM,
+				TANKARD_HONEYMEAD_BLOCK_ITEM,
+				TANKARD_MILK_BLOCK_ITEM,
+				TANKARD_SWEETBERRY_BLOCK_ITEM,
+				MUSHROOMS_RED_BLOCK_ITEM,
+				COIN_STOCK_GOLD_BLOCK_ITEM
+		};
+
+		REGISTRY.addDataGenerator(LANG, provider -> {
+			for(BlockEntry<?> entry : blocks)
+			{
+				entry.ifPresent(block -> {
+					if(block instanceof IStackedBlock)
+					{
+						IStackedBlock stacked = (IStackedBlock) block;
+						provider.add(stacked.getStackableTranslationKey(), "Stackable");
+					}
+				});
+			}
+		});
+
+		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
+			for(BlockEntry<?> entry : blocks)
+			{
+				entry.ifPresent(block -> {
+					if(block instanceof IStackedBlock)
+					{
+						IStackedBlock stacked = (IStackedBlock) block;
+						provider.add(EN_GB, stacked.getStackableTranslationKey(), "Stackable");
+					}
+				});
+			}
+		});
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
 			ItemGroupCategoryManager instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
