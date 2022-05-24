@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -139,7 +140,7 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	@Override
 	public ITextComponent getName()
 	{
-		return getBlockState().getBlock().getName();
+		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
 	}
 
 	@Override
