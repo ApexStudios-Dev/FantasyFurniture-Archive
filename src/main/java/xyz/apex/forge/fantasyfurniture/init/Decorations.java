@@ -410,6 +410,52 @@ public final class Decorations
 	}
 	// endregion
 
+	// region: Muffins
+	// region: Blueberry
+	public static final BlockEntry<MuffinsBlock> MUFFINS_BLUEBERRY_BLOCK = muffins("blueberry");
+	public static final ItemEntry<BlockItem> MUFFINS_BLUEBERRY_BLOCK_ITEM = Registrations.blockItem(MUFFINS_BLUEBERRY_BLOCK);
+	// endregion
+
+	// region: Chocolate
+	public static final BlockEntry<MuffinsBlock> MUFFINS_CHOCOLATE_BLOCK = muffins("chocolate");
+	public static final ItemEntry<BlockItem> MUFFINS_CHOCOLATE_BLOCK_ITEM = Registrations.blockItem(MUFFINS_CHOCOLATE_BLOCK);
+	// endregion
+
+	// region: Sweetberry
+	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY_BLOCK = muffins("sweetberry");
+	public static final ItemEntry<BlockItem> MUFFINS_SWEETBERRY_BLOCK_ITEM = Registrations.blockItem(MUFFINS_SWEETBERRY_BLOCK);
+	// endregion
+
+	private static BlockEntry<MuffinsBlock> muffins(String type)
+	{
+		return REGISTRY
+				.block("decorations/muffins_" + type, MuffinsBlock::new)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Muffins")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Muffins")
+
+					.initialProperties(Material.CAKE)
+					.strength(.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MuffinsBlock.MUFFINS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MuffinsBlock.MUFFINS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MuffinsBlock.MUFFINS))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
+					.build()
+		.register();
+	}
+	// endregion
+
 	// region: Item Group Category
 	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
 			.builder(ITEM_GROUP_CATEGORY_TAG.getName().toString())
@@ -440,7 +486,10 @@ public final class Decorations
 				TANKARD_MILK_BLOCK,
 				TANKARD_SWEETBERRY_BLOCK,
 				MUSHROOMS_RED_BLOCK,
-				COIN_STOCK_GOLD_BLOCK
+				COIN_STOCK_GOLD_BLOCK,
+				MUFFINS_BLUEBERRY_BLOCK,
+				MUFFINS_CHOCOLATE_BLOCK,
+				MUFFINS_SWEETBERRY_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -459,7 +508,10 @@ public final class Decorations
 				TANKARD_MILK_BLOCK_ITEM,
 				TANKARD_SWEETBERRY_BLOCK_ITEM,
 				MUSHROOMS_RED_BLOCK_ITEM,
-				COIN_STOCK_GOLD_BLOCK_ITEM
+				COIN_STOCK_GOLD_BLOCK_ITEM,
+				MUFFINS_BLUEBERRY_BLOCK_ITEM,
+				MUFFINS_CHOCOLATE_BLOCK_ITEM,
+				MUFFINS_SWEETBERRY_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
