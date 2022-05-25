@@ -13,11 +13,9 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingWideBlock;
 
 public final class NordicPaintingWideBlock extends SetPaintingWideBlock
 {
-	public static final VoxelShape SHAPE_A = box(-16D, 0D, 14D, 16D, 16D, 16D);
-	public static final VoxelShape SHAPE_B = box(0D, 0D, 14D, 32D, 16D, 16D);
+	public static final VoxelShape SHAPE = box(-16D, 0D, 14D, 16D, 16D, 16D);
 
-	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
-	public static final VoxelShaper SHAPER_B = VoxelShaper.forHorizontal(SHAPE_B, Direction.NORTH);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicPaintingWideBlock(Properties properties, MultiBlockPattern pattern)
 	{
@@ -28,7 +26,14 @@ public final class NordicPaintingWideBlock extends SetPaintingWideBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
-		VoxelShaper shaper = pattern.isOrigin(blockState) ? SHAPER_A : SHAPER_B;
-		return shaper.get(facing);
+		VoxelShape shape = SHAPER.get(facing);
+
+		if(!pattern.isOrigin(blockState))
+		{
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+		}
+
+		return shape;
 	}
 }

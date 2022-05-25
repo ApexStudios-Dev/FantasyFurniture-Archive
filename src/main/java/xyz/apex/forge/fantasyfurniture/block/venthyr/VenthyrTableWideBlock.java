@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block.nordic;
+package xyz.apex.forge.fantasyfurniture.block.venthyr;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -11,23 +11,23 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableWideBlock;
 
-public final class NordicTableWideBlock extends SetTableWideBlock
+public final class VenthyrTableWideBlock extends SetTableWideBlock
 {
-	public static final VoxelShape SHAPE_A = VoxelShaper.or(
-			box(13D, 0D, 0D, 15D, 9D, 2D),
-			box(13D, 7D, 1D, 15D, 13D, 3D),
-			box(13D, 7D, 13D, 15D, 13D, 15D),
-			box(-15D, 7D, 13D, -13D, 13D, 15D),
-			box(-15D, 0D, 0D, -13D, 9D, 2D),
-			box(-15D, 0D, 14D, -13D, 9D, 16D),
-			box(13D, 0D, 14D, 15D, 9D, 16D),
-			box(-16D, 13D, 0D, 16D, 16D, 16D),
-			box(-15D, 7D, 1D, -13D, 13D, 3D)
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(12D, 0D, 1D, 15D, 2D, 4D),
+			box(-15D, 0D, 1D, -12D, 2D, 4D),
+			box(-15D, 0D, 12D, -12D, 2D, 15D),
+			box(12D, 0D, 12D, 15D, 2D, 15D),
+			box(12.5D, 2D, 12.5D, 14.5D, 13D, 14.5D),
+			box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+			box(-14.5D, 2D, 1.5D, -12.5D, 13D, 3.5D),
+			box(-14.5D, 2D, 12.5D, -12.5D, 13D, 14.5D),
+			box(-16D, 13D, 0D, 16D, 16D, 16D)
 	);
 
-	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NordicTableWideBlock(Properties properties, MultiBlockPattern pattern)
+	public VenthyrTableWideBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}

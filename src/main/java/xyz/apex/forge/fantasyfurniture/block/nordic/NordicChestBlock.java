@@ -13,12 +13,10 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetChestBlock;
 
 public final class NordicChestBlock extends SetChestBlock
 {
-	public static final VoxelShape SHAPE_A = box(-15D, 0D, 2D, 15D, 14D, 16D);
+	public static final VoxelShape SHAPE = box(-15D, 0D, 2D, 15D, 14D, 16D);
 
-	public static final VoxelShape SHAPE_B = box(1D, 0D, 2D, 31D, 14D, 16D);
 
-	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
-	public static final VoxelShaper SHAPER_B = VoxelShaper.forHorizontal(SHAPE_B, Direction.NORTH);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicChestBlock(Properties properties, MultiBlockPattern pattern)
 	{
@@ -29,7 +27,14 @@ public final class NordicChestBlock extends SetChestBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
-		VoxelShaper shaper = pattern.isOrigin(blockState) ? SHAPER_A : SHAPER_B;
-		return shaper.get(facing);
+		VoxelShape shape = SHAPER.get(facing);
+
+		if(!pattern.isOrigin(blockState))
+		{
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+		}
+
+		return shape;
 	}
 }

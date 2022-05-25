@@ -10,7 +10,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetChandelierBlock;
 
 public final class NordicChandelierBlock extends SetChandelierBlock
 {
-	public static final VoxelShape SHAPE = box(1, 0, 1, 15, 16D, 15D);
+	public static final VoxelShape SHAPE = box(1D, 0D, 1D, 15, 16D, 15D);
 
 	public NordicChandelierBlock(Properties properties)
 	{

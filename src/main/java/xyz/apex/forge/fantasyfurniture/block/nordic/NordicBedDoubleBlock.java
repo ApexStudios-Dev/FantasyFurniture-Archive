@@ -13,34 +13,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetBedDoubleBlock;
 
 public final class NordicBedDoubleBlock extends SetBedDoubleBlock
 {
-	public static final VoxelShape SHAPE_A = VoxelShaper.or(
+	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(-16D, 0D, 0D, 16D, 16D, 2D),
 			box(-16D, 0D, 30D, 16D, 16D, 32D),
 			box(-16D, 3D, 2D, 16D, 9D, 30D)
 	);
 
-	public static final VoxelShape SHAPE_B = VoxelShaper.or(
-			box(0D, 0D, 0D, 32D, 16D, 2D),
-			box(0D, 0D, 30D, 32D, 16D, 32D),
-			box(0D, 3D, 2D, 32D, 9D, 30D)
-	);
-
-	public static final VoxelShape SHAPE_C = VoxelShaper.or(
-			box(-16D, 0D, -16D, 16D, 16D, -14D),
-			box(-16D, 0D, 14D, 16D, 16D, 16D),
-			box(-16D, 3D, -14D, 16D, 9D, 14D)
-	);
-
-	public static final VoxelShape SHAPE_D = VoxelShaper.or(
-			box(0D, 0D, -16D, 32D, 16D, -14D),
-			box(0D, 0D, 14D, 32D, 16D, 16D),
-			box(0D, 3D, -14D, 32D, 9D, 14D)
-	);
-
-	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
-	public static final VoxelShaper SHAPER_B = VoxelShaper.forHorizontal(SHAPE_B, Direction.NORTH);
-	public static final VoxelShaper SHAPER_C = VoxelShaper.forHorizontal(SHAPE_C, Direction.NORTH);
-	public static final VoxelShaper SHAPER_D = VoxelShaper.forHorizontal(SHAPE_D, Direction.NORTH);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicBedDoubleBlock(Properties properties, MultiBlockPattern pattern)
 	{
@@ -51,26 +30,18 @@ public final class NordicBedDoubleBlock extends SetBedDoubleBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
+		VoxelShape shape = SHAPER.get(facing);
 		int index = pattern.getIndex(blockState);
-		VoxelShaper shaper;
 
-		switch(index)
+		if(index == 1 || index == 3)
 		{
-			default:
-			case 0:
-				shaper = SHAPER_A;
-				break;
-			case 1:
-				shaper = SHAPER_B;
-				break;
-			case 2:
-				shaper = SHAPER_C;
-				break;
-			case 3:
-				shaper = SHAPER_D;
-				break;
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
 		}
 
-		return shaper.get(facing);
+		if(index == 2 || index == 3)
+			shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+
+		return shape;
 	}
 }

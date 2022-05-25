@@ -13,20 +13,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetDresserBlock;
 
 public final class NordicDresserBlock extends SetDresserBlock
 {
-	public static final VoxelShape SHAPE_A = VoxelShaper.or(
+	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(-15D, 0D, 1D, 15D, 16D, 15D),
 			box(-16D, 13D, 14D, 16D, 16D, 16D),
 			box(-16D, 13D, 0D, 16D, 16D, 2D)
 	);
 
-	public static final VoxelShape SHAPE_B = VoxelShaper.or(
-			box(1D, 0D, 1D, 31D, 16D, 15D),
-			box(0D, 13D, 14D, 32D, 16D, 16D),
-			box(0D, 13D, 0D, 32D, 16D, 2D)
-	);
-
-	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
-	public static final VoxelShaper SHAPER_B = VoxelShaper.forHorizontal(SHAPE_B, Direction.NORTH);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicDresserBlock(Properties properties, MultiBlockPattern pattern)
 	{
@@ -37,7 +30,14 @@ public final class NordicDresserBlock extends SetDresserBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
-		VoxelShaper shaper = pattern.isOrigin(blockState) ? SHAPER_A : SHAPER_B;
-		return shaper.get(facing);
+		VoxelShape shape = SHAPER.get(facing);
+
+		if(!pattern.isOrigin(blockState))
+		{
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+		}
+
+		return shape;
 	}
 }

@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block.nordic;
+package xyz.apex.forge.fantasyfurniture.block.venthyr;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -9,19 +9,21 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.set.SetBedSingleBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetBenchBlock;
 
-public final class NordicBedSingleBlock extends SetBedSingleBlock
+public final class VenthyrBenchBlock extends SetBenchBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(0D, 0D, 0D, 16D, 14D, 2D),
-			box(0D, 0D, 30D, 16D, 14D, 32D),
-			box(0D, 3D, 2D, 16D, 5D, 30D),
-			box(1D, 5D, 2D, 15D, 8D, 30D)
+			box(-14D, 0D, 2D, -11D, 4D, 5D),
+			box(-14D, 0D, 11D, -11D, 4D, 14D),
+			box(11D, 0D, 11D, 14D, 4D, 14D),
+			box(11D, 0D, 2D, 14D, 4D, 5D),
+			box(-15D, 4D, 1D, 15D, 7D, 15D)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
-	public NordicBedSingleBlock(Properties properties, MultiBlockPattern pattern)
+
+	public VenthyrBenchBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}
@@ -33,7 +35,10 @@ public final class NordicBedSingleBlock extends SetBedSingleBlock
 		VoxelShape shape = SHAPER.get(facing);
 
 		if(!pattern.isOrigin(blockState))
-			shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+		{
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+		}
 
 		return shape;
 	}

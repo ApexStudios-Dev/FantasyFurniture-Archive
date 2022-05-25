@@ -28,7 +28,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
-import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.venthyr.*;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -75,29 +75,29 @@ public enum FurnitureSet
 			"venthyr",
 
 			VenthyrCarpetBlock::new,
-			NordicWallLightBlock::new, // TODO
+			VenthyrWallLightBlock::new,
 			NordicFloorLightBlock::new, // TODO
-			NordicTableSmallBlock::new, // TODO
-			NordicTableWideBlock::new, // TODO
-			NordicTableLargeBlock::new, // TODO
+			VenthyrTableSmallBlock::new,
+			VenthyrTableWideBlock::new,
+			VenthyrTableLargeBlock::new,
 			NordicStoolBlock::new, // TODO
-			NordicCushionBlock::new, // TODO
+			VenthyrCushionBlock::new,
 			NordicPaintingSmallBlock::new, // TODO
-			NordicPaintingWideBlock::new, // TODO
-			NordicDrawerBlock::new, // TODO
-			NordicShelfBlock::new, // TODO
-			NordicSofaBlock::new, // TODO
-			NordicDeskBlock::new, // TODO
-			NordicChairBlock::new, // TODO
-			NordicBenchBlock::new, // TODO
-			NordicBookshelfBlock::new, // TODO
+			VenthyrPaintingWideBlock::new,
+			VenthyrDrawerBlock::new,
+			VenthyrShelfBlock::new,
+			VenthyrSofaBlock::new,
+			VenthyrDeskBlock::new,
+			VenthyrChairBlock::new,
+			VenthyrBenchBlock::new,
+			VenthyrBookshelfBlock::new,
 			NordicChestBlock::new, // TODO
 			NordicDresserBlock::new, // TODO
-			NordicWardrobeBlock::new, // TODO
-			NordicWardrobeTopperBlock::new, // TODO
-			NordicBedSingleBlock::new, // TODO
-			NordicBedDoubleBlock::new, // TODO
-			NordicChandelierBlock::new // TODO
+			VenthyrWardrobeBlock::new,
+			VenthyrWardrobeTopperBlock::new,
+			VenthyrBedSingleBlock::new,
+			VenthyrBedDoubleBlock::new,
+			VenthyrChandelierBlock::new
 	),
 	// endregion
 	;

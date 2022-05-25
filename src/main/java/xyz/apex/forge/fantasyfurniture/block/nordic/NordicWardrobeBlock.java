@@ -13,18 +13,8 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetWardrobeBlock;
 
 public final class NordicWardrobeBlock extends SetWardrobeBlock
 {
-	public static final VoxelShape SHAPE_A = box(-15D, 0D, 0D, 15D, 32D, 16D);
-
-	public static final VoxelShape SHAPE_B = box(1D, 0D, 0D, 31D, 32D, 16D);
-
-	public static final VoxelShape SHAPE_C = box(-15D, -16D, 0D, 15D, 16D, 16D);
-
-	public static final VoxelShape SHAPE_D = box(1D, -16D, 0D, 31D, 16D, 16D);
-
-	public static final VoxelShaper SHAPER_A = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
-	public static final VoxelShaper SHAPER_B = VoxelShaper.forHorizontal(SHAPE_B, Direction.NORTH);
-	public static final VoxelShaper SHAPER_C = VoxelShaper.forHorizontal(SHAPE_C, Direction.NORTH);
-	public static final VoxelShaper SHAPER_D = VoxelShaper.forHorizontal(SHAPE_D, Direction.NORTH);
+	public static final VoxelShape SHAPE = box(-15D, 0D, 0D, 15D, 32D, 16D);
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicWardrobeBlock(Properties properties, MultiBlockPattern pattern)
 	{
@@ -35,26 +25,18 @@ public final class NordicWardrobeBlock extends SetWardrobeBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
+		VoxelShape shape = SHAPER.get(facing);
 		int index = pattern.getIndex(blockState);
-		VoxelShaper shaper;
 
-		switch(index)
+		if(index == 1 || index == 3)
 		{
-			default:
-			case 0:
-				shaper = SHAPER_A;
-				break;
-			case 1:
-				shaper = SHAPER_B;
-				break;
-			case 2:
-				shaper = SHAPER_C;
-				break;
-			case 3:
-				shaper = SHAPER_D;
-				break;
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
 		}
 
-		return shaper.get(facing);
+		if(index == 2 || index == 3)
+			shape = shape.move(0D, -1D, 0D);
+
+		return shape;
 	}
 }
