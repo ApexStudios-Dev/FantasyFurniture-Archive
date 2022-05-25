@@ -4,7 +4,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.items.IItemHandler;
 
-public class SetChestContainer extends InventoryContainer
+public final class SetChestContainer extends InventoryContainer
 {
 	public static final int ROWS = 6;
 	public static final int COLS = 9;

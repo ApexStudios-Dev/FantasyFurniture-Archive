@@ -6,7 +6,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import xyz.apex.forge.fantasyfurniture.container.slot.BookSlotItemHandler;
 
-public class SetBookshelfContainer extends InventoryContainer
+public final class SetBookshelfContainer extends InventoryContainer
 {
 	public static final int ROWS = 6;
 	public static final int COLS = 9;

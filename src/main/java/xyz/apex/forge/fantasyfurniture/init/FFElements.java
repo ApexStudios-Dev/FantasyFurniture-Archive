@@ -63,6 +63,11 @@ public final class FFElements
 	public static final BlockEntityEntry<SetDresserBlockEntity> DRESSER_BLOCK_ENTITY;
 	// endregion
 
+	// region: Desk
+	public static final ContainerEntry<SetDeskContainer> DESK_CONTAINER = Registrations.container("desk", SetDeskContainer.ROWS, SetDeskContainer.COLS, SetDeskContainer::new, () -> SetDeskContainerScreen::new);
+	public static final BlockEntityEntry<SetDeskBlockEntity> DESK_BLOCK_ENTITY;
+	// endregion
+
 	// region: Wardrobe
 	public static final ContainerEntry<SetWardrobeContainer> WARDROBE_CONTAINER = Registrations.container("wardrobe", SetWardrobeContainer.ROWS, SetWardrobeContainer.COLS, SetWardrobeContainer::new, () -> SetWardrobeContainerScreen::new);
 	public static final BlockEntityEntry<SetWardrobeBlockEntity> WARDROBE_BLOCK_ENTITY;
@@ -80,6 +85,7 @@ public final class FFElements
 		List<NonnullSupplier<Block>> dressers = Lists.newArrayList();
 		List<NonnullSupplier<Block>> wardrobes = Lists.newArrayList();
 		List<NonnullSupplier<Block>> bookshelves = Lists.newArrayList();
+		List<NonnullSupplier<Block>> desks = Lists.newArrayList();
 
 		for(FurnitureSet furnitureSet : FurnitureSet.values())
 		{
@@ -88,6 +94,8 @@ public final class FFElements
 			dressers.add(furnitureSet.dresserBlock::asBlock);
 			wardrobes.add(furnitureSet.wardrobeBlock::asBlock);
 			bookshelves.add(furnitureSet.bookshelfBlock::asBlock);
+			desks.add(furnitureSet.deskLeftBlock::asBlock);
+			desks.add(furnitureSet.deskRightBlock::asBlock);
 		}
 
 		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(new NonnullSupplier[0]));
@@ -95,6 +103,7 @@ public final class FFElements
 		DRESSER_BLOCK_ENTITY = blockEntity("dresser", SetDresserBlockEntity::new, dressers.toArray(new NonnullSupplier[0]));
 		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(new NonnullSupplier[0]));
 		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(new NonnullSupplier[0]));
+		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(new NonnullSupplier[0]));
 	}
 
 	static void bootstrap()
