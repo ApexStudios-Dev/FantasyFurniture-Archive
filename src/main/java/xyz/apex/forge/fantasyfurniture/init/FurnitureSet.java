@@ -111,8 +111,8 @@ public enum FurnitureSet
 	public static final ResourceLocation VENTHYR_FANCY_TABLE_ITEM_PROPERTY = FFRegistry.getInstance().id("venthyr_fancy");
 
 	// region: Fields
-	private final String serializedName;
-	private final String englishName;
+	public final String serializedName;
+	public final String englishName;
 
 	public final ITag.INamedTag<Item> itemGroupCategoryTag;
 	public final ItemGroupCategory itemGroupCategory;

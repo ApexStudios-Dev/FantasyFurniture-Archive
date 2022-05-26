@@ -190,13 +190,20 @@ public final class Decorations
 	// endregion
 
 	// region: Bowl
+	// region: Empty
 	public static final BlockEntry<BowlBlock> BOWL_EMPTY_BLOCK = bowl("empty");
-	public static final BlockEntry<BowlBlock> BOWL_BEETROOT_SOUP_BLOCK = bowl("beetroot_soup");
-	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW_BLOCK = bowl("mushroom_stew");
-
 	public static final ItemEntry<BlockItem> BOWL_EMPTY_BLOCK_ITEM = Registrations.blockItem(BOWL_EMPTY_BLOCK);
+	// endregion
+
+	// region: Beetroot Soup
+	public static final BlockEntry<BowlBlock> BOWL_BEETROOT_SOUP_BLOCK = bowl("beetroot_soup");
 	public static final ItemEntry<BlockItem> BOWL_BEETROOT_SOUP_BLOCK_ITEM = Registrations.blockItem(BOWL_BEETROOT_SOUP_BLOCK);
+	// endregion
+
+	// region: Mushroom Stew
+	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW_BLOCK = bowl("mushroom_stew");
 	public static final ItemEntry<BlockItem> BOWL_MUSHROOM_STEW_BLOCK_ITEM = Registrations.blockItem(BOWL_MUSHROOM_STEW_BLOCK);
+	// endregion
 
 	private static BlockEntry<BowlBlock> bowl(String type)
 	{
@@ -304,15 +311,25 @@ public final class Decorations
 	// endregion
 
 	// region: Tankards
+	// region: Empty
 	public static final BlockEntry<TankardsBlock> TANKARD_EMPTY_BLOCK = tankards("empty");
-	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD_BLOCK = tankards("honeymead");
-	public static final BlockEntry<TankardsBlock> TANKARD_MILK_BLOCK = tankards("milk");
-	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY_BLOCK = tankards("sweetberry");
-
 	public static final ItemEntry<BlockItem> TANKARD_EMPTY_BLOCK_ITEM = Registrations.blockItem(TANKARD_EMPTY_BLOCK);
+	// endregion
+
+	// region: Honeymead
+	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD_BLOCK = tankards("honeymead");
 	public static final ItemEntry<BlockItem> TANKARD_HONEYMEAD_BLOCK_ITEM = Registrations.blockItem(TANKARD_HONEYMEAD_BLOCK);
+	// endregion
+
+	// region: Milk
+	public static final BlockEntry<TankardsBlock> TANKARD_MILK_BLOCK = tankards("milk");
 	public static final ItemEntry<BlockItem> TANKARD_MILK_BLOCK_ITEM = Registrations.blockItem(TANKARD_MILK_BLOCK);
+	// endregion
+
+	// region: Sweetberry
+	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY_BLOCK = tankards("sweetberry");
 	public static final ItemEntry<BlockItem> TANKARD_SWEETBERRY_BLOCK_ITEM = Registrations.blockItem(TANKARD_SWEETBERRY_BLOCK);
+	// endregion
 
 	private static BlockEntry<TankardsBlock> tankards(String type)
 	{
@@ -470,6 +487,115 @@ public final class Decorations
 	}
 	// endregion
 
+	// region: Venthyr
+	// region: Food
+	// region: 0
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0_BLOCK = food(FurnitureSet.VENTHYR, 0);
+	public static final ItemEntry<BlockItem> VENTHYR_FOOD_0_BLOCK_ITEM = Registrations.blockItem(VENTHYR_FOOD_0_BLOCK);
+	// endregion
+
+	// region: 1
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1_BLOCK = food(FurnitureSet.VENTHYR, 1);
+	public static final ItemEntry<BlockItem> VENTHYR_FOOD_1_BLOCK_ITEM = Registrations.blockItem(VENTHYR_FOOD_1_BLOCK);
+	// endregion
+
+	private static BlockEntry<FoodBlock> food(FurnitureSet furnitureSet, int index)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/food_" + index, FoodBlock::new)
+					.lang(furnitureSet.englishName + " Food")
+					.lang(EN_GB, furnitureSet.englishName + " Food")
+
+					.initialProperties(Material.CAKE)
+					.strength(2.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Tea Set
+	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET_BLOCK = teaSet(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_TEA_SET_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TEA_SET_BLOCK);
+
+	private static BlockEntry<TeaSetBlock> teaSet(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.multiBlock("decorations/" + furnitureSet.serializedName + "/tea_set", TeaSetBlock::new, FFPatterns.PATTERN_1x2)
+					.lang(furnitureSet.englishName + " Tea Set")
+					.lang(EN_GB, furnitureSet.englishName + " Tea Set")
+
+					.initialProperties(Material.METAL)
+					.strength(2.5F)
+					.sound(SoundType.METAL)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Tea Cups
+	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS_BLOCK = teaCups(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_TEA_CUPS_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TEA_CUPS_BLOCK);
+
+	private static BlockEntry<TeaCupsBlock> teaCups(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/tea_cups", TeaCupsBlock::new)
+					.lang(furnitureSet.englishName + " Tea Cups")
+					.lang(EN_GB, furnitureSet.englishName + " Tea Cups")
+
+					.initialProperties(Material.METAL)
+					.strength(2.5F)
+					.sound(SoundType.METAL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TeaCupsBlock.TEA_CUPS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TeaCupsBlock.TEA_CUPS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TeaCupsBlock.TEA_CUPS))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+	// endregion
+
 	// region: Item Group Category
 	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
 			.builder(ITEM_GROUP_CATEGORY_TAG.getName().toString())
@@ -503,7 +629,11 @@ public final class Decorations
 				COIN_STOCK_GOLD_BLOCK,
 				MUFFINS_BLUEBERRY_BLOCK,
 				MUFFINS_CHOCOLATE_BLOCK,
-				MUFFINS_SWEETBERRY_BLOCK
+				MUFFINS_SWEETBERRY_BLOCK,
+				VENTHYR_FOOD_0_BLOCK,
+				VENTHYR_FOOD_1_BLOCK,
+				VENTHYR_TEA_SET_BLOCK,
+				VENTHYR_TEA_CUPS_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -525,7 +655,11 @@ public final class Decorations
 				COIN_STOCK_GOLD_BLOCK_ITEM,
 				MUFFINS_BLUEBERRY_BLOCK_ITEM,
 				MUFFINS_CHOCOLATE_BLOCK_ITEM,
-				MUFFINS_SWEETBERRY_BLOCK_ITEM
+				MUFFINS_SWEETBERRY_BLOCK_ITEM,
+				VENTHYR_FOOD_0_BLOCK_ITEM,
+				VENTHYR_FOOD_1_BLOCK_ITEM,
+				VENTHYR_TEA_SET_BLOCK_ITEM,
+				VENTHYR_TEA_CUPS_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
