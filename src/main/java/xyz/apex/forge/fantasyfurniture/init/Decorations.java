@@ -594,6 +594,40 @@ public final class Decorations
 		.register();
 	}
 	// endregion
+
+	// region: Platter
+	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER_BLOCK = platter(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_PLATTER_BLOCK_ITEM = Registrations.blockItem(VENTHYR_PLATTER_BLOCK);
+
+	private static BlockEntry<PlatterBlock> platter(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/platter", PlatterBlock::new)
+					.lang(furnitureSet.englishName + " Platter")
+					.lang(EN_GB, furnitureSet.englishName + " Platter")
+
+					.initialProperties(Material.METAL)
+					.strength(2.5F)
+					.sound(SoundType.METAL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, PlatterBlock.PLATTER))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, PlatterBlock.PLATTER))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, PlatterBlock.PLATTER))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Item Group Category
@@ -633,7 +667,8 @@ public final class Decorations
 				VENTHYR_FOOD_0_BLOCK,
 				VENTHYR_FOOD_1_BLOCK,
 				VENTHYR_TEA_SET_BLOCK,
-				VENTHYR_TEA_CUPS_BLOCK
+				VENTHYR_TEA_CUPS_BLOCK,
+				VENTHYR_PLATTER_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -659,7 +694,8 @@ public final class Decorations
 				VENTHYR_FOOD_0_BLOCK_ITEM,
 				VENTHYR_FOOD_1_BLOCK_ITEM,
 				VENTHYR_TEA_SET_BLOCK_ITEM,
-				VENTHYR_TEA_CUPS_BLOCK_ITEM
+				VENTHYR_TEA_CUPS_BLOCK_ITEM,
+				VENTHYR_PLATTER_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
