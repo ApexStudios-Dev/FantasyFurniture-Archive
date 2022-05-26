@@ -30,11 +30,25 @@ public final class Decorations
 	public static final ITag.INamedTag<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
 
 	// region: Berry Basket
+	// region: Empty
 	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY_BLOCK = berryBasket("empty");
-	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY_BLOCK = berryBasket("sweetberry");
-
 	public static final ItemEntry<BlockItem> BERRY_BASKET_EMPTY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_EMPTY_BLOCK);
+	// endregion
+
+	// region: Sweetberry
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY_BLOCK = berryBasket("sweetberry");
 	public static final ItemEntry<BlockItem> BERRY_BASKET_SWEETBERRY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_SWEETBERRY_BLOCK);
+	// endregion
+
+	// region: Blueberry
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_BLUEBERRY_BLOCK = berryBasket("blueberry");
+	public static final ItemEntry<BlockItem> BERRY_BASKET_BLUEBERRY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_BLUEBERRY_BLOCK);
+	// endregion
+
+	// region: Strawberry
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_STRAWBERRY_BLOCK = berryBasket("strawberry");
+	public static final ItemEntry<BlockItem> BERRY_BASKET_STRAWBERRY_BLOCK_ITEM = Registrations.blockItem(BERRY_BASKET_STRAWBERRY_BLOCK);
+	// endregion
 
 	private static BlockEntry<BerryBasketBlock> berryBasket(String type)
 	{
