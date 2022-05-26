@@ -9,12 +9,17 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
@@ -29,6 +34,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.*;
+import xyz.apex.forge.fantasyfurniture.item.VenthyrTableBlockItem;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockFactory;
@@ -101,6 +107,8 @@ public enum FurnitureSet
 	),
 	// endregion
 	;
+
+	public static final ResourceLocation VENTHYR_FANCY_TABLE_ITEM_PROPERTY = FFRegistry.getInstance().id("venthyr_fancy");
 
 	// region: Fields
 	private final String serializedName;
@@ -197,6 +205,8 @@ public enum FurnitureSet
 	{
 		this.serializedName = serializedName;
 
+		boolean isVenthyr = serializedName.equals("venthyr");
+
 		englishName = RegistrateLangProvider.toEnglishName(serializedName);
 		itemGroupCategoryTag = FFRegistry.getInstance().moddedItemTag("item_category/" + serializedName);
 
@@ -212,13 +222,13 @@ public enum FurnitureSet
 		floorLightBlock = floorLight(floorLightBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		floorLightBlockItem = Registrations.blockItem(floorLightBlock);
 
-		tableSmallBlock = tableSmall(tableSmallBlockFactory, serializedName, englishName, itemGroupCategoryTag);
+		tableSmallBlock = isVenthyr ? venthyrTableSmall(tableSmallBlockFactory, serializedName, englishName, itemGroupCategoryTag) : tableSmall(tableSmallBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		tableSmallBlockItem = Registrations.blockItem(tableSmallBlock);
 
-		tableWideBlock = tableWide(tableWideBlockFactory, serializedName, englishName, itemGroupCategoryTag);
+		tableWideBlock = isVenthyr ? venthyrTableWide(tableWideBlockFactory, serializedName, englishName, itemGroupCategoryTag) : tableWide(tableWideBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		tableWideBlockItem = Registrations.blockItem(tableWideBlock);
 
-		tableLargeBlock = tableLarge(tableLargeBlockFactory, serializedName, englishName, itemGroupCategoryTag);
+		tableLargeBlock = isVenthyr ? venthyrTableLarge(tableLargeBlockFactory, serializedName, englishName, itemGroupCategoryTag) : tableLarge(tableLargeBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		tableLargeBlockItem = Registrations.blockItem(tableLargeBlock);
 
 		stoolBlock = stool(stoolBlockFactory, serializedName, englishName, itemGroupCategoryTag);
@@ -396,6 +406,56 @@ public enum FurnitureSet
 				instance.addCategory(furnitureSet.itemGroupCategory);
 			});
 		}
+
+		EventBusHelper.addEnqueuedListener(FMLClientSetupEvent.class, event -> {
+			VENTHYR.tableLargeBlockItem.ifPresent(item -> {
+				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
+					CompoundNBT stackTag = stack.getTag();
+
+					if(stackTag != null)
+					{
+						String name = VenthyrTableSmallBlock.FANCY.getName();
+
+						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
+							return 1F;
+					}
+
+					return 0F;
+				});
+			});
+
+			VENTHYR.tableWideBlockItem.ifPresent(item -> {
+				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
+					CompoundNBT stackTag = stack.getTag();
+
+					if(stackTag != null)
+					{
+						String name = VenthyrTableSmallBlock.FANCY.getName();
+
+						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
+							return 1F;
+					}
+
+					return 0F;
+				});
+			});
+
+			VENTHYR.tableSmallBlockItem.ifPresent(item -> {
+				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
+					CompoundNBT stackTag = stack.getTag();
+
+					if(stackTag != null)
+					{
+						String name = VenthyrTableSmallBlock.FANCY.getName();
+
+						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
+							return 1F;
+					}
+
+					return 0F;
+				});
+			});
+		});
 	}
 
 	// region: Wool
@@ -545,7 +605,62 @@ public enum FurnitureSet
 						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
-		.register();
+        .register();
+	}
+
+	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> venthyrTableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.getInstance()
+				.block(serializedName + "/table_small", blockFactory)
+					// .lang(englishName + " Table Small")
+					// .lang(EN_GB, englishName + " Table Small")
+					.setData(LANG, (ctx, provider) -> {
+			            BLOCK block = ctx.get();
+			            provider.add(block, englishName + " Table Small");
+			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Small");
+		            })
+			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
+				        BLOCK block = ctx.get();
+				        provider.add(EN_GB, block, englishName + " Table Small");
+				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Small");
+			        })
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
+
+							if(blockState.getValue(VenthyrTableSmallBlock.FANCY))
+								return provider.models().getBuilder(id + "_fancy").parent(existingModel).texture("table_small", id.getNamespace() + ":models/" + serializedName + "/table_small_fancy");
+							return existingModel;
+						});
+					})
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(VenthyrTableBlockItem::new)
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							        .override()
+							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+							        .end()
+							;
+						})
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+					.build()
+        .register();
 	}
 	// endregion
 
@@ -575,7 +690,62 @@ public enum FurnitureSet
 						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
-		.register();
+        .register();
+	}
+
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.getInstance()
+				.multiBlock(serializedName + "/table_wide", blockFactory, FFPatterns.PATTERN_1x2)
+					// .lang(englishName + " Table Wide")
+					// .lang(EN_GB, englishName + " Table Wide")
+                    .setData(LANG, (ctx, provider) -> {
+			            BLOCK block = ctx.get();
+			            provider.add(block, englishName + " Table Wide");
+			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Wide");
+		            })
+			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
+				        BLOCK block = ctx.get();
+				        provider.add(EN_GB, block, englishName + " Table Wide");
+				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Wide");
+			        })
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
+
+							if(blockState.getValue(VenthyrTableWideBlock.FANCY))
+								return provider.models().getBuilder(id + "_fancy").parent(existingModel).texture("table_wide", id.getNamespace() + ":models/" + serializedName + "/table_wide_fancy");
+							return existingModel;
+						});
+					})
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(VenthyrTableBlockItem::new)
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							        .override()
+							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+							        .end()
+							;
+						})
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+					.build()
+        .register();
 	}
 	// endregion
 
@@ -605,7 +775,62 @@ public enum FurnitureSet
 						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
-		.register();
+        .register();
+	}
+
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.getInstance()
+				.multiBlock(serializedName + "/table_large", blockFactory, FFPatterns.PATTERN_2x2)
+					// .lang(englishName + " Table Large")
+					// .lang(EN_GB, englishName + " Table Large")
+		            .setData(LANG, (ctx, provider) -> {
+			            BLOCK block = ctx.get();
+			            provider.add(block, englishName + " Table Large");
+			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Large");
+		            })
+			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
+				        BLOCK block = ctx.get();
+				        provider.add(EN_GB, block, englishName + " Table Large");
+				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Large");
+			        })
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
+
+							if(blockState.getValue(VenthyrTableLargeBlock.FANCY))
+								return provider.models().getBuilder(id + "_fancy").parent(existingModel).texture("table_large", id.getNamespace() + ":models/" + serializedName + "/table_large_fancy");
+							return existingModel;
+						});
+					})
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item(VenthyrTableBlockItem::new)
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							        .override()
+							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+							        .end()
+							;
+						})
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+					.build()
+        .register();
 	}
 	// endregion
 	// endregion
