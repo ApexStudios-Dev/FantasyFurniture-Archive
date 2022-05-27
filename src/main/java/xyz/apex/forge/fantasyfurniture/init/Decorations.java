@@ -538,6 +538,51 @@ public final class Decorations
 		.register();
 	}
 	// endregion
+
+	// region: Soul Gems
+	// region: Light
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT_BLOCK = soulGems(FurnitureSet.NORDIC, "light");
+	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_LIGHT_BLOCK_ITEM = Registrations.blockItem(NORDIC_SOUL_GEMS_LIGHT_BLOCK);
+	// endregion
+
+	// region: Dark
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK_BLOCK = soulGems(FurnitureSet.NORDIC, "dark");
+	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_DARK_BLOCK_ITEM = Registrations.blockItem(NORDIC_SOUL_GEMS_DARK_BLOCK);
+	// endregion
+
+	private static BlockEntry<SoulGemsBlock> soulGems(FurnitureSet furnitureSet, String type)
+	{
+		String englishName = "Soul Gems";
+
+		if(type.equals("dark"))
+			englishName = "Dark " + englishName;
+
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/soul_gems_" + type, SoulGemsBlock::new)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+
+					.initialProperties(Material.GLASS)
+					.strength(2.5F)
+					.sound(SoundType.GLASS)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Venthyr
