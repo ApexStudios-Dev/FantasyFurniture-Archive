@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
@@ -24,6 +25,7 @@ import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PR
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
+@SuppressWarnings("SameParameterValue")
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
@@ -81,40 +83,6 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
-					.build()
-		.register();
-	}
-	// endregion
-
-	// region: Boiled Crème Treats
-	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats();
-	public static final ItemEntry<BlockItem> BOILED_CREME_TREATS_BLOCK_ITEM = Registrations.blockItem(BOILED_CREME_TREATS_BLOCK);
-
-	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats()
-	{
-		return REGISTRY
-				.block("decorations/boiled_creme_treats", BoiledCremeTreatsBlock::new)
-					.lang("Boiled Creme Treats")
-					.lang(EN_GB, "Boiled Creme Treats")
-
-					.initialProperties(Material.CAKE)
-					.strength(.5F)
-					.sound(SoundType.WOOL)
-					.noOcclusion()
-
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
-					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
-
-					.isValidSpawn(BlockHelper::never)
-					.isRedstoneConductor(BlockHelper::never)
-					.isSuffocating(BlockHelper::never)
-					.isViewBlocking(BlockHelper::never)
-
-					.addRenderType(() -> RenderType::cutout)
-
-					.item()
-						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
@@ -236,74 +204,6 @@ public final class Decorations
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
-					.build()
-		.register();
-	}
-	// endregion
-
-	// region: Sweetrolls
-	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls();
-	public static final ItemEntry<BlockItem> SWEETROLLS_BLOCK_ITEM = Registrations.blockItem(SWEETROLLS_BLOCK);
-
-	private static BlockEntry<SweetRollsBlock> sweetRolls()
-	{
-		return REGISTRY
-				.block("decorations/sweetrolls", SweetRollsBlock::new)
-					.lang("Sweetrolls")
-					.lang(EN_GB, "Sweetrolls")
-
-					.initialProperties(Material.CAKE)
-					.strength(.5F)
-					.sound(SoundType.WOOL)
-					.noOcclusion()
-
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
-					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
-
-					.isValidSpawn(BlockHelper::never)
-					.isRedstoneConductor(BlockHelper::never)
-					.isSuffocating(BlockHelper::never)
-					.isViewBlocking(BlockHelper::never)
-
-					.addRenderType(() -> RenderType::cutout)
-
-					.item()
-						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
-						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
-					.build()
-		.register();
-	}
-	// endregion
-
-	// region: Mead Bottles
-	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles();
-	public static final ItemEntry<BlockItem> MEAD_BOTTLES_BLOCK_ITEM = Registrations.blockItem(MEAD_BOTTLES_BLOCK);
-
-	private static BlockEntry<MeadBottlesBlock> meadBottles()
-	{
-		return REGISTRY
-				.block("decorations/mead_bottles", MeadBottlesBlock::new)
-					.lang("Mead Bottles")
-					.lang(EN_GB, "Mead Bottles")
-
-					.initialProperties(Material.GLASS)
-					.strength(.3F)
-					.sound(SoundType.GLASS)
-					.noOcclusion()
-
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
-					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
-
-					.isValidSpawn(BlockHelper::never)
-					.isRedstoneConductor(BlockHelper::never)
-					.isSuffocating(BlockHelper::never)
-					.isViewBlocking(BlockHelper::never)
-
-					.addRenderType(() -> RenderType::cutout)
-
-					.item()
-						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
 					.build()
 		.register();
@@ -485,6 +385,119 @@ public final class Decorations
 					.build()
 		.register();
 	}
+	// endregion
+
+	// region: Nordic
+	// region: Boiled Crème Treats
+	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats(FurnitureSet.NORDIC);
+	public static final ItemEntry<BlockItem> BOILED_CREME_TREATS_BLOCK_ITEM = Registrations.blockItem(BOILED_CREME_TREATS_BLOCK);
+
+	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/boiled_creme_treats", BoiledCremeTreatsBlock::new)
+					.lang("Boiled Creme Treats")
+					.lang(EN_GB, "Boiled Creme Treats")
+
+					.initialProperties(Material.CAKE)
+					.strength(.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.mapping("1.16.5", "decorations/boiled_creme_treats", RegistryEvent.MissingMappings.Action.REMAP)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+						.mapping("1.16.5", "decorations/boiled_creme_treats", RegistryEvent.MissingMappings.Action.REMAP)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Sweetrolls
+	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls(FurnitureSet.NORDIC);
+	public static final ItemEntry<BlockItem> SWEETROLLS_BLOCK_ITEM = Registrations.blockItem(SWEETROLLS_BLOCK);
+
+	private static BlockEntry<SweetRollsBlock> sweetRolls(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/sweetrolls", SweetRollsBlock::new)
+					.lang("Sweetrolls")
+					.lang(EN_GB, "Sweetrolls")
+
+					.initialProperties(Material.CAKE)
+					.strength(.5F)
+					.sound(SoundType.WOOL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.mapping("1.16.5", "decorations/sweetrolls", RegistryEvent.MissingMappings.Action.REMAP)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+						.mapping("1.16.5", "decorations/sweetrolls", RegistryEvent.MissingMappings.Action.REMAP)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Mead Bottles
+	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles(FurnitureSet.NORDIC);
+	public static final ItemEntry<BlockItem> MEAD_BOTTLES_BLOCK_ITEM = Registrations.blockItem(MEAD_BOTTLES_BLOCK);
+
+	private static BlockEntry<MeadBottlesBlock> meadBottles(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/mead_bottles", MeadBottlesBlock::new)
+					.lang("Mead Bottles")
+					.lang(EN_GB, "Mead Bottles")
+
+					.initialProperties(Material.GLASS)
+					.strength(.3F)
+					.sound(SoundType.GLASS)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.mapping("1.16.5", "decorations/mead_bottles", RegistryEvent.MissingMappings.Action.REMAP)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+						.mapping("1.16.5", "decorations/mead_bottles", RegistryEvent.MissingMappings.Action.REMAP)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Venthyr
