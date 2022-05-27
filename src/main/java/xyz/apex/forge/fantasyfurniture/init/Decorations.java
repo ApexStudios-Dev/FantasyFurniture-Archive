@@ -503,8 +503,8 @@ public final class Decorations
 	{
 		return REGISTRY
 				.block("decorations/" + furnitureSet.serializedName + "/food_" + index, FoodBlock::new)
-					.lang(furnitureSet.englishName + " Food")
-					.lang(EN_GB, furnitureSet.englishName + " Food")
+					.lang(furnitureSet.englishName + " Food " + index)
+					.lang(EN_GB, furnitureSet.englishName + " Food " + index)
 
 					.initialProperties(Material.CAKE)
 					.strength(2.5F)
