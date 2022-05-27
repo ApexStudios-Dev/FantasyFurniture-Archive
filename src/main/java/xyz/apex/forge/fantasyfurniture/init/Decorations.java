@@ -387,6 +387,39 @@ public final class Decorations
 	}
 	// endregion
 
+	// region: Paper Stack
+	public static final BlockEntry<PaperStackBlock> PAPER_STACK_BLOCK = paperStack();
+	public static final ItemEntry<BlockItem> PAPER_STACK_BLOCK_ITEM = Registrations.blockItem(PAPER_STACK_BLOCK);
+
+	private static BlockEntry<PaperStackBlock> paperStack()
+	{
+		return REGISTRY
+				.block("decorations/paper_stack", PaperStackBlock::new)
+					.lang("Paper Stack")
+					.lang(EN_GB, "Paper stack")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG)
+					.build()
+		.register();
+	}
+	// endregion
+
 	// region: Nordic
 	// region: Boiled Crème Treats
 	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats(FurnitureSet.NORDIC);
@@ -681,7 +714,8 @@ public final class Decorations
 				VENTHYR_FOOD_1_BLOCK,
 				VENTHYR_TEA_SET_BLOCK,
 				VENTHYR_TEA_CUPS_BLOCK,
-				VENTHYR_PLATTER_BLOCK
+				VENTHYR_PLATTER_BLOCK,
+				PAPER_STACK_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -708,7 +742,8 @@ public final class Decorations
 				VENTHYR_FOOD_1_BLOCK_ITEM,
 				VENTHYR_TEA_SET_BLOCK_ITEM,
 				VENTHYR_TEA_CUPS_BLOCK_ITEM,
-				VENTHYR_PLATTER_BLOCK_ITEM
+				VENTHYR_PLATTER_BLOCK_ITEM,
+				PAPER_STACK_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
