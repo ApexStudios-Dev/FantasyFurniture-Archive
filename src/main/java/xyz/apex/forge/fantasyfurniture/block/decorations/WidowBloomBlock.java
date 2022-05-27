@@ -8,11 +8,11 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayBlockEntityBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedBlockEntityBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
 
-public final class WidowBloomBlock extends SimpleFourWayBlockEntityBlock<WidowBloomBlockEntity>
+public final class WidowBloomBlock extends SimpleFourWayWaterLoggedBlockEntityBlock<WidowBloomBlockEntity>
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(6D, 0D, 6D, 10D, 3D, 10D),
