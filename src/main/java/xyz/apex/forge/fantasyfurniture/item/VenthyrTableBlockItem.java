@@ -6,6 +6,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrTableLargeBlock;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrTableSmallBlock;
 
 public final class VenthyrTableBlockItem extends BlockItem
@@ -24,10 +26,19 @@ public final class VenthyrTableBlockItem extends BlockItem
 
 		if(stackTag != null)
 		{
-			String name = VenthyrTableSmallBlock.FANCY.getName();
+			if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+			{
+				CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+				String name = VenthyrTableSmallBlock.FANCY.getName();
 
-			if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
-				return id + ".fancy";
+				if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+				{
+					String strFancy = blockStateTag.getString(name);
+
+					if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
+						return id + ".fancy";
+				}
+			}
 		}
 
 		return id;

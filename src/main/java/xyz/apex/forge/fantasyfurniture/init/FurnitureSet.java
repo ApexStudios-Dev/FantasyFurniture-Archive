@@ -7,9 +7,16 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.functions.CopyBlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
@@ -27,6 +34,7 @@ import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFactory;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
@@ -414,10 +422,19 @@ public enum FurnitureSet
 
 					if(stackTag != null)
 					{
-						String name = VenthyrTableSmallBlock.FANCY.getName();
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						{
+							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							String name = VenthyrTableLargeBlock.FANCY.getName();
 
-						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
-							return 1F;
+							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							{
+								String strFancy = blockStateTag.getString(name);
+
+								if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
+									return 1F;
+							}
+						}
 					}
 
 					return 0F;
@@ -430,10 +447,19 @@ public enum FurnitureSet
 
 					if(stackTag != null)
 					{
-						String name = VenthyrTableSmallBlock.FANCY.getName();
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						{
+							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							String name = VenthyrTableWideBlock.FANCY.getName();
 
-						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
-							return 1F;
+							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							{
+								String strFancy = blockStateTag.getString(name);
+
+								if(VenthyrTableWideBlock.FANCY.getValue(strFancy).orElse(false))
+									return 1F;
+							}
+						}
 					}
 
 					return 0F;
@@ -446,10 +472,19 @@ public enum FurnitureSet
 
 					if(stackTag != null)
 					{
-						String name = VenthyrTableSmallBlock.FANCY.getName();
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						{
+							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							String name = VenthyrTableSmallBlock.FANCY.getName();
 
-						if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
-							return 1F;
+							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							{
+								String strFancy = blockStateTag.getString(name);
+
+								if(VenthyrTableSmallBlock.FANCY.getValue(strFancy).orElse(false))
+									return 1F;
+							}
+						}
 					}
 
 					return 0F;
@@ -641,6 +676,23 @@ public enum FurnitureSet
 						});
 					})
 
+                    .loot((lootTables, block) -> lootTables
+		                    .add(block, LootTable
+				                    .lootTable()
+				                    .withPool(BlockLootTables
+						                    .applyExplosionCondition(block, LootPool
+								                    .lootPool()
+								                    .setRolls(ConstantRange.exactly(1))
+								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .apply(CopyBlockState
+										                    .copyState(block)
+										                    .copy(VenthyrTableSmallBlock.FANCY)
+								                    )
+						                    )
+				                    )
+		                    )
+                    )
+
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
@@ -659,6 +711,21 @@ public enum FurnitureSet
 							;
 						})
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+						.onRegister(item -> {
+							ItemStack stack = item.getDefaultInstance();
+							CompoundNBT stackTag = stack.getOrCreateTag();
+							CompoundNBT blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableSmallBlock.FANCY.getName(), "false");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
+
+							stack = item.getDefaultInstance();
+							stackTag = stack.getOrCreateTag();
+							blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableSmallBlock.FANCY.getName(), "true");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
+						})
 					.build()
         .register();
 	}
@@ -726,6 +793,23 @@ public enum FurnitureSet
 						});
 					})
 
+                    .loot((lootTables, block) -> lootTables
+		                    .add(block, LootTable
+				                    .lootTable()
+				                    .withPool(BlockLootTables
+						                    .applyExplosionCondition(block, LootPool
+								                    .lootPool()
+								                    .setRolls(ConstantRange.exactly(1))
+								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .apply(CopyBlockState
+										                    .copyState(block)
+										                    .copy(VenthyrTableWideBlock.FANCY)
+								                    )
+						                    )
+				                    )
+		                    )
+                    )
+
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
@@ -734,7 +818,7 @@ public enum FurnitureSet
 					.addRenderType(() -> RenderType::cutout)
 
 					.item(VenthyrTableBlockItem::new)
-						.model((ctx, provider) -> {
+					     .model((ctx, provider) -> {
 							ResourceLocation id = ctx.getId();
 							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
 							        .override()
@@ -742,8 +826,23 @@ public enum FurnitureSet
 										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
 							        .end()
 							;
+						 })
+						 .tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+						 .onRegister(item -> {
+							ItemStack stack = item.getDefaultInstance();
+							CompoundNBT stackTag = stack.getOrCreateTag();
+							CompoundNBT blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableWideBlock.FANCY.getName(), "false");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
+
+							stack = item.getDefaultInstance();
+							stackTag = stack.getOrCreateTag();
+							blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableWideBlock.FANCY.getName(), "true");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
 						})
-						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
         .register();
 	}
@@ -811,6 +910,23 @@ public enum FurnitureSet
 						});
 					})
 
+                    .loot((lootTables, block) -> lootTables
+		                    .add(block, LootTable
+				                    .lootTable()
+				                    .withPool(BlockLootTables
+						                    .applyExplosionCondition(block, LootPool
+								                    .lootPool()
+								                    .setRolls(ConstantRange.exactly(1))
+								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .apply(CopyBlockState
+										                    .copyState(block)
+										                    .copy(VenthyrTableLargeBlock.FANCY)
+								                    )
+						                    )
+				                    )
+		                    )
+                    )
+
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
@@ -819,7 +935,7 @@ public enum FurnitureSet
 					.addRenderType(() -> RenderType::cutout)
 
 					.item(VenthyrTableBlockItem::new)
-						.model((ctx, provider) -> {
+					     .model((ctx, provider) -> {
 							ResourceLocation id = ctx.getId();
 							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
 							        .override()
@@ -828,7 +944,22 @@ public enum FurnitureSet
 							        .end()
 							;
 						})
-						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+						 .tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+		                 .onRegister(item -> {
+							ItemStack stack = item.getDefaultInstance();
+							CompoundNBT stackTag = stack.getOrCreateTag();
+							CompoundNBT blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableLargeBlock.FANCY.getName(), "false");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
+
+							stack = item.getDefaultInstance();
+							stackTag = stack.getOrCreateTag();
+							blockStateTag = new CompoundNBT();
+							blockStateTag.putString(VenthyrTableLargeBlock.FANCY.getName(), "true");
+							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+							FurnitureStation.registerAdditionalCraftingResult(stack);
+						})
 					.build()
         .register();
 	}

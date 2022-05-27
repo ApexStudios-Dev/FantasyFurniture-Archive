@@ -19,6 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.util.Constants;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableSmallBlock;
 
 public final class VenthyrTableSmallBlock extends SetTableSmallBlock
@@ -57,10 +58,20 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 
 			if(stackTag != null)
 			{
-				String name = FANCY.getName();
+				if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+				{
+					CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
 
-				if(stackTag.contains(name, Constants.NBT.TAG_BYTE) && stackTag.getBoolean(name))
-					blockState = blockState.setValue(FANCY, true);
+					String name = FANCY.getName();
+
+					if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+					{
+						String strFancy = blockStateTag.getString(name);
+
+						if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
+							blockState = blockState.setValue(FANCY, true);
+					}
+				}
 			}
 		}
 
@@ -77,11 +88,22 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 	@Override
 	public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> items)
 	{
-		super.fillItemCategory(itemGroup, items);
+		String name = FANCY.getName();
 
+		// not fancy
 		ItemStack stack = asItem().getDefaultInstance();
 		CompoundNBT stackTag = stack.getOrCreateTag();
-		stackTag.putBoolean(FANCY.getName(), true);
+		CompoundNBT blockStateTag = new CompoundNBT();
+		blockStateTag.putString(name, "false");
+		stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
+		items.add(stack);
+
+		// fancy
+		stack = asItem().getDefaultInstance();
+		stackTag = stack.getOrCreateTag();
+		blockStateTag = new CompoundNBT();
+		blockStateTag.putString(name, "true");
+		stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 		items.add(stack);
 	}
 
@@ -93,7 +115,9 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 		if(blockState.getValue(FANCY))
 		{
 			CompoundNBT stackTag = stack.getOrCreateTag();
-			stackTag.putBoolean(FANCY.getName(), true);
+			CompoundNBT blockStateTag = new CompoundNBT();
+			blockStateTag.putString(FANCY.getName(), "true");
+			stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 		}
 
 		return stack;

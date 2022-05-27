@@ -17,6 +17,7 @@ public final class FantasyFurniture
 {
 	public static final String ID = "fantasyfurniture";
 	public static final Logger LOGGER = LogManager.getLogger();
+	public static final String NBT_BLOCK_STATE_TAG = "BlockStateTag";
 
 	public FantasyFurniture()
 	{
