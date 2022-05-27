@@ -2,6 +2,7 @@ package xyz.apex.forge.fantasyfurniture.block.venthyr;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -81,6 +83,20 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 		CompoundNBT stackTag = stack.getOrCreateTag();
 		stackTag.putBoolean(FANCY.getName(), true);
 		items.add(stack);
+	}
+
+	@Override
+	public ItemStack getPickBlock(BlockState blockState, RayTraceResult result, IBlockReader level, BlockPos pos, PlayerEntity player)
+	{
+		ItemStack stack = super.getPickBlock(blockState, result, level, pos, player);
+
+		if(blockState.getValue(FANCY))
+		{
+			CompoundNBT stackTag = stack.getOrCreateTag();
+			stackTag.putBoolean(FANCY.getName(), true);
+		}
+
+		return stack;
 	}
 
 	@Override
