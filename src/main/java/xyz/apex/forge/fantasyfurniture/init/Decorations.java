@@ -308,16 +308,23 @@ public final class Decorations
 	}
 	// endregion
 
-	// region: Coin Stack Gold
-	public static final BlockEntry<CoinStackBlock> COIN_STOCK_GOLD_BLOCK = coinStackGold();
+	// region: Coin Stack
+	// region: Gold
+	public static final BlockEntry<CoinStackBlock> COIN_STOCK_GOLD_BLOCK = coinStack("gold");
 	public static final ItemEntry<BlockItem> COIN_STOCK_GOLD_BLOCK_ITEM = Registrations.blockItem(COIN_STOCK_GOLD_BLOCK);
+	// endregion
 
-	private static BlockEntry<CoinStackBlock> coinStackGold()
+	// region: Iron
+	public static final BlockEntry<CoinStackBlock> COIN_STOCK_IRON_BLOCK = coinStack("iron");
+	public static final ItemEntry<BlockItem> COIN_STOCK_IRON_BLOCK_ITEM = Registrations.blockItem(COIN_STOCK_IRON_BLOCK);
+	// endregion
+
+	private static BlockEntry<CoinStackBlock> coinStack(String type)
 	{
 		return REGISTRY
-				.block("decorations/coin_stack_gold", CoinStackBlock::new)
-					.lang("Gold Coin Stack")
-					.lang(EN_GB, "Gold Coin Stack")
+				.block("decorations/coin_stack_" + type, CoinStackBlock::new)
+					.lang(RegistrateLangProvider.toEnglishName(type) + " Coin Stack")
+					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Coin Stack")
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
