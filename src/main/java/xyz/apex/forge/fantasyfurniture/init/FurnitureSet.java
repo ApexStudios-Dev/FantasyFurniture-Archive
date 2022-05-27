@@ -88,7 +88,7 @@ public enum FurnitureSet
 			VenthyrTableLargeBlock::new,
 			NordicStoolBlock::new, // TODO
 			VenthyrCushionBlock::new,
-			NordicPaintingSmallBlock::new, // TODO
+			VenthyrPaintingSmallBlock::new,
 			VenthyrPaintingWideBlock::new,
 			VenthyrDrawerBlock::new,
 			VenthyrShelfBlock::new,
