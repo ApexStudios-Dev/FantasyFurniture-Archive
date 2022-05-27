@@ -9,22 +9,16 @@ import net.minecraft.world.IBlockReader;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.set.SetChairBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetChestBlock;
 
-public final class VenthyrChairBlock extends SetChairBlock
+public final class VenthyrChestBlock extends SetChestBlock
 {
-	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(1D, 0D, 1D, 4D, 5D, 4D),
-			box(12D, 0D, 1D, 15D, 5D, 4D),
-			box(12D, 0D, 12D, 15D, 5D, 15D),
-			box(1D, 0D, 12D, 4D, 5D, 15D),
-			box(.5D, 5D, .5D, 15.5D, 9D, 15.5D),
-			box(1D, 9D, 12D, 15D, 31D, 15D)
-	);
+	public static final VoxelShape SHAPE = box(-13D, 0D, 1D, 13D, 14.25D, 15D);
+
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public VenthyrChairBlock(Properties properties, MultiBlockPattern pattern)
+	public VenthyrChestBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}
@@ -36,14 +30,11 @@ public final class VenthyrChairBlock extends SetChairBlock
 		VoxelShape shape = SHAPER.get(facing);
 
 		if(!pattern.isOrigin(blockState))
-			shape = shape.move(0D, -1D, 0D);
+		{
+			Direction other = facing.getClockWise();
+			shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+		}
 
 		return shape;
-	}
-
-	@Override
-	protected boolean sitAtOriginOnly()
-	{
-		return true;
 	}
 }

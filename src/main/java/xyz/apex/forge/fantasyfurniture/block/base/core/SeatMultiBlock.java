@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
+import java.util.List;
+
 public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implements ISeatBlock
 {
 	public SeatMultiBlock(Properties properties, MultiBlockPattern pattern)
@@ -45,5 +47,51 @@ public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implement
 	{
 		builder.add(OCCUPIED);
 		super.createBlockStateDefinition(builder);
+	}
+
+	protected boolean sitAtOriginOnly()
+	{
+		return false;
+	}
+
+	@Override
+	public BlockPos getSeatSitPos(BlockState blockState, BlockPos pos)
+	{
+		if(sitAtOriginOnly())
+		{
+			if(pattern.isOrigin(blockState))
+				return pos;
+
+			int index = pattern.getIndex(blockState);
+			return pattern.getOriginFromWorldSpace(blockState, pos, pattern.getLocalPositions().get(index));
+		}
+
+		return ISeatBlock.super.getSeatSitPos(blockState, pos);
+	}
+
+	@Override
+	public void setSeatOccupied(World level, BlockPos pos, BlockState blockState, boolean occupied)
+	{
+		if(sitAtOriginOnly())
+		{
+			BlockPos origin = pos;
+			List<BlockPos> localPositions = pattern.getLocalPositions();
+
+			if(!pattern.isOrigin(blockState))
+			{
+				int index = pattern.getIndex(blockState);
+				origin = pattern.getOriginFromWorldSpace(blockState, pos, localPositions.get(index));
+			}
+
+			for(BlockPos localSpace : localPositions)
+			{
+				BlockPos worldSpace = pattern.getWorldSpaceFromLocalSpace(blockState, origin, localSpace);
+				BlockState seatBlockState = level.getBlockState(worldSpace);
+
+				ISeatBlock.super.setSeatOccupied(level, worldSpace, seatBlockState, occupied);
+			}
+		}
+		else
+			ISeatBlock.super.setSeatOccupied(level, pos, blockState, occupied);
 	}
 }
