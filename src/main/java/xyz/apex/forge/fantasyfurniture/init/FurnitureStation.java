@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -32,6 +33,7 @@ import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
+import xyz.apex.java.utility.Lazy;
 
 import java.util.List;
 
@@ -63,27 +65,11 @@ public final class FurnitureStation
 	public static final ITag.INamedTag<Item> CLAY = REGISTRY.forgeItemTagOptional("clay_ball", Sets.newHashSet(() -> Items.CLAY_BALL));
 	public static final ITag.INamedTag<Item> WOOD = ItemTags.PLANKS;
 	public static final ITag.INamedTag<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
-	private static final List<ItemStack> craftingResults = Lists.newArrayList();
-
-	public static boolean isValidClay(ItemStack stack)
-	{
-		return stack.getItem().is(CLAY);
-	}
-
-	public static boolean isValidWood(ItemStack stack)
-	{
-		return stack.getItem().is(WOOD);
-	}
-
-	public static boolean isValidStone(ItemStack stack)
-	{
-		return stack.getItem().is(STONE);
-	}
-
-	public static List<ItemStack> getCraftingResults()
-	{
+	private static List<ItemStack> customCraftingResults = Lists.newArrayList();
+	private static final Lazy<List<ItemStack>> results = Lazy.of(() -> {
+		FantasyFurniture.LOGGER.info("Precaching Furniture Station Crafting Results...");
 		List<ItemStack> results = Lists.newArrayList();
-		craftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
+		customCraftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
 
 		for(Item item : CRAFTABLE.getValues())
 		{
@@ -102,7 +88,28 @@ public final class FurnitureStation
 				results.add(item.getDefaultInstance());
 		}
 
-		return results;
+		results.sort(FurnitureStation::compareItemStacks);
+		return ImmutableList.copyOf(results);
+	});
+
+	public static boolean isValidClay(ItemStack stack)
+	{
+		return stack.getItem().is(CLAY);
+	}
+
+	public static boolean isValidWood(ItemStack stack)
+	{
+		return stack.getItem().is(WOOD);
+	}
+
+	public static boolean isValidStone(ItemStack stack)
+	{
+		return stack.getItem().is(STONE);
+	}
+
+	public static List<ItemStack> getCraftingResults()
+	{
+		return results.get();
 	}
 
 	public static ITextComponent buildAcceptsAnyComponent(ITag.INamedTag<Item> tag)
@@ -116,7 +123,7 @@ public final class FurnitureStation
 
 	public static void registerAdditionalCraftingResult(ItemStack stack)
 	{
-		craftingResults.add(stack.copy());
+		customCraftingResults.add(stack.copy());
 	}
 
 	static void bootstrap()
@@ -127,6 +134,25 @@ public final class FurnitureStation
 
 		REGISTRY.addDataGenerator(LANG, provider -> provider.add(TXT_ACCEPTS_ANY, acceptsAnyEnglish));
 		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> provider.add(EN_GB, TXT_ACCEPTS_ANY, acceptsAnyEnglish));
+	}
+
+	private static int compareItemStacks(ItemStack left, ItemStack right)
+	{
+		Item leftItem = left.getItem();
+		Item rightItem = right.getItem();
+
+		for(FurnitureSet furnitureSet : FurnitureSet.values())
+		{
+			boolean leftHasTag = leftItem.is(furnitureSet.itemGroupCategoryTag);
+			boolean rightHasTag = rightItem.is(furnitureSet.itemGroupCategoryTag);
+
+			if(leftHasTag && !rightHasTag)
+				return -1;
+			else if(!leftHasTag && rightHasTag)
+				return 1;
+		}
+
+		return 0;
 	}
 
 	private static BlockEntry<FurnitureStationBlock> block()
