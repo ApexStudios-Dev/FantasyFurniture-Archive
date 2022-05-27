@@ -46,4 +46,10 @@ public final class NordicChairBlock extends SetChairBlock
 
 		return shape;
 	}
+
+	@Override
+	protected boolean sitAtOriginOnly()
+	{
+		return true;
+	}
 }

@@ -40,4 +40,10 @@ public final class VenthyrChairBlock extends SetChairBlock
 
 		return shape;
 	}
+
+	@Override
+	protected boolean sitAtOriginOnly()
+	{
+		return true;
+	}
 }
