@@ -115,6 +115,14 @@ repositories {
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://maven.apexmods.xyz/' }
+
+	maven {
+		url 'https://cursemaven.com'
+
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 dependencies {
@@ -127,6 +135,8 @@ dependencies {
 	// CTM for 1.16.1 works for 1.16.5 (there is no 1.16.5 specific release)
 	runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC1.16.1-${ctm_version}")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC${mc_version}-${ctm_version}")
+
+	runtimeOnly fg.deobf('curse.maven:worldedit-225608:3283693')
 
 	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
