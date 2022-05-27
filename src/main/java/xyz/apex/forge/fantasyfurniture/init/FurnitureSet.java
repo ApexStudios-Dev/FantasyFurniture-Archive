@@ -97,7 +97,7 @@ public enum FurnitureSet
 			VenthyrChairBlock::new,
 			VenthyrBenchBlock::new,
 			VenthyrBookshelfBlock::new,
-			NordicChestBlock::new, // TODO
+			VenthyrChestBlock::new,
 			VenthyrDresserBlock::new,
 			VenthyrWardrobeBlock::new,
 			VenthyrWardrobeTopperBlock::new,
