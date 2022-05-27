@@ -869,6 +869,40 @@ public final class Decorations
 		.register();
 	}
 	// endregion
+
+	// region: Chalices
+	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES_BLOCK = chalices(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_CHALICES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_CHALICES_BLOCK);
+
+	private static BlockEntry<ChalicesBlock> chalices(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/chalices", ChalicesBlock::new)
+					.lang(furnitureSet.englishName + " Chalices")
+					.lang(EN_GB, furnitureSet.englishName + " Chalices")
+
+					.initialProperties(Material.METAL)
+					.strength(2.5F)
+					.sound(SoundType.METAL)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, ChalicesBlock.CHALICES))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, ChalicesBlock.CHALICES))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, ChalicesBlock.CHALICES))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Item Group Category
@@ -912,7 +946,8 @@ public final class Decorations
 				VENTHYR_PLATTER_BLOCK,
 				PAPER_STACK_BLOCK,
 				VENTHYR_WIDOW_BLOOM_BLOCK,
-				VENTHYR_TOMES_BLOCK
+				VENTHYR_TOMES_BLOCK,
+				VENTHYR_CHALICES_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -942,7 +977,8 @@ public final class Decorations
 				VENTHYR_PLATTER_BLOCK_ITEM,
 				PAPER_STACK_BLOCK_ITEM,
 				VENTHYR_WIDOW_BLOOM_BLOCK_ITEM,
-				VENTHYR_TOMES_BLOCK_ITEM
+				VENTHYR_TOMES_BLOCK_ITEM,
+				VENTHYR_CHALICES_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
