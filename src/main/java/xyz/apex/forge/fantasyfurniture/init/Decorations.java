@@ -6,18 +6,29 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelBuilder;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
+import xyz.apex.forge.apexcore.lib.item.WearableBlockItem;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
+import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
+import xyz.apex.forge.fantasyfurniture.client.renderer.FFItemStackBlockEntityRenderer;
+import xyz.apex.forge.fantasyfurniture.client.renderer.entity.WidowBloomBlockEntityRenderer;
+import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
@@ -25,7 +36,7 @@ import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PR
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({ "SameParameterValue", "ConstantConditions" })
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
@@ -722,6 +733,104 @@ public final class Decorations
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, PlatterBlock.PLATTER))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Widow Bloom
+	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM_BLOCK = widowBloom(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_WIDOW_BLOOM_BLOCK_ITEM = Registrations.blockItem(VENTHYR_WIDOW_BLOOM_BLOCK);
+	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = Registrations.blockEntity(VENTHYR_WIDOW_BLOOM_BLOCK);
+
+	private static BlockEntry<WidowBloomBlock> widowBloom(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/widow_bloom", WidowBloomBlock::new)
+					.lang("Widowbloom Vase")
+					.lang(EN_GB, "Widowbloom Vase")
+
+					.initialProperties(Material.DECORATION)
+					.strength(2.5F)
+					.sound(SoundType.STONE)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> provider
+							.getVariantBuilder(ctx.get())
+							.forAllStates(blockState -> ConfiguredModel
+									.builder()
+										.modelFile(provider
+												.models()
+												.getBuilder(ctx.getName())
+												.texture("particle", "minecraft:block/basalt_top")
+										)
+									.build()
+							)
+					)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item((block, properties) -> new WearableBlockItem(block, properties, EquipmentSlotType.HEAD))
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							ModelFile.UncheckedModelFile builtInEntity = new ModelFile.UncheckedModelFile("minecraft:builtin/entity");
+
+							provider.getBuilder(id.getNamespace() + ":item/" + id.getPath())
+						        .parent(builtInEntity)
+								.transforms()
+									.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+										.rotation(75F, 45F, 0F)
+										.translation(0F, 3F, 4F)
+										.scale(.375F, .375F, .375F)
+									.end()
+									.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+										.rotation(75F, 45F, 0F)
+										.translation(0F, 3F, 4F)
+										.scale(.375F, .375F, .375F)
+									.end()
+									.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+										.rotation(0F, 135F, 0F)
+										.translation(0F, 7F, 0F)
+										.scale(.4F, .4F, .4F)
+									.end()
+									.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+										.rotation(0F, 135F, 0F)
+										.translation(0F, 7F, 0F)
+										.scale(.4F, .4F, .4F)
+									.end()
+									.transform(ModelBuilder.Perspective.HEAD)
+										.rotation(0F, 0F, 0F)
+										.translation(0F, 30F, 0F)
+										.scale(1F, 1F, 1F)
+									.end()
+									.transform(ModelBuilder.Perspective.GROUND)
+										.rotation(0F, 0F, 0F)
+										.translation(0F, 6F, 0F)
+										.scale(.25F, .25F, .25F)
+									.end()
+									.transform(ModelBuilder.Perspective.FIXED)
+										.rotation(-90F, 0F, 0F)
+										.translation(0F, 0F, -23F)
+										.scale(1F, 1F, 1F)
+									.end()
+									.transform(ModelBuilder.Perspective.GUI)
+										.rotation(30F, -135F, 0F)
+										.translation(0F, 3F, 0F)
+										.scale(.5F, .5F, .5F)
+									.end()
+								.end();
+						})
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+						.setISTER(() -> DatagenModLoader.isRunningDataGen() ? () -> null : FFItemStackBlockEntityRenderer::new)
+					.build()
+
+					.blockEntity(WidowBloomBlockEntity::new)
+						.renderer(() -> WidowBloomBlockEntityRenderer::new)
 					.build()
 		.register();
 	}
