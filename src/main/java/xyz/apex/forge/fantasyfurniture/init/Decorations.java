@@ -151,7 +151,7 @@ public final class Decorations
 
 					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
 					// .loot((lootTables, block) -> droppingStacked(lootTables, block, Items.BOOK, BookStackBlock.BOOKS))
-				.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BookStackBlock.BOOKS))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BookStackBlock.BOOKS))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -835,6 +835,40 @@ public final class Decorations
 		.register();
 	}
 	// endregion
+
+	// region: Book Stack
+	public static final BlockEntry<TomesBlock> VENTHYR_TOMES_BLOCK = tomes(FurnitureSet.VENTHYR);
+	public static final ItemEntry<BlockItem> VENTHYR_TOMES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TOMES_BLOCK);
+
+	private static BlockEntry<TomesBlock> tomes(FurnitureSet furnitureSet)
+	{
+		return REGISTRY
+				.block("decorations/" + furnitureSet.serializedName + "/tomes", TomesBlock::new)
+					.lang(furnitureSet.englishName + " Tomes")
+					.lang(EN_GB, furnitureSet.englishName + " Tomes")
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TomesBlock.TOMES))
+					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TomesBlock.TOMES))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TomesBlock.TOMES))
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
 	// endregion
 
 	// region: Item Group Category
@@ -876,7 +910,9 @@ public final class Decorations
 				VENTHYR_TEA_SET_BLOCK,
 				VENTHYR_TEA_CUPS_BLOCK,
 				VENTHYR_PLATTER_BLOCK,
-				PAPER_STACK_BLOCK
+				PAPER_STACK_BLOCK,
+				VENTHYR_WIDOW_BLOOM_BLOCK,
+				VENTHYR_TOMES_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
@@ -904,7 +940,9 @@ public final class Decorations
 				VENTHYR_TEA_SET_BLOCK_ITEM,
 				VENTHYR_TEA_CUPS_BLOCK_ITEM,
 				VENTHYR_PLATTER_BLOCK_ITEM,
-				PAPER_STACK_BLOCK_ITEM
+				PAPER_STACK_BLOCK_ITEM,
+				VENTHYR_WIDOW_BLOOM_BLOCK_ITEM,
+				VENTHYR_TOMES_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {
