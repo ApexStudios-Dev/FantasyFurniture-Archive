@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasyfurniture.init;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.DoorBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -80,7 +81,8 @@ public enum FurnitureSet
 			NordicWardrobeTopperBlock::new,
 			NordicBedSingleBlock::new,
 			NordicBedDoubleBlock::new,
-			NordicChandelierBlock::new
+			NordicChandelierBlock::new,
+			DoorBlock::new
 	),
 	// endregion
 
@@ -111,7 +113,8 @@ public enum FurnitureSet
 			VenthyrWardrobeTopperBlock::new,
 			VenthyrBedSingleBlock::new,
 			VenthyrBedDoubleBlock::new,
-			VenthyrChandelierBlock::new
+			VenthyrChandelierBlock::new,
+			DoorBlock::new
 	),
 	// endregion
 	;
@@ -180,6 +183,10 @@ public enum FurnitureSet
 	public final ItemEntry<BlockItem> bedDoubleBlockItem;
 	public final BlockEntry<? extends SetChandelierBlock> chandelierBlock;
 	public final ItemEntry<BlockItem> chandelierBlockItem;
+	public final BlockEntry<? extends DoorBlock> doorSingleBlock;
+	public final ItemEntry<BlockItem> doorSingleBlockItem;
+	public final BlockEntry<? extends DoorBlock> doorDoubleBlock;
+	public final ItemEntry<BlockItem> doorDoubleBlockItem;
 	// endregion
 
 	FurnitureSet(
@@ -208,7 +215,8 @@ public enum FurnitureSet
 			MultiBlockFactory<SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
 			MultiBlockFactory<SetBedSingleBlock> bedSingleBlockFactory,
 			MultiBlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory,
-			BlockFactory<SetChandelierBlock> chandelierBlockFactory
+			BlockFactory<SetChandelierBlock> chandelierBlockFactory,
+			BlockFactory<DoorBlock> doorBlockFactory
 	)
 	{
 		this.serializedName = serializedName;
@@ -296,6 +304,12 @@ public enum FurnitureSet
 		chandelierBlock = chandelier(chandelierBlockFactory, serializedName, englishName, itemGroupCategoryTag);
 		chandelierBlockItem = Registrations.blockItem(chairBlock);
 
+		doorSingleBlock = door(doorBlockFactory, serializedName, englishName, "single", itemGroupCategoryTag);
+		doorSingleBlockItem = Registrations.blockItem(chairBlock);
+
+		doorDoubleBlock = door(doorBlockFactory, serializedName, englishName, "double", itemGroupCategoryTag);
+		doorDoubleBlockItem = Registrations.blockItem(chairBlock);
+
 		blocks = new BlockEntry<?>[] {
 				woolBlock,
 				carpetBlock,
@@ -322,7 +336,9 @@ public enum FurnitureSet
 				wardrobeTopperBlock,
 				bedSingleBlock,
 				bedDoubleBlock,
-				chandelierBlock
+				chandelierBlock,
+				doorSingleBlock,
+				doorDoubleBlock
 		};
 
 		items = new ItemEntry<?>[] {
@@ -351,7 +367,9 @@ public enum FurnitureSet
 				wardrobeTopperBlockItem,
 				bedSingleBlockItem,
 				bedDoubleBlockItem,
-				chandelierBlockItem
+				chandelierBlockItem,
+				doorSingleBlockItem,
+				doorDoubleBlockItem
 		};
 
 		itemGroupCategory = ItemGroupCategory
@@ -1541,6 +1559,47 @@ public enum FurnitureSet
 					.item()
 						.model(Registrations::blockItem)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Door
+	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, ITag.INamedTag<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.getInstance()
+				.block(serializedName + "/door_" + type, blockFactory)
+					.lang(englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
+					.lang(EN_GB, englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+						String path = id.getPath();
+						String namespace = id.getNamespace();
+						provider.doorBlock(ctx.get(), new ResourceLocation(namespace, "block/" + path + "_bottom"), new ResourceLocation(namespace, "block/" + path + "_top"));
+					})
+					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createDoorTable(block)))
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+			        .tag(BlockTags.WOODEN_DOORS)
+
+					.item()
+						.model((ctx, provider) -> provider
+								.withExistingParent(ctx.getId().getNamespace() + ":item/" + ctx.getId().getPath(), new ResourceLocation("minecraft:item/generated"))
+								.texture("layer0", provider.itemTexture(ctx))
+						)
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.WOODEN_DOORS)
 					.build()
 		.register();
 	}
