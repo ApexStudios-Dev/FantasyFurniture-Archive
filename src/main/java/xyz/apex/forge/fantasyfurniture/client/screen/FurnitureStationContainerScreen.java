@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tags.ITag;
@@ -27,16 +28,24 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModInfo;
 
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
+import xyz.apex.forge.fantasyfurniture.init.FurnitureSet;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -55,6 +64,8 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 	@Nullable private TextFieldWidget searchBox;
 	private boolean focusSearchBoxNextTick = false;
+	private int currentSearchSyntaxColor = 0xffffff;
+	private boolean changeSearchSyntaxColor = true;
 
 	public FurnitureStationContainerScreen(FurnitureStationContainer container, PlayerInventory playerInventory, ITextComponent title)
 	{
@@ -91,7 +102,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		searchBox.setMaxLength(50);
 		searchBox.setBordered(true);
 		searchBox.setVisible(true);
-		searchBox.setTextColor(16777215);
+		searchBox.setTextColor(currentSearchSyntaxColor);
 		searchBox.setValue(text);
 		searchBox.setCanLoseFocus(true);
 	}
@@ -130,6 +141,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			}
 		}
 
+		updateSearchBoxSyntaxHighlighting();
 		super.tick();
 	}
 
@@ -153,6 +165,53 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);
 		renderTooltip(pose, mouseX, mouseY);
+
+		{
+			if(searchBox != null && searchBox.isVisible())
+			{
+				if(searchBox.isMouseOver(mouseX, mouseY))
+				{
+					renderWrappedToolTip(pose, Arrays.asList(
+							new StringTextComponent("'")
+									.append(new StringTextComponent("@")
+											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
+									.append("' -> Search by ")
+									.append(new StringTextComponent("Mod ID")
+											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC)),
+
+							new StringTextComponent("'")
+									.append(new StringTextComponent("#")
+											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
+									.append("' -> Search by ")
+									.append(new StringTextComponent("ItemTag")
+											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC)),
+
+							StringTextComponent.EMPTY,
+
+							new StringTextComponent("Examples:")
+									.withStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC),
+
+							new StringTextComponent("'")
+									.withStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC)
+									.append(new StringTextComponent("@" + FantasyFurniture.ID)
+											.withStyle(TextFormatting.GRAY))
+									.append("' - Search for items from the mod '")
+									.append(new StringTextComponent(ModList.get().getModContainerById(FantasyFurniture.ID).map(ModContainer::getModInfo).map(IModInfo::getDisplayName).orElse("Fantasy's Furniture"))
+											.withStyle(TextFormatting.GRAY))
+									.append("'"),
+
+							new StringTextComponent("'")
+									.withStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC)
+									.append(new StringTextComponent("#" + FurnitureSet.NORDIC.serializedName)
+											.withStyle(TextFormatting.GRAY))
+									.append("' - Search for all '")
+									.append(new StringTextComponent(FurnitureSet.NORDIC.englishName)
+											.withStyle(TextFormatting.GRAY))
+									.append("' Items")
+					), mouseX, mouseY, font);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -176,10 +235,14 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(searchBox != null && searchBox.active && searchBox.isVisible())
 		{
 			if(searchBox.mouseClicked(mouseX, mouseY, mouseButton))
+			{
+				changeSearchSyntaxColor = true;
 				return true;
+			}
 
 			if(mouseButton == GLFW_MOUSE_BUTTON_RIGHT && searchBox.isMouseOver(mouseX, mouseY))
 			{
+				changeSearchSyntaxColor = true;
 				searchBox.setValue("");
 				return true;
 			}
@@ -256,7 +319,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			if(searchBox.isFocused())
 			{
 				if(searchBox.keyPressed(keyCode, scanCode, modifiers))
+				{
+					changeSearchSyntaxColor = true;
 					return true;
+				}
 
 				if(minecraft.options.keyInventory.matches(keyCode, scanCode))
 					return false;
@@ -285,7 +351,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	public boolean charTyped(char typedChar, int modifiers)
 	{
 		if(searchBox != null && searchBox.active && searchBox.isFocused() && searchBox.isVisible() && searchBox.charTyped(typedChar, modifiers))
+		{
+			changeSearchSyntaxColor = true;
 			return true;
+		}
 
 		return super.charTyped(typedChar, modifiers);
 	}
@@ -301,6 +370,46 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		}
 
 		return children;
+	}
+
+	private void updateSearchBoxSyntaxHighlighting()
+	{
+		if(searchBox == null || !changeSearchSyntaxColor)
+			return;
+
+		String value = searchBox.getValue();
+
+		if(StringUtils.isBlank(value))
+		{
+			int syntaxColor = 0xffffff;
+			searchBox.setTextColor(syntaxColor);
+			currentSearchSyntaxColor = syntaxColor;
+			return;
+		}
+
+		List<ItemStack> results = menu.getResults();
+
+		if(!results.isEmpty())
+		{
+			for(int j = startIndex; j < results.size(); j++)
+			{
+				ItemStack resultItem = results.get(j);
+
+				if(isItemValid(resultItem))
+				{
+					changeSearchSyntaxColor = false;
+					int syntaxColor = DyeColor.GREEN.getTextColor();
+					searchBox.setTextColor(syntaxColor);
+					currentSearchSyntaxColor = syntaxColor;
+					return;
+				}
+			}
+		}
+
+		int syntaxColor = DyeColor.RED.getTextColor();
+		searchBox.setTextColor(syntaxColor);
+		currentSearchSyntaxColor = syntaxColor;
+		changeSearchSyntaxColor = false;
 	}
 
 	private void renderSlotBackgrounds(MatrixStack pose, int mouseX, int mouseY)
@@ -365,18 +474,55 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 	private boolean isItemValid(ItemStack stack)
 	{
-		if(searchBox != null && searchBox.isVisible())
-		{
-			String value = searchBox.getValue();
+		if(stack.isEmpty())
+			return false;
+		if(searchBox == null)
+			return true;
 
-			if(!value.isEmpty())
+		if(!searchBox.isVisible() || !searchBox.active)
+			return true;
+
+		String value = searchBox.getValue();
+
+		if(StringUtils.isBlank(value))
+			return true;
+
+		String[] values = value.split("\\s+");
+		Item item = stack.getItem();
+		Set<ResourceLocation> itemTagNames = item.getTags();
+		String displayName = stack.getHoverName().getString();
+
+		for(String filter : values)
+		{
+			if(filter.startsWith("#"))
 			{
-				ITextComponent displayName = stack.getHoverName();
-				return StringUtils.containsIgnoreCase(displayName.getString(), value);
+				String rawTagName = filter.substring(1);
+
+				for(ResourceLocation itemTagName : itemTagNames)
+				{
+					String namespace = itemTagName.getNamespace();
+					String path = itemTagName.getPath();
+
+					if(StringUtils.containsIgnoreCase(namespace, rawTagName) || StringUtils.containsIgnoreCase(path, rawTagName))
+						return true;
+				}
+			}
+			else if(filter.startsWith("@"))
+			{
+				String raw = filter.substring(1);
+				String modId = item.getCreatorModId(stack);
+
+				if(StringUtils.containsIgnoreCase(modId, raw))
+					return true;
+			}
+			else
+			{
+				if(StringUtils.containsIgnoreCase(displayName, filter))
+					return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	private void renderResults(MatrixStack pose, int mouseX, int mouseY)
