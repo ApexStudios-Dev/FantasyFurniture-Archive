@@ -31,14 +31,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.forgespi.language.IModInfo;
 
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
-import xyz.apex.forge.fantasyfurniture.init.FurnitureSet;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import javax.annotation.Nullable;
@@ -184,9 +179,9 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
 									.append("' -> Search by ")
 									.append(new StringTextComponent("ItemTag")
-											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC)),
+											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
 
-							StringTextComponent.EMPTY,
+							/*StringTextComponent.EMPTY,
 
 							new StringTextComponent("Examples:")
 									.withStyle(TextFormatting.DARK_GRAY, TextFormatting.ITALIC),
@@ -207,7 +202,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 									.append("' - Search for all '")
 									.append(new StringTextComponent(FurnitureSet.NORDIC.englishName)
 											.withStyle(TextFormatting.GRAY))
-									.append("' Items")
+									.append("' Items")*/
 					), mouseX, mouseY, font);
 				}
 			}
