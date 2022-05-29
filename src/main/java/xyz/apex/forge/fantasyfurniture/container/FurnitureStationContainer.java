@@ -153,7 +153,7 @@ public final class FurnitureStationContainer extends Container
 
 			int resultSlot = FurnitureStation.RESULT_SLOT;
 
-			int playerStart = 5;
+			int playerStart = 4;
 			int playerEnd = 31;
 
 			int hotStart = 32;
