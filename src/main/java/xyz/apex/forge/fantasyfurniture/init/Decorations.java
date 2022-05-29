@@ -566,7 +566,7 @@ public final class Decorations
 		String englishName = "Soul Gems";
 
 		if(type.equals("dark"))
-			englishName = "Dark " + englishName;
+			englishName = "Black " + englishName;
 
 		return REGISTRY
 				.block("decorations/" + furnitureSet.serializedName + "/soul_gems_" + type, SoulGemsBlock::new)
