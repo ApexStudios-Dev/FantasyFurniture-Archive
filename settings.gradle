@@ -15,7 +15,7 @@ gradle.rootProject { root ->
 
 	def currentATFile = root.file('accesstransformer.cfg')
 
-	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/accesstransformers/1.16.5.cfg').readLines().forEach { line ->
+	new URL('https://raw.githubusercontent.com/ApexStudios-Dev/Version/master/accesstransformers/1.16.5.cfg').readLines().forEach { line ->
 		newATFile.withWriterAppend { writer ->
 			writer.println line
 		}
@@ -60,7 +60,7 @@ gradle.rootProject { root ->
 
 gradle.beforeProject { prj ->
 	// ensure required properties exist
-	new URL('https://raw.githubusercontent.com/ApexModder/Version/master/properties/1.16.5.properties').readLines().forEach { line ->
+	new URL('https://raw.githubusercontent.com/ApexStudios-Dev/Version/master/properties/1.16.5.properties').readLines().forEach { line ->
 		def split = line.split('=', 2)
 
 		if(split.length == 2) {
