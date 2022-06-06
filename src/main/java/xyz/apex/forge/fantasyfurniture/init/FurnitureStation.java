@@ -10,6 +10,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.SmithingRecipeBuilder;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,19 +24,23 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.FurnitureStationBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
+import xyz.apex.forge.fantasyfurniture.net.SyncFurnitureStationResultsPacket;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.java.utility.Lazy;
 
+import java.util.Collections;
 import java.util.List;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
@@ -66,7 +72,7 @@ public final class FurnitureStation
 	public static final ITag.INamedTag<Item> WOOD = ItemTags.PLANKS;
 	public static final ITag.INamedTag<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
 	private static List<ItemStack> customCraftingResults = Lists.newArrayList();
-	private static final Lazy<List<ItemStack>> results = Lazy.of(() -> {
+	private static final Lazy<List<ItemStack>> preCachedResults = Lazy.of(() -> {
 		FantasyFurniture.LOGGER.info("Precaching Furniture Station Crafting Results...");
 		List<ItemStack> results = Lists.newArrayList();
 		customCraftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
@@ -91,6 +97,7 @@ public final class FurnitureStation
 		results.sort(FurnitureStation::compareItemStacks);
 		return ImmutableList.copyOf(results);
 	});
+	private static final List<ItemStack> syncedFromServer = Lists.newArrayList();
 
 	public static boolean isValidClay(ItemStack stack)
 	{
@@ -109,7 +116,10 @@ public final class FurnitureStation
 
 	public static List<ItemStack> getCraftingResults()
 	{
-		return results.get();
+		if(!syncedFromServer.isEmpty())
+			return syncedFromServer;
+
+		return preCachedResults.get();
 	}
 
 	public static ITextComponent buildAcceptsAnyComponent(ITag.INamedTag<Item> tag)
@@ -126,6 +136,12 @@ public final class FurnitureStation
 		customCraftingResults.add(stack.copy());
 	}
 
+	public static void syncCraftingResultsFromServer(SyncFurnitureStationResultsPacket packet)
+	{
+		syncedFromServer.clear();
+		Collections.addAll(syncedFromServer, packet.getResults());
+	}
+
 	static void bootstrap()
 	{
 		REGISTRY.addDataGenerator(ITEM_TAGS, provider -> provider.tag(CRAFTABLE));
@@ -134,6 +150,16 @@ public final class FurnitureStation
 
 		REGISTRY.addDataGenerator(LANG, provider -> provider.add(TXT_ACCEPTS_ANY, acceptsAnyEnglish));
 		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> provider.add(EN_GB, TXT_ACCEPTS_ANY, acceptsAnyEnglish));
+
+		EventBusHelper.addListener(PlayerEvent.PlayerLoggedInEvent.class, event -> {
+			PlayerEntity player = event.getPlayer();
+
+			if(player instanceof ServerPlayerEntity)
+			{
+				FantasyFurniture.LOGGER.info("Syncing FurnitureStation results to client ('{}')...", player.getScoreboardName());
+				FantasyFurniture.NETWORK.sendTo(new SyncFurnitureStationResultsPacket(), (ServerPlayerEntity) player);
+			}
+		});
 	}
 
 	private static int compareItemStacks(ItemStack left, ItemStack right)
