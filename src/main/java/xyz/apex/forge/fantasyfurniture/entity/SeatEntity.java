@@ -1,6 +1,8 @@
 package xyz.apex.forge.fantasyfurniture.entity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,6 +17,8 @@ import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public class SeatEntity extends Entity
 {
+	private Block seatBlock = Blocks.AIR;
+
 	// default constructor for registration, do not call manually
 	@Deprecated
 	public SeatEntity(EntityType<? extends SeatEntity> entityType, World level)
@@ -40,7 +44,7 @@ public class SeatEntity extends Entity
 		{
 			BlockPos pos = blockPosition();
 
-			if(getPassengers().isEmpty() || level.isEmptyBlock(pos))
+			if(getPassengers().isEmpty() || !level.getBlockState(pos).is(seatBlock))
 			{
 				remove(false);
 				level.updateNeighbourForOutputSignal(pos, level.getBlockState(pos).getBlock());
@@ -102,6 +106,7 @@ public class SeatEntity extends Entity
 			double seatYOffset = seatBlock.getSeatYOffset(blockState);
 
 			seat.setPos(x + .5D, y + seatYOffset, z + .5D);
+			seat.seatBlock = blockState.getBlock();
 
 			level.addFreshEntity(seat);
 			player.startRiding(seat, false);
