@@ -2,7 +2,6 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 
@@ -14,7 +13,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +23,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
@@ -65,18 +65,18 @@ public final class FurnitureStation
 	private static final String TXT_ACCEPTS_ANY_ARG = TXT_ACCEPTS_ANY + ".arg";
 
 	// items with this tag can be crafted from the furniture station
-	public static final Tag.Named<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
+	public static final TagKey<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
 
-	public static final Tag.Named<Item> CLAY = REGISTRY.forgeItemTagOptional("clay_ball", Sets.newHashSet(() -> Items.CLAY_BALL));
-	public static final Tag.Named<Item> WOOD = ItemTags.PLANKS;
-	public static final Tag.Named<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
+	public static final TagKey<Item> CLAY = REGISTRY.forgeItemTag("clay_ball");
+	public static final TagKey<Item> WOOD = ItemTags.PLANKS;
+	public static final TagKey<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
 	private static List<ItemStack> customCraftingResults = Lists.newArrayList();
 	private static final Lazy<List<ItemStack>> preCachedResults = Lazy.of(() -> {
 		FantasyFurniture.LOGGER.info("Precaching Furniture Station Crafting Results...");
 		var results = Lists.<ItemStack>newArrayList();
 		customCraftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
 
-		for(var item : CRAFTABLE.getValues())
+		for(var item : ForgeRegistries.ITEMS.tags().getTag(CRAFTABLE))
 		{
 			var flag = false;
 
@@ -121,9 +121,9 @@ public final class FurnitureStation
 		return preCachedResults.get();
 	}
 
-	public static Component buildAcceptsAnyComponent(Tag.Named<Item> tag)
+	public static Component buildAcceptsAnyComponent(TagKey<Item> tag)
 	{
-		return new TranslatableComponent(TXT_ACCEPTS_ANY, new TextComponent(tag.getName().toString())
+		return new TranslatableComponent(TXT_ACCEPTS_ANY, new TextComponent(tag.location().toString())
 				.withStyle(ChatFormatting.ITALIC)
 		)
 				.withStyle(ChatFormatting.GRAY)
@@ -143,7 +143,11 @@ public final class FurnitureStation
 
 	static void bootstrap()
 	{
-		REGISTRY.addDataGenerator(ITEM_TAGS, provider -> provider.tag(CRAFTABLE));
+		REGISTRY.addDataGenerator(ITEM_TAGS, provider -> {
+			provider.tag(CRAFTABLE);
+
+			provider.tag(CLAY).add(Items.CLAY_BALL);
+		});
 
 		var acceptsAnyEnglish = "Accepts Any: %s";
 

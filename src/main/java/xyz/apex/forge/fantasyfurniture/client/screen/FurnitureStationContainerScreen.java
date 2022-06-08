@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
@@ -25,15 +26,15 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.RenderProperties;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -54,6 +55,9 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 	private boolean focusSearchBoxNextTick = false;
 	private int currentSearchSyntaxColor = 0xffffff;
 	private boolean changeSearchSyntaxColor = true;
+
+	private final Map<TagKey<Item>, List<ItemStack>> tagValues = Maps.newHashMap();
+	private final Map<Item, List<TagKey<Item>>> itemTags = Maps.newHashMap();
 
 	public FurnitureStationContainerScreen(FurnitureStationContainer container, Inventory playerInventory, Component title)
 	{
@@ -416,13 +420,13 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 			cycleCounter = 0;
 	}
 
-	private int renderSlotBackground(Slot slot, Tag.Named<Item> backgroundTag, PoseStack pose, int mouseX, int mouseY, int counter)
+	private int renderSlotBackground(Slot slot, TagKey<Item> backgroundTag, PoseStack pose, int mouseX, int mouseY, int counter)
 	{
 		var index  = counter;
 
 		if(!slot.hasItem())
 		{
-			var values = backgroundTag.getValues();
+			var values = tagValues.computeIfAbsent(backgroundTag, $ -> ForgeRegistries.ITEMS.tags().getTag(backgroundTag).stream().map(Item::getDefaultInstance).collect(Collectors.toList()));
 
 			if(cycleCounter == 125)
 			{
@@ -435,8 +439,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 			var x = leftPos + slot.x;
 			var y = topPos + slot.y;
 
-			var item = values.get(index);
-			var stack = item.getDefaultInstance();
+			var stack = values.get(index);
 			var stackFont = RenderProperties.get(stack.getItem()).getFont(stack);
 			stackFont = stackFont == null ? font : stackFont;
 
@@ -476,7 +479,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 
 		var values = value.split("\\s+");
 		var item = stack.getItem();
-		var itemTagNames = item.getTags();
+		var tags = itemTags.computeIfAbsent(item, $ -> ForgeRegistries.ITEMS.tags().getReverseTag(item).map(t -> t.getTagKeys().collect(Collectors.toList())).orElse(Collections.emptyList()));
 		var displayName = stack.getHoverName().getString();
 
 		for(var filter : values)
@@ -485,10 +488,11 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 			{
 				var rawTagName = filter.substring(1);
 
-				for(var itemTagName : itemTagNames)
+				for(var tag : tags)
 				{
-					var namespace = itemTagName.getNamespace();
-					var path = itemTagName.getPath();
+					var tagName = tag.location();
+					var namespace = tagName.getNamespace();
+					var path = tagName.getPath();
 
 					if(StringUtils.containsIgnoreCase(namespace, rawTagName) || StringUtils.containsIgnoreCase(path, rawTagName))
 						return true;

@@ -3,7 +3,7 @@ package xyz.apex.forge.fantasyfurniture.init;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
@@ -36,7 +36,7 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-	public static final Tag.Named<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
+	public static final TagKey<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
 
 	// region: Berry Basket
 	// region: Empty
@@ -902,7 +902,7 @@ public final class Decorations
 
 	// region: Item Group Category
 	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
-			.builder(ITEM_GROUP_CATEGORY_TAG.getName().toString())
+			.builder(ITEM_GROUP_CATEGORY_TAG.location().toString())
 				.tagged(ITEM_GROUP_CATEGORY_TAG)
 				.defaultIcon(SWEETROLLS_BLOCK::asItemStack)
 			.build();

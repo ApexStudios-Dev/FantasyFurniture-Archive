@@ -72,8 +72,8 @@ jobs:
           webhook_id: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_PRE_RELEASE_WEBHOOK_TOKEN }}
           color: '#97C6E7'
-          file: './build/libs/fantasyfurniture-1.18.1-${{ steps.mod_version.outputs.value }}.jar'
-          message: "Early version of **Fantasy's Furniture** v**_${{ steps.mod_version.outputs.value }}_** (**Minecraft** **_1.18.1_**) is available."
+          file: './build/libs/fantasyfurniture-1.18.2-${{ steps.mod_version.outputs.value }}.jar'
+          message: "Early version of **Fantasy's Furniture** v**_${{ steps.mod_version.outputs.value }}_** (**Minecraft** **_1.18.2_**) is available."
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop
