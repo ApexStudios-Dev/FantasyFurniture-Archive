@@ -55,7 +55,7 @@ public class WallLightBlock extends SimpleFourWayWaterLoggedBlock
 		if(facing.getOpposite() == blockState.getValue(FACING) && !blockState.canSurvive(level, pos))
 		{
 			if(blockState.getValue(WATERLOGGED))
-				level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+				level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 
 			return Blocks.AIR.defaultBlockState();
 		}

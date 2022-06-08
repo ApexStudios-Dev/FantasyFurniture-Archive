@@ -2,7 +2,7 @@ package xyz.apex.forge.fantasyfurniture.net;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import xyz.apex.forge.apexcore.lib.net.AbstractPacket;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;

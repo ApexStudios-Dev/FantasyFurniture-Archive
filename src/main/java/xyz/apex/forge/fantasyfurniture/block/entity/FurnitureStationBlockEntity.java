@@ -46,7 +46,7 @@ public final class FurnitureStationBlockEntity extends BaseBlockEntity implement
 	}
 
 	@Override
-	public void load(CompoundTag tagCompound)
+	public void deserializeNBT(CompoundTag tagCompound)
 	{
 		if(tagCompound.contains(NBT_CUSTOM_NAME, Tag.TAG_STRING))
 		{
@@ -54,19 +54,21 @@ public final class FurnitureStationBlockEntity extends BaseBlockEntity implement
 			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
-		super.load(tagCompound);
+		super.deserializeNBT(tagCompound);
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tagCompound)
+	public CompoundTag serializeNBT()
 	{
+		var tagCompound = super.serializeNBT();
+
 		if(customName != null)
 		{
 			var customNameJson = TextComponent.Serializer.toJson(customName);
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
-		return super.save(tagCompound);
+		return tagCompound;
 	}
 
 	@Nullable

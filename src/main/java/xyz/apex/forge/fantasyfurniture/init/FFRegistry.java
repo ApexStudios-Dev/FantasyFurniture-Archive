@@ -28,7 +28,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 	{
 		super(FantasyFurniture.ID);
 
-		itemGroup(() -> MOD_ITEM_GROUP, "Fantasy's Furniture");
+		creativeModeTab(() -> MOD_ITEM_GROUP, "Fantasy's Furniture");
 
 		addDataGenerator(LANG, provider -> {
 			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");

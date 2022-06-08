@@ -111,9 +111,9 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState blockState, HitResult result, BlockGetter level, BlockPos pos, Player player)
+	public ItemStack getCloneItemStack(BlockState blockState, HitResult result, BlockGetter level, BlockPos pos, Player player)
 	{
-		var stack = super.getPickBlock(blockState, result, level, pos, player);
+		var stack = super.getCloneItemStack(blockState, result, level, pos, player);
 
 		if(blockState.getValue(FANCY))
 		{

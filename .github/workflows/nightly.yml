@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ 16 ]
+        java: [ 17 ]
 
     name: Publish Mod
     runs-on: ${{ matrix.os }}

@@ -1,21 +1,16 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import org.apache.commons.lang3.StringUtils;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -29,16 +24,16 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.RenderProperties;
 
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
-import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -91,7 +86,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 		var x = leftPos + s;
 		var y = topPos + titleLabelY + font.lineHeight + 6;
 
-		searchBox = addWidget(new EditBox(font, x, y, w, h, new TranslatableComponent("gui.recipebook.search_hint")));
+		searchBox = addRenderableWidget(new EditBox(font, x, y, w, h, new TranslatableComponent("gui.recipebook.search_hint")));
 		searchBox.setMaxLength(50);
 		searchBox.setBordered(true);
 		searchBox.setVisible(true);
@@ -135,7 +130,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 		}
 
 		updateSearchBoxSyntaxHighlighting();
-		super.tick();
+		super.containerTick();
 	}
 
 	@Override
@@ -442,9 +437,10 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 
 			var item = values.get(index);
 			var stack = item.getDefaultInstance();
-			var stackFont = getItemFont(stack, () -> font);
+			var stackFont = RenderProperties.get(stack.getItem()).getFont(stack);
+			stackFont = stackFont == null ? font : stackFont;
 
-			renderTranslucentItem(stack, x, y);
+			renderTranslucentItem(pose, stack, x, y);
 			itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y);
 
 			// TODO: Maybe this should be a config?
@@ -455,7 +451,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 				{
 					var name = stack.getHoverName();
 					var accepts = FurnitureStation.buildAcceptsAnyComponent(backgroundTag);
-					renderComponentToolTip(pose, Lists.newArrayList(name, accepts), mouseX, mouseY, stackFont);
+					renderTooltip(pose, Lists.newArrayList(name, accepts), Optional.empty(), mouseX, mouseY, stackFont);
 				}
 			}
 		}
@@ -534,6 +530,8 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 			var selectedResult = menu.getResultSlot().getItem();
 			var visibleItemIndex = 0;
 
+			var hoveredStack = ItemStack.EMPTY;
+
 			for(var j = startIndex; j < results.size(); j++)
 			{
 				var resultItem = results.get(j);
@@ -567,16 +565,20 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 				RenderSystem.setShaderTexture(0, TEXTURE);
 				blit(pose, resultItemX - 1, resultItemY - 1, 176F, vOffset, 18, 18, 256, 256);
 
-				var stackFont = getItemFont(resultItem, () -> font);
+				var stackFont = RenderProperties.get(resultItem.getItem()).getFont(resultItem);
+				stackFont = stackFont == null ? font : stackFont;
 
 				itemRenderer.renderGuiItem(resultItem, resultItemX, resultItemY);
 				itemRenderer.renderGuiItemDecorations(stackFont, resultItem, resultItemX, resultItemY);
 
-				if(isHovered)
-					renderTooltip(pose, resultItem, mouseX, mouseY);
+				if(isHovered && hoveredStack.isEmpty())
+					hoveredStack = resultItem;
 
 				visibleItemIndex++;
 			}
+
+			if(!hoveredStack.isEmpty())
+				renderTooltip(pose, hoveredStack, mouseX, mouseY);
 		}
 	}
 
@@ -636,74 +638,31 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 		return false;
 	}
 
-	private void renderTranslucentItem(ItemStack stack, int x, int y)
+	private void renderTranslucentItem(PoseStack pose, ItemStack stack, int x, int y)
 	{
-		if(stack.isEmpty())
-			return;
+		var modelViewStack = RenderSystem.getModelViewStack();
+		modelViewStack.pushPose();
 
-		var mc = getMinecraft();
-		var model = itemRenderer.getModel(stack, null, null, 0);
+		modelViewStack.mulPoseMatrix(pose.last().pose());
 
-		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
-		mc.textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
+		var stackFont = RenderProperties.get(stack.getItem()).getFont(stack);
+		stackFont = stackFont == null ? font : stackFont;
 
-		RenderSystem.enableBlend();
-		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-
-		var poseStack = RenderSystem.getModelViewStack();
-		poseStack.pushPose();
-		poseStack.translate(x, y, 100D + getBlitOffset());
-		poseStack.translate(8D, 8D, 0D);
-		poseStack.scale(1F, -1F, 1F);
-		poseStack.scale(16F, 16F, 16F);
-		RenderSystem.applyModelViewMatrix();
-
-		var pose = new PoseStack();
-		var buffer = mc.renderBuffers().bufferSource();
-		var flag = !model.usesBlockLight();
-
-		if(flag)
-			Lighting.setupForFlatItems();
-
-		var color = 15728880;
-		var overlay = OverlayTexture.NO_OVERLAY;
-
-		if(flag)
-			color = (191 << 24) | 0xf000f0;
-		else
-			overlay = OverlayTexture.pack(.45F, false);
-
-		itemRenderer.render(stack, ItemTransforms.TransformType.GUI, false, pose, buffer, color, overlay, model);
-		buffer.endBatch();
+		itemRenderer.renderAndDecorateFakeItem(stack, x, y);
 
 		RenderSystem.enableDepthTest();
+		RenderSystem.depthFunc(516);
+		GuiComponent.fill(pose, x, y, x + 16, y + 16, 822083583);
+		RenderSystem.depthFunc(515);
+		RenderSystem.disableDepthTest();
 
-		if(flag)
-			Lighting.setupFor3DItems();
+		itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y, null);
 
-		poseStack.popPose();
-		RenderSystem.applyModelViewMatrix();
+		modelViewStack.popPose();
 	}
 
 	private boolean scrollbarActive()
 	{
 		return menu.getResults().size() > 6 * 4;
-	}
-
-	public static Font getItemFont(ItemStack stack, NonnullSupplier<Font> defaultFont)
-	{
-		var renderPropertiesInternal = stack.getItem().getRenderPropertiesInternal();
-
-		if(renderPropertiesInternal instanceof IItemRenderProperties properties)
-		{
-			var font = properties.getFont(stack);
-
-			if(font != null)
-				return font;
-		}
-
-		return defaultFont.get();
 	}
 }

@@ -78,7 +78,7 @@ public abstract class InventoryBlockEntity<MENU extends AbstractContainerMenu> e
 	}
 
 	@Override
-	public void load(CompoundTag tagCompound)
+	public void deserializeNBT(CompoundTag tagCompound)
 	{
 		if(tagCompound.contains(NBT_INVENTORY, Tag.TAG_COMPOUND))
 		{
@@ -94,12 +94,14 @@ public abstract class InventoryBlockEntity<MENU extends AbstractContainerMenu> e
 			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
-		super.load(tagCompound);
+		super.deserializeNBT(tagCompound);
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tagCompound)
+	public CompoundTag serializeNBT()
 	{
+		var tagCompound = super.serializeNBT();
+
 		if(inventory != null)
 		{
 			var inventoryTag = inventory.serializeNBT();
@@ -112,7 +114,7 @@ public abstract class InventoryBlockEntity<MENU extends AbstractContainerMenu> e
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
-		return super.save(tagCompound);
+		return tagCompound;
 	}
 
 	@Nonnull

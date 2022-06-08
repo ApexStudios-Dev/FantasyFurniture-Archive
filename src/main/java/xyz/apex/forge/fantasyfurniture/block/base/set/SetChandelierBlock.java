@@ -49,7 +49,7 @@ public class SetChandelierBlock extends Block implements SimpleWaterloggedBlock
 	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, LevelAccessor level, BlockPos pos, BlockPos facingPos)
 	{
 		if(blockState.getValue(WATERLOGGED))
-			level.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 
 		return super.updateShape(blockState, facing, facingBlockState, level, pos, facingPos);
 	}
