@@ -1,13 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 
 import javax.annotation.Nullable;
 
@@ -20,14 +18,14 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx)
+	public BlockState getStateForPlacement(BlockPlaceContext ctx)
 	{
-		World level = ctx.getLevel();
-		BlockPos pos = ctx.getClickedPos();
+		var level = ctx.getLevel();
+		var pos = ctx.getClickedPos();
 
-		for(Direction facing : ctx.getNearestLookingDirections())
+		for(var facing : ctx.getNearestLookingDirections())
 		{
-			Direction opposite = facing.getOpposite();
+			var opposite = facing.getOpposite();
 
 			if(canSupportPainting(level, pos, facing))
 				return defaultBlockState().setValue(FACING, opposite);
@@ -37,7 +35,7 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 	}
 
 	@Override
-	public boolean canSurvive(BlockState blockState, IWorldReader level, BlockPos pos)
+	public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos pos)
 	{
 		return canSupportPainting(level, pos);
 	}
@@ -48,9 +46,9 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 		return PushReaction.DESTROY;
 	}
 
-	public static boolean canSupportPainting(IBlockReader level, BlockPos pos)
+	public static boolean canSupportPainting(LevelReader level, BlockPos pos)
 	{
-		for(Direction facing : Direction.Plane.HORIZONTAL)
+		for(var facing : Direction.Plane.HORIZONTAL)
 		{
 			if(canSupportPainting(level, pos, facing))
 				return true;
@@ -59,7 +57,7 @@ public class PaintingBlock extends SimpleFourWayWaterLoggedBlock
 		return false;
 	}
 
-	public static boolean canSupportPainting(IBlockReader level, BlockPos pos, Direction facing)
+	public static boolean canSupportPainting(LevelReader level, BlockPos pos, Direction facing)
 	{
 		if(!facing.getAxis().isHorizontal())
 			return false;

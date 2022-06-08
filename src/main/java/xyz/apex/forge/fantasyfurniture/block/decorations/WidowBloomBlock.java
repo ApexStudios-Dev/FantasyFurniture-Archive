@@ -1,11 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.block.decorations;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedBlockEntityBlock;
@@ -28,13 +28,13 @@ public final class WidowBloomBlock extends SimpleFourWayWaterLoggedBlockEntityBl
 	}
 
 	@Override
-	protected TileEntityType<WidowBloomBlockEntity> getBlockEntityType()
+	protected BlockEntityType<WidowBloomBlockEntity> getBlockEntityType()
 	{
 		return Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.asBlockEntityType();
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext  ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
 		return SHAPE;
 	}

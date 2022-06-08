@@ -1,10 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.item;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrTableLargeBlock;
@@ -20,20 +19,20 @@ public final class VenthyrTableBlockItem extends BlockItem
 	@Override
 	public String getDescriptionId(ItemStack stack)
 	{
-		String id = super.getDescriptionId(stack);
+		var id = super.getDescriptionId(stack);
 
-		CompoundNBT stackTag = stack.getTag();
+		var stackTag = stack.getTag();
 
 		if(stackTag != null)
 		{
-			if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+			if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Tag.TAG_COMPOUND))
 			{
-				CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
-				String name = VenthyrTableSmallBlock.FANCY.getName();
+				var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+				var name = VenthyrTableSmallBlock.FANCY.getName();
 
-				if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+				if(blockStateTag.contains(name, Tag.TAG_STRING))
 				{
-					String strFancy = blockStateTag.getString(name);
+					var strFancy = blockStateTag.getString(name);
 
 					if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
 						return id + ".fancy";

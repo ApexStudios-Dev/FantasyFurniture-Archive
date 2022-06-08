@@ -1,14 +1,14 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.fantasyfurniture.container.SetDeskContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public final class SetDeskContainerScreen extends InventoryContainerScreen<SetDeskContainer>
 {
-	public SetDeskContainerScreen(SetDeskContainer menu, PlayerInventory playerInventory, ITextComponent titleComponent)
+	public SetDeskContainerScreen(SetDeskContainer menu, Inventory playerInventory, Component titleComponent)
 	{
 		super(menu, playerInventory, titleComponent, FFElements.SMALL_STORAGE_TEXTURE);
 	}

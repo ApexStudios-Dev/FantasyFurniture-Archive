@@ -1,13 +1,12 @@
 package xyz.apex.forge.fantasyfurniture.block.decorations;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedStackedBlock;
@@ -42,10 +41,10 @@ public class MushroomsRedBlock extends SimpleFourWayWaterLoggedStackedBlock
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		Direction facing = blockState.getValue(FACING);
-		int count = blockState.getValue(MUSHROOMS);
+		var facing = blockState.getValue(FACING);
+		var count = blockState.getValue(MUSHROOMS);
 		VoxelShaper shaper;
 
 		if(count == 1)
@@ -55,8 +54,8 @@ public class MushroomsRedBlock extends SimpleFourWayWaterLoggedStackedBlock
 		else
 			shaper = SHAPER_2;
 
-		Vector3d offset = blockState.getOffset(level, pos);
-		VoxelShape shape = shaper.get(facing);
+		var offset = blockState.getOffset(level, pos);
+		var shape = shaper.get(facing);
 		return shape.move(offset.x, offset.y, offset.z);
 	}
 

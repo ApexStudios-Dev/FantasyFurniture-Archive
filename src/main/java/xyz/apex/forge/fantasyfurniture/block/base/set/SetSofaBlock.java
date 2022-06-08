@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 

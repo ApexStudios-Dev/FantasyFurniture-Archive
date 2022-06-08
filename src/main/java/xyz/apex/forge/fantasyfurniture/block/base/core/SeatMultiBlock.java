@@ -1,19 +1,17 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-
-import java.util.List;
 
 public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implements ISeatBlock
 {
@@ -25,7 +23,7 @@ public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implement
 	}
 
 	@Override
-	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
 	{
 		return useSeatBlock(blockState, level, pos, player, hand, rayTraceResult);
 	}
@@ -43,7 +41,7 @@ public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implement
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(OCCUPIED);
 		super.createBlockStateDefinition(builder);
@@ -62,7 +60,7 @@ public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implement
 			if(pattern.isOrigin(blockState))
 				return pos;
 
-			int index = pattern.getIndex(blockState);
+			var index = pattern.getIndex(blockState);
 			return pattern.getOriginFromWorldSpace(blockState, pos, pattern.getLocalPositions().get(index));
 		}
 
@@ -70,23 +68,23 @@ public class SeatMultiBlock extends SimpleFourWayWaterLoggedMultiBlock implement
 	}
 
 	@Override
-	public void setSeatOccupied(World level, BlockPos pos, BlockState blockState, boolean occupied)
+	public void setSeatOccupied(Level level, BlockPos pos, BlockState blockState, boolean occupied)
 	{
 		if(sitAtOriginOnly())
 		{
-			BlockPos origin = pos;
-			List<BlockPos> localPositions = pattern.getLocalPositions();
+			var origin = pos;
+			var localPositions = pattern.getLocalPositions();
 
 			if(!pattern.isOrigin(blockState))
 			{
-				int index = pattern.getIndex(blockState);
+				var index = pattern.getIndex(blockState);
 				origin = pattern.getOriginFromWorldSpace(blockState, pos, localPositions.get(index));
 			}
 
-			for(BlockPos localSpace : localPositions)
+			for(var localSpace : localPositions)
 			{
-				BlockPos worldSpace = pattern.getWorldSpaceFromLocalSpace(blockState, origin, localSpace);
-				BlockState seatBlockState = level.getBlockState(worldSpace);
+				var worldSpace = pattern.getWorldSpaceFromLocalSpace(blockState, origin, localSpace);
+				var seatBlockState = level.getBlockState(worldSpace);
 
 				ISeatBlock.super.setSeatOccupied(level, worldSpace, seatBlockState, occupied);
 			}

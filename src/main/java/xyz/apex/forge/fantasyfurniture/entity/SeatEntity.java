@@ -1,16 +1,16 @@
 package xyz.apex.forge.fantasyfurniture.entity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
@@ -21,7 +21,7 @@ public class SeatEntity extends Entity
 
 	// default constructor for registration, do not call manually
 	@Deprecated
-	public SeatEntity(EntityType<? extends SeatEntity> entityType, World level)
+	public SeatEntity(EntityType<? extends SeatEntity> entityType, Level level)
 	{
 		super(entityType, level);
 
@@ -30,7 +30,7 @@ public class SeatEntity extends Entity
 
 	// used for entity client factory, do not call manually
 	@Deprecated
-	public SeatEntity(World level)
+	public SeatEntity(Level level)
 	{
 		this(FFElements.SEAT_ENTITY.asEntityType(), level);
 	}
@@ -42,11 +42,11 @@ public class SeatEntity extends Entity
 
 		if(!level.isClientSide)
 		{
-			BlockPos pos = blockPosition();
+			var pos = blockPosition();
 
 			if(getPassengers().isEmpty() || !level.getBlockState(pos).is(seatBlock))
 			{
-				remove(false);
+				remove(RemovalReason.DISCARDED);
 				level.updateNeighbourForOutputSignal(pos, level.getBlockState(pos).getBlock());
 				ISeatBlock.setSeatOccupied(level, pos, false);
 			}
@@ -71,39 +71,39 @@ public class SeatEntity extends Entity
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT tagCompound)
+	protected void readAdditionalSaveData(CompoundTag tagCompound)
 	{
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT tagCompound)
+	protected void addAdditionalSaveData(CompoundTag tagCompound)
 	{
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket()
+	public Packet<?> getAddEntityPacket()
 	{
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public static boolean create(World level, BlockPos pos, ISeatBlock seatBlock, PlayerEntity player)
+	public static boolean create(Level level, BlockPos pos, ISeatBlock seatBlock, Player player)
 	{
 		if(level.isClientSide)
 			return true;
 
-		BlockState blockState = level.getBlockState(pos);
+		var blockState = level.getBlockState(pos);
 		pos = seatBlock.getSeatSitPos(blockState, pos);
 		blockState = level.getBlockState(pos);
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
+		var x = pos.getX();
+		var y = pos.getY();
+		var z = pos.getZ();
 
-		SeatEntity seat = FFElements.SEAT_ENTITY.create(level);
+		var seat = FFElements.SEAT_ENTITY.create(level);
 
 		if(seat != null)
 		{
-			double seatYOffset = seatBlock.getSeatYOffset(blockState);
+			var seatYOffset = seatBlock.getSeatYOffset(blockState);
 
 			seat.setPos(x + .5D, y + seatYOffset, z + .5D);
 			seat.seatBlock = blockState.getBlock();

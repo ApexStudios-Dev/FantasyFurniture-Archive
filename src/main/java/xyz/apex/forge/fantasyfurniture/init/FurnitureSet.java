@@ -2,31 +2,28 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.functions.CopyBlockState;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -125,7 +122,7 @@ public enum FurnitureSet
 	public final String serializedName;
 	public final String englishName;
 
-	public final ITag.INamedTag<Item> itemGroupCategoryTag;
+	public final Tag.Named<Item> itemGroupCategoryTag;
 	public final ItemGroupCategory itemGroupCategory;
 
 	public final BlockEntry<?>[] blocks;
@@ -221,7 +218,7 @@ public enum FurnitureSet
 	{
 		this.serializedName = serializedName;
 
-		boolean isVenthyr = serializedName.equals("venthyr");
+		var isVenthyr = serializedName.equals("venthyr");
 
 		englishName = RegistrateLangProvider.toEnglishName(serializedName);
 		itemGroupCategoryTag = FFRegistry.getInstance().moddedItemTag("item_category/" + serializedName);
@@ -381,25 +378,18 @@ public enum FurnitureSet
 
 	static void bootstrap()
 	{
-		FFRegistry registry = FFRegistry.getInstance();
+		var registry = FFRegistry.getInstance();
 
-		for(FurnitureSet furnitureSet : values())
+		for(var furnitureSet : values())
 		{
 			registry.addDataGenerator(LANG, provider -> {
-				for(BlockEntry<?> entry : furnitureSet.blocks)
+				for(var entry : furnitureSet.blocks)
 				{
 					entry.ifPresent(block -> {
-						if(block instanceof ISeatBlock)
-						{
-							ISeatBlock seat = (ISeatBlock) block;
+						if(block instanceof ISeatBlock seat)
 							provider.add(seat.getOccupiedTranslationKey(), "This seat is occupied");
-						}
-
-						if(block instanceof BedBlock)
-						{
-							BedBlock bed = (BedBlock) block;
+						if(block instanceof BedBlock bed)
 							provider.add(bed.getOccupiedTranslationKey(), "This bed is occupied");
-						}
 					});
 				}
 			});
@@ -409,45 +399,38 @@ public enum FurnitureSet
 					.addTranslationGenerator(registry, EN_GB, furnitureSet.englishName);
 
 			registry.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-				for(BlockEntry<?> entry : furnitureSet.blocks)
+				for(var entry : furnitureSet.blocks)
 				{
 					entry.ifPresent(block -> {
-						if(block instanceof ISeatBlock)
-						{
-							ISeatBlock seat = (ISeatBlock) block;
+						if(block instanceof ISeatBlock seat)
 							provider.add(EN_GB, seat.getOccupiedTranslationKey(), "This seat is occupied");
-						}
-
-						if(block instanceof BedBlock)
-						{
-							BedBlock bed = (BedBlock) block;
+						if(block instanceof BedBlock bed)
 							provider.add(EN_GB, bed.getOccupiedTranslationKey(), "This bed is occupied");
-						}
 					});
 				}
 			});
 
 			EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
-				ItemGroupCategoryManager instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
+				var instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
 				instance.addCategory(furnitureSet.itemGroupCategory);
 			});
 		}
 
 		EventBusHelper.addEnqueuedListener(FMLClientSetupEvent.class, event -> {
 			VENTHYR.tableLargeBlockItem.ifPresent(item -> {
-				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
-					CompoundNBT stackTag = stack.getTag();
+				ItemProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity, seed) -> {
+					var stackTag = stack.getTag();
 
 					if(stackTag != null)
 					{
-						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, net.minecraft.nbt.Tag.TAG_COMPOUND))
 						{
-							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
-							String name = VenthyrTableLargeBlock.FANCY.getName();
+							var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							var name = VenthyrTableLargeBlock.FANCY.getName();
 
-							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							if(blockStateTag.contains(name, net.minecraft.nbt.Tag.TAG_STRING))
 							{
-								String strFancy = blockStateTag.getString(name);
+								var strFancy = blockStateTag.getString(name);
 
 								if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
 									return 1F;
@@ -460,19 +443,19 @@ public enum FurnitureSet
 			});
 
 			VENTHYR.tableWideBlockItem.ifPresent(item -> {
-				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
-					CompoundNBT stackTag = stack.getTag();
+				ItemProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity, seed) -> {
+					var stackTag = stack.getTag();
 
 					if(stackTag != null)
 					{
-						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, net.minecraft.nbt.Tag.TAG_COMPOUND))
 						{
-							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
-							String name = VenthyrTableWideBlock.FANCY.getName();
+							var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							var name = VenthyrTableWideBlock.FANCY.getName();
 
-							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							if(blockStateTag.contains(name, net.minecraft.nbt.Tag.TAG_STRING))
 							{
-								String strFancy = blockStateTag.getString(name);
+								var strFancy = blockStateTag.getString(name);
 
 								if(VenthyrTableWideBlock.FANCY.getValue(strFancy).orElse(false))
 									return 1F;
@@ -485,19 +468,19 @@ public enum FurnitureSet
 			});
 
 			VENTHYR.tableSmallBlockItem.ifPresent(item -> {
-				ItemModelsProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity) -> {
-					CompoundNBT stackTag = stack.getTag();
+				ItemProperties.register(item, VENTHYR_FANCY_TABLE_ITEM_PROPERTY, (stack, level, entity, seed) -> {
+					var stackTag = stack.getTag();
 
 					if(stackTag != null)
 					{
-						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+						if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, net.minecraft.nbt.Tag.TAG_COMPOUND))
 						{
-							CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
-							String name = VenthyrTableSmallBlock.FANCY.getName();
+							var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+							var name = VenthyrTableSmallBlock.FANCY.getName();
 
-							if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+							if(blockStateTag.contains(name, net.minecraft.nbt.Tag.TAG_STRING))
 							{
-								String strFancy = blockStateTag.getString(name);
+								var strFancy = blockStateTag.getString(name);
 
 								if(VenthyrTableSmallBlock.FANCY.getValue(strFancy).orElse(false))
 									return 1F;
@@ -512,15 +495,15 @@ public enum FurnitureSet
 	}
 
 	// region: Wool
-	private static BlockEntry<Block> wool(String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static BlockEntry<Block> wool(String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
-		FFRegistry registry = FFRegistry.getInstance();
-		String location = registry.idString("block/" + serializedName + "/wool");
+		var registry = FFRegistry.getInstance();
+		var location = registry.idString("block/%s/wool".formatted(serializedName));
 
 		return registry
-				.block(serializedName + "/wool")
-					.lang(englishName + " Wool")
-					.lang(EN_GB, englishName + " Wool")
+				.block("%s/wool".formatted(serializedName))
+					.lang("%s Wool".formatted(englishName))
+					.lang(EN_GB, "%s Wool".formatted(englishName))
 
 					.initialProperties(Material.WOOL, MaterialColor.WOOL)
 					.strength(.8F)
@@ -540,16 +523,16 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Carpet
-	private static <BLOCK extends SetCarpetBlock> BlockEntry<BLOCK> carpet(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetCarpetBlock> BlockEntry<BLOCK> carpet(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
-		FFRegistry registry = FFRegistry.getInstance();
-		ResourceLocation locationWool = registry.id("block/" + serializedName + "/wool");
-		String location = registry.idString("block/" + serializedName + "/carpet");
+		var registry = FFRegistry.getInstance();
+		var locationWool = registry.id("block/%s/wool".formatted(serializedName));
+		var location = registry.idString("block/%s/carpet".formatted(serializedName));
 
 		return registry
-				.block(serializedName + "/carpet", blockFactory)
-					.lang(englishName + " Carpet")
-					.lang(EN_GB, englishName + " Carpet")
+				.block("%s/carpet".formatted(serializedName), blockFactory)
+					.lang("%s Carpet".formatted(englishName))
+					.lang(EN_GB, "%s Carpet".formatted(englishName))
 
 					.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 					.strength(.1F)
@@ -569,12 +552,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wall Light
-	private static <BLOCK extends SetWallLightBlock> BlockEntry<BLOCK> wallLight(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWallLightBlock> BlockEntry<BLOCK> wallLight(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/wall_light", blockFactory)
-					.lang(englishName + " Wall Light")
-					.lang(EN_GB, englishName + " Wall Light")
+				.block("%s/wall_light".formatted(serializedName), blockFactory)
+					.lang("%s Wall Light".formatted(englishName))
+					.lang(EN_GB, "%s Wall Light".formatted(englishName))
 
 					.initialProperties(Material.DECORATION)
 					.sound(SoundType.WOOD)
@@ -601,12 +584,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Floor Light
-	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/floor_light", blockFactory, FFPatterns.PATTERN_2x1_FLOOR_LIGHT)
-					.lang(englishName + " Floor Light")
-					.lang(EN_GB, englishName + " Floor Light")
+				.multiBlock("%s/floor_light".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x1_FLOOR_LIGHT)
+					.lang("%s Floor Light".formatted(englishName))
+					.lang(EN_GB, "%s Floor Light".formatted(englishName))
 
 					.initialProperties(Material.DECORATION)
 					.sound(SoundType.WOOD)
@@ -633,12 +616,12 @@ public enum FurnitureSet
 
 	// region: Table
 	// region: Small
-	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> tableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> tableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/table_small", blockFactory)
-					.lang(englishName + " Table Small")
-					.lang(EN_GB, englishName + " Table Small")
+				.block("%s/table_small".formatted(serializedName), blockFactory)
+					.lang("%s Table Small".formatted(englishName))
+					.lang(EN_GB, "%s Table Small".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -661,21 +644,19 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> venthyrTableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> venthyrTableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/table_small", blockFactory)
-					// .lang(englishName + " Table Small")
-					// .lang(EN_GB, englishName + " Table Small")
+				.block("%s/table_small".formatted(serializedName), blockFactory)
 					.setData(LANG, (ctx, provider) -> {
-			            BLOCK block = ctx.get();
-			            provider.add(block, englishName + " Table Small");
-			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Small");
+			            var block = ctx.get();
+			            provider.add(block, "%s Table Small".formatted(englishName));
+			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Small".formatted(englishName));
 		            })
 			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        BLOCK block = ctx.get();
-				        provider.add(EN_GB, block, englishName + " Table Small");
-				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Small");
+				        var block = ctx.get();
+				        provider.add(EN_GB, block, "%s Table Small".formatted(englishName));
+				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Small".formatted(englishName));
 			        })
 
 					.initialProperties(Material.WOOD)
@@ -697,11 +678,11 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLootTables
+				                    .withPool(BlockLoot
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
-								                    .setRolls(ConstantRange.exactly(1))
-								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .setRolls(ConstantValue.exactly(1))
+								                    .add(LootItem.lootTableItem(block))
 								                    .apply(CopyBlockState
 										                    .copyState(block)
 										                    .copy(VenthyrTableSmallBlock.FANCY)
@@ -720,26 +701,26 @@ public enum FurnitureSet
 
 					.item(VenthyrTableBlockItem::new)
 						.model((ctx, provider) -> {
-							ResourceLocation id = ctx.getId();
-							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							var id = ctx.getId();
+							provider.withExistingParent("%s:item/%s".formatted(id.getNamespace(), id.getPath()), Registrations.getExistingModelPath(id, ""))
 							        .override()
 							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
-										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), "%s_fancy".formatted(id.getPath()))))
 							        .end()
 							;
 						})
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 						.onRegister(item -> {
-							ItemStack stack = item.getDefaultInstance();
-							CompoundNBT stackTag = stack.getOrCreateTag();
-							CompoundNBT blockStateTag = new CompoundNBT();
+							var stack = item.getDefaultInstance();
+							var stackTag = stack.getOrCreateTag();
+							var blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableSmallBlock.FANCY.getName(), "false");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
 
 							stack = item.getDefaultInstance();
 							stackTag = stack.getOrCreateTag();
-							blockStateTag = new CompoundNBT();
+							blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableSmallBlock.FANCY.getName(), "true");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
@@ -750,12 +731,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/table_wide", blockFactory, FFPatterns.PATTERN_1x2)
-					.lang(englishName + " Table Wide")
-					.lang(EN_GB, englishName + " Table Wide")
+				.multiBlock("%s/table_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.lang("%s Table Wide".formatted(englishName))
+					.lang(EN_GB, "%s Table Wide".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -778,21 +759,19 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/table_wide", blockFactory, FFPatterns.PATTERN_1x2)
-					// .lang(englishName + " Table Wide")
-					// .lang(EN_GB, englishName + " Table Wide")
-                    .setData(LANG, (ctx, provider) -> {
-			            BLOCK block = ctx.get();
-			            provider.add(block, englishName + " Table Wide");
-			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Wide");
+				.multiBlock("%s/table_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.setData(LANG, (ctx, provider) -> {
+			            var block = ctx.get();
+			            provider.add(block, "%s Table Wide".formatted(englishName));
+			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Wide".formatted(englishName));
 		            })
 			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        BLOCK block = ctx.get();
-				        provider.add(EN_GB, block, englishName + " Table Wide");
-				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Wide");
+				        var block = ctx.get();
+				        provider.add(EN_GB, block, "%s Table Wide".formatted(englishName));
+				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Wide".formatted(englishName));
 			        })
 
 					.initialProperties(Material.WOOD)
@@ -801,12 +780,12 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> {
-						ResourceLocation id = ctx.getId();
+						var id = ctx.getId();
 						provider.horizontalBlock(ctx.get(), blockState -> {
-							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
+							var existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
 
 							if(blockState.getValue(VenthyrTableWideBlock.FANCY))
-								return provider.models().getBuilder(id + "_fancy").parent(existingModel).texture("table_wide", id.getNamespace() + ":models/" + serializedName + "/table_wide_fancy");
+								return provider.models().getBuilder("%s_fancy".formatted(id)).parent(existingModel).texture("table_wide", "%s:models/%s/table_wide_fancy".formatted(id.getNamespace(), serializedName));
 							return existingModel;
 						});
 					})
@@ -814,11 +793,11 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLootTables
+				                    .withPool(BlockLoot
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
-								                    .setRolls(ConstantRange.exactly(1))
-								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .setRolls(ConstantValue.exactly(1))
+								                    .add(LootItem.lootTableItem(block))
 								                    .apply(CopyBlockState
 										                    .copyState(block)
 										                    .copy(VenthyrTableWideBlock.FANCY)
@@ -837,26 +816,26 @@ public enum FurnitureSet
 
 					.item(VenthyrTableBlockItem::new)
 					     .model((ctx, provider) -> {
-							ResourceLocation id = ctx.getId();
-							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							var id = ctx.getId();
+							provider.withExistingParent("%s:item/%s".formatted(id.getNamespace(), id.getPath()), Registrations.getExistingModelPath(id, ""))
 							        .override()
 							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
-										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), "%s_fancy".formatted(id.getPath()))))
 							        .end()
 							;
 						 })
 						 .tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 						 .onRegister(item -> {
-							ItemStack stack = item.getDefaultInstance();
-							CompoundNBT stackTag = stack.getOrCreateTag();
-							CompoundNBT blockStateTag = new CompoundNBT();
+							var stack = item.getDefaultInstance();
+							var stackTag = stack.getOrCreateTag();
+							var blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableWideBlock.FANCY.getName(), "false");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
 
 							stack = item.getDefaultInstance();
 							stackTag = stack.getOrCreateTag();
-							blockStateTag = new CompoundNBT();
+							blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableWideBlock.FANCY.getName(), "true");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
@@ -867,12 +846,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Large
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/table_large", blockFactory, FFPatterns.PATTERN_2x2)
-					.lang(englishName + " Table Large")
-					.lang(EN_GB, englishName + " Table Large")
+				.multiBlock("%s/table_large".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+					.lang("%s Table Large".formatted(englishName))
+					.lang(EN_GB, "%s Table Large".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -895,21 +874,19 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/table_large", blockFactory, FFPatterns.PATTERN_2x2)
-					// .lang(englishName + " Table Large")
-					// .lang(EN_GB, englishName + " Table Large")
-		            .setData(LANG, (ctx, provider) -> {
-			            BLOCK block = ctx.get();
-			            provider.add(block, englishName + " Table Large");
-			            provider.add(block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Large");
+				.multiBlock("%s/table_large".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+					.setData(LANG, (ctx, provider) -> {
+			            var block = ctx.get();
+			            provider.add(block, "%s Table Large".formatted(englishName));
+			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Large".formatted(englishName));
 		            })
 			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        BLOCK block = ctx.get();
-				        provider.add(EN_GB, block, englishName + " Table Large");
-				        provider.add(EN_GB, block.getDescriptionId() + ".fancy", "Fancy " + englishName + " Table Large");
+				        var block = ctx.get();
+				        provider.add(EN_GB, block, "%s Table Large".formatted(englishName));
+				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Large".formatted(englishName));
 			        })
 
 					.initialProperties(Material.WOOD)
@@ -918,12 +895,12 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> {
-						ResourceLocation id = ctx.getId();
+						var id = ctx.getId();
 						provider.horizontalBlock(ctx.get(), blockState -> {
-							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
+							var existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
 
 							if(blockState.getValue(VenthyrTableLargeBlock.FANCY))
-								return provider.models().getBuilder(id + "_fancy").parent(existingModel).texture("table_large", id.getNamespace() + ":models/" + serializedName + "/table_large_fancy");
+								return provider.models().getBuilder("%s_fancy".formatted(id)).parent(existingModel).texture("table_large", "%s:models/%s/table_large_fancy".formatted(id.getNamespace(), serializedName));
 							return existingModel;
 						});
 					})
@@ -931,11 +908,11 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLootTables
+				                    .withPool(BlockLoot
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
-								                    .setRolls(ConstantRange.exactly(1))
-								                    .add(ItemLootEntry.lootTableItem(block))
+								                    .setRolls(ConstantValue.exactly(1))
+								                    .add(LootItem.lootTableItem(block))
 								                    .apply(CopyBlockState
 										                    .copyState(block)
 										                    .copy(VenthyrTableLargeBlock.FANCY)
@@ -954,26 +931,26 @@ public enum FurnitureSet
 
 					.item(VenthyrTableBlockItem::new)
 					     .model((ctx, provider) -> {
-							ResourceLocation id = ctx.getId();
-							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, ""))
+							var id = ctx.getId();
+							provider.withExistingParent("%s:item/%s".formatted(id.getNamespace(), id.getPath()), Registrations.getExistingModelPath(id, ""))
 							        .override()
 							            .predicate(VENTHYR_FANCY_TABLE_ITEM_PROPERTY, 1F)
-										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), id.getPath() + "_fancy")))
+										.model(provider.getExistingFile(new ResourceLocation(id.getNamespace(), "%s_fancy".formatted(id.getPath()))))
 							        .end()
 							;
 						})
 						 .tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 		                 .onRegister(item -> {
-							ItemStack stack = item.getDefaultInstance();
-							CompoundNBT stackTag = stack.getOrCreateTag();
-							CompoundNBT blockStateTag = new CompoundNBT();
+							var stack = item.getDefaultInstance();
+			                 var stackTag = stack.getOrCreateTag();
+			                 var blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableLargeBlock.FANCY.getName(), "false");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
 
 							stack = item.getDefaultInstance();
 							stackTag = stack.getOrCreateTag();
-							blockStateTag = new CompoundNBT();
+							blockStateTag = new CompoundTag();
 							blockStateTag.putString(VenthyrTableLargeBlock.FANCY.getName(), "true");
 							stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 							FurnitureStation.registerAdditionalCraftingResult(stack);
@@ -985,12 +962,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Stool
-	private static <BLOCK extends SetStoolBlock> BlockEntry<BLOCK> stool(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetStoolBlock> BlockEntry<BLOCK> stool(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/stool", blockFactory)
-					.lang(englishName + " Stool")
-					.lang(EN_GB, englishName + " Stool")
+				.block("%s/stool".formatted(serializedName), blockFactory)
+					.lang("%s Stool".formatted(englishName))
+					.lang(EN_GB, "%s Stool".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1015,12 +992,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Cushion
-	private static <BLOCK extends SetCushionBlock> BlockEntry<BLOCK> cushion(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetCushionBlock> BlockEntry<BLOCK> cushion(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/cushion", blockFactory)
-					.lang(englishName + " Cushion")
-					.lang(EN_GB, englishName + " Cushion")
+				.block("%s/cushion".formatted(serializedName), blockFactory)
+					.lang("%s Cushion".formatted(englishName))
+					.lang(EN_GB, "%s Cushion".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1046,12 +1023,12 @@ public enum FurnitureSet
 
 	// region: Painting
 	// region: Small
-	private static <BLOCK extends SetPaintingSmallBlock> BlockEntry<BLOCK> paintingSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetPaintingSmallBlock> BlockEntry<BLOCK> paintingSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/painting_small", blockFactory)
-					.lang(englishName + " Painting Small")
-					.lang(EN_GB, englishName + " Painting Small")
+				.block("%s/painting_small".formatted(serializedName), blockFactory)
+					.lang("%s Painting Small".formatted(englishName))
+					.lang(EN_GB, "%s Painting Small".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.sound(SoundType.WOOD)
@@ -1077,12 +1054,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/painting_wide", blockFactory, FFPatterns.PATTERN_1x2_PAINTING)
-					.lang(englishName + " Painting Wide")
-					.lang(EN_GB, englishName + " Painting Wide")
+				.multiBlock("%s/painting_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2_PAINTING)
+					.lang("%s Painting Wide".formatted(englishName))
+					.lang(EN_GB, "%s Painting Wide".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.sound(SoundType.WOOD)
@@ -1109,12 +1086,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Drawer
-	private static <BLOCK extends SetDrawerBlock> BlockEntry<BLOCK> drawer(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDrawerBlock> BlockEntry<BLOCK> drawer(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/drawer", blockFactory)
-					.lang(englishName + " Drawer")
-					.lang(EN_GB, englishName + " Drawer")
+				.block("%s/drawer".formatted(serializedName), blockFactory)
+					.lang("%s Drawer".formatted(englishName))
+					.lang(EN_GB, "%s Drawer".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1139,14 +1116,14 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Shelf
-	private static <BLOCK extends SetShelfBlock> BlockEntry<BLOCK> shelf(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetShelfBlock> BlockEntry<BLOCK> shelf(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		FFRegistry registry = FFRegistry.getInstance();
 
 		return registry
-				.block(serializedName + "/shelf", blockFactory)
-					.lang(englishName + " Shelf")
-					.lang(EN_GB, englishName + " Shelf")
+				.block("%s/shelf".formatted(serializedName), blockFactory)
+					.lang("%s Shelf".formatted(englishName))
+					.lang(EN_GB, "%s Shelf".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1154,7 +1131,7 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
-						ShelfBlock.ConnectionType connectionType = blockState.getValue(ShelfBlock.CONNECTION_TYPE);
+						var connectionType = blockState.getValue(ShelfBlock.CONNECTION_TYPE);
 						String suffix;
 
 						if(connectionType == ShelfBlock.ConnectionType.LEFT || connectionType == ShelfBlock.ConnectionType.RIGHT)
@@ -1164,7 +1141,7 @@ public enum FurnitureSet
 						else
 							suffix = "";
 
-						return provider.models().getExistingFile(registry.id("block/" + serializedName + "/shelf" + suffix));
+						return provider.models().getExistingFile(registry.id("block/%s/shelf%s".formatted(serializedName, suffix)));
 					}, 180))
 
 					.isValidSpawn(BlockHelper::never)
@@ -1183,14 +1160,14 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Sofa
-	private static <BLOCK extends SetSofaBlock> BlockEntry<BLOCK> sofa(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetSofaBlock> BlockEntry<BLOCK> sofa(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
-		FFRegistry registry = FFRegistry.getInstance();
+		var registry = FFRegistry.getInstance();
 
 		return registry
-				.block(serializedName + "/sofa", blockFactory)
-					.lang(englishName + " Sofa")
-					.lang(EN_GB, englishName + " Sofa")
+				.block("%s/sofa".formatted(serializedName), blockFactory)
+					.lang("%s Sofa".formatted(englishName))
+					.lang(EN_GB, "%s Sofa".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1198,12 +1175,12 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
-						Direction facing = blockState.getValue(SofaBlock.FACING);
-						SofaBlock.ConnectionType connectionType = blockState.getValue(SofaBlock.CONNECTION_TYPE);
+						var facing = blockState.getValue(SofaBlock.FACING);
+						var connectionType = blockState.getValue(SofaBlock.CONNECTION_TYPE);
 
 						return ConfiguredModel
 								.builder()
-									.modelFile(provider.models().getExistingFile(registry.id("block/" + serializedName + "/sofa_" + connectionType.getSerializedName())))
+									.modelFile(provider.models().getExistingFile(registry.id("block/%s/sofa_%s".formatted(serializedName, connectionType.getSerializedName()))))
 									.rotationY(((int) facing.toYRot() + 180) % 360)
 								.build();
 					}))
@@ -1216,7 +1193,7 @@ public enum FurnitureSet
 					.addRenderType(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> provider.withExistingParent("item/" + ctx.getName(), registry.id("block/" + serializedName + "/sofa_single")))
+						.model((ctx, provider) -> provider.withExistingParent("item/%s".formatted(ctx.getName()), registry.id("block/%s/sofa_single".formatted(serializedName))))
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
 		.register();
@@ -1224,12 +1201,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Desk
-	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String side, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String side, Tag.Named<Item> itemGroupCategoryTag)
 	{
-		String engName = englishName + " Desk " + RegistrateLangProvider.toEnglishName(side);
+		var engName = "%s Desk %s".formatted(englishName, RegistrateLangProvider.toEnglishName(side));
 
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/desk_" + side, blockFactory, FFPatterns.PATTERN_1x2)
+				.multiBlock("%s/desk_%s".formatted(serializedName, side), blockFactory, FFPatterns.PATTERN_1x2)
 					.lang(engName)
 					.lang(EN_GB, engName)
 
@@ -1256,12 +1233,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chair
-	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/chair", blockFactory, FFPatterns.PATTERN_2x1)
-					.lang(englishName + " Chair")
-					.lang(EN_GB, englishName + " Chair")
+				.multiBlock("%s/chair".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x1)
+					.lang("%s Chair".formatted(englishName))
+					.lang(EN_GB, "%s Chair".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1286,12 +1263,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bench
-	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/bench", blockFactory, FFPatterns.PATTERN_1x2)
-					.lang(englishName + " Bench")
-					.lang(EN_GB, englishName + " Bench")
+				.multiBlock("%s/bench".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.lang("%s Bench".formatted(englishName))
+					.lang(EN_GB, "%s Bench".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1316,12 +1293,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bookshelf
-	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/bookshelf", blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
-					.lang(englishName + " Bookshelf")
-					.lang(EN_GB, englishName + " Bookshelf")
+				.multiBlock("%s/bookshelf".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
+					.lang("%s Bookshelf".formatted(englishName))
+					.lang(EN_GB, "%s Bookshelf".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1346,12 +1323,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chest
-	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/chest", blockFactory, FFPatterns.PATTERN_1x2)
-					.lang(englishName + " Chest")
-					.lang(EN_GB, englishName + " Chest")
+				.multiBlock("%s/chest".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.lang("%s Chest".formatted(englishName))
+					.lang(EN_GB, "%s Chest".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1376,12 +1353,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Dresser
-	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/dresser", blockFactory, FFPatterns.PATTERN_1x2)
-					.lang(englishName + " Dresser")
-					.lang(EN_GB, englishName + " Dresser")
+				.multiBlock("%s/dresser".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.lang("%s Dresser".formatted(englishName))
+					.lang(EN_GB, "%s Dresser".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1407,12 +1384,12 @@ public enum FurnitureSet
 
 	// region: Wardrobe
 	// region: Bottom
-	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/wardrobe_bottom", blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
-					.lang(englishName + " Wardrobe")
-					.lang(EN_GB, englishName + " Wardrobe")
+				.multiBlock("%s/wardrobe_bottom".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
+					.lang("%s Wardrobe".formatted(englishName))
+					.lang(EN_GB, "%s Wardrobe".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1437,12 +1414,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Top
-	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/wardrobe_top", blockFactory, FFPatterns.PATTERN_1x2)
-					.lang(englishName + " Wardrobe Top")
-					.lang(EN_GB, englishName + " Wardrobe Top")
+				.multiBlock("%s/wardrobe_top".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+					.lang("%s Wardrobe Top".formatted(englishName))
+					.lang(EN_GB, "%s Wardrobe Top".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1469,12 +1446,12 @@ public enum FurnitureSet
 
 	// region: Bed
 	// region: Single
-	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/bed_single", blockFactory, FFPatterns.PATTERN_BED_SINGLE)
-					.lang(englishName + " Bed Single")
-					.lang(EN_GB, englishName + " Bed Single")
+				.multiBlock("%s/bed_single".formatted(serializedName), blockFactory, FFPatterns.PATTERN_BED_SINGLE)
+					.lang("%s Bed Single".formatted(englishName))
+					.lang(EN_GB, "%s Bed Single".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1501,12 +1478,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Double
-	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock(serializedName + "/bed_double", blockFactory, FFPatterns.PATTERN_2x2)
-					.lang(englishName + " Bed Double")
-					.lang(EN_GB, englishName + " Bed Double")
+				.multiBlock("%s/bed_double".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+					.lang("%s Bed Double".formatted(englishName))
+					.lang(EN_GB, "%s Bed Double".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1534,12 +1511,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chandelier
-	private static <BLOCK extends SetChandelierBlock> BlockEntry<BLOCK> chandelier(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChandelierBlock> BlockEntry<BLOCK> chandelier(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/chandelier", blockFactory)
-					.lang(englishName + " Chandelier")
-					.lang(EN_GB, englishName + " Chandelier")
+				.block("%s/chandelier".formatted(serializedName), blockFactory)
+					.lang("%s Chandelier".formatted(englishName))
+					.lang(EN_GB, "%s Chandelier".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1565,12 +1542,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Door
-	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, ITag.INamedTag<Item> itemGroupCategoryTag)
+	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, Tag.Named<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.block(serializedName + "/door_" + type, blockFactory)
-					.lang(englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
-					.lang(EN_GB, englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
+				.block("%s/door_%s".formatted(serializedName, type), blockFactory)
+					.lang("%s Door %s".formatted(englishName, RegistrateLangProvider.toEnglishName(type)))
+					.lang(EN_GB, "%s Door %s".formatted(englishName, RegistrateLangProvider.toEnglishName(type)))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1578,12 +1555,12 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> {
-						ResourceLocation id = ctx.getId();
-						String path = id.getPath();
-						String namespace = id.getNamespace();
-						provider.doorBlock(ctx.get(), new ResourceLocation(namespace, "block/" + path + "_bottom"), new ResourceLocation(namespace, "block/" + path + "_top"));
+						var id = ctx.getId();
+						var path = id.getPath();
+						var namespace = id.getNamespace();
+						provider.doorBlock(ctx.get(), new ResourceLocation(namespace, "block/%s_bottom".formatted(path)), new ResourceLocation(namespace, "block/%s_top".formatted(path)));
 					})
-					.loot((lootTables, block) -> lootTables.add(block, BlockLootTables.createDoorTable(block)))
+					.loot((lootTables, block) -> lootTables.add(block, BlockLoot.createDoorTable(block)))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -1596,7 +1573,7 @@ public enum FurnitureSet
 
 					.item()
 						.model((ctx, provider) -> provider
-								.withExistingParent(ctx.getId().getNamespace() + ":item/" + ctx.getId().getPath(), new ResourceLocation("minecraft:item/generated"))
+								.withExistingParent("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), new ResourceLocation("minecraft:item/generated"))
 								.texture("layer0", provider.itemTexture(ctx))
 						)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.WOODEN_DOORS)

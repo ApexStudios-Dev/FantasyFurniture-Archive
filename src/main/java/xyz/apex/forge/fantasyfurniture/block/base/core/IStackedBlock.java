@@ -1,9 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.common.extensions.IForgeBlock;
 
 public interface IStackedBlock extends IForgeBlock
@@ -12,15 +12,12 @@ public interface IStackedBlock extends IForgeBlock
 
 	String getStackableTranslationKey();
 
-	default IFormattableTextComponent getStackableTranslation()
+	default MutableComponent getStackableTranslation()
 	{
-		return new TranslationTextComponent(getStackableTranslationKey());
+		return new TranslatableComponent(getStackableTranslationKey());
 	}
 
-	default boolean isForStack(ItemStack stack)
-	{
-		return stack.getItem() == getBlock().asItem();
-	}
+	boolean isForStack(ItemStack stack);
 
 	static int getMinValue(IntegerProperty property)
 	{

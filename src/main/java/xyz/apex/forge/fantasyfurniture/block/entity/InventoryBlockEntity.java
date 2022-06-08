@@ -1,48 +1,49 @@
 package xyz.apex.forge.fantasyfurniture.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.IContainerListener;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import xyz.apex.forge.apexcore.lib.block.entity.BaseBlockEntity;
-import xyz.apex.forge.apexcore.lib.util.INameableMutable;
+import xyz.apex.forge.apexcore.lib.util.NameableMutable;
 import xyz.apex.forge.fantasyfurniture.init.Registrations;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class InventoryBlockEntity<CONTAINER extends Container> extends BaseBlockEntity implements INamedContainerProvider, INameableMutable, IContainerListener
+public abstract class InventoryBlockEntity<MENU extends AbstractContainerMenu> extends BaseBlockEntity implements MenuProvider, NameableMutable, ContainerListener
 {
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_CUSTOM_NAME = "CustomName";
 
 	@Nullable private ItemStackHandler inventory = null;
 	private final LazyOptional<IItemHandler> itemHandlerCapability = LazyOptional.of(this::createItemHandler);
-	@Nullable private ITextComponent customName = null;
-	private final Registrations.ContainerFactory<CONTAINER> containerFactory;
+	@Nullable private Component customName = null;
+	private final Registrations.MenuFactory<MENU> menuFactory;
 
-	public InventoryBlockEntity(TileEntityType<? extends InventoryBlockEntity> blockEntityType, Registrations.ContainerFactory<CONTAINER> containerFactory)
+	public InventoryBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState blockState, Registrations.MenuFactory<MENU> menuFactory)
 	{
-		super(blockEntityType);
+		super(blockEntityType, pos, blockState);
 
-		this.containerFactory = containerFactory;
+		this.menuFactory = menuFactory;
 
 		itemHandlerCapability.addListener(opt -> inventory = null);
 	}
@@ -53,7 +54,7 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	}
 
 	protected abstract ItemStackHandler createInventoryHandler();
-	protected abstract ContainerType<CONTAINER> getContainerType();
+	protected abstract MenuType<MENU> getContainerType();
 
 	private IItemHandler createItemHandler()
 	{
@@ -63,51 +64,51 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	}
 
 	@Override
-	public final Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player)
+	public final AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player)
 	{
-		CONTAINER drawerContainer = containerFactory.create(getContainerType(), windowId, playerInventory, getItemHandler());
+		var drawerContainer = menuFactory.create(getContainerType(), windowId, playerInventory, getItemHandler());
 		drawerContainer.addSlotListener(this);
 		return drawerContainer;
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent customName)
+	public void setCustomName(@Nullable Component customName)
 	{
 		this.customName = customName;
 	}
 
 	@Override
-	public void load(BlockState blockState, CompoundNBT tagCompound)
+	public void load(CompoundTag tagCompound)
 	{
-		if(tagCompound.contains(NBT_INVENTORY, Constants.NBT.TAG_COMPOUND))
+		if(tagCompound.contains(NBT_INVENTORY, Tag.TAG_COMPOUND))
 		{
 			itemHandlerCapability.invalidate();
 			inventory = createInventoryHandler();
-			CompoundNBT inventoryTag = tagCompound.getCompound(NBT_INVENTORY);
+			var inventoryTag = tagCompound.getCompound(NBT_INVENTORY);
 			inventory.deserializeNBT(inventoryTag);
 		}
 
-		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Tag.TAG_STRING))
 		{
-			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
-			customName = ITextComponent.Serializer.fromJson(customNameJson);
+			var customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
-		super.load(blockState, tagCompound);
+		super.load(tagCompound);
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tagCompound)
+	public CompoundTag save(CompoundTag tagCompound)
 	{
 		if(inventory != null)
 		{
-			CompoundNBT inventoryTag = inventory.serializeNBT();
+			var inventoryTag = inventory.serializeNBT();
 			tagCompound.put(NBT_INVENTORY, inventoryTag);
 		}
 
 		if(customName != null)
 		{
-			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			var customNameJson = TextComponent.Serializer.toJson(customName);
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
@@ -126,51 +127,46 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 
 	@Nullable
 	@Override
-	public ITextComponent getCustomName()
+	public Component getCustomName()
 	{
 		return customName;
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
 		return customName == null ? getName() : customName;
 	}
 
 	@Override
-	public ITextComponent getName()
+	public Component getName()
 	{
-		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
+		return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
 	}
 
 	@Override
-	public void refreshContainer(Container container, NonNullList<ItemStack> stacks)
-	{
-	}
-
-	@Override
-	public void slotChanged(Container container, int slotIndex, ItemStack stack)
+	public void slotChanged(AbstractContainerMenu container, int slotIndex, ItemStack stack)
 	{
 		setChanged();
 	}
 
 	@Override
-	public void setContainerData(Container container, int varToUpdate, int newValue)
+	public void dataChanged(AbstractContainerMenu container, int varToUpdate, int newValue)
 	{
 	}
 
 	@Override
-	protected CompoundNBT writeUpdateTag(CompoundNBT tagCompound)
+	protected CompoundTag writeUpdateTag(CompoundTag tagCompound)
 	{
 		if(inventory != null)
 		{
-			CompoundNBT inventoryTag = inventory.serializeNBT();
+			var inventoryTag = inventory.serializeNBT();
 			tagCompound.put(NBT_INVENTORY, inventoryTag);
 		}
 
 		if(customName != null)
 		{
-			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			var customNameJson = TextComponent.Serializer.toJson(customName);
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
@@ -178,20 +174,20 @@ public abstract class InventoryBlockEntity<CONTAINER extends Container> extends 
 	}
 
 	@Override
-	protected void readeUpdateTag(CompoundNBT tagCompound)
+	protected void readeUpdateTag(CompoundTag tagCompound)
 	{
-		if(tagCompound.contains(NBT_INVENTORY, Constants.NBT.TAG_COMPOUND))
+		if(tagCompound.contains(NBT_INVENTORY, Tag.TAG_COMPOUND))
 		{
 			itemHandlerCapability.invalidate();
 			inventory = createInventoryHandler();
-			CompoundNBT inventoryTag = tagCompound.getCompound(NBT_INVENTORY);
+			var inventoryTag = tagCompound.getCompound(NBT_INVENTORY);
 			inventory.deserializeNBT(inventoryTag);
 		}
 
-		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Tag.TAG_STRING))
 		{
-			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
-			customName = ITextComponent.Serializer.fromJson(customNameJson);
+			var customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
 		super.readeUpdateTag(tagCompound);

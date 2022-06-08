@@ -2,18 +2,14 @@ package xyz.apex.forge.fantasyfurniture.container;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
 
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.java.utility.nullness.NonnullPredicate;
@@ -21,11 +17,11 @@ import xyz.apex.java.utility.nullness.NonnullPredicate;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public final class FurnitureStationContainer extends Container
+public final class FurnitureStationContainer extends AbstractContainerMenu
 {
-	private final IWorldPosCallable access;
-	private final IInventory inputInventory;
-	private final CraftResultInventory resultInventory;
+	private final ContainerLevelAccess access;
+	private final Container inputInventory;
+	private final ResultContainer resultInventory;
 
 	private final Slot claySlot;
 	private final Slot woodSlot;
@@ -35,13 +31,13 @@ public final class FurnitureStationContainer extends Container
 	private final List<ItemStack> results = Lists.newArrayList();
 	private long lastSoundTime = 0L;
 
-	public FurnitureStationContainer(@Nullable ContainerType<?> menuType, int windowId, PlayerInventory playerInventory, IWorldPosCallable access)
+	public FurnitureStationContainer(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ContainerLevelAccess access)
 	{
 		super(menuType, windowId);
 
 		this.access = access;
 
-		inputInventory = new Inventory(4) {
+		inputInventory = new SimpleContainer(4) {
 			@Override
 			public void setChanged()
 			{
@@ -50,7 +46,7 @@ public final class FurnitureStationContainer extends Container
 			}
 		};
 
-		resultInventory = new CraftResultInventory();
+		resultInventory = new ResultContainer();
 
 		claySlot = addSlot(new InputSlot(FurnitureStation.CLAY_SLOT, 16, 21, FurnitureStation::isValidClay));
 		woodSlot = addSlot(new InputSlot(FurnitureStation.WOOD_SLOT, 34, 21, FurnitureStation::isValidWood));
@@ -58,15 +54,15 @@ public final class FurnitureStationContainer extends Container
 		resultSlot = addSlot(new ResultSlot());
 
 		// player inventory slots
-		for(int i = 0; i < 3; i++)
+		for(var i = 0; i < 3; i++)
 		{
-			for(int j = 0; j < 9; j++)
+			for(var j = 0; j < 9; j++)
 			{
 				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
 			}
 		}
 
-		for(int i = 0; i < 9; i++)
+		for(var i = 0; i < 9; i++)
 		{
 			addSlot(new Slot(playerInventory, i, 8 + i * 18, 198));
 		}
@@ -98,13 +94,13 @@ public final class FurnitureStationContainer extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean stillValid(Player player)
 	{
 		return stillValid(access, player, FurnitureStation.BLOCK.asBlock());
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory)
+	public void slotsChanged(Container inventory)
 	{
 		super.slotsChanged(inventory);
 
@@ -123,41 +119,41 @@ public final class FurnitureStationContainer extends Container
 	}
 
 	@Override
-	public boolean clickMenuButton(PlayerEntity player, int button)
+	public boolean clickMenuButton(Player player, int button)
 	{
 		setupResultSlot(button);
 		return super.clickMenuButton(player, button);
 	}
 
 	@Override
-	public void removed(PlayerEntity player)
+	public void removed(Player player)
 	{
 		super.removed(player);
 		resultInventory.removeItemNoUpdate(1);
-		access.execute((world, pos) -> clearContainer(player, world, inputInventory));
+		access.execute((world, pos) -> clearContainer(player, inputInventory));
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int slotIndex)
+	public ItemStack quickMoveStack(Player player, int slotIndex)
 	{
-		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = slots.get(slotIndex);
+		var stack = ItemStack.EMPTY;
+		var slot = slots.get(slotIndex);
 
-		if(slot != null && slot.hasItem())
+		if(slot.hasItem())
 		{
-			ItemStack stack1 = slot.getItem();
+			var stack1 = slot.getItem();
 			stack = stack1.copy();
 
-			int inputStart = Math.min(FurnitureStation.CLAY_SLOT, Math.min(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
-			int inputEnd = Math.max(FurnitureStation.CLAY_SLOT, Math.max(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
+			var inputStart = Math.min(FurnitureStation.CLAY_SLOT, Math.min(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
+			var inputEnd = Math.max(FurnitureStation.CLAY_SLOT, Math.max(FurnitureStation.WOOD_SLOT, FurnitureStation.STONE_SLOT));
 
-			int resultSlot = FurnitureStation.RESULT_SLOT;
+			var resultSlot = FurnitureStation.RESULT_SLOT;
 
-			int playerStart = 4;
-			int playerEnd = 31;
+			var playerStart = 4;
+			var playerEnd = 31;
 
-			int hotStart = 32;
-			int hotEnd = 40;
+			var hotStart = 32;
+			var hotEnd = 40;
 
 			if(slotIndex >= inputStart && slotIndex <= inputEnd)
 			{
@@ -203,7 +199,7 @@ public final class FurnitureStationContainer extends Container
 
 	private void setupResultSlot(int button)
 	{
-		int size = results.size();
+		var size = results.size();
 
 		if(size == 0 || button < 0 || button > size - 1)
 		{
@@ -212,7 +208,7 @@ public final class FurnitureStationContainer extends Container
 			return;
 		}
 
-		ItemStack stack = results.get(button).copy();
+		var stack = results.get(button).copy();
 		stack.setCount(1);
 		resultSlot.set(stack);
 		broadcastChanges();
@@ -257,7 +253,7 @@ public final class FurnitureStationContainer extends Container
 		}
 
 		@Override
-		public ItemStack onTake(PlayerEntity player, ItemStack stack)
+		public void onTake(Player player, ItemStack stack)
 		{
 			stack.getItem().onCraftedBy(stack, player.level, player);
 			resultInventory.awardUsedRecipes(player);
@@ -266,16 +262,14 @@ public final class FurnitureStationContainer extends Container
 			setupResultSlot(-1);
 
 			access.execute((world, pos) -> {
-				long gameTime = world.getGameTime();
+				var gameTime = world.getGameTime();
 
 				if(lastSoundTime != gameTime)
 				{
-					world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1F, 1F);
+					world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1F, 1F);
 					lastSoundTime = gameTime;
 				}
 			});
-
-			return super.onTake(player, stack);
 		}
 	}
 }

@@ -1,22 +1,22 @@
 package xyz.apex.forge.fantasyfurniture.block.venthyr;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
@@ -51,26 +51,26 @@ public final class VenthyrTableWideBlock extends SetTableWideBlock
 
 	@Nullable
 	@Override
-	protected BlockState getPlacementState(BlockItemUseContext ctx, BlockState defaultBlockState)
+	protected BlockState getPlacementState(BlockPlaceContext ctx, BlockState defaultBlockState)
 	{
-		BlockState blockState = super.getPlacementState(ctx, defaultBlockState);
+		var blockState = super.getPlacementState(ctx, defaultBlockState);
 
 		if(blockState != null)
 		{
-			ItemStack stack = ctx.getItemInHand();
-			CompoundNBT stackTag = stack.getTag();
+			var stack = ctx.getItemInHand();
+			var stackTag = stack.getTag();
 
 			if(stackTag != null)
 			{
-				if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Constants.NBT.TAG_COMPOUND))
+				if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Tag.TAG_COMPOUND))
 				{
-					CompoundNBT blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
+					var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
 
-					String name = FANCY.getName();
+					var name = FANCY.getName();
 
-					if(blockStateTag.contains(name, Constants.NBT.TAG_STRING))
+					if(blockStateTag.contains(name, Tag.TAG_STRING))
 					{
-						String strFancy = blockStateTag.getString(name);
+						var strFancy = blockStateTag.getString(name);
 
 						if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
 							blockState = blockState.setValue(FANCY, true);
@@ -83,14 +83,14 @@ public final class VenthyrTableWideBlock extends SetTableWideBlock
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		Direction facing = blockState.getValue(FACING);
-		VoxelShape shape = SHAPER.get(facing);
+		var facing = blockState.getValue(FACING);
+		var shape = SHAPER.get(facing);
 
 		if(!pattern.isOrigin(blockState))
 		{
-			Direction opposite = facing.getClockWise();
+			var opposite = facing.getClockWise();
 			shape = shape.move(opposite.getStepX(), 0D, opposite.getStepZ());
 		}
 
@@ -98,14 +98,14 @@ public final class VenthyrTableWideBlock extends SetTableWideBlock
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup itemGroup, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab itemGroup, NonNullList<ItemStack> items)
 	{
-		String name = FANCY.getName();
+		var name = FANCY.getName();
 
 		// not fancy
-		ItemStack stack = asItem().getDefaultInstance();
-		CompoundNBT stackTag = stack.getOrCreateTag();
-		CompoundNBT blockStateTag = new CompoundNBT();
+		var stack = asItem().getDefaultInstance();
+		var stackTag = stack.getOrCreateTag();
+		var blockStateTag = new CompoundTag();
 		blockStateTag.putString(name, "false");
 		stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 		items.add(stack);
@@ -113,21 +113,21 @@ public final class VenthyrTableWideBlock extends SetTableWideBlock
 		// fancy
 		stack = asItem().getDefaultInstance();
 		stackTag = stack.getOrCreateTag();
-		blockStateTag = new CompoundNBT();
+		blockStateTag = new CompoundTag();
 		blockStateTag.putString(name, "true");
 		stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 		items.add(stack);
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState blockState, RayTraceResult result, IBlockReader level, BlockPos pos, PlayerEntity player)
+	public ItemStack getPickBlock(BlockState blockState, HitResult result, BlockGetter level, BlockPos pos, Player player)
 	{
-		ItemStack stack = super.getPickBlock(blockState, result, level, pos, player);
+		var stack = super.getPickBlock(blockState, result, level, pos, player);
 
 		if(blockState.getValue(FANCY))
 		{
-			CompoundNBT stackTag = stack.getOrCreateTag();
-			CompoundNBT blockStateTag = new CompoundNBT();
+			var stackTag = stack.getOrCreateTag();
+			var blockStateTag = new CompoundTag();
 			blockStateTag.putString(FANCY.getName(), "true");
 			stackTag.put(FantasyFurniture.NBT_BLOCK_STATE_TAG, blockStateTag);
 		}
@@ -136,7 +136,7 @@ public final class VenthyrTableWideBlock extends SetTableWideBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(FANCY);
 		super.createBlockStateDefinition(builder);

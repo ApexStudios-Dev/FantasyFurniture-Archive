@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        java: [ 8 ]
+        java: [ 16 ]
 
     name: Publish Mod
     runs-on: ${{ matrix.os }}
@@ -104,7 +104,7 @@ jobs:
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           color: '#97C6E7'
           file: ./CHANGELOG.md
-          message: "Fantasy's Furniture has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.16.5_**!"
+          message: "Fantasy's Furniture has been updated to v**_${{ steps.mod_version.outputs.value }}_** for **Minecraft** **_1.17.1_**!"
 
       - name: Stop Gradle Deamons
         run: ./gradlew --stop

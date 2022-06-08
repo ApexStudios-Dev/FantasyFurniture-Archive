@@ -1,10 +1,10 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.entity.player.RemoteClientPlayerEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.player.RemotePlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
@@ -23,9 +23,9 @@ public class SetBedSingleBlock extends BedBlock
 	}
 
 	@Override
-	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
+	public void onFixBedRotations(LivingEntity entity, PoseStack pose)
 	{
-		if(entity instanceof RemoteClientPlayerEntity)
+		if(entity instanceof RemotePlayer)
 		{
 			pose.scale(.85F, .85F, .85F);
 			pose.translate(0D, .2D, .15D);

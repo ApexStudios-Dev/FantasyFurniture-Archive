@@ -30,9 +30,12 @@ version = "${minecraft_version}-${mod_version}"
 group = "${mod_base_package}.${mod_id}"
 archivesBaseName = "${mod_id}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 configurations {
+	library
+	implementation.extendsFrom library
+
 	shade
 }
 
@@ -98,6 +101,12 @@ minecraft {
 	}
 }
 
+minecraft.runs.all {
+	lazyToken('minecraft_classpath') {
+		configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+	}
+}
+
 if(file("./src/main/resources/${mod_id}.mixins.json").exists()) {
 	mixin {
 		add sourceSets.main, "${mod_id}.refmap.json"
@@ -132,17 +141,12 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
 
-	// CTM for 1.16.1 works for 1.16.5 (there is no 1.16.5 specific release)
-	runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC1.16.1-${ctm_version}")
-	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:MC${mc_version}-${ctm_version}")
-
-	runtimeOnly fg.deobf('curse.maven:worldedit-225608:3283693')
-
 	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
 	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
 
 	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
 	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
+	library "xyz.apex.java.utility:javautilities:${javautilities_version}"
 
 	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
 	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
@@ -240,15 +244,15 @@ if(System.getenv('GENERATE_CHANGELOG') != null) {
 	}
 
 	task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-        file = file("CHANGELOG.md")
-        fromRepo = file('.')
-        fromRef = "${previousGitTag}"
-        toRef = "v${mod_version}"
-        templateContent = file('.github/changelog.mustache').text
-		        .replace('{current_tag}', "${currentGitTag}")
-		        .replace('{mod_git_url}', "${mod_git_url}")
-		        .replace('{last_tag}', "${previousGitTag}")
-    }
+		file = file("CHANGELOG.md")
+		fromRepo = file('.')
+		fromRef = "${previousGitTag}"
+		toRef = "v${mod_version}"
+		templateContent = file('.github/changelog.mustache').text
+		                                                    .replace('{current_tag}', "${currentGitTag}")
+		                                                    .replace('{mod_git_url}', "${mod_git_url}")
+		                                                    .replace('{last_tag}', "${previousGitTag}")
+	}
 }
 
 tasks.withType(Jar) {

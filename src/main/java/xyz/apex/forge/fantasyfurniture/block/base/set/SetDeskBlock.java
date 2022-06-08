@@ -1,8 +1,8 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayMultiBlockContainerBlock;
@@ -18,7 +18,7 @@ public class SetDeskBlock extends SimpleFourWayMultiBlockContainerBlock<SetDeskB
 	}
 
 	@Override
-	protected TileEntityType<SetDeskBlockEntity> getBlockEntityType()
+	protected BlockEntityType<SetDeskBlockEntity> getBlockEntityType()
 	{
 		return FFElements.DESK_BLOCK_ENTITY.asBlockEntityType();
 	}

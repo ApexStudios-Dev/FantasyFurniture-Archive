@@ -2,32 +2,28 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
-import xyz.apex.forge.apexcore.lib.item.WearableBlockItem;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
-import xyz.apex.forge.fantasyfurniture.client.renderer.FFItemStackBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.renderer.entity.WidowBloomBlockEntityRenderer;
+import xyz.apex.forge.fantasyfurniture.item.WidowBloomBlockItem;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
@@ -40,7 +36,7 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-	public static final ITag.INamedTag<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
+	public static final Tag.Named<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
 
 	// region: Berry Basket
 	// region: Empty
@@ -65,13 +61,13 @@ public final class Decorations
 
 	private static BlockEntry<BerryBasketBlock> berryBasket(String type)
 	{
-		String codeName = "decorations/berry_basket_" + type;
+		var codeName = "decorations/berry_basket_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
 			englishName = "Berry Basket";
 		else
-			englishName = RegistrateLangProvider.toEnglishName(type) + " Basket";
+			englishName = "%s Basket".formatted(RegistrateLangProvider.toEnglishName(type));
 
 		return REGISTRY
 				.block(codeName, BerryBasketBlock::new)
@@ -186,13 +182,13 @@ public final class Decorations
 
 	private static BlockEntry<BowlBlock> bowl(String type)
 	{
-		String codeName = "decorations/bowl_" + type;
+		String codeName = "decorations/bowl_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
 			englishName = "Bowl";
 		else
-			englishName = RegistrateLangProvider.toEnglishName(type) + " Bowl";
+			englishName = "%s Bowl".formatted(RegistrateLangProvider.toEnglishName(type));
 
 		return REGISTRY
 				.block(codeName, BowlBlock::new)
@@ -244,7 +240,7 @@ public final class Decorations
 
 	private static BlockEntry<TankardsBlock> tankards(String type)
 	{
-		String codeName = "decorations/tankards_" + type;
+		String codeName = "decorations/tankards_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
@@ -252,7 +248,7 @@ public final class Decorations
 		else if(type.equals("honeymead"))
 			englishName = "Honeyed Tankards";
 		else
-			englishName = RegistrateLangProvider.toEnglishName(type) + " Tankards";
+			englishName = "%s Tankards".formatted(RegistrateLangProvider.toEnglishName(type));
 
 		return REGISTRY
 				.block(codeName, TankardsBlock::new)
@@ -333,9 +329,9 @@ public final class Decorations
 	private static BlockEntry<CoinStackBlock> coinStack(String type)
 	{
 		return REGISTRY
-				.block("decorations/coin_stack_" + type, CoinStackBlock::new)
-					.lang(RegistrateLangProvider.toEnglishName(type) + " Coin Stack")
-					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Coin Stack")
+				.block("decorations/coin_stack_%s".formatted(type), CoinStackBlock::new)
+					.lang("%s Coin Stack".formatted(RegistrateLangProvider.toEnglishName(type)))
+					.lang(EN_GB, "%s Coin Stack".formatted(RegistrateLangProvider.toEnglishName(type)))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
@@ -378,9 +374,9 @@ public final class Decorations
 	private static BlockEntry<MuffinsBlock> muffins(String type)
 	{
 		return REGISTRY
-				.block("decorations/muffins_" + type, MuffinsBlock::new)
-					.lang(RegistrateLangProvider.toEnglishName(type) + " Muffins")
-					.lang(EN_GB, RegistrateLangProvider.toEnglishName(type) + " Muffins")
+				.block("decorations/muffins_%s".formatted(type), MuffinsBlock::new)
+					.lang("%s Muffins".formatted(RegistrateLangProvider.toEnglishName(type)))
+					.lang(EN_GB, "%s Muffins".formatted(RegistrateLangProvider.toEnglishName(type)))
 
 					.initialProperties(Material.CAKE)
 					.strength(.5F)
@@ -446,7 +442,7 @@ public final class Decorations
 	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/boiled_creme_treats", BoiledCremeTreatsBlock::new)
+				.block("decorations/%s/boiled_creme_treats".formatted(furnitureSet.serializedName), BoiledCremeTreatsBlock::new)
 					.lang("Boiled Creme Treats")
 					.lang(EN_GB, "Boiled Creme Treats")
 
@@ -483,7 +479,7 @@ public final class Decorations
 	private static BlockEntry<SweetRollsBlock> sweetRolls(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/sweetrolls", SweetRollsBlock::new)
+				.block("decorations/%s/sweetrolls".formatted(furnitureSet.serializedName), SweetRollsBlock::new)
 					.lang("Sweetrolls")
 					.lang(EN_GB, "Sweetrolls")
 
@@ -520,7 +516,7 @@ public final class Decorations
 	private static BlockEntry<MeadBottlesBlock> meadBottles(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/mead_bottles", MeadBottlesBlock::new)
+				.block("decorations/%s/mead_bottles".formatted(furnitureSet.serializedName), MeadBottlesBlock::new)
 					.lang("Mead Bottles")
 					.lang(EN_GB, "Mead Bottles")
 
@@ -566,10 +562,10 @@ public final class Decorations
 		String englishName = "Soul Gems";
 
 		if(type.equals("dark"))
-			englishName = "Black " + englishName;
+			englishName = "Black %s".formatted(englishName);
 
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/soul_gems_" + type, SoulGemsBlock::new)
+				.block("decorations/%s/soul_gems_%s".formatted(furnitureSet.serializedName, type), SoulGemsBlock::new)
 					.lang(englishName)
 					.lang(EN_GB, englishName)
 
@@ -611,9 +607,9 @@ public final class Decorations
 	private static BlockEntry<FoodBlock> food(FurnitureSet furnitureSet, int index)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/food_" + index, FoodBlock::new)
-					.lang(furnitureSet.englishName + " Food " + (index + 1))
-					.lang(EN_GB, furnitureSet.englishName + " Food " + (index + 1))
+				.block("decorations/%s/food_%d".formatted(furnitureSet.serializedName, index), FoodBlock::new)
+					.lang("%s Food %d".formatted(furnitureSet.englishName, index + 1))
+					.lang(EN_GB, "%s Food %d".formatted(furnitureSet.englishName, index + 1))
 
 					.initialProperties(Material.CAKE)
 					.strength(2.5F)
@@ -644,9 +640,9 @@ public final class Decorations
 	private static BlockEntry<TeaSetBlock> teaSet(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.multiBlock("decorations/" + furnitureSet.serializedName + "/tea_set", TeaSetBlock::new, FFPatterns.PATTERN_1x2)
-					.lang(furnitureSet.englishName + " Tea Set")
-					.lang(EN_GB, furnitureSet.englishName + " Tea Set")
+				.multiBlock("decorations/%s/tea_set".formatted(furnitureSet.serializedName), TeaSetBlock::new, FFPatterns.PATTERN_1x2)
+					.lang("%s Tea Set".formatted(furnitureSet.englishName))
+					.lang(EN_GB, "%s Tea Set".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
@@ -677,9 +673,9 @@ public final class Decorations
 	private static BlockEntry<TeaCupsBlock> teaCups(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/tea_cups", TeaCupsBlock::new)
-					.lang(furnitureSet.englishName + " Tea Cups")
-					.lang(EN_GB, furnitureSet.englishName + " Tea Cups")
+				.block("decorations/%s/tea_cups".formatted(furnitureSet.serializedName), TeaCupsBlock::new)
+					.lang("%s Tea Cups".formatted(furnitureSet.englishName))
+					.lang(EN_GB, "%s Tea Cups".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
@@ -711,9 +707,9 @@ public final class Decorations
 	private static BlockEntry<PlatterBlock> platter(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/platter", PlatterBlock::new)
-					.lang(furnitureSet.englishName + " Platter")
-					.lang(EN_GB, furnitureSet.englishName + " Platter")
+				.block("decorations/%s/platter".formatted(furnitureSet.serializedName), PlatterBlock::new)
+					.lang("%s Platter".formatted(furnitureSet.englishName))
+					.lang(EN_GB, "%s Platter".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
@@ -746,7 +742,7 @@ public final class Decorations
 	private static BlockEntry<WidowBloomBlock> widowBloom(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/widow_bloom", WidowBloomBlock::new)
+				.block("decorations/%s/widow_bloom".formatted(furnitureSet.serializedName), WidowBloomBlock::new)
 					.lang("Widowbloom Vase")
 					.lang(EN_GB, "Widowbloom Vase")
 
@@ -775,12 +771,12 @@ public final class Decorations
 
 					.addRenderType(() -> RenderType::cutout)
 
-					.item((block, properties) -> new WearableBlockItem(block, properties, EquipmentSlotType.HEAD))
+					.item(WidowBloomBlockItem::new)
 						.model((ctx, provider) -> {
-							ResourceLocation id = ctx.getId();
-							ModelFile.UncheckedModelFile builtInEntity = new ModelFile.UncheckedModelFile("minecraft:builtin/entity");
+							var id = ctx.getId();
+							var builtInEntity = new ModelFile.UncheckedModelFile("minecraft:builtin/entity");
 
-							provider.getBuilder(id.getNamespace() + ":item/" + id.getPath())
+							provider.getBuilder("%s:item/%s".formatted(id.getNamespace(), id.getPath()))
 						        .parent(builtInEntity)
 								.transforms()
 									.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
@@ -826,7 +822,6 @@ public final class Decorations
 								.end();
 						})
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
-						.setISTER(() -> DatagenModLoader.isRunningDataGen() ? () -> null : FFItemStackBlockEntityRenderer::new)
 					.build()
 
 					.blockEntity(WidowBloomBlockEntity::new)
@@ -843,9 +838,9 @@ public final class Decorations
 	private static BlockEntry<TomesBlock> tomes(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/tomes", TomesBlock::new)
-					.lang(furnitureSet.englishName + " Tomes")
-					.lang(EN_GB, furnitureSet.englishName + " Tomes")
+				.block("decorations/%s/tomes".formatted(furnitureSet.serializedName), TomesBlock::new)
+					.lang("%s Tomes".formatted(furnitureSet.englishName))
+					.lang(EN_GB, "%s Tomes".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -877,9 +872,9 @@ public final class Decorations
 	private static BlockEntry<ChalicesBlock> chalices(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.block("decorations/" + furnitureSet.serializedName + "/chalices", ChalicesBlock::new)
-					.lang(furnitureSet.englishName + " Chalices")
-					.lang(EN_GB, furnitureSet.englishName + " Chalices")
+				.block("decorations/%s/chalices".formatted(furnitureSet.serializedName), ChalicesBlock::new)
+					.lang("%s Chalices".formatted(furnitureSet.englishName))
+					.lang(EN_GB, "%s Chalices".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)

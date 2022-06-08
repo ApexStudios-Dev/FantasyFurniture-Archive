@@ -1,62 +1,50 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
-public abstract class SimpleFourWayBlockEntityBlock<T extends TileEntity> extends SimpleFourWayBlock implements ITileEntityProvider
+public abstract class SimpleFourWayBlockEntityBlock<T extends BlockEntity> extends SimpleFourWayBlock implements EntityBlock
 {
 	public SimpleFourWayBlockEntityBlock(Properties properties)
 	{
 		super(properties);
 	}
 
-	protected abstract TileEntityType<T> getBlockEntityType();
+	protected abstract BlockEntityType<T> getBlockEntityType();
 
 	@Nullable
-	protected T getBlockEntity(IBlockReader level, BlockPos pos)
+	protected T getBlockEntity(BlockGetter level, BlockPos pos)
 	{
 		return getBlockEntityType().getBlockEntity(level, pos);
 	}
 
 	@Override
-	public boolean triggerEvent(BlockState blockState, World level, BlockPos pos, int event, int param)
+	public boolean triggerEvent(BlockState blockState, Level level, BlockPos pos, int event, int param)
 	{
-		T blockEntity = getBlockEntity(level, pos);
+		var blockEntity = getBlockEntity(level, pos);
 		return blockEntity != null && blockEntity.triggerEvent(event, param);
 	}
 
 	@Nullable
-	public INamedContainerProvider getMenuProvider(BlockState blockState, World level, BlockPos pos)
+	@Override
+	public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
 	{
-		T blockEntity = getBlockEntity(level, pos);
-		return blockEntity instanceof INamedContainerProvider ? (INamedContainerProvider) blockEntity : null;
+		var blockEntity = getBlockEntity(level, pos);
+		return blockEntity instanceof MenuProvider menuProvider ? menuProvider : null;
 	}
 
 	@Nullable
 	@Override
-	public TileEntity newBlockEntity(IBlockReader level)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState)
 	{
-		return getBlockEntityType().create();
-	}
-
-	@Nullable
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
-	{
-		return getBlockEntityType().create();
-	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state)
-	{
-		return true;
+		return getBlockEntityType().create(pos, blockState);
 	}
 }

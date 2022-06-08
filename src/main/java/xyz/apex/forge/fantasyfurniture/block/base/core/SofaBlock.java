@@ -1,19 +1,18 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 import javax.annotation.Nullable;
 
@@ -29,14 +28,14 @@ public class SofaBlock extends SeatBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(CONNECTION_TYPE);
 		super.createBlockStateDefinition(builder);
 	}
 
 	@Override
-	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, IWorld level, BlockPos pos, BlockPos facingPos)
+	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, LevelAccessor level, BlockPos pos, BlockPos facingPos)
 	{
 		return getBlockState(level, pos, blockState, this);
 	}
@@ -44,20 +43,20 @@ public class SofaBlock extends SeatBlock
 	@SuppressWarnings("ConstantConditions") // super is non null
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx)
+	public BlockState getStateForPlacement(BlockPlaceContext ctx)
 	{
-		BlockState blockState = super.getStateForPlacement(ctx);
+		var blockState = super.getStateForPlacement(ctx);
 		return getBlockState(ctx.getLevel(), ctx.getClickedPos(), blockState, this);
 	}
 
 	@Override
-	public void fallOn(World level, BlockPos pos, Entity entity, float distance)
+	public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float distance)
 	{
-		super.fallOn(level, pos, entity, distance * .5F);
+		super.fallOn(level, blockState, pos, entity, distance * .5F);
 	}
 
 	@Override
-	public void updateEntityAfterFallOn(IBlockReader level, Entity entity)
+	public void updateEntityAfterFallOn(BlockGetter level, Entity entity)
 	{
 		if(entity.isSuppressingBounce())
 			super.updateEntityAfterFallOn(level, entity);
@@ -67,54 +66,54 @@ public class SofaBlock extends SeatBlock
 
 	protected void bounceUp(Entity entity)
 	{
-		Vector3d deltaMovement = entity.getDeltaMovement();
+		var deltaMovement = entity.getDeltaMovement();
 
 		if(deltaMovement.y < 0D)
 		{
-			double d0 = entity instanceof LivingEntity ? 1D : .8D;
+			var d0 = entity instanceof LivingEntity ? 1D : .8D;
 			entity.setDeltaMovement(deltaMovement.x, -deltaMovement.y * (double) .66F * d0, deltaMovement.z);
 		}
 	}
 
 	@Override
-	public void neighborChanged(BlockState blockState, World level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+	public void neighborChanged(BlockState blockState, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
 		super.neighborChanged(blockState, level, pos, block, fromPos, isMoving);
 		updateConnectionBlockState(level, pos, blockState, this);
 	}
 
-	public static void updateConnectionBlockState(IWorld level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
+	public static void updateConnectionBlockState(LevelAccessor level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
 	{
-		BlockState newBlockState = getBlockState(level, pos, blockState, baseSofaBlock);
+		var newBlockState = getBlockState(level, pos, blockState, baseSofaBlock);
 
 		if(newBlockState != blockState)
 			level.setBlock(pos, newBlockState, 3);
 	}
 
-	public static BlockState getBlockState(IWorld level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
+	public static BlockState getBlockState(LevelAccessor level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
 	{
-		ConnectionType connectionType = getConnectionState(level, pos, blockState, baseSofaBlock);
+		var connectionType = getConnectionState(level, pos, blockState, baseSofaBlock);
 		return blockState.setValue(CONNECTION_TYPE, connectionType);
 	}
 
-	public static ConnectionType getConnectionState(IWorld level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
+	public static ConnectionType getConnectionState(LevelAccessor level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
 	{
-		Direction originFacing = blockState.getValue(FACING);
-		ConnectionType originConnectionType = blockState.getValue(CONNECTION_TYPE);
+		var originFacing = blockState.getValue(FACING);
+		var originConnectionType = blockState.getValue(CONNECTION_TYPE);
 
-		BlockPos leftPos = pos.relative(originFacing.getCounterClockWise());
-		BlockPos rightPos = pos.relative(originFacing.getClockWise());
-		BlockPos inFrontPos = pos.relative(originFacing);
+		var leftPos = pos.relative(originFacing.getCounterClockWise());
+		var rightPos = pos.relative(originFacing.getClockWise());
+		var inFrontPos = pos.relative(originFacing);
 
-		BlockState leftBlockState = level.getBlockState(leftPos);
-		BlockState rightBlockState = level.getBlockState(rightPos);
-		BlockState inFrontBlockState = level.getBlockState(inFrontPos);
+		var leftBlockState = level.getBlockState(leftPos);
+		var rightBlockState = level.getBlockState(rightPos);
+		var inFrontBlockState = level.getBlockState(inFrontPos);
 
 		if(isCornerConnection(leftBlockState, rightBlockState, inFrontBlockState, originFacing, baseSofaBlock))
 			return ConnectionType.CORNER;
 
-		boolean hasLeft = isLeftConnection(leftBlockState, originFacing, originConnectionType, baseSofaBlock);
-		boolean hasRight = isRightConnection(rightBlockState, originFacing, originConnectionType, baseSofaBlock);
+		var hasLeft = isLeftConnection(leftBlockState, originFacing, originConnectionType, baseSofaBlock);
+		var hasRight = isRightConnection(rightBlockState, originFacing, originConnectionType, baseSofaBlock);
 
 		if(hasLeft && !hasRight)
 			return ConnectionType.LEFT;
@@ -131,16 +130,16 @@ public class SofaBlock extends SeatBlock
 		if(!inFrontBlockState.is(baseSofaBlock))
 			return false;
 
-		Direction inFrontFacing = inFrontBlockState.getValue(FACING);
+		var inFrontFacing = inFrontBlockState.getValue(FACING);
 
 		if(leftBlockState.is(baseSofaBlock))
 		{
-			Direction leftFacing = leftBlockState.getValue(FACING);
+			var leftFacing = leftBlockState.getValue(FACING);
 			return isCornerFacing(originFacing, leftFacing, inFrontFacing);
 		}
 		else if(rightBlockState.is(baseSofaBlock))
 		{
-			Direction rightFacing = rightBlockState.getValue(FACING);
+			var rightFacing = rightBlockState.getValue(FACING);
 			return isCornerFacing(originFacing, rightFacing, inFrontFacing);
 		}
 
@@ -162,7 +161,7 @@ public class SofaBlock extends SeatBlock
 		if(leftBlockState.getValue(FACING) == originFacing)
 			return true;
 
-		ConnectionType leftConnectionType = leftBlockState.getValue(CONNECTION_TYPE);
+		var leftConnectionType = leftBlockState.getValue(CONNECTION_TYPE);
 
 		if(leftConnectionType == ConnectionType.CORNER || leftConnectionType == ConnectionType.CENTER)
 			return true;
@@ -176,14 +175,14 @@ public class SofaBlock extends SeatBlock
 		if(rightBlockState.getValue(FACING) == originFacing)
 			return true;
 
-		ConnectionType rightConnectionType = rightBlockState.getValue(CONNECTION_TYPE);
+		var rightConnectionType = rightBlockState.getValue(CONNECTION_TYPE);
 
 		if(rightConnectionType == ConnectionType.CORNER || rightConnectionType == ConnectionType.CENTER)
 			return true;
 		return false;
 	}
 
-	public enum ConnectionType implements IStringSerializable
+	public enum ConnectionType implements StringRepresentable
 	{
 		LEFT("left"),
 		RIGHT("right"),

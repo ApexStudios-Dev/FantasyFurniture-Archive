@@ -1,11 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.block.nordic;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetShelfBlock;
@@ -45,19 +45,17 @@ public final class NordicShelfBlock extends SetShelfBlock
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		Direction facing = blockState.getValue(FACING);
-		ConnectionType connectionType = blockState.getValue(CONNECTION_TYPE);
+		var facing = blockState.getValue(FACING);
+		var connectionType = blockState.getValue(CONNECTION_TYPE);
 
-		switch(connectionType)
-		{
-			default:
-			case NONE: return SHAPER.get(facing);
-
-			case LEFT: return SHAPER_LEFT.get(facing);
-			case BOTH: return SHAPER_CENTER.get(facing);
-			case RIGHT: return SHAPER_RIGHT.get(facing);
-		}
+		return switch(connectionType)
+				{
+					case NONE -> SHAPER.get(facing);
+					case LEFT -> SHAPER_LEFT.get(facing);
+					case BOTH -> SHAPER_CENTER.get(facing);
+					case RIGHT -> SHAPER_RIGHT.get(facing);
+				};
 	}
 }

@@ -1,18 +1,18 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 
 import javax.annotation.Nullable;
 
@@ -28,35 +28,35 @@ public class ShelfBlock extends SimpleFourWayWaterLoggedBlock
 	}
 
 	@Override
-	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, IWorld level, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos)
 	{
-		ConnectionType connectionState = getConnectionState(level, currentPos, blockState, this);
+		var connectionState = getConnectionState(level, currentPos, blockState, this);
 		return blockState.setValue(CONNECTION_TYPE, connectionState);
 	}
 
 	@SuppressWarnings("ConstantConditions") // super is non null
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx)
+	public BlockState getStateForPlacement(BlockPlaceContext ctx)
 	{
-		BlockState blockState = super.getStateForPlacement(ctx);
-		ConnectionType connectionState = getConnectionState(ctx.getLevel(), ctx.getClickedPos(), blockState, this);
+		var blockState = super.getStateForPlacement(ctx);
+		var connectionState = getConnectionState(ctx.getLevel(), ctx.getClickedPos(), blockState, this);
 		return blockState.setValue(CONNECTION_TYPE, connectionState);
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(CONNECTION_TYPE);
 		super.createBlockStateDefinition(builder);
 	}
 
 	@Override
-	public void neighborChanged(BlockState blockState, World level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+	public void neighborChanged(BlockState blockState, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
 		super.neighborChanged(blockState, level, pos, block, fromPos, isMoving);
 
-		ConnectionType connectionState = getConnectionState(level, pos, blockState, this);
+		var connectionState = getConnectionState(level, pos, blockState, this);
 		level.setBlockAndUpdate(pos, blockState.setValue(CONNECTION_TYPE, connectionState));
 	}
 
@@ -67,20 +67,20 @@ public class ShelfBlock extends SimpleFourWayWaterLoggedBlock
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState blockState, IBlockReader level, BlockPos pos, PathType pathType)
+	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos pos, PathComputationType pathType)
 	{
 		return false;
 	}
 
-	private static ConnectionType getConnectionState(IWorld level, BlockPos pos, BlockState blockState, ShelfBlock baseShelfBlock)
+	private static ConnectionType getConnectionState(LevelAccessor level, BlockPos pos, BlockState blockState, ShelfBlock baseShelfBlock)
 	{
-		Direction facing = blockState.getValue(FACING);
+		var facing = blockState.getValue(FACING);
 
-		BlockPos leftPos = pos.relative(facing.getCounterClockWise());
-		BlockPos rightPos = pos.relative(facing.getClockWise());
+		var leftPos = pos.relative(facing.getCounterClockWise());
+		var rightPos = pos.relative(facing.getClockWise());
 
-		boolean hasLeft = hasConnection(level, leftPos, baseShelfBlock);
-		boolean hasRight = hasConnection(level, rightPos, baseShelfBlock);
+		var hasLeft = hasConnection(level, leftPos, baseShelfBlock);
+		var hasRight = hasConnection(level, rightPos, baseShelfBlock);
 
 		if(hasLeft && hasRight)
 			return ConnectionType.BOTH;
@@ -91,13 +91,13 @@ public class ShelfBlock extends SimpleFourWayWaterLoggedBlock
 		return ConnectionType.NONE;
 	}
 
-	private static boolean hasConnection(IWorld level, BlockPos pos, ShelfBlock baseShelfBlock)
+	private static boolean hasConnection(LevelAccessor level, BlockPos pos, ShelfBlock baseShelfBlock)
 	{
-		BlockState blockState = level.getBlockState(pos);
+		var blockState = level.getBlockState(pos);
 		return blockState.is(baseShelfBlock);
 	}
 
-	public enum ConnectionType implements IStringSerializable
+	public enum ConnectionType implements StringRepresentable
 	{
 		NONE("none"),
 		LEFT("left"),

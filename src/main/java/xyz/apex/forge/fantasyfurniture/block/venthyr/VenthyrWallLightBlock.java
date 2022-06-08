@@ -1,12 +1,12 @@
 package xyz.apex.forge.fantasyfurniture.block.venthyr;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetWallLightBlock;
@@ -31,26 +31,26 @@ public final class VenthyrWallLightBlock extends SetWallLightBlock
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		Direction facing = blockState.getValue(FACING);
+		var facing = blockState.getValue(FACING);
 		return SHAPER.get(facing);
 	}
 
 	@Override
-	public void animateTick(BlockState blockState, World level, BlockPos pos, Random rng)
+	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
 	{
 		if(!blockState.getValue(WATERLOGGED))
 		{
-			Direction facing = blockState.getValue(FACING).getOpposite();
+			var facing = blockState.getValue(FACING).getOpposite();
 
-			double x = pos.getX() + .5D + (.25D * facing.getStepX());
-			double y = pos.getY() + .85D;
-			double z = pos.getZ() + .5D + (.25D * facing.getStepZ());
+			var x = pos.getX() + .5D + (.25D * facing.getStepX());
+			var y = pos.getY() + .85D;
+			var z = pos.getZ() + .5D + (.25D * facing.getStepZ());
 
-			Direction face = facing.getClockWise();
-			double xOffset = .15D * face.getStepX();
-			double zOffset = .15D * face.getStepZ();
+			var face = facing.getClockWise();
+			var xOffset = .15D * face.getStepX();
+			var zOffset = .15D * face.getStepZ();
 
 			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
 			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);

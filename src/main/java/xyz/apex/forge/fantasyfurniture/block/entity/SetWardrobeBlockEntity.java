@@ -1,7 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.block.entity;
 
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
 import xyz.apex.forge.fantasyfurniture.container.SetWardrobeContainer;
@@ -9,9 +11,9 @@ import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public final class SetWardrobeBlockEntity extends InventoryBlockEntity<SetWardrobeContainer>
 {
-	public SetWardrobeBlockEntity(TileEntityType<? extends SetWardrobeBlockEntity> blockEntityType)
+	public SetWardrobeBlockEntity(BlockEntityType<? extends SetWardrobeBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
 	{
-		super(blockEntityType, SetWardrobeContainer::new);
+		super(blockEntityType, pos, blockState, SetWardrobeContainer::new);
 	}
 
 	@Override
@@ -21,8 +23,8 @@ public final class SetWardrobeBlockEntity extends InventoryBlockEntity<SetWardro
 	}
 
 	@Override
-	protected ContainerType<SetWardrobeContainer> getContainerType()
+	protected MenuType<SetWardrobeContainer> getContainerType()
 	{
-		return FFElements.WARDROBE_CONTAINER.asContainerType();
+		return FFElements.WARDROBE_CONTAINER.asMenuType();
 	}
 }

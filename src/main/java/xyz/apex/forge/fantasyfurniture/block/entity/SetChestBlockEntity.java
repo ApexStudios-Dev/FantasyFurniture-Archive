@@ -1,7 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.block.entity;
 
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
 import xyz.apex.forge.fantasyfurniture.container.SetChestContainer;
@@ -9,9 +11,9 @@ import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public final class SetChestBlockEntity extends InventoryBlockEntity<SetChestContainer>
 {
-	public SetChestBlockEntity(TileEntityType<? extends SetChestBlockEntity> blockEntityType)
+	public SetChestBlockEntity(BlockEntityType<? extends SetChestBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
 	{
-		super(blockEntityType, SetChestContainer::new);
+		super(blockEntityType, pos, blockState, SetChestContainer::new);
 	}
 
 	@Override
@@ -21,8 +23,8 @@ public final class SetChestBlockEntity extends InventoryBlockEntity<SetChestCont
 	}
 
 	@Override
-	protected ContainerType<SetChestContainer> getContainerType()
+	protected MenuType<SetChestContainer> getContainerType()
 	{
-		return FFElements.CHEST_CONTAINER.asContainerType();
+		return FFElements.CHEST_CONTAINER.asMenuType();
 	}
 }

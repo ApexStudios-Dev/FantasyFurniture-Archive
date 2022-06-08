@@ -1,22 +1,22 @@
 package xyz.apex.forge.fantasyfurniture.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public class InventoryContainer extends Container
+public class InventoryContainer extends AbstractContainerMenu
 {
-	protected final PlayerEntity player;
+	protected final Player player;
 	protected final IItemHandler itemHandler;
 
-	public InventoryContainer(ContainerType<?> menuType, int windowId, PlayerInventory playerInventory, IItemHandler itemHandler, int rows, int cols)
+	public InventoryContainer(MenuType<?> menuType, int windowId, Inventory playerInventory, IItemHandler itemHandler, int rows, int cols)
 	{
 		super(menuType, windowId);
 
@@ -26,22 +26,22 @@ public class InventoryContainer extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player)
+	public boolean stillValid(Player player)
 	{
 		return player.isAlive() && player.containerMenu == this;
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int slotIndex)
+	public ItemStack quickMoveStack(Player player, int slotIndex)
 	{
-		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = slots.get(slotIndex);
+		var stack = ItemStack.EMPTY;
+		var slot = slots.get(slotIndex);
 
-		if(slot != null && slot.hasItem())
+		if(slot.hasItem())
 		{
-			ItemStack stack1 = slot.getItem();
+			var stack1 = slot.getItem();
 			stack = stack1.copy();
-			int maxIndex = itemHandler.getSlots();
+			var maxIndex = itemHandler.getSlots();
 
 			if(slotIndex < maxIndex)
 			{
@@ -62,26 +62,26 @@ public class InventoryContainer extends Container
 
 	protected static void addInventorySlots(NonnullConsumer<Slot> addSlot, IItemHandler itemHandler, int rows, int cols, int xStart, int yStart)
 	{
-		for(int j = 0; j < rows; j++)
+		for(var j = 0; j < rows; j++)
 		{
-			for(int k = 0; k < cols; k++)
+			for(var k = 0; k < cols; k++)
 			{
 				addSlot.accept(new SlotItemHandler(itemHandler, k + j * cols, xStart + k * 18, yStart + j * 18));
 			}
 		}
 	}
 
-	protected static void addPlayerInventorySlots(NonnullConsumer<Slot> addSlot, PlayerInventory playerInventory, int xStart, int yStart)
+	protected static void addPlayerInventorySlots(NonnullConsumer<Slot> addSlot, Inventory playerInventory, int xStart, int yStart)
 	{
-		for(int i = 0; i < 3; i++)
+		for(var i = 0; i < 3; i++)
 		{
-			for(int j = 0; j < 9; j++)
+			for(var j = 0; j < 9; j++)
 			{
 				addSlot.accept(new Slot(playerInventory, j + i * 9 + 9, xStart + j * 18, yStart + i * 18));
 			}
 		}
 
-		for(int i = 0; i < 9; ++i)
+		for(var i = 0; i < 9; ++i)
 		{
 			addSlot.accept(new Slot(playerInventory, i, xStart + i * 18, yStart + 58));
 		}

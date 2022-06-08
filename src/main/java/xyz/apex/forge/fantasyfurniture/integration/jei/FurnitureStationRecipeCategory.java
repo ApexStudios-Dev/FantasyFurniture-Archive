@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -8,8 +8,8 @@ import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
@@ -39,13 +39,7 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	}
 
 	@Override
-	public String getTitle()
-	{
-		return getTitleAsTextComponent().getString();
-	}
-
-	@Override
-	public ITextComponent getTitleAsTextComponent()
+	public Component getTitle()
 	{
 		return FurnitureStation.BLOCK.asBlock().getName();
 	}
@@ -75,7 +69,7 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	}
 
 	@Override
-	public void draw(FurnitureStationRecipes recipe, MatrixStack pose, double mouseX, double mouseY)
+	public void draw(FurnitureStationRecipes recipe, PoseStack pose, double mouseX, double mouseY)
 	{
 		recipe.draw(pose, background);
 	}

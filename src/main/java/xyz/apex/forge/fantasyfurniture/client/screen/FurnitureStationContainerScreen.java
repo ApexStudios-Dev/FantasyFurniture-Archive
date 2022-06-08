@@ -1,50 +1,48 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import org.apache.commons.lang3.StringUtils;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.IItemRenderProperties;
 
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
+import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public final class FurnitureStationContainerScreen extends ContainerScreen<FurnitureStationContainer>
+public final class FurnitureStationContainerScreen extends AbstractContainerScreen<FurnitureStationContainer>
 {
 	public static final ResourceLocation TEXTURE = FFRegistry.getInstance().id("textures/gui/container/furniture_station.png");
 
@@ -57,12 +55,12 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	private int startIndex = 0;
 	private boolean scrolling = false;
 
-	@Nullable private TextFieldWidget searchBox;
+	@Nullable private EditBox searchBox;
 	private boolean focusSearchBoxNextTick = false;
 	private int currentSearchSyntaxColor = 0xffffff;
 	private boolean changeSearchSyntaxColor = true;
 
-	public FurnitureStationContainerScreen(FurnitureStationContainer container, PlayerInventory playerInventory, ITextComponent title)
+	public FurnitureStationContainerScreen(FurnitureStationContainer container, Inventory playerInventory, Component title)
 	{
 		super(container, playerInventory, title);
 	}
@@ -83,17 +81,17 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		startIndex = 0;
 		scrollOffset = 0F;
 
-		String text = searchBox == null ? "" : searchBox.getValue();
+		var text = searchBox == null ? "" : searchBox.getValue();
 
-		int s = 15 + (16 * 3) + 10;
-		int e = imageWidth - 12;
+		var s = 15 + (16 * 3) + 10;
+		var e = imageWidth - 12;
 
-		int w = e - s;
-		int h = 16;
-		int x = leftPos + s;
-		int y = topPos + titleLabelY + font.lineHeight + 6;
+		var w = e - s;
+		var h = 16;
+		var x = leftPos + s;
+		var y = topPos + titleLabelY + font.lineHeight + 6;
 
-		searchBox = addButton(new TextFieldWidget(font, x, y, w, h, new TranslationTextComponent("gui.recipebook.search_hint")));
+		searchBox = addWidget(new EditBox(font, x, y, w, h, new TranslatableComponent("gui.recipebook.search_hint")));
 		searchBox.setMaxLength(50);
 		searchBox.setBordered(true);
 		searchBox.setVisible(true);
@@ -103,13 +101,13 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	}
 
 	@Override
-	public void tick()
+	public void containerTick()
 	{
 		if(searchBox != null)
 		{
-			Slot claySlot = menu.getClaySlot();
-			Slot woodSlot = menu.getWoodSlot();
-			Slot stoneSlot = menu.getStoneSlot();
+			var claySlot = menu.getClaySlot();
+			var woodSlot = menu.getWoodSlot();
+			var stoneSlot = menu.getStoneSlot();
 
 			if(!claySlot.hasItem() || !woodSlot.hasItem() || !stoneSlot.hasItem())
 			{
@@ -149,13 +147,13 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	}
 
 	@Override
-	public void render(MatrixStack pose, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack pose, int mouseX, int mouseY, float partialTicks)
 	{
 		renderBackground(pose);
 		super.render(pose, mouseX, mouseY, partialTicks);
 
 		if(searchBox != null && searchBox.isVisible() && !searchBox.isFocused() && searchBox.getValue().isEmpty())
-			drawString(pose, font, searchBox.getMessage().copy().withStyle(TextFormatting.GRAY, TextFormatting.ITALIC), searchBox.x + 2, searchBox.y + (font.lineHeight / 2), searchBox.getFGColor());
+			drawString(pose, font, searchBox.getMessage().copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), searchBox.x + 2, searchBox.y + (font.lineHeight / 2), searchBox.getFGColor());
 
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);
@@ -166,20 +164,20 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			{
 				if(searchBox.isMouseOver(mouseX, mouseY))
 				{
-					renderWrappedToolTip(pose, Arrays.asList(
-							new StringTextComponent("'")
-									.append(new StringTextComponent("@")
-											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
+					renderComponentTooltip(pose, Arrays.asList(
+							new TextComponent("'")
+									.append(new TextComponent("@")
+											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 									.append("' -> Search by ")
-									.append(new StringTextComponent("Mod ID")
-											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC)),
+									.append(new TextComponent("Mod ID")
+											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC)),
 
-							new StringTextComponent("'")
-									.append(new StringTextComponent("#")
-											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
+							new TextComponent("'")
+									.append(new TextComponent("#")
+											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 									.append("' -> Search by ")
-									.append(new StringTextComponent("ItemTag")
-											.withStyle(TextFormatting.AQUA, TextFormatting.ITALIC))
+									.append(new TextComponent("ItemTag")
+											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 
 							/*StringTextComponent.EMPTY,
 
@@ -210,15 +208,15 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	}
 
 	@Override
-	protected void renderBg(MatrixStack pose, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack pose, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1F, 1F, 1F, 1F);
-		getMinecraft().getTextureManager().bind(TEXTURE);
-		int i = (width - imageWidth) / 2;
-		int j = (height - imageHeight) / 2;
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		RenderSystem.setShaderTexture(0, TEXTURE);
+		var i = (width - imageWidth) / 2;
+		var j = (height - imageHeight) / 2;
 		blit(pose, i, j, 0, 0, imageWidth, imageHeight);
 
-		int k = (int) (57F * scrollOffset);
+		var k = (int) (57F * scrollOffset);
 		blit(pose, i + 127, j + 45 + k, 194 + (scrollbarActive() ? 0 : 12), 0, 12, 15);
 	}
 
@@ -248,10 +246,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 
 		if(!menu.getResults().isEmpty())
 		{
-			int x = leftPos + 128;
-			int y = topPos + 46;
-			int w = 12;
-			int h = 71;
+			var x = leftPos + 128;
+			var y = topPos + 46;
+			var w = 12;
+			var h = 71;
 
 			if(mouseX >= x && mouseY >= y && mouseX < x + w && mouseY < y + h)
 			{
@@ -266,18 +264,18 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	@Override
 	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY)
 	{
-		List<ItemStack> results = menu.getResults();
-		int size = results.size();
+		var results = menu.getResults();
+		var size = results.size();
 
 		if(scrolling && scrollbarActive())
 		{
-			int i = topPos + 44;
-			int j = i + 73;
+			var i = topPos + 44;
+			var j = i + 73;
 
-			int offscreenRows = (size + 6 - 1) / 4 - 4;
+			var offscreenRows = (size + 6 - 1) / 4 - 4;
 
 			scrollOffset = ((float) mouseY - (float) i - 7.5F) / ((float) (j - i) - 15F);
-			scrollOffset = MathHelper.clamp(scrollOffset, 0F, 1F);
+			scrollOffset = Mth.clamp(scrollOffset, 0F, 1F);
 			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 6;
 
 			return true;
@@ -291,13 +289,13 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	{
 		if(scrollbarActive())
 		{
-			List<ItemStack> results = menu.getResults();
-			int size = results.size();
+			var results = menu.getResults();
+			var size = results.size();
 
-			int offscreenRows = (size + 6 - 1) / 4 - 4;
+			var offscreenRows = (size + 6 - 1) / 4 - 4;
 
 			scrollOffset = (float) ((double) scrollOffset - scrollDelta / (double) offscreenRows);
-			scrollOffset = MathHelper.clamp(scrollOffset, 0F, 1F);
+			scrollOffset = Mth.clamp(scrollOffset, 0F, 1F);
 			startIndex = (int) ((double) (scrollOffset * (float) offscreenRows) + .5D) * 6;
 
 			return true;
@@ -355,16 +353,16 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 	}
 
 	@Override
-	public List<? extends IGuiEventListener> children()
+	public List<? extends GuiEventListener> children()
 	{
 		if(searchBox != null && !searchBox.active)
 		{
-			ArrayList<IGuiEventListener> kids = Lists.newArrayList(children);
+			var kids = Lists.newArrayList(super.children());
 			kids.remove(searchBox);
 			return kids;
 		}
 
-		return children;
+		return super.children();
 	}
 
 	private void updateSearchBoxSyntaxHighlighting()
@@ -372,28 +370,28 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(searchBox == null || !changeSearchSyntaxColor)
 			return;
 
-		String value = searchBox.getValue();
+		var value = searchBox.getValue();
 
 		if(StringUtils.isBlank(value))
 		{
-			int syntaxColor = 0xffffff;
+			var syntaxColor = 0xffffff;
 			searchBox.setTextColor(syntaxColor);
 			currentSearchSyntaxColor = syntaxColor;
 			return;
 		}
 
-		List<ItemStack> results = menu.getResults();
+		var results = menu.getResults();
 
 		if(!results.isEmpty())
 		{
-			for(int j = startIndex; j < results.size(); j++)
+			for(var j = startIndex; j < results.size(); j++)
 			{
-				ItemStack resultItem = results.get(j);
+				var resultItem = results.get(j);
 
 				if(isItemValid(resultItem))
 				{
 					changeSearchSyntaxColor = false;
-					int syntaxColor = DyeColor.GREEN.getTextColor();
+					var syntaxColor = DyeColor.GREEN.getTextColor();
 					searchBox.setTextColor(syntaxColor);
 					currentSearchSyntaxColor = syntaxColor;
 					return;
@@ -401,17 +399,17 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			}
 		}
 
-		int syntaxColor = DyeColor.RED.getTextColor();
+		var syntaxColor = DyeColor.RED.getTextColor();
 		searchBox.setTextColor(syntaxColor);
 		currentSearchSyntaxColor = syntaxColor;
 		changeSearchSyntaxColor = false;
 	}
 
-	private void renderSlotBackgrounds(MatrixStack pose, int mouseX, int mouseY)
+	private void renderSlotBackgrounds(PoseStack pose, int mouseX, int mouseY)
 	{
-		Slot claySlot = menu.getClaySlot();
-		Slot woodSlot = menu.getWoodSlot();
-		Slot stoneSlot = menu.getStoneSlot();
+		var claySlot = menu.getClaySlot();
+		var woodSlot = menu.getWoodSlot();
+		var stoneSlot = menu.getStoneSlot();
 
 		clayIndex = renderSlotBackground(claySlot, FurnitureStation.CLAY, pose, mouseX, mouseY, clayIndex);
 		woodIndex = renderSlotBackground(woodSlot, FurnitureStation.WOOD, pose, mouseX, mouseY, woodIndex);
@@ -423,13 +421,13 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			cycleCounter = 0;
 	}
 
-	private int renderSlotBackground(Slot slot, ITag.INamedTag<Item> backgroundTag, MatrixStack pose, int mouseX, int mouseY, int counter)
+	private int renderSlotBackground(Slot slot, Tag.Named<Item> backgroundTag, PoseStack pose, int mouseX, int mouseY, int counter)
 	{
-		int index  = counter;
+		var index  = counter;
 
 		if(!slot.hasItem())
 		{
-			List<Item> values = backgroundTag.getValues();
+			var values = backgroundTag.getValues();
 
 			if(cycleCounter == 125)
 			{
@@ -439,27 +437,25 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 					index = 0;
 			}
 
-			int x = leftPos + slot.x;
-			int y = topPos + slot.y;
+			var x = leftPos + slot.x;
+			var y = topPos + slot.y;
 
-			Item item = values.get(index);
-			ItemStack stack = item.getDefaultInstance();
-
-			FontRenderer stackFont = item.getFontRenderer(stack);
-			stackFont = stackFont == null ? font : stackFont;
+			var item = values.get(index);
+			var stack = item.getDefaultInstance();
+			var stackFont = getItemFont(stack, () -> font);
 
 			renderTranslucentItem(stack, x, y);
 			itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y);
 
 			// TODO: Maybe this should be a config?
 			//  Show tooltip theres more than 1 valid input item
-			if(/*backgroundTag.getValues().size() > 1 &&*/ minecraft.player.inventory.getCarried().isEmpty())
+			if(/*backgroundTag.getValues().size() > 1 &&*/ menu.getCarried().isEmpty())
 			{
 				if(mouseX >= x && mouseY >= y && mouseX < x + 16 && mouseY < y + 16)
 				{
-					ITextComponent name = stack.getHoverName();
-					ITextComponent accepts = FurnitureStation.buildAcceptsAnyComponent(backgroundTag);
-					renderWrappedToolTip(pose, Lists.newArrayList(name, accepts), mouseX, mouseY, stackFont);
+					var name = stack.getHoverName();
+					var accepts = FurnitureStation.buildAcceptsAnyComponent(backgroundTag);
+					renderComponentToolTip(pose, Lists.newArrayList(name, accepts), mouseX, mouseY, stackFont);
 				}
 			}
 		}
@@ -477,26 +473,26 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(!searchBox.isVisible() || !searchBox.active)
 			return true;
 
-		String value = searchBox.getValue();
+		var value = searchBox.getValue();
 
 		if(StringUtils.isBlank(value))
 			return true;
 
-		String[] values = value.split("\\s+");
-		Item item = stack.getItem();
-		Set<ResourceLocation> itemTagNames = item.getTags();
-		String displayName = stack.getHoverName().getString();
+		var values = value.split("\\s+");
+		var item = stack.getItem();
+		var itemTagNames = item.getTags();
+		var displayName = stack.getHoverName().getString();
 
-		for(String filter : values)
+		for(var filter : values)
 		{
 			if(filter.startsWith("#"))
 			{
-				String rawTagName = filter.substring(1);
+				var rawTagName = filter.substring(1);
 
-				for(ResourceLocation itemTagName : itemTagNames)
+				for(var itemTagName : itemTagNames)
 				{
-					String namespace = itemTagName.getNamespace();
-					String path = itemTagName.getPath();
+					var namespace = itemTagName.getNamespace();
+					var path = itemTagName.getPath();
 
 					if(StringUtils.containsIgnoreCase(namespace, rawTagName) || StringUtils.containsIgnoreCase(path, rawTagName))
 						return true;
@@ -504,8 +500,8 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 			}
 			else if(filter.startsWith("@"))
 			{
-				String raw = filter.substring(1);
-				String modId = item.getCreatorModId(stack);
+				var raw = filter.substring(1);
+				var modId = item.getCreatorModId(stack);
 
 				if(StringUtils.containsIgnoreCase(modId, raw))
 					return true;
@@ -520,41 +516,41 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		return false;
 	}
 
-	private void renderResults(MatrixStack pose, int mouseX, int mouseY)
+	private void renderResults(PoseStack pose, int mouseX, int mouseY)
 	{
-		List<ItemStack> results = menu.getResults();
+		var results = menu.getResults();
 
 		if(!results.isEmpty())
 		{
-			Minecraft mc = getMinecraft();
+			var mc = getMinecraft();
 
-			int centerX = (width - imageWidth) / 2;
-			int centerY = (height - imageHeight) / 2;
+			var centerX = (width - imageWidth) / 2;
+			var centerY = (height - imageHeight) / 2;
 
-			int yOffset = 0;
-			boolean canHover = true;
-			int maxY = centerY + 46 + (18 * 4);
+			var yOffset = 0;
+			var canHover = true;
+			var maxY = centerY + 46 + (18 * 4);
 
-			ItemStack selectedResult = menu.getResultSlot().getItem();
-			int visibleItemIndex = 0;
+			var selectedResult = menu.getResultSlot().getItem();
+			var visibleItemIndex = 0;
 
-			for(int j = startIndex; j < results.size(); j++)
+			for(var j = startIndex; j < results.size(); j++)
 			{
-				ItemStack resultItem = results.get(j);
+				var resultItem = results.get(j);
 
 				if(!isItemValid(resultItem))
 					continue;
 
-				int resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
-				int resultItemY = centerY + 46 + yOffset;
+				var resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
+				var resultItemY = centerY + 46 + yOffset;
 
 				if(visibleItemIndex % 6 == 5)
 					yOffset += 18;
 				if(resultItemY >= maxY)
 					break;
 
-				boolean isHovered = false;
-				float vOffset = 0F;
+				var isHovered = false;
+				var vOffset = 0F;
 
 				if(canHover)
 					isHovered = mouseX >= resultItemX && mouseY >= resultItemY && mouseX < resultItemX + 18 && mouseY < resultItemY + 18;
@@ -568,11 +564,10 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 				if(!selectedResult.isEmpty() && ItemStack.matches(selectedResult, resultItem))
 					vOffset = 18F;
 
-				mc.textureManager.bind(TEXTURE);
+				RenderSystem.setShaderTexture(0, TEXTURE);
 				blit(pose, resultItemX - 1, resultItemY - 1, 176F, vOffset, 18, 18, 256, 256);
 
-				FontRenderer stackFont = resultItem.getItem().getFontRenderer(resultItem);
-				stackFont = stackFont == null ? font : stackFont;
+				var stackFont = getItemFont(resultItem, () -> font);
 
 				itemRenderer.renderGuiItem(resultItem, resultItemX, resultItemY);
 				itemRenderer.renderGuiItemDecorations(stackFont, resultItem, resultItemX, resultItemY);
@@ -590,33 +585,33 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(mouseButton != GLFW_MOUSE_BUTTON_LEFT)
 			return false;
 
-		List<ItemStack> results = menu.getResults();
+		var results = menu.getResults();
 
 		if(!results.isEmpty())
 		{
-			ItemStack selectedItem = menu.getResultSlot().getItem();
+			var selectedItem = menu.getResultSlot().getItem();
 
-			int centerX = (width - imageWidth) / 2;
-			int centerY = (height - imageHeight) / 2;
+			var centerX = (width - imageWidth) / 2;
+			var centerY = (height - imageHeight) / 2;
 
-			int yOffset = 0;
-			int maxY = centerY + 46 + (18 * 4);
-			int visibleItemIndex = 0;
+			var yOffset = 0;
+			var maxY = centerY + 46 + (18 * 4);
+			var visibleItemIndex = 0;
 
-			for(int j = startIndex; j < results.size(); j++)
+			for(var j = startIndex; j < results.size(); j++)
 			{
-				ItemStack resultItem = results.get(j);
+				var resultItem = results.get(j);
 
 				if(!isItemValid(resultItem))
 					continue;
 
-				boolean isSelected = false;
+				var isSelected = false;
 
 				if(!selectedItem.isEmpty() && ItemStack.matches(selectedItem, resultItem))
 					isSelected = true;
 
-				int resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
-				int resultItemY = centerY + 46 + yOffset;
+				var resultItemX = centerX + 17 + 18 * (visibleItemIndex % 6);
+				var resultItemY = centerY + 46 + yOffset;
 
 				if(visibleItemIndex % 6 == 5)
 					yOffset += 18;
@@ -628,7 +623,7 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 					if(mouseX >= resultItemX && mouseY >= resultItemY && mouseX < resultItemX + 18 && mouseY < resultItemY + 18)
 					{
 						Minecraft mc = getMinecraft();
-						mc.getSoundManager().play(SimpleSound.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
+						mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
 						mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
 						return true;
 					}
@@ -646,57 +641,69 @@ public final class FurnitureStationContainerScreen extends ContainerScreen<Furni
 		if(stack.isEmpty())
 			return;
 
-		Minecraft mc = getMinecraft();
-		IBakedModel model = itemRenderer.getModel(stack, null, null);
+		var mc = getMinecraft();
+		var model = itemRenderer.getModel(stack, null, null, 0);
 
-		RenderSystem.pushMatrix();
+		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+		mc.textureManager.getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
 
-		mc.textureManager.bind(AtlasTexture.LOCATION_BLOCKS);
-		mc.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS).setFilter(false, false);
-
-		RenderSystem.enableRescaleNormal();
-		RenderSystem.enableAlphaTest();
-
-		RenderSystem.defaultAlphaFunc();
 		RenderSystem.enableBlend();
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
-		RenderSystem.color4f(1F, 1F, 1F, 1F);
-		RenderSystem.translatef((float) x, (float) y, 100F + getBlitOffset());
-		RenderSystem.translatef(8F, 8F, 0F);
-		RenderSystem.scalef(1F, -1F, 1F);
-		RenderSystem.scalef(16F, 16F, 16F);
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-		MatrixStack pose = new MatrixStack();
-		IRenderTypeBuffer.Impl buffer = mc.renderBuffers().bufferSource();
-		boolean flag = !model.usesBlockLight();
+		var poseStack = RenderSystem.getModelViewStack();
+		poseStack.pushPose();
+		poseStack.translate(x, y, 100D + getBlitOffset());
+		poseStack.translate(8D, 8D, 0D);
+		poseStack.scale(1F, -1F, 1F);
+		poseStack.scale(16F, 16F, 16F);
+		RenderSystem.applyModelViewMatrix();
+
+		var pose = new PoseStack();
+		var buffer = mc.renderBuffers().bufferSource();
+		var flag = !model.usesBlockLight();
 
 		if(flag)
-			RenderHelper.setupForFlatItems();
+			Lighting.setupForFlatItems();
 
-		int color = 15728880;
-		int overlay = OverlayTexture.NO_OVERLAY;
+		var color = 15728880;
+		var overlay = OverlayTexture.NO_OVERLAY;
 
 		if(flag)
 			color = (191 << 24) | 0xf000f0;
 		else
 			overlay = OverlayTexture.pack(.45F, false);
 
-		itemRenderer.render(stack, ItemCameraTransforms.TransformType.GUI, false, pose, buffer, color, overlay, model);
+		itemRenderer.render(stack, ItemTransforms.TransformType.GUI, false, pose, buffer, color, overlay, model);
 		buffer.endBatch();
 
 		RenderSystem.enableDepthTest();
 
 		if(flag)
-			RenderHelper.setupFor3DItems();
+			Lighting.setupFor3DItems();
 
-		RenderSystem.disableAlphaTest();
-		RenderSystem.disableRescaleNormal();
-		RenderSystem.popMatrix();
+		poseStack.popPose();
+		RenderSystem.applyModelViewMatrix();
 	}
 
 	private boolean scrollbarActive()
 	{
 		return menu.getResults().size() > 6 * 4;
+	}
+
+	public static Font getItemFont(ItemStack stack, NonnullSupplier<Font> defaultFont)
+	{
+		var renderPropertiesInternal = stack.getItem().getRenderPropertiesInternal();
+
+		if(renderPropertiesInternal instanceof IItemRenderProperties properties)
+		{
+			var font = properties.getFont(stack);
+
+			if(font != null)
+				return font;
+		}
+
+		return defaultFont.get();
 	}
 }

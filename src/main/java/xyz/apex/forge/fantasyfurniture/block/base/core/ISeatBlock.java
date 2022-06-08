@@ -1,18 +1,17 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
 
@@ -22,22 +21,22 @@ public interface ISeatBlock
 
 	String getOccupiedTranslationKey();
 
-	default IFormattableTextComponent getOccupiedTranslation()
+	default MutableComponent getOccupiedTranslation()
 	{
-		return new TranslationTextComponent(getOccupiedTranslationKey());
+		return new TranslatableComponent(getOccupiedTranslationKey());
 	}
 
-	default ActionResultType useSeatBlock(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+	default InteractionResult useSeatBlock(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
 	{
 		if(level.isClientSide)
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 
-		BlockPos sitPos = getSeatSitPos(blockState, pos);
+		var sitPos = getSeatSitPos(blockState, pos);
 
 		if(isSeatOccupied(level, sitPos, player, this))
 		{
 			player.displayClientMessage(getOccupiedTranslation(), true);
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
 		return trySitInSeat(level, pos, player);
@@ -53,43 +52,43 @@ public interface ISeatBlock
 		return pos;
 	}
 
-	default AxisAlignedBB getSeatOccupiedArea(BlockState blockState, BlockPos pos)
+	default AABB getSeatOccupiedArea(BlockState blockState, BlockPos pos)
 	{
-		return new AxisAlignedBB(pos).inflate(0D, 1D, 0D);
+		return new AABB(pos).inflate(0D, 1D, 0D);
 	}
 
-	default ActionResultType trySitInSeat(World level, BlockPos pos, PlayerEntity player)
+	default InteractionResult trySitInSeat(Level level, BlockPos pos, Player player)
 	{
-		BlockState blockState = level.getBlockState(pos);
-		BlockPos sitPos = getSeatSitPos(blockState, pos);
+		var blockState = level.getBlockState(pos);
+		var sitPos = getSeatSitPos(blockState, pos);
 
 		if(SeatEntity.create(level, sitPos, this, player))
 		{
 			setSeatOccupied(level, pos, true);
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
-	default void setSeatOccupied(World level, BlockPos pos, BlockState blockState, boolean occupied)
+	default void setSeatOccupied(Level level, BlockPos pos, BlockState blockState, boolean occupied)
 	{
 		level.setBlock(pos, blockState.setValue(OCCUPIED, occupied), 3);
 	}
 
-	static void setSeatOccupied(World level, BlockPos pos, boolean occupied)
+	static void setSeatOccupied(Level level, BlockPos pos, boolean occupied)
 	{
-		BlockState blockState = level.getBlockState(pos);
-		Block block = blockState.getBlock();
+		var blockState = level.getBlockState(pos);
+		var block = blockState.getBlock();
 
-		if(block instanceof ISeatBlock)
-			((ISeatBlock) block).setSeatOccupied(level, pos, blockState, occupied);
+		if(block instanceof ISeatBlock seat)
+			seat.setSeatOccupied(level, pos, blockState, occupied);
 	}
 
-	static boolean isSeatOccupied(World level, BlockPos pos, PlayerEntity sitter, ISeatBlock seatBlock)
+	static boolean isSeatOccupied(Level level, BlockPos pos, Player sitter, ISeatBlock seatBlock)
 	{
-		BlockState blockState = level.getBlockState(pos);
-		BlockPos seatPos = seatBlock.getSeatSitPos(blockState, pos);
+		var blockState = level.getBlockState(pos);
+		var seatPos = seatBlock.getSeatSitPos(blockState, pos);
 		return level.getBlockState(seatPos).getOptionalValue(OCCUPIED).orElse(false);
 		/*BlockState blockState = level.getBlockState(pos);
 		AxisAlignedBB sitArea = seatBlock.getSeatOccupiedArea(blockState, pos);

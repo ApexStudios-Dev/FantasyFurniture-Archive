@@ -2,8 +2,8 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
@@ -22,7 +22,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 	private static boolean bootstrap = false;
 
-	public static final ItemGroup MOD_ITEM_GROUP = new ModItemGroup();
+	public static final CreativeModeTab MOD_ITEM_GROUP = new ModItemGroup();
 
 	private FFRegistry()
 	{
@@ -66,7 +66,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		return REGISTRY.get();
 	}
 
-	public static final class ModItemGroup extends ItemGroup
+	public static final class ModItemGroup extends CreativeModeTab
 	{
 		private ModItemGroup()
 		{

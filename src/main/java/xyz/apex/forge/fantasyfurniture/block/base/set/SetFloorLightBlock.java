@@ -1,14 +1,14 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -29,13 +29,13 @@ public class SetFloorLightBlock extends WaterLoggedMultiBlock
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState blockState)
+	public RenderShape getRenderShape(BlockState blockState)
 	{
-		return pattern.isOrigin(blockState) ? BlockRenderType.MODEL : BlockRenderType.INVISIBLE;
+		return pattern.isOrigin(blockState) ? RenderShape.MODEL : RenderShape.INVISIBLE;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(SIDE);
 		super.createBlockStateDefinition(builder);
@@ -43,13 +43,13 @@ public class SetFloorLightBlock extends WaterLoggedMultiBlock
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void animateTick(BlockState blockState, World level, BlockPos pos, Random rng)
+	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
 	{
 		if(!blockState.getValue(WATERLOGGED) && blockState.getValue(SIDE) == Side.TOP)
 		{
-			double x = pos.getX() + .5D;
-			double y = pos.getY() + .5D + .34D;
-			double z = pos.getZ() + .5D;
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .5D + .34D;
+			var z = pos.getZ() + .5D;
 
 			onLightParticle(level, pos, blockState, x + .27D, y, z, rng);
 			onLightParticle(level, pos, blockState, x - .27D, y, z, rng);
@@ -58,13 +58,13 @@ public class SetFloorLightBlock extends WaterLoggedMultiBlock
 		}
 	}
 
-	protected void onLightParticle(World level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
 	{
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
 	}
 
-	public enum Side implements IStringSerializable
+	public enum Side implements StringRepresentable
 	{
 		TOP("top"),
 		BOTTOM("bottom");

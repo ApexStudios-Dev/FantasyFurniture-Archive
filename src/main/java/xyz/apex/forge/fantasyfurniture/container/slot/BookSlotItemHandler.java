@@ -1,9 +1,8 @@
 package xyz.apex.forge.fantasyfurniture.container.slot;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -19,12 +18,10 @@ public final class BookSlotItemHandler extends SlotItemHandler
 	@Override
 	public boolean mayPlace(@Nonnull ItemStack stack)
 	{
-		Item item = stack.getItem();
-
-		if(item.is(ItemTags.LECTERN_BOOKS))
+		if(stack.is(ItemTags.LECTERN_BOOKS))
 			return true;
-		if(item == Items.BOOK)
+		if(stack.is(Items.BOOK))
 			return true;
-		return item == Items.ENCHANTED_BOOK;
+		return stack.is(Items.ENCHANTED_BOOK);
 	}
 }

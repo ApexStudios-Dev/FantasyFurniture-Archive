@@ -1,67 +1,68 @@
 package xyz.apex.forge.fantasyfurniture.block.entity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import xyz.apex.forge.apexcore.lib.block.entity.BaseBlockEntity;
-import xyz.apex.forge.apexcore.lib.util.INameableMutable;
+import xyz.apex.forge.apexcore.lib.util.NameableMutable;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import javax.annotation.Nullable;
 
-public final class FurnitureStationBlockEntity extends BaseBlockEntity implements INamedContainerProvider, INameableMutable
+public final class FurnitureStationBlockEntity extends BaseBlockEntity implements MenuProvider, NameableMutable
 {
 	public static final String NBT_CUSTOM_NAME = InventoryBlockEntity.NBT_CUSTOM_NAME;
 
-	@Nullable private ITextComponent customName = null;
+	@Nullable private Component customName = null;
 
-	public FurnitureStationBlockEntity(TileEntityType<?> blockEntityType)
+	public FurnitureStationBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState blockState)
 	{
-		super(blockEntityType);
+		super(blockEntityType, pos, blockState);
 	}
 
 	@Override
-	public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player)
+	public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player)
 	{
-		World level = this.level == null ? player.level : this.level;
-		return new FurnitureStationContainer(FurnitureStation.CONTAINER.asContainerType(), windowId, playerInventory, IWorldPosCallable.create(level, worldPosition));
+		var level = this.level == null ? player.level : this.level;
+		return new FurnitureStationContainer(FurnitureStation.CONTAINER.asMenuType(), windowId, playerInventory, ContainerLevelAccess.create(level, worldPosition));
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent customName)
+	public void setCustomName(@Nullable Component customName)
 	{
 		this.customName = customName;
 	}
 
 	@Override
-	public void load(BlockState blockState, CompoundNBT tagCompound)
+	public void load(CompoundTag tagCompound)
 	{
-		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Tag.TAG_STRING))
 		{
-			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
-			customName = ITextComponent.Serializer.fromJson(customNameJson);
+			var customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
-		super.load(blockState, tagCompound);
+		super.load(tagCompound);
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tagCompound)
+	public CompoundTag save(CompoundTag tagCompound)
 	{
 		if(customName != null)
 		{
-			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			var customNameJson = TextComponent.Serializer.toJson(customName);
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
@@ -70,29 +71,29 @@ public final class FurnitureStationBlockEntity extends BaseBlockEntity implement
 
 	@Nullable
 	@Override
-	public ITextComponent getCustomName()
+	public Component getCustomName()
 	{
 		return customName;
 	}
 
 	@Override
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
 		return customName == null ? getName() : customName;
 	}
 
 	@Override
-	public ITextComponent getName()
+	public Component getName()
 	{
-		return new TranslationTextComponent(getBlockState().getBlock().getDescriptionId());
+		return new TranslatableComponent(getBlockState().getBlock().getDescriptionId());
 	}
 
 	@Override
-	protected CompoundNBT writeUpdateTag(CompoundNBT tagCompound)
+	protected CompoundTag writeUpdateTag(CompoundTag tagCompound)
 	{
 		if(customName != null)
 		{
-			String customNameJson = ITextComponent.Serializer.toJson(customName);
+			var customNameJson = TextComponent.Serializer.toJson(customName);
 			tagCompound.putString(NBT_CUSTOM_NAME, customNameJson);
 		}
 
@@ -100,12 +101,12 @@ public final class FurnitureStationBlockEntity extends BaseBlockEntity implement
 	}
 
 	@Override
-	protected void readeUpdateTag(CompoundNBT tagCompound)
+	protected void readeUpdateTag(CompoundTag tagCompound)
 	{
-		if(tagCompound.contains(NBT_CUSTOM_NAME, Constants.NBT.TAG_STRING))
+		if(tagCompound.contains(NBT_CUSTOM_NAME, Tag.TAG_STRING))
 		{
-			String customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
-			customName = ITextComponent.Serializer.fromJson(customNameJson);
+			var customNameJson = tagCompound.getString(NBT_CUSTOM_NAME);
+			customName = TextComponent.Serializer.fromJson(customNameJson);
 		}
 
 		super.readeUpdateTag(tagCompound);

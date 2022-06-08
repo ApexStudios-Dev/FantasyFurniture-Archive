@@ -6,23 +6,22 @@ import com.google.common.collect.Sets;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.SmithingRecipeBuilder;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.tags.ITag;
+import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -36,8 +35,8 @@ import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.net.SyncFurnitureStationResultsPacket;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.entry.ContainerEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
+import xyz.apex.forge.utility.registrator.entry.MenuEntry;
 import xyz.apex.java.utility.Lazy;
 
 import java.util.Collections;
@@ -60,30 +59,30 @@ public final class FurnitureStation
 	public static final BlockEntry<FurnitureStationBlock> BLOCK = block();
 	public static final ItemEntry<BlockItem> BLOCK_ITEM = Registrations.blockItem(BLOCK);
 	public static final BlockEntityEntry<FurnitureStationBlockEntity> BLOCK_ENTITY = Registrations.blockEntity(BLOCK);
-	public static final ContainerEntry<FurnitureStationContainer> CONTAINER = container();
+	public static final MenuEntry<FurnitureStationContainer> CONTAINER = container();
 
 	private static final String TXT_ACCEPTS_ANY = "text." + FantasyFurniture.ID + ".recipe.accepts_any";
 	private static final String TXT_ACCEPTS_ANY_ARG = TXT_ACCEPTS_ANY + ".arg";
 
 	// items with this tag can be crafted from the furniture station
-	public static final ITag.INamedTag<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
+	public static final Tag.Named<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
 
-	public static final ITag.INamedTag<Item> CLAY = REGISTRY.forgeItemTagOptional("clay_ball", Sets.newHashSet(() -> Items.CLAY_BALL));
-	public static final ITag.INamedTag<Item> WOOD = ItemTags.PLANKS;
-	public static final ITag.INamedTag<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
+	public static final Tag.Named<Item> CLAY = REGISTRY.forgeItemTagOptional("clay_ball", Sets.newHashSet(() -> Items.CLAY_BALL));
+	public static final Tag.Named<Item> WOOD = ItemTags.PLANKS;
+	public static final Tag.Named<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
 	private static List<ItemStack> customCraftingResults = Lists.newArrayList();
 	private static final Lazy<List<ItemStack>> preCachedResults = Lazy.of(() -> {
 		FantasyFurniture.LOGGER.info("Precaching Furniture Station Crafting Results...");
-		List<ItemStack> results = Lists.newArrayList();
+		var results = Lists.<ItemStack>newArrayList();
 		customCraftingResults.stream().filter(stack -> !stack.isEmpty()).forEach(results::add);
 
-		for(Item item : CRAFTABLE.getValues())
+		for(var item : CRAFTABLE.getValues())
 		{
-			boolean flag = false;
+			var flag = false;
 
-			for(ItemStack result : results)
+			for(var result : results)
 			{
-				if(result.getItem() == item)
+				if(result.is(item))
 				{
 					flag = true;
 					break;
@@ -101,17 +100,17 @@ public final class FurnitureStation
 
 	public static boolean isValidClay(ItemStack stack)
 	{
-		return stack.getItem().is(CLAY);
+		return stack.is(CLAY);
 	}
 
 	public static boolean isValidWood(ItemStack stack)
 	{
-		return stack.getItem().is(WOOD);
+		return stack.is(WOOD);
 	}
 
 	public static boolean isValidStone(ItemStack stack)
 	{
-		return stack.getItem().is(STONE);
+		return stack.is(STONE);
 	}
 
 	public static List<ItemStack> getCraftingResults()
@@ -122,12 +121,12 @@ public final class FurnitureStation
 		return preCachedResults.get();
 	}
 
-	public static ITextComponent buildAcceptsAnyComponent(ITag.INamedTag<Item> tag)
+	public static Component buildAcceptsAnyComponent(Tag.Named<Item> tag)
 	{
-		return new TranslationTextComponent(TXT_ACCEPTS_ANY, new StringTextComponent(tag.getName().toString())
-				.withStyle(TextFormatting.ITALIC)
+		return new TranslatableComponent(TXT_ACCEPTS_ANY, new TextComponent(tag.getName().toString())
+				.withStyle(ChatFormatting.ITALIC)
 		)
-				.withStyle(TextFormatting.GRAY)
+				.withStyle(ChatFormatting.GRAY)
 		;
 	}
 
@@ -146,31 +145,26 @@ public final class FurnitureStation
 	{
 		REGISTRY.addDataGenerator(ITEM_TAGS, provider -> provider.tag(CRAFTABLE));
 
-		String acceptsAnyEnglish = "Accepts Any: %s";
+		var acceptsAnyEnglish = "Accepts Any: %s";
 
 		REGISTRY.addDataGenerator(LANG, provider -> provider.add(TXT_ACCEPTS_ANY, acceptsAnyEnglish));
 		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> provider.add(EN_GB, TXT_ACCEPTS_ANY, acceptsAnyEnglish));
 
 		EventBusHelper.addListener(PlayerEvent.PlayerLoggedInEvent.class, event -> {
-			PlayerEntity player = event.getPlayer();
-
-			if(player instanceof ServerPlayerEntity)
+			if(event.getPlayer() instanceof ServerPlayer player)
 			{
 				FantasyFurniture.LOGGER.info("Syncing FurnitureStation results to client ('{}')...", player.getScoreboardName());
-				FantasyFurniture.NETWORK.sendTo(new SyncFurnitureStationResultsPacket(), (ServerPlayerEntity) player);
+				FantasyFurniture.NETWORK.sendTo(new SyncFurnitureStationResultsPacket(), player);
 			}
 		});
 	}
 
 	private static int compareItemStacks(ItemStack left, ItemStack right)
 	{
-		Item leftItem = left.getItem();
-		Item rightItem = right.getItem();
-
-		for(FurnitureSet furnitureSet : FurnitureSet.values())
+		for(var furnitureSet : FurnitureSet.values())
 		{
-			boolean leftHasTag = leftItem.is(furnitureSet.itemGroupCategoryTag);
-			boolean rightHasTag = rightItem.is(furnitureSet.itemGroupCategoryTag);
+			var leftHasTag = left.is(furnitureSet.itemGroupCategoryTag);
+			var rightHasTag = right.is(furnitureSet.itemGroupCategoryTag);
 
 			if(leftHasTag && !rightHasTag)
 				return -1;
@@ -195,10 +189,10 @@ public final class FurnitureStation
 
 				.blockState(Registrations::horizontalBlock)
 
-				.recipe((ctx, provider) -> SmithingRecipeBuilder
+				.recipe((ctx, provider) -> UpgradeRecipeBuilder
 						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(Tags.Items.LEATHER), ctx.get().asItem())
-						.unlocks("has_crafting_table", RegistrateRecipeProvider.hasItem(Items.CRAFTING_TABLE))
-						.unlocks("has_leather", RegistrateRecipeProvider.hasItem(Tags.Items.LEATHER))
+						.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
+						.unlocks("has_leather", RegistrateRecipeProvider.has(Tags.Items.LEATHER))
 						.save(provider, ctx.getId())
 				)
 
@@ -217,12 +211,12 @@ public final class FurnitureStation
 		.register();
 	}
 
-	private static ContainerEntry<FurnitureStationContainer> container()
+	private static MenuEntry<FurnitureStationContainer> container()
 	{
 		return REGISTRY
 				.container(
 						"furniture_station",
-						(containerType, windowId, playerInventory, buffer) -> new FurnitureStationContainer(containerType, windowId, playerInventory, IWorldPosCallable.NULL),
+						(containerType, windowId, playerInventory, buffer) -> new FurnitureStationContainer(containerType, windowId, playerInventory, ContainerLevelAccess.NULL),
 						() -> FurnitureStationContainerScreen::new
 				)
 		.register();

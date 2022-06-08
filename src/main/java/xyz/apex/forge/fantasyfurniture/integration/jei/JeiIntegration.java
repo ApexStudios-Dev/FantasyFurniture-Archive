@@ -2,13 +2,10 @@ package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.registration.*;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
@@ -16,8 +13,6 @@ import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Set;
 
 @JeiPlugin
 public final class JeiIntegration implements IModPlugin
@@ -35,16 +30,16 @@ public final class JeiIntegration implements IModPlugin
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration)
 	{
-		IJeiHelpers jei = registration.getJeiHelpers();
+		var jei = registration.getJeiHelpers();
 		registration.addRecipeCategories(new FurnitureStationRecipeCategory(jei));
 	}
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration)
 	{
-		IJeiHelpers jei = registration.getJeiHelpers();
-		List<ItemStack> results = FurnitureStation.getCraftingResults();
-		Set<FurnitureStationRecipes> recipes = Collections.singleton(new FurnitureStationRecipes(results, jei));
+		var jei = registration.getJeiHelpers();
+		var results = FurnitureStation.getCraftingResults();
+		var recipes = Collections.singleton(new FurnitureStationRecipes(results, jei));
 		registration.addRecipes(recipes, FURNITURE_STATION_RECIPES);
 	}
 
@@ -64,13 +59,13 @@ public final class JeiIntegration implements IModPlugin
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration)
 	{
-		FontRenderer font = Minecraft.getInstance().font;
+		var font = Minecraft.getInstance().font;
 		// x, y should match title location in screen class
-		int x = 6;
-		int y = 8;
-		int w = font.width(FurnitureStation.BLOCK.asBlock().getName());
-		int h = font.lineHeight;
-		int padding = 2;
+		var x = 6;
+		var y = 8;
+		var w = font.width(FurnitureStation.BLOCK.asBlock().getName());
+		var h = font.lineHeight;
+		var padding = 2;
 		registration.addRecipeClickArea(FurnitureStationContainerScreen.class, x - padding, y - padding, w + (padding * 2), h + (padding * 2), FURNITURE_STATION_RECIPES);
 	}
 

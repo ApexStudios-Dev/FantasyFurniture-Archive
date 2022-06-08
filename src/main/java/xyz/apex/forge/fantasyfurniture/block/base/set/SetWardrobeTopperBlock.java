@@ -1,15 +1,14 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedMultiBlock;
@@ -24,37 +23,36 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
 	{
 		// move to origin of topper block
-		BlockPos startPos = pos;
+		var startPos = pos;
 
 		if(!pattern.isOrigin(blockState))
 		{
-			int index = pattern.getIndex(blockState);
-			BlockPos localSpace = pattern.getLocalPositions().get(index);
+			var index = pattern.getIndex(blockState);
+			var localSpace = pattern.getLocalPositions().get(index);
 			startPos = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
 		}
 
 		// validate block below topper origin is a wardrobe block
-		BlockPos belowPos = startPos.below();
-		BlockState belowBlockState = level.getBlockState(belowPos);
-		Block belowBlock = belowBlockState.getBlock();
+		var belowPos = startPos.below();
+		var belowBlockState = level.getBlockState(belowPos);
+		var belowBlock = belowBlockState.getBlock();
 
-		if(belowBlock instanceof SetWardrobeBlock)
+		if(belowBlock instanceof SetWardrobeBlock wardrobeBlock)
 		{
 			// move to wardrobe origin block
-			SetWardrobeBlock wardrobeBlock = (SetWardrobeBlock) belowBlock;
-			MultiBlockPattern multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
-			int index = multiBlockPattern.getIndex(belowBlockState);
-			BlockPos localSpace = multiBlockPattern.getLocalPositions().get(index);
-			BlockPos origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
+			var multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
+			var index = multiBlockPattern.getIndex(belowBlockState);
+			var localSpace = multiBlockPattern.getLocalPositions().get(index);
+			var origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
 
 			// build new raytrace result
-			BlockRayTraceResult newResult = result.withPosition(origin).withDirection(player.getDirection());
+			var newResult = result.withPosition(origin).withDirection(player.getDirection());
 
 			// try again from wardrobe origin pov
-			BlockState originBlockState = level.getBlockState(origin);
+			var originBlockState = level.getBlockState(origin);
 			return originBlockState.use(level, player, hand, newResult);
 		}
 
@@ -64,33 +62,32 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	@Nullable
 	@Override
-	public INamedContainerProvider getMenuProvider(BlockState blockState, World level, BlockPos pos)
+	public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
 	{
 		// move to origin of topper block
-		BlockPos startPos = pos;
+		var startPos = pos;
 
 		if(!pattern.isOrigin(blockState))
 		{
-			int index = pattern.getIndex(blockState);
-			BlockPos localSpace = pattern.getLocalPositions().get(index);
+			var index = pattern.getIndex(blockState);
+			var localSpace = pattern.getLocalPositions().get(index);
 			startPos = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
 		}
 
 		// validate block below topper origin is a wardrobe block
-		BlockPos belowPos = startPos.below();
-		BlockState belowBlockState = level.getBlockState(belowPos);
-		Block belowBlock = belowBlockState.getBlock();
+		var belowPos = startPos.below();
+		var belowBlockState = level.getBlockState(belowPos);
+		var belowBlock = belowBlockState.getBlock();
 
-		if(belowBlock instanceof SetWardrobeBlock)
+		if(belowBlock instanceof SetWardrobeBlock wardrobeBlock)
 		{
-			SetWardrobeBlock wardrobeBlock = (SetWardrobeBlock) belowBlock;
-			MultiBlockPattern multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
-			int index = multiBlockPattern.getIndex(belowBlockState);
-			BlockPos localSpace = multiBlockPattern.getLocalPositions().get(index);
-			BlockPos origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
+			var multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
+			var index = multiBlockPattern.getIndex(belowBlockState);
+			var localSpace = multiBlockPattern.getLocalPositions().get(index);
+			var origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
 
 			// try again from wardrobe origin pov
-			BlockState originBlockState = level.getBlockState(origin);
+			var originBlockState = level.getBlockState(origin);
 			return originBlockState.getMenuProvider(level, origin);
 		}
 

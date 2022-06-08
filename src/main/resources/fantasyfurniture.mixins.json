@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"package": "${mod_base_package}.${mod_id}.mixin",
-	"compatibilityLevel": "JAVA_8",
+	"compatibilityLevel": "JAVA_16",
 	"refmap": "${mod_id}.refmap.json",
 	"mixins": [ ],
 	"client": [

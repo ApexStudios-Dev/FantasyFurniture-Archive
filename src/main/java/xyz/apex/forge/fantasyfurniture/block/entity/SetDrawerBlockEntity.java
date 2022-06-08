@@ -1,7 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.block.entity;
 
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.items.ItemStackHandler;
 
 import xyz.apex.forge.fantasyfurniture.container.SetDrawerContainer;
@@ -9,9 +11,9 @@ import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public final class SetDrawerBlockEntity extends InventoryBlockEntity<SetDrawerContainer>
 {
-	public SetDrawerBlockEntity(TileEntityType<? extends SetDrawerBlockEntity> blockEntityType)
+	public SetDrawerBlockEntity(BlockEntityType<? extends SetDrawerBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
 	{
-		super(blockEntityType, SetDrawerContainer::new);
+		super(blockEntityType, pos, blockState, SetDrawerContainer::new);
 	}
 
 	@Override
@@ -21,8 +23,8 @@ public final class SetDrawerBlockEntity extends InventoryBlockEntity<SetDrawerCo
 	}
 
 	@Override
-	protected ContainerType<SetDrawerContainer> getContainerType()
+	protected MenuType<SetDrawerContainer> getContainerType()
 	{
-		return FFElements.DRAWER_CONTAINER.asContainerType();
+		return FFElements.DRAWER_CONTAINER.asMenuType();
 	}
 }

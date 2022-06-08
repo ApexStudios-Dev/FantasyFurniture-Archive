@@ -1,14 +1,14 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.fantasyfurniture.container.SetDresserContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
 public final class SetDresserContainerScreen extends InventoryContainerScreen<SetDresserContainer>
 {
-	public SetDresserContainerScreen(SetDresserContainer menu, PlayerInventory playerInventory, ITextComponent titleComponent)
+	public SetDresserContainerScreen(SetDresserContainer menu, Inventory playerInventory, Component titleComponent)
 	{
 		super(menu, playerInventory, titleComponent, FFElements.MEDIUM_STORAGE_TEXTURE);
 	}

@@ -1,38 +1,36 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import org.apache.commons.lang3.ArrayUtils;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Optional;
 
 public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 {
@@ -47,9 +45,9 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	@Nullable
 	@Override
-	protected BlockState getPlacementState(BlockItemUseContext ctx, BlockState defaultBlockState)
+	protected BlockState getPlacementState(BlockPlaceContext ctx, BlockState defaultBlockState)
 	{
-		BlockState blockState = super.getPlacementState(ctx, defaultBlockState);
+		var blockState = super.getPlacementState(ctx, defaultBlockState);
 
 		if(blockState != null)
 			return blockState.setValue(FACING, ctx.getHorizontalDirection());
@@ -66,28 +64,28 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(OCCUPIED);
 		super.createBlockStateDefinition(builder);
 	}
 
 	@Override
-	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
 	{
 		if(level.isClientSide)
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 
-		BlockPos footPos = getBedFootPos(this, blockState, pos);
-		BlockState footBlockState = blockState;
+		var footPos = getBedFootPos(this, blockState, pos);
+		var footBlockState = blockState;
 
 		if(!footPos.equals(pos))
 			footBlockState = level.getBlockState(footPos);
 
 		if(!footBlockState.is(this))
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 
-		if(!canSetSpawn(level))
+		if(!net.minecraft.world.level.block.BedBlock.canSetSpawn(level))
 			return onBadBedSetSpawn(level, footBlockState, footPos, player, hand);
 		else if(footBlockState.getValue(OCCUPIED))
 			return onBedOccupied(level, footBlockState, footPos, player, hand);
@@ -96,13 +94,13 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	public void fallOn(World level, BlockPos pos, Entity entity, float dist)
+	public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float dist)
 	{
-		super.fallOn(level, pos, entity, dist * .5F);
+		super.fallOn(level, blockState, pos, entity, dist * .5F);
 	}
 
 	@Override
-	public void updateEntityAfterFallOn(IBlockReader level, Entity entity)
+	public void updateEntityAfterFallOn(BlockGetter level, Entity entity)
 	{
 		if(entity.isSuppressingBounce())
 			super.updateEntityAfterFallOn(level, entity);
@@ -111,72 +109,61 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	public boolean isBed(BlockState blockState, IBlockReader level, BlockPos pos, @Nullable Entity player)
+	public boolean isBed(BlockState blockState, BlockGetter level, BlockPos pos, @Nullable Entity player)
 	{
 		return blockState.is(this);
 	}
 
 	@Override
-	public void setBedOccupied(BlockState blockState, World level, BlockPos pos, LivingEntity sleeper, boolean occupied)
+	public void setBedOccupied(BlockState blockState, Level level, BlockPos pos, LivingEntity sleeper, boolean occupied)
 	{
-		BlockPos footPos = getBedFootPos(this, blockState, pos);
-		BlockState footBlockState = level.getBlockState(footPos);
+		var footPos = getBedFootPos(this, blockState, pos);
+		var footBlockState = level.getBlockState(footPos);
 
-		BlockPos headPos = footPos.relative(footBlockState.getValue(FACING));
-		BlockState headBlockState = level.getBlockState(headPos);
+		var headPos = footPos.relative(footBlockState.getValue(FACING));
+		var headBlockState = level.getBlockState(headPos);
 
 		super.setBedOccupied(footBlockState, level, footPos, sleeper, occupied);
 		super.setBedOccupied(headBlockState, level, headPos, sleeper, occupied);
 	}
 
 	@Override
-	public Optional<Vector3d> getBedSpawnPosition(EntityType<?> entityType, BlockState blockState, IWorldReader level, BlockPos pos, float orientation, @Nullable LivingEntity sleeper)
-	{
-		Optional<Vector3d> standUpPosition = findStandUpPosition(entityType, level, pos, orientation);
-
-		if(standUpPosition.isPresent())
-			return standUpPosition;
-
-		return super.getBedSpawnPosition(entityType, blockState, level, pos, orientation, sleeper);
-	}
-
-	@Override
-	public boolean isPathfindable(BlockState blockState, IBlockReader level, BlockPos pos, PathType pathType)
+	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos pos, PathComputationType pathType)
 	{
 		return false;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void onFixBedRotations(LivingEntity entity, MatrixStack pose)
+	public void onFixBedRotations(LivingEntity entity, PoseStack pose)
 	{
 	}
 
-	protected ActionResultType onBadBedSetSpawn(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)
+	protected InteractionResult onBadBedSetSpawn(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
 		level.removeBlock(pos, false);
-		level.explode(null, DamageSource.badRespawnPointExplosion(), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Explosion.Mode.DESTROY);
-		return ActionResultType.SUCCESS;
+		level.explode(null, DamageSource.badRespawnPointExplosion(), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Explosion.BlockInteraction.DESTROY);
+		return InteractionResult.SUCCESS;
 	}
 
-	protected ActionResultType onBedOccupied(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)
+	protected InteractionResult onBedOccupied(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
 		if(!kickVillagerOutOfBed(level, pos))
 			player.displayClientMessage(getOccupiedTranslation(), true);
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
-	protected ActionResultType onSleepInBed(World level, BlockState blockState, BlockPos pos, PlayerEntity player, Hand hand)
+	protected InteractionResult onSleepInBed(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
-		Direction facing = blockState.getValue(FACING);
-		BlockPos sleepPos = pos.relative(facing);
+		var facing = blockState.getValue(FACING);
+		var sleepPos = pos.relative(facing);
 
 		player.startSleepInBed(sleepPos).ifLeft(result -> {
 			if(result != null)
 				player.displayClientMessage(result.getMessage(), true);
 		});
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	public String getOccupiedTranslationKey()
@@ -184,14 +171,14 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		return getDescriptionId() + ".occupied";
 	}
 
-	public IFormattableTextComponent getOccupiedTranslation()
+	public Component getOccupiedTranslation()
 	{
-		return new TranslationTextComponent(getOccupiedTranslationKey());
+		return new TranslatableComponent(getOccupiedTranslationKey());
 	}
 
-	public static boolean kickVillagerOutOfBed(World level, BlockPos pos)
+	public static boolean kickVillagerOutOfBed(Level level, BlockPos pos)
 	{
-		List<VillagerEntity> villagersInBed = level.getEntities(EntityType.VILLAGER, new AxisAlignedBB(pos), LivingEntity::isSleeping);
+		var villagersInBed = level.getEntities(EntityType.VILLAGER, new AABB(pos), LivingEntity::isSleeping);
 
 		if(villagersInBed.isEmpty())
 			return false;
@@ -204,152 +191,28 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	public static void bounceUp(Entity entity)
 	{
-		Vector3d delta = entity.getDeltaMovement();
+		var delta = entity.getDeltaMovement();
 
 		if(delta.y < 0D)
 		{
-			double d = entity instanceof LivingEntity ? 1D : .8D;
+			var d = entity instanceof LivingEntity ? 1D : .8D;
 			entity.setDeltaMovement(delta.x, -delta.y * .66F * d, delta.z);
 		}
 	}
 
 	public static BlockPos getBedFootPos(BedBlock bed, BlockState blockState, BlockPos pos)
 	{
-		int footIndex = bed.getBedFootMultiBlockIndex(blockState);
-		MultiBlockPattern pattern = bed.getMultiBlockPattern();
-		int currentIndex = pattern.getIndex(blockState);
+		var footIndex = bed.getBedFootMultiBlockIndex(blockState);
+		var pattern = bed.getMultiBlockPattern();
+		var currentIndex = pattern.getIndex(blockState);
 
 		if(currentIndex == footIndex)
 			return pos;
 
-		List<BlockPos> localPositions = pattern.getLocalPositions();
-		BlockPos localSpace = localPositions.get(currentIndex);
-		BlockPos origin = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
-		BlockPos footLocalSPace = localPositions.get(footIndex);
+		var localPositions = pattern.getLocalPositions();
+		var localSpace = localPositions.get(currentIndex);
+		var origin = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
+		var footLocalSPace = localPositions.get(footIndex);
 		return pattern.getWorldSpaceFromLocalSpace(blockState, origin, footLocalSPace);
-	}
-
-	public static boolean canSetSpawn(World level)
-	{
-		return net.minecraft.block.BedBlock.canSetSpawn(level);
-	}
-
-	public static boolean isBedBlock(BlockState blockState)
-	{
-		Block block = blockState.getBlock();
-
-		if(block instanceof BedBlock || block instanceof net.minecraft.block.BedBlock)
-			return true;
-
-		return blockState.is(BlockTags.BEDS);
-	}
-
-	public static boolean isBunkBed(IBlockReader level, BlockPos pos)
-	{
-		return isBedBlock(level.getBlockState(pos.below())) || isBedBlock(level.getBlockState(pos.above()));
-	}
-
-	public static Optional<Vector3d> findStandUpPosition(EntityType<?> entityType, ICollisionReader level, BlockPos pos, float f)
-	{
-		Direction facing = level.getBlockState(pos).getValue(FACING);
-		Direction facingClockWise = facing.getClockWise();
-		Direction dir = facingClockWise.isFacingAngle(f) ? facingClockWise.getOpposite() : facingClockWise;
-
-		if(isBunkBed(level, pos))
-			return findBunkBedStandUpPosition(entityType, level, pos, facing, dir);
-		else
-		{
-			int[][] aint = bedStandUpOffsets(facing, dir);
-			Optional<Vector3d> optional = findStandUpPositionAtOffset(entityType, level, pos, aint, true);
-			return optional.isPresent() ? optional : findStandUpPositionAtOffset(entityType, level, pos, aint, false);
-		}
-	}
-
-	private static Optional<Vector3d> findBunkBedStandUpPosition(EntityType<?> entityType, ICollisionReader level, BlockPos pos, Direction dirA, Direction dirB)
-	{
-		int[][] aint = bedSurroundStandUpOffsets(dirA, dirB);
-		Optional<Vector3d> optional = findStandUpPositionAtOffset(entityType, level, pos, aint, true);
-
-		if(optional.isPresent())
-			return optional;
-		else
-		{
-			BlockPos below = pos.below();
-			Optional<Vector3d> belowOptional = findStandUpPositionAtOffset(entityType, level, below, aint, true);
-
-			if(belowOptional.isPresent())
-				return belowOptional;
-			else
-			{
-				int[][] aint1 = bedAboveStandUpOffsets(dirA);
-				Optional<Vector3d> optA = findStandUpPositionAtOffset(entityType, level, pos, aint1, true);
-
-				if(optA.isPresent())
-					return optA;
-				else
-				{
-					Optional<Vector3d> optB = findStandUpPositionAtOffset(entityType, level, pos, aint, false);
-
-					if(optB.isPresent())
-						return optB;
-					else
-					{
-						Optional<Vector3d> optC = findStandUpPositionAtOffset(entityType, level, below, aint, false);
-						return optC.isPresent() ? optC : findStandUpPositionAtOffset(entityType, level, pos, aint1, false);
-					}
-				}
-			}
-		}
-	}
-
-	private static Optional<Vector3d> findStandUpPositionAtOffset(EntityType<?> entityType, ICollisionReader level, BlockPos pos, int[][] ints, boolean flag)
-	{
-		BlockPos.Mutable posMutable = new BlockPos.Mutable();
-
-		for(int[] aint : ints)
-		{
-			posMutable.set(pos.getX() + aint[0], pos.getY(), pos.getZ() + aint[1]);
-			Vector3d vector3d = TransportationHelper.findSafeDismountLocation(entityType, level, posMutable, flag);
-
-			if(vector3d != null)
-				return Optional.of(vector3d);
-		}
-
-		return Optional.empty();
-	}
-
-	private static int[][] bedStandUpOffsets(Direction dirA, Direction dirB)
-	{
-		return ArrayUtils.addAll(bedSurroundStandUpOffsets(dirA, dirB), bedAboveStandUpOffsets(dirA));
-	}
-
-	private static int[][] bedSurroundStandUpOffsets(Direction dirA, Direction dirB)
-	{
-		int dirAStepX = dirA.getStepX();
-		int dirAStepZ = dirA.getStepZ();
-
-		int dirBStepX = dirB.getStepX();
-		int dirBStepZ = dirB.getStepZ();
-
-		return new int[][] {
-				{ dirBStepX, dirBStepZ },
-				{ dirBStepX - dirAStepX, dirBStepZ - dirAStepZ },
-				{ dirBStepX - dirAStepX * 2, dirBStepZ - dirAStepZ * 2 },
-				{ -dirAStepX * 2, -dirAStepZ * 2 },
-				{ -dirBStepX - dirAStepX * 2, -dirBStepZ - dirAStepZ * 2 },
-				{ -dirBStepX - dirAStepX, -dirBStepZ - dirAStepZ },
-				{ -dirBStepX, -dirBStepZ },
-				{ -dirBStepX + dirAStepX, -dirBStepZ + dirAStepZ },
-				{ dirAStepX, dirAStepZ },
-				{ dirBStepX + dirAStepX, dirBStepZ + dirAStepZ }
-		};
-	}
-
-	private static int[][] bedAboveStandUpOffsets(Direction dir)
-	{
-		return new int[][] {
-				{ 0, 0 },
-				{ -dir.getStepX(), -dir.getStepZ() }
-		};
 	}
 }

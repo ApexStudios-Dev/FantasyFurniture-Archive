@@ -1,13 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 
@@ -22,18 +20,18 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	@Nullable
 	@Override
-	protected BlockState getPlacementState(BlockItemUseContext ctx, BlockState defaultBlockState)
+	protected BlockState getPlacementState(BlockPlaceContext ctx, BlockState defaultBlockState)
 	{
-		BlockState blockState = super.getPlacementState(ctx, defaultBlockState);
+		var blockState = super.getPlacementState(ctx, defaultBlockState);
 
 		if(blockState != null)
 		{
-			World level = ctx.getLevel();
-			BlockPos pos = ctx.getClickedPos();
+			var level = ctx.getLevel();
+			var pos = ctx.getClickedPos();
 
-			for(Direction facing : ctx.getNearestLookingDirections())
+			for(var facing : ctx.getNearestLookingDirections())
 			{
-				Direction opposite = facing.getOpposite();
+				var opposite = facing.getOpposite();
 
 				if(canSupportPainting(level, pos, opposite))
 					return blockState.setValue(FACING, opposite);
@@ -44,7 +42,7 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 	}
 
 	@Override
-	public boolean canSurviveAdditional(IWorldReader level, BlockPos pos, BlockState blockState)
+	public boolean canSurviveAdditional(LevelReader level, BlockPos pos, BlockState blockState)
 	{
 		return canSupportPainting(level, pos);
 	}
@@ -55,9 +53,9 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 		return PushReaction.DESTROY;
 	}
 
-	public static boolean canSupportPainting(IBlockReader level, BlockPos pos)
+	public static boolean canSupportPainting(LevelReader level, BlockPos pos)
 	{
-		for(Direction facing : Direction.Plane.HORIZONTAL)
+		for(var facing : Direction.Plane.HORIZONTAL)
 		{
 			if(canSupportPainting(level, pos, facing))
 				return true;
@@ -66,7 +64,7 @@ public class PaintingMultiBlock extends SimpleFourWayWaterLoggedMultiBlock
 		return false;
 	}
 
-	public static boolean canSupportPainting(IBlockReader level, BlockPos pos, Direction facing)
+	public static boolean canSupportPainting(LevelReader level, BlockPos pos, Direction facing)
 	{
 		return facing.getAxis().isHorizontal();
 	}

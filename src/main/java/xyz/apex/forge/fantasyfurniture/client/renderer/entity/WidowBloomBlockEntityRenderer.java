@@ -1,43 +1,37 @@
 package xyz.apex.forge.fantasyfurniture.client.renderer.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 import xyz.apex.forge.fantasyfurniture.block.decorations.WidowBloomBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 
-public final class WidowBloomBlockEntityRenderer extends TileEntityRenderer<WidowBloomBlockEntity>
+public final class WidowBloomBlockEntityRenderer implements BlockEntityRenderer<WidowBloomBlockEntity>
 {
 	private final WidowBloomModel model;
 
-	public WidowBloomBlockEntityRenderer(TileEntityRendererDispatcher rendererDispatcher)
+	public WidowBloomBlockEntityRenderer(BlockEntityRendererProvider.Context ctx)
 	{
-		super(rendererDispatcher);
-
-		model = new WidowBloomModel();
+		model = new WidowBloomModel(ctx.bakeLayer(WidowBloomModel.LAYER_LOCATION));
 	}
 
 	@Override
-	public void render(WidowBloomBlockEntity blockEntity, float partialTicks, MatrixStack pose, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay)
+	public void render(WidowBloomBlockEntity blockEntity, float partialTicks, PoseStack pose, MultiBufferSource buffer, int combinedLight, int combinedOverlay)
 	{
-		RenderType renderType = RenderType.entityTranslucentCull(WidowBloomModel.TEXTURE);
-		IVertexBuilder modelBuffer = buffer.getBuffer(renderType);
+		var renderType = model.renderType(WidowBloomModel.TEXTURE);
+		var modelBuffer = buffer.getBuffer(renderType);
 
 		pose.pushPose();
 
 		if(blockEntity.hasLevel())
 		{
-			BlockState blockState = blockEntity.getBlockState();
-			Direction facing = blockState.getValue(WidowBloomBlock.FACING);
+			var blockState = blockEntity.getBlockState();
+			var facing = blockState.getValue(WidowBloomBlock.FACING);
 
 			pose.translate(.5D, .5D, .5D);
 			pose.mulPose(Vector3f.YP.rotationDegrees(-facing.toYRot()));

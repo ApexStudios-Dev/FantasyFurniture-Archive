@@ -1,22 +1,22 @@
 package xyz.apex.forge.fantasyfurniture.block.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.util.ContainerHelper;
@@ -45,36 +45,36 @@ public final class FurnitureStationBlock extends SimpleFourWayBlockEntityBlock<F
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		Direction facing = blockState.getValue(FACING);
+		var facing = blockState.getValue(FACING);
 		return SHAPER.get(facing);
 	}
 
 	@Override
-	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rayTraceResult)
 	{
-		ItemStack stack = player.getItemInHand(hand);
+		var stack = player.getItemInHand(hand);
 
-		if(player instanceof ServerPlayerEntity)
+		if(player instanceof ServerPlayer serverPlayer)
 		{
-			if(!openContainerScreen(blockState, level, pos, (ServerPlayerEntity) player, hand, stack, stack.getHoverName()))
-				return ActionResultType.PASS;
+			if(!openContainerScreen(blockState, level, pos, serverPlayer, hand, stack, stack.getHoverName()))
+				return InteractionResult.PASS;
 		}
 
-		return ActionResultType.sidedSuccess(level.isClientSide);
+		return InteractionResult.sidedSuccess(level.isClientSide);
 	}
 
 	@Override
-	public void setPlacedBy(World level, BlockPos pos, BlockState blockState, @Nullable LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(Level level, BlockPos pos, BlockState blockState, @Nullable LivingEntity placer, ItemStack stack)
 	{
 		super.setPlacedBy(level, pos, blockState, placer, stack);
 
-		FurnitureStationBlockEntity blockEntity = getBlockEntity(level, pos);
+		var blockEntity = getBlockEntity(level, pos);
 
 		if(blockEntity != null && stack.hasCustomHoverName())
 		{
-			ITextComponent customName = stack.getHoverName();
+			var customName = stack.getHoverName();
 			blockEntity.setCustomName(customName);
 		}
 	}
@@ -86,19 +86,19 @@ public final class FurnitureStationBlock extends SimpleFourWayBlockEntityBlock<F
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState blockState, World level, BlockPos pos)
+	public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos)
 	{
 		return ContainerHelper.getRedstoneSignalFromContainer(level, pos);
 	}
 
-	protected boolean openContainerScreen(BlockState blockState, World level, BlockPos pos, ServerPlayerEntity player, Hand hand, ItemStack stack, ITextComponent titleComponent)
+	protected boolean openContainerScreen(BlockState blockState, Level level, BlockPos pos, ServerPlayer player, InteractionHand hand, ItemStack stack, Component titleComponent)
 	{
 		NetworkHooks.openGui(player, getMenuProvider(blockState, level, pos));
 		return true;
 	}
 
 	@Override
-	protected TileEntityType<FurnitureStationBlockEntity> getBlockEntityType()
+	protected BlockEntityType<FurnitureStationBlockEntity> getBlockEntityType()
 	{
 		return FurnitureStation.BLOCK_ENTITY.asBlockEntityType();
 	}

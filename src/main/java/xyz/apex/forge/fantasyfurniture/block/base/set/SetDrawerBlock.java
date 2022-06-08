@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedContainerBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.SetDrawerBlockEntity;
@@ -15,7 +15,7 @@ public class SetDrawerBlock extends SimpleFourWayWaterLoggedContainerBlock<SetDr
 	}
 
 	@Override
-	protected TileEntityType<SetDrawerBlockEntity> getBlockEntityType()
+	protected BlockEntityType<SetDrawerBlockEntity> getBlockEntityType()
 	{
 		return FFElements.DRAWER_BLOCK_ENTITY.asBlockEntityType();
 	}

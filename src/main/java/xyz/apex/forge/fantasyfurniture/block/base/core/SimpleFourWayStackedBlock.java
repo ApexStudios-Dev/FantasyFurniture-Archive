@@ -1,18 +1,18 @@
 package xyz.apex.forge.fantasyfurniture.block.base.core;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.java.utility.Lazy;
@@ -39,14 +39,14 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock imple
 	}
 
 	@Override
-	public ActionResultType use(BlockState blockState, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
 	{
-		ItemStack stack = player.getItemInHand(hand);
-		IntegerProperty stackSizeProperty = getStackSizeProperty();
-		int count = blockState.getValue(stackSizeProperty);
+		var stack = player.getItemInHand(hand);
+		var stackSizeProperty = getStackSizeProperty();
+		var count = blockState.getValue(stackSizeProperty);
 		int newCount;
-		int minValue = this.minValue.get();
-		int maxValue = this.maxValue.get();
+		var minValue = this.minValue.get();
+		var maxValue = this.maxValue.get();
 
 		if(isForStack(stack))
 			newCount = count + 1;
@@ -57,7 +57,7 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock imple
 		{
 			level.setBlockAndUpdate(pos, blockState.setValue(stackSizeProperty, minValue));
 			level.destroyBlock(pos, !player.isCreative(), player);
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
 		if(newCount <= maxValue)
@@ -77,20 +77,20 @@ public abstract class SimpleFourWayStackedBlock extends SimpleFourWayBlock imple
 					stack.shrink(1);
 			}
 
-			for(int i = 0; i < 5; i++)
+			for(var i = 0; i < 5; i++)
 			{
-				level.addParticle(new BlockParticleData(ParticleTypes.BLOCK, blockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
+				level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
 			}
 
 			level.setBlockAndUpdate(pos, blockState.setValue(stackSizeProperty, newCount));
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(getStackSizeProperty());
 		super.createBlockStateDefinition(builder);

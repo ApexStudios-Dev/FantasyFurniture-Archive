@@ -1,7 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.container;
 
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.items.IItemHandler;
 
 public final class SetDeskContainer extends InventoryContainer
@@ -10,7 +10,7 @@ public final class SetDeskContainer extends InventoryContainer
 	public static final int COLS = 5;
 	public static final int SIZE = ROWS * COLS;
 
-	public SetDeskContainer(ContainerType<?> menuType, int windowId, PlayerInventory playerInventory, IItemHandler itemHandler)
+	public SetDeskContainer(MenuType<?> menuType, int windowId, Inventory playerInventory, IItemHandler itemHandler)
 	{
 		super(menuType, windowId, playerInventory, itemHandler, ROWS, COLS);
 
