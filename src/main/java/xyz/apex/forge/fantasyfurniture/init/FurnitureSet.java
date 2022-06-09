@@ -1639,10 +1639,17 @@ public enum FurnitureSet
 	// region: Door
 	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, ITag.INamedTag<Item> itemGroupCategoryTag)
 	{
+		String engName;
+
+		if(serializedName.equals("dunmer"))
+			engName = englishName + " Door " + (type.equals("single") ? 1 : 2);
+		else
+			engName = englishName + " Door " + RegistrateLangProvider.toEnglishName(type);
+
 		return FFRegistry.getInstance()
 				.block(serializedName + "/door_" + type, blockFactory)
-					.lang(englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
-					.lang(EN_GB, englishName + " Door " + RegistrateLangProvider.toEnglishName(type))
+					.lang(engName)
+					.lang(EN_GB, engName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
