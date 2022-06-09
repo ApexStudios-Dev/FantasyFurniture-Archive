@@ -63,7 +63,7 @@ public class SetChandelierBlock extends Block implements IWaterLoggable
 		if(stateForPlacement != null)
 		{
 			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-			boolean waterLogged = fluidState.is(FluidTags.WATER);
+			boolean waterLogged = fluidState.is(FluidTags.WATER) && fluidState.isSource();
 			return stateForPlacement.setValue(WATERLOGGED, waterLogged);
 		}
 
