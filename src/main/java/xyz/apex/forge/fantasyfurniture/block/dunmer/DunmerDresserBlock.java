@@ -15,13 +15,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetDresserBlock;
 public final class DunmerDresserBlock extends SetDresserBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			Block.box(1, 0, 1, 3, 14, 3),
-			Block.box(1, 0, 13, 3, 14, 15),
+			Block.box(-15, 0, 1, -13, 14, 3),
+			Block.box(-15, 0, 13, -13, 14, 15),
 			Block.box(13, 0, 13, 15, 14, 15),
 			Block.box(13, 0, 1, 15, 14, 3),
-			Block.box(0, 14, 0, 16, 16, 16),
-			Block.box(1, 6, 1, 15, 8, 15),
-			Block.box(2, 6, 2, 14, 14, 14)
+			Block.box(-16, 14, 0, 16, 16, 16),
+			Block.box(-15, 6, 1, 15, 8, 15),
+			Block.box(-14, 8, 2, 14, 14, 14)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
