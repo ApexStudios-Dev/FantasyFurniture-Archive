@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block.nordic;
+package xyz.apex.forge.fantasyfurniture.block.dunmer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,32 +9,24 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.set.SetBedDoubleBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetBookshelfBlock;
 
-public final class NordicBedDoubleBlock extends SetBedDoubleBlock
+public final class DunmerBookshelfBlock extends SetBookshelfBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(-16D, 3D, 2D, 16D, 5D, 30D),
-			box(-14D, 5D, 2D, 14D, 8D, 30D),
-			box(-16D, 3D, 0D, 16D, 5D, 2D),
-			box(-16D, 0D, 0D, -14D, 8D, 2D),
-			box(14D, 0D, 0D, 16D, 8D, 2D),
-			box(-16D, 12D, 0D, -8D, 14D, 2D),
-			box(8D, 12D, 0D, 16D, 14D, 2D),
-			box(-10D, 12D, 0D, 10D, 16D, 2D),
-			box(-15D, 5D, 0D, 15D, 12D, 2D),
-			box(-15D, 5D, 30D, 15D, 12D, 32D),
-			box(-16D, 3D, 30D, 16D, 5D, 32D),
-			box(-16D, 0D, 30D, -14D, 8D, 32D),
-			box(14D, 0D, 30D, 16D, 8D, 32D),
-			box(-16D, 12D, 30D, -8D, 14D, 32D),
-			box(8D, 12D, 30D, 16D, 14D, 32D),
-			box(-10D, 12D, 30D, 10D, 16D, 32D)
+			box(-14, 0, 2, -12, 30, 4),
+			box(-14, 0, 12, -12, 30, 14),
+			box(12, 0, 12, 14, 30, 14),
+			box(12, 0, 2, 14, 30, 4),
+			box(-12, 9, 4, 12, 32, 12),
+			box(-16, 9, 1, 15, 11, 15),
+			box(-16, 19, 1, 15, 21, 15),
+			box(-16, 30, 1, 15, 32, 15)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
-	public NordicBedDoubleBlock(Properties properties, MultiBlockPattern pattern)
+	public DunmerBookshelfBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
 	}
@@ -53,7 +45,7 @@ public final class NordicBedDoubleBlock extends SetBedDoubleBlock
 		}
 
 		if(index == 2 || index == 3)
-			shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+			shape = shape.move(0D, -1D, 0D);
 
 		return shape;
 	}

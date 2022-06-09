@@ -900,6 +900,51 @@ public final class Decorations
 	// endregion
 	// endregion
 
+	// region: Dunmer
+	// region: Pottery
+	// region: 0
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0_BLOCK = pottery(FurnitureSet.DUNMER, 0);
+	public static final ItemEntry<BlockItem> DUNMER_POTTERY_0_BLOCK_ITEM = Registrations.blockItem(DUNMER_POTTERY_0_BLOCK);
+	// endregion
+
+	// region: 1
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1_BLOCK = pottery(FurnitureSet.DUNMER, 1);
+	public static final ItemEntry<BlockItem> DUNMER_POTTERY_1_BLOCK_ITEM = Registrations.blockItem(DUNMER_POTTERY_1_BLOCK);
+	// endregion
+
+	private static BlockEntry<PotteryBlock> pottery(FurnitureSet furnitureSet, int index)
+	{
+		var codeName = "decorations/%s/pottery_%s".formatted(furnitureSet.serializedName, index);
+		var englishName = "%s Pottery %s".formatted(furnitureSet.englishName, index + 1);
+
+		return REGISTRY
+				.block(codeName, PotteryBlock::new)
+					.lang(englishName)
+					.lang(EN_GB, englishName)
+
+					.initialProperties(Material.DECORATION)
+					.strength(2.5F)
+					.sound(SoundType.STONE)
+					.noOcclusion()
+
+					.blockState(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addRenderType(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
+					.build()
+		.register();
+	}
+	// endregion
+	// endregion
+
 	// region: Item Group Category
 	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
 			.builder(ITEM_GROUP_CATEGORY_TAG.location().toString())
@@ -917,63 +962,77 @@ public final class Decorations
 		BlockEntry<?>[] blocks = new BlockEntry[] {
 				BERRY_BASKET_EMPTY_BLOCK,
 				BERRY_BASKET_SWEETBERRY_BLOCK,
-				BOILED_CREME_TREATS_BLOCK,
+				BERRY_BASKET_BLUEBERRY_BLOCK,
+				BERRY_BASKET_STRAWBERRY_BLOCK,
 				BOLTS_OF_CLOTH_BLOCK,
 				BOOK_STACK_BLOCK,
 				BOWL_EMPTY_BLOCK,
 				BOWL_BEETROOT_SOUP_BLOCK,
 				BOWL_MUSHROOM_STEW_BLOCK,
-				SWEETROLLS_BLOCK,
-				MEAD_BOTTLES_BLOCK,
 				TANKARD_EMPTY_BLOCK,
 				TANKARD_HONEYMEAD_BLOCK,
 				TANKARD_MILK_BLOCK,
 				TANKARD_SWEETBERRY_BLOCK,
 				MUSHROOMS_RED_BLOCK,
 				COIN_STOCK_GOLD_BLOCK,
+				COIN_STOCK_IRON_BLOCK,
 				MUFFINS_BLUEBERRY_BLOCK,
 				MUFFINS_CHOCOLATE_BLOCK,
 				MUFFINS_SWEETBERRY_BLOCK,
+				PAPER_STACK_BLOCK,
+				BOILED_CREME_TREATS_BLOCK,
+				SWEETROLLS_BLOCK,
+				MEAD_BOTTLES_BLOCK,
+				NORDIC_SOUL_GEMS_LIGHT_BLOCK,
+				NORDIC_SOUL_GEMS_DARK_BLOCK,
 				VENTHYR_FOOD_0_BLOCK,
 				VENTHYR_FOOD_1_BLOCK,
 				VENTHYR_TEA_SET_BLOCK,
 				VENTHYR_TEA_CUPS_BLOCK,
 				VENTHYR_PLATTER_BLOCK,
-				PAPER_STACK_BLOCK,
 				VENTHYR_WIDOW_BLOOM_BLOCK,
 				VENTHYR_TOMES_BLOCK,
-				VENTHYR_CHALICES_BLOCK
+				VENTHYR_CHALICES_BLOCK,
+				DUNMER_POTTERY_0_BLOCK,
+				DUNMER_POTTERY_1_BLOCK
 		};
 
 		ItemEntry<?>[] items = new ItemEntry[] {
 				BERRY_BASKET_EMPTY_BLOCK_ITEM,
 				BERRY_BASKET_SWEETBERRY_BLOCK_ITEM,
-				BOILED_CREME_TREATS_BLOCK_ITEM,
+				BERRY_BASKET_BLUEBERRY_BLOCK_ITEM,
+				BERRY_BASKET_STRAWBERRY_BLOCK_ITEM,
 				BOLTS_OF_CLOTH_BLOCK_ITEM,
 				BOOK_STACK_BLOCK_ITEM,
 				BOWL_EMPTY_BLOCK_ITEM,
 				BOWL_BEETROOT_SOUP_BLOCK_ITEM,
 				BOWL_MUSHROOM_STEW_BLOCK_ITEM,
-				SWEETROLLS_BLOCK_ITEM,
-				MEAD_BOTTLES_BLOCK_ITEM,
 				TANKARD_EMPTY_BLOCK_ITEM,
 				TANKARD_HONEYMEAD_BLOCK_ITEM,
 				TANKARD_MILK_BLOCK_ITEM,
 				TANKARD_SWEETBERRY_BLOCK_ITEM,
 				MUSHROOMS_RED_BLOCK_ITEM,
 				COIN_STOCK_GOLD_BLOCK_ITEM,
+				COIN_STOCK_IRON_BLOCK_ITEM,
 				MUFFINS_BLUEBERRY_BLOCK_ITEM,
 				MUFFINS_CHOCOLATE_BLOCK_ITEM,
 				MUFFINS_SWEETBERRY_BLOCK_ITEM,
+				PAPER_STACK_BLOCK_ITEM,
+				BOILED_CREME_TREATS_BLOCK_ITEM,
+				SWEETROLLS_BLOCK_ITEM,
+				MEAD_BOTTLES_BLOCK_ITEM,
+				NORDIC_SOUL_GEMS_LIGHT_BLOCK_ITEM,
+				NORDIC_SOUL_GEMS_DARK_BLOCK_ITEM,
 				VENTHYR_FOOD_0_BLOCK_ITEM,
 				VENTHYR_FOOD_1_BLOCK_ITEM,
 				VENTHYR_TEA_SET_BLOCK_ITEM,
 				VENTHYR_TEA_CUPS_BLOCK_ITEM,
 				VENTHYR_PLATTER_BLOCK_ITEM,
-				PAPER_STACK_BLOCK_ITEM,
 				VENTHYR_WIDOW_BLOOM_BLOCK_ITEM,
 				VENTHYR_TOMES_BLOCK_ITEM,
-				VENTHYR_CHALICES_BLOCK_ITEM
+				VENTHYR_CHALICES_BLOCK_ITEM,
+				DUNMER_POTTERY_0_BLOCK_ITEM,
+				DUNMER_POTTERY_1_BLOCK_ITEM
 		};
 
 		REGISTRY.addDataGenerator(LANG, provider -> {

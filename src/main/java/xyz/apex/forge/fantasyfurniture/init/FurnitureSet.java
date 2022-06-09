@@ -38,6 +38,7 @@ import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
+import xyz.apex.forge.fantasyfurniture.block.dunmer.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.*;
 import xyz.apex.forge.fantasyfurniture.item.VenthyrTableBlockItem;
@@ -111,6 +112,38 @@ public enum FurnitureSet
 			VenthyrBedSingleBlock::new,
 			VenthyrBedDoubleBlock::new,
 			VenthyrChandelierBlock::new,
+			DoorBlock::new
+	),
+	// endregion
+
+	// region: Dunmer
+	DUNMER(
+			"dunmer",
+
+			DunmerCarpetBlock::new,
+			DunmerWallLightBlock::new,
+			DunmerFloorLightBlock::new,
+			DunmerTableSmallBlock::new,
+			DunmerTableWideBlock::new,
+			DunmerTableLargeBlock::new,
+			DunmerStoolBlock::new,
+			DunmerCushionBlock::new,
+			DunmerPaintingSmallBlock::new,
+			DunmerPaintingWideBlock::new,
+			DunmerDrawerBlock::new,
+			DunmerShelfBlock::new,
+			DunmerSofaBlock::new,
+			DunmerDeskBlock::new,
+			DunmerChairBlock::new,
+			DunmerBenchBlock::new,
+			DunmerBookshelfBlock::new,
+			DunmerChestBlock::new,
+			DunmerDresserBlock::new,
+			DunmerWardrobeBlock::new,
+			DunmerWardrobeTopperBlock::new,
+			DunmerBedSingleBlock::new,
+			DunmerBedDoubleBlock::new,
+			DunmerChandelierBlock::new,
 			DoorBlock::new
 	),
 	// endregion
@@ -1458,7 +1491,18 @@ public enum FurnitureSet
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockState((ctx, provider) -> {
+						var id = ctx.getId();
+
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							var suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = ((SetBedSingleBlock) blockState.getBlock()).getMultiBlockPattern().isOrigin(blockState) ? "_head" : "_foot";
+
+							return provider.models().getExistingFile(Registrations.getExistingModelPath(id, suffix));
+						});
+					})
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -1470,7 +1514,15 @@ public enum FurnitureSet
 					.tag(BlockTags.BEDS)
 
 					.item()
-						.model(Registrations::blockItem)
+						.model((ctx, provider) -> {
+							var id = ctx.getId();
+							var suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = "_full";
+
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, suffix));
+						})
 						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, itemGroupCategoryTag)
 					.build()
 		.register();
