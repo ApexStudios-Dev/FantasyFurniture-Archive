@@ -1566,7 +1566,18 @@ public enum FurnitureSet
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							String suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = ((SetBedDoubleBlock) blockState.getBlock()).getMultiBlockPattern().isOrigin(blockState) ? "_head" : "_foot";
+
+							return provider.models().getExistingFile(Registrations.getExistingModelPath(id, suffix));
+						});
+					})
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -1578,7 +1589,15 @@ public enum FurnitureSet
 					.tag(BlockTags.BEDS)
 
 					.item()
-						.model(Registrations::blockItem)
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							String suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = "_full";
+
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, suffix));
+						})
 						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, itemGroupCategoryTag)
 					.build()
 		.register();

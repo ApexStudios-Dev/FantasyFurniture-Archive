@@ -44,7 +44,7 @@ public final class DunmerDeskBlock extends SetDeskBlock
 	public VoxelShape getShape(BlockState blockState, IBlockReader level, BlockPos pos, ISelectionContext ctx)
 	{
 		Direction facing = blockState.getValue(FACING);
-		VoxelShaper shaper = FurnitureSet.NORDIC.deskLeftBlock.is(this) ? SHAPER_LEFT : SHAPER_RIGHT;
+		VoxelShaper shaper = FurnitureSet.DUNMER.deskLeftBlock.is(this) ? SHAPER_LEFT : SHAPER_RIGHT;
 		VoxelShape shape = shaper.get(facing);
 
 		if(!pattern.isOrigin(blockState))

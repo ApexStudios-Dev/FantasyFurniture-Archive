@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.dunmer;
 
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -29,6 +30,13 @@ public final class DunmerBedDoubleBlock extends SetBedDoubleBlock
 	public DunmerBedDoubleBlock(Properties properties, MultiBlockPattern pattern)
 	{
 		super(properties, pattern);
+	}
+
+	@Override
+	public BlockRenderType getRenderShape(BlockState blockState)
+	{
+		int index = pattern.getIndex(blockState);
+		return index == 0 || index == 2 ? BlockRenderType.MODEL : BlockRenderType.INVISIBLE;
 	}
 
 	@Override

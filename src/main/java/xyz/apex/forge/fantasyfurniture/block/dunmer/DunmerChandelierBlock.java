@@ -35,13 +35,13 @@ public final class DunmerChandelierBlock extends SetChandelierBlock
 		if(!blockState.getValue(WATERLOGGED))
 		{
 			double x = pos.getX() + .5D;
-			double y = pos.getY() + .8D;
-			double z = pos.getZ() + .525D;
+			double y = pos.getY() + .875D;
+			double z = pos.getZ() + .5D;
 
-			onLightParticle(level, pos, blockState, x + .25D, y, z + .25D, rng);
-			onLightParticle(level, pos, blockState, x - .27D, y, z + .25D, rng);
-			onLightParticle(level, pos, blockState, x + .27D, y, z - .25D, rng);
-			onLightParticle(level, pos, blockState, x - .25D, y, z - .25D, rng);
+			onLightParticle(level, pos, blockState, x + .275D, y, z + .275D, rng);
+			onLightParticle(level, pos, blockState, x + .275D, y, z - .275D, rng);
+			onLightParticle(level, pos, blockState, x - .275D, y, z + .275D, rng);
+			onLightParticle(level, pos, blockState, x - .275D, y, z - .275D, rng);
 		}
 	}
 }
