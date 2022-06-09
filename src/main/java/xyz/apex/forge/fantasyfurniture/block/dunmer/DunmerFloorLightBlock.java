@@ -44,7 +44,7 @@ public final class DunmerFloorLightBlock extends SetFloorLightBlock
 		if(!blockState.getValue(WATERLOGGED) && blockState.getValue(SIDE) == Side.TOP)
 		{
 			double x = pos.getX() + .5D;
-			double y = pos.getY() + .5D + .4D;
+			double y = pos.getY() + .5D + .5D;
 			double z = pos.getZ() + .5D;
 
 			onLightParticle(level, pos, blockState, x, y, z, rng);
