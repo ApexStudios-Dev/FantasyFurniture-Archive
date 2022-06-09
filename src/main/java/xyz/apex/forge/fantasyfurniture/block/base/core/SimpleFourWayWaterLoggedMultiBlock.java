@@ -68,7 +68,7 @@ public class SimpleFourWayWaterLoggedMultiBlock extends MultiBlockFourWay implem
 		if(placementState != null)
 		{
 			var fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-			var waterLogged = fluidState.is(FluidTags.WATER);
+			var waterLogged = fluidState.is(FluidTags.WATER) && fluidState.isSource();
 			return placementState.setValue(WATERLOGGED, waterLogged);
 		}
 

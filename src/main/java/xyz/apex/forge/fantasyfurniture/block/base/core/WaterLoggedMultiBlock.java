@@ -61,7 +61,7 @@ public class WaterLoggedMultiBlock extends MultiBlock implements SimpleWaterlogg
 		if(stateForPlacement != null)
 		{
 			var fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-			var waterLogged = fluidState.is(FluidTags.WATER);
+			var waterLogged = fluidState.is(FluidTags.WATER) && fluidState.isSource();
 			return stateForPlacement.setValue(WATERLOGGED, waterLogged);
 		}
 
