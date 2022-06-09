@@ -15,29 +15,21 @@ import xyz.apex.forge.fantasyfurniture.init.FurnitureSet;
 public final class DunmerDeskBlock extends SetDeskBlock
 {
 	public static final VoxelShape SHAPE_LEFT = VoxelShaper.or(
-			box(13D, 0D, 0D, 15D, 9D, 2D),
-			box(13D, 7D, 1D, 15D, 13D, 3D),
-			box(13D, 7D, 13D, 15D, 13D, 15D),
-			box(-15D, 7D, 13D, -13D, 13D, 15D),
-			box(-15D, 0D, 0D, -13D, 9D, 2D),
-			box(-15D, 0D, 14D, -13D, 9D, 16D),
-			box(13D, 0D, 14D, 15D, 9D, 16D),
-			box(-16D, 13D, 0D, 16D, 16D, 16D),
-			box(-15D, 7D, 1D, -13D, 13D, 3D),
-			box(5D, 9D, 2D, 12D, 13D, 11D)
+			box(12, 0, 2, 14, 14, 4),
+			box(-14, 0, 2, -12, 14, 4),
+			box(-14, 0, 12, -12, 14, 14),
+			box(12, 0, 12, 14, 14, 14),
+			box(-16, 14, 0, 16, 16, 16),
+			box(4, 10, 2, 11, 14, 11)
 	);
 
 	public static final VoxelShape SHAPE_RIGHT = VoxelShaper.or(
-			box(13D, 0D, 0D, 15D, 9D, 2D),
-			box(13D, 7D, 1D, 15D, 13D, 3D),
-			box(13D, 7D, 13D, 15D, 13D, 15D),
-			box(-15D, 7D, 13D, -13D, 13D, 15D),
-			box(-15D, 0D, 0D, -13D, 9D, 2D),
-			box(-15D, 0D, 14D, -13D, 9D, 16D),
-			box(13D, 0D, 14D, 15D, 9D, 16D),
-			box(-16D, 13D, 0D, 16D, 16D, 16D),
-			box(-15D, 7D, 1D, -13D, 13D, 3D),
-			box(-12D, 9D, 2D, -5D, 13D, 11D)
+			box(12, 0, 2, 14, 14, 4),
+			box(-14, 0, 2, -12, 14, 4),
+			box(-14, 0, 12, -12, 14, 14),
+			box(12, 0, 12, 14, 14, 14),
+			box(-16, 14, 0, 16, 16, 16),
+			box(-11, 10, 2, -4, 14, 11)
 	);
 
 	public static final VoxelShaper SHAPER_LEFT = VoxelShaper.forHorizontal(SHAPE_LEFT, Direction.NORTH);

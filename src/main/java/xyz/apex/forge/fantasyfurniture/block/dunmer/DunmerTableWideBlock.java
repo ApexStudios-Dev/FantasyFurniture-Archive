@@ -14,15 +14,11 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableWideBlock;
 public final class DunmerTableWideBlock extends SetTableWideBlock
 {
 	public static final VoxelShape SHAPE_A = VoxelShaper.or(
-			box(13D, 0D, 0D, 15D, 9D, 2D),
-			box(13D, 7D, 1D, 15D, 13D, 3D),
-			box(13D, 7D, 13D, 15D, 13D, 15D),
-			box(-15D, 7D, 13D, -13D, 13D, 15D),
-			box(-15D, 0D, 0D, -13D, 9D, 2D),
-			box(-15D, 0D, 14D, -13D, 9D, 16D),
-			box(13D, 0D, 14D, 15D, 9D, 16D),
-			box(-16D, 13D, 0D, 16D, 16D, 16D),
-			box(-15D, 7D, 1D, -13D, 13D, 3D)
+			box(12, 0, 2, 14, 14, 4),
+			box(-14, 0, 2, -12, 14, 4),
+			box(-14, 0, 12, -12, 14, 14),
+			box(12, 0, 12, 14, 14, 14),
+			box(-16, 14, 0, 16, 16, 16)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);

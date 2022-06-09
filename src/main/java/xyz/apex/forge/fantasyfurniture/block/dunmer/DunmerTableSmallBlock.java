@@ -13,11 +13,11 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableSmallBlock;
 public final class DunmerTableSmallBlock extends SetTableSmallBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 13D, 3D),
-			box(1D, 0D, 13D, 3D, 13D, 15D),
-			box(13D, 0D, 13D, 15D, 13D, 15D),
-			box(13D, 0D, 1D, 15D, 13D, 3D),
-			box(0D, 13D, 0D, 16D, 16D, 16D)
+			box(1, 0, 1, 3, 14, 3),
+			box(1, 0, 13, 3, 14, 15),
+			box(13, 0, 13, 15, 14, 15),
+			box(13, 0, 1, 15, 14, 3),
+			box(0, 14, 0, 16, 16, 16)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

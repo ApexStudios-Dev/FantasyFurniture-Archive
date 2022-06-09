@@ -13,25 +13,21 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetShelfBlock;
 public final class DunmerShelfBlock extends SetShelfBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(.5D, 9D, 2D, 2.5D, 14D, 13D),
-			box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
-			box(0D, 14D, 0D, 16D, 16D, 16D),
-			box(13D, 6D, 13D, 16D, 14D, 16D),
-			box(0D, 6D, 13D, 3D, 14D, 16D)
+			box(13, 8, 14, 15, 14, 16),
+			box(1, 8, 14, 3, 14, 16),
+			box(0, 14, 0, 16, 16, 16)
 	);
 
 	public static final VoxelShape SHAPE_LEFT = VoxelShaper.or(
-			box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
-			box(0D, 14D, 0D, 16D, 16D, 16D),
-			box(13D, 6D, 13D, 16D, 14D, 16D)
+			box(13, 8, 14, 15, 14, 16),
+			box(0, 14, 0, 16, 16, 16)
 	);
 
-	public static final VoxelShape SHAPE_CENTER = box(0D, 14D, 0D, 16D, 16D, 16D);
+	public static final VoxelShape SHAPE_CENTER = box(0, 14, 0, 16, 16, 16);
 
 	public static final VoxelShape SHAPE_RIGHT = VoxelShaper.or(
-			box(.5D, 9D, 2D, 2.5D, 14D, 13D),
-			box(0D, 14D, 0D, 16D, 16D, 16D),
-			box(0D, 6D, 13D, 3D, 14D, 16D)
+			box(1, 8, 14, 3, 14, 16),
+			box(0, 14, 0, 16, 16, 16)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

@@ -14,8 +14,14 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetBookshelfBlock;
 public final class DunmerBookshelfBlock extends SetBookshelfBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(-15D, 0D, 1D, 15D, 30D, 15D),
-			box(-16D, 30D, 0D, 16D, 32D, 16D)
+			box(-14, 0, 2, -12, 30, 4),
+			box(-14, 0, 12, -12, 30, 14),
+			box(12, 0, 12, 14, 30, 14),
+			box(12, 0, 2, 14, 30, 4),
+			box(-12, 9, 4, 12, 32, 12),
+			box(-16, 9, 1, 15, 11, 15),
+			box(-16, 19, 1, 15, 21, 15),
+			box(-16, 30, 1, 15, 32, 15)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

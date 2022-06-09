@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.dunmer;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -14,9 +15,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetDresserBlock;
 public final class DunmerDresserBlock extends SetDresserBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(-15D, 0D, 1D, 15D, 16D, 15D),
-			box(-16D, 13D, 14D, 16D, 16D, 16D),
-			box(-16D, 13D, 0D, 16D, 16D, 2D)
+			Block.box(1, 0, 1, 3, 14, 3),
+			Block.box(1, 0, 13, 3, 14, 15),
+			Block.box(13, 0, 13, 15, 14, 15),
+			Block.box(13, 0, 1, 15, 14, 3),
+			Block.box(0, 14, 0, 16, 16, 16),
+			Block.box(1, 6, 1, 15, 8, 15),
+			Block.box(2, 6, 2, 14, 14, 14)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

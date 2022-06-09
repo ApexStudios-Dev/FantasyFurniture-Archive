@@ -14,12 +14,14 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetWardrobeBlock;
 public final class DunmerWardrobeBlock extends SetWardrobeBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(-14.75D, 0D, .25D, -12.25D, 31D, 2.75D),
-			box(-14.75D, 0D, 13.25D, -12.25D, 31D, 15.75D),
-			box(12.25D, 0D, 13.25D, 14.75D, 31D, 15.75D),
-			box(12.25D, 0D, .25D, 14.75D, 31D, 2.75D),
-			box(-14D, 2D, 1D, 14D, 31D, 15D),
-			box(-15D, 31D, 0D, 15D, 32D, 16D)
+			box(-15, 0, 1, -13, 30, 3),
+			box(-15, 0, 13, -13, 30, 15),
+			box(13, 0, 13, 15, 30, 15),
+			box(13, 0, 1, 15, 30, 3),
+			box(-16, 30, 0, 16, 32, 16),
+			box(-16, 20, 0, 16, 22, 16),
+			box(-16, 2, 0, 16, 4, 16),
+			box(-13, 4, 2, 13, 30, 14)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

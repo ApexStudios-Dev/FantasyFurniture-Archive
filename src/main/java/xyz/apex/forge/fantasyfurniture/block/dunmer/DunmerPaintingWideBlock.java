@@ -13,7 +13,11 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingWideBlock;
 
 public final class DunmerPaintingWideBlock extends SetPaintingWideBlock
 {
-	public static final VoxelShape SHAPE = box(-16D, 0D, 14D, 16D, 16D, 16D);
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(-16, 0, 14, 16, 2, 16),
+			box(-16, 14, 14, 16, 16, 16),
+			box(-15, 2, 14, 15, 14, 16)
+	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 

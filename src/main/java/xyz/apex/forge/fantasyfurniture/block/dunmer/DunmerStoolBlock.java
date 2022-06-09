@@ -13,17 +13,13 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetStoolBlock;
 public final class DunmerStoolBlock extends SetStoolBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(2D, 0D, 2D, 4D, 3D, 4D),
-			box(12D, 0D, 12D, 14D, 3D, 14D),
-			box(12D, 0D, 2D, 14D, 3D, 4D),
-			box(2D, 0D, 12D, 4D, 3D, 14D),
-			box(2D, 3D, 11.5D, 4D, 5D, 13.5D),
-			box(12D, 3D, 11.5D, 14D, 5, 13.5D),
-			box(12D, 3D, 2.5D, 14D, 5D, 4.5D),
-			box(1.5D, 5D, 1.75D, 14.5D, 7D, 14.25D),
-			box(2D, 3D, 2.5D, 4D, 5D, 4.5D),
-			box(2.5D, 3.5D, 4.5D, 3.5D, 4.5D, 11.5D),
-			box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D)
+			box(12, 0, 2, 14, 5, 4),
+			box(2, 0, 2, 4, 5, 4),
+			box(2, 0, 12, 4, 5, 14),
+			box(12, 0, 12, 14, 5, 14),
+			box(1, 5, 1, 15, 7, 15),
+			box(12.5, 2.5, 4, 13.5, 3.5, 12),
+			box(2.5, 2.5, 4, 3.5, 3.5, 12)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

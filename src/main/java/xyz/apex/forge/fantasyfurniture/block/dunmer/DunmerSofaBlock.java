@@ -13,57 +13,69 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetSofaBlock;
 public final class DunmerSofaBlock extends SetSofaBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 3D, 3D),
-			box(1D, 0D, 13D, 3D, 3D, 15D),
-			box(13D, 0D, 13D, 15D, 3D, 15D),
-			box(13D, 0D, 1D, 15D, 3D, 3D),
-			box(0D, 3D, 0D, 16D, 6D, 16D),
-			box(0D, 6D, 13D, 16D, 16D, 16D),
-			box(14D, 10D, 0D, 16D, 12D, 14D),
-			box(0D, 10D, 0D, 2D, 12D, 14D),
-			box(0D, 6D, 0D, 2D, 10D, 2D),
-			box(14D, 6D, 0D, 16D, 10D, 2D)
+			box(0, 4, 1, 16, 6, 15),
+			box(2, 0, 12, 4, 4, 14),
+			box(2, 0, 2, 4, 4, 4),
+			box(12, 0, 2, 14, 4, 4),
+			box(12, 0, 12, 14, 4, 14),
+			box(3, 6, 13, 13, 14, 13),
+			box(13, 6, 12, 15, 16, 14),
+			box(3, 14, 12, 13, 16, 14),
+			box(1, 6, 12, 3, 16, 14),
+			box(13, 9, 2, 15, 11, 12),
+			box(13, 6, 3, 15, 9, 5),
+			box(1, 6, 3, 3, 9, 5),
+			box(1, 9, 2, 3, 11, 12)
 	);
 
 	public static final VoxelShape SHAPE_LEFT = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 3D, 3D),
-			box(1D, 0D, 13D, 3D, 3D, 15D),
-			box(13D, 0D, 13D, 15D, 3D, 15D),
-			box(13D, 0D, 1D, 15D, 3D, 3D),
-			box(0D, 3D, 0D, 16D, 6D, 16D),
-			box(0D, 6D, 13D, 16D, 16D, 16D),
-			box(14D, 10D, 0D, 16D, 12D, 13D),
-			box(14D, 6D, 0D, 16D, 10D, 2D)
+			box(2, 0, 12, 4, 4, 14),
+			box(2, 0, 2, 4, 4, 4),
+			box(12, 0, 2, 14, 4, 4),
+			box(12, 0, 12, 14, 4, 14),
+			box(0, 4, 1, 15, 6, 15),
+			box(0, 6, 13, 13, 14, 13),
+			box(13, 6, 12, 15, 16, 14),
+			box(0, 14, 12, 13, 16, 14),
+			box(13, 9, 2, 15, 11, 12),
+			box(13, 6, 3, 15, 9, 5)
 	);
 
 	public static final VoxelShape SHAPE_CENTER = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 3D, 3D),
-			box(1D, 0D, 13D, 3D, 3D, 15D),
-			box(13D, 0D, 13D, 15D, 3D, 15D),
-			box(13D, 0D, 1D, 15D, 3D, 3D),
-			box(0D, 3D, 0D, 16D, 6D, 16D),
-			box(0D, 6D, 13D, 16D, 16D, 16D)
+			box(2, 0, 2, 4, 4, 4),
+			box(12, 0, 2, 14, 4, 4),
+			box(12, 0, 12, 14, 4, 14),
+			box(2, 0, 12, 4, 4, 14),
+			box(0, 4, 1, 16, 6, 15),
+			box(0, 6, 13, 16, 14, 13),
+			box(0, 14, 12, 16, 16, 14)
 	);
 
 	public static final VoxelShape SHAPE_RIGHT = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 3D, 3D),
-			box(1D, 0D, 13D, 3D, 3D, 15D),
-			box(13D, 0D, 13D, 15D, 3D, 15D),
-			box(13D, 0D, 1D, 15D, 3D, 3D),
-			box(0D, 3D, 0D, 16D, 6D, 16D),
-			box(0D, 6D, 13D, 16D, 16D, 16D),
-			box(0D, 10D, 0D, 2D, 12D, 13D),
-			box(0D, 6D, 0D, 2D, 10D, 2D)
+			box(12, 0, 12, 14, 4, 14),
+			box(12, 0, 2, 14, 4, 4),
+			box(2, 0, 2, 4, 4, 4),
+			box(2, 0, 12, 4, 4, 14),
+			box(1, 4, 1, 16, 6, 15),
+			box(3, 6, 13, 16, 14, 13),
+			box(1, 6, 12, 3, 16, 14),
+			box(3, 14, 12, 16, 16, 14),
+			box(1, 9, 2, 3, 11, 12),
+			box(1, 6, 3, 3, 9, 5)
 	);
 
 	public static final VoxelShape SHAPE_CORNER = VoxelShaper.or(
-			box(1D, 0D, 1D, 3D, 3D, 3D),
-			box(1D, 0D, 13D, 3D, 3D, 15D),
-			box(13D, 0D, 13D, 15D, 3D, 15D),
-			box(13D, 0D, 1D, 15D, 3D, 3D),
-			box(0D, 3D, 0D, 16D, 6D, 16D),
-			box(0D, 6D, 13D, 16D, 16D, 16D),
-			box(13D, 6D, 0D, 16D, 16D, 13D)
+			box(2, 0, 12, 4, 4, 14),
+			box(2, 0, 2, 4, 4, 4),
+			box(12, 0, 2, 14, 4, 4),
+			box(12, 0, 12, 14, 4, 14),
+			box(12, 6, 12, 14, 16, 14),
+			box(12, 14, 0, 14, 16, 12),
+			box(0, 14, 12, 12, 16, 14),
+			box(13, 6, 0, 13, 14, 12),
+			box(0, 6, 13, 12, 14, 13),
+			box(1, 4, 0, 15, 6, 15),
+			box(0, 4, 1, 1, 6, 15)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

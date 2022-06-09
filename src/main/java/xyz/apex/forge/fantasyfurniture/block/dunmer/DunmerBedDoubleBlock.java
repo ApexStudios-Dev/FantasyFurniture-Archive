@@ -14,9 +14,14 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetBedDoubleBlock;
 public final class DunmerBedDoubleBlock extends SetBedDoubleBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(-16D, 0D, 0D, 16D, 16D, 2D),
-			box(-16D, 0D, 30D, 16D, 16D, 32D),
-			box(-16D, 3D, 2D, 16D, 9D, 30D)
+			box(-16D, 0D, 0D, -14D, 13D, 2D),
+			box(-16D, 0D, 30D, -14D, 11D, 32D),
+			box(14D, 0D, 30D, 16D, 11D, 32D),
+			box(14D, 0D, 0D, 16D, 13D, 2D),
+			box(-14D, 3D, 0D, 14D, 14.25D, 2D),
+			box(-14D, 3D, 30D, 14D, 12.25D, 32D),
+			box(-15D, 5D, 2D, 15D, 8D, 30D),
+			box(-16D, 3D, 2D, 16D, 5D, 30D)
 	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

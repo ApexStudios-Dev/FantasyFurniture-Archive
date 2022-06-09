@@ -13,7 +13,16 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetChestBlock;
 
 public final class DunmerChestBlock extends SetChestBlock
 {
-	public static final VoxelShape SHAPE = box(-15D, 0D, 2D, 15D, 14D, 16D);
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(12, 0, 2, 14, 14, 4),
+			box(-14, 0, 2, -12, 14, 4),
+			box(-14, 0, 12, -12, 14, 14),
+			box(12, 0, 12, 14, 14, 14),
+			box(-15, 4, 1, 15, 6, 15),
+			box(-15, 14, 1, 15, 16, 15),
+			box(-13, 6, 3, 13, 14, 13),
+			box(-2, 11, 2, 2, 14, 3)
+	);
 
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);

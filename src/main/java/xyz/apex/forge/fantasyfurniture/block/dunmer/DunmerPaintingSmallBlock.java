@@ -12,7 +12,11 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingSmallBlock;
 
 public final class DunmerPaintingSmallBlock extends SetPaintingSmallBlock
 {
-	public static final VoxelShape SHAPE = box(0D, 0D, 14D, 16D, 16D, 16D);
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(0, 1, 14, 16, 3, 16),
+			box(0, 13, 14, 16, 15, 16),
+			box(1, 3, 14, 15, 13, 16)
+	);
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
