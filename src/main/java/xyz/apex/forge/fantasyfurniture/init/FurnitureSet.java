@@ -1543,7 +1543,18 @@ public enum FurnitureSet
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockState((ctx, provider) -> {
+						ResourceLocation id = ctx.getId();
+
+						provider.horizontalBlock(ctx.get(), blockState -> {
+							String suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = ((SetBedDoubleBlock) blockState.getBlock()).getMultiBlockPattern().isOrigin(blockState) ? "_head" : "_foot";
+
+							return provider.models().getExistingFile(Registrations.getExistingModelPath(id, suffix));
+						});
+					})
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
@@ -1555,7 +1566,15 @@ public enum FurnitureSet
 					.tag(BlockTags.BEDS)
 
 					.item()
-						.model(Registrations::blockItem)
+						.model((ctx, provider) -> {
+							ResourceLocation id = ctx.getId();
+							String suffix = "";
+
+							if(serializedName.equals("dunmer"))
+								suffix = "_full";
+
+							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, suffix));
+						})
 						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, itemGroupCategoryTag)
 					.build()
 		.register();
@@ -1597,10 +1616,17 @@ public enum FurnitureSet
 	// region: Door
 	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, Tag.Named<Item> itemGroupCategoryTag)
 	{
+		String engName;
+
+		if(serializedName.equals("dunmer"))
+			engName = englishName + " Door " + (type.equals("single") ? 1 : 2);
+		else
+			engName = englishName + " Door " + RegistrateLangProvider.toEnglishName(type);
+
 		return FFRegistry.getInstance()
 				.block("%s/door_%s".formatted(serializedName, type), blockFactory)
-					.lang("%s Door %s".formatted(englishName, RegistrateLangProvider.toEnglishName(type)))
-					.lang(EN_GB, "%s Door %s".formatted(englishName, RegistrateLangProvider.toEnglishName(type)))
+					.lang(engName)
+					.lang(EN_GB, engName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
