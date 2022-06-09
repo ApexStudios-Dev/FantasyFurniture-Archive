@@ -597,7 +597,8 @@ public enum FurnitureSet
 					.noOcclusion()
 					.instabreak()
 					.noCollission()
-					.lightLevel(blockState -> 14)
+					// .lightLevel(blockState -> DUNMER.wallLightBlock.hasBlockState(blockState) || !blockState.getValue(SetWallLightBlock.WATERLOGGED) ? 14 : 0)
+				     .lightLevel(blockState -> serializedName.equals("dunmer") || !blockState.getValue(SetWallLightBlock.WATERLOGGED) ? 14 : 0)
 
 					.blockState(Registrations::horizontalBlock)
 
@@ -628,7 +629,7 @@ public enum FurnitureSet
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 					.instabreak()
-					.lightLevel(blockState -> blockState.getValue(SetFloorLightBlock.SIDE) == SetFloorLightBlock.Side.TOP ? 14 : 0)
+					.lightLevel(blockState -> blockState.getValue(SetFloorLightBlock.WATERLOGGED) || blockState.getValue(SetFloorLightBlock.SIDE) == SetFloorLightBlock.Side.BOTTOM ? 0 : 14)
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(Registrations.getExistingModelPath(ctx.getId(), ""))))
 
@@ -1574,7 +1575,7 @@ public enum FurnitureSet
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
-					.lightLevel(blockState -> 14)
+					.lightLevel(blockState -> blockState.getValue(SetChandelierBlock.WATERLOGGED) ? 0 : 14)
 
 					.blockState(Registrations::simpleBlockWithStates)
 
