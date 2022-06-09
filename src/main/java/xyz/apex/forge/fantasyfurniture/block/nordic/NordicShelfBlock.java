@@ -13,15 +13,15 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetShelfBlock;
 public final class NordicShelfBlock extends SetShelfBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
-			box(1.5D, 9D, 2D, 2.5D, 14D, 13D),
-			box(14.5D, 9D, 2D, 15.5D, 14D, 13D),
+			box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+			box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
 			box(0D, 14D, 0D, 16D, 16D, 16D),
 			box(13D, 6D, 13D, 16D, 14D, 16D),
 			box(0D, 6D, 13D, 3D, 14D, 16D)
 	);
 
 	public static final VoxelShape SHAPE_LEFT = VoxelShaper.or(
-			box(14.5D, 9D, 2D, 15.5D, 14D, 13D),
+			box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
 			box(0D, 14D, 0D, 16D, 16D, 16D),
 			box(13D, 6D, 13D, 16D, 14D, 16D)
 	);
@@ -29,7 +29,7 @@ public final class NordicShelfBlock extends SetShelfBlock
 	public static final VoxelShape SHAPE_CENTER = box(0D, 14D, 0D, 16D, 16D, 16D);
 
 	public static final VoxelShape SHAPE_RIGHT = VoxelShaper.or(
-			box(1.5D, 9D, 2D, 2.5D, 14D, 13D),
+			box(.5D, 9D, 2D, 2.5D, 14D, 13D),
 			box(0D, 14D, 0D, 16D, 16D, 16D),
 			box(0D, 6D, 13D, 3D, 14D, 16D)
 	);

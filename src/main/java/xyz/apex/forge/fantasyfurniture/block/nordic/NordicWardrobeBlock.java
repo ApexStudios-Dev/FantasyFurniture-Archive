@@ -13,7 +13,15 @@ import xyz.apex.forge.fantasyfurniture.block.base.set.SetWardrobeBlock;
 
 public final class NordicWardrobeBlock extends SetWardrobeBlock
 {
-	public static final VoxelShape SHAPE = box(-15D, 0D, 0D, 15D, 32D, 16D);
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			box(-14.75D, 0D, .25D, -12.25D, 31D, 2.75D),
+			box(-14.75D, 0D, 13.25D, -12.25D, 31D, 15.75D),
+			box(12.25D, 0D, 13.25D, 14.75D, 31D, 15.75D),
+			box(12.25D, 0D, .25D, 14.75D, 31D, 2.75D),
+			box(-14D, 2D, 1D, 14D, 31D, 15D),
+			box(-15D, 31D, 0D, 15D, 32D, 16D)
+	);
+
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 
 	public NordicWardrobeBlock(Properties properties, MultiBlockPattern pattern)
