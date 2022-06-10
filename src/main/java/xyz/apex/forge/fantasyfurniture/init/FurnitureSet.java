@@ -48,6 +48,7 @@ import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 
 import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
+import static com.tterrag.registrate.providers.ProviderType.ITEM_MODEL;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public enum FurnitureSet
@@ -1651,10 +1652,7 @@ public enum FurnitureSet
 			        .tag(BlockTags.WOODEN_DOORS)
 
 					.item()
-						.model((ctx, provider) -> provider
-								.withExistingParent("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), new ResourceLocation("minecraft:item/generated"))
-								.texture("layer0", provider.itemTexture(ctx))
-						)
+						.clearDataGenerator(ITEM_MODEL)
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.WOODEN_DOORS)
 					.build()
 		.register();
