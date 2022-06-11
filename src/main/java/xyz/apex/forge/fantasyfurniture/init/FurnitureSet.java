@@ -598,8 +598,7 @@ public enum FurnitureSet
 					.noOcclusion()
 					.instabreak()
 					.noCollission()
-					// .lightLevel(blockState -> DUNMER.wallLightBlock.hasBlockState(blockState) || !blockState.getValue(SetWallLightBlock.WATERLOGGED) ? 14 : 0)
-				     .lightLevel(blockState -> serializedName.equals("dunmer") || !blockState.getValue(SetWallLightBlock.WATERLOGGED) ? 14 : 0)
+			        .lightLevel(blockState -> serializedName.equals("dunmer") || !SetWallLightBlock.isWaterLogged(blockState) ? 14 : 0)
 
 					.blockState(Registrations::horizontalBlock)
 

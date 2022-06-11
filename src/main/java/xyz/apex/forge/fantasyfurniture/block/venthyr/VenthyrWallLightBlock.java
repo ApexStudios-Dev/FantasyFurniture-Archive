@@ -33,27 +33,33 @@ public final class VenthyrWallLightBlock extends SetWallLightBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = getFacing(blockState);
 		return SHAPER.get(facing);
 	}
 
 	@Override
-	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
+	protected void spawnLightParticles(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
 	{
-		if(!blockState.getValue(WATERLOGGED))
+		var x = pX;
+		var y = pY + .35D;
+		var z = pZ;
+
+		var xOffset = 0D;
+		var zOffset = 0D;
+
+		if(supportsFacing(blockState))
 		{
-			var facing = blockState.getValue(FACING).getOpposite();
-
-			var x = pos.getX() + .5D + (.25D * facing.getStepX());
-			var y = pos.getY() + .85D;
-			var z = pos.getZ() + .5D + (.25D * facing.getStepZ());
-
+			var facing =getFacing(blockState).getOpposite();
 			var face = facing.getClockWise();
-			var xOffset = .15D * face.getStepX();
-			var zOffset = .15D * face.getStepZ();
 
-			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
-			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
+			xOffset = .15D * face.getStepX();
+			zOffset = .15D * face.getStepZ();
+
+			x += .25D * facing.getStepX();
+			z += .25D * facing.getStepZ();
 		}
+
+		onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
+		onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
 	}
 }

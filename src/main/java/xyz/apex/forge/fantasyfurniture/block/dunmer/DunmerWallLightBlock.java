@@ -44,7 +44,7 @@ public final class DunmerWallLightBlock extends SetWallLightBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = getFacing(blockState);
 		return SHAPER.get(facing);
 	}
 }
