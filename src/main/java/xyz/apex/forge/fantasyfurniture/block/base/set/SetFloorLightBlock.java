@@ -63,7 +63,7 @@ public class SetFloorLightBlock extends BaseMultiBlock
 	@Override
 	public MultiBlockPattern getMultiBlockPattern()
 	{
-		return FFPatterns.PATTERN_1x1x2;
+		return FFPatterns.PATTERN_1x1x2_FLOOR_LIGHT;
 	}
 
 	public enum Side implements StringRepresentable

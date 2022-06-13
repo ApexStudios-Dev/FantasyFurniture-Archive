@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.fantasyfurniture.block.base.set.SetFloorLightBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetPaintingWideBlock;
 
 public final class FFPatterns
@@ -9,6 +10,13 @@ public final class FFPatterns
 			.builder()
 			.layer("X")
 			.layer("X")
+			.build();
+
+	public static final MultiBlockPattern PATTERN_1x1x2_FLOOR_LIGHT = MultiBlockPattern
+			.builder()
+			.layer("X")
+			.layer("X")
+			.placementStateModifier((pattern, pos, blockState, integer) -> pattern.isOrigin(blockState) ? blockState : blockState.setValue(SetFloorLightBlock.SIDE, SetFloorLightBlock.Side.TOP))
 			.build();
 
 	public static final MultiBlockPattern PATTERN_1x2x1 = MultiBlockPattern
