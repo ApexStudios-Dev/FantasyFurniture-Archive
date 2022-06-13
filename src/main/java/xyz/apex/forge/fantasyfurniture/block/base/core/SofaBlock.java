@@ -11,8 +11,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 
@@ -28,25 +32,29 @@ public class SofaBlock extends SeatBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
 	{
-		builder.add(CONNECTION_TYPE);
-		super.createBlockStateDefinition(builder);
+		super.registerProperties(consumer);
+		consumer.accept(CONNECTION_TYPE);
 	}
 
 	@Override
 	public BlockState updateShape(BlockState blockState, Direction facing, BlockState facingBlockState, LevelAccessor level, BlockPos pos, BlockPos facingPos)
 	{
+		blockState = super.updateShape(blockState, facing, facingBlockState, level, pos, facingPos);
 		return getBlockState(level, pos, blockState, this);
 	}
 
-	@SuppressWarnings("ConstantConditions") // super is non null
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx)
+	protected BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
 	{
-		var blockState = super.getStateForPlacement(ctx);
-		return getBlockState(ctx.getLevel(), ctx.getClickedPos(), blockState, this);
+		placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
+
+		if(placementBlockState != null)
+			placementBlockState = getBlockState(ctx.getLevel(), ctx.getClickedPos(), placementBlockState, this);
+
+		return placementBlockState;
 	}
 
 	@Override
@@ -98,7 +106,7 @@ public class SofaBlock extends SeatBlock
 
 	public static ConnectionType getConnectionState(LevelAccessor level, BlockPos pos, BlockState blockState, SofaBlock baseSofaBlock)
 	{
-		var originFacing = blockState.getValue(FACING);
+		var originFacing = BaseBlock.getFacing(blockState);
 		var originConnectionType = blockState.getValue(CONNECTION_TYPE);
 
 		var leftPos = pos.relative(originFacing.getCounterClockWise());
@@ -130,16 +138,16 @@ public class SofaBlock extends SeatBlock
 		if(!inFrontBlockState.is(baseSofaBlock))
 			return false;
 
-		var inFrontFacing = inFrontBlockState.getValue(FACING);
+		var inFrontFacing = BaseBlock.getFacing(inFrontBlockState);
 
 		if(leftBlockState.is(baseSofaBlock))
 		{
-			var leftFacing = leftBlockState.getValue(FACING);
+			var leftFacing = BaseBlock.getFacing(leftBlockState);
 			return isCornerFacing(originFacing, leftFacing, inFrontFacing);
 		}
 		else if(rightBlockState.is(baseSofaBlock))
 		{
-			var rightFacing = rightBlockState.getValue(FACING);
+			var rightFacing = BaseBlock.getFacing(rightBlockState);
 			return isCornerFacing(originFacing, rightFacing, inFrontFacing);
 		}
 
@@ -158,7 +166,7 @@ public class SofaBlock extends SeatBlock
 	{
 		if(!leftBlockState.is(baseSofaBlock))
 			return false;
-		if(leftBlockState.getValue(FACING) == originFacing)
+		if(BaseBlock.getFacing(leftBlockState) == originFacing)
 			return true;
 
 		var leftConnectionType = leftBlockState.getValue(CONNECTION_TYPE);
@@ -172,7 +180,7 @@ public class SofaBlock extends SeatBlock
 	{
 		if(!rightBlockState.is(baseSofaBlock))
 			return false;
-		if(rightBlockState.getValue(FACING) == originFacing)
+		if(BaseBlock.getFacing(rightBlockState) == originFacing)
 			return true;
 
 		var rightConnectionType = rightBlockState.getValue(CONNECTION_TYPE);

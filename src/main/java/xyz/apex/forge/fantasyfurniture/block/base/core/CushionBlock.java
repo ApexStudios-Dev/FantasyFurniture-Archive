@@ -7,6 +7,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
+
 public class CushionBlock extends SeatBlock
 {
 	public CushionBlock(Properties properties)

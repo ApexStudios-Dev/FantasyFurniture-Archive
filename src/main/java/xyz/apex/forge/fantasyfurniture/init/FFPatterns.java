@@ -51,8 +51,21 @@ public final class FFPatterns
 	public static final MultiBlockPattern PATTERN_BED_SINGLE = MultiBlockPattern
 			.builder()
 			.layer("X", "X")
-			.setSpacesFor4Way()
 			.build();
+
+	public static final class Revamp
+	{
+		public static final xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern PATTERN_1x1x2 = xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern
+				.builder()
+				.layer("X")
+				.layer("X")
+				.build();
+
+		public static final xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern PATTERN_1x2x1 = xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern
+				.builder()
+				.layer("XX")
+				.build();
+	}
 
 	static void bootstrap()
 	{

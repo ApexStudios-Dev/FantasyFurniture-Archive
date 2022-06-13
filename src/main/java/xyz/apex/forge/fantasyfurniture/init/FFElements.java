@@ -3,46 +3,22 @@ package xyz.apex.forge.fantasyfurniture.init;
 import com.google.common.collect.Lists;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
-import xyz.apex.forge.fantasyfurniture.client.renderer.entity.SeatEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.container.*;
-import xyz.apex.forge.fantasyfurniture.entity.SeatEntity;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
-import xyz.apex.forge.utility.registrator.entry.EntityEntry;
 import xyz.apex.forge.utility.registrator.entry.MenuEntry;
 import xyz.apex.forge.utility.registrator.factory.BlockEntityFactory;
 import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 import java.util.List;
 
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
-
 public final class FFElements
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
-	// region: Seat Entity
-	public static final EntityEntry<SeatEntity> SEAT_ENTITY = REGISTRY
-			.<SeatEntity>entity("seat", MobCategory.MISC, SeatEntity::new)
-				.lang("Seat")
-				.lang(EN_GB, "Seat")
-
-				.sized(0F, 0F)
-				.setCustomClientFactory((spawnEntity, level) -> new SeatEntity(level))
-
-				.noSummon()
-				.fireImmune()
-				.immuneTo(() -> Blocks.TNT, () -> Blocks.LAVA)
-
-				.renderer(() -> SeatEntityRenderer::new)
-			.register();
-	// endregion
 
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/medium_storage.png");

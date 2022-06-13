@@ -32,9 +32,10 @@ import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFactory;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
-import xyz.apex.forge.fantasyfurniture.block.base.core.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
@@ -237,8 +238,8 @@ public enum FurnitureSet
 			BlockFactory<SetShelfBlock> shelfBlockFactory,
 			BlockFactory<SetSofaBlock> sofaBlockFactory,
 			MultiBlockFactory<SetDeskBlock> deskBlockFactory,
-			MultiBlockFactory<SetChairBlock> chairBlockFactory,
-			MultiBlockFactory<SetBenchBlock> benchBlockFactory,
+			BlockFactory<SetChairBlock> chairBlockFactory,
+			BlockFactory<SetBenchBlock> benchBlockFactory,
 			MultiBlockFactory<SetBookshelfBlock> bookshelfBlockFactory,
 			MultiBlockFactory<SetChestBlock> chestBlockFactory,
 			MultiBlockFactory<SetDresserBlock> dresserBlockFactory,
@@ -1209,7 +1210,7 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
-						var facing = blockState.getValue(SofaBlock.FACING);
+						var facing = BaseBlock.getFacing(blockState);
 						var connectionType = blockState.getValue(SofaBlock.CONNECTION_TYPE);
 
 						return ConfiguredModel
@@ -1267,10 +1268,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chair
-	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/chair".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x1)
+				.block("%s/chair".formatted(serializedName), blockFactory)
 					.lang("%s Chair".formatted(englishName))
 					.lang(EN_GB, "%s Chair".formatted(englishName))
 
@@ -1297,10 +1298,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bench
-	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/bench".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/bench".formatted(serializedName), blockFactory)
 					.lang("%s Bench".formatted(englishName))
 					.lang(EN_GB, "%s Bench".formatted(englishName))
 
