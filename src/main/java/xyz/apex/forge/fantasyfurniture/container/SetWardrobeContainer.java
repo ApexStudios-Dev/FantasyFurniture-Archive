@@ -25,6 +25,6 @@ public final class SetWardrobeContainer extends BaseMenu
 		var itemHandler = blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().orElseThrow();
 
 		bindItemHandlerSlots(this, itemHandler, ROWS, COLS, 8, 18);
-		bindPlayerInventory(this, 8, 84);
+		bindPlayerInventory(this, 8, 140);
 	}
 }
