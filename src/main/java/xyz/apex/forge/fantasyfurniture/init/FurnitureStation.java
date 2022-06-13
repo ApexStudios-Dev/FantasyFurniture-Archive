@@ -14,7 +14,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -219,8 +218,7 @@ public final class FurnitureStation
 	{
 		return REGISTRY
 				.container(
-						"furniture_station",
-						(containerType, windowId, playerInventory, buffer) -> new FurnitureStationContainer(containerType, windowId, playerInventory, ContainerLevelAccess.NULL),
+						"furniture_station", FurnitureStationContainer::new,
 						() -> FurnitureStationContainerScreen::new
 				)
 		.register();

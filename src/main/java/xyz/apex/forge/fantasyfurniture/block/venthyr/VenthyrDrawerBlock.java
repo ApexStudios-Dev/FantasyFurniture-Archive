@@ -8,6 +8,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetDrawerBlock;
 
 public final class VenthyrDrawerBlock extends SetDrawerBlock
@@ -35,7 +36,7 @@ public final class VenthyrDrawerBlock extends SetDrawerBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		return SHAPER.get(facing);
 	}
 }

@@ -7,33 +7,37 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 
-public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
+public class SetWardrobeTopperBlock extends BaseMultiBlock
 {
-	public SetWardrobeTopperBlock(Properties properties, MultiBlockPattern pattern)
+	public SetWardrobeTopperBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
 	}
 
 	@Override
 	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
 	{
 		// move to origin of topper block
-		var startPos = pos;
-
-		if(!pattern.isOrigin(blockState))
-		{
-			var index = pattern.getIndex(blockState);
-			var localSpace = pattern.getLocalPositions().get(index);
-			startPos = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
-		}
+		var startPos = getMultiBlockOriginPos(blockState, pos);
 
 		// validate block below topper origin is a wardrobe block
 		var belowPos = startPos.below();
@@ -43,10 +47,7 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 		if(belowBlock instanceof SetWardrobeBlock wardrobeBlock)
 		{
 			// move to wardrobe origin block
-			var multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
-			var index = multiBlockPattern.getIndex(belowBlockState);
-			var localSpace = multiBlockPattern.getLocalPositions().get(index);
-			var origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
+			var origin = wardrobeBlock.getMultiBlockOriginPos(belowBlockState, belowPos);
 
 			// build new raytrace result
 			var newResult = result.withPosition(origin).withDirection(player.getDirection());
@@ -65,14 +66,7 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
 	{
 		// move to origin of topper block
-		var startPos = pos;
-
-		if(!pattern.isOrigin(blockState))
-		{
-			var index = pattern.getIndex(blockState);
-			var localSpace = pattern.getLocalPositions().get(index);
-			startPos = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
-		}
+		var startPos = getMultiBlockOriginPos(blockState, pos);
 
 		// validate block below topper origin is a wardrobe block
 		var belowPos = startPos.below();
@@ -81,10 +75,7 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 		if(belowBlock instanceof SetWardrobeBlock wardrobeBlock)
 		{
-			var multiBlockPattern = wardrobeBlock.getMultiBlockPattern();
-			var index = multiBlockPattern.getIndex(belowBlockState);
-			var localSpace = multiBlockPattern.getLocalPositions().get(index);
-			var origin = multiBlockPattern.getOriginFromWorldSpace(belowBlockState, belowPos, localSpace);
+			var origin = wardrobeBlock.getMultiBlockOriginPos(blockState, belowPos);
 
 			// try again from wardrobe origin pov
 			var originBlockState = level.getBlockState(origin);
@@ -99,5 +90,11 @@ public class SetWardrobeTopperBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
 		return PushReaction.DESTROY;
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_1x2x1;
 	}
 }

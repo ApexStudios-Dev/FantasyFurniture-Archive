@@ -6,20 +6,21 @@ import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
 
 public class SetBedDoubleBlock extends BedBlock
 {
-	public SetBedDoubleBlock(Properties properties, MultiBlockPattern pattern)
+	public SetBedDoubleBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 	}
 
 	@Override
 	protected int getBedFootMultiBlockIndex(BlockState blockState)
 	{
-		int index = pattern.getIndex(blockState);
+		int index = getMultiBlockIndex(blockState);
 		return index % 2 == 0 ? 2 : 3;
 	}
 
@@ -36,5 +37,11 @@ public class SetBedDoubleBlock extends BedBlock
 			pose.scale(.9F, .9F, .9F);
 			pose.translate(0D, .2D, -.05D);
 		}
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_2x2x1;
 	}
 }

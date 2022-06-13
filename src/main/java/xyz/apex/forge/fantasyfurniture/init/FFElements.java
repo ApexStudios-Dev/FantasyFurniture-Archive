@@ -25,32 +25,32 @@ public final class FFElements
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/large_storage.png");
 
 	// region: Drawer
-	public static final MenuEntry<SetDrawerContainer> DRAWER_CONTAINER = Registrations.container("drawer", SetDrawerContainer.ROWS, SetDrawerContainer.COLS, SetDrawerContainer::new, () -> SetDrawerContainerScreen::new);
+	public static final MenuEntry<SetDrawerContainer> DRAWER_CONTAINER = Registrations.container("drawer", SetDrawerContainer::new, () -> SetDrawerContainerScreen::new);
 	public static final BlockEntityEntry<SetDrawerBlockEntity> DRAWER_BLOCK_ENTITY;
 	// endregion
 
 	// region: Chest
-	public static final MenuEntry<SetChestContainer> CHEST_CONTAINER = Registrations.container("chest", SetChestContainer.ROWS, SetChestContainer.COLS, SetChestContainer::new, () -> SetChestContainerScreen::new);
+	public static final MenuEntry<SetChestContainer> CHEST_CONTAINER = Registrations.container("chest", SetChestContainer::new, () -> SetChestContainerScreen::new);
 	public static final BlockEntityEntry<SetChestBlockEntity> CHEST_BLOCK_ENTITY;
 	// endregion
 
 	// region: Dresser
-	public static final MenuEntry<SetDresserContainer> DRESSER_CONTAINER = Registrations.container("dresser", SetDresserContainer.ROWS, SetDresserContainer.COLS, SetDresserContainer::new, () -> SetDresserContainerScreen::new);
+	public static final MenuEntry<SetDresserContainer> DRESSER_CONTAINER = Registrations.container("dresser", SetDresserContainer::new, () -> SetDresserContainerScreen::new);
 	public static final BlockEntityEntry<SetDresserBlockEntity> DRESSER_BLOCK_ENTITY;
 	// endregion
 
 	// region: Desk
-	public static final MenuEntry<SetDeskContainer> DESK_CONTAINER = Registrations.container("desk", SetDeskContainer.ROWS, SetDeskContainer.COLS, SetDeskContainer::new, () -> SetDeskContainerScreen::new);
+	public static final MenuEntry<SetDeskContainer> DESK_CONTAINER = Registrations.container("desk", SetDeskContainer::new, () -> SetDeskContainerScreen::new);
 	public static final BlockEntityEntry<SetDeskBlockEntity> DESK_BLOCK_ENTITY;
 	// endregion
 
 	// region: Wardrobe
-	public static final MenuEntry<SetWardrobeContainer> WARDROBE_CONTAINER = Registrations.container("wardrobe", SetWardrobeContainer.ROWS, SetWardrobeContainer.COLS, SetWardrobeContainer::new, () -> SetWardrobeContainerScreen::new);
+	public static final MenuEntry<SetWardrobeContainer> WARDROBE_CONTAINER = Registrations.container("wardrobe", SetWardrobeContainer::new, () -> SetWardrobeContainerScreen::new);
 	public static final BlockEntityEntry<SetWardrobeBlockEntity> WARDROBE_BLOCK_ENTITY;
 	// endregion
 
 	// region: Bookshelf
-	public static final MenuEntry<SetBookshelfContainer> BOOKSHELF_CONTAINER = Registrations.container("bookshelf", SetBookshelfContainer.ROWS, SetBookshelfContainer.COLS, SetBookshelfContainer::new, () -> SetBookshelfContainerScreen::new);
+	public static final MenuEntry<SetBookshelfContainer> BOOKSHELF_CONTAINER = Registrations.container("bookshelf", SetBookshelfContainer::new, () -> SetBookshelfContainerScreen::new);
 	public static final BlockEntityEntry<SetBookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY;
 	// endregion
 

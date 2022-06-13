@@ -24,7 +24,7 @@ public class SetBenchBlock extends SeatMultiBlock
 	@Override
 	public MultiBlockPattern getMultiBlockPattern()
 	{
-		return FFPatterns.Revamp.PATTERN_1x2x1;
+		return FFPatterns.PATTERN_1x2x1;
 	}
 
 	@Override

@@ -9,9 +9,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedStackedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 
-public final class ChalicesBlock extends SimpleFourWayWaterLoggedStackedBlock
+public final class ChalicesBlock extends StackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(6.5D, 0D, 6.5D, 9.5D, 8D, 9.5D);
 	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
@@ -43,7 +44,7 @@ public final class ChalicesBlock extends SimpleFourWayWaterLoggedStackedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var count = blockState.getValue(CHALICES);
 		return (count == 2 ? SHAPER_2 : count == 1 ? SHAPER_1 : SHAPER_0).get(facing);
 	}

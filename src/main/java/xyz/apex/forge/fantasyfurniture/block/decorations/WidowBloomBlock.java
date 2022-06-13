@@ -4,15 +4,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedBlockEntityBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public final class WidowBloomBlock extends SimpleFourWayWaterLoggedBlockEntityBlock<WidowBloomBlockEntity>
+public final class WidowBloomBlock extends BaseBlock.WithBlockEntity<WidowBloomBlockEntity>
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(6D, 0D, 6D, 10D, 3D, 10D),
@@ -25,6 +27,14 @@ public final class WidowBloomBlock extends SimpleFourWayWaterLoggedBlockEntityBl
 	public WidowBloomBlock(Properties properties)
 	{
 		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(WATERLOGGED);
+		consumer.accept(FACING_4_WAY);
 	}
 
 	@Override

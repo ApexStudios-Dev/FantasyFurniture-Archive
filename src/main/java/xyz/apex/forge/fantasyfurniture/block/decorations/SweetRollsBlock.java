@@ -10,9 +10,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedStackedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 
-public final class SweetRollsBlock extends SimpleFourWayWaterLoggedStackedBlock
+public final class SweetRollsBlock extends StackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(6D, 0D, 6D, 10D, 4D, 10D);
 	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
@@ -50,7 +51,7 @@ public final class SweetRollsBlock extends SimpleFourWayWaterLoggedStackedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var count = blockState.getValue(ROLLS);
 		VoxelShaper shaper;
 

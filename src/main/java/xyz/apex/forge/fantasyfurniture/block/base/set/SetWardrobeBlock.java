@@ -1,20 +1,38 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayMultiBlockContainerBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.entity.SetWardrobeBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetWardrobeContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public class SetWardrobeBlock extends SimpleFourWayMultiBlockContainerBlock<SetWardrobeBlockEntity, SetWardrobeContainer>
+public class SetWardrobeBlock extends BaseMultiBlock.WithContainer<SetWardrobeBlockEntity, SetWardrobeContainer>
 {
-	public SetWardrobeBlock(Properties properties, MultiBlockPattern pattern)
+	public SetWardrobeBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+	}
+
+	@Override
+	protected MenuType<SetWardrobeContainer> getContainerType()
+	{
+		return FFElements.WARDROBE_CONTAINER.asMenuType();
 	}
 
 	@Override
@@ -27,5 +45,11 @@ public class SetWardrobeBlock extends SimpleFourWayMultiBlockContainerBlock<SetW
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
 		return PushReaction.BLOCK;
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_1x2x2;
 	}
 }

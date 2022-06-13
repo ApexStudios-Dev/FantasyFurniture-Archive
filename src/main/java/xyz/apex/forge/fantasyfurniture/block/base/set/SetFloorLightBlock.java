@@ -4,41 +4,37 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.core.WaterLoggedMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import java.util.Random;
 
-public class SetFloorLightBlock extends WaterLoggedMultiBlock
+public class SetFloorLightBlock extends BaseMultiBlock
 {
 	public static final EnumProperty<Side> SIDE = EnumProperty.create("side", Side.class);
 
-	public SetFloorLightBlock(Properties properties, MultiBlockPattern pattern)
+	public SetFloorLightBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(SIDE, Side.BOTTOM));
 	}
 
 	@Override
-	public RenderShape getRenderShape(BlockState blockState)
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
 	{
-		return pattern.isOrigin(blockState) ? RenderShape.MODEL : RenderShape.INVISIBLE;
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
-	{
-		builder.add(SIDE);
-		super.createBlockStateDefinition(builder);
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+		consumer.accept(SIDE);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -62,6 +58,12 @@ public class SetFloorLightBlock extends WaterLoggedMultiBlock
 	{
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_1x1x2;
 	}
 
 	public enum Side implements StringRepresentable

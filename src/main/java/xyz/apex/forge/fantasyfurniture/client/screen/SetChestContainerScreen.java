@@ -3,10 +3,11 @@ package xyz.apex.forge.fantasyfurniture.client.screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
+import xyz.apex.forge.apexcore.revamp.client.screen.BaseMenuScreen;
 import xyz.apex.forge.fantasyfurniture.container.SetChestContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 
-public final class SetChestContainerScreen extends InventoryContainerScreen<SetChestContainer>
+public final class SetChestContainerScreen extends BaseMenuScreen<SetChestContainer>
 {
 	public SetChestContainerScreen(SetChestContainer menu, Inventory playerInventory, Component titleComponent)
 	{

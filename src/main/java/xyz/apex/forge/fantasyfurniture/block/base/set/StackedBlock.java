@@ -1,10 +1,12 @@
-package xyz.apex.forge.fantasyfurniture.block.base.core;
+package xyz.apex.forge.fantasyfurniture.block.base.set;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -12,35 +14,34 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.java.utility.Lazy;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SimpleFourWayWaterLoggedStackedBlock extends SimpleFourWayWaterLoggedBlock implements IStackedBlock
+public abstract class StackedBlock extends BaseBlock
 {
-	private final Lazy<Integer> minValue = Lazy.of(() -> IStackedBlock.getMinValue(getStackSizeProperty()));
-	private final Lazy<Integer> maxValue = Lazy.of(() -> IStackedBlock.getMaxValue(getStackSizeProperty()));
+	private final Lazy<Integer> minValue = Lazy.of(() -> getMinValue(getStackSizeProperty()));
+	private final Lazy<Integer> maxValue = Lazy.of(() -> getMaxValue(getStackSizeProperty()));
 
-	public SimpleFourWayWaterLoggedStackedBlock(Properties properties)
+	public StackedBlock(Properties properties)
 	{
 		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(getStackSizeProperty(), 0));
 	}
 
-	@Override
 	public abstract IntegerProperty getStackSizeProperty();
 
-	@Override
-	public boolean isForStack(ItemStack stack)
+	protected boolean isForStack(ItemStack stack)
 	{
 		return stack.is(asItem());
 	}
@@ -97,10 +98,12 @@ public abstract class SimpleFourWayWaterLoggedStackedBlock extends SimpleFourWay
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
 	{
-		builder.add(getStackSizeProperty());
-		super.createBlockStateDefinition(builder);
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+		consumer.accept(getStackSizeProperty());
 	}
 
 	@Override
@@ -110,9 +113,23 @@ public abstract class SimpleFourWayWaterLoggedStackedBlock extends SimpleFourWay
 		tooltip.add(getStackableTranslation().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 	}
 
-	@Override
-	public String getStackableTranslationKey()
+	public MutableComponent getStackableTranslation()
+	{
+		return new TranslatableComponent(getStackableTranslationKey());
+	}
+
+	public final String getStackableTranslationKey()
 	{
 		return getDescriptionId() + ".stacked";
+	}
+
+	public static int getMinValue(IntegerProperty property)
+	{
+		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i <= 0).min().orElse(0);
+	}
+
+	public static int getMaxValue(IntegerProperty property)
+	{
+		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i >= 0).max().orElse(0);
 	}
 }

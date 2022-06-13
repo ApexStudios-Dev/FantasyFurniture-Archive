@@ -30,14 +30,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockFactory;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
-import xyz.apex.forge.fantasyfurniture.block.base.core.ShelfBlock;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
 import xyz.apex.forge.fantasyfurniture.block.dunmer.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
@@ -226,27 +223,27 @@ public enum FurnitureSet
 
 			BlockFactory<SetCarpetBlock> carpetBlockFactory,
 			BlockFactory<SetWallLightBlock> wallLightBlockFactory,
-			MultiBlockFactory<SetFloorLightBlock> floorLightBlockFactory,
+			BlockFactory<SetFloorLightBlock> floorLightBlockFactory,
 			BlockFactory<SetTableSmallBlock> tableSmallBlockFactory,
-			MultiBlockFactory<SetTableWideBlock> tableWideBlockFactory,
-			MultiBlockFactory<SetTableLargeBlock> tableLargeBlockFactory,
+			BlockFactory<SetTableWideBlock> tableWideBlockFactory,
+			BlockFactory<SetTableLargeBlock> tableLargeBlockFactory,
 			BlockFactory<SetStoolBlock> stoolBlockFactory,
 			BlockFactory<SetCushionBlock> cushionBlockFactory,
 			BlockFactory<SetPaintingSmallBlock> paintingSmallBlockFactory,
-			MultiBlockFactory<SetPaintingWideBlock> paintingWideBlockFactory,
+			BlockFactory<SetPaintingWideBlock> paintingWideBlockFactory,
 			BlockFactory<SetDrawerBlock> drawerBlockFactory,
 			BlockFactory<SetShelfBlock> shelfBlockFactory,
 			BlockFactory<SetSofaBlock> sofaBlockFactory,
-			MultiBlockFactory<SetDeskBlock> deskBlockFactory,
+			BlockFactory<SetDeskBlock> deskBlockFactory,
 			BlockFactory<SetChairBlock> chairBlockFactory,
 			BlockFactory<SetBenchBlock> benchBlockFactory,
-			MultiBlockFactory<SetBookshelfBlock> bookshelfBlockFactory,
-			MultiBlockFactory<SetChestBlock> chestBlockFactory,
-			MultiBlockFactory<SetDresserBlock> dresserBlockFactory,
-			MultiBlockFactory<SetWardrobeBlock> wardrobeBlockFactory,
-			MultiBlockFactory<SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
-			MultiBlockFactory<SetBedSingleBlock> bedSingleBlockFactory,
-			MultiBlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory,
+			BlockFactory<SetBookshelfBlock> bookshelfBlockFactory,
+			BlockFactory<SetChestBlock> chestBlockFactory,
+			BlockFactory<SetDresserBlock> dresserBlockFactory,
+			BlockFactory<SetWardrobeBlock> wardrobeBlockFactory,
+			BlockFactory<SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
+			BlockFactory<SetBedSingleBlock> bedSingleBlockFactory,
+			BlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory,
 			BlockFactory<SetChandelierBlock> chandelierBlockFactory,
 			BlockFactory<DoorBlock> doorBlockFactory
 	)
@@ -619,10 +616,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Floor Light
-	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/floor_light".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x1_FLOOR_LIGHT)
+				.block("%s/floor_light".formatted(serializedName), blockFactory)
 					.lang("%s Floor Light".formatted(englishName))
 					.lang(EN_GB, "%s Floor Light".formatted(englishName))
 
@@ -766,10 +763,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/table_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/table_wide".formatted(serializedName), blockFactory)
 					.lang("%s Table Wide".formatted(englishName))
 					.lang(EN_GB, "%s Table Wide".formatted(englishName))
 
@@ -794,10 +791,10 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/table_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/table_wide".formatted(serializedName), blockFactory)
 					.setData(LANG, (ctx, provider) -> {
 			            var block = ctx.get();
 			            provider.add(block, "%s Table Wide".formatted(englishName));
@@ -881,10 +878,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Large
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/table_large".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+				.block("%s/table_large".formatted(serializedName), blockFactory)
 					.lang("%s Table Large".formatted(englishName))
 					.lang(EN_GB, "%s Table Large".formatted(englishName))
 
@@ -909,10 +906,10 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/table_large".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+				.block("%s/table_large".formatted(serializedName), blockFactory)
 					.setData(LANG, (ctx, provider) -> {
 			            var block = ctx.get();
 			            provider.add(block, "%s Table Large".formatted(englishName));
@@ -1089,10 +1086,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/painting_wide".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2_PAINTING)
+				.block("%s/painting_wide".formatted(serializedName), blockFactory)
 					.lang("%s Painting Wide".formatted(englishName))
 					.lang(EN_GB, "%s Painting Wide".formatted(englishName))
 
@@ -1166,12 +1163,12 @@ public enum FurnitureSet
 					.noOcclusion()
 
 					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
-						var connectionType = blockState.getValue(ShelfBlock.CONNECTION_TYPE);
+						var connectionType = blockState.getValue(SetShelfBlock.CONNECTION_TYPE);
 						String suffix;
 
-						if(connectionType == ShelfBlock.ConnectionType.LEFT || connectionType == ShelfBlock.ConnectionType.RIGHT)
+						if(connectionType == SetShelfBlock.ConnectionType.LEFT || connectionType == SetShelfBlock.ConnectionType.RIGHT)
 							suffix = "_" + connectionType.getSerializedName();
-						else if(connectionType == ShelfBlock.ConnectionType.BOTH)
+						else if(connectionType == SetShelfBlock.ConnectionType.BOTH)
 							suffix = "_center";
 						else
 							suffix = "";
@@ -1211,7 +1208,7 @@ public enum FurnitureSet
 
 					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
 						var facing = BaseBlock.getFacing(blockState);
-						var connectionType = blockState.getValue(SofaBlock.CONNECTION_TYPE);
+						var connectionType = blockState.getValue(SetSofaBlock.CONNECTION_TYPE);
 
 						return ConfiguredModel
 								.builder()
@@ -1236,12 +1233,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Desk
-	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String side, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String side, TagKey<Item> itemGroupCategoryTag)
 	{
 		var engName = "%s Desk %s".formatted(englishName, RegistrateLangProvider.toEnglishName(side));
 
 		return FFRegistry.getInstance()
-				.multiBlock("%s/desk_%s".formatted(serializedName, side), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/desk_%s".formatted(serializedName, side), blockFactory)
 					.lang(engName)
 					.lang(EN_GB, engName)
 
@@ -1328,10 +1325,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bookshelf
-	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/bookshelf".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
+				.block("%s/bookshelf".formatted(serializedName), blockFactory)
 					.lang("%s Bookshelf".formatted(englishName))
 					.lang(EN_GB, "%s Bookshelf".formatted(englishName))
 
@@ -1358,10 +1355,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chest
-	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/chest".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/chest".formatted(serializedName), blockFactory)
 					.lang("%s Chest".formatted(englishName))
 					.lang(EN_GB, "%s Chest".formatted(englishName))
 
@@ -1388,10 +1385,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Dresser
-	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/dresser".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/dresser".formatted(serializedName), blockFactory)
 					.lang("%s Dresser".formatted(englishName))
 					.lang(EN_GB, "%s Dresser".formatted(englishName))
 
@@ -1419,10 +1416,10 @@ public enum FurnitureSet
 
 	// region: Wardrobe
 	// region: Bottom
-	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/wardrobe_bottom".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2_VERTICAL)
+				.block("%s/wardrobe_bottom".formatted(serializedName), blockFactory)
 					.lang("%s Wardrobe".formatted(englishName))
 					.lang(EN_GB, "%s Wardrobe".formatted(englishName))
 
@@ -1449,10 +1446,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Top
-	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/wardrobe_top".formatted(serializedName), blockFactory, FFPatterns.PATTERN_1x2)
+				.block("%s/wardrobe_top".formatted(serializedName), blockFactory)
 					.lang("%s Wardrobe Top".formatted(englishName))
 					.lang(EN_GB, "%s Wardrobe Top".formatted(englishName))
 
@@ -1481,10 +1478,10 @@ public enum FurnitureSet
 
 	// region: Bed
 	// region: Single
-	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/bed_single".formatted(serializedName), blockFactory, FFPatterns.PATTERN_BED_SINGLE)
+				.block("%s/bed_single".formatted(serializedName), blockFactory)
 					.lang("%s Bed Single".formatted(englishName))
 					.lang(EN_GB, "%s Bed Single".formatted(englishName))
 
@@ -1532,10 +1529,10 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Double
-	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(MultiBlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
 		return FFRegistry.getInstance()
-				.multiBlock("%s/bed_double".formatted(serializedName), blockFactory, FFPatterns.PATTERN_2x2)
+				.block("%s/bed_double".formatted(serializedName), blockFactory)
 					.lang("%s Bed Double".formatted(englishName))
 					.lang(EN_GB, "%s Bed Double".formatted(englishName))
 
@@ -1551,7 +1548,7 @@ public enum FurnitureSet
 							String suffix = "";
 
 							if(serializedName.equals("dunmer"))
-								suffix = ((SetBedDoubleBlock) blockState.getBlock()).getMultiBlockPattern().isOrigin(blockState) ? "_head" : "_foot";
+								suffix = ((SetBedDoubleBlock) blockState.getBlock()).isMultiBlockOrigin(blockState) ? "_head" : "_foot";
 
 							return provider.models().getExistingFile(Registrations.getExistingModelPath(id, suffix));
 						});

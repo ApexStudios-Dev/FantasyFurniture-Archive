@@ -24,7 +24,7 @@ public class SetChairBlock extends SeatMultiBlock
 	@Override
 	public MultiBlockPattern getMultiBlockPattern()
 	{
-		return FFPatterns.Revamp.PATTERN_1x1x2;
+		return FFPatterns.PATTERN_1x1x2;
 	}
 
 	@Override

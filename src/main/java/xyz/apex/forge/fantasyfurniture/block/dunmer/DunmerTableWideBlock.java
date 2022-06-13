@@ -8,7 +8,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableWideBlock;
 
 public final class DunmerTableWideBlock extends SetTableWideBlock
@@ -23,18 +23,18 @@ public final class DunmerTableWideBlock extends SetTableWideBlock
 
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE_A, Direction.NORTH);
 
-	public DunmerTableWideBlock(Properties properties, MultiBlockPattern pattern)
+	public DunmerTableWideBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var shape = SHAPER.get(facing);
 
-		if(!pattern.isOrigin(blockState))
+		if(!isMultiBlockOrigin(blockState))
 		{
 			var opposite = facing.getClockWise();
 			shape = shape.move(opposite.getStepX(), 0D, opposite.getStepZ());

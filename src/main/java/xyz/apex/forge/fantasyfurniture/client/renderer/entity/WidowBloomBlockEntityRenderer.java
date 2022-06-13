@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-import xyz.apex.forge.fantasyfurniture.block.decorations.WidowBloomBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 
@@ -31,7 +31,7 @@ public final class WidowBloomBlockEntityRenderer implements BlockEntityRenderer<
 		if(blockEntity.hasLevel())
 		{
 			var blockState = blockEntity.getBlockState();
-			var facing = blockState.getValue(WidowBloomBlock.FACING);
+			var facing = BaseBlock.getFacing(blockState);
 
 			pose.translate(.5D, .5D, .5D);
 			pose.mulPose(Vector3f.YP.rotationDegrees(-facing.toYRot()));

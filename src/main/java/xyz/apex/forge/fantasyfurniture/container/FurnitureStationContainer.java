@@ -2,24 +2,27 @@ package xyz.apex.forge.fantasyfurniture.container;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.java.utility.nullness.NonnullPredicate;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public final class FurnitureStationContainer extends AbstractContainerMenu
+public final class FurnitureStationContainer extends BaseMenu
 {
-	private final ContainerLevelAccess access;
 	private final Container inputInventory;
 	private final ResultContainer resultInventory;
 
@@ -31,11 +34,9 @@ public final class FurnitureStationContainer extends AbstractContainerMenu
 	private final List<ItemStack> results = Lists.newArrayList();
 	private long lastSoundTime = 0L;
 
-	public FurnitureStationContainer(@Nullable MenuType<?> menuType, int windowId, Inventory playerInventory, ContainerLevelAccess access)
+	public FurnitureStationContainer(@Nullable MenuType<? extends FurnitureStationContainer> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer)
 	{
-		super(menuType, windowId);
-
-		this.access = access;
+		super(menuType, windowId, playerInventory, buffer);
 
 		inputInventory = new SimpleContainer(4) {
 			@Override
@@ -53,19 +54,7 @@ public final class FurnitureStationContainer extends AbstractContainerMenu
 		stoneSlot = addSlot(new InputSlot(FurnitureStation.STONE_SLOT, 52, 21, FurnitureStation::isValidStone));
 		resultSlot = addSlot(new ResultSlot());
 
-		// player inventory slots
-		for(var i = 0; i < 3; i++)
-		{
-			for(var j = 0; j < 9; j++)
-			{
-				addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
-			}
-		}
-
-		for(var i = 0; i < 9; i++)
-		{
-			addSlot(new Slot(playerInventory, i, 8 + i * 18, 198));
-		}
+		bindPlayerInventory(this, 8, 140);
 	}
 
 	public Slot getClaySlot()
@@ -91,12 +80,6 @@ public final class FurnitureStationContainer extends AbstractContainerMenu
 	public List<ItemStack> getResults()
 	{
 		return results;
-	}
-
-	@Override
-	public boolean stillValid(Player player)
-	{
-		return stillValid(access, player, FurnitureStation.BLOCK.asBlock());
 	}
 
 	@Override
@@ -130,7 +113,7 @@ public final class FurnitureStationContainer extends AbstractContainerMenu
 	{
 		super.removed(player);
 		resultInventory.removeItemNoUpdate(1);
-		access.execute((world, pos) -> clearContainer(player, inputInventory));
+		clearContainer(player, inputInventory);
 	}
 
 	@Override
@@ -261,15 +244,13 @@ public final class FurnitureStationContainer extends AbstractContainerMenu
 			decrementInput();
 			setupResultSlot(-1);
 
-			access.execute((world, pos) -> {
-				var gameTime = world.getGameTime();
+			var gameTime = player.level.getGameTime();
 
-				if(lastSoundTime != gameTime)
-				{
-					world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1F, 1F);
-					lastSoundTime = gameTime;
-				}
-			});
+			if(lastSoundTime != gameTime)
+			{
+				player.level.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1F, 1F);
+				lastSoundTime = gameTime;
+			}
 		}
 	}
 }
