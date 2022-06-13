@@ -831,7 +831,7 @@ public final class Decorations
 	}
 	// endregion
 
-	// region: Book Stack
+	// region: Tomes
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES_BLOCK = tomes(FurnitureSet.VENTHYR);
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TOMES_BLOCK);
 
