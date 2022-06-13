@@ -9,9 +9,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedStackedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 
-public final class MuffinsBlock extends SimpleFourWayWaterLoggedStackedBlock
+public final class MuffinsBlock extends StackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(5.5D, 0D, 5.5D, 10.5D, 5D, 10.5D);
 	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
@@ -44,7 +45,7 @@ public final class MuffinsBlock extends SimpleFourWayWaterLoggedStackedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var count = blockState.getValue(MUFFINS);
 		VoxelShaper shaper;
 

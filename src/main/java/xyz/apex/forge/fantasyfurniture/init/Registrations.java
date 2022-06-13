@@ -10,9 +10,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -26,14 +24,13 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
-import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 import xyz.apex.forge.utility.registrator.entry.MenuEntry;
+import xyz.apex.forge.utility.registrator.factory.MenuFactory;
 import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 public final class Registrations
@@ -90,7 +87,7 @@ public final class Registrations
 	static <ITEM extends BlockItem> void blockItemStacked(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider, IntegerProperty property)
 	{
 		var id = ctx.getId();
-		var maxValue = IStackedBlock.getMaxValue(property);
+		var maxValue = StackedBlock.getMaxValue(property);
 		provider.withExistingParent("%s:item/%s".formatted(id.getNamespace(), id.getPath()), getExistingModelPath(id, "_%d".formatted(maxValue)));
 	}
 
@@ -132,24 +129,18 @@ public final class Registrations
 		return new ResourceLocation(namespace, "block/%s%s".formatted(path, suffix));
 	}
 
-	static <MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(String registryName, int rows, int cols, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
+	static <MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(String registryName, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
 	{
 		return REGISTRY.container(
 				registryName,
-				(containerType, windowId, playerInventory, buffer) -> menuFactory.create(containerType, windowId, playerInventory, new ItemStackHandler(rows * cols)),
+				menuFactory,
 				screenFactory
 		).register();
 	}
 
-	static <BLOCK extends Block, MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(BlockEntry<BLOCK> block, int rows, int cols, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
+	static <BLOCK extends Block, MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(BlockEntry<BLOCK> block, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
 	{
 		var blockName = block.getId().getPath();
-		return container(blockName, rows, cols, menuFactory, screenFactory);
-	}
-
-	@FunctionalInterface
-	public interface MenuFactory<MENU extends AbstractContainerMenu>
-	{
-		MENU create(MenuType<?> menuType, int windowId, Inventory playerInventory, IItemHandler itemHandler);
+		return container(blockName, menuFactory, screenFactory);
 	}
 }

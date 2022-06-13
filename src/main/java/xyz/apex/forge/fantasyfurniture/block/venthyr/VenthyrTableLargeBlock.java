@@ -10,18 +10,18 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableLargeBlock;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 
@@ -42,20 +42,20 @@ public final class VenthyrTableLargeBlock extends SetTableLargeBlock
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
 	public static final BooleanProperty FANCY = VenthyrTableSmallBlock.FANCY;
 
-	public VenthyrTableLargeBlock(Properties properties, MultiBlockPattern pattern)
+	public VenthyrTableLargeBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(FANCY, false));
 	}
 
 	@Nullable
 	@Override
-	protected BlockState getPlacementState(BlockPlaceContext ctx, BlockState defaultBlockState)
+	protected BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
 	{
-		var blockState = super.getPlacementState(ctx, defaultBlockState);
+		placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
 
-		if(blockState != null)
+		if(placementBlockState != null)
 		{
 			var stack = ctx.getItemInHand();
 			var stackTag = stack.getTag();
@@ -73,21 +73,28 @@ public final class VenthyrTableLargeBlock extends SetTableLargeBlock
 						var strFancy = blockStateTag.getString(name);
 
 						if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
-							blockState = blockState.setValue(FANCY, true);
+							placementBlockState = placementBlockState.setValue(FANCY, true);
 					}
 				}
 			}
 		}
 
-		return blockState;
+		return placementBlockState;
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FANCY);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var shape = SHAPER.get(facing);
-		var index = pattern.getIndex(blockState);
+		var index = getMultiBlockIndex(blockState);
 
 		if(index == 1 || index == 3)
 		{
@@ -137,12 +144,5 @@ public final class VenthyrTableLargeBlock extends SetTableLargeBlock
 		}
 
 		return stack;
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
-	{
-		builder.add(FANCY);
-		super.createBlockStateDefinition(builder);
 	}
 }

@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -28,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.RenderProperties;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import xyz.apex.forge.apexcore.revamp.client.screen.BaseMenuScreen;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public final class FurnitureStationContainerScreen extends AbstractContainerScreen<FurnitureStationContainer>
+public final class FurnitureStationContainerScreen extends BaseMenuScreen<FurnitureStationContainer>
 {
 	public static final ResourceLocation TEXTURE = FFRegistry.getInstance().id("textures/gui/container/furniture_station.png");
 
@@ -61,7 +61,7 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 
 	public FurnitureStationContainerScreen(FurnitureStationContainer container, Inventory playerInventory, Component title)
 	{
-		super(container, playerInventory, title);
+		super(container, playerInventory, title, TEXTURE);
 	}
 
 	@Override
@@ -148,7 +148,6 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 	@Override
 	public void render(PoseStack pose, int mouseX, int mouseY, float partialTicks)
 	{
-		renderBackground(pose);
 		super.render(pose, mouseX, mouseY, partialTicks);
 
 		if(searchBox != null && searchBox.isVisible() && !searchBox.isFocused() && searchBox.getValue().isEmpty())
@@ -156,7 +155,6 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);
-		renderTooltip(pose, mouseX, mouseY);
 
 		{
 			if(searchBox != null && searchBox.isVisible())
@@ -209,12 +207,9 @@ public final class FurnitureStationContainerScreen extends AbstractContainerScre
 	@Override
 	protected void renderBg(PoseStack pose, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		RenderSystem.setShaderTexture(0, TEXTURE);
+		super.renderBg(pose, partialTicks, mouseX, mouseY);
 		var i = (width - imageWidth) / 2;
 		var j = (height - imageHeight) / 2;
-		blit(pose, i, j, 0, 0, imageWidth, imageHeight);
-
 		var k = (int) (57F * scrollOffset);
 		blit(pose, i + 127, j + 45 + k, 194 + (scrollbarActive() ? 0 : 12), 0, 12, 15);
 	}

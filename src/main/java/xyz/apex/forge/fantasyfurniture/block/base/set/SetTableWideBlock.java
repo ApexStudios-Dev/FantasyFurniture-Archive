@@ -1,21 +1,38 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public class SetTableWideBlock extends SimpleFourWayWaterLoggedMultiBlock
+public class SetTableWideBlock extends BaseMultiBlock
 {
-	public SetTableWideBlock(Properties properties, MultiBlockPattern pattern)
+	public SetTableWideBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
 	}
 
 	@Override
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
 		return PushReaction.DESTROY;
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_1x2x1;
 	}
 }

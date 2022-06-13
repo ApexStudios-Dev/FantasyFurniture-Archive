@@ -19,7 +19,7 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.IStackedBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.entity.WidowBloomBlockEntityRenderer;
@@ -640,7 +640,7 @@ public final class Decorations
 	private static BlockEntry<TeaSetBlock> teaSet(FurnitureSet furnitureSet)
 	{
 		return REGISTRY
-				.multiBlock("decorations/%s/tea_set".formatted(furnitureSet.serializedName), TeaSetBlock::new, FFPatterns.PATTERN_1x2)
+				.block("decorations/%s/tea_set".formatted(furnitureSet.serializedName), TeaSetBlock::new)
 					.lang("%s Tea Set".formatted(furnitureSet.englishName))
 					.lang(EN_GB, "%s Tea Set".formatted(furnitureSet.englishName))
 
@@ -831,7 +831,7 @@ public final class Decorations
 	}
 	// endregion
 
-	// region: Book Stack
+	// region: Tomes
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES_BLOCK = tomes(FurnitureSet.VENTHYR);
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TOMES_BLOCK);
 
@@ -1039,11 +1039,8 @@ public final class Decorations
 			for(BlockEntry<?> entry : blocks)
 			{
 				entry.ifPresent(block -> {
-					if(block instanceof IStackedBlock)
-					{
-						IStackedBlock stacked = (IStackedBlock) block;
+					if(block instanceof StackedBlock stacked)
 						provider.add(stacked.getStackableTranslationKey(), "Stackable");
-					}
 				});
 			}
 		});
@@ -1052,11 +1049,8 @@ public final class Decorations
 			for(BlockEntry<?> entry : blocks)
 			{
 				entry.ifPresent(block -> {
-					if(block instanceof IStackedBlock)
-					{
-						IStackedBlock stacked = (IStackedBlock) block;
+					if(block instanceof StackedBlock stacked)
 						provider.add(EN_GB, stacked.getStackableTranslationKey(), "Stackable");
-					}
 				});
 			}
 		});

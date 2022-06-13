@@ -4,13 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public final class CoinStackBlock extends SimpleFourWayWaterLoggedBlock
+public final class CoinStackBlock extends BaseBlock
 {
 	public static final VoxelShape SHAPE = VoxelShaper.or(
 			box(5D, 0D, 3D, 8D, 3D, 6D),
@@ -28,9 +30,17 @@ public final class CoinStackBlock extends SimpleFourWayWaterLoggedBlock
 	}
 
 	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		return SHAPER.get(facing);
 	}
 }

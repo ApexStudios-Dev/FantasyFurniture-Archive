@@ -8,7 +8,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetFloorLightBlock;
 
 import java.util.Random;
@@ -29,17 +28,15 @@ public final class VenthyrFloorLightBlock extends SetFloorLightBlock
 			box(10.25D, 24D, 3.5D, 12.5D, 28.75D, 5.75D)
 	);
 
-	public VenthyrFloorLightBlock(Properties properties, MultiBlockPattern pattern)
+	public VenthyrFloorLightBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(pattern.isOrigin(blockState))
-			return SHAPE;
-		return SHAPE.move(0D, -1D, 0D);
+		return isMultiBlockOrigin(blockState) ? SHAPE : SHAPE.move(0D, -1D, 0D);
 	}
 
 	@Override

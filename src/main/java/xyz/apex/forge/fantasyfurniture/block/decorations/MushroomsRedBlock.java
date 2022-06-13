@@ -9,9 +9,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedStackedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 
-public class MushroomsRedBlock extends SimpleFourWayWaterLoggedStackedBlock
+public class MushroomsRedBlock extends StackedBlock
 {
 	public static final VoxelShape SHAPE_0 = box(5D, 0D, 5D, 11D, 7D, 11D);
 	public static final VoxelShape SHAPE_1 = VoxelShaper.or(
@@ -43,7 +44,7 @@ public class MushroomsRedBlock extends SimpleFourWayWaterLoggedStackedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var count = blockState.getValue(MUSHROOMS);
 		VoxelShaper shaper;
 

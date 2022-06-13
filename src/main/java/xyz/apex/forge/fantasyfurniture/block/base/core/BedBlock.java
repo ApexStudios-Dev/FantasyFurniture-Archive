@@ -3,6 +3,7 @@ package xyz.apex.forge.fantasyfurniture.block.base.core;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
@@ -16,11 +17,10 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
@@ -28,31 +28,37 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 
-public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
+public abstract class BedBlock extends BaseMultiBlock
 {
 	public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
 
-	public BedBlock(Properties properties, MultiBlockPattern pattern)
+	public BedBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(OCCUPIED, false));
 	}
 
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+		consumer.accept(OCCUPIED);
+	}
+
 	@Nullable
 	@Override
-	protected BlockState getPlacementState(BlockPlaceContext ctx, BlockState defaultBlockState)
+	protected Direction getFourWayFacing(BlockPlaceContext ctx)
 	{
-		var blockState = super.getPlacementState(ctx, defaultBlockState);
-
-		if(blockState != null)
-			return blockState.setValue(FACING, ctx.getHorizontalDirection());
-
-		return null;
+		return ctx.getHorizontalDirection();
 	}
 
 	protected abstract int getBedFootMultiBlockIndex(BlockState blockState);
@@ -61,13 +67,6 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
 		return PushReaction.DESTROY;
-	}
-
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
-	{
-		builder.add(OCCUPIED);
-		super.createBlockStateDefinition(builder);
 	}
 
 	@Override
@@ -120,7 +119,7 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 		var footPos = getBedFootPos(this, blockState, pos);
 		var footBlockState = level.getBlockState(footPos);
 
-		var headPos = footPos.relative(footBlockState.getValue(FACING));
+		var headPos = footPos.relative(BaseBlock.getFacing(footBlockState));
 		var headBlockState = level.getBlockState(headPos);
 
 		super.setBedOccupied(footBlockState, level, footPos, sleeper, occupied);
@@ -155,7 +154,7 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 
 	protected InteractionResult onSleepInBed(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		var sleepPos = pos.relative(facing);
 
 		player.startSleepInBed(sleepPos).ifLeft(result -> {
@@ -203,16 +202,13 @@ public abstract class BedBlock extends SimpleFourWayWaterLoggedMultiBlock
 	public static BlockPos getBedFootPos(BedBlock bed, BlockState blockState, BlockPos pos)
 	{
 		var footIndex = bed.getBedFootMultiBlockIndex(blockState);
-		var pattern = bed.getMultiBlockPattern();
-		var currentIndex = pattern.getIndex(blockState);
+		var currentIndex = bed.getMultiBlockIndex(blockState);
 
 		if(currentIndex == footIndex)
 			return pos;
 
-		var localPositions = pattern.getLocalPositions();
-		var localSpace = localPositions.get(currentIndex);
-		var origin = pattern.getOriginFromWorldSpace(blockState, pos, localSpace);
-		var footLocalSPace = localPositions.get(footIndex);
-		return pattern.getWorldSpaceFromLocalSpace(blockState, origin, footLocalSPace);
+		var origin = bed.getMultiBlockOriginPos(blockState, pos);
+		var footLocalSpace = bed.getMultiBlockLocalPositions().get(footIndex);
+		return bed.getMultiBlockWorldSpaceFromLocalSpace(blockState, origin, footLocalSpace);
 	}
 }

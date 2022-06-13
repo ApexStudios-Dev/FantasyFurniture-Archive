@@ -7,7 +7,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetFloorLightBlock;
 
 public final class NordicFloorLightBlock extends SetFloorLightBlock
@@ -29,16 +28,14 @@ public final class NordicFloorLightBlock extends SetFloorLightBlock
 			box(7D, 16.75D, 9D, 9D, 20.75, 13D)
 	);
 
-	public NordicFloorLightBlock(Properties properties, MultiBlockPattern pattern)
+	public NordicFloorLightBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(pattern.isOrigin(blockState))
-			return SHAPE;
-		return SHAPE.move(0D, -1D, 0D);
+		return isMultiBlockOrigin(blockState) ? SHAPE : SHAPE.move(0D, -1D, 0D);
 	}
 }

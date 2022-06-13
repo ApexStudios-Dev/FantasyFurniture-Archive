@@ -10,17 +10,18 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableSmallBlock;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 
@@ -50,11 +51,11 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext ctx)
+	protected BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
 	{
-		var blockState = super.getStateForPlacement(ctx);
+		placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
 
-		if(blockState != null)
+		if(placementBlockState != null)
 		{
 			var stack = ctx.getItemInHand();
 			var stackTag = stack.getTag();
@@ -72,19 +73,19 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 						var strFancy = blockStateTag.getString(name);
 
 						if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
-							blockState = blockState.setValue(FANCY, true);
+							placementBlockState = placementBlockState.setValue(FANCY, true);
 					}
 				}
 			}
 		}
 
-		return blockState;
+		return placementBlockState;
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		return SHAPER.get(facing);
 	}
 
@@ -127,9 +128,9 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
 	{
-		builder.add(FANCY);
-		super.createBlockStateDefinition(builder);
+		super.registerProperties(consumer);
+		consumer.accept(FANCY);
 	}
 }

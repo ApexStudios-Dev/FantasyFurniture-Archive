@@ -1,20 +1,32 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.PushReaction;
 
-import xyz.apex.forge.apexcore.lib.multiblock.MultiBlockPattern;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayMultiBlockContainerBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.entity.SetChestBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetChestContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
+import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public class SetChestBlock extends SimpleFourWayMultiBlockContainerBlock<SetChestBlockEntity, SetChestContainer>
+public class SetChestBlock extends BaseMultiBlock.WithContainer<SetChestBlockEntity, SetChestContainer>
 {
-	public SetChestBlock(Properties properties, MultiBlockPattern pattern)
+	public SetChestBlock(Properties properties)
 	{
-		super(properties, pattern);
+		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
 	}
 
 	@Override
@@ -27,5 +39,17 @@ public class SetChestBlock extends SimpleFourWayMultiBlockContainerBlock<SetChes
 	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
 		return PushReaction.BLOCK;
+	}
+
+	@Override
+	protected MenuType<SetChestContainer> getContainerType()
+	{
+		return FFElements.CHEST_CONTAINER.asMenuType();
+	}
+
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return FFPatterns.PATTERN_1x2x1;
 	}
 }

@@ -4,14 +4,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.block.base.core.SimpleFourWayWaterLoggedBlock;
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
+import xyz.apex.java.utility.nullness.NonnullConsumer;
 
-public final class PotteryBlock extends SimpleFourWayWaterLoggedBlock
+public final class PotteryBlock extends BaseBlock
 {
 	public static final VoxelShape SHAPE_0 = VoxelShaper.or(
 			box(2, 0, 2, 7, 3, 7),
@@ -43,9 +45,17 @@ public final class PotteryBlock extends SimpleFourWayWaterLoggedBlock
 	}
 
 	@Override
+	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(FACING_4_WAY);
+		consumer.accept(WATERLOGGED);
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		var facing = blockState.getValue(FACING);
+		var facing = BaseBlock.getFacing(blockState);
 		return (Decorations.DUNMER_POTTERY_0_BLOCK.is(this) ? SHAPER_0 : SHAPER_1).get(facing);
 	}
 }
