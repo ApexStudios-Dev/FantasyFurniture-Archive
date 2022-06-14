@@ -17,7 +17,7 @@ import xyz.apex.forge.fantasyfurniture.init.Decorations;
 
 @GameTestHolder(FantasyFurniture.ID)
 @PrefixGameTestTemplate(false)
-public class StackedBlockTests
+public final class StackedBlockTests
 {
 	@GameTest(template = "bedrock_5x5x5", batch = "stacked_blocks")
 	public static void bookStack(GameTestHelper test)
