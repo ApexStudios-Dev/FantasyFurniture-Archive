@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -42,6 +43,12 @@ public final class PotteryBlock extends BaseBlock
 	public PotteryBlock(Properties properties)
 	{
 		super(properties);
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.NORMAL;
 	}
 
 	@Override

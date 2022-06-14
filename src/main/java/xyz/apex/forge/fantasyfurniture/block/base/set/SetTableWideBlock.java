@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
@@ -22,12 +20,6 @@ public class SetTableWideBlock extends BaseMultiBlock
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
 		consumer.accept(WATERLOGGED);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

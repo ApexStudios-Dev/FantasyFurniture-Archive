@@ -37,15 +37,15 @@ public final class SweetRollsBlock extends StackedBlock
 	}
 
 	@Override
-	public IntegerProperty getStackSizeProperty()
+	public PushReaction getPistonPushReaction(BlockState blockState)
 	{
-		return ROLLS;
+		return PushReaction.NORMAL;
 	}
 
 	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
+	public IntegerProperty getStackSizeProperty()
 	{
-		return PushReaction.DESTROY;
+		return ROLLS;
 	}
 
 	@Override

@@ -37,6 +37,12 @@ public final class BoiledCremeTreatsBlock extends StackedBlock
 	}
 
 	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.NORMAL;
+	}
+
+	@Override
 	public IntegerProperty getStackSizeProperty()
 	{
 		return TREATS;
@@ -57,11 +63,5 @@ public final class BoiledCremeTreatsBlock extends StackedBlock
 			shaper = SHAPER_2;
 
 		return shaper.get(facing);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.NORMAL;
 	}
 }

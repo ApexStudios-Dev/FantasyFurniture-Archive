@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -25,6 +26,12 @@ public final class FoodBlock extends BaseBlock
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
 		consumer.accept(WATERLOGGED);
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState blockState)
+	{
+		return PushReaction.NORMAL;
 	}
 
 	@Override

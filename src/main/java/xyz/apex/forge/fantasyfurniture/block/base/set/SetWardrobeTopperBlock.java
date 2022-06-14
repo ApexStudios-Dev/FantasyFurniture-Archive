@@ -8,7 +8,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
@@ -84,12 +83,6 @@ public class SetWardrobeTopperBlock extends BaseMultiBlock
 
 		// default logic, no wardrobe below topper
 		return super.getMenuProvider(blockState, level, pos);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

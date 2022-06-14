@@ -6,7 +6,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
@@ -53,12 +52,6 @@ public class SetPaintingWideBlock extends BaseMultiBlock
 
 		return null;
 
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	public static boolean canSupportPainting(LevelReader level, BlockPos pos)

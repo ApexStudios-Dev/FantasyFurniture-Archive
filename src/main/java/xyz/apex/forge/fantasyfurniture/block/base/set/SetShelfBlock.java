@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
@@ -68,12 +67,6 @@ public class SetShelfBlock extends BaseBlock
 
 		var connectionState = getConnectionState(level, pos, blockState, this);
 		level.setBlockAndUpdate(pos, blockState.setValue(CONNECTION_TYPE, connectionState));
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

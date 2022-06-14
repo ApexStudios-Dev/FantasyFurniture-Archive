@@ -2,9 +2,7 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
@@ -39,12 +37,6 @@ public class SetBookshelfBlock extends BaseMultiBlock.WithContainer<SetBookshelf
 	protected BlockEntityType<SetBookshelfBlockEntity> getBlockEntityType()
 	{
 		return FFElements.BOOKSHELF_BLOCK_ENTITY.asBlockEntityType();
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	@Override

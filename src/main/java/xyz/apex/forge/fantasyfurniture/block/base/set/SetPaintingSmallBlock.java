@@ -6,7 +6,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.material.PushReaction;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.java.utility.nullness.NonnullConsumer;
@@ -56,12 +55,6 @@ public class SetPaintingSmallBlock extends BaseBlock
 	public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos pos)
 	{
 		return canSupportPainting(level, pos);
-	}
-
-	@Override
-	public PushReaction getPistonPushReaction(BlockState blockState)
-	{
-		return PushReaction.DESTROY;
 	}
 
 	public static boolean canSupportPainting(LevelReader level, BlockPos pos)
