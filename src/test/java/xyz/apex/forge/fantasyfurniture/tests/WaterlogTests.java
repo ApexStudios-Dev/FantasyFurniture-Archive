@@ -18,13 +18,13 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.IMultiBlock;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.utility.registrator.entry.BlockEntry;
 
 import java.util.Objects;
 
-@GameTestHolder(FantasyFurniture.ID)
+@GameTestHolder(Mods.FANTASY_FURNITURE)
 @PrefixGameTestTemplate(false)
 public final class WaterlogTests
 {

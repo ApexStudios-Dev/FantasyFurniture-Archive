@@ -19,6 +19,8 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
@@ -36,7 +38,7 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 public final class Decorations
 {
 	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-	public static final TagKey<Item> ITEM_GROUP_CATEGORY_TAG = REGISTRY.moddedItemTag("item_category/decorations");
+	public static final TagKey<Item> ITEM_GROUP_CATEGORY_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_category/decorations");
 
 	// region: Berry Basket
 	// region: Empty

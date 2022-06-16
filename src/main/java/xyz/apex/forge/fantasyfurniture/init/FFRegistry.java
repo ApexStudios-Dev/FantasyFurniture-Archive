@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.apexcore.lib.ApexRegistrator;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.java.utility.Lazy;
 
 import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
@@ -17,8 +17,8 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 {
 	private static final Lazy<FFRegistry> REGISTRY = create(FFRegistry::new);
 
-	public static final String TXT_JEI_INGREDIENTS_KEY = "text." + FantasyFurniture.ID + ".jei.ingredients";
-	public static final String TXT_JEI_RESULTS_KEY = "text." + FantasyFurniture.ID + ".jei.results";
+	public static final String TXT_JEI_INGREDIENTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.ingredients";
+	public static final String TXT_JEI_RESULTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.results";
 
 	private static boolean bootstrap = false;
 
@@ -26,7 +26,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 
 	private FFRegistry()
 	{
-		super(FantasyFurniture.ID);
+		super(Mods.FANTASY_FURNITURE);
 
 		creativeModeTab(() -> MOD_ITEM_GROUP, "Fantasy's Furniture");
 
@@ -46,7 +46,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		if(bootstrap)
 			return;
 
-		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(FantasyFurniture.ID), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
+		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(Mods.FANTASY_FURNITURE), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
 
 		Registrations.bootstrap();
 		FFPatterns.bootstrap();
@@ -70,7 +70,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 	{
 		private ModItemGroup()
 		{
-			super(FantasyFurniture.ID);
+			super(Mods.FANTASY_FURNITURE);
 		}
 
 		@Override

@@ -12,7 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -20,12 +19,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.FurnitureStationBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
@@ -60,15 +60,15 @@ public final class FurnitureStation
 	public static final BlockEntityEntry<FurnitureStationBlockEntity> BLOCK_ENTITY = Registrations.blockEntity(BLOCK);
 	public static final MenuEntry<FurnitureStationContainer> CONTAINER = container();
 
-	private static final String TXT_ACCEPTS_ANY = "text." + FantasyFurniture.ID + ".recipe.accepts_any";
+	private static final String TXT_ACCEPTS_ANY = "text." + Mods.FANTASY_FURNITURE + ".recipe.accepts_any";
 	private static final String TXT_ACCEPTS_ANY_ARG = TXT_ACCEPTS_ANY + ".arg";
 
 	// items with this tag can be crafted from the furniture station
-	public static final TagKey<Item> CRAFTABLE = REGISTRY.moddedItemTag("craftable");
+	public static final TagKey<Item> CRAFTABLE = ItemTags.tag(Mods.FANTASY_FURNITURE, "craftable");
 
-	public static final TagKey<Item> CLAY = REGISTRY.forgeItemTag("clay_ball");
-	public static final TagKey<Item> WOOD = ItemTags.PLANKS;
-	public static final TagKey<Item> STONE = ItemTags.STONE_CRAFTING_MATERIALS;
+	public static final TagKey<Item> CLAY = ItemTags.forgeTag("clay_ball"); // TODO: Move to commonality?
+	public static final TagKey<Item> WOOD = ItemTags.Vanilla.PLANKS;
+	public static final TagKey<Item> STONE = ItemTags.Vanilla.STONE_CRAFTING_MATERIALS;
 	private static List<ItemStack> customCraftingResults = Lists.newArrayList();
 	private static final Lazy<List<ItemStack>> preCachedResults = Lazy.of(() -> {
 		FantasyFurniture.LOGGER.info("Precaching Furniture Station Crafting Results...");
@@ -193,9 +193,9 @@ public final class FurnitureStation
 				.blockState(Registrations::horizontalBlock)
 
 				.recipe((ctx, provider) -> UpgradeRecipeBuilder
-						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(Tags.Items.LEATHER), ctx.get().asItem())
+						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), ctx.get().asItem())
 						.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
-						.unlocks("has_leather", RegistrateRecipeProvider.has(Tags.Items.LEATHER))
+						.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 						.save(provider, ctx.getId())
 				)
 

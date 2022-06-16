@@ -1,10 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.container.slot;
 
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import xyz.apex.forge.commonality.init.ItemTags;
 
 import javax.annotation.Nonnull;
 
@@ -18,7 +19,7 @@ public final class BookSlotItemHandler extends SlotItemHandler
 	@Override
 	public boolean mayPlace(@Nonnull ItemStack stack)
 	{
-		if(stack.is(ItemTags.LECTERN_BOOKS))
+		if(stack.is(ItemTags.Vanilla.LECTERN_BOOKS))
 			return true;
 		if(stack.is(Items.BOOK))
 			return true;

@@ -11,11 +11,11 @@ import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import xyz.apex.forge.apexcore.revamp.util.GameTestUtils;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
 
-@GameTestHolder(FantasyFurniture.ID)
+@GameTestHolder(Mods.FANTASY_FURNITURE)
 @PrefixGameTestTemplate(false)
 public final class StackedBlockTests
 {

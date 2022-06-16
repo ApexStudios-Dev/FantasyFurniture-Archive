@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -18,6 +17,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import xyz.apex.forge.commonality.init.FluidTags;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -63,7 +64,7 @@ public class SetChandelierBlock extends Block implements SimpleWaterloggedBlock
 		if(stateForPlacement != null)
 		{
 			var fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-			var waterLogged = fluidState.is(FluidTags.WATER) && fluidState.isSource();;
+			var waterLogged = fluidState.is(FluidTags.Vanilla.WATER) && fluidState.isSource();;
 			return stateForPlacement.setValue(WATERLOGGED, waterLogged);
 		}
 

@@ -7,8 +7,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -33,6 +31,9 @@ import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
+import xyz.apex.forge.commonality.init.BlockTags;
+import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
@@ -253,7 +254,7 @@ public enum FurnitureSet
 		var isVenthyr = serializedName.equals("venthyr");
 
 		englishName = RegistrateLangProvider.toEnglishName(serializedName);
-		itemGroupCategoryTag = FFRegistry.getInstance().moddedItemTag("item_category/" + serializedName);
+		itemGroupCategoryTag = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_category/" + serializedName);
 
 		woolBlock = wool(serializedName, englishName, itemGroupCategoryTag);
 		woolBlockItem = Registrations.blockItem(woolBlock);
@@ -544,11 +545,11 @@ public enum FurnitureSet
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().cubeAll(location, new ResourceLocation(location))))
 
-					.tag(BlockTags.WOOL)
+					.tag(BlockTags.Vanilla.WOOL)
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.WOOL, itemGroupCategoryTag)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.Vanilla.WOOL, itemGroupCategoryTag)
 					.build()
 		.register();
 	}
@@ -573,11 +574,11 @@ public enum FurnitureSet
 
 					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
 
-					.tag(BlockTags.CARPETS)
+					.tag(BlockTags.Vanilla.CARPETS)
 
 					.item()
 						.model(Registrations::blockItem)
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.CARPETS, itemGroupCategoryTag)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.Vanilla.CARPETS, itemGroupCategoryTag)
 					.build()
 		.register();
 	}
@@ -1510,7 +1511,7 @@ public enum FurnitureSet
 
 					.addRenderType(() -> RenderType::cutout)
 
-					.tag(BlockTags.BEDS)
+					.tag(BlockTags.Vanilla.BEDS)
 
 					.item()
 						.model((ctx, provider) -> {
@@ -1522,7 +1523,7 @@ public enum FurnitureSet
 
 							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, suffix));
 						})
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, itemGroupCategoryTag)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.Vanilla.BEDS, itemGroupCategoryTag)
 					.build()
 		.register();
 	}
@@ -1561,7 +1562,7 @@ public enum FurnitureSet
 
 					.addRenderType(() -> RenderType::cutout)
 
-					.tag(BlockTags.BEDS)
+					.tag(BlockTags.Vanilla.BEDS)
 
 					.item()
 						.model((ctx, provider) -> {
@@ -1573,7 +1574,7 @@ public enum FurnitureSet
 
 							provider.withExistingParent(id.getNamespace() + ":item/" + id.getPath(), Registrations.getExistingModelPath(id, suffix));
 						})
-						.tag(FurnitureStation.CRAFTABLE, ItemTags.BEDS, itemGroupCategoryTag)
+						.tag(FurnitureStation.CRAFTABLE, ItemTags.Vanilla.BEDS, itemGroupCategoryTag)
 					.build()
 		.register();
 	}
@@ -1646,11 +1647,11 @@ public enum FurnitureSet
 
 					.addRenderType(() -> RenderType::cutout)
 
-			        .tag(BlockTags.WOODEN_DOORS)
+			        .tag(BlockTags.Vanilla.WOODEN_DOORS)
 
 					.item()
 						.clearDataGenerator(ITEM_MODEL)
-						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.WOODEN_DOORS)
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.Vanilla.WOODEN_DOORS)
 					.build()
 		.register();
 	}

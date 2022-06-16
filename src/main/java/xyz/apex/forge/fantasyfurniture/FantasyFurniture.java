@@ -14,18 +14,18 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
+import xyz.apex.forge.commonality.init.Mods;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.net.SyncFurnitureStationResultsPacket;
 
-@Mod(FantasyFurniture.ID)
+@Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
 {
-	public static final String ID = "fantasyfurniture";
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final String NBT_BLOCK_STATE_TAG = "BlockStateTag";
-	public static final NetworkManager NETWORK = new NetworkManager(ID, "net", "1");
+	public static final NetworkManager NETWORK = new NetworkManager(Mods.FANTASY_FURNITURE, "net", "1");
 
 	public FantasyFurniture()
 	{
