@@ -338,7 +338,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		changelog = file('CHANGELOG.md').text
 		loaders = [ 'forge' ]
 		dependencies = [
-				new ModDependency("${apexcore_modrinth_slug}", 'required')
+				new ModDependency('xl3myxch', 'required') // ApexCore
 		]
 	}
 }
