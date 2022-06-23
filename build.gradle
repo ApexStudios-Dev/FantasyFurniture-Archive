@@ -133,11 +133,7 @@ dependencies {
 	runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
 	implementation fg.deobf("${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}")
-	shade "${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}"
-
 	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}")
-	shade "${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}"
-
 	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:slim")
 }
 
@@ -165,15 +161,6 @@ shadowJar {
 	configurations = [ project.configurations.shade ]
 	relocate "${registrate_package}", "xyz.apex.repack.${registrate_package}"
 	exclude '**/*bbmodel'
-
-	// we only want to remap class refrences imports etc
-	// and not shade in these into the mod jar
-	// registrator already comes with these pre shaded
-	// and we dependend on registrator
-	dependencies {
-		exclude dependency("${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}")
-		exclude dependency("${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}")
-	}
 }
 
 artifacts {
