@@ -24,7 +24,7 @@ apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
 version = "${minecraft_version}-${mod_version}"
-group = "${mod_base_package}.${mod_id}"
+group = "${mod_base_package}"
 archivesBaseName = "${mod_id}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
