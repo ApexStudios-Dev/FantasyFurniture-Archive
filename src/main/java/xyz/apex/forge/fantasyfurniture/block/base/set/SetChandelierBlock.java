@@ -18,7 +18,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import xyz.apex.forge.commonality.init.FluidTags;
+import xyz.apex.forge.commonality.tags.FluidTags;
 
 import javax.annotation.Nullable;
 import java.util.Random;

@@ -10,7 +10,8 @@ import xyz.apex.forge.fantasyfurniture.block.entity.SetChestBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetChestContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetChestBlock extends BaseMultiBlock.WithContainer<SetChestBlockEntity, SetChestContainer>
 {
@@ -20,7 +21,7 @@ public class SetChestBlock extends BaseMultiBlock.WithContainer<SetChestBlockEnt
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -30,13 +31,13 @@ public class SetChestBlock extends BaseMultiBlock.WithContainer<SetChestBlockEnt
 	@Override
 	protected BlockEntityType<SetChestBlockEntity> getBlockEntityType()
 	{
-		return FFElements.CHEST_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.CHEST_BLOCK_ENTITY.get();
 	}
 
 	@Override
 	protected MenuType<SetChestContainer> getContainerType()
 	{
-		return FFElements.CHEST_CONTAINER.asMenuType();
+		return FFElements.CHEST_CONTAINER.get();
 	}
 
 	@Override

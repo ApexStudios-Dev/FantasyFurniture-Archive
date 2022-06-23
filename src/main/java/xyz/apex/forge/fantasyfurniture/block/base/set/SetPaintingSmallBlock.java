@@ -8,9 +8,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class SetPaintingSmallBlock extends BaseBlock
 {
@@ -20,7 +20,7 @@ public class SetPaintingSmallBlock extends BaseBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(WATERLOGGED);

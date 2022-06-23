@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.util.Lazy;
 
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.entity.WidowBloomBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
-import xyz.apex.java.utility.Lazy;
 
 public final class FFItemStackBlockEntityRenderer extends BlockEntityWithoutLevelRenderer
 {
@@ -21,8 +21,8 @@ public final class FFItemStackBlockEntityRenderer extends BlockEntityWithoutLeve
 
 	private final WidowBloomBlockEntityRenderer widowBloomBlockEntityRenderer;
 	private final Lazy<WidowBloomBlockEntity> widowBloomBlockEntity = Lazy.of(() -> {
-		var blockState = Decorations.VENTHYR_WIDOW_BLOOM_BLOCK.defaultBlockState();
-		return Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.createBlockEntity(BlockPos.ZERO, blockState);
+		var blockState = Decorations.VENTHYR_WIDOW_BLOOM_BLOCK.getDefaultState();
+		return Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.create(BlockPos.ZERO, blockState);
 	});
 
 	public FFItemStackBlockEntityRenderer(Minecraft mc)
@@ -38,7 +38,7 @@ public final class FFItemStackBlockEntityRenderer extends BlockEntityWithoutLeve
 	{
 		var partialTick = Minecraft.getInstance().getDeltaFrameTime();
 
-		if(Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ITEM.isInStack(stack))
+		if(Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ITEM.isIn(stack))
 		{
 			var blockEntity = this.widowBloomBlockEntity.get();
 			widowBloomBlockEntityRenderer.render(blockEntity, partialTick, pose, buffer, light, overlay);

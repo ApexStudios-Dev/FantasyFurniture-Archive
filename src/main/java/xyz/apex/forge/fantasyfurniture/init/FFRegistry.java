@@ -1,21 +1,20 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.AbstractRegistrate;
 import org.apache.commons.lang3.Validate;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import xyz.apex.forge.apexcore.lib.ApexRegistrator;
-import xyz.apex.forge.commonality.init.Mods;
-import xyz.apex.java.utility.Lazy;
+import xyz.apex.forge.commonality.Mods;
 
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
-public final class FFRegistry extends ApexRegistrator<FFRegistry>
+public final class FFRegistry extends AbstractRegistrate<FFRegistry>
 {
-	private static final Lazy<FFRegistry> REGISTRY = create(FFRegistry::new);
+	public static final FFRegistry INSTANCE = new FFRegistry();
 
 	public static final String TXT_JEI_INGREDIENTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.ingredients";
 	public static final String TXT_JEI_RESULTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.results";
@@ -34,11 +33,6 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 			provider.add(TXT_JEI_RESULTS_KEY, "Results");
 		});
-
-		addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-			provider.add(EN_GB, TXT_JEI_INGREDIENTS_KEY, "Ingredients");
-			provider.add(EN_GB, TXT_JEI_RESULTS_KEY, "Results");
-		});
 	}
 
 	public static void bootstrap()
@@ -47,6 +41,8 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 			return;
 
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(Mods.FANTASY_FURNITURE), "Only FantasyFurniture can execute FFRegistry#bootstrap()");
+
+		INSTANCE.registerEventListeners(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Registrations.bootstrap();
 		FFPatterns.bootstrap();
@@ -61,11 +57,6 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		bootstrap = true;
 	}
 
-	public static FFRegistry getInstance()
-	{
-		return REGISTRY.get();
-	}
-
 	public static final class ModItemGroup extends CreativeModeTab
 	{
 		private ModItemGroup()
@@ -76,7 +67,7 @@ public final class FFRegistry extends ApexRegistrator<FFRegistry>
 		@Override
 		public ItemStack makeIcon()
 		{
-			return FurnitureStation.BLOCK.asItemStack();
+			return FurnitureStation.BLOCK.asStack();
 		}
 	}
 }

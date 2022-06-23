@@ -4,7 +4,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetStoolBlock extends SeatBlock
 {
@@ -20,7 +21,7 @@ public class SetStoolBlock extends SeatBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);

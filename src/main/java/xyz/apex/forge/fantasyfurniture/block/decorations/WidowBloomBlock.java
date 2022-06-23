@@ -12,7 +12,8 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.Decorations;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public final class WidowBloomBlock extends BaseBlock.WithBlockEntity<WidowBloomBlockEntity>
 {
@@ -30,7 +31,7 @@ public final class WidowBloomBlock extends BaseBlock.WithBlockEntity<WidowBloomB
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(WATERLOGGED);
@@ -40,7 +41,7 @@ public final class WidowBloomBlock extends BaseBlock.WithBlockEntity<WidowBloomB
 	@Override
 	protected BlockEntityType<WidowBloomBlockEntity> getBlockEntityType()
 	{
-		return Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.asBlockEntityType();
+		return Decorations.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.get();
 	}
 
 	@Override

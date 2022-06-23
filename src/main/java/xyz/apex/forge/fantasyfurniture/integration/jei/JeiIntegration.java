@@ -17,9 +17,8 @@ import java.util.Collections;
 @JeiPlugin
 public final class JeiIntegration implements IModPlugin
 {
-	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-	private static final ResourceLocation PLUGIN_ID = REGISTRY.id("jei_integration");
-	public static final ResourceLocation FURNITURE_STATION_RECIPES = REGISTRY.id("recipes/furniture_station");
+	private static final ResourceLocation PLUGIN_ID = FFRegistry.INSTANCE.id("jei_integration");
+	public static final ResourceLocation FURNITURE_STATION_RECIPES = FFRegistry.INSTANCE.id("recipes/furniture_station");
 
 	@Override
 	public ResourceLocation getPluginUid()
@@ -63,7 +62,7 @@ public final class JeiIntegration implements IModPlugin
 		// x, y should match title location in screen class
 		var x = 6;
 		var y = 8;
-		var w = font.width(FurnitureStation.BLOCK.asBlock().getName());
+		var w = font.width(FurnitureStation.BLOCK.get().getName());
 		var h = font.lineHeight;
 		var padding = 2;
 		registration.addRecipeClickArea(FurnitureStationContainerScreen.class, x - padding, y - padding, w + (padding * 2), h + (padding * 2), FURNITURE_STATION_RECIPES);
@@ -72,6 +71,6 @@ public final class JeiIntegration implements IModPlugin
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
-		registration.addRecipeCatalyst(FurnitureStation.BLOCK.asItemStack(), FURNITURE_STATION_RECIPES);
+		registration.addRecipeCatalyst(FurnitureStation.BLOCK.asStack(), FURNITURE_STATION_RECIPES);
 	}
 }

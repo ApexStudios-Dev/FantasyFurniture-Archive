@@ -15,7 +15,8 @@ import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public final class FurnitureStationBlock extends BaseBlock.WithContainer<FurnitureStationBlockEntity, FurnitureStationContainer>
 {
@@ -36,7 +37,7 @@ public final class FurnitureStationBlock extends BaseBlock.WithContainer<Furnitu
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -52,12 +53,12 @@ public final class FurnitureStationBlock extends BaseBlock.WithContainer<Furnitu
 	@Override
 	protected BlockEntityType<FurnitureStationBlockEntity> getBlockEntityType()
 	{
-		return FurnitureStation.BLOCK_ENTITY.asBlockEntityType();
+		return FurnitureStation.BLOCK_ENTITY.get();
 	}
 
 	@Override
 	protected MenuType<FurnitureStationContainer> getContainerType()
 	{
-		return FurnitureStation.CONTAINER.asMenuType();
+		return FurnitureStation.CONTAINER.get();
 	}
 }

@@ -21,9 +21,9 @@ import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.set.SetTableSmallBlock;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 {
@@ -128,7 +128,7 @@ public final class VenthyrTableSmallBlock extends SetTableSmallBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FANCY);

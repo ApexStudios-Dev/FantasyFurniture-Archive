@@ -5,7 +5,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetTableLargeBlock extends BaseMultiBlock
 {
@@ -15,7 +16,7 @@ public class SetTableLargeBlock extends BaseMultiBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);

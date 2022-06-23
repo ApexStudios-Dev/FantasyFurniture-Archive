@@ -14,7 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;

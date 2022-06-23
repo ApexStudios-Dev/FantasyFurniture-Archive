@@ -29,9 +29,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public abstract class BedBlock extends BaseMultiBlock
 {
@@ -45,7 +45,7 @@ public abstract class BedBlock extends BaseMultiBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);

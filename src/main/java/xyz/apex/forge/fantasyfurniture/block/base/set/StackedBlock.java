@@ -18,14 +18,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.util.Lazy;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.java.utility.Lazy;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class StackedBlock extends BaseBlock
 {
@@ -98,7 +98,7 @@ public abstract class StackedBlock extends BaseBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);

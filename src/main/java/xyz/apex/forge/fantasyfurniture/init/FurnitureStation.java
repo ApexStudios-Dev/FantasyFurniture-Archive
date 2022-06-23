@@ -4,6 +4,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.MenuEntry;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.RenderType;
@@ -19,37 +23,29 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.commonality.init.ItemTags;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.FurnitureStationBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
 import xyz.apex.forge.fantasyfurniture.container.FurnitureStationContainer;
 import xyz.apex.forge.fantasyfurniture.net.SyncFurnitureStationResultsPacket;
-import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
-import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.entry.MenuEntry;
-import xyz.apex.java.utility.Lazy;
 
 import java.util.Collections;
 import java.util.List;
 
-import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.ITEM_TAGS;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class FurnitureStation
 {
-	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
 	public static final int CLAY_SLOT = 0;
 	public static final int WOOD_SLOT = 1;
 	public static final int STONE_SLOT = 2;
@@ -142,7 +138,7 @@ public final class FurnitureStation
 
 	static void bootstrap()
 	{
-		REGISTRY.addDataGenerator(ITEM_TAGS, provider -> {
+		FFRegistry.INSTANCE.addDataGenerator(ITEM_TAGS, provider -> {
 			provider.tag(CRAFTABLE);
 
 			provider.tag(CLAY).add(Items.CLAY_BALL);
@@ -150,8 +146,7 @@ public final class FurnitureStation
 
 		var acceptsAnyEnglish = "Accepts Any: %s";
 
-		REGISTRY.addDataGenerator(LANG, provider -> provider.add(TXT_ACCEPTS_ANY, acceptsAnyEnglish));
-		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> provider.add(EN_GB, TXT_ACCEPTS_ANY, acceptsAnyEnglish));
+		FFRegistry.INSTANCE.addDataGenerator(LANG, provider -> provider.add(TXT_ACCEPTS_ANY, acceptsAnyEnglish));
 
 		EventBusHelper.addListener(PlayerEvent.PlayerLoggedInEvent.class, event -> {
 			if(event.getPlayer() instanceof ServerPlayer player)
@@ -180,17 +175,17 @@ public final class FurnitureStation
 
 	private static BlockEntry<FurnitureStationBlock> block()
 	{
-		return REGISTRY
-				.block("furniture_station", FurnitureStationBlock::new)
+		return FFRegistry.INSTANCE
+				.object("furniture_station")
+				.block(FurnitureStationBlock::new)
 				.lang("Furniture Station")
-				.lang(EN_GB, "Furniture Station")
 
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
 
-				.blockState(Registrations::horizontalBlock)
+				.blockstate(Registrations::horizontalBlock)
 
 				.recipe((ctx, provider) -> UpgradeRecipeBuilder
 						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), ctx.get().asItem())
@@ -204,7 +199,7 @@ public final class FurnitureStation
 				.isSuffocating(BlockHelper::never)
 				.isViewBlocking(BlockHelper::never)
 
-				.addRenderType(() -> RenderType::cutout)
+				.addLayer(() -> RenderType::cutout)
 
 				.item()
 					.model(Registrations::blockItem)
@@ -216,9 +211,10 @@ public final class FurnitureStation
 
 	private static MenuEntry<FurnitureStationContainer> container()
 	{
-		return REGISTRY
-				.container(
-						"furniture_station", FurnitureStationContainer::new,
+		return FFRegistry.INSTANCE
+				.object("furniture_station")
+				.menu(
+						FurnitureStationContainer::new,
 						() -> FurnitureStationContainerScreen::new
 				)
 		.register();

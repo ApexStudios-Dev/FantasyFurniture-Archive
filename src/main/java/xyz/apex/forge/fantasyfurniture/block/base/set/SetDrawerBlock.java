@@ -8,7 +8,8 @@ import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.SetDrawerBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetDrawerContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetDrawerBlock extends BaseBlock.WithContainer<SetDrawerBlockEntity, SetDrawerContainer>
 {
@@ -18,7 +19,7 @@ public class SetDrawerBlock extends BaseBlock.WithContainer<SetDrawerBlockEntity
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -28,12 +29,12 @@ public class SetDrawerBlock extends BaseBlock.WithContainer<SetDrawerBlockEntity
 	@Override
 	protected MenuType<SetDrawerContainer> getContainerType()
 	{
-		return FFElements.DRAWER_CONTAINER.asMenuType();
+		return FFElements.DRAWER_CONTAINER.get();
 	}
 
 	@Override
 	protected BlockEntityType<SetDrawerBlockEntity> getBlockEntityType()
 	{
-		return FFElements.DRAWER_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.DRAWER_BLOCK_ENTITY.get();
 	}
 }

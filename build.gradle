@@ -1,26 +1,23 @@
 buildscript {
 	repositories {
 		maven { url 'https://maven.minecraftforge.net' }
-		maven { url 'https://maven.parchmentmc.org' }
 		maven { url 'https://repo.spongepowered.org/repository/maven-public/' }
 		mavenCentral()
 	}
 	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forge_gradle_version}", changing: true
-		classpath "org.parchmentmc:librarian:${librarian_version}"
-		classpath "org.spongepowered:mixingradle:${mixin_gradle_version}"
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath 'org.spongepowered:mixingradle:0.7.+'
 	}
 }
 
 plugins {
-	id 'com.github.johnrengelman.shadow' version "${gradle_shadow_version}"
-	id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-	id 'com.modrinth.minotaur' version "${minotaur_version}"
-	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version "${gradle_changelog_version}"
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
+	id 'com.matthewprenger.cursegradle' version '1.4.0'
+	id 'com.modrinth.minotaur' version '2.+'
+	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -33,15 +30,12 @@ archivesBaseName = "${mod_id}"
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 configurations {
-	library
-	implementation.extendsFrom library
-
 	shade
 }
 
 minecraft {
-	mappings channel: "${mappings_channel}", version: "${mappings_version}"
-	accessTransformer = file('accesstransformer.cfg')
+	mappings channel: 'official', version: "${minecraft_version}"
+	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
 	runs {
 		client {
@@ -50,7 +44,6 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			property 'forge.enabledGameTestNamespaces', mod_id
 
 			mods {
 				"${mod_id}" {
@@ -73,25 +66,7 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			property 'forge.enabledGameTestNamespaces', mod_id
 			args 'nogui'
-
-			mods {
-				"${mod_id}" {
-					source sourceSets.main
-				}
-			}
-		}
-
-		gameTestServer {
-			taskName 'GameTestServer'
-			workingDirectory rootProject.file('run/server')
-			// property 'forge.logging.markers', 'REGISTRIES'
-			// property 'forge.logging.console.level', 'debug'
-			property 'fml.earlyprogresswindow', 'false'
-			property 'forge.enabledGameTestNamespaces', mod_id
-			args 'nogui'
-			singleInstance true
 
 			mods {
 				"${mod_id}" {
@@ -106,7 +81,7 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', registrator_mod_id, '--existing-mod', apexcore_mod_id
+			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', apexcore_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
@@ -117,12 +92,6 @@ minecraft {
 				}
 			}
 		}
-	}
-}
-
-minecraft.runs.all {
-	lazyToken('minecraft_classpath') {
-		configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
 	}
 }
 
@@ -155,7 +124,7 @@ repositories {
 
 dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-	annotationProcessor "org.spongepowered:mixin:${mixin_ap_version}:processor"
+	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}:api")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
@@ -163,38 +132,13 @@ dependencies {
 	compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
-	implementation fg.deobf("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
-	shade "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+	implementation fg.deobf("${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}")
+	shade "${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}"
 
-	implementation "xyz.apex.java.utility:javautilities:${javautilities_version}"
-	shade "xyz.apex.java.utility:javautilities:${javautilities_version}"
-	library "xyz.apex.java.utility:javautilities:${javautilities_version}"
+	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}")
+	shade "${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}"
 
-	implementation fg.deobf("xyz.apex.forge.utility:${registrator_mod_id}:${minecraft_version}-${registrator_version}:deobf")
-	implementation fg.deobf("xyz.apex.forge:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:deobf")
-}
-
-def resourceTargets = [ 'META-INF/mods.toml', '**/*.mcmeta', "${mod_id}.mixins.json".toString() ]
-def intoTargets = [ "${projectDir}/out/production/resources/", "${projectDir}/out/production/${project.name}.main/", "${projectDir}/bin/main/" ]
-def replaceProperties = project.properties
-
-processResources {
-	filesMatching(resourceTargets) {
-		expand replaceProperties
-	}
-
-	intoTargets.each { target ->
-		if(file(target).exists()) {
-			copy{
-				from(sourceSets.main.resources) {
-					include resourceTargets
-					expand replaceProperties
-				}
-
-				into target
-			}
-		}
-	}
+	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:slim")
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -227,8 +171,8 @@ shadowJar {
 	// registrator already comes with these pre shaded
 	// and we dependend on registrator
 	dependencies {
-		exclude dependency("com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}")
-		exclude dependency("xyz.apex.java.utility:javautilities:${javautilities_version}")
+		exclude dependency("${registrate_package}:registrate-apex:MC${minecraft_version}-${registrate_version}")
+		exclude dependency("${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}")
 	}
 }
 
@@ -278,10 +222,6 @@ if(System.getenv('GENERATE_CHANGELOG') != null) {
 }
 
 tasks.withType(Jar) {
-	from(file('accesstransformer.cfg')) {
-		into '/META-INF'
-	}
-
 	from file('CHANGELOG.md')
 	from file('LICENSE')
 
@@ -308,10 +248,8 @@ reobf {
 	shadowJar { }
 }
 
-build.dependsOn shadowJar
-build.dependsOn reobfShadowJar
-
 jar.finalizedBy('reobfJar')
+shadowJar.finalizedBy('reobfShadowJar')
 
 if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
 	publishing {
@@ -370,10 +308,7 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			changelog = file('CHANGELOG.md').text
 
 			relations {
-				requiredDependency "${registrator_mod_id}"
 				requiredDependency "${apexcore_mod_id}"
-				optionalDependency "${jei_mod_id}"
-				optionalDependency "${ctm_mod_id}"
 			}
 
 			mainArtifact shadowJar
@@ -403,7 +338,6 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		changelog = file('CHANGELOG.md').text
 		loaders = [ 'forge' ]
 		dependencies = [
-				new ModDependency("${registrator_modrinth_slug}", 'required'),
 				new ModDependency("${apexcore_modrinth_slug}", 'required')
 		]
 	}

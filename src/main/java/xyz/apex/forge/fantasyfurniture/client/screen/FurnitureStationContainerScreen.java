@@ -40,7 +40,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public final class FurnitureStationContainerScreen extends BaseMenuScreen<FurnitureStationContainer>
 {
-	public static final ResourceLocation TEXTURE = FFRegistry.getInstance().id("textures/gui/container/furniture_station.png");
+	public static final ResourceLocation TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/furniture_station.png");
 
 	private int clayIndex = 0;
 	private int woodIndex = 0;

@@ -1,6 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -13,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -31,9 +37,9 @@ import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
-import xyz.apex.forge.commonality.init.BlockTags;
-import xyz.apex.forge.commonality.init.ItemTags;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.BlockTags;
+import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
@@ -41,12 +47,7 @@ import xyz.apex.forge.fantasyfurniture.block.dunmer.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.*;
 import xyz.apex.forge.fantasyfurniture.item.VenthyrTableBlockItem;
-import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.factory.BlockFactory;
 
-import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.ITEM_MODEL;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
@@ -149,7 +150,7 @@ public enum FurnitureSet
 	// endregion
 	;
 
-	public static final ResourceLocation VENTHYR_FANCY_TABLE_ITEM_PROPERTY = FFRegistry.getInstance().id("venthyr_fancy");
+	public static final ResourceLocation VENTHYR_FANCY_TABLE_ITEM_PROPERTY = FFRegistry.INSTANCE.id("venthyr_fancy");
 
 	// region: Fields
 	public final String serializedName;
@@ -222,31 +223,31 @@ public enum FurnitureSet
 	FurnitureSet(
 			String serializedName,
 
-			BlockFactory<SetCarpetBlock> carpetBlockFactory,
-			BlockFactory<SetWallLightBlock> wallLightBlockFactory,
-			BlockFactory<SetFloorLightBlock> floorLightBlockFactory,
-			BlockFactory<SetTableSmallBlock> tableSmallBlockFactory,
-			BlockFactory<SetTableWideBlock> tableWideBlockFactory,
-			BlockFactory<SetTableLargeBlock> tableLargeBlockFactory,
-			BlockFactory<SetStoolBlock> stoolBlockFactory,
-			BlockFactory<SetCushionBlock> cushionBlockFactory,
-			BlockFactory<SetPaintingSmallBlock> paintingSmallBlockFactory,
-			BlockFactory<SetPaintingWideBlock> paintingWideBlockFactory,
-			BlockFactory<SetDrawerBlock> drawerBlockFactory,
-			BlockFactory<SetShelfBlock> shelfBlockFactory,
-			BlockFactory<SetSofaBlock> sofaBlockFactory,
-			BlockFactory<SetDeskBlock> deskBlockFactory,
-			BlockFactory<SetChairBlock> chairBlockFactory,
-			BlockFactory<SetBenchBlock> benchBlockFactory,
-			BlockFactory<SetBookshelfBlock> bookshelfBlockFactory,
-			BlockFactory<SetChestBlock> chestBlockFactory,
-			BlockFactory<SetDresserBlock> dresserBlockFactory,
-			BlockFactory<SetWardrobeBlock> wardrobeBlockFactory,
-			BlockFactory<SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
-			BlockFactory<SetBedSingleBlock> bedSingleBlockFactory,
-			BlockFactory<SetBedDoubleBlock> bedDoubleBlockFactory,
-			BlockFactory<SetChandelierBlock> chandelierBlockFactory,
-			BlockFactory<DoorBlock> doorBlockFactory
+			NonNullFunction<BlockBehaviour.Properties, SetCarpetBlock> carpetBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetWallLightBlock> wallLightBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetFloorLightBlock> floorLightBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetTableSmallBlock> tableSmallBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetTableWideBlock> tableWideBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetTableLargeBlock> tableLargeBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetStoolBlock> stoolBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetCushionBlock> cushionBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetPaintingSmallBlock> paintingSmallBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetPaintingWideBlock> paintingWideBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetDrawerBlock> drawerBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetShelfBlock> shelfBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetSofaBlock> sofaBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetDeskBlock> deskBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetChairBlock> chairBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetBenchBlock> benchBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetBookshelfBlock> bookshelfBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetChestBlock> chestBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetDresserBlock> dresserBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetWardrobeBlock> wardrobeBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetWardrobeTopperBlock> wardrobeTopperBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetBedSingleBlock> bedSingleBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetBedDoubleBlock> bedDoubleBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetChandelierBlock> chandelierBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, DoorBlock> doorBlockFactory
 	)
 	{
 		this.serializedName = serializedName;
@@ -405,17 +406,15 @@ public enum FurnitureSet
 		itemGroupCategory = ItemGroupCategory
 			.builder(itemGroupCategoryTag.location().toString())
 				.tagged(itemGroupCategoryTag)
-				.defaultIcon(bedSingleBlock::asItemStack)
+				.defaultIcon(bedSingleBlock::asStack)
 		.build();
 	}
 
 	static void bootstrap()
 	{
-		var registry = FFRegistry.getInstance();
-
 		for(var furnitureSet : values())
 		{
-			registry.addDataGenerator(LANG, provider -> {
+			FFRegistry.INSTANCE.addDataGenerator(LANG, provider -> {
 				for(var entry : furnitureSet.blocks)
 				{
 					entry.ifPresent(block -> {
@@ -428,20 +427,7 @@ public enum FurnitureSet
 			});
 
 			furnitureSet.itemGroupCategory
-					.addTranslationGenerator(registry, furnitureSet.englishName)
-					.addTranslationGenerator(registry, EN_GB, furnitureSet.englishName);
-
-			registry.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-				for(var entry : furnitureSet.blocks)
-				{
-					entry.ifPresent(block -> {
-						if(block instanceof ISeatBlock seat)
-							provider.add(EN_GB, seat.getOccupiedTranslationKey(), "This seat is occupied");
-						if(block instanceof BedBlock bed)
-							provider.add(EN_GB, bed.getOccupiedTranslationKey(), "This bed is occupied");
-					});
-				}
-			});
+					.addTranslationGenerator(FFRegistry.INSTANCE, furnitureSet.englishName);
 
 			EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> {
 				var instance = ItemGroupCategoryManager.getInstance(FFRegistry.MOD_ITEM_GROUP);
@@ -530,20 +516,20 @@ public enum FurnitureSet
 	// region: Wool
 	private static BlockEntry<Block> wool(String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		var registry = FFRegistry.getInstance();
-		var location = registry.idString("block/%s/wool".formatted(serializedName));
-
-		return registry
-				.block("%s/wool".formatted(serializedName))
+		return FFRegistry.INSTANCE
+				.object("%s/wool".formatted(serializedName))
+				.block(Block::new)
 					.lang("%s Wool".formatted(englishName))
-					.lang(EN_GB, "%s Wool".formatted(englishName))
 
 					.initialProperties(Material.WOOL, MaterialColor.WOOL)
 					.strength(.8F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().cubeAll(location, new ResourceLocation(location))))
+					.blockstate((ctx, provider) -> {
+						var location = FFRegistry.INSTANCE.idString("block/%s/wool".formatted(serializedName));
+						provider.simpleBlock(ctx.get(), provider.models().cubeAll(location, new ResourceLocation(location)));
+					})
 
 					.tag(BlockTags.Vanilla.WOOL)
 
@@ -556,23 +542,24 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Carpet
-	private static <BLOCK extends SetCarpetBlock> BlockEntry<BLOCK> carpet(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetCarpetBlock> BlockEntry<BLOCK> carpet(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		var registry = FFRegistry.getInstance();
-		var locationWool = registry.id("block/%s/wool".formatted(serializedName));
-		var location = registry.idString("block/%s/carpet".formatted(serializedName));
-
-		return registry
-				.block("%s/carpet".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/carpet".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Carpet".formatted(englishName))
-					.lang(EN_GB, "%s Carpet".formatted(englishName))
 
 					.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 					.strength(.1F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().carpet(location, locationWool)))
+					.blockstate((ctx, provider) -> provider
+							.simpleBlock(ctx.get(), provider
+									.models()
+									.carpet(FFRegistry.INSTANCE.idString("block/%s/carpet".formatted(serializedName)), FFRegistry.INSTANCE.id("block/%s/wool".formatted(serializedName)))
+							)
+					)
 
 					.tag(BlockTags.Vanilla.CARPETS)
 
@@ -585,12 +572,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wall Light
-	private static <BLOCK extends SetWallLightBlock> BlockEntry<BLOCK> wallLight(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWallLightBlock> BlockEntry<BLOCK> wallLight(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/wall_light".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/wall_light".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Wall Light".formatted(englishName))
-					.lang(EN_GB, "%s Wall Light".formatted(englishName))
 
 					.initialProperties(Material.DECORATION)
 					.sound(SoundType.WOOD)
@@ -599,14 +586,14 @@ public enum FurnitureSet
 					.noCollission()
 			        .lightLevel(blockState -> serializedName.equals("dunmer") || !SetWallLightBlock.isWaterLogged(blockState) ? 14 : 0)
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -617,12 +604,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Floor Light
-	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetFloorLightBlock> BlockEntry<BLOCK> floorLight(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/floor_light".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/floor_light".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Floor Light".formatted(englishName))
-					.lang(EN_GB, "%s Floor Light".formatted(englishName))
 
 					.initialProperties(Material.DECORATION)
 					.sound(SoundType.WOOD)
@@ -630,14 +617,14 @@ public enum FurnitureSet
 					.instabreak()
 					.lightLevel(blockState -> blockState.getValue(SetFloorLightBlock.WATERLOGGED) || blockState.getValue(SetFloorLightBlock.SIDE) == SetFloorLightBlock.Side.BOTTOM ? 0 : 14)
 
-					.blockState((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(Registrations.getExistingModelPath(ctx.getId(), ""))))
+					.blockstate((ctx, provider) -> provider.simpleBlock(ctx.get(), provider.models().getExistingFile(Registrations.getExistingModelPath(ctx.getId(), ""))))
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -649,26 +636,26 @@ public enum FurnitureSet
 
 	// region: Table
 	// region: Small
-	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> tableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> tableSmall(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_small".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_small".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Table Small".formatted(englishName))
-					.lang(EN_GB, "%s Table Small".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -677,27 +664,23 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> venthyrTableSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableSmallBlock> BlockEntry<BLOCK> venthyrTableSmall(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_small".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_small".formatted(serializedName))
+				.block(blockFactory)
 					.setData(LANG, (ctx, provider) -> {
 			            var block = ctx.get();
 			            provider.add(block, "%s Table Small".formatted(englishName));
 			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Small".formatted(englishName));
 		            })
-			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        var block = ctx.get();
-				        provider.add(EN_GB, block, "%s Table Small".formatted(englishName));
-				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Small".formatted(englishName));
-			        })
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						ResourceLocation id = ctx.getId();
 						provider.horizontalBlock(ctx.get(), blockState -> {
 							ModelFile.ExistingModelFile existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
@@ -711,7 +694,7 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLoot
+				                    .withPool(RegistrateBlockLootTables
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
 								                    .setRolls(ConstantValue.exactly(1))
@@ -730,7 +713,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item(VenthyrTableBlockItem::new)
 						.model((ctx, provider) -> {
@@ -764,26 +747,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> tableWide(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_wide".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_wide".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Table Wide".formatted(englishName))
-					.lang(EN_GB, "%s Table Wide".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -792,27 +775,23 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableWideBlock> BlockEntry<BLOCK> venthyrTableWide(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_wide".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_wide".formatted(serializedName))
+				.block(blockFactory)
 					.setData(LANG, (ctx, provider) -> {
 			            var block = ctx.get();
 			            provider.add(block, "%s Table Wide".formatted(englishName));
 			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Wide".formatted(englishName));
 		            })
-			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        var block = ctx.get();
-				        provider.add(EN_GB, block, "%s Table Wide".formatted(englishName));
-				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Wide".formatted(englishName));
-			        })
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						var id = ctx.getId();
 						provider.horizontalBlock(ctx.get(), blockState -> {
 							var existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
@@ -826,7 +805,7 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLoot
+				                    .withPool(RegistrateBlockLootTables
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
 								                    .setRolls(ConstantValue.exactly(1))
@@ -845,7 +824,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item(VenthyrTableBlockItem::new)
 					     .model((ctx, provider) -> {
@@ -879,26 +858,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Large
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> tableLarge(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_large".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_large".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Table Large".formatted(englishName))
-					.lang(EN_GB, "%s Table Large".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -907,27 +886,23 @@ public enum FurnitureSet
         .register();
 	}
 
-	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetTableLargeBlock> BlockEntry<BLOCK> venthyrTableLarge(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/table_large".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/table_large".formatted(serializedName))
+				.block(blockFactory)
 					.setData(LANG, (ctx, provider) -> {
 			            var block = ctx.get();
 			            provider.add(block, "%s Table Large".formatted(englishName));
 			            provider.add("%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Large".formatted(englishName));
 		            })
-			        .setData(LANG_EXT_PROVIDER, (ctx, provider) -> {
-				        var block = ctx.get();
-				        provider.add(EN_GB, block, "%s Table Large".formatted(englishName));
-				        provider.add(EN_GB, "%s.fancy".formatted(block.getDescriptionId()), "Fancy %s Table Large".formatted(englishName));
-			        })
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						var id = ctx.getId();
 						provider.horizontalBlock(ctx.get(), blockState -> {
 							var existingModel = provider.models().getExistingFile(Registrations.getExistingModelPath(id, ""));
@@ -941,7 +916,7 @@ public enum FurnitureSet
                     .loot((lootTables, block) -> lootTables
 		                    .add(block, LootTable
 				                    .lootTable()
-				                    .withPool(BlockLoot
+				                    .withPool(RegistrateBlockLootTables
 						                    .applyExplosionCondition(block, LootPool
 								                    .lootPool()
 								                    .setRolls(ConstantValue.exactly(1))
@@ -960,7 +935,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item(VenthyrTableBlockItem::new)
 					     .model((ctx, provider) -> {
@@ -995,26 +970,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Stool
-	private static <BLOCK extends SetStoolBlock> BlockEntry<BLOCK> stool(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetStoolBlock> BlockEntry<BLOCK> stool(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/stool".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/stool".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Stool".formatted(englishName))
-					.lang(EN_GB, "%s Stool".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1025,26 +1000,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Cushion
-	private static <BLOCK extends SetCushionBlock> BlockEntry<BLOCK> cushion(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetCushionBlock> BlockEntry<BLOCK> cushion(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/cushion".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/cushion".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Cushion".formatted(englishName))
-					.lang(EN_GB, "%s Cushion".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1056,12 +1031,12 @@ public enum FurnitureSet
 
 	// region: Painting
 	// region: Small
-	private static <BLOCK extends SetPaintingSmallBlock> BlockEntry<BLOCK> paintingSmall(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetPaintingSmallBlock> BlockEntry<BLOCK> paintingSmall(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/painting_small".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/painting_small".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Painting Small".formatted(englishName))
-					.lang(EN_GB, "%s Painting Small".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.sound(SoundType.WOOD)
@@ -1069,14 +1044,14 @@ public enum FurnitureSet
 					.instabreak()
 					.noCollission()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1087,12 +1062,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Wide
-	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetPaintingWideBlock> BlockEntry<BLOCK> paintingWide(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/painting_wide".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/painting_wide".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Painting Wide".formatted(englishName))
-					.lang(EN_GB, "%s Painting Wide".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.sound(SoundType.WOOD)
@@ -1100,14 +1075,14 @@ public enum FurnitureSet
 					.instabreak()
 					.noCollission()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1119,26 +1094,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Drawer
-	private static <BLOCK extends SetDrawerBlock> BlockEntry<BLOCK> drawer(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDrawerBlock> BlockEntry<BLOCK> drawer(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/drawer".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/drawer".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Drawer".formatted(englishName))
-					.lang(EN_GB, "%s Drawer".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1149,21 +1124,19 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Shelf
-	private static <BLOCK extends SetShelfBlock> BlockEntry<BLOCK> shelf(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetShelfBlock> BlockEntry<BLOCK> shelf(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		FFRegistry registry = FFRegistry.getInstance();
-
-		return registry
-				.block("%s/shelf".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/shelf".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Shelf".formatted(englishName))
-					.lang(EN_GB, "%s Shelf".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
+					.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
 						var connectionType = blockState.getValue(SetShelfBlock.CONNECTION_TYPE);
 						String suffix;
 
@@ -1174,7 +1147,7 @@ public enum FurnitureSet
 						else
 							suffix = "";
 
-						return provider.models().getExistingFile(registry.id("block/%s/shelf%s".formatted(serializedName, suffix)));
+						return provider.models().getExistingFile(FFRegistry.INSTANCE.id("block/%s/shelf%s".formatted(serializedName, suffix)));
 					}, 180))
 
 					.isValidSpawn(BlockHelper::never)
@@ -1182,7 +1155,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1193,27 +1166,25 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Sofa
-	private static <BLOCK extends SetSofaBlock> BlockEntry<BLOCK> sofa(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetSofaBlock> BlockEntry<BLOCK> sofa(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		var registry = FFRegistry.getInstance();
-
-		return registry
-				.block("%s/sofa".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/sofa".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Sofa".formatted(englishName))
-					.lang(EN_GB, "%s Sofa".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+					.blockstate((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
 						var facing = BaseBlock.getFacing(blockState);
 						var connectionType = blockState.getValue(SetSofaBlock.CONNECTION_TYPE);
 
 						return ConfiguredModel
 								.builder()
-									.modelFile(provider.models().getExistingFile(registry.id("block/%s/sofa_%s".formatted(serializedName, connectionType.getSerializedName()))))
+									.modelFile(provider.models().getExistingFile(FFRegistry.INSTANCE.id("block/%s/sofa_%s".formatted(serializedName, connectionType.getSerializedName()))))
 									.rotationY(((int) facing.toYRot() + 180) % 360)
 								.build();
 					}))
@@ -1223,10 +1194,10 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
-						.model((ctx, provider) -> provider.withExistingParent("item/%s".formatted(ctx.getName()), registry.id("block/%s/sofa_single".formatted(serializedName))))
+						.model((ctx, provider) -> provider.withExistingParent("item/%s".formatted(ctx.getName()), FFRegistry.INSTANCE.id("block/%s/sofa_single".formatted(serializedName))))
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
 		.register();
@@ -1234,28 +1205,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Desk
-	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String side, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDeskBlock> BlockEntry<BLOCK> desk(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, String side, TagKey<Item> itemGroupCategoryTag)
 	{
-		var engName = "%s Desk %s".formatted(englishName, RegistrateLangProvider.toEnglishName(side));
-
-		return FFRegistry.getInstance()
-				.block("%s/desk_%s".formatted(serializedName, side), blockFactory)
-					.lang(engName)
-					.lang(EN_GB, engName)
+		return FFRegistry.INSTANCE
+				.object("%s/desk_%s".formatted(serializedName, side))
+				.block(blockFactory)
+					.lang("%s Desk %s".formatted(englishName, RegistrateLangProvider.toEnglishName(side)))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1266,26 +1235,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chair
-	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChairBlock> BlockEntry<BLOCK> chair(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/chair".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/chair".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Chair".formatted(englishName))
-					.lang(EN_GB, "%s Chair".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1296,26 +1265,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bench
-	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBenchBlock> BlockEntry<BLOCK> bench(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/bench".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/bench".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Bench".formatted(englishName))
-					.lang(EN_GB, "%s Bench".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1326,26 +1295,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Bookshelf
-	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBookshelfBlock> BlockEntry<BLOCK> bookshelf(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/bookshelf".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/bookshelf".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Bookshelf".formatted(englishName))
-					.lang(EN_GB, "%s Bookshelf".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1356,26 +1325,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chest
-	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChestBlock> BlockEntry<BLOCK> chest(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/chest".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/chest".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Chest".formatted(englishName))
-					.lang(EN_GB, "%s Chest".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1386,26 +1355,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Dresser
-	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetDresserBlock> BlockEntry<BLOCK> dresser(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/dresser".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/dresser".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Dresser".formatted(englishName))
-					.lang(EN_GB, "%s Dresser".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1417,26 +1386,26 @@ public enum FurnitureSet
 
 	// region: Wardrobe
 	// region: Bottom
-	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeBlock> BlockEntry<BLOCK> wardrobeBottom(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/wardrobe_bottom".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/wardrobe_bottom".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Wardrobe".formatted(englishName))
-					.lang(EN_GB, "%s Wardrobe".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1447,26 +1416,26 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Top
-	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetWardrobeTopperBlock> BlockEntry<BLOCK> wardrobeTop(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/wardrobe_top".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/wardrobe_top".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Wardrobe Top".formatted(englishName))
-					.lang(EN_GB, "%s Wardrobe Top".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1479,19 +1448,19 @@ public enum FurnitureSet
 
 	// region: Bed
 	// region: Single
-	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedSingleBlock> BlockEntry<BLOCK> bedSingle(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/bed_single".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/bed_single".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Bed Single".formatted(englishName))
-					.lang(EN_GB, "%s Bed Single".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						var id = ctx.getId();
 
 						provider.horizontalBlock(ctx.get(), blockState -> {
@@ -1509,7 +1478,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.tag(BlockTags.Vanilla.BEDS)
 
@@ -1530,19 +1499,19 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Double
-	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetBedDoubleBlock> BlockEntry<BLOCK> bedDouble(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/bed_double".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/bed_double".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Bed Double".formatted(englishName))
-					.lang(EN_GB, "%s Bed Double".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						ResourceLocation id = ctx.getId();
 
 						provider.horizontalBlock(ctx.get(), blockState -> {
@@ -1560,7 +1529,7 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.tag(BlockTags.Vanilla.BEDS)
 
@@ -1582,12 +1551,12 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Chandelier
-	private static <BLOCK extends SetChandelierBlock> BlockEntry<BLOCK> chandelier(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends SetChandelierBlock> BlockEntry<BLOCK> chandelier(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
 	{
-		return FFRegistry.getInstance()
-				.block("%s/chandelier".formatted(serializedName), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/chandelier".formatted(serializedName))
+				.block(blockFactory)
 					.lang("%s Chandelier".formatted(englishName))
-					.lang(EN_GB, "%s Chandelier".formatted(englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
@@ -1595,14 +1564,14 @@ public enum FurnitureSet
 					.noOcclusion()
 					.lightLevel(blockState -> blockState.getValue(SetChandelierBlock.WATERLOGGED) ? 0 : 14)
 
-					.blockState(Registrations::simpleBlockWithStates)
+					.blockstate(Registrations::simpleBlockWithStates)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -1613,7 +1582,7 @@ public enum FurnitureSet
 	// endregion
 
 	// region: Door
-	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(BlockFactory<BLOCK> blockFactory, String serializedName, String englishName, String type, TagKey<Item> itemGroupCategoryTag)
+	private static <BLOCK extends DoorBlock> BlockEntry<BLOCK> door(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, String type, TagKey<Item> itemGroupCategoryTag)
 	{
 		String engName;
 
@@ -1622,17 +1591,17 @@ public enum FurnitureSet
 		else
 			engName = englishName + " Door " + RegistrateLangProvider.toEnglishName(type);
 
-		return FFRegistry.getInstance()
-				.block("%s/door_%s".formatted(serializedName, type), blockFactory)
+		return FFRegistry.INSTANCE
+				.object("%s/door_%s".formatted(serializedName, type))
+				.block(blockFactory)
 					.lang(engName)
-					.lang(EN_GB, engName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> {
+					.blockstate((ctx, provider) -> {
 						var id = ctx.getId();
 						var path = id.getPath();
 						var namespace = id.getNamespace();
@@ -1645,12 +1614,12 @@ public enum FurnitureSet
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 			        .tag(BlockTags.Vanilla.WOODEN_DOORS)
 
 					.item()
-						.clearDataGenerator(ITEM_MODEL)
+						.setData(ITEM_MODEL, NonNullBiConsumer.noop())
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.Vanilla.WOODEN_DOORS)
 					.build()
 		.register();

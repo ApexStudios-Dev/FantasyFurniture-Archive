@@ -1,6 +1,10 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import com.google.common.collect.Lists;
+import com.tterrag.registrate.builders.BlockEntityBuilder;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.MenuEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -9,20 +13,14 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.container.*;
-import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
-import xyz.apex.forge.utility.registrator.entry.MenuEntry;
-import xyz.apex.forge.utility.registrator.factory.BlockEntityFactory;
-import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 import java.util.List;
 
 public final class FFElements
 {
-	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
-	public static final ResourceLocation SMALL_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/small_storage.png");
-	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/medium_storage.png");
-	public static final ResourceLocation LARGE_STORAGE_TEXTURE = REGISTRY.id("textures/gui/container/large_storage.png");
+	public static final ResourceLocation SMALL_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/small_storage.png");
+	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/medium_storage.png");
+	public static final ResourceLocation LARGE_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/large_storage.png");
 
 	// region: Drawer
 	public static final MenuEntry<SetDrawerContainer> DRAWER_CONTAINER = Registrations.container("drawer", SetDrawerContainer::new, () -> SetDrawerContainerScreen::new);
@@ -56,38 +54,38 @@ public final class FFElements
 
 	static
 	{
-		List<NonnullSupplier<Block>> drawers = Lists.newArrayList();
-		List<NonnullSupplier<Block>> chests = Lists.newArrayList();
-		List<NonnullSupplier<Block>> dressers = Lists.newArrayList();
-		List<NonnullSupplier<Block>> wardrobes = Lists.newArrayList();
-		List<NonnullSupplier<Block>> bookshelves = Lists.newArrayList();
-		List<NonnullSupplier<Block>> desks = Lists.newArrayList();
+		List<NonNullSupplier<Block>> drawers = Lists.newArrayList();
+		List<NonNullSupplier<Block>> chests = Lists.newArrayList();
+		List<NonNullSupplier<Block>> dressers = Lists.newArrayList();
+		List<NonNullSupplier<Block>> wardrobes = Lists.newArrayList();
+		List<NonNullSupplier<Block>> bookshelves = Lists.newArrayList();
+		List<NonNullSupplier<Block>> desks = Lists.newArrayList();
 
 		for(var furnitureSet : FurnitureSet.values())
 		{
-			drawers.add(furnitureSet.drawerBlock::asBlock);
-			chests.add(furnitureSet.chestBlock::asBlock);
-			dressers.add(furnitureSet.dresserBlock::asBlock);
-			wardrobes.add(furnitureSet.wardrobeBlock::asBlock);
-			bookshelves.add(furnitureSet.bookshelfBlock::asBlock);
-			desks.add(furnitureSet.deskLeftBlock::asBlock);
-			desks.add(furnitureSet.deskRightBlock::asBlock);
+			drawers.add(furnitureSet.drawerBlock::get);
+			chests.add(furnitureSet.chestBlock::get);
+			dressers.add(furnitureSet.dresserBlock::get);
+			wardrobes.add(furnitureSet.wardrobeBlock::get);
+			bookshelves.add(furnitureSet.bookshelfBlock::get);
+			desks.add(furnitureSet.deskLeftBlock::get);
+			desks.add(furnitureSet.deskRightBlock::get);
 		}
 
-		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(new NonnullSupplier[0]));
-		CHEST_BLOCK_ENTITY = blockEntity("chest", SetChestBlockEntity::new, chests.toArray(new NonnullSupplier[0]));
-		DRESSER_BLOCK_ENTITY = blockEntity("dresser", SetDresserBlockEntity::new, dressers.toArray(new NonnullSupplier[0]));
-		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(new NonnullSupplier[0]));
-		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(new NonnullSupplier[0]));
-		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(new NonnullSupplier[0]));
+		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(new NonNullSupplier[0]));
+		CHEST_BLOCK_ENTITY = blockEntity("chest", SetChestBlockEntity::new, chests.toArray(new NonNullSupplier[0]));
+		DRESSER_BLOCK_ENTITY = blockEntity("dresser", SetDresserBlockEntity::new, dressers.toArray(new NonNullSupplier[0]));
+		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(new NonNullSupplier[0]));
+		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(new NonNullSupplier[0]));
+		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(new NonNullSupplier[0]));
 	}
 
 	static void bootstrap()
 	{
 	}
 
-	private static <BLOCK_ENTITY extends BlockEntity> BlockEntityEntry<BLOCK_ENTITY> blockEntity(String registryName, BlockEntityFactory<BLOCK_ENTITY> blockEntityFactory, NonnullSupplier<Block>... validBlocks)
+	private static <BLOCK_ENTITY extends BlockEntity> BlockEntityEntry<BLOCK_ENTITY> blockEntity(String registryName, BlockEntityBuilder.BlockEntityFactory<BLOCK_ENTITY> blockEntityFactory, NonNullSupplier<Block>... validBlocks)
 	{
-		return REGISTRY.blockEntity(registryName, blockEntityFactory).validBlocks(validBlocks).register();
+		return FFRegistry.INSTANCE.object(registryName).blockEntity(blockEntityFactory).validBlocks(validBlocks).register();
 	}
 }

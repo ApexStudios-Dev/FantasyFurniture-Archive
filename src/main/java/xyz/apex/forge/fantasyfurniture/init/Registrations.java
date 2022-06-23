@@ -1,21 +1,26 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.entry.MenuEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -26,29 +31,21 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
-import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
-import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
-import xyz.apex.forge.utility.registrator.entry.MenuEntry;
-import xyz.apex.forge.utility.registrator.factory.MenuFactory;
-import xyz.apex.java.utility.nullness.NonnullSupplier;
 
 public final class Registrations
 {
-	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
-
 	static void bootstrap()
 	{
 	}
 
 	static <BLOCK extends Block, BLOCK_ITEM extends BlockItem> ItemEntry<BLOCK_ITEM> blockItem(BlockEntry<BLOCK> block)
 	{
-		return ItemEntry.cast(block.getSibling(Item.class));
+		return ItemEntry.cast(block.getSibling(Registry.ITEM_REGISTRY));
 	}
 
 	static <BLOCK extends Block, BLOCK_ENTITY extends BlockEntity> BlockEntityEntry<BLOCK_ENTITY> blockEntity(BlockEntry<BLOCK> block)
 	{
-		return BlockEntityEntry.cast(block.getSibling(BlockEntityType.class));
+		return BlockEntityEntry.cast(block.getSibling(Registry.BLOCK_ENTITY_TYPE_REGISTRY));
 	}
 
 	static <BLOCK extends Block> void droppingStacked(RegistrateBlockLootTables lootTables, BLOCK block, IntegerProperty property)
@@ -58,7 +55,7 @@ public final class Registrations
 		for(var value : property.getPossibleValues())
 		{
 			lootTable = lootTable
-					.withPool(BlockLoot
+					.withPool(RegistrateBlockLootTables
 							.applyExplosionCondition(block, LootPool
 									.lootPool()
 									.setRolls(ConstantValue.exactly(1))
@@ -129,16 +126,18 @@ public final class Registrations
 		return new ResourceLocation(namespace, "block/%s%s".formatted(path, suffix));
 	}
 
-	static <MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(String registryName, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
+	static <MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(String registryName, MenuBuilder.ForgeMenuFactory<MENU> menuFactory, NonNullSupplier<MenuBuilder.ScreenFactory<MENU, SCREEN>> screenFactory)
 	{
-		return REGISTRY.container(
-				registryName,
-				menuFactory,
-				screenFactory
-		).register();
+		return FFRegistry.INSTANCE
+				.object(registryName)
+				.menu(
+					menuFactory,
+					screenFactory
+				)
+		.register();
 	}
 
-	static <BLOCK extends Block, MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(BlockEntry<BLOCK> block, MenuFactory<MENU> menuFactory, NonnullSupplier<xyz.apex.forge.utility.registrator.factory.MenuFactory.ScreenFactory<MENU, SCREEN>> screenFactory)
+	static <BLOCK extends Block, MENU extends AbstractContainerMenu, SCREEN extends AbstractContainerScreen<MENU> & MenuAccess<MENU>> MenuEntry<MENU> container(BlockEntry<BLOCK> block, MenuBuilder.ForgeMenuFactory<MENU> menuFactory, NonNullSupplier<MenuBuilder.ScreenFactory<MENU, SCREEN>> screenFactory)
 	{
 		var blockName = block.getId().getPath();
 		return container(blockName, menuFactory, screenFactory);

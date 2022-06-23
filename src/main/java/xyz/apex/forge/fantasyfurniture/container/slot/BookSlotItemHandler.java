@@ -5,7 +5,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-import xyz.apex.forge.commonality.init.ItemTags;
+import xyz.apex.forge.commonality.tags.ItemTags;
 
 import javax.annotation.Nonnull;
 

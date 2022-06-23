@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
 
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class SetShelfBlock extends BaseBlock
 {
@@ -52,7 +52,7 @@ public class SetShelfBlock extends BaseBlock
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);

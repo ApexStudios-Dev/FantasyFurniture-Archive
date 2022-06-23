@@ -15,8 +15,8 @@ import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 
 public final class WidowBloomModel extends Model
 {
-	public static final ResourceLocation TEXTURE = FFRegistry.getInstance().id("textures/models/decorations/venthyr/widowbloom.png");
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(FFRegistry.getInstance().id("widowbloom"), "main");
+	public static final ResourceLocation TEXTURE = FFRegistry.INSTANCE.id("textures/models/decorations/venthyr/widowbloom.png");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(FFRegistry.INSTANCE.id("widowbloom"), "main");
 
 	private final ModelPart model;
 

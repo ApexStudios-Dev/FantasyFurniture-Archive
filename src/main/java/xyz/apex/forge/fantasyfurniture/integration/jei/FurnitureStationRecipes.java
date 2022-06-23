@@ -13,6 +13,7 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IFocus;
+import org.apache.commons.lang3.tuple.Triple;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,7 +29,6 @@ import net.minecraftforge.client.model.data.EmptyModelData;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationContainerScreen;
 import xyz.apex.forge.fantasyfurniture.init.FFRegistry;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
-import xyz.apex.java.utility.tuple.Triple;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -142,7 +142,7 @@ public final class FurnitureStationRecipes
 			var itemX = x;
 			var itemY = y;
 
-			var slotData = slotMap.computeIfAbsent(slotCounter, $ -> Triple.create(itemX, itemY, Lists.newArrayList()));
+			var slotData = slotMap.computeIfAbsent(slotCounter, $ -> Triple.of(itemX, itemY, Lists.newArrayList()));
 			slotData.getRight().add(stack);
 
 			x += xSpacing;
@@ -171,7 +171,7 @@ public final class FurnitureStationRecipes
 	private void renderBlock(PoseStack pose, IDrawable background)
 	{
 		var mc = Minecraft.getInstance();
-		var blockState = FurnitureStation.BLOCK.defaultBlockState();
+		var blockState = FurnitureStation.BLOCK.getDefaultState();
 		var model = mc.getBlockRenderer().getBlockModel(blockState);
 
 		var frameTime = mc.getFrameTime();

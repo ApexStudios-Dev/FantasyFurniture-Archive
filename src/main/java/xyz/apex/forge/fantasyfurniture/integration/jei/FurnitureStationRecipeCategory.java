@@ -23,7 +23,7 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 		IGuiHelper gui = jei.getGuiHelper();
 
 		background = gui.createBlankDrawable(123, 175);
-		icon = gui.createDrawableIngredient(FurnitureStation.BLOCK.asItemStack());
+		icon = gui.createDrawableIngredient(FurnitureStation.BLOCK.asStack());
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	@Override
 	public Component getTitle()
 	{
-		return FurnitureStation.BLOCK.asBlock().getName();
+		return FurnitureStation.BLOCK.get().getName();
 	}
 
 	@Override

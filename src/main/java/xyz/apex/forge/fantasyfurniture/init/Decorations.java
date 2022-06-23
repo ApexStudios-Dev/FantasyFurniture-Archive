@@ -1,6 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.TagKey;
@@ -12,32 +15,25 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategory;
 import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
-import xyz.apex.forge.commonality.init.ItemTags;
-import xyz.apex.forge.commonality.init.Mods;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.block.base.set.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.entity.WidowBloomBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.item.WidowBloomBlockItem;
-import xyz.apex.forge.utility.registrator.entry.BlockEntityEntry;
-import xyz.apex.forge.utility.registrator.entry.BlockEntry;
-import xyz.apex.forge.utility.registrator.entry.ItemEntry;
 
-import static xyz.apex.forge.utility.registrator.AbstractRegistrator.LANG_EXT_PROVIDER;
-import static xyz.apex.forge.utility.registrator.provider.RegistrateLangExtProvider.EN_GB;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
-@SuppressWarnings({ "SameParameterValue", "ConstantConditions" })
+@SuppressWarnings("SameParameterValue")
 public final class Decorations
 {
-	private static final FFRegistry REGISTRY = FFRegistry.getInstance();
 	public static final TagKey<Item> ITEM_GROUP_CATEGORY_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_category/decorations");
 
 	// region: Berry Basket
@@ -63,7 +59,6 @@ public final class Decorations
 
 	private static BlockEntry<BerryBasketBlock> berryBasket(String type)
 	{
-		var codeName = "decorations/berry_basket_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
@@ -71,24 +66,24 @@ public final class Decorations
 		else
 			englishName = "%s Basket".formatted(RegistrateLangProvider.toEnglishName(type));
 
-		return REGISTRY
-				.block(codeName, BerryBasketBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/berry_basket_%s".formatted(type))
+				.block(BerryBasketBlock::new)
 					.lang(englishName)
-					.lang(EN_GB, englishName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -104,24 +99,24 @@ public final class Decorations
 
 	private static BlockEntry<BoltsOfClothBlock> boltsOfCloth()
 	{
-		return REGISTRY
-				.block("decorations/bolts_of_cloth", BoltsOfClothBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/bolts_of_cloth")
+				.block(BoltsOfClothBlock::new)
 					.lang("Bolts of Cloth")
-					.lang(EN_GB,"Bolts of Cloth")
 
 					.initialProperties(Material.WOOL)
 					.strength(.8F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -137,17 +132,17 @@ public final class Decorations
 
 	private static BlockEntry<BookStackBlock> bookStack()
 	{
-		return REGISTRY
-				.block("decorations/book_stack", BookStackBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/book_stack")
+				.block(BookStackBlock::new)
 					.lang("Book Stack")
-					.lang(EN_GB, "Book Stack")
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BookStackBlock.BOOKS))
 					// .loot((lootTables, block) -> droppingStacked(lootTables, block, Items.BOOK, BookStackBlock.BOOKS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BookStackBlock.BOOKS))
 
@@ -156,7 +151,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BookStackBlock.BOOKS))
@@ -184,7 +179,6 @@ public final class Decorations
 
 	private static BlockEntry<BowlBlock> bowl(String type)
 	{
-		String codeName = "decorations/bowl_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
@@ -192,24 +186,24 @@ public final class Decorations
 		else
 			englishName = "%s Bowl".formatted(RegistrateLangProvider.toEnglishName(type));
 
-		return REGISTRY
-				.block(codeName, BowlBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/bowl_%s".formatted(type))
+				.block(BowlBlock::new)
 					.lang(englishName)
-					.lang(EN_GB, englishName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -242,7 +236,6 @@ public final class Decorations
 
 	private static BlockEntry<TankardsBlock> tankards(String type)
 	{
-		String codeName = "decorations/tankards_%s".formatted(type);
 		String englishName;
 
 		if(type.equals("empty"))
@@ -252,17 +245,17 @@ public final class Decorations
 		else
 			englishName = "%s Tankards".formatted(RegistrateLangProvider.toEnglishName(type));
 
-		return REGISTRY
-				.block(codeName, TankardsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/tankards_%s".formatted(type))
+				.block(TankardsBlock::new)
 					.lang(englishName)
-					.lang(EN_GB, englishName)
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TankardsBlock.TANKARDS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TankardsBlock.TANKARDS))
 
 					.isValidSpawn(BlockHelper::never)
@@ -270,7 +263,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TankardsBlock.TANKARDS))
@@ -286,10 +279,10 @@ public final class Decorations
 
 	private static BlockEntry<MushroomsRedBlock> mushroomsRed()
 	{
-		return REGISTRY
-				.block("decorations/mushrooms_red", MushroomsRedBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/mushrooms_red")
+				.block(MushroomsRedBlock::new)
 					.lang("Red Mushrooms")
-					.lang(EN_GB, "Red Mushrooms")
 
 					.initialProperties(Material.PLANT, MaterialColor.COLOR_RED)
 					.sound(SoundType.GRASS)
@@ -298,7 +291,7 @@ public final class Decorations
 					.randomTicks()
 					.instabreak()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MushroomsRedBlock.MUSHROOMS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MushroomsRedBlock.MUSHROOMS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MushroomsRedBlock.MUSHROOMS))
 
 					.hasPostProcess(BlockHelper::always)
@@ -307,7 +300,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MushroomsRedBlock.MUSHROOMS))
@@ -330,24 +323,24 @@ public final class Decorations
 
 	private static BlockEntry<CoinStackBlock> coinStack(String type)
 	{
-		return REGISTRY
-				.block("decorations/coin_stack_%s".formatted(type), CoinStackBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/coin_stack_%s".formatted(type))
+				.block(CoinStackBlock::new)
 					.lang("%s Coin Stack".formatted(RegistrateLangProvider.toEnglishName(type)))
-					.lang(EN_GB, "%s Coin Stack".formatted(RegistrateLangProvider.toEnglishName(type)))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
 					.sound(SoundType.METAL)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -375,17 +368,17 @@ public final class Decorations
 
 	private static BlockEntry<MuffinsBlock> muffins(String type)
 	{
-		return REGISTRY
-				.block("decorations/muffins_%s".formatted(type), MuffinsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/muffins_%s".formatted(type))
+				.block(MuffinsBlock::new)
 					.lang("%s Muffins".formatted(RegistrateLangProvider.toEnglishName(type)))
-					.lang(EN_GB, "%s Muffins".formatted(RegistrateLangProvider.toEnglishName(type)))
 
 					.initialProperties(Material.CAKE)
 					.strength(.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MuffinsBlock.MUFFINS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MuffinsBlock.MUFFINS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MuffinsBlock.MUFFINS))
 
 					.isValidSpawn(BlockHelper::never)
@@ -393,7 +386,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MuffinsBlock.MUFFINS))
@@ -409,24 +402,24 @@ public final class Decorations
 
 	private static BlockEntry<PaperStackBlock> paperStack()
 	{
-		return REGISTRY
-				.block("decorations/paper_stack", PaperStackBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/paper_stack")
+				.block(PaperStackBlock::new)
 					.lang("Paper Stack")
-					.lang(EN_GB, "Paper stack")
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -443,17 +436,17 @@ public final class Decorations
 
 	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/boiled_creme_treats".formatted(furnitureSet.serializedName), BoiledCremeTreatsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/boiled_creme_treats".formatted(furnitureSet.serializedName))
+				.block(BoiledCremeTreatsBlock::new)
 					.lang("Boiled Creme Treats")
-					.lang(EN_GB, "Boiled Creme Treats")
 
 					.initialProperties(Material.CAKE)
 					.strength(.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, BoiledCremeTreatsBlock.TREATS))
 
 					.isValidSpawn(BlockHelper::never)
@@ -461,14 +454,11 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
-
-					.mapping("1.16.5", "decorations/boiled_creme_treats", RegistryEvent.MissingMappings.Action.REMAP)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, BoiledCremeTreatsBlock.TREATS))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
-						.mapping("1.16.5", "decorations/boiled_creme_treats", RegistryEvent.MissingMappings.Action.REMAP)
 					.build()
 		.register();
 	}
@@ -480,17 +470,17 @@ public final class Decorations
 
 	private static BlockEntry<SweetRollsBlock> sweetRolls(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/sweetrolls".formatted(furnitureSet.serializedName), SweetRollsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/sweetrolls".formatted(furnitureSet.serializedName))
+				.block(SweetRollsBlock::new)
 					.lang("Sweetrolls")
-					.lang(EN_GB, "Sweetrolls")
 
 					.initialProperties(Material.CAKE)
 					.strength(.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, SweetRollsBlock.ROLLS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, SweetRollsBlock.ROLLS))
 
 					.isValidSpawn(BlockHelper::never)
@@ -498,14 +488,11 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
-
-					.mapping("1.16.5", "decorations/sweetrolls", RegistryEvent.MissingMappings.Action.REMAP)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, SweetRollsBlock.ROLLS))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
-						.mapping("1.16.5", "decorations/sweetrolls", RegistryEvent.MissingMappings.Action.REMAP)
 					.build()
 		.register();
 	}
@@ -517,17 +504,17 @@ public final class Decorations
 
 	private static BlockEntry<MeadBottlesBlock> meadBottles(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/mead_bottles".formatted(furnitureSet.serializedName), MeadBottlesBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/mead_bottles".formatted(furnitureSet.serializedName))
+				.block(MeadBottlesBlock::new)
 					.lang("Mead Bottles")
-					.lang(EN_GB, "Mead Bottles")
 
 					.initialProperties(Material.GLASS)
 					.strength(.3F)
 					.sound(SoundType.GLASS)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, MeadBottlesBlock.BOTTLES))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, MeadBottlesBlock.BOTTLES))
 
 					.isValidSpawn(BlockHelper::never)
@@ -535,14 +522,11 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
-
-					.mapping("1.16.5", "decorations/mead_bottles", RegistryEvent.MissingMappings.Action.REMAP)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, MeadBottlesBlock.BOTTLES))
 						.tag(FurnitureStation.CRAFTABLE, ITEM_GROUP_CATEGORY_TAG, furnitureSet.itemGroupCategoryTag)
-						.mapping("1.16.5", "decorations/mead_bottles", RegistryEvent.MissingMappings.Action.REMAP)
 					.build()
 		.register();
 	}
@@ -566,24 +550,24 @@ public final class Decorations
 		if(type.equals("dark"))
 			englishName = "Black %s".formatted(englishName);
 
-		return REGISTRY
-				.block("decorations/%s/soul_gems_%s".formatted(furnitureSet.serializedName, type), SoulGemsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/soul_gems_%s".formatted(furnitureSet.serializedName, type))
+				.block(SoulGemsBlock::new)
 					.lang(englishName)
-					.lang(EN_GB, englishName)
 
 					.initialProperties(Material.GLASS)
 					.strength(.3F)
 					.sound(SoundType.GLASS)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -608,24 +592,24 @@ public final class Decorations
 
 	private static BlockEntry<FoodBlock> food(FurnitureSet furnitureSet, int index)
 	{
-		return REGISTRY
-				.block("decorations/%s/food_%d".formatted(furnitureSet.serializedName, index), FoodBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/food_%d".formatted(furnitureSet.serializedName, index))
+				.block(FoodBlock::new)
 					.lang("%s Food %d".formatted(furnitureSet.englishName, index + 1))
-					.lang(EN_GB, "%s Food %d".formatted(furnitureSet.englishName, index + 1))
 
 					.initialProperties(Material.CAKE)
 					.strength(2.5F)
 					.sound(SoundType.WOOL)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -641,24 +625,24 @@ public final class Decorations
 
 	private static BlockEntry<TeaSetBlock> teaSet(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/tea_set".formatted(furnitureSet.serializedName), TeaSetBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/tea_set".formatted(furnitureSet.serializedName))
+				.block(TeaSetBlock::new)
 					.lang("%s Tea Set".formatted(furnitureSet.englishName))
-					.lang(EN_GB, "%s Tea Set".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
 					.sound(SoundType.METAL)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -674,17 +658,17 @@ public final class Decorations
 
 	private static BlockEntry<TeaCupsBlock> teaCups(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/tea_cups".formatted(furnitureSet.serializedName), TeaCupsBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/tea_cups".formatted(furnitureSet.serializedName))
+				.block(TeaCupsBlock::new)
 					.lang("%s Tea Cups".formatted(furnitureSet.englishName))
-					.lang(EN_GB, "%s Tea Cups".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
 					.sound(SoundType.METAL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TeaCupsBlock.TEA_CUPS))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TeaCupsBlock.TEA_CUPS))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TeaCupsBlock.TEA_CUPS))
 
 					.isValidSpawn(BlockHelper::never)
@@ -692,7 +676,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TeaCupsBlock.TEA_CUPS))
@@ -708,17 +692,17 @@ public final class Decorations
 
 	private static BlockEntry<PlatterBlock> platter(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/platter".formatted(furnitureSet.serializedName), PlatterBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/platter".formatted(furnitureSet.serializedName))
+				.block(PlatterBlock::new)
 					.lang("%s Platter".formatted(furnitureSet.englishName))
-					.lang(EN_GB, "%s Platter".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
 					.sound(SoundType.METAL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, PlatterBlock.PLATTER))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, PlatterBlock.PLATTER))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, PlatterBlock.PLATTER))
 
 					.isValidSpawn(BlockHelper::never)
@@ -726,7 +710,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, PlatterBlock.PLATTER))
@@ -743,17 +727,17 @@ public final class Decorations
 
 	private static BlockEntry<WidowBloomBlock> widowBloom(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/widow_bloom".formatted(furnitureSet.serializedName), WidowBloomBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/widow_bloom".formatted(furnitureSet.serializedName))
+				.block(WidowBloomBlock::new)
 					.lang("Widowbloom Vase")
-					.lang(EN_GB, "Widowbloom Vase")
 
 					.initialProperties(Material.DECORATION)
 					.strength(2.5F)
 					.sound(SoundType.STONE)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> provider
+					.blockstate((ctx, provider) -> provider
 							.getVariantBuilder(ctx.get())
 							.forAllStates(blockState -> ConfiguredModel
 									.builder()
@@ -771,7 +755,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item(WidowBloomBlockItem::new)
 						.model((ctx, provider) -> {
@@ -839,17 +823,17 @@ public final class Decorations
 
 	private static BlockEntry<TomesBlock> tomes(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/tomes".formatted(furnitureSet.serializedName), TomesBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/tomes".formatted(furnitureSet.serializedName))
+				.block(TomesBlock::new)
 					.lang("%s Tomes".formatted(furnitureSet.englishName))
-					.lang(EN_GB, "%s Tomes".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.WOOD)
 					.strength(2.5F)
 					.sound(SoundType.WOOD)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TomesBlock.TOMES))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, TomesBlock.TOMES))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, TomesBlock.TOMES))
 
 					.isValidSpawn(BlockHelper::never)
@@ -857,7 +841,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, TomesBlock.TOMES))
@@ -873,17 +857,17 @@ public final class Decorations
 
 	private static BlockEntry<ChalicesBlock> chalices(FurnitureSet furnitureSet)
 	{
-		return REGISTRY
-				.block("decorations/%s/chalices".formatted(furnitureSet.serializedName), ChalicesBlock::new)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/chalices".formatted(furnitureSet.serializedName))
+				.block(ChalicesBlock::new)
 					.lang("%s Chalices".formatted(furnitureSet.englishName))
-					.lang(EN_GB, "%s Chalices".formatted(furnitureSet.englishName))
 
 					.initialProperties(Material.METAL)
 					.strength(2.5F)
 					.sound(SoundType.METAL)
 					.noOcclusion()
 
-					.blockState((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, ChalicesBlock.CHALICES))
+					.blockstate((ctx, provider) -> Registrations.horizontalBlock(ctx, provider, ChalicesBlock.CHALICES))
 					.loot((lootTables, block) -> Registrations.droppingStacked(lootTables, block, ChalicesBlock.CHALICES))
 
 					.isValidSpawn(BlockHelper::never)
@@ -891,7 +875,7 @@ public final class Decorations
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model((ctx, provider) -> Registrations.blockItemStacked(ctx, provider, ChalicesBlock.CHALICES))
@@ -916,27 +900,24 @@ public final class Decorations
 
 	private static BlockEntry<PotteryBlock> pottery(FurnitureSet furnitureSet, int index)
 	{
-		var codeName = "decorations/%s/pottery_%s".formatted(furnitureSet.serializedName, index);
-		var englishName = "%s Pottery %s".formatted(furnitureSet.englishName, index + 1);
-
-		return REGISTRY
-				.block(codeName, PotteryBlock::new)
-					.lang(englishName)
-					.lang(EN_GB, englishName)
+		return FFRegistry.INSTANCE
+				.object("decorations/%s/pottery_%s".formatted(furnitureSet.serializedName, index))
+				.block(PotteryBlock::new)
+					.lang("%s Pottery %s".formatted(furnitureSet.englishName, index + 1))
 
 					.initialProperties(Material.DECORATION)
 					.strength(2.5F)
 					.sound(SoundType.STONE)
 					.noOcclusion()
 
-					.blockState(Registrations::horizontalBlock)
+					.blockstate(Registrations::horizontalBlock)
 
 					.isValidSpawn(BlockHelper::never)
 					.isRedstoneConductor(BlockHelper::never)
 					.isSuffocating(BlockHelper::never)
 					.isViewBlocking(BlockHelper::never)
 
-					.addRenderType(() -> RenderType::cutout)
+					.addLayer(() -> RenderType::cutout)
 
 					.item()
 						.model(Registrations::blockItem)
@@ -951,15 +932,13 @@ public final class Decorations
 	public static final ItemGroupCategory ITEM_GROUP_CATEGORY = ItemGroupCategory
 			.builder(ITEM_GROUP_CATEGORY_TAG.location().toString())
 				.tagged(ITEM_GROUP_CATEGORY_TAG)
-				.defaultIcon(SWEETROLLS_BLOCK::asItemStack)
+				.defaultIcon(SWEETROLLS_BLOCK::asStack)
 			.build();
 	// endregion
 
 	static void bootstrap()
 	{
-		ITEM_GROUP_CATEGORY
-				.addTranslationGenerator(REGISTRY, "Decorations")
-				.addTranslationGenerator(REGISTRY, EN_GB, "Decorations");
+		ITEM_GROUP_CATEGORY.addTranslationGenerator(FFRegistry.INSTANCE, "Decorations");
 
 		BlockEntry<?>[] blocks = new BlockEntry[] {
 				BERRY_BASKET_EMPTY_BLOCK,
@@ -1037,22 +1016,12 @@ public final class Decorations
 				DUNMER_POTTERY_1_BLOCK_ITEM
 		};
 
-		REGISTRY.addDataGenerator(LANG, provider -> {
+		FFRegistry.INSTANCE.addDataGenerator(LANG, provider -> {
 			for(BlockEntry<?> entry : blocks)
 			{
 				entry.ifPresent(block -> {
 					if(block instanceof StackedBlock stacked)
 						provider.add(stacked.getStackableTranslationKey(), "Stackable");
-				});
-			}
-		});
-
-		REGISTRY.addDataGenerator(LANG_EXT_PROVIDER, provider -> {
-			for(BlockEntry<?> entry : blocks)
-			{
-				entry.ifPresent(block -> {
-					if(block instanceof StackedBlock stacked)
-						provider.add(EN_GB, stacked.getStackableTranslationKey(), "Stackable");
 				});
 			}
 		});

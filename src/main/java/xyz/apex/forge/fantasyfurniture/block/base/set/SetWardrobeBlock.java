@@ -10,7 +10,8 @@ import xyz.apex.forge.fantasyfurniture.block.entity.SetWardrobeBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetWardrobeContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetWardrobeBlock extends BaseMultiBlock.WithContainer<SetWardrobeBlockEntity, SetWardrobeContainer>
 {
@@ -20,7 +21,7 @@ public class SetWardrobeBlock extends BaseMultiBlock.WithContainer<SetWardrobeBl
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -30,13 +31,13 @@ public class SetWardrobeBlock extends BaseMultiBlock.WithContainer<SetWardrobeBl
 	@Override
 	protected MenuType<SetWardrobeContainer> getContainerType()
 	{
-		return FFElements.WARDROBE_CONTAINER.asMenuType();
+		return FFElements.WARDROBE_CONTAINER.get();
 	}
 
 	@Override
 	protected BlockEntityType<SetWardrobeBlockEntity> getBlockEntityType()
 	{
-		return FFElements.WARDROBE_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.WARDROBE_BLOCK_ENTITY.get();
 	}
 
 	@Override

@@ -10,7 +10,8 @@ import xyz.apex.forge.fantasyfurniture.block.entity.SetBookshelfBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetBookshelfContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetBookshelfBlock extends BaseMultiBlock.WithContainer<SetBookshelfBlockEntity, SetBookshelfContainer>
 {
@@ -20,7 +21,7 @@ public class SetBookshelfBlock extends BaseMultiBlock.WithContainer<SetBookshelf
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -30,13 +31,13 @@ public class SetBookshelfBlock extends BaseMultiBlock.WithContainer<SetBookshelf
 	@Override
 	protected MenuType<SetBookshelfContainer> getContainerType()
 	{
-		return FFElements.BOOKSHELF_CONTAINER.asMenuType();
+		return FFElements.BOOKSHELF_CONTAINER.get();
 	}
 
 	@Override
 	protected BlockEntityType<SetBookshelfBlockEntity> getBlockEntityType()
 	{
-		return FFElements.BOOKSHELF_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.BOOKSHELF_BLOCK_ENTITY.get();
 	}
 
 	@Override

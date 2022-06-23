@@ -10,7 +10,8 @@ import xyz.apex.forge.fantasyfurniture.block.entity.SetDeskBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetDeskContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetDeskBlock extends BaseMultiBlock.WithContainer<SetDeskBlockEntity, SetDeskContainer>
 {
@@ -20,7 +21,7 @@ public class SetDeskBlock extends BaseMultiBlock.WithContainer<SetDeskBlockEntit
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -30,13 +31,13 @@ public class SetDeskBlock extends BaseMultiBlock.WithContainer<SetDeskBlockEntit
 	@Override
 	protected MenuType<SetDeskContainer> getContainerType()
 	{
-		return FFElements.DESK_CONTAINER.asMenuType();
+		return FFElements.DESK_CONTAINER.get();
 	}
 
 	@Override
 	protected BlockEntityType<SetDeskBlockEntity> getBlockEntityType()
 	{
-		return FFElements.DESK_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.DESK_BLOCK_ENTITY.get();
 	}
 
 	@Override

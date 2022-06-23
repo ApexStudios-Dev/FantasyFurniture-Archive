@@ -16,10 +16,10 @@ import net.minecraft.world.item.ItemStack;
 
 import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
-import xyz.apex.java.utility.nullness.NonnullPredicate;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Predicate;
 
 public final class FurnitureStationContainer extends BaseMenu
 {
@@ -206,9 +206,9 @@ public final class FurnitureStationContainer extends BaseMenu
 
 	public final class InputSlot extends Slot
 	{
-		private final NonnullPredicate<ItemStack> predicate;
+		private final Predicate<ItemStack> predicate;
 
-		private InputSlot(int index, int x, int y, NonnullPredicate<ItemStack> predicate)
+		private InputSlot(int index, int x, int y, Predicate<ItemStack> predicate)
 		{
 			super(inputInventory, index, x, y);
 

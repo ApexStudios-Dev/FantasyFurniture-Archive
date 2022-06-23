@@ -10,7 +10,8 @@ import xyz.apex.forge.fantasyfurniture.block.entity.SetDresserBlockEntity;
 import xyz.apex.forge.fantasyfurniture.container.SetDresserContainer;
 import xyz.apex.forge.fantasyfurniture.init.FFElements;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
-import xyz.apex.java.utility.nullness.NonnullConsumer;
+
+import java.util.function.Consumer;
 
 public class SetDresserBlock extends BaseMultiBlock.WithContainer<SetDresserBlockEntity, SetDresserContainer>
 {
@@ -20,7 +21,7 @@ public class SetDresserBlock extends BaseMultiBlock.WithContainer<SetDresserBloc
 	}
 
 	@Override
-	protected void registerProperties(NonnullConsumer<Property<?>> consumer)
+	protected void registerProperties(Consumer<Property<?>> consumer)
 	{
 		super.registerProperties(consumer);
 		consumer.accept(FACING_4_WAY);
@@ -30,13 +31,13 @@ public class SetDresserBlock extends BaseMultiBlock.WithContainer<SetDresserBloc
 	@Override
 	protected BlockEntityType<SetDresserBlockEntity> getBlockEntityType()
 	{
-		return FFElements.DRESSER_BLOCK_ENTITY.asBlockEntityType();
+		return FFElements.DRESSER_BLOCK_ENTITY.get();
 	}
 
 	@Override
 	protected MenuType<SetDresserContainer> getContainerType()
 	{
-		return FFElements.DRESSER_CONTAINER.asMenuType();
+		return FFElements.DRESSER_CONTAINER.get();
 	}
 
 	@Override
