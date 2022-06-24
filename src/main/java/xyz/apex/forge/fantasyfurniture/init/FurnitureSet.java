@@ -148,6 +148,38 @@ public enum FurnitureSet
 			DoorBlock::new
 	),
 	// endregion
+
+	// region: Bone
+	BONE(
+			"bone",
+
+			NordicCarpetBlock::new,
+			NordicWallLightBlock::new,
+			NordicFloorLightBlock::new,
+			NordicTableSmallBlock::new,
+			NordicTableWideBlock::new,
+			NordicTableLargeBlock::new,
+			NordicStoolBlock::new,
+			NordicCushionBlock::new,
+			NordicPaintingSmallBlock::new,
+			NordicPaintingWideBlock::new,
+			NordicDrawerBlock::new,
+			NordicShelfBlock::new,
+			NordicSofaBlock::new,
+			NordicDeskBlock::new,
+			NordicChairBlock::new,
+			NordicBenchBlock::new,
+			NordicBookshelfBlock::new,
+			NordicChestBlock::new,
+			NordicDresserBlock::new,
+			NordicWardrobeBlock::new,
+			NordicWardrobeTopperBlock::new,
+			NordicBedSingleBlock::new,
+			NordicBedDoubleBlock::new,
+			NordicChandelierBlock::new,
+			DoorBlock::new
+	),
+	// endregion
 	;
 
 	public static final ResourceLocation VENTHYR_FANCY_TABLE_ITEM_PROPERTY = FFRegistry.INSTANCE.id("venthyr_fancy");
