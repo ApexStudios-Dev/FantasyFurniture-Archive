@@ -56,8 +56,7 @@ public final class FurnitureStation
 	public static final BlockEntityEntry<FurnitureStationBlockEntity> BLOCK_ENTITY = Registrations.blockEntity(BLOCK);
 	public static final MenuEntry<FurnitureStationContainer> CONTAINER = container();
 
-	private static final String TXT_ACCEPTS_ANY = "text." + Mods.FANTASY_FURNITURE + ".recipe.accepts_any";
-	private static final String TXT_ACCEPTS_ANY_ARG = TXT_ACCEPTS_ANY + ".arg";
+	private static final String TXT_ACCEPTS_ANY = "text.%s.recipe.accepts_any".formatted(Mods.FANTASY_FURNITURE);
 
 	// items with this tag can be crafted from the furniture station
 	public static final TagKey<Item> CRAFTABLE = ItemTags.tag(Mods.FANTASY_FURNITURE, "craftable");
@@ -159,7 +158,7 @@ public final class FurnitureStation
 
 	private static int compareItemStacks(ItemStack left, ItemStack right)
 	{
-		for(var furnitureSet : FurnitureSet.values())
+		for(var furnitureSet : FFElements.FURNITURE_SETS)
 		{
 			var leftHasTag = left.is(furnitureSet.itemGroupCategoryTag);
 			var rightHasTag = right.is(furnitureSet.itemGroupCategoryTag);

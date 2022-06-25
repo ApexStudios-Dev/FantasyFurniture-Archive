@@ -16,8 +16,8 @@ public final class FFRegistry extends AbstractRegistrate<FFRegistry>
 {
 	public static final FFRegistry INSTANCE = new FFRegistry();
 
-	public static final String TXT_JEI_INGREDIENTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.ingredients";
-	public static final String TXT_JEI_RESULTS_KEY = "text." + Mods.FANTASY_FURNITURE + ".jei.results";
+	public static final String TXT_JEI_INGREDIENTS_KEY = "text.%s.jei.ingredients".formatted(Mods.FANTASY_FURNITURE);
+	public static final String TXT_JEI_RESULTS_KEY = "text.%s.jei.results".formatted(Mods.FANTASY_FURNITURE);
 
 	private static boolean bootstrap = false;
 
@@ -46,12 +46,12 @@ public final class FFRegistry extends AbstractRegistrate<FFRegistry>
 
 		Registrations.bootstrap();
 		FFPatterns.bootstrap();
-
-		FurnitureSet.bootstrap();
+		NordicBlocks.bootstrap();
+		VenthyrBlocks.bootstrap();
+		DunmerBlocks.bootstrap();
+		BoneBlocks.bootstrap();
 		Decorations.bootstrap();
-
 		FurnitureStation.bootstrap();
-
 		FFElements.bootstrap();
 
 		bootstrap = true;

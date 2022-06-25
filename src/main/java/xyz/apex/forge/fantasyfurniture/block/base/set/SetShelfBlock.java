@@ -12,21 +12,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class SetShelfBlock extends BaseBlock
+public class SetShelfBlock extends BaseBlock implements IFurnitureSetBlock
 {
 	public static final EnumProperty<ConnectionType> CONNECTION_TYPE = EnumProperty.create("connection_type", ConnectionType.class);
 
-	public SetShelfBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetShelfBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
 
+		this.furnitureSet = furnitureSet;
+
 		registerDefaultState(defaultBlockState().setValue(CONNECTION_TYPE, ConnectionType.NONE));
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -73,6 +86,12 @@ public class SetShelfBlock extends BaseBlock
 	public boolean isPathfindable(BlockState blockState, BlockGetter level, BlockPos pos, PathComputationType pathType)
 	{
 		return false;
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.shelf(this, blockState);
 	}
 
 	private static ConnectionType getConnectionState(LevelAccessor level, BlockPos pos, BlockState blockState, Block baseShelfBlock)

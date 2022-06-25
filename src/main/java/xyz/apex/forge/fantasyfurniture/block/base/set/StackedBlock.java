@@ -120,7 +120,7 @@ public abstract class StackedBlock extends BaseBlock
 
 	public final String getStackableTranslationKey()
 	{
-		return getDescriptionId() + ".stacked";
+		return "%s.stacked".formatted(getDescriptionId());
 	}
 
 	public static int getMinValue(IntegerProperty property)

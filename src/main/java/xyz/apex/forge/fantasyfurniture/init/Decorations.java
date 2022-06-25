@@ -431,10 +431,10 @@ public final class Decorations
 
 	// region: Nordic
 	// region: Boiled Crème Treats
-	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats(FurnitureSet.NORDIC);
+	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS_BLOCK = boiledCremeTreats(NordicBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> BOILED_CREME_TREATS_BLOCK_ITEM = Registrations.blockItem(BOILED_CREME_TREATS_BLOCK);
 
-	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats(FurnitureSet furnitureSet)
+	private static BlockEntry<BoiledCremeTreatsBlock> boiledCremeTreats(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/boiled_creme_treats".formatted(furnitureSet.serializedName))
@@ -465,10 +465,10 @@ public final class Decorations
 	// endregion
 
 	// region: Sweetrolls
-	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls(FurnitureSet.NORDIC);
+	public static final BlockEntry<SweetRollsBlock> SWEETROLLS_BLOCK = sweetRolls(NordicBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> SWEETROLLS_BLOCK_ITEM = Registrations.blockItem(SWEETROLLS_BLOCK);
 
-	private static BlockEntry<SweetRollsBlock> sweetRolls(FurnitureSet furnitureSet)
+	private static BlockEntry<SweetRollsBlock> sweetRolls(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/sweetrolls".formatted(furnitureSet.serializedName))
@@ -499,10 +499,10 @@ public final class Decorations
 	// endregion
 
 	// region: Mead Bottles
-	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles(FurnitureSet.NORDIC);
+	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES_BLOCK = meadBottles(NordicBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> MEAD_BOTTLES_BLOCK_ITEM = Registrations.blockItem(MEAD_BOTTLES_BLOCK);
 
-	private static BlockEntry<MeadBottlesBlock> meadBottles(FurnitureSet furnitureSet)
+	private static BlockEntry<MeadBottlesBlock> meadBottles(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/mead_bottles".formatted(furnitureSet.serializedName))
@@ -534,16 +534,16 @@ public final class Decorations
 
 	// region: Soul Gems
 	// region: Light
-	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT_BLOCK = soulGems(FurnitureSet.NORDIC, "light");
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT_BLOCK = soulGems(NordicBlocks.INSTANCE, "light");
 	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_LIGHT_BLOCK_ITEM = Registrations.blockItem(NORDIC_SOUL_GEMS_LIGHT_BLOCK);
 	// endregion
 
 	// region: Dark
-	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK_BLOCK = soulGems(FurnitureSet.NORDIC, "dark");
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK_BLOCK = soulGems(NordicBlocks.INSTANCE, "dark");
 	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_DARK_BLOCK_ITEM = Registrations.blockItem(NORDIC_SOUL_GEMS_DARK_BLOCK);
 	// endregion
 
-	private static BlockEntry<SoulGemsBlock> soulGems(FurnitureSet furnitureSet, String type)
+	private static BlockEntry<SoulGemsBlock> soulGems(ModBlocks furnitureSet, String type)
 	{
 		String englishName = "Soul Gems";
 
@@ -581,16 +581,16 @@ public final class Decorations
 	// region: Venthyr
 	// region: Food
 	// region: 0
-	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0_BLOCK = food(FurnitureSet.VENTHYR, 0);
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0_BLOCK = food(VenthyrBlocks.INSTANCE, 0);
 	public static final ItemEntry<BlockItem> VENTHYR_FOOD_0_BLOCK_ITEM = Registrations.blockItem(VENTHYR_FOOD_0_BLOCK);
 	// endregion
 
 	// region: 1
-	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1_BLOCK = food(FurnitureSet.VENTHYR, 1);
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1_BLOCK = food(VenthyrBlocks.INSTANCE, 1);
 	public static final ItemEntry<BlockItem> VENTHYR_FOOD_1_BLOCK_ITEM = Registrations.blockItem(VENTHYR_FOOD_1_BLOCK);
 	// endregion
 
-	private static BlockEntry<FoodBlock> food(FurnitureSet furnitureSet, int index)
+	private static BlockEntry<FoodBlock> food(ModBlocks furnitureSet, int index)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/food_%d".formatted(furnitureSet.serializedName, index))
@@ -620,10 +620,10 @@ public final class Decorations
 	// endregion
 
 	// region: Tea Set
-	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET_BLOCK = teaSet(FurnitureSet.VENTHYR);
+	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET_BLOCK = teaSet(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_TEA_SET_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TEA_SET_BLOCK);
 
-	private static BlockEntry<TeaSetBlock> teaSet(FurnitureSet furnitureSet)
+	private static BlockEntry<TeaSetBlock> teaSet(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/tea_set".formatted(furnitureSet.serializedName))
@@ -653,10 +653,10 @@ public final class Decorations
 	// endregion
 
 	// region: Tea Cups
-	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS_BLOCK = teaCups(FurnitureSet.VENTHYR);
+	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS_BLOCK = teaCups(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_TEA_CUPS_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TEA_CUPS_BLOCK);
 
-	private static BlockEntry<TeaCupsBlock> teaCups(FurnitureSet furnitureSet)
+	private static BlockEntry<TeaCupsBlock> teaCups(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/tea_cups".formatted(furnitureSet.serializedName))
@@ -687,10 +687,10 @@ public final class Decorations
 	// endregion
 
 	// region: Platter
-	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER_BLOCK = platter(FurnitureSet.VENTHYR);
+	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER_BLOCK = platter(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_PLATTER_BLOCK_ITEM = Registrations.blockItem(VENTHYR_PLATTER_BLOCK);
 
-	private static BlockEntry<PlatterBlock> platter(FurnitureSet furnitureSet)
+	private static BlockEntry<PlatterBlock> platter(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/platter".formatted(furnitureSet.serializedName))
@@ -721,11 +721,11 @@ public final class Decorations
 	// endregion
 
 	// region: Widow Bloom
-	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM_BLOCK = widowBloom(FurnitureSet.VENTHYR);
+	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM_BLOCK = widowBloom(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_WIDOW_BLOOM_BLOCK_ITEM = Registrations.blockItem(VENTHYR_WIDOW_BLOOM_BLOCK);
 	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = Registrations.blockEntity(VENTHYR_WIDOW_BLOOM_BLOCK);
 
-	private static BlockEntry<WidowBloomBlock> widowBloom(FurnitureSet furnitureSet)
+	private static BlockEntry<WidowBloomBlock> widowBloom(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/widow_bloom".formatted(furnitureSet.serializedName))
@@ -818,10 +818,10 @@ public final class Decorations
 	// endregion
 
 	// region: Tomes
-	public static final BlockEntry<TomesBlock> VENTHYR_TOMES_BLOCK = tomes(FurnitureSet.VENTHYR);
+	public static final BlockEntry<TomesBlock> VENTHYR_TOMES_BLOCK = tomes(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_TOMES_BLOCK);
 
-	private static BlockEntry<TomesBlock> tomes(FurnitureSet furnitureSet)
+	private static BlockEntry<TomesBlock> tomes(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/tomes".formatted(furnitureSet.serializedName))
@@ -852,10 +852,10 @@ public final class Decorations
 	// endregion
 
 	// region: Chalices
-	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES_BLOCK = chalices(FurnitureSet.VENTHYR);
+	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES_BLOCK = chalices(VenthyrBlocks.INSTANCE);
 	public static final ItemEntry<BlockItem> VENTHYR_CHALICES_BLOCK_ITEM = Registrations.blockItem(VENTHYR_CHALICES_BLOCK);
 
-	private static BlockEntry<ChalicesBlock> chalices(FurnitureSet furnitureSet)
+	private static BlockEntry<ChalicesBlock> chalices(ModBlocks furnitureSet)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/chalices".formatted(furnitureSet.serializedName))
@@ -889,16 +889,16 @@ public final class Decorations
 	// region: Dunmer
 	// region: Pottery
 	// region: 0
-	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0_BLOCK = pottery(FurnitureSet.DUNMER, 0);
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0_BLOCK = pottery(DunmerBlocks.INSTANCE, 0);
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_0_BLOCK_ITEM = Registrations.blockItem(DUNMER_POTTERY_0_BLOCK);
 	// endregion
 
 	// region: 1
-	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1_BLOCK = pottery(FurnitureSet.DUNMER, 1);
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1_BLOCK = pottery(DunmerBlocks.INSTANCE, 1);
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_1_BLOCK_ITEM = Registrations.blockItem(DUNMER_POTTERY_1_BLOCK);
 	// endregion
 
-	private static BlockEntry<PotteryBlock> pottery(FurnitureSet furnitureSet, int index)
+	private static BlockEntry<PotteryBlock> pottery(ModBlocks furnitureSet, int index)
 	{
 		return FFRegistry.INSTANCE
 				.object("decorations/%s/pottery_%s".formatted(furnitureSet.serializedName, index))

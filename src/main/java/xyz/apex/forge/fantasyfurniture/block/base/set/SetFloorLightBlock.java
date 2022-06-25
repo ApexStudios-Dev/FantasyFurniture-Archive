@@ -3,29 +3,43 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class SetFloorLightBlock extends BaseMultiBlock
+public class SetFloorLightBlock extends BaseMultiBlock implements IFurnitureSetBlock
 {
 	public static final EnumProperty<Side> SIDE = EnumProperty.create("side", Side.class);
 
-	public SetFloorLightBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetFloorLightBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
 
+		this.furnitureSet = furnitureSet;
+
 		registerDefaultState(defaultBlockState().setValue(SIDE, Side.BOTTOM));
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -64,6 +78,12 @@ public class SetFloorLightBlock extends BaseMultiBlock
 	public MultiBlockPattern getMultiBlockPattern()
 	{
 		return FFPatterns.PATTERN_1x1x2_FLOOR_LIGHT;
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.floorLight(this, blockState);
 	}
 
 	public enum Side implements StringRepresentable

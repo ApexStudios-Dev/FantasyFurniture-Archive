@@ -1,18 +1,34 @@
 package xyz.apex.forge.fantasyfurniture.block.base.set;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import java.util.function.Consumer;
 
-public class SetTableLargeBlock extends BaseMultiBlock
+public class SetTableLargeBlock extends BaseMultiBlock implements IFurnitureSetBlock
 {
-	public SetTableLargeBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetTableLargeBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -27,5 +43,11 @@ public class SetTableLargeBlock extends BaseMultiBlock
 	public MultiBlockPattern getMultiBlockPattern()
 	{
 		return FFPatterns.PATTERN_2x2x1;
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.tableLarge(this, blockState);
 	}
 }

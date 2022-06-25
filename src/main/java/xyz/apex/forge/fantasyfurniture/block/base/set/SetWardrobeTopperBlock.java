@@ -5,23 +5,37 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class SetWardrobeTopperBlock extends BaseMultiBlock
+public class SetWardrobeTopperBlock extends BaseMultiBlock implements IFurnitureSetBlock
 {
-	public SetWardrobeTopperBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetWardrobeTopperBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -89,5 +103,11 @@ public class SetWardrobeTopperBlock extends BaseMultiBlock
 	public MultiBlockPattern getMultiBlockPattern()
 	{
 		return FFPatterns.PATTERN_1x2x1;
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.wardrobeTopper(this, blockState);
 	}
 }

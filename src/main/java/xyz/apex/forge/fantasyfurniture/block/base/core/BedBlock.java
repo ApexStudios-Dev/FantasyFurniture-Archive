@@ -160,7 +160,7 @@ public abstract class BedBlock extends BaseMultiBlock
 
 	public String getOccupiedTranslationKey()
 	{
-		return getDescriptionId() + ".occupied";
+		return "%s.occupied".formatted(getDescriptionId());
 	}
 
 	public Component getOccupiedTranslation()

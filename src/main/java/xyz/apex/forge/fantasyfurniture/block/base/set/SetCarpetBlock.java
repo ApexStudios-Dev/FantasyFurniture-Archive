@@ -11,14 +11,25 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
-public class SetCarpetBlock extends BaseBlock
+public class SetCarpetBlock extends BaseBlock implements IFurnitureSetBlock
 {
 	public static final VoxelShape SHAPE = box(0D, 0D, 0D, 16D, 1D, 16D);
 
-	public SetCarpetBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetCarpetBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override

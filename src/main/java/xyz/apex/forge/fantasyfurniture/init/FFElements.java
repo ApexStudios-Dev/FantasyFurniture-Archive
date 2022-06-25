@@ -14,13 +14,18 @@ import xyz.apex.forge.fantasyfurniture.block.entity.*;
 import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.container.*;
 
-import java.util.List;
-
 public final class FFElements
 {
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = FFRegistry.INSTANCE.id("textures/gui/container/large_storage.png");
+
+	public static final ModBlocks[] FURNITURE_SETS = new ModBlocks[] {
+			NordicBlocks.INSTANCE,
+			VenthyrBlocks.INSTANCE,
+			DunmerBlocks.INSTANCE,
+			BoneBlocks.INSTANCE
+	};
 
 	// region: Drawer
 	public static final MenuEntry<SetDrawerContainer> DRAWER_CONTAINER = Registrations.container("drawer", SetDrawerContainer::new, () -> SetDrawerContainerScreen::new);
@@ -59,15 +64,15 @@ public final class FFElements
 
 	static
 	{
-		List<NonNullSupplier<Block>> drawers = Lists.newArrayList();
-		List<NonNullSupplier<Block>> chests = Lists.newArrayList();
-		List<NonNullSupplier<Block>> dressers = Lists.newArrayList();
-		List<NonNullSupplier<Block>> wardrobes = Lists.newArrayList();
-		List<NonNullSupplier<Block>> bookshelves = Lists.newArrayList();
-		List<NonNullSupplier<Block>> desks = Lists.newArrayList();
-		List<NonNullSupplier<Block>> lockboxes = Lists.newArrayList();
+		var drawers = Lists.<NonNullSupplier<Block>>newArrayList();
+		var chests = Lists.<NonNullSupplier<Block>>newArrayList();
+		var dressers = Lists.<NonNullSupplier<Block>>newArrayList();
+		var wardrobes = Lists.<NonNullSupplier<Block>>newArrayList();
+		var bookshelves = Lists.<NonNullSupplier<Block>>newArrayList();
+		var desks = Lists.<NonNullSupplier<Block>>newArrayList();
+		var lockboxes = Lists.<NonNullSupplier<Block>>newArrayList();
 
-		for(var furnitureSet : FurnitureSet.values())
+		for(var furnitureSet : FURNITURE_SETS)
 		{
 			drawers.add(furnitureSet.drawerBlock::get);
 			chests.add(furnitureSet.chestBlock::get);
@@ -79,13 +84,13 @@ public final class FFElements
 			lockboxes.add(furnitureSet.lockboxBlock::get);
 		}
 
-		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(new NonNullSupplier[0]));
-		CHEST_BLOCK_ENTITY = blockEntity("chest", SetChestBlockEntity::new, chests.toArray(new NonNullSupplier[0]));
-		DRESSER_BLOCK_ENTITY = blockEntity("dresser", SetDresserBlockEntity::new, dressers.toArray(new NonNullSupplier[0]));
-		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(new NonNullSupplier[0]));
-		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(new NonNullSupplier[0]));
-		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(new NonNullSupplier[0]));
-		LOCKBOX_BLOCK_ENTITY = blockEntity("lockbox", SetLockboxBlockEntity::new, lockboxes.toArray(new NonNullSupplier[0]));
+		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(NonNullSupplier[]::new));
+		CHEST_BLOCK_ENTITY = blockEntity("chest", SetChestBlockEntity::new, chests.toArray(NonNullSupplier[]::new));
+		DRESSER_BLOCK_ENTITY = blockEntity("dresser", SetDresserBlockEntity::new, dressers.toArray(NonNullSupplier[]::new));
+		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(NonNullSupplier[]::new));
+		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(NonNullSupplier[]::new));
+		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(NonNullSupplier[]::new));
+		LOCKBOX_BLOCK_ENTITY = blockEntity("lockbox", SetLockboxBlockEntity::new, lockboxes.toArray(NonNullSupplier[]::new));
 	}
 
 	static void bootstrap()

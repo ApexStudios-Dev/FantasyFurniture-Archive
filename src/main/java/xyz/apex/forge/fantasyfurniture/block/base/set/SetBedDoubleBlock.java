@@ -3,18 +3,33 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.player.RemotePlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
-public class SetBedDoubleBlock extends BedBlock
+public class SetBedDoubleBlock extends BedBlock implements IFurnitureSetBlock
 {
-	public SetBedDoubleBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetBedDoubleBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -43,5 +58,11 @@ public class SetBedDoubleBlock extends BedBlock
 	public MultiBlockPattern getMultiBlockPattern()
 	{
 		return FFPatterns.PATTERN_2x2x1;
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.bedDouble(this, blockState);
 	}
 }

@@ -7,16 +7,29 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import java.util.function.Consumer;
 
-public class SetCushionBlock extends SeatBlock
+public class SetCushionBlock extends SeatBlock implements IFurnitureSetBlock
 {
-	public SetCushionBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetCushionBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -57,5 +70,11 @@ public class SetCushionBlock extends SeatBlock
 			var d0 = entity instanceof LivingEntity ? 1D : .8D;
 			entity.setDeltaMovement(deltaMovement.x, -deltaMovement.y * (double) .66F * d0, deltaMovement.z);
 		}
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.cushion(this, blockState);
 	}
 }

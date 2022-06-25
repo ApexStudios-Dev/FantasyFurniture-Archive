@@ -13,22 +13,35 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class SetSofaBlock extends SeatBlock
+public class SetSofaBlock extends SeatBlock implements IFurnitureSetBlock
 {
 	public static final EnumProperty<ConnectionType> CONNECTION_TYPE = EnumProperty.create("connection_type", ConnectionType.class);
 
-	public SetSofaBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetSofaBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
 
+		this.furnitureSet = furnitureSet;
+
 		registerDefaultState(defaultBlockState().setValue(CONNECTION_TYPE, ConnectionType.NONE));
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -96,6 +109,12 @@ public class SetSofaBlock extends SeatBlock
 	{
 		super.neighborChanged(blockState, level, pos, block, fromPos, isMoving);
 		updateConnectionBlockState(level, pos, blockState, this);
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.sofa(this, blockState);
 	}
 
 	public static void updateConnectionBlockState(LevelAccessor level, BlockPos pos, BlockState blockState, Block baseSofaBlock)

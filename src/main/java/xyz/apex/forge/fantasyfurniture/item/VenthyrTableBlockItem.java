@@ -6,8 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrTableLargeBlock;
-import xyz.apex.forge.fantasyfurniture.block.venthyr.VenthyrTableSmallBlock;
+import xyz.apex.forge.fantasyfurniture.init.VenthyrBlocks;
 
 public final class VenthyrTableBlockItem extends BlockItem
 {
@@ -28,14 +27,14 @@ public final class VenthyrTableBlockItem extends BlockItem
 			if(stackTag.contains(FantasyFurniture.NBT_BLOCK_STATE_TAG, Tag.TAG_COMPOUND))
 			{
 				var blockStateTag = stackTag.getCompound(FantasyFurniture.NBT_BLOCK_STATE_TAG);
-				var name = VenthyrTableSmallBlock.FANCY.getName();
+				var name = VenthyrBlocks.FANCY.getName();
 
 				if(blockStateTag.contains(name, Tag.TAG_STRING))
 				{
 					var strFancy = blockStateTag.getString(name);
 
-					if(VenthyrTableLargeBlock.FANCY.getValue(strFancy).orElse(false))
-						return id + ".fancy";
+					if(VenthyrBlocks.FANCY.getValue(strFancy).orElse(false))
+						return "%s.fancy".formatted(id);
 				}
 			}
 		}

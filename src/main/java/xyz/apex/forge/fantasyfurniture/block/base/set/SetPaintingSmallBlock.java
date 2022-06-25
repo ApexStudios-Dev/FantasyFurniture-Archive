@@ -3,20 +3,34 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class SetPaintingSmallBlock extends BaseBlock
+public class SetPaintingSmallBlock extends BaseBlock implements IFurnitureSetBlock
 {
-	public SetPaintingSmallBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetPaintingSmallBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -55,6 +69,12 @@ public class SetPaintingSmallBlock extends BaseBlock
 	public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos pos)
 	{
 		return canSupportPainting(level, pos);
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.paintingSmall(this, blockState);
 	}
 
 	public static boolean canSupportPainting(LevelReader level, BlockPos pos)

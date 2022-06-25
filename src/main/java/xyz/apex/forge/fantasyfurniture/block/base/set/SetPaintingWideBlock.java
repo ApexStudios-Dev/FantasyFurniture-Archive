@@ -3,23 +3,37 @@ package xyz.apex.forge.fantasyfurniture.block.base.set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.FFPatterns;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class SetPaintingWideBlock extends BaseMultiBlock
+public class SetPaintingWideBlock extends BaseMultiBlock implements IFurnitureSetBlock
 {
-	public SetPaintingWideBlock(Properties properties)
+	protected final ModBlocks furnitureSet;
+
+	public SetPaintingWideBlock(ModBlocks furnitureSet, Properties properties)
 	{
 		super(properties);
+
+		this.furnitureSet = furnitureSet;
+	}
+
+	@Override
+	public final ModBlocks getFurnitureSet()
+	{
+		return furnitureSet;
 	}
 
 	@Override
@@ -52,6 +66,12 @@ public class SetPaintingWideBlock extends BaseMultiBlock
 
 		return null;
 
+	}
+
+	@Override
+	public final VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		return furnitureSet.hitBoxes.paintingWide(this, blockState);
 	}
 
 	public static boolean canSupportPainting(LevelReader level, BlockPos pos)
