@@ -8,8 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
@@ -41,7 +39,6 @@ public class SetChandelierBlock extends BaseBlock implements IFurnitureSetBlock
 		consumer.accept(WATERLOGGED);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
 	{

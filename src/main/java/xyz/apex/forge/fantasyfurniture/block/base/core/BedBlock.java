@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
@@ -125,7 +123,6 @@ public abstract class BedBlock extends BaseMultiBlock
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public void onFixBedRotations(LivingEntity entity, PoseStack pose)
 	{
 	}
