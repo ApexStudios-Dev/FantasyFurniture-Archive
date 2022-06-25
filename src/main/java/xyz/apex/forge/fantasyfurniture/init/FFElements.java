@@ -52,6 +52,11 @@ public final class FFElements
 	public static final BlockEntityEntry<SetBookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY;
 	// endregion
 
+	// region: Lockbox
+	public static final MenuEntry<SetLockboxContainer> LOCKBOX_CONTAINER = Registrations.container("lockbox", SetLockboxContainer::new, () -> SetLockboxContainerScreen::new);
+	public static final BlockEntityEntry<SetLockboxBlockEntity> LOCKBOX_BLOCK_ENTITY;
+	// endregion
+
 	static
 	{
 		List<NonNullSupplier<Block>> drawers = Lists.newArrayList();
@@ -60,6 +65,7 @@ public final class FFElements
 		List<NonNullSupplier<Block>> wardrobes = Lists.newArrayList();
 		List<NonNullSupplier<Block>> bookshelves = Lists.newArrayList();
 		List<NonNullSupplier<Block>> desks = Lists.newArrayList();
+		List<NonNullSupplier<Block>> lockboxes = Lists.newArrayList();
 
 		for(var furnitureSet : FurnitureSet.values())
 		{
@@ -70,6 +76,7 @@ public final class FFElements
 			bookshelves.add(furnitureSet.bookshelfBlock::get);
 			desks.add(furnitureSet.deskLeftBlock::get);
 			desks.add(furnitureSet.deskRightBlock::get);
+			lockboxes.add(furnitureSet.lockboxBlock::get);
 		}
 
 		DRAWER_BLOCK_ENTITY = blockEntity("drawer", SetDrawerBlockEntity::new, drawers.toArray(new NonNullSupplier[0]));
@@ -78,6 +85,7 @@ public final class FFElements
 		WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", SetWardrobeBlockEntity::new, wardrobes.toArray(new NonNullSupplier[0]));
 		BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", SetBookshelfBlockEntity::new, bookshelves.toArray(new NonNullSupplier[0]));
 		DESK_BLOCK_ENTITY = blockEntity("desk", SetDeskBlockEntity::new, desks.toArray(new NonNullSupplier[0]));
+		LOCKBOX_BLOCK_ENTITY = blockEntity("lockbox", SetLockboxBlockEntity::new, lockboxes.toArray(new NonNullSupplier[0]));
 	}
 
 	static void bootstrap()

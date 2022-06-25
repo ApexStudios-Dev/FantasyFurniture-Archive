@@ -43,6 +43,7 @@ import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.base.core.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.base.set.*;
+import xyz.apex.forge.fantasyfurniture.block.bone.*;
 import xyz.apex.forge.fantasyfurniture.block.dunmer.*;
 import xyz.apex.forge.fantasyfurniture.block.nordic.*;
 import xyz.apex.forge.fantasyfurniture.block.venthyr.*;
@@ -81,6 +82,7 @@ public enum FurnitureSet
 			NordicBedSingleBlock::new,
 			NordicBedDoubleBlock::new,
 			NordicChandelierBlock::new,
+			NordicLockboxBlock::new,
 			DoorBlock::new
 	),
 	// endregion
@@ -113,6 +115,7 @@ public enum FurnitureSet
 			VenthyrBedSingleBlock::new,
 			VenthyrBedDoubleBlock::new,
 			VenthyrChandelierBlock::new,
+			VenthyrLockboxBlock::new,
 			DoorBlock::new
 	),
 	// endregion
@@ -145,6 +148,7 @@ public enum FurnitureSet
 			DunmerBedSingleBlock::new,
 			DunmerBedDoubleBlock::new,
 			DunmerChandelierBlock::new,
+			DunmerLockboxBlock::new,
 			DoorBlock::new
 	),
 	// endregion
@@ -153,30 +157,31 @@ public enum FurnitureSet
 	BONE(
 			"bone",
 
-			NordicCarpetBlock::new,
-			NordicWallLightBlock::new,
-			NordicFloorLightBlock::new,
-			NordicTableSmallBlock::new,
-			NordicTableWideBlock::new,
-			NordicTableLargeBlock::new,
-			NordicStoolBlock::new,
-			NordicCushionBlock::new,
-			NordicPaintingSmallBlock::new,
-			NordicPaintingWideBlock::new,
-			NordicDrawerBlock::new,
-			NordicShelfBlock::new,
-			NordicSofaBlock::new,
-			NordicDeskBlock::new,
-			NordicChairBlock::new,
-			NordicBenchBlock::new,
-			NordicBookshelfBlock::new,
-			NordicChestBlock::new,
-			NordicDresserBlock::new,
-			NordicWardrobeBlock::new,
-			NordicWardrobeTopperBlock::new,
-			NordicBedSingleBlock::new,
-			NordicBedDoubleBlock::new,
-			NordicChandelierBlock::new,
+			BoneCarpetBlock::new,
+			BoneWallLightBlock::new,
+			BoneFloorLightBlock::new,
+			BoneTableSmallBlock::new,
+			BoneTableWideBlock::new,
+			BoneTableLargeBlock::new,
+			BoneStoolBlock::new,
+			BoneCushionBlock::new,
+			BonePaintingSmallBlock::new,
+			BonePaintingWideBlock::new,
+			BoneDrawerBlock::new,
+			BoneShelfBlock::new,
+			BoneSofaBlock::new,
+			BoneDeskBlock::new,
+			BoneChairBlock::new,
+			BoneBenchBlock::new,
+			BoneBookshelfBlock::new,
+			BoneChestBlock::new,
+			BoneDresserBlock::new,
+			BoneWardrobeBlock::new,
+			BoneWardrobeTopperBlock::new,
+			BoneBedSingleBlock::new,
+			BoneBedDoubleBlock::new,
+			BoneChandelierBlock::new,
+			BoneLockboxBlock::new,
 			DoorBlock::new
 	),
 	// endregion
@@ -250,6 +255,8 @@ public enum FurnitureSet
 	public final ItemEntry<BlockItem> doorSingleBlockItem;
 	public final BlockEntry<? extends DoorBlock> doorDoubleBlock;
 	public final ItemEntry<BlockItem> doorDoubleBlockItem;
+	public final BlockEntry<? extends SetLockboxBlock> lockboxBlock;
+	public final ItemEntry<BlockItem> lockboxBlockItem;
 	// endregion
 
 	FurnitureSet(
@@ -279,6 +286,7 @@ public enum FurnitureSet
 			NonNullFunction<BlockBehaviour.Properties, SetBedSingleBlock> bedSingleBlockFactory,
 			NonNullFunction<BlockBehaviour.Properties, SetBedDoubleBlock> bedDoubleBlockFactory,
 			NonNullFunction<BlockBehaviour.Properties, SetChandelierBlock> chandelierBlockFactory,
+			NonNullFunction<BlockBehaviour.Properties, SetLockboxBlock> lockboxFactory,
 			NonNullFunction<BlockBehaviour.Properties, DoorBlock> doorBlockFactory
 	)
 	{
@@ -373,6 +381,9 @@ public enum FurnitureSet
 		doorDoubleBlock = door(doorBlockFactory, serializedName, englishName, "double", itemGroupCategoryTag);
 		doorDoubleBlockItem = Registrations.blockItem(chairBlock);
 
+		lockboxBlock = lockbox(lockboxFactory, serializedName, englishName, itemGroupCategoryTag);
+		lockboxBlockItem = Registrations.blockItem(lockboxBlock);
+
 		blocks = new BlockEntry<?>[] {
 				woolBlock,
 				carpetBlock,
@@ -401,7 +412,8 @@ public enum FurnitureSet
 				bedDoubleBlock,
 				chandelierBlock,
 				doorSingleBlock,
-				doorDoubleBlock
+				doorDoubleBlock,
+				lockboxBlock
 		};
 
 		items = new ItemEntry<?>[] {
@@ -432,7 +444,8 @@ public enum FurnitureSet
 				bedDoubleBlockItem,
 				chandelierBlockItem,
 				doorSingleBlockItem,
-				doorDoubleBlockItem
+				doorDoubleBlockItem,
+				lockboxBlockItem
 		};
 
 		itemGroupCategory = ItemGroupCategory
@@ -1653,6 +1666,36 @@ public enum FurnitureSet
 					.item()
 						.setData(ITEM_MODEL, NonNullBiConsumer.noop())
 						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag, ItemTags.Vanilla.WOODEN_DOORS)
+					.build()
+		.register();
+	}
+	// endregion
+
+	// region: Lockbox
+	private static <BLOCK extends SetLockboxBlock> BlockEntry<BLOCK> lockbox(NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory, String serializedName, String englishName, TagKey<Item> itemGroupCategoryTag)
+	{
+		return FFRegistry.INSTANCE
+				.object("%s/lockbox".formatted(serializedName))
+				.block(blockFactory)
+					.lang("%s Lockbox".formatted(englishName))
+
+					.initialProperties(Material.WOOD)
+					.strength(2.5F)
+					.sound(SoundType.WOOD)
+					.noOcclusion()
+
+					.blockstate(Registrations::horizontalBlock)
+
+					.isValidSpawn(BlockHelper::never)
+					.isRedstoneConductor(BlockHelper::never)
+					.isSuffocating(BlockHelper::never)
+					.isViewBlocking(BlockHelper::never)
+
+					.addLayer(() -> RenderType::cutout)
+
+					.item()
+						.model(Registrations::blockItem)
+						.tag(FurnitureStation.CRAFTABLE, itemGroupCategoryTag)
 					.build()
 		.register();
 	}
