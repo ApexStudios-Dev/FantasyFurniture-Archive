@@ -1,0 +1,153 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"pottery": "fantasyfurniture:models/decorations/pottery_0",
+		"particle": "fantasyfurniture:particles/dunmer"
+	},
+	"elements": [
+		{
+			"name": "pot_3",
+			"from": [9.5, 8, 8.5],
+			"to": [12.5, 9, 11.5],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [11, 17.75, 10]},
+			"faces": {
+				"north": {"uv": [6, 5.5, 7.5, 6], "texture": "#pottery"},
+				"east": {"uv": [9.5, 4.5, 11, 5], "texture": "#pottery"},
+				"south": {"uv": [9.5, 5, 11, 5.5], "texture": "#pottery"},
+				"west": {"uv": [9.5, 8.5, 11, 9], "texture": "#pottery"},
+				"up": {"uv": [4.5, 10, 3, 8.5], "texture": "#pottery"},
+				"down": {"uv": [10, 3, 8.5, 4.5], "texture": "#pottery"}
+			}
+		},
+		{
+			"name": "pot_1",
+			"from": [8, 0, 7],
+			"to": [14, 6, 13],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [11, 14.75, 10]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 3], "texture": "#pottery"},
+				"east": {"uv": [0, 3, 3, 6], "texture": "#pottery"},
+				"south": {"uv": [3, 0, 6, 3], "texture": "#pottery"},
+				"west": {"uv": [3, 3, 6, 6], "texture": "#pottery"},
+				"up": {"uv": [3, 9, 0, 6], "texture": "#pottery"},
+				"down": {"uv": [9, 0, 6, 3], "texture": "#pottery"}
+			}
+		},
+		{
+			"name": "pot_2",
+			"from": [10, 6, 9],
+			"to": [12, 8, 11],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [11, 16.75, 10]},
+			"faces": {
+				"north": {"uv": [4.5, 8.5, 5.5, 9.5], "texture": "#pottery"},
+				"east": {"uv": [8.5, 4.5, 9.5, 5.5], "texture": "#pottery"},
+				"south": {"uv": [9, 0, 10, 1], "texture": "#pottery"},
+				"west": {"uv": [9, 1, 10, 2], "texture": "#pottery"},
+				"up": {"uv": [2.5, 10, 1.5, 9], "texture": "#pottery"},
+				"down": {"uv": [10, 2, 9, 3], "texture": "#pottery"}
+			}
+		},
+		{
+			"name": "1",
+			"from": [2, 0, 2],
+			"to": [7, 3, 7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6, 0, 6]},
+			"faces": {
+				"north": {"uv": [5.5, 6, 8, 7.5], "texture": "#pottery"},
+				"east": {"uv": [5.5, 7.5, 8, 9], "texture": "#pottery"},
+				"south": {"uv": [8, 5.5, 10.5, 7], "texture": "#pottery"},
+				"west": {"uv": [8, 7, 10.5, 8.5], "texture": "#pottery"},
+				"up": {"uv": [5.5, 8.5, 3, 6], "texture": "#pottery"},
+				"down": {"uv": [8.5, 3, 6, 5.5], "texture": "#pottery"}
+			}
+		},
+		{
+			"name": "2",
+			"from": [3.5, 3, 3.5],
+			"to": [5.5, 4, 5.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.5, 3, 4.5]},
+			"faces": {
+				"north": {"uv": [4.5, 9.5, 5.5, 10], "texture": "#pottery"},
+				"east": {"uv": [10, 1, 11, 1.5], "texture": "#pottery"},
+				"south": {"uv": [1.5, 10, 2.5, 10.5], "texture": "#pottery"},
+				"west": {"uv": [10, 1.5, 11, 2], "texture": "#pottery"},
+				"up": {"uv": [6.5, 10, 5.5, 9], "texture": "#pottery"},
+				"down": {"uv": [7.5, 9, 6.5, 10], "texture": "#pottery"}
+			}
+		},
+		{
+			"name": "3",
+			"from": [3, 4, 3],
+			"to": [6, 5, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 4, 4]},
+			"faces": {
+				"north": {"uv": [9.5, 9, 11, 9.5], "texture": "#pottery"},
+				"east": {"uv": [9.5, 9.5, 11, 10], "texture": "#pottery"},
+				"south": {"uv": [10, 0, 11.5, 0.5], "texture": "#pottery"},
+				"west": {"uv": [10, 0.5, 11.5, 1], "texture": "#pottery"},
+				"up": {"uv": [9.5, 10, 8, 8.5], "texture": "#pottery"},
+				"down": {"uv": [1.5, 9, 0, 10.5], "texture": "#pottery"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "dunmer_pottery_1",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "pot_1",
+					"origin": [10, 14.75, 10],
+					"color": 0,
+					"children": [0, 1, 2]
+				},
+				{
+					"name": "pot_2",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [3, 4, 5]
+				}
+			]
+		}
+	]
+}

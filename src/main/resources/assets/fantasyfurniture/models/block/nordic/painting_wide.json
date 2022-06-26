@@ -1,0 +1,139 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"painting_wide": "fantasyfurniture:models/nordic/painting_wide",
+		"particle": "fantasyfurniture:particles/nordic"
+	},
+	"elements": [
+		{
+			"name": "frame_1",
+			"from": [-16, 0, 14],
+			"to": [16, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0, 15]},
+			"faces": {
+				"north": {"uv": [7, 3, 15, 3.5], "texture": "#painting_wide"},
+				"east": {"uv": [2, 9, 2.5, 9.5], "texture": "#painting_wide"},
+				"south": {"uv": [7, 3.5, 15, 4], "texture": "#painting_wide"},
+				"west": {"uv": [2.5, 9, 3, 9.5], "texture": "#painting_wide"},
+				"up": {"uv": [15, 4.5, 7, 4], "texture": "#painting_wide"},
+				"down": {"uv": [15, 4.5, 7, 5], "texture": "#painting_wide"}
+			}
+		},
+		{
+			"name": "frame_2",
+			"from": [-16, 14, 14],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 14, 15]},
+			"faces": {
+				"north": {"uv": [7, 5, 15, 5.5], "texture": "#painting_wide"},
+				"east": {"uv": [3, 9, 3.5, 9.5], "texture": "#painting_wide"},
+				"south": {"uv": [7, 5.5, 15, 6], "texture": "#painting_wide"},
+				"west": {"uv": [3.5, 9, 4, 9.5], "texture": "#painting_wide"},
+				"up": {"uv": [15, 6.5, 7, 6], "texture": "#painting_wide"},
+				"down": {"uv": [15, 6.5, 7, 7], "texture": "#painting_wide"}
+			}
+		},
+		{
+			"name": "frame_3",
+			"from": [14, 2, 14],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 12, 15]},
+			"faces": {
+				"north": {"uv": [7, 7, 7.5, 10], "texture": "#painting_wide"},
+				"east": {"uv": [7.5, 7, 8, 10], "texture": "#painting_wide"},
+				"south": {"uv": [8, 7, 8.5, 10], "texture": "#painting_wide"},
+				"west": {"uv": [8.5, 7, 9, 10], "texture": "#painting_wide"},
+				"up": {"uv": [4.5, 9.5, 4, 9], "texture": "#painting_wide"},
+				"down": {"uv": [5, 9, 4.5, 9.5], "texture": "#painting_wide"}
+			}
+		},
+		{
+			"name": "frame_4",
+			"from": [-16, 2, 14],
+			"to": [-14, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-15, 12, 15]},
+			"faces": {
+				"north": {"uv": [0, 9, 0.5, 12], "texture": "#painting_wide"},
+				"east": {"uv": [0.5, 9, 1, 12], "texture": "#painting_wide"},
+				"south": {"uv": [1, 9, 1.5, 12], "texture": "#painting_wide"},
+				"west": {"uv": [1.5, 9, 2, 12], "texture": "#painting_wide"},
+				"up": {"uv": [5.5, 9.5, 5, 9], "texture": "#painting_wide"},
+				"down": {"uv": [6, 9, 5.5, 9.5], "texture": "#painting_wide"}
+			}
+		},
+		{
+			"name": "back",
+			"from": [-14, 2, 16],
+			"to": [14, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-13, 12, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 7, 3], "texture": "#painting_wide"},
+				"east": {"uv": [0, 0, 0, 3], "texture": "#painting_wide"},
+				"south": {"uv": [0, 3, 7, 6], "texture": "#painting_wide"},
+				"west": {"uv": [0, 0, 0, 3], "texture": "#painting_wide"},
+				"up": {"uv": [7, 0, 0, 0], "texture": "#painting_wide"},
+				"down": {"uv": [7, 0, 0, 0], "texture": "#painting_wide"}
+			}
+		},
+		{
+			"name": "painting",
+			"from": [-14, 2, 15],
+			"to": [14, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, 14]},
+			"faces": {
+				"north": {"uv": [0, 6, 7, 9], "texture": "#painting_wide"},
+				"east": {"uv": [0, 0, 0, 3], "texture": "#painting_wide"},
+				"south": {"uv": [7, 0, 14, 3], "texture": "#painting_wide"},
+				"west": {"uv": [0, 0, 0, 3], "texture": "#painting_wide"},
+				"up": {"uv": [7, 0, 0, 0], "texture": "#painting_wide"},
+				"down": {"uv": [7, 0, 0, 0], "texture": "#painting_wide"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, -1.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"head": {
+			"translation": [4, 10.5, -3.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"fixed": {
+			"translation": [4, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "nordic_painting_wide",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}
