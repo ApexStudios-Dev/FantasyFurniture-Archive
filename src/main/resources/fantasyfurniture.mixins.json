@@ -4,9 +4,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "fantasyfurniture.refmap.json",
 	"mixins": [ ],
-	"client": [
-		"client.LivingRendererMixin"
-	],
+	"client": [ ],
 	"server": [ ],
 	"minVersion": "0.8.4"
 }
