@@ -8,6 +8,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
 
 @Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
@@ -16,6 +17,7 @@ public final class FantasyFurniture
 
 	public FantasyFurniture()
 	{
+		ModRegistry.bootstrap();
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> Client::new);
 	}
 
