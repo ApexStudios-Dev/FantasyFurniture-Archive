@@ -183,20 +183,6 @@
 				"up": {"uv": [8, 4, 0, 0], "texture": "#table_wide"},
 				"down": {"uv": [8, 4, 0, 8], "texture": "#table_wide"}
 			}
-		},
-		{
-			"name": "4",
-			"from": [-16, 14, 0],
-			"to": [16, 16, 16],
-			"color": 0,
-			"faces": {
-				"north": {"uv": [0, 0, 8, 0.5], "texture": "#missing"},
-				"east": {"uv": [0, 0, 4, 0.5], "texture": "#missing"},
-				"south": {"uv": [0, 0, 8, 0.5], "texture": "#missing"},
-				"west": {"uv": [0, 0, 4, 0.5], "texture": "#missing"},
-				"up": {"uv": [0, 0, 8, 4], "texture": "#missing"},
-				"down": {"uv": [0, 0, 8, 4], "texture": "#missing"}
-			}
 		}
 	],
 	"display": {
