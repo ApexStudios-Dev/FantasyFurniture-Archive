@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
 import xyz.apex.forge.commonality.tags.ItemTags;
+import xyz.apex.forge.fantasyfurniture.block.FurnitureWallLightBlock;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
@@ -21,6 +22,7 @@ public final class ModItems
 {
 	public static final ItemEntry<BlockItem> NORDIC_WOOL = wool(ModBlocks.NORDIC_WOOL).register();
 	public static final ItemEntry<BlockItem> NORDIC_CARPET = carpet(ModBlocks.NORDIC_CARPET).register();
+	public static final ItemEntry<BlockItem> NORDIC_WALLLIGHT = wallLight(ModBlocks.NORDIC_WALLIGHT).register();
 
 	static void bootstrap()
 	{
@@ -44,6 +46,15 @@ public final class ModItems
 				.item(properties -> new BlockItem(block.get(), properties))
 				.transform(ModItems::applyBlockItemDefaults)
 				.tag(ItemTags.Vanilla.CARPETS)
+		;
+	}
+
+	private static <BLOCK extends FurnitureWallLightBlock> ItemBuilder<Registrate, BlockItem, Registrate> wallLight(BlockEntry<BLOCK> block)
+	{
+		return REGISTRATE
+				.object(block.getId().getPath())
+				.item(properties -> new BlockItem(block.get(), properties))
+				.transform(ModItems::applyBlockItemDefaults)
 		;
 	}
 
