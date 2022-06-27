@@ -48,14 +48,25 @@ public class FloorLightBlock extends BaseMultiBlock
 
 	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
 	{
-		var x = pos.getX() + .5D;
-		var y = pos.getY() + .5D + .34D;
-		var z = pos.getZ() + .5D;
+		if(ModBlocks.NORDIC_FLOOR_LIGHT.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .5D + .34D;
+			var z = pos.getZ() + .5D;
 
-		onLightParticle(level, pos, blockState, x + .27D, y, z, rng);
-		onLightParticle(level, pos, blockState, x - .27D, y, z, rng);
-		onLightParticle(level, pos, blockState, x, y, z + .27D, rng);
-		onLightParticle(level, pos, blockState, x, y, z - .27D, rng);
+			onLightParticle(level, pos, blockState, x + .27D, y, z, rng);
+			onLightParticle(level, pos, blockState, x - .27D, y, z, rng);
+			onLightParticle(level, pos, blockState, x, y, z + .27D, rng);
+			onLightParticle(level, pos, blockState, x, y, z - .27D, rng);
+		}
+		else if(ModBlocks.DUNMER_FLOOR_LIGHT.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .5D + .5D;
+			var z = pos.getZ() + .5D;
+
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
@@ -75,6 +86,8 @@ public class FloorLightBlock extends BaseMultiBlock
 	{
 		if(ModBlocks.NORDIC_FLOOR_LIGHT.has(blockState))
 			return HitBoxes.NORDIC.floorLight(this, blockState);
+		else if(ModBlocks.DUNMER_FLOOR_LIGHT.has(blockState))
+			return HitBoxes.DUNMER.floorLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

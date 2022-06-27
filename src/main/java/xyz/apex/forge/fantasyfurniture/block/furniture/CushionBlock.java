@@ -68,6 +68,8 @@ public class CushionBlock extends SeatBlock
 	{
 		if(ModBlocks.NORDIC_CUSHION.has(blockState))
 			return HitBoxes.NORDIC.cushion(this, blockState);
+		else if(ModBlocks.DUNMER_CUSHION.has(blockState))
+			return HitBoxes.DUNMER.cushion(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -58,6 +58,8 @@ public class BookshelfBlock extends BaseMultiBlock.WithContainer<BookshelfBlockE
 	{
 		if(ModBlocks.NORDIC_BOOKSHELF.has(blockState))
 			return HitBoxes.NORDIC.bookshelf(this, blockState);
+		else if(ModBlocks.DUNMER_BOOKSHELF.has(blockState))
+			return HitBoxes.DUNMER.bookshelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

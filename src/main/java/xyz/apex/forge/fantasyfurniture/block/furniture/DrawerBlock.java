@@ -50,6 +50,8 @@ public class DrawerBlock extends BaseBlock.WithContainer<DrawerBlockEntity, Smal
 	{
 		if(ModBlocks.NORDIC_DRAWER.has(blockState))
 			return HitBoxes.NORDIC.drawer(this, blockState);
+		else if(ModBlocks.DUNMER_DRAWER.has(blockState))
+			return HitBoxes.DUNMER.drawer(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

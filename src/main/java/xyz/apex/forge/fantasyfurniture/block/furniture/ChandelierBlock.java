@@ -39,14 +39,28 @@ public class ChandelierBlock extends BaseBlock
 
 	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
 	{
-		var x = pos.getX() + .5D;
-		var y = pos.getY() + .65D;
-		var z = pos.getZ() + .5D;
+		if(ModBlocks.NORDIC_CHANDELIER.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .65D;
+			var z = pos.getZ() + .5D;
 
-		onLightParticle(level, pos, blockState, x + .25D, y, z + .25D, rng);
-		onLightParticle(level, pos, blockState, x - .25D, y, z + .25D, rng);
-		onLightParticle(level, pos, blockState, x + .25D, y, z - .25D, rng);
-		onLightParticle(level, pos, blockState, x - .25D, y, z - .25D, rng);
+			onLightParticle(level, pos, blockState, x + .25D, y, z + .25D, rng);
+			onLightParticle(level, pos, blockState, x - .25D, y, z + .25D, rng);
+			onLightParticle(level, pos, blockState, x + .25D, y, z - .25D, rng);
+			onLightParticle(level, pos, blockState, x - .25D, y, z - .25D, rng);
+		}
+		else if(ModBlocks.DUNMER_CHANDELIER.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .875D;
+			var z = pos.getZ() + .5D;
+
+			onLightParticle(level, pos, blockState, x + .275D, y, z + .275D, rng);
+			onLightParticle(level, pos, blockState, x + .275D, y, z - .275D, rng);
+			onLightParticle(level, pos, blockState, x - .275D, y, z + .275D, rng);
+			onLightParticle(level, pos, blockState, x - .275D, y, z - .275D, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
@@ -60,6 +74,8 @@ public class ChandelierBlock extends BaseBlock
 	{
 		if(ModBlocks.NORDIC_CHANDELIER.has(blockState))
 			return HitBoxes.NORDIC.chandelier(this, blockState);
+		else if(ModBlocks.DUNMER_CHANDELIER.has(blockState))
+			return HitBoxes.DUNMER.chandelier(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

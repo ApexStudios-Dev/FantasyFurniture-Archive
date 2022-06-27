@@ -58,6 +58,8 @@ public class WardrobeBottomBlock extends BaseMultiBlock.WithContainer<WardrobeBl
 	{
 		if(ModBlocks.NORDIC_WARDROBE_BOTTOM.has(blockState))
 			return HitBoxes.NORDIC.wardrobeBottom(this, blockState);
+		else if(ModBlocks.DUNMER_WARDROBE_BOTTOM.has(blockState))
+			return HitBoxes.DUNMER.wardrobeBottom(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

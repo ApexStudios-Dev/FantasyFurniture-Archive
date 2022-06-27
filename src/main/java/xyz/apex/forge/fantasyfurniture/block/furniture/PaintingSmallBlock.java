@@ -33,6 +33,8 @@ public class PaintingSmallBlock extends BaseBlock
 	{
 		if(ModBlocks.NORDIC_PAINTING_SMALL.has(blockState))
 			return HitBoxes.NORDIC.paintingSmall(this, blockState);
+		else if(ModBlocks.DUNMER_PAINTING_SMALL.has(blockState))
+			return HitBoxes.DUNMER.paintingSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

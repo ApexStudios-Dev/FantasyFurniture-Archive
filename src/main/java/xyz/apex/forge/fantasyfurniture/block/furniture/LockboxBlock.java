@@ -50,6 +50,8 @@ public class LockboxBlock extends BaseBlock.WithContainer<LockboxBlockEntity, Sm
 	{
 		if(ModBlocks.NORDIC_LOCKBOX.has(blockState))
 			return HitBoxes.NORDIC.lockbox(this, blockState);
+		else if(ModBlocks.DUNMER_LOCKBOX.has(blockState))
+			return HitBoxes.DUNMER.lockbox(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

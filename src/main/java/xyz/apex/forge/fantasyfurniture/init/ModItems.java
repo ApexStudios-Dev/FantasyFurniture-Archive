@@ -52,6 +52,36 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_DOUBLE = door(ModBlocks.NORDIC_DOOR_DOUBLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_LOCKBOX = blockItem(ModBlocks.NORDIC_LOCKBOX).tag(ModItemGroupCategories.NORDIC_TAG).register();
 
+	public static final ItemEntry<BlockItem> DUNMER_WOOL = wool(ModBlocks.DUNMER_WOOL).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_CARPET = carpet(ModBlocks.DUNMER_CARPET).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_WALL_LIGHT = blockItem(ModBlocks.DUNMER_WALL_LIGHT).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_FLOOR_LIGHT = blockItem(ModBlocks.DUNMER_FLOOR_LIGHT).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_TABLE_SMALL = blockItem(ModBlocks.DUNMER_TABLE_SMALL).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_TABLE_WIDE = blockItem(ModBlocks.DUNMER_TABLE_WIDE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_TABLE_LARGE = blockItem(ModBlocks.DUNMER_TABLE_LARGE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_STOOL = blockItem(ModBlocks.DUNMER_STOOL).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_CUSHION = blockItem(ModBlocks.DUNMER_CUSHION).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_PAINTING_SMALL = blockItem(ModBlocks.DUNMER_PAINTING_SMALL).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_PAINTING_WIDE = blockItem(ModBlocks.DUNMER_PAINTING_WIDE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DRAWER = blockItem(ModBlocks.DUNMER_DRAWER).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_SHELF = shelf(ModBlocks.DUNMER_SHELF).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_SOFA = sofa(ModBlocks.DUNMER_SOFA).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DESK_LEFT = blockItem(ModBlocks.DUNMER_DESK_LEFT).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DESK_RIGHT = blockItem(ModBlocks.DUNMER_DESK_RIGHT).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_CHAIR = blockItem(ModBlocks.DUNMER_CHAIR).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BENCH = blockItem(ModBlocks.DUNMER_BENCH).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BOOKSHELF = blockItem(ModBlocks.DUNMER_BOOKSHELF).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_CHEST = blockItem(ModBlocks.DUNMER_CHEST).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DRESSER = blockItem(ModBlocks.DUNMER_DRESSER).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_BOTTOM = blockItem(ModBlocks.DUNMER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_TOP = blockItem(ModBlocks.DUNMER_WARDROBE_TOP).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_SINGLE = bed(ModBlocks.DUNMER_BED_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_DOUBLE = bed(ModBlocks.DUNMER_BED_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_CHANDELIER = blockItem(ModBlocks.DUNMER_CHANDELIER).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_LOCKBOX = blockItem(ModBlocks.DUNMER_LOCKBOX).tag(ModItemGroupCategories.DUNMER_TAG).register();
+
 	static void bootstrap()
 	{
 	}

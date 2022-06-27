@@ -47,6 +47,8 @@ public class ChairBlock extends SeatMultiBlock
 	{
 		if(ModBlocks.NORDIC_CHAIR.has(blockState))
 			return HitBoxes.NORDIC.chair(this, blockState);
+		else if(ModBlocks.DUNMER_CHAIR.has(blockState))
+			return HitBoxes.DUNMER.chair(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

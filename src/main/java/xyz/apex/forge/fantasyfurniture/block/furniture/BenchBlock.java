@@ -47,6 +47,8 @@ public class BenchBlock extends SeatMultiBlock
 	{
 		if(ModBlocks.NORDIC_BENCH.has(blockState))
 			return HitBoxes.NORDIC.bench(this, blockState);
+		else if(ModBlocks.DUNMER_BENCH.has(blockState))
+			return HitBoxes.DUNMER.bench(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

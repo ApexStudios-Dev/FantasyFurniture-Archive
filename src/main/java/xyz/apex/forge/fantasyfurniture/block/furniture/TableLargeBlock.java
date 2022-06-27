@@ -41,6 +41,8 @@ public class TableLargeBlock extends BaseMultiBlock
 	{
 		if(ModBlocks.NORDIC_TABLE_LARGE.has(blockState))
 			return HitBoxes.NORDIC.tableLarge(this, blockState);
+		else if(ModBlocks.DUNMER_TABLE_LARGE.has(blockState))
+			return HitBoxes.DUNMER.tableLarge(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -102,6 +102,8 @@ public class WardrobeTopBlock extends BaseMultiBlock
 	{
 		if(ModBlocks.NORDIC_WARDROBE_TOP.has(blockState))
 			return HitBoxes.NORDIC.wardrobeTop(this, blockState);
+		else if(ModBlocks.DUNMER_WARDROBE_TOP.has(blockState))
+			return HitBoxes.DUNMER.wardrobeTop(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -23,7 +23,7 @@ public final class ModRegistry
 		Validate.isTrue(ModLoadingContext.get().getActiveContainer().getModId().equals(Mods.FANTASY_FURNITURE));
 		bootstrap = true;
 
-		REGISTRATE.creativeModeTab(() -> CREATIVE_MODE_TAB);
+		REGISTRATE.creativeModeTab(() -> CREATIVE_MODE_TAB, "Fantasy's Furniture");
 
 		ModBlocks.bootstrap();
 		ModItems.bootstrap();

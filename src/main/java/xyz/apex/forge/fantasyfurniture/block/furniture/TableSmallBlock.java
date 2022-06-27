@@ -33,6 +33,8 @@ public class TableSmallBlock extends BaseBlock
 	{
 		if(ModBlocks.NORDIC_TABLE_SMALL.has(blockState))
 			return HitBoxes.NORDIC.tableSmall(this, blockState);
+		else if(ModBlocks.DUNMER_TABLE_SMALL.has(blockState))
+			return HitBoxes.DUNMER.tableSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

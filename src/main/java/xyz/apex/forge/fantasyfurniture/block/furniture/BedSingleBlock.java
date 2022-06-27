@@ -6,6 +6,7 @@ import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -50,10 +51,21 @@ public class BedSingleBlock extends BedBlock
 	}
 
 	@Override
+	public RenderShape getRenderShape(BlockState blockState)
+	{
+		if(ModBlocks.DUNMER_BED_SINGLE.has(blockState))
+			return RenderShape.MODEL;
+
+		return super.getRenderShape(blockState);
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
 		if(ModBlocks.NORDIC_BED_SINGLE.has(blockState))
 			return HitBoxes.NORDIC.bedSingle(this, blockState);
+		else if(ModBlocks.DUNMER_BED_SINGLE.has(blockState))
+			return HitBoxes.DUNMER.bedSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

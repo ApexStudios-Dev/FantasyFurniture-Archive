@@ -39,6 +39,8 @@ public class StoolBlock extends SeatBlock
 	{
 		if(ModBlocks.NORDIC_STOOL.has(blockState))
 			return HitBoxes.NORDIC.stool(this, blockState);
+		else if(ModBlocks.DUNMER_STOOL.has(blockState))
+			return HitBoxes.DUNMER.stool(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
