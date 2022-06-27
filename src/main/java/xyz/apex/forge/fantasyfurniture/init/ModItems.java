@@ -290,6 +290,7 @@ public final class ModItems
 								new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath()))
 						)
 				)
+				.tag(FurnitureStation.CRAFTABLE)
 		;
 	}
 
@@ -309,7 +310,7 @@ public final class ModItems
 				.object(ModBlocks.VENTHYR_WIDOW_BLOOM.getId().getPath())
 				.item(properties -> new WidowBloomBlockItem(ModBlocks.VENTHYR_WIDOW_BLOOM.get(), properties))
 				.setData(LANG, NonNullBiConsumer.noop())
-				.tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG)
+				.tag(FurnitureStation.CRAFTABLE, ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG)
 				.model((ctx, provider) -> provider
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))

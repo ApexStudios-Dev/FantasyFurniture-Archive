@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import xyz.apex.forge.apexcore.revamp.block.entity.BaseBlockEntity;
 
-public final class WidowBloomBlockEntity extends BaseBlockEntity
+public final class FurnitureStationBlockEntity extends BaseBlockEntity.WithCustomName
 {
-	public WidowBloomBlockEntity(BlockEntityType<? extends WidowBloomBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
+	public FurnitureStationBlockEntity(BlockEntityType<? extends FurnitureStationBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
 	{
 		super(blockEntityType, pos, blockState);
 	}

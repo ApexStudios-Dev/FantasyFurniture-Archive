@@ -25,6 +25,7 @@ public final class ModRegistry
 
 		REGISTRATE.creativeModeTab(() -> CREATIVE_MODE_TAB, "Fantasy's Furniture");
 
+		FurnitureStation.bootstrap();
 		ModBlocks.bootstrap();
 		ModItems.bootstrap();
 		ModElements.bootstrap();

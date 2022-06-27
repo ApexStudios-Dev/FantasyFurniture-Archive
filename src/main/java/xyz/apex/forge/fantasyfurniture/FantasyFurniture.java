@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
+import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
@@ -17,6 +18,7 @@ import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
 public final class FantasyFurniture
 {
 	public static final Logger LOGGER = LogManager.getLogger();
+	public static final NetworkManager NETWORK = new NetworkManager(Mods.FANTASY_FURNITURE, "net", "1");
 
 	public FantasyFurniture()
 	{
