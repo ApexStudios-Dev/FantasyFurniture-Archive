@@ -11,6 +11,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -23,12 +24,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
 import xyz.apex.forge.commonality.tags.BlockTags;
+import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
 import java.util.function.Predicate;
@@ -39,6 +46,42 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class ModBlocks
 {
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY = berryBasket("empty").register();
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY = berryBasket("sweetberry").register();
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_BLUEBERRY = berryBasket("blueberry").register();
+	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_STRAWBERRYBERRY = berryBasket("strawberry").register();
+	public static final BlockEntry<BoltsOfClothBlock> BOLTS_OF_CLOTH = boltsOfCloth().register();
+	public static final BlockEntry<BookStackBlock> BOOK_STACK = bookStack().register();
+	public static final BlockEntry<BowlBlock> BOWL_EMPTY = bowl("empty").register();
+	public static final BlockEntry<BowlBlock> BOWL_BERRTROOT_SOUP = bowl("beetroot_soup").register();
+	public static final BlockEntry<BowlBlock> BOWL_MUSHROOM_STEW = bowl("mushroom_stew").register();
+	public static final BlockEntry<TankardsBlock> TANKARD_EMPTY = tankards("empty").register();
+	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD = tankards("honeymead").register();
+	public static final BlockEntry<TankardsBlock> TANKARD_MILK = tankards("milk").register();
+	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY = tankards("sweetberry").register();
+	public static final BlockEntry<MushroomsRedBlock> MUSHROOMS_RED = mushroomsRed().register();
+	public static final BlockEntry<CoinStackBlock> COIN_STOCK_GOLD = coinStack("gold").register();
+	public static final BlockEntry<CoinStackBlock> COIN_STOCK_IRON = coinStack("iron").register();
+	public static final BlockEntry<MuffinsBlock> MUFFINS_BLUEBERRY = muffins("blueberry").register();
+	public static final BlockEntry<MuffinsBlock> MUFFINS_CHOCOLATE = muffins("chocolate").register();
+	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
+	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
+	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS = boiledCremeTreats().register();
+	public static final BlockEntry<SweetRollsBlock> SWEETROLLS = sweetRolls().register();
+	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES = meadBottles().register();
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT = soulGems("light").register();
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK = soulGems("dark").register();
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0 = food(0).register();
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1 = food(1).register();
+	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET = teaSet().register();
+	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS = teaCups().register();
+	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER = platter().register();
+	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM = widowBloom().register();
+	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes().register();
+	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices().register();
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery(0).register();
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery(1).register();
+
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new).register();
 	public static final BlockEntry<CarpetBlock> NORDIC_CARPET = carpet("nordic", CarpetBlock::new).register();
 	public static final BlockEntry<FurnitureWallLightBlock> NORDIC_WALL_LIGHT = wallLight("nordic", FurnitureWallLightBlock::new).register();
@@ -199,10 +242,326 @@ public final class ModBlocks
 				provider.add(seat.getOccupiedTranslationKey(), "This seat is occupied");
 			if(block instanceof BedBlock bed)
 				provider.add(bed.getOccupiedTranslationKey(), "This bed is occupied");
+			if(block instanceof StackedBlock stacked)
+				provider.add(stacked.getStackableTranslationKey(), "Stackable");
 		}));
 	}
 
 	// region: Constructors
+	private static BlockBuilder<Registrate, BerryBasketBlock, Registrate> berryBasket(String type)
+	{
+		return REGISTRATE
+				.object("decorations/berry_basket_%s".formatted(type))
+				.block(BerryBasketBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang(type.equals("empty") ? "Basket" : "%s Basket".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, BoltsOfClothBlock, Registrate> boltsOfCloth()
+	{
+		return REGISTRATE
+				.object("decorations/bolts_of_cloth")
+				.block(BoltsOfClothBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Bolts of Cloth")
+				.initialProperties(Material.WOOL)
+				.strength(.8F)
+				.sound(SoundType.WOOL)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, BookStackBlock, Registrate> bookStack()
+	{
+		return REGISTRATE
+				.object("decorations/book_stack")
+				.block(BookStackBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Book Stack")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, BowlBlock, Registrate> bowl(String type)
+	{
+		return REGISTRATE
+				.object("decorations/bowl_%s".formatted(type))
+				.block(BowlBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang(type.equals("empty") ? "Bowl" : "%s Bowl".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, TankardsBlock, Registrate> tankards(String type)
+	{
+		return REGISTRATE
+				.object("decorations/tankards_%s".formatted(type))
+				.block(TankardsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang(type.equals("empty") ? "Tankards" : type.equals("honeymead") ? "Honeyed Tankards" : "%s Tankards".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, MushroomsRedBlock, Registrate> mushroomsRed()
+	{
+		return REGISTRATE
+				.object("decorations/mushrooms_red")
+				.block(MushroomsRedBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Red Mushrooms")
+				.initialProperties(Material.PLANT, MaterialColor.COLOR_RED)
+				.sound(SoundType.GRASS)
+				.noCollission()
+				.randomTicks()
+				.instabreak()
+				.hasPostProcess(BlockHelper::always)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, CoinStackBlock, Registrate> coinStack(String type)
+	{
+		return REGISTRATE
+				.object("decorations/coin_stack_%s".formatted(type))
+				.block(CoinStackBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Coin Stack".formatted(type))
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, MuffinsBlock, Registrate> muffins(String type)
+	{
+		return REGISTRATE
+				.object("decorations/muffins_%s".formatted(type))
+				.block(MuffinsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Muffins".formatted(type))
+				.initialProperties(Material.CAKE)
+				.strength(.5F)
+				.sound(SoundType.WOOL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, PaperStackBlock, Registrate> paperStack()
+	{
+		return REGISTRATE
+				.object("decorations/paper_stack")
+				.block(PaperStackBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Paper Stack")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, BoiledCremeTreatsBlock, Registrate> boiledCremeTreats()
+	{
+		return REGISTRATE
+				.object("decorations/boiled_creme_treats")
+				.block(BoiledCremeTreatsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Boiled Creme Treats")
+				.initialProperties(Material.CAKE)
+				.strength(.5F)
+				.sound(SoundType.WOOL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, SweetRollsBlock, Registrate> sweetRolls()
+	{
+		return REGISTRATE
+				.object("decorations/sweetrolls")
+				.block(SweetRollsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Sweetrolls")
+				.initialProperties(Material.CAKE)
+				.strength(.5F)
+				.sound(SoundType.WOOL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, MeadBottlesBlock, Registrate> meadBottles()
+	{
+		return REGISTRATE
+				.object("decorations/mead_bottles")
+				.block(MeadBottlesBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Mead Bottles")
+				.initialProperties(Material.GLASS)
+				.strength(.3F)
+				.sound(SoundType.GLASS)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, SoulGemsBlock, Registrate> soulGems(String type)
+	{
+		return REGISTRATE
+				.object("decorations/soul_gems_%s".formatted(type))
+				.block(SoulGemsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang(type.equals("dark") ? "Black Soul Gems" : "Soul Gems")
+				.initialProperties(Material.GLASS)
+				.strength(.3F)
+				.sound(SoundType.GLASS)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, FoodBlock, Registrate> food(int type)
+	{
+		return REGISTRATE
+				.object("decorations/food_%d".formatted(type))
+				.block(FoodBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Venthyr Food %d".formatted(type + 1))
+				.initialProperties(Material.CAKE)
+				.strength(2.5F)
+				.sound(SoundType.WOOL)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, TeaSetBlock, Registrate> teaSet()
+	{
+		return REGISTRATE
+				.object("decorations/tea_set")
+				.block(TeaSetBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Venthyr Tea Set")
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, TeaCupsBlock, Registrate> teaCups()
+	{
+		return REGISTRATE
+				.object("decorations/tea_cups")
+				.block(TeaCupsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Venthyr Tea Cups")
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, PlatterBlock, Registrate> platter()
+	{
+		return REGISTRATE
+				.object("decorations/platter")
+				.block(PlatterBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Platter")
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, WidowBloomBlock, Registrate> widowBloom()
+	{
+		return REGISTRATE
+				.object("decorations/widow_bloom")
+				.block(WidowBloomBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Widowbloom Vase")
+				.initialProperties(Material.DECORATION)
+				.strength(2.5F)
+				.sound(SoundType.STONE)
+				.blockstate((ctx, provider) -> provider
+						.horizontalBlock(ctx.get(), provider
+								.models()
+								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+								.texture("particle", "minecraft:block/basalt_top")
+						)
+				)
+		;
+	}
+
+	private static BlockBuilder<Registrate, TomesBlock, Registrate> tomes()
+	{
+		return REGISTRATE
+				.object("decorations/tomes")
+				.block(TomesBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Venthyr Tomes")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, ChalicesBlock, Registrate> chalices()
+	{
+		return REGISTRATE
+				.object("decorations/chalices")
+				.block(ChalicesBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Venthyr Chalices")
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.loot(ModBlocks::stackedLootTable)
+		;
+	}
+
+	private static BlockBuilder<Registrate, PotteryBlock, Registrate> pottery(int type)
+	{
+		return REGISTRATE
+				.object("decorations/pottery_%d".formatted(type))
+				.block(PotteryBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Dunmer Pottery %d".formatted(type + 1))
+				.initialProperties(Material.DECORATION)
+				.strength(2.5F)
+				.sound(SoundType.STONE)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> wool(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
 	{
 		return REGISTRATE
@@ -747,6 +1106,14 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends StackedBlock> void horizontalStackableBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
+	{
+		provider.horizontalBlock(ctx.get(), blockState -> {
+			var count = blockState.getOptionalValue(ctx.get().getStackSizeProperty()).orElse(0);
+			return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%d".formatted(ctx.getId().getPath(), count)));
+		});
+	}
+
 	private static <BLOCK extends Block> void horizontalBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
 	{
 		provider.horizontalBlock(ctx.get(), provider
@@ -763,6 +1130,33 @@ public final class ModBlocks
 					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), suffix)));
 				}))
 		;
+	}
+
+	private static <BLOCK extends StackedBlock> void stackedLootTable(RegistrateBlockLootTables lootTables, BLOCK block)
+	{
+		var lootTable = LootTable.lootTable();
+
+		for(var value : block.getStackSizeProperty().getPossibleValues())
+		{
+			lootTable = lootTable
+					.withPool(RegistrateBlockLootTables
+							.applyExplosionCondition(block, LootPool
+									.lootPool()
+									.setRolls(ConstantValue.exactly(1))
+									.add(LootItem.lootTableItem(block))
+									.when(LootItemBlockStatePropertyCondition
+											.hasBlockStateProperties(block)
+											.setProperties(StatePropertiesPredicate.Builder
+													.properties()
+													.hasProperty(block.getStackSizeProperty(), value)
+											)
+									)
+							)
+					)
+			;
+		}
+
+		lootTables.add(block, lootTable);
 	}
 	// endregion
 }

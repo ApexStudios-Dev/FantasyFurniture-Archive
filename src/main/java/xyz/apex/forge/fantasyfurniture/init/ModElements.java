@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
+import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.screen.BookshelfMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.LargeInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.MediumInventoryMenuScreen;
@@ -92,6 +93,11 @@ public final class ModElements
 					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
 					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM
 			)
+	.register();
+
+	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = blockEntity("decorations/widow_bloom", WidowBloomBlockEntity::new)
+			.validBlock(ModBlocks.VENTHYR_WIDOW_BLOOM)
+			.renderer(() -> WidowBloomBlockEntityRenderer::new)
 	.register();
 
 	static void bootstrap()
