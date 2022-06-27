@@ -54,6 +54,8 @@ public class DrawerBlock extends BaseBlock.WithContainer<DrawerBlockEntity, Smal
 			return HitBoxes.DUNMER.drawer(this, blockState);
 		else if(ModBlocks.VENTHYR_DRAWER.has(blockState))
 			return HitBoxes.VENTHYR.drawer(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_DRAWER.has(blockState) || ModBlocks.BONE_WITHER_DRAWER.has(blockState))
+			return HitBoxes.BONE.drawer(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

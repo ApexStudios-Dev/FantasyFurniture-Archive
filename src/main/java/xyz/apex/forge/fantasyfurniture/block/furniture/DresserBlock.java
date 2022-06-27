@@ -62,6 +62,8 @@ public class DresserBlock extends BaseMultiBlock.WithContainer<DresserBlockEntit
 			return HitBoxes.DUNMER.dresser(this, blockState);
 		else if(ModBlocks.VENTHYR_DRESSER.has(blockState))
 			return HitBoxes.VENTHYR.dresser(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_DRESSER.has(blockState) || ModBlocks.BONE_WITHER_DRESSER.has(blockState))
+			return HitBoxes.BONE.dresser(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

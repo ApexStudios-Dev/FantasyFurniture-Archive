@@ -132,6 +132,66 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_DOUBLE = doorDouble("venthyr", FurnitureDoorBlock::new).register();
 	public static final BlockEntry<LockboxBlock> VENTHYR_LOCKBOX = lockbox("venthyr", LockboxBlock::new).register();
 
+	public static final BlockEntry<Block> BONE_SKELETON_WOOL = wool("bone/skeleton", Block::new).register();
+	public static final BlockEntry<CarpetBlock> BONE_SKELETON_CARPET = carpet("bone/skeleton", CarpetBlock::new).register();
+	public static final BlockEntry<FurnitureWallLightBlock> BONE_SKELETON_WALL_LIGHT = wallLight("bone/skeleton", FurnitureWallLightBlock::new).register();
+	public static final BlockEntry<FloorLightBlock> BONE_SKELETON_FLOOR_LIGHT = floorLight("bone/skeleton", FloorLightBlock::new).register();
+	public static final BlockEntry<TableSmallBlock> BONE_SKELETON_TABLE_SMALL = tableSmall("bone/skeleton", TableSmallBlock::new).register();
+	public static final BlockEntry<TableWideBlock> BONE_SKELETON_TABLE_WIDE = tableWide("bone/skeleton", TableWideBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> BONE_SKELETON_TABLE_LARGE = tableLarge("bone/skeleton", TableLargeBlock::new).register();
+	public static final BlockEntry<StoolBlock> BONE_SKELETON_STOOL = stool("bone/skeleton", StoolBlock::new).register();
+	public static final BlockEntry<CushionBlock> BONE_SKELETON_SKULL = skull("bone/skeleton", CushionBlock::new).register();
+	public static final BlockEntry<PaintingSmallBlock> BONE_SKELETON_PAINTING_SMALL = paintingSmall("bone/skeleton", PaintingSmallBlock::new).register();
+	public static final BlockEntry<PaintingWideBlock> BONE_SKELETON_PAINTING_WIDE = paintingWide("bone/skeleton", PaintingWideBlock::new).register();
+	public static final BlockEntry<DrawerBlock> BONE_SKELETON_DRAWER = drawer("bone/skeleton", DrawerBlock::new).register();
+	public static final BlockEntry<ShelfBlock> BONE_SKELETON_SHELF = shelf("bone/skeleton", ShelfBlock::new).register();
+	public static final BlockEntry<SofaBlock> BONE_SKELETON_SOFA = sofa("bone/skeleton", SofaBlock::new).register();
+	public static final BlockEntry<DeskBlock> BONE_SKELETON_DESK_LEFT = deskLeft("bone/skeleton", DeskBlock::new).register();
+	public static final BlockEntry<DeskBlock> BONE_SKELETON_DESK_RIGHT = deskRight("bone/skeleton", DeskBlock::new).register();
+	public static final BlockEntry<ChairBlock.OriginOnly> BONE_SKELETON_CHAIR = chair("bone/skeleton", ChairBlock.OriginOnly::new).register();
+	public static final BlockEntry<BenchBlock> BONE_SKELETON_BENCH = bench("bone/skeleton", BenchBlock::new).register();
+	public static final BlockEntry<BookshelfBlock> BONE_SKELETON_BOOKSHELF = bookshelf("bone/skeleton", BookshelfBlock::new).register();
+	public static final BlockEntry<ChestBlock> BONE_SKELETON_CHEST = chest("bone/skeleton", ChestBlock::new).register();
+	public static final BlockEntry<DresserBlock> BONE_SKELETON_DRESSER = dresser("bone/skeleton", DresserBlock::new).register();
+	public static final BlockEntry<WardrobeBottomBlock> BONE_SKELETON_WARDROBE_BOTTOM = wardrobeBottom("bone/skeleton", WardrobeBottomBlock::new).register();
+	public static final BlockEntry<WardrobeTopBlock> BONE_SKELETON_WARDROBE_TOP = wardrobeTop("bone/skeleton", WardrobeTopBlock::new).register();
+	public static final BlockEntry<BedSingleBlock> BONE_SKELETON_BED_SINGLE = bedSingle("bone/skeleton", BedSingleBlock::new).register();
+	public static final BlockEntry<BedDoubleBlock> BONE_SKELETON_BED_DOUBLE = bedDouble("bone/skeleton", BedDoubleBlock::new).register();
+	public static final BlockEntry<ChandelierBlock> BONE_SKELETON_CHANDELIER = chandelier("bone/skeleton", ChandelierBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_SINGLE = doorSingle("bone/skeleton", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_DOUBLE = doorDouble("bone/skeleton", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<LockboxBlock> BONE_SKELETON_LOCKBOX = lockbox("bone/skeleton", LockboxBlock::new).register();
+
+	public static final BlockEntry<Block> BONE_WITHER_WOOL = wool("bone/wither", Block::new).register();
+	public static final BlockEntry<CarpetBlock> BONE_WITHER_CARPET = carpet("bone/wither", CarpetBlock::new).register();
+	public static final BlockEntry<FurnitureWallLightBlock> BONE_WITHER_WALL_LIGHT = wallLight("bone/wither", FurnitureWallLightBlock::new).register();
+	public static final BlockEntry<FloorLightBlock> BONE_WITHER_FLOOR_LIGHT = floorLight("bone/wither", FloorLightBlock::new).register();
+	public static final BlockEntry<TableSmallBlock> BONE_WITHER_TABLE_SMALL = tableSmall("bone/wither", TableSmallBlock::new).register();
+	public static final BlockEntry<TableWideBlock> BONE_WITHER_TABLE_WIDE = tableWide("bone/wither", TableWideBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> BONE_WITHER_TABLE_LARGE = tableLarge("bone/wither", TableLargeBlock::new).register();
+	public static final BlockEntry<StoolBlock> BONE_WITHER_STOOL = stool("bone/wither", StoolBlock::new).register();
+	public static final BlockEntry<CushionBlock> BONE_WITHER_SKULL = skull("bone/wither", CushionBlock::new).register();
+	public static final BlockEntry<PaintingSmallBlock> BONE_WITHER_PAINTING_SMALL = paintingSmall("bone/wither", PaintingSmallBlock::new).register();
+	public static final BlockEntry<PaintingWideBlock> BONE_WITHER_PAINTING_WIDE = paintingWide("bone/wither", PaintingWideBlock::new).register();
+	public static final BlockEntry<DrawerBlock> BONE_WITHER_DRAWER = drawer("bone/wither", DrawerBlock::new).register();
+	public static final BlockEntry<ShelfBlock> BONE_WITHER_SHELF = shelf("bone/wither", ShelfBlock::new).register();
+	public static final BlockEntry<SofaBlock> BONE_WITHER_SOFA = sofa("bone/wither", SofaBlock::new).register();
+	public static final BlockEntry<DeskBlock> BONE_WITHER_DESK_LEFT = deskLeft("bone/wither", DeskBlock::new).register();
+	public static final BlockEntry<DeskBlock> BONE_WITHER_DESK_RIGHT = deskRight("bone/wither", DeskBlock::new).register();
+	public static final BlockEntry<ChairBlock.OriginOnly> BONE_WITHER_CHAIR = chair("bone/wither", ChairBlock.OriginOnly::new).register();
+	public static final BlockEntry<BenchBlock> BONE_WITHER_BENCH = bench("bone/wither", BenchBlock::new).register();
+	public static final BlockEntry<BookshelfBlock> BONE_WITHER_BOOKSHELF = bookshelf("bone/wither", BookshelfBlock::new).register();
+	public static final BlockEntry<ChestBlock> BONE_WITHER_CHEST = chest("bone/wither", ChestBlock::new).register();
+	public static final BlockEntry<DresserBlock> BONE_WITHER_DRESSER = dresser("bone/wither", DresserBlock::new).register();
+	public static final BlockEntry<WardrobeBottomBlock> BONE_WITHER_WARDROBE_BOTTOM = wardrobeBottom("bone/wither", WardrobeBottomBlock::new).register();
+	public static final BlockEntry<WardrobeTopBlock> BONE_WITHER_WARDROBE_TOP = wardrobeTop("bone/wither", WardrobeTopBlock::new).register();
+	public static final BlockEntry<BedSingleBlock> BONE_WITHER_BED_SINGLE = bedSingle("bone/wither", BedSingleBlock::new).register();
+	public static final BlockEntry<BedDoubleBlock> BONE_WITHER_BED_DOUBLE = bedDouble("bone/wither", BedDoubleBlock::new).register();
+	public static final BlockEntry<ChandelierBlock> BONE_WITHER_CHANDELIER = chandelier("bone/wither", ChandelierBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_SINGLE = doorSingle("bone/wither", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_DOUBLE = doorDouble("bone/wither", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<LockboxBlock> BONE_WITHER_LOCKBOX = lockbox("bone/wither", LockboxBlock::new).register();
+
 	static void bootstrap()
 	{
 		REGISTRATE.addDataGenerator(LANG, provider -> REGISTRATE.getAll(Registry.BLOCK_REGISTRY).stream().map(RegistryEntry::get).forEach(block -> {
@@ -148,7 +208,7 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/wool".formatted(type))
 				.block(blockFactory)
-				.lang("%s Wool".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyBlockDefaults)
 				.initialProperties(Material.WOOL, MaterialColor.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
@@ -170,7 +230,7 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/carpet".formatted(type))
 				.block(blockFactory)
-				.lang("%s Carpet".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyBlockDefaults)
 				.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 				.strength(.1F)
 				.sound(SoundType.WOOL)
@@ -192,7 +252,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/wall_light".formatted(type))
 				.block(blockFactory)
-				.lang("%s Wall Light".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.DECORATION)
 				.sound(SoundType.WOOD)
@@ -208,7 +267,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/floor_light".formatted(type))
 				.block(blockFactory)
-				.lang("%s Floor Light".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.DECORATION)
 				.sound(SoundType.WOOD)
@@ -223,7 +281,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_small".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Small".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -237,7 +294,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_small_fancy".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Small Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -251,7 +307,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_wide".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Wide".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -265,7 +320,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_wide_fancy".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Wide Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -279,7 +333,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_large".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Large".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -293,7 +346,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/table_large_fancy".formatted(type))
 				.block(blockFactory)
-				.lang("%s Table Large Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -307,7 +359,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/stool".formatted(type))
 				.block(blockFactory)
-				.lang("%s Stool".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -321,7 +372,19 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/cushion".formatted(type))
 				.block(blockFactory)
-				.lang("%s Cushion".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends CushionBlock> BlockBuilder<Registrate, BLOCK, Registrate> skull(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/skull".formatted(type))
+				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -335,7 +398,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/painting_small".formatted(type))
 				.block(blockFactory)
-				.lang("%s Painting Small".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.sound(SoundType.WOOD)
@@ -350,7 +412,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/painting_wide".formatted(type))
 				.block(blockFactory)
-				.lang("%s Painting Wide".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.sound(SoundType.WOOD)
@@ -365,7 +426,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/drawer".formatted(type))
 				.block(blockFactory)
-				.lang("%s Drawer".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -379,7 +439,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/shelf".formatted(type))
 				.block(blockFactory)
-				.lang("%s Shelf".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -396,7 +455,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/sofa".formatted(type))
 				.block(blockFactory)
-				.lang("%s Sofa".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -413,7 +471,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/desk_left".formatted(type))
 				.block(blockFactory)
-				.lang("%s Desk Left".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -427,7 +484,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/desk_right".formatted(type))
 				.block(blockFactory)
-				.lang("%s Desk Right".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -441,7 +497,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/chair".formatted(type))
 				.block(blockFactory)
-				.lang("%s Chair".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -455,7 +510,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/bench".formatted(type))
 				.block(blockFactory)
-				.lang("%s Bench".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -469,7 +523,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/bookshelf".formatted(type))
 				.block(blockFactory)
-				.lang("%s Bookshelf".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -483,7 +536,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/chest".formatted(type))
 				.block(blockFactory)
-				.lang("%s Chest".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -497,7 +549,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/dresser".formatted(type))
 				.block(blockFactory)
-				.lang("%s Dresser".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -511,7 +562,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/wardrobe_bottom".formatted(type))
 				.block(blockFactory)
-				.lang("%s Wardrobe".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -525,7 +575,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/wardrobe_top".formatted(type))
 				.block(blockFactory)
-				.lang("%s Wardrobe Top".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -539,7 +588,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/bed_single".formatted(type))
 				.block(blockFactory)
-				.lang("%s Bed Single".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -554,7 +602,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/bed_double".formatted(type))
 				.block(blockFactory)
-				.lang("%s Bed Double".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -569,7 +616,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/chandelier".formatted(type))
 				.block(blockFactory)
-				.lang("%s Chandelier".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -584,7 +630,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/door_single".formatted(type))
 				.block(blockFactory)
-				.lang("%s Door Single".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -600,7 +645,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/door_double".formatted(type))
 				.block(blockFactory)
-				.lang("%s Door Double".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -652,7 +696,6 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("%s/lockbox".formatted(type))
 				.block(blockFactory)
-				.lang("%s Lockbox".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
@@ -662,9 +705,15 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> applyBlockDefaults(BlockBuilder<Registrate, BLOCK, Registrate> builder)
+	{
+		return builder.lang(RegistrateLangProvider.toEnglishName(builder.getName().replace('/', '_')));
+	}
+
 	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> applyFurnitureBlockDefaults(BlockBuilder<Registrate, BLOCK, Registrate> builder)
 	{
 		return builder
+				.transform(ModBlocks::applyBlockDefaults)
 				.noOcclusion()
 				.isValidSpawn(BlockHelper::never)
 				.isRedstoneConductor(BlockHelper::never)

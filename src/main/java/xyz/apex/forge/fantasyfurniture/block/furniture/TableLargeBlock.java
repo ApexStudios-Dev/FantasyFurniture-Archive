@@ -45,6 +45,8 @@ public class TableLargeBlock extends BaseMultiBlock
 			return HitBoxes.DUNMER.tableLarge(this, blockState);
 		else if(ModBlocks.VENTHYR_TABLE_LARGE.has(blockState) || ModBlocks.VENTHYR_TABLE_LARGE_FANCY.has(blockState))
 			return HitBoxes.VENTHYR.tableLarge(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_TABLE_LARGE.has(blockState) || ModBlocks.BONE_WITHER_TABLE_LARGE.has(blockState))
+			return HitBoxes.BONE.tableLarge(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -68,6 +68,8 @@ public class BedSingleBlock extends BedBlock
 			return HitBoxes.DUNMER.bedSingle(this, blockState);
 		else if(ModBlocks.VENTHYR_BED_SINGLE.has(blockState))
 			return HitBoxes.VENTHYR.bedSingle(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_BED_SINGLE.has(blockState) || ModBlocks.BONE_WITHER_BED_SINGLE.has(blockState))
+			return HitBoxes.BONE.bedSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

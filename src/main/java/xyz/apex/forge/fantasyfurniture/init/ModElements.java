@@ -39,14 +39,16 @@ public final class ModElements
 	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", BookshelfBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_BOOKSHELF, ModBlocks.DUNMER_BOOKSHELF,
-					ModBlocks.VENTHYR_BOOKSHELF
+					ModBlocks.VENTHYR_BOOKSHELF, ModBlocks.BONE_SKELETON_BOOKSHELF,
+					ModBlocks.BONE_WITHER_BOOKSHELF
 			)
 	.register();
 
 	public static final BlockEntityEntry<ChestBlockEntity> CHEST_BLOCK_ENTITY = blockEntity("chest", ChestBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_CHEST, ModBlocks.DUNMER_CHEST,
-					ModBlocks.VENTHYR_CHEST
+					ModBlocks.VENTHYR_CHEST, ModBlocks.BONE_SKELETON_CHEST,
+					ModBlocks.BONE_WITHER_CHEST
 			)
 	.register();
 
@@ -54,35 +56,41 @@ public final class ModElements
 			.validBlocks(
 					ModBlocks.NORDIC_DESK_LEFT, ModBlocks.NORDIC_DESK_RIGHT,
 					ModBlocks.DUNMER_DESK_LEFT, ModBlocks.DUNMER_DESK_RIGHT,
-					ModBlocks.VENTHYR_DESK_LEFT, ModBlocks.VENTHYR_DESK_RIGHT
+					ModBlocks.VENTHYR_DESK_LEFT, ModBlocks.VENTHYR_DESK_RIGHT,
+					ModBlocks.BONE_SKELETON_DESK_LEFT, ModBlocks.BONE_SKELETON_DESK_RIGHT,
+					ModBlocks.BONE_WITHER_DESK_LEFT, ModBlocks.BONE_WITHER_DESK_RIGHT
 			)
 	.register();
 
 	public static final BlockEntityEntry<DrawerBlockEntity> DRAWER_BLOCK_ENTITY = blockEntity("drawer", DrawerBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_DRAWER, ModBlocks.DUNMER_DRAWER,
-					ModBlocks.VENTHYR_DRAWER
+					ModBlocks.VENTHYR_DRAWER, ModBlocks.BONE_SKELETON_DRAWER,
+					ModBlocks.BONE_WITHER_DRAWER
 			)
 	.register();
 
 	public static final BlockEntityEntry<DresserBlockEntity> DRESSER_BLOCK_ENTITY = blockEntity("dresser", DresserBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_DRESSER, ModBlocks.DUNMER_DRESSER,
-					ModBlocks.VENTHYR_DRESSER
+					ModBlocks.VENTHYR_DRESSER, ModBlocks.BONE_SKELETON_DRESSER,
+					ModBlocks.BONE_WITHER_DRESSER
 			)
 	.register();
 
 	public static final BlockEntityEntry<LockboxBlockEntity> LOCKBOX_BLOCK_ENTITY = blockEntity("lockbox", LockboxBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_LOCKBOX, ModBlocks.DUNMER_LOCKBOX,
-					ModBlocks.VENTHYR_LOCKBOX
+					ModBlocks.VENTHYR_LOCKBOX, ModBlocks.BONE_SKELETON_LOCKBOX,
+					ModBlocks.BONE_WITHER_LOCKBOX
 			)
 	.register();
 
 	public static final BlockEntityEntry<WardrobeBlockEntity> WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", WardrobeBlockEntity::new)
 			.validBlocks(
 					ModBlocks.NORDIC_WARDROBE_BOTTOM, ModBlocks.DUNMER_WARDROBE_BOTTOM,
-					ModBlocks.VENTHYR_WARDROBE_BOTTOM
+					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
+					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM
 			)
 	.register();
 

@@ -72,6 +72,8 @@ public class CushionBlock extends SeatBlock
 			return HitBoxes.DUNMER.cushion(this, blockState);
 		else if(ModBlocks.VENTHYR_CUSHION.has(blockState))
 			return HitBoxes.VENTHYR.cushion(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_SKULL.has(blockState) || ModBlocks.BONE_WITHER_SKULL.has(blockState))
+			return HitBoxes.BONE.cushion(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

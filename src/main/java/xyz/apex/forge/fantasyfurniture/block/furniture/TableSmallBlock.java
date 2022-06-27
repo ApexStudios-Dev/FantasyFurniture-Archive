@@ -37,6 +37,8 @@ public class TableSmallBlock extends BaseBlock
 			return HitBoxes.DUNMER.tableSmall(this, blockState);
 		else if(ModBlocks.VENTHYR_TABLE_SMALL.has(blockState) || ModBlocks.VENTHYR_TABLE_SMALL_FANCY.has(blockState))
 			return HitBoxes.VENTHYR.tableSmall(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_TABLE_SMALL.has(blockState) || ModBlocks.BONE_WITHER_TABLE_SMALL.has(blockState))
+			return HitBoxes.BONE.tableSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

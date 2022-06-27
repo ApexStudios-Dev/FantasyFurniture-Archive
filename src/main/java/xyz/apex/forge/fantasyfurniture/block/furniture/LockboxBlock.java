@@ -54,6 +54,8 @@ public class LockboxBlock extends BaseBlock.WithContainer<LockboxBlockEntity, Sm
 			return HitBoxes.DUNMER.lockbox(this, blockState);
 		else if(ModBlocks.VENTHYR_LOCKBOX.has(blockState))
 			return HitBoxes.VENTHYR.lockbox(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_LOCKBOX.has(blockState) || ModBlocks.BONE_WITHER_LOCKBOX.has(blockState))
+			return HitBoxes.BONE.lockbox(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

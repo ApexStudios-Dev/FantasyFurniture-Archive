@@ -82,12 +82,27 @@ public class FloorLightBlock extends BaseMultiBlock
 				onLightParticle(level, pos, blockState, x + .4D, y, z + .4D, rng);
 			}
 		}
+		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .5D + .45D;
+			var z = pos.getZ() + .5D;
+
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+			onLightParticle(level, pos, blockState, x + .25D, y - .05D, z, rng);
+			onLightParticle(level, pos, blockState, x - .25D, y - .05D, z, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
 	{
+		var flame = ParticleTypes.FLAME;
+
+		if(ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+			flame = ParticleTypes.SOUL_FIRE_FLAME;
+
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
-		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
+		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
 	}
 
 	@Override
@@ -105,6 +120,8 @@ public class FloorLightBlock extends BaseMultiBlock
 			return HitBoxes.DUNMER.floorLight(this, blockState);
 		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.has(blockState))
 			return HitBoxes.VENTHYR.floorLight(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+			return HitBoxes.BONE.floorLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -106,6 +106,8 @@ public class WardrobeTopBlock extends BaseMultiBlock
 			return HitBoxes.DUNMER.wardrobeTop(this, blockState);
 		else if(ModBlocks.VENTHYR_WARDROBE_TOP.has(blockState))
 			return HitBoxes.VENTHYR.wardrobeTop(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_WARDROBE_TOP.has(blockState) || ModBlocks.BONE_WITHER_WARDROBE_TOP.has(blockState))
+			return HitBoxes.BONE.wardrobeTop(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

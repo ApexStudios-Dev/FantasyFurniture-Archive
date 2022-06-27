@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.block.furniture;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,6 +60,20 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
 			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
 		}
+		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+			super.spawnLightParticles(level, pos, blockState, pX, pY + .05D, pZ, rng);
+	}
+
+	@Override
+	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	{
+		var flame = ParticleTypes.FLAME;
+
+		if(ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+			flame = ParticleTypes.SOUL_FIRE_FLAME;
+
+		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
+		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
 	}
 
 	@Override
@@ -70,6 +85,8 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			return HitBoxes.DUNMER.wallLight(this, blockState);
 		else if(ModBlocks.VENTHYR_WALL_LIGHT.has(blockState))
 			return HitBoxes.VENTHYR.wallLight(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+			return HitBoxes.BONE.wallLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

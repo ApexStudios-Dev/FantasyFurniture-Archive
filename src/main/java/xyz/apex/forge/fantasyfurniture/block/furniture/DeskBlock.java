@@ -63,11 +63,15 @@ public class DeskBlock extends BaseMultiBlock.WithContainer<DeskBlockEntity, Sma
 		else if(ModBlocks.DUNMER_DESK_LEFT.has(blockState))
 			return HitBoxes.DUNMER.deskLeft(this, blockState);
 		else if(ModBlocks.DUNMER_DESK_RIGHT.has(blockState))
-			return HitBoxes.VENTHYR.deskRight(this, blockState);
+			return HitBoxes.DUNMER.deskRight(this, blockState);
 		else if(ModBlocks.VENTHYR_DESK_LEFT.has(blockState))
 			return HitBoxes.VENTHYR.deskLeft(this, blockState);
 		else if(ModBlocks.VENTHYR_DESK_RIGHT.has(blockState))
 			return HitBoxes.VENTHYR.deskRight(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_DESK_LEFT.has(blockState) || ModBlocks.BONE_WITHER_DESK_LEFT.has(blockState))
+			return HitBoxes.BONE.deskLeft(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_DESK_RIGHT.has(blockState) || ModBlocks.BONE_WITHER_DESK_RIGHT.has(blockState))
+			return HitBoxes.BONE.deskRight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -37,6 +37,8 @@ public class PaintingSmallBlock extends BaseBlock
 			return HitBoxes.DUNMER.paintingSmall(this, blockState);
 		else if(ModBlocks.VENTHYR_PAINTING_SMALL.has(blockState))
 			return HitBoxes.VENTHYR.paintingSmall(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_PAINTING_SMALL.has(blockState) || ModBlocks.BONE_WITHER_PAINTING_SMALL.has(blockState))
+			return HitBoxes.BONE.paintingSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

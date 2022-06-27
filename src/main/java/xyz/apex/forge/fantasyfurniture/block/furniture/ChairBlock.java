@@ -51,6 +51,8 @@ public class ChairBlock extends SeatMultiBlock
 			return HitBoxes.DUNMER.chair(this, blockState);
 		else if(ModBlocks.VENTHYR_CHAIR.has(blockState))
 			return HitBoxes.VENTHYR.chair(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_CHAIR.has(blockState) || ModBlocks.BONE_WITHER_CHAIR.has(blockState))
+			return HitBoxes.BONE.chair(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

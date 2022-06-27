@@ -51,6 +51,8 @@ public class BenchBlock extends SeatMultiBlock
 			return HitBoxes.DUNMER.bench(this, blockState);
 		else if(ModBlocks.VENTHYR_BENCH.has(blockState))
 			return HitBoxes.VENTHYR.bench(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_BENCH.has(blockState) || ModBlocks.BONE_WITHER_BENCH.has(blockState))
+			return HitBoxes.BONE.bench(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

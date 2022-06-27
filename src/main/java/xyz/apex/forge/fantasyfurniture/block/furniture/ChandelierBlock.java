@@ -77,12 +77,28 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x + .1D + .4D, y + .2D, z + .1D + .4D, rng);
 			onLightParticle(level, pos, blockState, x + .1D, y + .2D, z + .1D + .4D, rng);
 		}
+		else if(ModBlocks.BONE_SKELETON_CHANDELIER.has(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .8D;
+			var z = pos.getZ() + .5D;
+
+			onLightParticle(level, pos, blockState, x + .4D, y, z, rng);
+			onLightParticle(level, pos, blockState, x - .4D, y, z, rng);
+			onLightParticle(level, pos, blockState, x, y, z + .4D, rng);
+			onLightParticle(level, pos, blockState, x, y, z - .4D, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
 	{
+		var flame = ParticleTypes.FLAME;
+
+		if(ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+			flame = ParticleTypes.SOUL_FIRE_FLAME;
+
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
-		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
+		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
 	}
 
 	@Override
@@ -94,6 +110,8 @@ public class ChandelierBlock extends BaseBlock
 			return HitBoxes.DUNMER.chandelier(this, blockState);
 		else if(ModBlocks.VENTHYR_CHANDELIER.has(blockState))
 			return HitBoxes.VENTHYR.chandelier(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_CHANDELIER.has(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+			return HitBoxes.BONE.chandelier(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

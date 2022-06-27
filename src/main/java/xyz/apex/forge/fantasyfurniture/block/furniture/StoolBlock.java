@@ -43,6 +43,8 @@ public class StoolBlock extends SeatBlock
 			return HitBoxes.DUNMER.stool(this, blockState);
 		else if(ModBlocks.VENTHYR_STOOL.has(blockState))
 			return HitBoxes.VENTHYR.stool(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_STOOL.has(blockState) || ModBlocks.BONE_WITHER_STOOL.has(blockState))
+			return HitBoxes.BONE.stool(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

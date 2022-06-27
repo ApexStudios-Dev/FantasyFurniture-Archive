@@ -115,6 +115,66 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_DOUBLE = door(ModBlocks.VENTHYR_DOOR_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_LOCKBOX = blockItem(ModBlocks.VENTHYR_LOCKBOX).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WOOL = wool(ModBlocks.BONE_SKELETON_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CARPET = carpet(ModBlocks.BONE_SKELETON_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WALL_LIGHT = blockItem(ModBlocks.BONE_SKELETON_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_FLOOR_LIGHT = blockItem(ModBlocks.BONE_SKELETON_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_SMALL = blockItem(ModBlocks.BONE_SKELETON_TABLE_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_WIDE = blockItem(ModBlocks.BONE_SKELETON_TABLE_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_LARGE = blockItem(ModBlocks.BONE_SKELETON_TABLE_LARGE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_STOOL = blockItem(ModBlocks.BONE_SKELETON_STOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SKULL = blockItem(ModBlocks.BONE_SKELETON_SKULL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_SMALL = blockItem(ModBlocks.BONE_SKELETON_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_WIDE = blockItem(ModBlocks.BONE_SKELETON_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DRAWER = blockItem(ModBlocks.BONE_SKELETON_DRAWER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SHELF = shelf(ModBlocks.BONE_SKELETON_SHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SOFA = sofa(ModBlocks.BONE_SKELETON_SOFA).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_LEFT = blockItem(ModBlocks.BONE_SKELETON_DESK_LEFT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_RIGHT = blockItem(ModBlocks.BONE_SKELETON_DESK_RIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHAIR = blockItem(ModBlocks.BONE_SKELETON_CHAIR).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BENCH = blockItem(ModBlocks.BONE_SKELETON_BENCH).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BOOKSHELF = blockItem(ModBlocks.BONE_SKELETON_BOOKSHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHEST = blockItem(ModBlocks.BONE_SKELETON_CHEST).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DRESSER = blockItem(ModBlocks.BONE_SKELETON_DRESSER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_BOTTOM = blockItem(ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_TOP = blockItem(ModBlocks.BONE_SKELETON_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_SINGLE = bed(ModBlocks.BONE_SKELETON_BED_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_DOUBLE = bed(ModBlocks.BONE_SKELETON_BED_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHANDELIER = blockItem(ModBlocks.BONE_SKELETON_CHANDELIER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_SINGLE = door(ModBlocks.BONE_SKELETON_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+
+	public static final ItemEntry<BlockItem> BONE_WITHER_WOOL = wool(ModBlocks.BONE_WITHER_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CARPET = carpet(ModBlocks.BONE_WITHER_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WALL_LIGHT = blockItem(ModBlocks.BONE_WITHER_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_FLOOR_LIGHT = blockItem(ModBlocks.BONE_WITHER_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_SMALL = blockItem(ModBlocks.BONE_WITHER_TABLE_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_WIDE = blockItem(ModBlocks.BONE_WITHER_TABLE_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_LARGE = blockItem(ModBlocks.BONE_WITHER_TABLE_LARGE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_STOOL = blockItem(ModBlocks.BONE_WITHER_STOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SKULL = blockItem(ModBlocks.BONE_WITHER_SKULL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_SMALL = blockItem(ModBlocks.BONE_WITHER_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_WIDE = blockItem(ModBlocks.BONE_WITHER_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DRAWER = blockItem(ModBlocks.BONE_WITHER_DRAWER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SHELF = shelf(ModBlocks.BONE_WITHER_SHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SOFA = sofa(ModBlocks.BONE_WITHER_SOFA).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_LEFT = blockItem(ModBlocks.BONE_WITHER_DESK_LEFT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_RIGHT = blockItem(ModBlocks.BONE_WITHER_DESK_RIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHAIR = blockItem(ModBlocks.BONE_WITHER_CHAIR).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BENCH = blockItem(ModBlocks.BONE_WITHER_BENCH).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BOOKSHELF = blockItem(ModBlocks.BONE_WITHER_BOOKSHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHEST = blockItem(ModBlocks.BONE_WITHER_CHEST).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DRESSER = blockItem(ModBlocks.BONE_WITHER_DRESSER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_BOTTOM = blockItem(ModBlocks.BONE_WITHER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_TOP = blockItem(ModBlocks.BONE_WITHER_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BED_SINGLE = bed(ModBlocks.BONE_WITHER_BED_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BED_DOUBLE = bed(ModBlocks.BONE_WITHER_BED_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHANDELIER = blockItem(ModBlocks.BONE_WITHER_CHANDELIER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+
 	static void bootstrap()
 	{
 	}

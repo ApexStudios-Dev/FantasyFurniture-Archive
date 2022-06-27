@@ -69,6 +69,8 @@ public class BedDoubleBlock extends BedBlock
 			return HitBoxes.DUNMER.bedDouble(this, blockState);
 		else if(ModBlocks.VENTHYR_BED_DOUBLE.has(blockState))
 			return HitBoxes.VENTHYR.bedDouble(this, blockState);
+		else if(ModBlocks.BONE_SKELETON_BED_DOUBLE.has(blockState) || ModBlocks.BONE_WITHER_BED_DOUBLE.has(blockState))
+			return HitBoxes.BONE.bedDouble(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
