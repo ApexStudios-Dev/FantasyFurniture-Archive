@@ -20,11 +20,13 @@ public final class ModItemGroupCategories
 	public static final ItemGroupCategory NORDIC = ItemGroupCategory
 			.builder("nordic")
 			.tagged(NORDIC_TAG)
+			.defaultIcon(ModItems.NORDIC_BED_SINGLE::asStack)
 	.build();
 
 	public static final ItemGroupCategory DUNMER = ItemGroupCategory
 			.builder("dunmer")
 			.tagged(DUNMER_TAG)
+			.defaultIcon(ModItems.DUNMER_BED_DOUBLE::asStack)
 	.build();
 
 	static void bootstrap()
