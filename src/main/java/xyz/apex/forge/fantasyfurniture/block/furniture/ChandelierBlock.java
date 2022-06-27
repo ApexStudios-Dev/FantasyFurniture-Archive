@@ -1,0 +1,66 @@
+package xyz.apex.forge.fantasyfurniture.block.furniture;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+
+import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+
+import java.util.Random;
+import java.util.function.Consumer;
+
+public class ChandelierBlock extends BaseBlock
+{
+	public ChandelierBlock(Properties properties)
+	{
+		super(properties);
+	}
+
+	@Override
+	protected void registerProperties(Consumer<Property<?>> consumer)
+	{
+		super.registerProperties(consumer);
+		consumer.accept(WATERLOGGED);
+	}
+
+	@Override
+	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
+	{
+		if(!isWaterLogged(blockState))
+			spawnLightParticles(blockState, level, pos, rng);
+	}
+
+	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
+	{
+		var x = pos.getX() + .5D;
+		var y = pos.getY() + .65D;
+		var z = pos.getZ() + .5D;
+
+		onLightParticle(level, pos, blockState, x + .25D, y, z + .25D, rng);
+		onLightParticle(level, pos, blockState, x - .25D, y, z + .25D, rng);
+		onLightParticle(level, pos, blockState, x + .25D, y, z - .25D, rng);
+		onLightParticle(level, pos, blockState, x - .25D, y, z - .25D, rng);
+	}
+
+	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	{
+		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
+		level.addParticle(ParticleTypes.FLAME, pX, pY, pZ, 0D, 0D, 0D);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
+	{
+		if(ModBlocks.NORDIC_CHANDELIER.has(blockState))
+			return HitBoxes.NORDIC.chandelier(this, blockState);
+
+		return super.getShape(blockState, level, pos, ctx);
+	}
+}
