@@ -83,6 +83,8 @@ public class SofaBlock extends SeatBlock
 			return HitBoxes.NORDIC.sofa(this, blockState);
 		else if(ModBlocks.DUNMER_SOFA.has(blockState))
 			return HitBoxes.DUNMER.sofa(this, blockState);
+		else if(ModBlocks.VENTHYR_SOFA.has(blockState))
+			return HitBoxes.VENTHYR.sofa(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

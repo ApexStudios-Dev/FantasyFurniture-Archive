@@ -60,6 +60,8 @@ public class ChestBlock extends BaseMultiBlock.WithContainer<ChestBlockEntity, L
 			return HitBoxes.NORDIC.chest(this, blockState);
 		else if(ModBlocks.DUNMER_CHEST.has(blockState))
 			return HitBoxes.DUNMER.chest(this, blockState);
+		else if(ModBlocks.VENTHYR_CHEST.has(blockState))
+			return HitBoxes.VENTHYR.chest(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

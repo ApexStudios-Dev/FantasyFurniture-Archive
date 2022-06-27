@@ -35,6 +35,30 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	{
 		if(ModBlocks.NORDIC_WALL_LIGHT.has(blockState))
 			super.spawnLightParticles(level, pos, blockState, pX, pY, pZ, rng);
+		else if(ModBlocks.VENTHYR_WALL_LIGHT.has(blockState))
+		{
+			var x = pX;
+			var y = pY + .35D;
+			var z = pZ;
+
+			var xOffset = 0D;
+			var zOffset = 0D;
+
+			if(supportsFacing(blockState))
+			{
+				var facing = getFacing(blockState).getOpposite();
+				var face = facing.getClockWise();
+
+				xOffset = .15D * face.getStepX();
+				zOffset = .15D * face.getStepZ();
+
+				x += .25D * facing.getStepX();
+				z += .25D * facing.getStepZ();
+			}
+
+			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
+			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
+		}
 	}
 
 	@Override
@@ -44,6 +68,8 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			return HitBoxes.NORDIC.wallLight(this, blockState);
 		else if(ModBlocks.DUNMER_WALL_LIGHT.has(blockState))
 			return HitBoxes.DUNMER.wallLight(this, blockState);
+		else if(ModBlocks.VENTHYR_WALL_LIGHT.has(blockState))
+			return HitBoxes.VENTHYR.wallLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

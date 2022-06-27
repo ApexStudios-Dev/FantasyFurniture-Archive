@@ -37,6 +37,8 @@ public class PaintingWideBlock extends BaseMultiBlock
 			return HitBoxes.NORDIC.paintingWide(this, blockState);
 		else if(ModBlocks.DUNMER_PAINTING_WIDE.has(blockState))
 			return HitBoxes.DUNMER.paintingWide(this, blockState);
+		else if(ModBlocks.VENTHYR_PAINTING_WIDE.has(blockState))
+			return HitBoxes.VENTHYR.paintingWide(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

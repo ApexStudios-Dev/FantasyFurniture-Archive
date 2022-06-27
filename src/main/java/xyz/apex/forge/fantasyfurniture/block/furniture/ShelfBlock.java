@@ -47,6 +47,8 @@ public class ShelfBlock extends BaseBlock
 			return HitBoxes.NORDIC.shelf(this, blockState);
 		else if(ModBlocks.DUNMER_SHELF.has(blockState))
 			return HitBoxes.DUNMER.shelf(this, blockState);
+		else if(ModBlocks.VENTHYR_SHELF.has(blockState))
+			return HitBoxes.VENTHYR.shelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

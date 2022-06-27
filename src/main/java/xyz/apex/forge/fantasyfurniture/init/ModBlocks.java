@@ -45,7 +45,7 @@ public final class ModBlocks
 	public static final BlockEntry<FloorLightBlock> NORDIC_FLOOR_LIGHT = floorLight("nordic", FloorLightBlock::new).register();
 	public static final BlockEntry<TableSmallBlock> NORDIC_TABLE_SMALL = tableSmall("nordic", TableSmallBlock::new).register();
 	public static final BlockEntry<TableWideBlock> NORDIC_TABLE_WIDE = tableWide("nordic", TableWideBlock::new).register();
-	public static final BlockEntry<TableLargeBlock> NORDIC_TABLE_LARGE =tableLarge ("nordic", TableLargeBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> NORDIC_TABLE_LARGE = tableLarge("nordic", TableLargeBlock::new).register();
 	public static final BlockEntry<StoolBlock> NORDIC_STOOL = stool("nordic", StoolBlock::new).register();
 	public static final BlockEntry<CushionBlock> NORDIC_CUSHION = cushion("nordic", CushionBlock::new).register();
 	public static final BlockEntry<PaintingSmallBlock> NORDIC_PAINTING_SMALL = paintingSmall("nordic", PaintingSmallBlock::new).register();
@@ -75,7 +75,7 @@ public final class ModBlocks
 	public static final BlockEntry<FloorLightBlock> DUNMER_FLOOR_LIGHT = floorLight("dunmer", FloorLightBlock::new).register();
 	public static final BlockEntry<TableSmallBlock> DUNMER_TABLE_SMALL = tableSmall("dunmer", TableSmallBlock::new).register();
 	public static final BlockEntry<TableWideBlock> DUNMER_TABLE_WIDE = tableWide("dunmer", TableWideBlock::new).register();
-	public static final BlockEntry<TableLargeBlock> DUNMER_TABLE_LARGE =tableLarge ("dunmer", TableLargeBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> DUNMER_TABLE_LARGE = tableLarge("dunmer", TableLargeBlock::new).register();
 	public static final BlockEntry<StoolBlock> DUNMER_STOOL = stool("dunmer", StoolBlock::new).register();
 	public static final BlockEntry<CushionBlock> DUNMER_CUSHION = cushion("dunmer", CushionBlock::new).register();
 	public static final BlockEntry<PaintingSmallBlock> DUNMER_PAINTING_SMALL = paintingSmall("dunmer", PaintingSmallBlock::new).register();
@@ -98,6 +98,39 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_SINGLE = doorSingle("dunmer", FurnitureDoorBlock::new).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).register();
 	public static final BlockEntry<LockboxBlock> DUNMER_LOCKBOX = lockbox("dunmer", LockboxBlock::new).register();
+
+	public static final BlockEntry<Block> VENTHYR_WOOL = wool("venthyr", Block::new).register();
+	public static final BlockEntry<CarpetBlock> VENTHYR_CARPET = carpet("venthyr", CarpetBlock::new).register();
+	public static final BlockEntry<FurnitureWallLightBlock> VENTHYR_WALL_LIGHT = wallLight("venthyr", FurnitureWallLightBlock::new).lightLevel(blockState -> 14).register();
+	public static final BlockEntry<FloorLightBlock> VENTHYR_FLOOR_LIGHT = floorLight("venthyr", FloorLightBlock::new).register();
+	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL = tableSmall("venthyr", TableSmallBlock::new).register();
+	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL_FANCY = tableSmallFancy("venthyr", TableSmallBlock::new).register();
+	public static final BlockEntry<TableWideBlock> VENTHYR_TABLE_WIDE = tableWide("venthyr", TableWideBlock::new).register();
+	public static final BlockEntry<TableWideBlock> VENTHYR_TABLE_WIDE_FANCY = tableWideFancy("venthyr", TableWideBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> VENTHYR_TABLE_LARGE = tableLarge("venthyr", TableLargeBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> VENTHYR_TABLE_LARGE_FANCY = tableLargeFancy("venthyr", TableLargeBlock::new).register();
+	public static final BlockEntry<StoolBlock> VENTHYR_STOOL = stool("venthyr", StoolBlock::new).register();
+	public static final BlockEntry<CushionBlock> VENTHYR_CUSHION = cushion("venthyr", CushionBlock::new).register();
+	public static final BlockEntry<PaintingSmallBlock> VENTHYR_PAINTING_SMALL = paintingSmall("venthyr", PaintingSmallBlock::new).register();
+	public static final BlockEntry<PaintingWideBlock> VENTHYR_PAINTING_WIDE = paintingWide("venthyr", PaintingWideBlock::new).register();
+	public static final BlockEntry<DrawerBlock> VENTHYR_DRAWER = drawer("venthyr", DrawerBlock::new).register();
+	public static final BlockEntry<ShelfBlock> VENTHYR_SHELF = shelf("venthyr", ShelfBlock::new).register();
+	public static final BlockEntry<SofaBlock> VENTHYR_SOFA = sofa("venthyr", SofaBlock::new).register();
+	public static final BlockEntry<DeskBlock> VENTHYR_DESK_LEFT = deskLeft("venthyr", DeskBlock::new).register();
+	public static final BlockEntry<DeskBlock> VENTHYR_DESK_RIGHT = deskRight("venthyr", DeskBlock::new).register();
+	public static final BlockEntry<ChairBlock.OriginOnly> VENTHYR_CHAIR = chair("venthyr", ChairBlock.OriginOnly::new).register();
+	public static final BlockEntry<BenchBlock> VENTHYR_BENCH = bench("venthyr", BenchBlock::new).register();
+	public static final BlockEntry<BookshelfBlock> VENTHYR_BOOKSHELF = bookshelf("venthyr", BookshelfBlock::new).register();
+	public static final BlockEntry<ChestBlock> VENTHYR_CHEST = chest("venthyr", ChestBlock::new).register();
+	public static final BlockEntry<DresserBlock> VENTHYR_DRESSER = dresser("venthyr", DresserBlock::new).register();
+	public static final BlockEntry<WardrobeBottomBlock> VENTHYR_WARDROBE_BOTTOM = wardrobeBottom("venthyr", WardrobeBottomBlock::new).register();
+	public static final BlockEntry<WardrobeTopBlock> VENTHYR_WARDROBE_TOP = wardrobeTop("venthyr", WardrobeTopBlock::new).register();
+	public static final BlockEntry<BedSingleBlock> VENTHYR_BED_SINGLE = bedSingle("venthyr", BedSingleBlock::new).register();
+	public static final BlockEntry<BedDoubleBlock> VENTHYR_BED_DOUBLE = bedDouble("venthyr", BedDoubleBlock::new).register();
+	public static final BlockEntry<ChandelierBlock> VENTHYR_CHANDELIER = chandelier("venthyr", ChandelierBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_SINGLE = doorSingle("venthyr", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_DOUBLE = doorDouble("venthyr", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<LockboxBlock> VENTHYR_LOCKBOX = lockbox("venthyr", LockboxBlock::new).register();
 
 	static void bootstrap()
 	{
@@ -199,6 +232,20 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends TableSmallBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableSmallFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/table_small_fancy".formatted(type))
+				.block(blockFactory)
+				.lang("%s Table Small Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static <BLOCK extends TableWideBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableWide(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
 	{
 		return REGISTRATE
@@ -213,12 +260,40 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends TableWideBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableWideFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/table_wide_fancy".formatted(type))
+				.block(blockFactory)
+				.lang("%s Table Wide Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static <BLOCK extends TableLargeBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableLarge(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_large".formatted(type))
 				.block(blockFactory)
 				.lang("%s Table Large".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends TableLargeBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableLargeFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/table_large_fancy".formatted(type))
+				.block(blockFactory)
+				.lang("%s Table Large Fancy".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)

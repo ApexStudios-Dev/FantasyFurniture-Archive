@@ -61,6 +61,22 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x - .275D, y, z + .275D, rng);
 			onLightParticle(level, pos, blockState, x - .275D, y, z - .275D, rng);
 		}
+		else if(ModBlocks.VENTHYR_CHANDELIER.has(blockState))
+		{
+			var x = pos.getX() + .2D;
+			var y = pos.getY() + .55D;
+			var z = pos.getZ() + .2D;
+
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+			onLightParticle(level, pos, blockState, x + .6D, y, z, rng);
+			onLightParticle(level, pos, blockState, x + .6D, y, z + .6D, rng);
+			onLightParticle(level, pos, blockState, x, y, z + .6D, rng);
+
+			onLightParticle(level, pos, blockState, x + .1D, y + .2D, z + .1D, rng);
+			onLightParticle(level, pos, blockState, x + .1D + .4D, y + .2D, z + .1D, rng);
+			onLightParticle(level, pos, blockState, x + .1D + .4D, y + .2D, z + .1D + .4D, rng);
+			onLightParticle(level, pos, blockState, x + .1D, y + .2D, z + .1D + .4D, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
@@ -76,6 +92,8 @@ public class ChandelierBlock extends BaseBlock
 			return HitBoxes.NORDIC.chandelier(this, blockState);
 		else if(ModBlocks.DUNMER_CHANDELIER.has(blockState))
 			return HitBoxes.DUNMER.chandelier(this, blockState);
+		else if(ModBlocks.VENTHYR_CHANDELIER.has(blockState))
+			return HitBoxes.VENTHYR.chandelier(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

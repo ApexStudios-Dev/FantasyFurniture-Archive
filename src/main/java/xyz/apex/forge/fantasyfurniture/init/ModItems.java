@@ -82,6 +82,39 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_LOCKBOX = blockItem(ModBlocks.DUNMER_LOCKBOX).tag(ModItemGroupCategories.DUNMER_TAG).register();
 
+	public static final ItemEntry<BlockItem> VENTHYR_WOOL = wool(ModBlocks.VENTHYR_WOOL).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CARPET = carpet(ModBlocks.VENTHYR_CARPET).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_WALL_LIGHT = blockItem(ModBlocks.VENTHYR_WALL_LIGHT).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_FLOOR_LIGHT = blockItem(ModBlocks.VENTHYR_FLOOR_LIGHT).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_SMALL = blockItem(ModBlocks.VENTHYR_TABLE_SMALL).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_SMALL_FANCY = blockItem(ModBlocks.VENTHYR_TABLE_SMALL_FANCY).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_WIDE = blockItem(ModBlocks.VENTHYR_TABLE_WIDE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_WIDE_FANCY = blockItem(ModBlocks.VENTHYR_TABLE_WIDE_FANCY).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_LARGE = blockItem(ModBlocks.VENTHYR_TABLE_LARGE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_TABLE_LARGE_FANCY = blockItem(ModBlocks.VENTHYR_TABLE_LARGE_FANCY).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_STOOL = blockItem(ModBlocks.VENTHYR_STOOL).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CUSHION = blockItem(ModBlocks.VENTHYR_CUSHION).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_PAINTING_SMALL = blockItem(ModBlocks.VENTHYR_PAINTING_SMALL).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_PAINTING_WIDE = blockItem(ModBlocks.VENTHYR_PAINTING_WIDE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DRAWER = blockItem(ModBlocks.VENTHYR_DRAWER).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_SHELF = shelf(ModBlocks.VENTHYR_SHELF).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_SOFA = sofa(ModBlocks.VENTHYR_SOFA).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DESK_LEFT = blockItem(ModBlocks.VENTHYR_DESK_LEFT).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DESK_RIGHT = blockItem(ModBlocks.VENTHYR_DESK_RIGHT).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CHAIR = blockItem(ModBlocks.VENTHYR_CHAIR).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BENCH = blockItem(ModBlocks.VENTHYR_BENCH).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BOOKSHELF = blockItem(ModBlocks.VENTHYR_BOOKSHELF).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CHEST = blockItem(ModBlocks.VENTHYR_CHEST).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DRESSER = blockItem(ModBlocks.VENTHYR_DRESSER).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_WARDROBE_BOTTOM = blockItem(ModBlocks.VENTHYR_WARDROBE_BOTTOM).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_WARDROBE_TOP = blockItem(ModBlocks.VENTHYR_WARDROBE_TOP).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BED_SINGLE = bed(ModBlocks.VENTHYR_BED_SINGLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BED_DOUBLE = bed(ModBlocks.VENTHYR_BED_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CHANDELIER = blockItem(ModBlocks.VENTHYR_CHANDELIER).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DOOR_SINGLE = door(ModBlocks.VENTHYR_DOOR_SINGLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_DOOR_DOUBLE = door(ModBlocks.VENTHYR_DOOR_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_LOCKBOX = blockItem(ModBlocks.VENTHYR_LOCKBOX).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+
 	static void bootstrap()
 	{
 	}

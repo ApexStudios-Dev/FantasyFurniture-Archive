@@ -36,7 +36,11 @@ public class FurnitureDoorBlock extends DoorBlock
 		else if(ModBlocks.DUNMER_DOOR_DOUBLE.has(blockState))
 			return HitBoxes.DUNMER.doorDouble(this, blockState);
 		else if(ModBlocks.DUNMER_DOOR_SINGLE.has(blockState))
-			return HitBoxes.DUNMER.doorSingle(this, blockState);
+			return HitBoxes.VENTHYR.doorSingle(this, blockState);
+		else if(ModBlocks.VENTHYR_DOOR_DOUBLE.has(blockState))
+			return HitBoxes.VENTHYR.doorDouble(this, blockState);
+		else if(ModBlocks.VENTHYR_DOOR_SINGLE.has(blockState))
+			return HitBoxes.VENTHYR.doorSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

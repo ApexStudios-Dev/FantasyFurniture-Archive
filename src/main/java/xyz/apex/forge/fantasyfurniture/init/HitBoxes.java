@@ -17,6 +17,7 @@ public abstract class HitBoxes
 {
 	public static final HitBoxes NORDIC = new Nordic();
 	public static final HitBoxes DUNMER = new Dunmer();
+	public static final HitBoxes VENTHYR = new Venthyr();
 
 	private final HitBox.WithShaper bedDouble = new HitBox.WithShaper(this::bedDoubleShape, Direction.NORTH);
 	private final HitBox.WithShaper bedSingle = new HitBox.WithShaper(this::bedSingleShape, Direction.NORTH);
@@ -1297,6 +1298,475 @@ public abstract class HitBoxes
 					box(11, 21, 1, 12, 30, 2),
 					box(3, 27, 1, 13, 28, 2),
 					box(3, 22, 1, 13, 23, 2)
+			);
+		}
+	}
+
+	private static final class Venthyr extends HitBoxes
+	{
+		@Override
+		protected VoxelShape bedDoubleShape()
+		{
+			return VoxelShaper.or(
+					box(-16D, 0D, 0D, -13D, 2D, 3D),
+					box(-15.5D, 2D, .5D, -13.5D, 12D, 2.5D),
+					box(-15.5D, 2D, 29.5D, -13.5D, 12D, 31.5D),
+					box(13.5D, 2D, 29.5D, 15.5D, 12D, 31.5D),
+					box(13.5D, 2D, .5D, 15.5D, 12D, 2.5D),
+					box(-16D, 12D, 0D, -13D, 14D, 3D),
+					box(-16D, 12D, 29D, -13D, 14D, 32D),
+					box(13D, 12D, 29D, 16D, 14D, 32D),
+					box(13D, 12D, 0D, 16D, 14D, 3D),
+					box(13D, 0D, 0D, 16D, 2D, 3D),
+					box(13D, 0D, 29D, 16D, 2D, 32D),
+					box(-16D, 0D, 29D, -13D, 2D, 32D),
+					box(-15.5D, 0D, 2.5D, 15.5D, 5D, 29.5D),
+					box(-13.5D, 0D, 29.5D, 13.5D, 12D, 31.5D),
+					box(-13.5D, 0D, .5D, 13.5D, 14D, 2.5D),
+					box(-14.5D, 0D, 2.5D, 14.5D, 8D, 29.5D)
+			);
+		}
+
+		@Override
+		protected VoxelShape bedSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0D, 0D, 29D, 3D, 2D, 32D),
+					box(13D, 0D, 29D, 16D, 2D, 32D),
+					box(13D, 0D, 0D, 16D, 2D, 3D),
+					box(0D, 0D, 0D, 3D, 2D, 3D),
+					box(.5D, 2D, .5D, 2.5D, 12D, 2.5D),
+					box(.5D, 2D, 29.5D, 2.5D, 12D, 31.5D),
+					box(13.5D, 2D, 29.5D, 15.5D, 12D, 31.5D),
+					box(13.5D, 2D, .5D, 15.5D, 12D, 2.5D),
+					box(13D, 12D, 0D, 16D, 14D, 3D),
+					box(0D, 12D, 0D, 3D, 14D, 3D),
+					box(0D, 12D, 29D, 3D, 14D, 32D),
+					box(13D, 12D, 29D, 16D, 14D, 32D),
+					box(.5D, 0D, 2D, 15.5D, 5D, 30D),
+					box(2.5D, 0D, 29.5D, 13.5D, 11D, 31.5D),
+					box(2.5D, 0D, .5D, 13.5D, 13D, 2.5D),
+					box(1.5D, 5D, 2.5D, 14.5D, 8D, 29.5D)
+			);
+		}
+
+		@Override
+		protected VoxelShape benchShape()
+		{
+			return VoxelShaper.or(
+					box(-14D, 0D, 2D, -11D, 4D, 5D),
+					box(-14D, 0D, 11D, -11D, 4D, 14D),
+					box(11D, 0D, 11D, 14D, 4D, 14D),
+					box(11D, 0D, 2D, 14D, 4D, 5D),
+					box(-15D, 4D, 1D, 15D, 7D, 15D)
+			);
+		}
+
+		@Override
+		protected VoxelShape bookshelfShape()
+		{
+			return VoxelShaper.or(
+					box(-16D, 0D, 2D, 16D, 3D, 16D),
+					box(-15D, 3D, 3D, 15D, 29D, 16D),
+					box(-16D, 29D, 2D, 16D, 32D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape chairShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 5D, 4D),
+					box(12D, 0D, 1D, 15D, 5D, 4D),
+					box(12D, 0D, 12D, 15D, 5D, 15D),
+					box(1D, 0D, 12D, 4D, 5D, 15D),
+					box(.5D, 5D, .5D, 15.5D, 9D, 15.5D),
+					box(1D, 9D, 12D, 15D, 31D, 15D)
+			);
+		}
+
+		@Override
+		protected VoxelShape chandelierShape()
+		{
+			return box(1D, 0D, 1D, 15, 16D, 15D);
+		}
+
+		@Override
+		protected VoxelShape chestShape()
+		{
+			return box(-13D, 0D, 1D, 13D, 14.25D, 15D);
+		}
+
+		@Override
+		protected VoxelShape cushionShape()
+		{
+			return VoxelShaper.or(
+					box(2D, 0D, 2D, 5D, 3D, 5D),
+					box(2D, 0D, 11D, 5D, 3D, 14D),
+					box(11D, 0D, 11D, 14D, 3D, 14D),
+					box(11D, 0D, 2D, 14D, 3D, 5D),
+					box(1D, 3D, 1D, 15D, 4D, 15D),
+					box(2D, 4D, 2D, 14D, 7D, 14D)
+			);
+		}
+
+		@Override
+		protected VoxelShape deskLeftShape()
+		{
+			return VoxelShaper.or(
+					box(-15D, 0D, 1D, -12D, 2D, 4D),
+					box(-15D, 0D, 12D, -12D, 2D, 15D),
+					box(12D, 0D, 12D, 15, 2D, 15D),
+					box(12D, 0D, 1D, 15, 2D, 4D),
+					box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 1.5D, -12.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 12.5D, -12.5D, 13D, 14.5D),
+					box(12.5D, 2D, 12.5D, 14.5D, 13, 14.5D),
+					box(-16D, 13D, 0D, 16D, 16D, 16D),
+					box(5D, 9D, 2, 12D, 13D, 11D),
+					box(12.5D, 9D, 3.5D, 14.5D, 13D, 12.5D),
+					box(-14.5D, 9D, 3.5D, -12.5D, 13D, 12.5D)
+			);
+		}
+
+		@Override
+		protected VoxelShape deskRightShape()
+		{
+			return VoxelShaper.or(
+					box(-15D, 0D, 1D, -12D, 2D, 4D),
+					box(-15D, 0D, 12D, -12D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 1.5D, -12.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 12.5D, -12.5D, 13D, 14.5D),
+					box(12.5D, 2D, 12.5D, 14.5D, 13D, 14.5D),
+					box(-16D, 13D, 0D, 16D, 16D, 16D),
+					box(-12D, 9D, 2D, -5D, 13D, 11D),
+					box(12.5D, 9D, 3.5D, 14.5D, 13D, 12.5D),
+					box(-14.5D, 9D, 3.5D, -12.5D, 13D, 12.5D)
+			);
+		}
+
+		@Override
+		protected VoxelShape drawerShape()
+		{
+			return VoxelShaper.or(
+					box(.5D, 0D, .5D, 3.5D, 2D, 3.5D),
+					box(.5D, 0D, 12.5D, 3.5D, 2D, 15.5D),
+					box(12.5D, 0D, 12.5D, 15.5D, 2D, 15.5D),
+					box(12.5D, 0D, .5D, 15.5D, 2D, 3.5D),
+					box(13D, 2D, 1D, 15D, 13D, 3D),
+					box(1D, 2D, 1D, 3D, 13D, 3D),
+					box(1D, 2D, 13D, 3D, 13D, 15D),
+					box(13D, 2D, 13D, 15D, 13D, 15D),
+					box(1D, 5D, 1D, 15D, 13D, 15D),
+					box(0D, 13D, 0D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape dresserShape()
+		{
+			return VoxelShaper.or(
+					box(-15.5D, 0D, .5D, -12.5D, 2D, 3.5D),
+					box(-15.5D, 0D, 12.5D, -12.5D, 2D, 15.5D),
+					box(12.5D, 0D, 12.5D, 15.5D, 2D, 15.5D),
+					box(12.5D, 0D, .5D, 15.5D, 2D, 3.5D),
+					box(13D, 2D, 1D, 15D, 13D, 3D),
+					box(-15D, 2D, 1D, -13D, 13D, 3D),
+					box(-15D, 2D, 13D, -13D, 13D, 15D),
+					box(13D, 2D, 13D, 15D, 13D, 15D),
+					box(-15D, 5D, 1D, 15D, 13D, 15D),
+					box(-16D, 13D, 0D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape lockboxShape()
+		{
+			return VoxelShaper.or(
+					box(2, 1, 4, 14, 10, 12),
+					box(1.5, 6, 3.5, 14.5, 7, 12.5),
+					box(1.5, 1, 3.5, 14.5, 2, 12.5),
+					box(7, 4, 3.5, 9, 6, 4.25),
+					box(12, 0, 4, 14, 1, 6),
+					box(2, 0, 4, 4, 1, 6),
+					box(2, 0, 10, 4, 1, 12),
+					box(12, 0, 10, 14, 1, 12)
+			);
+		}
+
+		@Override
+		protected VoxelShape floorLightShape()
+		{
+			return VoxelShaper.or(
+					box(6D, 0D, 6D, 10D, 2D, 10D),
+					box(7D, 2D, 7D, 9D, 20D, 9D),
+					box(4D, 17.75D, 7D, 7D, 21.75D, 9D),
+					box(9D, 17.75D, 7D, 12D, 21.75D, 9D),
+					box(7D, 17.75D, 4D, 9D, 21.75D, 7D),
+					box(7D, 17.75D, 9D, 9D, 21.75D, 12D),
+					box(2.5D, 20.75D, 2.5D, 13.5D, 24D, 13.5D),
+					box(10.25D, 24D, 10.25D, 12.5D, 28.75D, 12.5D),
+					box(3.5D, 24D, 10.25D, 5.75D, 28.75D, 12.5D),
+					box(3.5D, 24D, 3.5D, 5.75D, 28.75D, 5.75D),
+					box(10.25D, 24D, 3.5D, 12.5D, 28.75D, 5.75D)
+			);
+		}
+
+		@Override
+		protected VoxelShape paintingSmallShape()
+		{
+			return box(0D, 0D, 14D, 16D, 16D, 16D);
+		}
+
+		@Override
+		protected VoxelShape paintingWideShape()
+		{
+			return box(-16D, 0D, 14D, 16D, 16D, 16D);
+		}
+
+		@Override
+		protected VoxelShape shelfSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0D, 13D, 0D, 16D, 16D, 16D),
+					box(13D, 9D, 10D, 16D, 13D, 16D),
+					box(13D, 11D, 3D, 16D, 13D, 10D),
+					box(13D, 10D, 0D, 16D, 13D, 3D),
+					box(13D, 6D, 13D, 16D, 9D, 16D),
+					box(13D, 3D, 12D, 16D, 6D, 16D),
+					box(0D, 3D, 12D, 3D, 6D, 16D),
+					box(0D, 9D, 10D, 3D, 13D, 16D),
+					box(0D, 11D, 3D, 3D, 13D, 10D),
+					box(0D, 10D, 0D, 3D, 13D, 3D),
+					box(0D, 6D, 13D, 3D, 9D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape shelfCenterShape()
+		{
+			return box(0D, 13D, 0D, 16D, 16D, 16D);
+		}
+
+		@Override
+		protected VoxelShape shelfLeftShape()
+		{
+			return VoxelShaper.or(
+					box(0D, 13D, 0D, 16D, 16D, 16D),
+					box(13D, 3D, 12D, 16D, 6D, 16D),
+					box(13D, 9D, 10D, 16D, 13D, 16D),
+					box(13D, 11D, 3D, 16D, 13D, 10D),
+					box(13D, 10D, 0D, 16D, 13D, 3D),
+					box(13D, 6D, 13D, 16D, 9D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape shelfRightShape()
+		{
+			return VoxelShaper.or(
+					box(0D, 3D, 12D, 3D, 6D, 16D),
+					box(0D, 6D, 13D, 3D, 9D, 16D),
+					box(0D, 9D, 10D, 3D, 13D, 16D),
+					box(0D, 11D, 3D, 3D, 13D, 10D),
+					box(0D, 10D, 0D, 3D, 13D, 3D),
+					box(0D, 13D, 0D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaSingleShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(0D, 2D, 0D, 16D, 6D, 16D),
+					box(13D, 6D, 0D, 16D, 10D, 13D),
+					box(0D, 6D, 0D, 3D, 10D, 13D),
+					box(0D, 6D, 13D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaCenterShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(0D, 2D, 0D, 16D, 6D, 16D),
+					box(0D, 6D, 13D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaLeftShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(0D, 2D, 0D, 16D, 6D, 16D),
+					box(13D, 6D, 0D, 16D, 10D, 13D),
+					box(0D, 6D, 13D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaRightShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(0D, 2D, 0D, 16D, 6D, 16D),
+					box(0D, 6D, 13D, 16D, 16D, 16D),
+					box(0D, 6D, 0D, 3D, 10D, 13D)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaCornerShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(13D, 6D, 0D, 16D, 16D, 16D),
+					box(0D, 6D, 13D, 13D, 16D, 16D),
+					box(0D, 2D, 0D, 16D, 6D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape stoolShape()
+		{
+			return VoxelShaper.or(
+					box(2D, 0D, 2D, 5D, 4D, 5D),
+					box(2D, 0D, 11D, 5D, 4D, 14D),
+					box(11D, 0D, 11D, 14D, 4D, 14D),
+					box(11D, 0D, 2D, 14D, 4D, 5D),
+					box(1D, 4D, 1D, 15D, 7D, 15D)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableLargeShape()
+		{
+			return VoxelShaper.or(
+					box(-15D, 0D, 1D, -12D, 2D, 4D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(12D, 0D, 28D, 15D, 2D, 31D),
+					box(-15D, 0D, 28D, -12D, 2D, 31D),
+					box(-14.5D, 2D, 1.5D, -12.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 28.5D, -12.5D, 13D, 30.5D),
+					box(12.5D, 2D, 28.5D, 14.5D, 13D, 30.5D),
+					box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+					box(-16D, 13D, 0D, 16D, 16D, 32D)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableSmallShape()
+		{
+			return VoxelShaper.or(
+					box(1D, 0D, 1D, 4D, 2D, 4D),
+					box(1D, 0D, 12D, 4D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+					box(1.5D, 2D, 1.5D, 3.5D, 13D, 3.5D),
+					box(1.5D, 2D, 12.5D, 3.5D, 13, 14.5D),
+					box(12.5D, 2D, 12.5D, 14.5D, 13D, 14.5D),
+					box(0D, 13D, 0D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableWideShape()
+		{
+			return VoxelShaper.or(
+					box(12D, 0D, 1D, 15D, 2D, 4D),
+					box(-15D, 0D, 1D, -12D, 2D, 4D),
+					box(-15D, 0D, 12D, -12D, 2D, 15D),
+					box(12D, 0D, 12D, 15D, 2D, 15D),
+					box(12.5D, 2D, 12.5D, 14.5D, 13D, 14.5D),
+					box(12.5D, 2D, 1.5D, 14.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 1.5D, -12.5D, 13D, 3.5D),
+					box(-14.5D, 2D, 12.5D, -12.5D, 13D, 14.5D),
+					box(-16D, 13D, 0D, 16D, 16D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape wallLightShape()
+		{
+			return VoxelShaper.or(
+					box(6D, 1D, 15D, 10D, 3D, 16D),
+					box(5D, 3D, 15D, 11D, 12D, 16D),
+					box(6D, 12D, 15D, 10D, 14D, 16D),
+					box(7D, 3.5D, 14D, 9D, 5.5D, 15D),
+					box(4.25D, 2.5D, 10.5D, 11.75D, 11.5D, 14D)
+			);
+		}
+
+		@Override
+		protected VoxelShape wardrobeTopShape()
+		{
+			return VoxelShaper.or(
+					box(-15D, 0D, 1D, 15D, 9D, 15D),
+					box(-16D, 9D, 0D, 16D, 11D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape wardrobeBottomShape()
+		{
+			return VoxelShaper.or(
+					box(-16D, 0D, 0D, -12D, 3D, 4D),
+					box(-16D, 0D, 12D, -12D, 3D, 16D),
+					box(12D, 0D, 12D, 16D, 3D, 16D),
+					box(12D, 0D, 0D, 16D, 3D, 4D),
+					box(-15D, 1D, 1D, 15D, 29D, 15D),
+					box(-16D, 29D, 0D, 16D, 32D, 16D)
+			);
+		}
+
+		@Override
+		protected VoxelShape doorDoubleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 0, 13, 2, 3),
+					box(0, 10, 0, 13, 12, 3),
+					box(0, 20, 0, 13, 22, 3),
+					box(13, 0, 0, 16, 32, 3),
+					box(12, 28, 0, 13, 32, 3),
+					box(10, 29, 0, 12, 32, 3),
+					box(8, 30, 0, 10, 32, 3),
+					box(3, 31, 0, 8, 32, 3),
+					box(0, 2, 0.5, 13, 32, 2.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape doorSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 0, 13, 2, 3),
+					box(0, 10, 0, 13, 12, 3),
+					box(0, 20, 0, 13, 22, 3),
+					box(0, 30, 0, 13, 32, 3),
+					box(13, 0, 0, 16, 32, 3),
+					box(0, 2, 0.5, 13, 30, 2.5)
 			);
 		}
 	}

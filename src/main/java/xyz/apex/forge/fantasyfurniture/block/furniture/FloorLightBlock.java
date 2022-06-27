@@ -67,6 +67,21 @@ public class FloorLightBlock extends BaseMultiBlock
 
 			onLightParticle(level, pos, blockState, x, y, z, rng);
 		}
+		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.has(blockState))
+		{
+			if(blockState.getOptionalValue(PART).orElse(Part.BOTTOM) == Part.TOP)
+			{
+				var x = pos.getX() + .3D;
+				var y = pos.getY() + .9D;
+				var z = pos.getZ() + .3D;
+
+				onLightParticle(level, pos, blockState, x, y, z, rng);
+
+				onLightParticle(level, pos, blockState, x + .4D, y, z, rng);
+				onLightParticle(level, pos, blockState, x, y, z + .4D, rng);
+				onLightParticle(level, pos, blockState, x + .4D, y, z + .4D, rng);
+			}
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
@@ -88,6 +103,8 @@ public class FloorLightBlock extends BaseMultiBlock
 			return HitBoxes.NORDIC.floorLight(this, blockState);
 		else if(ModBlocks.DUNMER_FLOOR_LIGHT.has(blockState))
 			return HitBoxes.DUNMER.floorLight(this, blockState);
+		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.has(blockState))
+			return HitBoxes.VENTHYR.floorLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
