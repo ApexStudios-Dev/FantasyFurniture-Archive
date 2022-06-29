@@ -64,7 +64,7 @@ public final class ModItemGroupCategories
 	public static final ItemGroupCategory DECORATIONS = ItemGroupCategory
 			.builder("decorations")
 			.tagged(DECORATIONS_TAG)
-			.defaultIcon(() -> ModItems.SWEETROLLS.asStack())
+			.defaultIcon(() -> ModItems.NORDIC_SWEETROLLS.asStack())
 	.build();
 
 	static void bootstrap()

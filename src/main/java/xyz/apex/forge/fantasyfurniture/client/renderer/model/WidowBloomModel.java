@@ -18,8 +18,8 @@ import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
 public final class WidowBloomModel extends Model
 {
-	public static final ResourceLocation TEXTURE = REGISTRATE.id("textures/models/decorations/widowbloom.png");
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(REGISTRATE.id("widowbloom"), "main");
+	public static final ResourceLocation TEXTURE = REGISTRATE.id("textures/models/decorations/venthyr_widowbloom.png");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(REGISTRATE.id("venthyr_widowbloom"), "main");
 
 	private final ModelPart model;
 
@@ -43,7 +43,7 @@ public final class WidowBloomModel extends Model
 		var venthyr_widowbloom = partdefinition.addOrReplaceChild("venthyr_widowbloom", CubeListBuilder.create(), PartPose.offset(0.0F, 16.0F, 0.0F));
 
 		var urn = venthyr_widowbloom.addOrReplaceChild("urn", CubeListBuilder.create().texOffs(20, 20).addBox(-10.0F, 6.0F, 6.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)).texOffs(20, 26).addBox(-9.5F, 5.0F, 6.5F, 3.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)).texOffs(0, 17).addBox(-10.5F, 2.0F, 5.5F, 5.0F, 3.0F, 5.0F, new CubeDeformation(0.0F)).texOffs(0, 9).addBox(-11.0F, 0.0F, 5.0F, 6.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(0, 0).addBox(-11.5F, -2.0F, 4.5F, 7.0F, 2.0F, 7.0F, new CubeDeformation(0.0F)).texOffs(0, 25).addBox(-6.0F, -3.0F, 5.0F, 1.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(21, 0).addBox(-11.0F, -3.0F, 5.0F, 1.0F, 1.0F, 6.0F, new CubeDeformation(0.0F)).texOffs(0, 32).addBox(-10.0F, -3.0F, 10.0F, 4.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).texOffs(29, 26).addBox(-10.0F, -3.0F, 5.0F, 4.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, 0.0F, -8.0F));
-		var widowbloom = venthyr_widowbloom.addOrReplaceChild("widowbloom", CubeListBuilder.create().texOffs(20, 30).addBox(-9.0F, -14.0F, 7.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, 8.0F, -8.0F));
+		var widowbloom = venthyr_widowbloom.addOrReplaceChild("venthyr_widowbloom", CubeListBuilder.create().texOffs(20, 30).addBox(-9.0F, -14.0F, 7.0F, 2.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, 8.0F, -8.0F));
 		var leaf_6_r1 = widowbloom.addOrReplaceChild("leaf_6_r1", CubeListBuilder.create().texOffs(-1, 34).addBox(-1.5F, 0.0F, -1.0F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.3997F, -17.5092F, 10.1867F, 0.9126F, 1.2606F, 1.4594F));
 		var leaf_5_r1 = widowbloom.addOrReplaceChild("leaf_5_r1", CubeListBuilder.create().texOffs(19, 2).addBox(-1.5F, 0.0F, -2.0F, 3.0F, 0.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.25F, -18.0F, 10.0F, 1.6107F, 1.2606F, 1.4594F));
 		var leaf_4_r1 = widowbloom.addOrReplaceChild("leaf_4_r1", CubeListBuilder.create().texOffs(15, 9).addBox(-1.5F, -0.3377F, -0.3817F, 3.0F, 0.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-8.6989F, -15.5435F, 11.3568F, -0.6273F, -0.379F, 0.2442F));

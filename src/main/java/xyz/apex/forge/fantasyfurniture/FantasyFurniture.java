@@ -44,8 +44,6 @@ public final class FantasyFurniture
 
 		if(!mappings.isEmpty())
 		{
-			mappings.forEach(RegistryEvent.MissingMappings.Mapping::fail);
-
 			for(var mapping : mappings)
 			{
 				switch(mapping.key.toString())
@@ -81,11 +79,11 @@ public final class FantasyFurniture
 					case "fantasyfurniture:bone/wool" -> mapping.remap(ModBlocks.BONE_SKELETON_WOOL.get());
 					case "fantasyfurniture:decorations/dunmer/pottery_0" -> mapping.remap(ModBlocks.DUNMER_POTTERY_0.get());
 					case "fantasyfurniture:decorations/dunmer/pottery_1" -> mapping.remap(ModBlocks.DUNMER_POTTERY_1.get());
-					case "fantasyfurniture:decorations/nordic/boiled_creme_treats" -> mapping.remap(ModBlocks.BOILED_CREME_TREATS.get());
-					case "fantasyfurniture:decorations/nordic/mead_bottles" -> mapping.remap(ModBlocks.MEAD_BOTTLES.get());
+					case "fantasyfurniture:decorations/nordic/boiled_creme_treats" -> mapping.remap(ModBlocks.NORDIC_BOILED_CREME_TREATS.get());
+					case "fantasyfurniture:decorations/nordic/mead_bottles" -> mapping.remap(ModBlocks.NORDIC_MEAD_BOTTLES.get());
 					case "fantasyfurniture:decorations/nordic/soul_gems_dark" -> mapping.remap(ModBlocks.NORDIC_SOUL_GEMS_DARK.get());
 					case "fantasyfurniture:decorations/nordic/soul_gems_light" -> mapping.remap(ModBlocks.NORDIC_SOUL_GEMS_LIGHT.get());
-					case "fantasyfurniture:decorations/nordic/sweetrolls" -> mapping.remap(ModBlocks.SWEETROLLS.get());
+					case "fantasyfurniture:decorations/nordic/sweetrolls" -> mapping.remap(ModBlocks.NORDIC_SWEETROLLS.get());
 					case "fantasyfurniture:decorations/venthyr/chalices" -> mapping.remap(ModBlocks.VENTHYR_CHALICES.get());
 					case "fantasyfurniture:decorations/venthyr/food_0" -> mapping.remap(ModBlocks.VENTHYR_FOOD_0.get());
 					case "fantasyfurniture:decorations/venthyr/food_1" -> mapping.remap(ModBlocks.VENTHYR_FOOD_1.get());
@@ -94,6 +92,22 @@ public final class FantasyFurniture
 					case "fantasyfurniture:decorations/venthyr/tea_set" -> mapping.remap(ModBlocks.VENTHYR_TEA_SET.get());
 					case "fantasyfurniture:decorations/venthyr/tomes" -> mapping.remap(ModBlocks.VENTHYR_TOMES.get());
 					case "fantasyfurniture:decorations/venthyr/widow_bloom" -> mapping.remap(ModBlocks.VENTHYR_WIDOW_BLOOM.get());
+
+					case "fantasyfurniture:decorations/boiled_creme_treats" -> mapping.remap(ModBlocks.NORDIC_BOILED_CREME_TREATS.get());
+					case "fantasyfurniture:decorations/chalices" -> mapping.remap(ModBlocks.VENTHYR_CHALICES.get());
+					case "fantasyfurniture:decorations/food_0" -> mapping.remap(ModBlocks.VENTHYR_FOOD_0.get());
+					case "fantasyfurniture:decorations/food_1" -> mapping.remap(ModBlocks.VENTHYR_FOOD_1.get());
+					case "fantasyfurniture:decorations/mead_bottles" -> mapping.remap(ModBlocks.NORDIC_MEAD_BOTTLES.get());
+					case "fantasyfurniture:decorations/platter" -> mapping.remap(ModBlocks.VENTHYR_PLATTER.get());
+					case "fantasyfurniture:decorations/pottery_0" -> mapping.remap(ModBlocks.DUNMER_POTTERY_0.get());
+					case "fantasyfurniture:decorations/pottery_1" -> mapping.remap(ModBlocks.DUNMER_POTTERY_1.get());
+					case "fantasyfurniture:decorations/soul_gems_dark" -> mapping.remap(ModBlocks.NORDIC_SOUL_GEMS_DARK.get());
+					case "fantasyfurniture:decorations/soul_gems_light" -> mapping.remap(ModBlocks.NORDIC_SOUL_GEMS_LIGHT.get());
+					case "fantasyfurniture:decorations/sweetrolls" -> mapping.remap(ModBlocks.NORDIC_SWEETROLLS.get());
+					case "fantasyfurniture:decorations/tea_cups" -> mapping.remap(ModBlocks.VENTHYR_TEA_CUPS.get());
+					case "fantasyfurniture:decorations/tea_set" -> mapping.remap(ModBlocks.VENTHYR_TEA_SET.get());
+					case "fantasyfurniture:decorations/tomes" -> mapping.remap(ModBlocks.VENTHYR_TOMES.get());
+					case "fantasyfurniture:decorations/widow_bloom" -> mapping.remap(ModBlocks.VENTHYR_WIDOW_BLOOM.get());
 				}
 			}
 		}
@@ -105,8 +119,6 @@ public final class FantasyFurniture
 
 		if(!mappings.isEmpty())
 		{
-			mappings.forEach(RegistryEvent.MissingMappings.Mapping::fail);
-
 			for(var mapping : mappings)
 			{
 				switch(mapping.key.toString())
@@ -142,11 +154,11 @@ public final class FantasyFurniture
 					case "fantasyfurniture:bone/wool" -> mapping.remap(ModItems.BONE_SKELETON_WOOL.get());
 					case "fantasyfurniture:decorations/dunmer/pottery_0" -> mapping.remap(ModItems.DUNMER_POTTERY_0.get());
 					case "fantasyfurniture:decorations/dunmer/pottery_1" -> mapping.remap(ModItems.DUNMER_POTTERY_1.get());
-					case "fantasyfurniture:decorations/nordic/boiled_creme_treats" -> mapping.remap(ModItems.BOILED_CREME_TREATS.get());
-					case "fantasyfurniture:decorations/nordic/mead_bottles" -> mapping.remap(ModItems.MEAD_BOTTLES.get());
+					case "fantasyfurniture:decorations/nordic/boiled_creme_treats" -> mapping.remap(ModItems.NORDIC_BOILED_CREME_TREATS.get());
+					case "fantasyfurniture:decorations/nordic/mead_bottles" -> mapping.remap(ModItems.NORDIC_MEAD_BOTTLES.get());
 					case "fantasyfurniture:decorations/nordic/soul_gems_dark" -> mapping.remap(ModItems.NORDIC_SOUL_GEMS_DARK.get());
 					case "fantasyfurniture:decorations/nordic/soul_gems_light" -> mapping.remap(ModItems.NORDIC_SOUL_GEMS_LIGHT.get());
-					case "fantasyfurniture:decorations/nordic/sweetrolls" -> mapping.remap(ModItems.SWEETROLLS.get());
+					case "fantasyfurniture:decorations/nordic/sweetrolls" -> mapping.remap(ModItems.NORDIC_SWEETROLLS.get());
 					case "fantasyfurniture:decorations/venthyr/chalices" -> mapping.remap(ModItems.VENTHYR_CHALICES.get());
 					case "fantasyfurniture:decorations/venthyr/food_0" -> mapping.remap(ModItems.VENTHYR_FOOD_0.get());
 					case "fantasyfurniture:decorations/venthyr/food_1" -> mapping.remap(ModItems.VENTHYR_FOOD_1.get());
@@ -155,6 +167,22 @@ public final class FantasyFurniture
 					case "fantasyfurniture:decorations/venthyr/tea_set" -> mapping.remap(ModItems.VENTHYR_TEA_SET.get());
 					case "fantasyfurniture:decorations/venthyr/tomes" -> mapping.remap(ModItems.VENTHYR_TOMES.get());
 					case "fantasyfurniture:decorations/venthyr/widow_bloom" -> mapping.remap(ModItems.VENTHYR_WIDOW_BLOOM.get());
+
+					case "fantasyfurniture:decorations/boiled_creme_treats" -> mapping.remap(ModItems.NORDIC_BOILED_CREME_TREATS.get());
+					case "fantasyfurniture:decorations/chalices" -> mapping.remap(ModItems.VENTHYR_CHALICES.get());
+					case "fantasyfurniture:decorations/food_0" -> mapping.remap(ModItems.VENTHYR_FOOD_0.get());
+					case "fantasyfurniture:decorations/food_1" -> mapping.remap(ModItems.VENTHYR_FOOD_1.get());
+					case "fantasyfurniture:decorations/mead_bottles" -> mapping.remap(ModItems.NORDIC_MEAD_BOTTLES.get());
+					case "fantasyfurniture:decorations/platter" -> mapping.remap(ModItems.VENTHYR_PLATTER.get());
+					case "fantasyfurniture:decorations/pottery_0" -> mapping.remap(ModItems.DUNMER_POTTERY_0.get());
+					case "fantasyfurniture:decorations/pottery_1" -> mapping.remap(ModItems.DUNMER_POTTERY_1.get());
+					case "fantasyfurniture:decorations/soul_gems_dark" -> mapping.remap(ModItems.NORDIC_SOUL_GEMS_DARK.get());
+					case "fantasyfurniture:decorations/soul_gems_light" -> mapping.remap(ModItems.NORDIC_SOUL_GEMS_LIGHT.get());
+					case "fantasyfurniture:decorations/sweetrolls" -> mapping.remap(ModItems.NORDIC_SWEETROLLS.get());
+					case "fantasyfurniture:decorations/tea_cups" -> mapping.remap(ModItems.VENTHYR_TEA_CUPS.get());
+					case "fantasyfurniture:decorations/tea_set" -> mapping.remap(ModItems.VENTHYR_TEA_SET.get());
+					case "fantasyfurniture:decorations/tomes" -> mapping.remap(ModItems.VENTHYR_TOMES.get());
+					case "fantasyfurniture:decorations/widow_bloom" -> mapping.remap(ModItems.VENTHYR_WIDOW_BLOOM.get());
 				}
 			}
 		}

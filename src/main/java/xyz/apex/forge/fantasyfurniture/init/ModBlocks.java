@@ -66,21 +66,21 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_CHOCOLATE = muffins("chocolate").register();
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
-	public static final BlockEntry<BoiledCremeTreatsBlock> BOILED_CREME_TREATS = boiledCremeTreats().register();
-	public static final BlockEntry<SweetRollsBlock> SWEETROLLS = sweetRolls().register();
-	public static final BlockEntry<MeadBottlesBlock> MEAD_BOTTLES = meadBottles().register();
-	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT = soulGems("light").register();
-	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK = soulGems("dark").register();
-	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0 = food(0).register();
-	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1 = food(1).register();
-	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET = teaSet().register();
-	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS = teaCups().register();
-	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER = platter().register();
-	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM = widowBloom().register();
-	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes().register();
-	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices().register();
-	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery(0).register();
-	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery(1).register();
+	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
+	public static final BlockEntry<SweetRollsBlock> NORDIC_SWEETROLLS = sweetRolls("nordic").register();
+	public static final BlockEntry<MeadBottlesBlock> NORDIC_MEAD_BOTTLES = meadBottles("nordic").register();
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT = soulGems("nordic", "light").register();
+	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK = soulGems("nordic", "dark").register();
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0 = food("venthyr", 0).register();
+	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1 = food("venthyr", 1).register();
+	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET = teaSet("venthyr").register();
+	public static final BlockEntry<TeaCupsBlock> VENTHYR_TEA_CUPS = teaCups("venthyr").register();
+	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER = platter("venthyr").register();
+	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM = widowBloom("venthyr").register();
+	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes("venthyr").register();
+	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr").register();
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery("dunmer", 0).register();
+	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery("dunmer", 1).register();
 
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new).register();
 	public static final BlockEntry<CarpetBlock> NORDIC_CARPET = carpet("nordic", CarpetBlock::new).register();
@@ -344,7 +344,7 @@ public final class ModBlocks
 				.object("decorations/coin_stack_%s".formatted(type))
 				.block(CoinStackBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("%s Coin Stack".formatted(type))
+				.lang("%s Coin Stack".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
@@ -358,7 +358,7 @@ public final class ModBlocks
 				.object("decorations/muffins_%s".formatted(type))
 				.block(MuffinsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("%s Muffins".formatted(type))
+				.lang("%s Muffins".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
@@ -381,10 +381,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, BoiledCremeTreatsBlock, Registrate> boiledCremeTreats()
+	private static BlockBuilder<Registrate, BoiledCremeTreatsBlock, Registrate> boiledCremeTreats(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/boiled_creme_treats")
+				.object("decorations/%s_boiled_creme_treats".formatted(furnitureType))
 				.block(BoiledCremeTreatsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Boiled Creme Treats")
@@ -396,10 +396,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, SweetRollsBlock, Registrate> sweetRolls()
+	private static BlockBuilder<Registrate, SweetRollsBlock, Registrate> sweetRolls(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/sweetrolls")
+				.object("decorations/%s_sweetrolls".formatted(furnitureType))
 				.block(SweetRollsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Sweetrolls")
@@ -411,10 +411,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, MeadBottlesBlock, Registrate> meadBottles()
+	private static BlockBuilder<Registrate, MeadBottlesBlock, Registrate> meadBottles(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/mead_bottles")
+				.object("decorations/%s_mead_bottles".formatted(furnitureType))
 				.block(MeadBottlesBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Mead Bottles")
@@ -426,10 +426,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, SoulGemsBlock, Registrate> soulGems(String type)
+	private static BlockBuilder<Registrate, SoulGemsBlock, Registrate> soulGems(String furnitureType, String type)
 	{
 		return REGISTRATE
-				.object("decorations/soul_gems_%s".formatted(type))
+				.object("decorations/%s_soul_gems_%s".formatted(furnitureType, type))
 				.block(SoulGemsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang(type.equals("dark") ? "Black Soul Gems" : "Soul Gems")
@@ -440,13 +440,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, FoodBlock, Registrate> food(int type)
+	private static BlockBuilder<Registrate, FoodBlock, Registrate> food(String furnitureType, int type)
 	{
 		return REGISTRATE
-				.object("decorations/food_%d".formatted(type))
+				.object("decorations/%s_food_%d".formatted(furnitureType, type))
 				.block(FoodBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Venthyr Food %d".formatted(type + 1))
+				.lang("%s Food %d".formatted(RegistrateLangProvider.toEnglishName(furnitureType), type + 1))
 				.initialProperties(Material.CAKE)
 				.strength(2.5F)
 				.sound(SoundType.WOOL)
@@ -454,13 +454,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, TeaSetBlock, Registrate> teaSet()
+	private static BlockBuilder<Registrate, TeaSetBlock, Registrate> teaSet(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/tea_set")
+				.object("decorations/%s_tea_set".formatted(furnitureType))
 				.block(TeaSetBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Venthyr Tea Set")
+				.lang("%s Tea Set".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
@@ -468,13 +468,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, TeaCupsBlock, Registrate> teaCups()
+	private static BlockBuilder<Registrate, TeaCupsBlock, Registrate> teaCups(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/tea_cups")
+				.object("decorations/%s_tea_cups".formatted(furnitureType))
 				.block(TeaCupsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Venthyr Tea Cups")
+				.lang("%s Tea Cups".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
@@ -483,10 +483,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, PlatterBlock, Registrate> platter()
+	private static BlockBuilder<Registrate, PlatterBlock, Registrate> platter(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/platter")
+				.object("decorations/%s_platter".formatted(furnitureType))
 				.block(PlatterBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Platter")
@@ -498,10 +498,10 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, WidowBloomBlock, Registrate> widowBloom()
+	private static BlockBuilder<Registrate, WidowBloomBlock, Registrate> widowBloom(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/widow_bloom")
+				.object("decorations/%s_widow_bloom".formatted(furnitureType))
 				.block(WidowBloomBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Widowbloom Vase")
@@ -518,13 +518,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, TomesBlock, Registrate> tomes()
+	private static BlockBuilder<Registrate, TomesBlock, Registrate> tomes(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/tomes")
+				.object("decorations/%s_tomes".formatted(furnitureType))
 				.block(TomesBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Venthyr Tomes")
+				.lang("%s Tomes".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
@@ -533,13 +533,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, ChalicesBlock, Registrate> chalices()
+	private static BlockBuilder<Registrate, ChalicesBlock, Registrate> chalices(String furnitureType)
 	{
 		return REGISTRATE
-				.object("decorations/chalices")
+				.object("decorations/%s_chalices".formatted(furnitureType))
 				.block(ChalicesBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Venthyr Chalices")
+				.lang("%s Chalices".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
@@ -548,13 +548,13 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, PotteryBlock, Registrate> pottery(int type)
+	private static BlockBuilder<Registrate, PotteryBlock, Registrate> pottery(String furnitureType, int type)
 	{
 		return REGISTRATE
-				.object("decorations/pottery_%d".formatted(type))
+				.object("decorations/%s_pottery_%d".formatted(furnitureType, type))
 				.block(PotteryBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Dunmer Pottery %d".formatted(type + 1))
+				.lang("%s Pottery %d".formatted(RegistrateLangProvider.toEnglishName(furnitureType), type + 1))
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
