@@ -2,148 +2,134 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_single": "fantasyfurniture:models/bone/wither/door_single",
+		"door_single": "fantasyfurniture:models/bone/wither/door_single_wither",
 		"particle": "fantasyfurniture:particles/bone_wither"
 	},
 	"elements": [
 		{
 			"name": "top",
-			"from": [3, 30, 0],
+			"from": [0, 29, 0],
 			"to": [16, 32, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [9.75, 4.5, 6.5, 5], "texture": "#door_single"},
-				"east": {"uv": [10.5, 0, 9.75, 0.5], "texture": "#door_single"},
-				"south": {"uv": [9.75, 5, 6.5, 5.5], "texture": "#door_single"},
-				"west": {"uv": [10.25, 8.75, 9.5, 9.25], "texture": "#door_single"},
-				"up": {"uv": [3, 6.75, 6.25, 6], "texture": "#door_single"},
-				"down": {"uv": [6.25, 6, 9.5, 6.75], "texture": "#door_single"}
+				"north": {"uv": [7, 6.5, 3, 7.25], "texture": "#door_single"},
+				"east": {"uv": [7.75, 6, 7, 6.75], "texture": "#door_single"},
+				"south": {"uv": [11, 0, 7, 0.75], "texture": "#door_single"},
+				"west": {"uv": [7.75, 5.25, 7, 6], "texture": "#door_single"},
+				"up": {"uv": [7, 1.5, 11, 0.75], "texture": "#door_single"},
+				"down": {"uv": [7, 1.5, 11, 2.25], "texture": "#door_single"}
 			}
 		},
 		{
 			"name": "bottom",
-			"from": [3, 0, 0],
-			"to": [16, 2, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
-			"faces": {
-				"north": {"uv": [9.75, 5.5, 6.5, 6], "texture": "#door_single"},
-				"east": {"uv": [10.5, 1, 9.75, 1.5], "texture": "#door_single"},
-				"south": {"uv": [6.25, 6.75, 3, 7.25], "texture": "#door_single"},
-				"west": {"uv": [10.5, 0.5, 9.75, 1], "texture": "#door_single"},
-				"up": {"uv": [6.5, 0.75, 9.75, 0], "texture": "#door_single"},
-				"down": {"uv": [6.5, 0.75, 9.75, 1.5], "texture": "#door_single"}
-			}
-		},
-		{
-			"name": "middle_1",
-			"from": [3, 20, 0],
-			"to": [16, 22, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
-			"faces": {
-				"north": {"uv": [9.5, 6.75, 6.25, 7.25], "texture": "#door_single"},
-				"east": {"uv": [10.5, 2, 9.75, 2.5], "texture": "#door_single"},
-				"south": {"uv": [6.25, 7.25, 3, 7.75], "texture": "#door_single"},
-				"west": {"uv": [10.5, 1.5, 9.75, 2], "texture": "#door_single"},
-				"up": {"uv": [6.5, 2.25, 9.75, 1.5], "texture": "#door_single"},
-				"down": {"uv": [6.5, 2.25, 9.75, 3], "texture": "#door_single"}
-			}
-		},
-		{
-			"name": "middle_2",
-			"from": [3, 10, 0],
-			"to": [16, 12, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
-			"faces": {
-				"north": {"uv": [9.5, 7.25, 6.25, 7.75], "texture": "#door_single"},
-				"east": {"uv": [3.75, 9.75, 3, 10.25], "texture": "#door_single"},
-				"south": {"uv": [6.25, 7.75, 3, 8.25], "texture": "#door_single"},
-				"west": {"uv": [10.5, 2.5, 9.75, 3], "texture": "#door_single"},
-				"up": {"uv": [6.5, 3.75, 9.75, 3], "texture": "#door_single"},
-				"down": {"uv": [6.5, 3.75, 9.75, 4.5], "texture": "#door_single"}
-			}
-		},
-		{
-			"name": "side",
 			"from": [0, 0, 0],
-			"to": [3, 32, 3],
+			"to": [16, 3, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [0.75, 6, 0, 14], "texture": "#door_single"},
-				"east": {"uv": [3, 6, 2.25, 14], "texture": "#door_single"},
-				"south": {"uv": [2.25, 6, 1.5, 14], "texture": "#door_single"},
-				"west": {"uv": [1.5, 6, 0.75, 14], "texture": "#door_single"},
-				"up": {"uv": [9.5, 8, 10.25, 7.25], "texture": "#door_single"},
-				"down": {"uv": [9.5, 8, 10.25, 8.75], "texture": "#door_single"}
+				"north": {"uv": [11, 2.25, 7, 3], "texture": "#door_single"},
+				"east": {"uv": [3.75, 7.25, 3, 8], "texture": "#door_single"},
+				"south": {"uv": [11, 3, 7, 3.75], "texture": "#door_single"},
+				"west": {"uv": [7.75, 6.75, 7, 7.5], "texture": "#door_single"},
+				"up": {"uv": [7, 4.5, 11, 3.75], "texture": "#door_single"},
+				"down": {"uv": [7, 4.5, 11, 5.25], "texture": "#door_single"}
 			}
 		},
 		{
-			"name": "panel_1",
-			"from": [3, 2, 0.5],
-			"to": [16, 10, 2.5],
+			"name": "post_1",
+			"from": [0, 3, 0.5],
+			"to": [2, 29, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [3.25, 0, 0, 2], "texture": "#door_single"},
-				"east": {"uv": [7.25, 9.25, 6.75, 11.25], "texture": "#door_single"},
-				"south": {"uv": [3.25, 2, 0, 4], "texture": "#door_single"},
-				"west": {"uv": [6.75, 9.25, 6.25, 11.25], "texture": "#door_single"},
-				"up": {"uv": [6.25, 8.25, 9.5, 7.75], "texture": "#door_single"},
-				"down": {"uv": [3, 8.25, 6.25, 8.75], "texture": "#door_single"}
+				"north": {"uv": [0.5, 0, 0, 6.5], "texture": "#door_single"},
+				"east": {"uv": [2, 0, 1.5, 6.5], "texture": "#door_single"},
+				"south": {"uv": [1.5, 0, 1, 6.5], "texture": "#door_single"},
+				"west": {"uv": [1, 0, 0.5, 6.5], "texture": "#door_single"},
+				"up": {"uv": [4.75, 7.75, 5.25, 7.25], "texture": "#door_single"},
+				"down": {"uv": [5.25, 7.25, 5.75, 7.75], "texture": "#door_single"}
 			}
 		},
 		{
-			"name": "panel_2",
-			"from": [3, 22, 0.5],
-			"to": [16, 30, 2.5],
+			"name": "post_2",
+			"from": [14, 3, 0.5],
+			"to": [16, 29, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [6.5, 0, 3.25, 2], "texture": "#door_single"},
-				"east": {"uv": [8.25, 9.25, 7.75, 11.25], "texture": "#door_single"},
-				"south": {"uv": [6.5, 2, 3.25, 4], "texture": "#door_single"},
-				"west": {"uv": [7.75, 9.25, 7.25, 11.25], "texture": "#door_single"},
-				"up": {"uv": [6.25, 8.75, 9.5, 8.25], "texture": "#door_single"},
-				"down": {"uv": [3, 8.75, 6.25, 9.25], "texture": "#door_single"}
+				"north": {"uv": [2.5, 0, 2, 6.5], "texture": "#door_single"},
+				"east": {"uv": [4, 0, 3.5, 6.5], "texture": "#door_single"},
+				"south": {"uv": [3.5, 0, 3, 6.5], "texture": "#door_single"},
+				"west": {"uv": [3, 0, 2.5, 6.5], "texture": "#door_single"},
+				"up": {"uv": [5.75, 7.75, 6.25, 7.25], "texture": "#door_single"},
+				"down": {"uv": [6.25, 7.25, 6.75, 7.75], "texture": "#door_single"}
 			}
 		},
 		{
-			"name": "panel_3",
-			"from": [3, 12, 0.5],
-			"to": [16, 20, 2.5],
+			"name": "post_3",
+			"from": [7, 3, 0.5],
+			"to": [9, 29, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [3.25, 4, 0, 6], "texture": "#door_single"},
-				"east": {"uv": [9.25, 9.25, 8.75, 11.25], "texture": "#door_single"},
-				"south": {"uv": [6.5, 4, 3.25, 6], "texture": "#door_single"},
-				"west": {"uv": [8.75, 9.25, 8.25, 11.25], "texture": "#door_single"},
-				"up": {"uv": [6.25, 9.25, 9.5, 8.75], "texture": "#door_single"},
-				"down": {"uv": [3, 9.25, 6.25, 9.75], "texture": "#door_single"}
+				"north": {"uv": [4.5, 0, 4, 6.5], "texture": "#door_single"},
+				"east": {"uv": [6, 0, 5.5, 6.5], "texture": "#door_single"},
+				"south": {"uv": [5.5, 0, 5, 6.5], "texture": "#door_single"},
+				"west": {"uv": [5, 0, 4.5, 6.5], "texture": "#door_single"},
+				"up": {"uv": [6.75, 8, 7.25, 7.5], "texture": "#door_single"},
+				"down": {"uv": [7.25, 7.5, 7.75, 8], "texture": "#door_single"}
 			}
 		},
 		{
-			"name": "handle_1",
-			"from": [12, 13, -0.5],
-			"to": [14, 18, 0.5],
+			"name": "post_4",
+			"from": [3.5, 3, 0.5],
+			"to": [5.5, 29, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [9.75, 9.25, 9.25, 10.5], "texture": "#door_single"},
-				"east": {"uv": [4, 9.75, 3.75, 11], "texture": "#door_single"},
-				"south": {"uv": [10, 6, 9.5, 7.25], "texture": "#door_single"},
-				"west": {"uv": [10, 3, 9.75, 4.25], "texture": "#door_single"},
-				"up": {"uv": [4, 10, 4.5, 9.75], "texture": "#door_single"},
-				"down": {"uv": [9.75, 4.25, 10.25, 4.5], "texture": "#door_single"}
+				"north": {"uv": [6.5, 0, 6, 6.5], "texture": "#door_single"},
+				"east": {"uv": [1, 6.5, 0.5, 13], "texture": "#door_single"},
+				"south": {"uv": [7, 0, 6.5, 6.5], "texture": "#door_single"},
+				"west": {"uv": [0.5, 6.5, 0, 13], "texture": "#door_single"},
+				"up": {"uv": [4.75, 8.25, 5.25, 7.75], "texture": "#door_single"},
+				"down": {"uv": [5.25, 7.75, 5.75, 8.25], "texture": "#door_single"}
 			}
 		},
 		{
-			"name": "handle_2",
-			"from": [12, 13, 2.5],
-			"to": [14, 18, 3.5],
+			"name": "post_5",
+			"from": [10.5, 3, 0.5],
+			"to": [12.5, 29, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [9.75, 9.25, 9.25, 10.5], "texture": "#door_single"},
-				"east": {"uv": [4, 9.75, 3.75, 11], "texture": "#door_single"},
-				"south": {"uv": [10, 6, 9.5, 7.25], "texture": "#door_single"},
-				"west": {"uv": [10, 3, 9.75, 4.25], "texture": "#door_single"},
-				"up": {"uv": [4, 10, 4.5, 9.75], "texture": "#door_single"},
-				"down": {"uv": [9.75, 4.25, 10.25, 4.5], "texture": "#door_single"}
+				"north": {"uv": [1.5, 6.5, 1, 13], "texture": "#door_single"},
+				"east": {"uv": [3, 6.5, 2.5, 13], "texture": "#door_single"},
+				"south": {"uv": [2.5, 6.5, 2, 13], "texture": "#door_single"},
+				"west": {"uv": [2, 6.5, 1.5, 13], "texture": "#door_single"},
+				"up": {"uv": [7.75, 5.75, 8.25, 5.25], "texture": "#door_single"},
+				"down": {"uv": [5.75, 7.75, 6.25, 8.25], "texture": "#door_single"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [14, 14, -0.5],
+			"to": [16, 18, 0.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [4.25, 7.25, 3.75, 8.25], "texture": "#door_single"},
+				"east": {"uv": [6.5, 7.75, 6.25, 8.75], "texture": "#door_single"},
+				"south": {"uv": [4.75, 7.25, 4.25, 8.25], "texture": "#door_single"},
+				"west": {"uv": [8, 5.75, 7.75, 6.75], "texture": "#door_single"},
+				"up": {"uv": [7.75, 7, 8.25, 6.75], "texture": "#door_single"},
+				"down": {"uv": [7.75, 7, 8.25, 7.25], "texture": "#door_single"}
+			}
+		},
+		{
+			"name": "handle",
+			"from": [14, 14, 2.5],
+			"to": [16, 18, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [4.25, 7.25, 3.75, 8.25], "texture": "#door_single"},
+				"east": {"uv": [6.5, 7.75, 6.25, 8.75], "texture": "#door_single"},
+				"south": {"uv": [4.75, 7.25, 4.25, 8.25], "texture": "#door_single"},
+				"west": {"uv": [8, 5.75, 7.75, 6.75], "texture": "#door_single"},
+				"up": {"uv": [7.75, 7, 8.25, 6.75], "texture": "#door_single"},
+				"down": {"uv": [7.75, 7, 8.25, 7.25], "texture": "#door_single"}
 			}
 		}
 	],
@@ -184,10 +170,10 @@
 	},
 	"groups": [
 		{
-			"name": "venthyr_door_single",
+			"name": "bone_door_single",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8]
 		}
 	]
 }
