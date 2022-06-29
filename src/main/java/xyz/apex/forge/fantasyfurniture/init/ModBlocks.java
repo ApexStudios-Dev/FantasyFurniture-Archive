@@ -79,6 +79,7 @@ public final class ModBlocks
 	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM = widowBloom("venthyr").register();
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes("venthyr").register();
 	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr").register();
+	public static final BlockEntry<CandleBlock> VENTHYR_CANDLES = candles("venthyr").register();
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery("dunmer", 0).register();
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery("dunmer", 1).register();
 
@@ -559,6 +560,21 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.STONE)
 				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<Registrate, CandleBlock, Registrate> candles(String furnitureType)
+	{
+		return REGISTRATE
+				.object("decorations/%s_candles".formatted(furnitureType))
+				.block(CandleBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Candles".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.initialProperties(Material.DECORATION, MaterialColor.SAND)
+				.strength(.1F)
+				.sound(SoundType.CANDLE)
+				.blockstate(ModBlocks::horizontalBlockState)
+				.tag(BlockTags.Vanilla.CANDLES)
 		;
 	}
 

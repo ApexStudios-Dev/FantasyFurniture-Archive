@@ -63,6 +63,7 @@ public final class ModItems
 	public static final ItemEntry<WidowBloomBlockItem> VENTHYR_WIDOW_BLOOM = widowBloomItem();
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES = blockItem(ModBlocks.VENTHYR_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TomesBlock.TOMES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CHALICES = blockItem(ModBlocks.VENTHYR_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> VENTHYR_CANDLES = blockItem(ModBlocks.VENTHYR_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG, ItemTags.Vanilla.CANDLES).register();
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_0 = blockItem(ModBlocks.DUNMER_POTTERY_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_1 = blockItem(ModBlocks.DUNMER_POTTERY_1).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
 
