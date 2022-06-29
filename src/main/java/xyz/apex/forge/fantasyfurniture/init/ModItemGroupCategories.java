@@ -49,17 +49,17 @@ public final class ModItemGroupCategories
 			.defaultIcon(() -> ModItems.BONE_SKELETON_BED_SINGLE.asStack())
 	.build();
 
-	public static final ItemGroupCategory BONE_SKELETON = ItemGroupCategory
+	/*public static final ItemGroupCategory BONE_SKELETON = ItemGroupCategory
 			.builder("bone/skeleton")
 			.tagged(BONE_SKELETON_TAG)
 			.defaultIcon(() -> ModItems.BONE_SKELETON_BED_SINGLE.asStack())
-	.build();
+	.build();*/
 
-	public static final ItemGroupCategory BONE_WITHER = ItemGroupCategory
+	/*public static final ItemGroupCategory BONE_WITHER = ItemGroupCategory
 			.builder("bone/wither")
 			.tagged(BONE_WITHER_TAG)
 			.defaultIcon(() -> ModItems.BONE_WITHER_BED_SINGLE.asStack())
-	.build();
+	.build();*/
 
 	public static final ItemGroupCategory DECORATIONS = ItemGroupCategory
 			.builder("decorations")
@@ -73,13 +73,13 @@ public final class ModItemGroupCategories
 		DUNMER.addTranslationGenerator(REGISTRATE, "Dunmer");
 		VENTHYR.addTranslationGenerator(REGISTRATE, "Venthyr");
 		BONE.addTranslationGenerator(REGISTRATE, "Bone");
-		BONE_SKELETON.addTranslationGenerator(REGISTRATE, "Bone - Skeleton");
-		BONE_WITHER.addTranslationGenerator(REGISTRATE, "Bone - Wither");
+		// BONE_SKELETON.addTranslationGenerator(REGISTRATE, "Bone - Skeleton");
+		// BONE_WITHER.addTranslationGenerator(REGISTRATE, "Bone - Wither");
 		DECORATIONS.addTranslationGenerator(REGISTRATE, "Decorations");
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> ItemGroupCategoryManager
 				.getInstance(ModRegistry.CREATIVE_MODE_TAB)
-				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, BONE_SKELETON, BONE_WITHER, DECORATIONS)
+				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ DECORATIONS)
 		);
 
 		REGISTRATE.addDataGenerator(ITEM_TAGS, provider -> provider.tag(BONE_TAG).addTags(BONE_SKELETON_TAG, BONE_WITHER_TAG));
