@@ -9,16 +9,28 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
+import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.screen.BookshelfMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.LargeInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.MediumInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.SmallInventoryMenuScreen;
+import xyz.apex.forge.fantasyfurniture.data.ParticleProvider;
 import xyz.apex.forge.fantasyfurniture.menu.BookshelfMenu;
 import xyz.apex.forge.fantasyfurniture.menu.LargeInventoryMenu;
 import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
@@ -28,6 +40,9 @@ import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
 public final class ModElements
 {
+	private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Mods.FANTASY_FURNITURE);
+	public static final RegistryObject<SimpleParticleType> SMALL_SOUL_FLAME = PARTICLE_TYPES.register("small_soul_fire_flame", () -> new SimpleParticleType(false));
+
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/large_storage.png");
@@ -100,8 +115,29 @@ public final class ModElements
 			.renderer(() -> WidowBloomBlockEntityRenderer::new)
 	.register();
 
+	public static final BlockEntityEntry<SkullBlossomsBlockEntity> BONE_SKULL_BLOSSOMS_BLOCK_ENTITY = blockEntity("decorations/bone_skull_blossoms", SkullBlossomsBlockEntity::new)
+			.validBlocks(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS, ModBlocks.BONE_WITHER_SKULL_BLOSSOMS)
+			.renderer(() -> SkullBlossomsBlockEntityRenderer::new)
+	.register();
+
 	static void bootstrap()
 	{
+		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+
+		EventBusHelper.addListener(GatherDataEvent.class, event -> {
+			if(event.includeClient())
+			{
+				var generator = event.getGenerator();
+
+				generator.addProvider(new ParticleProvider(generator, event.getExistingFileHelper()) {
+					@Override
+					public void registerParticleDefs()
+					{
+						SMALL_SOUL_FLAME.ifPresent(particleType -> definition(particleType).texture(ParticleTypes.SOUL_FIRE_FLAME.getRegistryName()));
+					}
+				});
+			}
+		});
 	}
 
 	// region: Constructors

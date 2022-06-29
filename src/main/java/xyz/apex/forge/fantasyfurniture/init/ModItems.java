@@ -23,6 +23,7 @@ import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.FurnitureDoorBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.SofaBlock;
+import xyz.apex.forge.fantasyfurniture.item.SkullBlossomsBlockItem;
 import xyz.apex.forge.fantasyfurniture.item.WidowBloomBlockItem;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
@@ -66,6 +67,13 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_CANDLES = blockItem(ModBlocks.VENTHYR_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG, ItemTags.Vanilla.CANDLES).register();
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_0 = blockItem(ModBlocks.DUNMER_POTTERY_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_1 = blockItem(ModBlocks.DUNMER_POTTERY_1).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_CANDLES = blockItem(ModBlocks.BONE_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHALICES = blockItem(ModBlocks.BONE_SKELETON_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PILE = blockItem(ModBlocks.BONE_SKELETON_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<SkullBlossomsBlockItem> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHALICES = blockItem(ModBlocks.BONE_WITHER_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PILE = blockItem(ModBlocks.BONE_WITHER_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<SkullBlossomsBlockItem> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_WITHER_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 
 	public static final ItemEntry<BlockItem> NORDIC_WOOL = wool(ModBlocks.NORDIC_WOOL).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_CARPET = carpet(ModBlocks.NORDIC_CARPET).tag(ModItemGroupCategories.NORDIC_TAG).register();
@@ -359,6 +367,61 @@ public final class ModItems
 						.end()
 				)
 		.register();
+	}
+
+	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<Registrate, SkullBlossomsBlockItem, Registrate> skullBlossoms(BlockEntry<BLOCK> block)
+	{
+		return REGISTRATE
+				.object(block.getId().getPath())
+				.item(properties -> new SkullBlossomsBlockItem(block.get(), properties))
+				.setData(LANG, NonNullBiConsumer.noop())
+				.tag(FurnitureStation.CRAFTABLE, ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG)
+				.model((ctx, provider) -> provider
+						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
+						.transforms()
+							.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+								.rotation(75F, 45F, 0F)
+								.translation(0F, 3F, 4F)
+								.scale(.375F, .375F, .375F)
+								.end()
+							.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+								.rotation(75F, 45F, 0F)
+								.translation(0F, 3F, 4F)
+								.scale(.375F, .375F, .375F)
+							.end()
+							.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+								.rotation(0F, 135F, 0F)
+								.translation(0F, 7F, 0F)
+								.scale(.4F, .4F, .4F)
+							.end()
+							.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+								.rotation(0F, 135F, 0F)
+								.translation(0F, 7F, 0F)
+								.scale(.4F, .4F, .4F)
+							.end()
+							.transform(ModelBuilder.Perspective.HEAD)
+								.rotation(0F, 0F, 0F)
+								.translation(0F, 30F, 0F)
+								.scale(1F, 1F, 1F)
+							.end()
+							.transform(ModelBuilder.Perspective.GROUND)
+								.rotation(0F, 0F, 0F)
+								.translation(0F, 6F, 0F)
+								.scale(.25F, .25F, .25F)
+							.end()
+							.transform(ModelBuilder.Perspective.FIXED)
+								.rotation(-90F, 0F, 0F)
+								.translation(0F, 0F, -23F)
+								.scale(1F, 1F, 1F)
+							.end()
+							.transform(ModelBuilder.Perspective.GUI)
+								.rotation(30F, -135F, 0F)
+								.translation(0F, 3F, 0F)
+								.scale(.5F, .5F, .5F)
+							.end()
+						.end()
+				);
 	}
 	// endregion
 }

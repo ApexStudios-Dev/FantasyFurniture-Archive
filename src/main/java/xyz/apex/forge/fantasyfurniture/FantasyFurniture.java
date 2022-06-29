@@ -3,10 +3,13 @@ package xyz.apex.forge.fantasyfurniture;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -15,8 +18,10 @@ import net.minecraftforge.fml.common.Mod;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModItems;
 import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
 
@@ -192,7 +197,15 @@ public final class FantasyFurniture
 	{
 		private Client()
 		{
-			EventBusHelper.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, event -> event.registerLayerDefinition(WidowBloomModel.LAYER_LOCATION, WidowBloomModel::createBodyLayer));
+			EventBusHelper.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, event -> {
+				event.registerLayerDefinition(WidowBloomModel.LAYER_LOCATION, WidowBloomModel::createBodyLayer);
+				event.registerLayerDefinition(SkullBlossomsModel.LAYER_LOCATION, SkullBlossomsModel::createBodyLayer);
+			});
+
+			EventBusHelper.addListener(ParticleFactoryRegisterEvent.class, event -> {
+				var particleEngine = Minecraft.getInstance().particleEngine;
+				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
+			});
 		}
 	}
 }

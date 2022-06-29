@@ -82,6 +82,13 @@ public final class ModBlocks
 	public static final BlockEntry<CandleBlock> VENTHYR_CANDLES = candles("venthyr").register();
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery("dunmer", 0).register();
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery("dunmer", 1).register();
+	public static final BlockEntry<CandleBlock> BONE_CANDLES = candles("bone").register();
+	public static final BlockEntry<ChalicesBlock> BONE_SKELETON_CHALICES = chalices("bone_skeleton").register();
+	public static final BlockEntry<BonePileBlock> BONE_SKELETON_PILE = bonePile("bone_skeleton").register();
+	public static final BlockEntry<SkullBlossomsBlock> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms("bone_skeleton").register();
+	public static final BlockEntry<ChalicesBlock> BONE_WITHER_CHALICES = chalices("bone_wither").register();
+	public static final BlockEntry<BonePileBlock> BONE_WITHER_PILE = bonePile("bone_wither").register();
+	public static final BlockEntry<SkullBlossomsBlock> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms("bone_wither").register();
 
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new).register();
 	public static final BlockEntry<CarpetBlock> NORDIC_CARPET = carpet("nordic", CarpetBlock::new).register();
@@ -549,6 +556,20 @@ public final class ModBlocks
 		;
 	}
 
+	private static BlockBuilder<Registrate, BonePileBlock, Registrate> bonePile(String furnitureType)
+	{
+		return REGISTRATE
+				.object("decorations/%s_pile".formatted(furnitureType))
+				.block(BonePileBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Pile".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.initialProperties(Material.METAL)
+				.strength(2.5F)
+				.sound(SoundType.METAL)
+				.blockstate(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static BlockBuilder<Registrate, PotteryBlock, Registrate> pottery(String furnitureType, int type)
 	{
 		return REGISTRATE
@@ -569,12 +590,32 @@ public final class ModBlocks
 				.object("decorations/%s_candles".formatted(furnitureType))
 				.block(CandleBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("%s Candles".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.lang(furnitureType.equals("bone") ? "Bone Soul Sand Candles" : "%s Candles".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.DECORATION, MaterialColor.SAND)
 				.strength(.1F)
 				.sound(SoundType.CANDLE)
 				.blockstate(ModBlocks::horizontalBlockState)
 				.tag(BlockTags.Vanilla.CANDLES)
+		;
+	}
+
+	private static BlockBuilder<Registrate, SkullBlossomsBlock, Registrate> skullBlossoms(String furnitureType)
+	{
+		return REGISTRATE
+				.object("decorations/%s_skull_blossoms".formatted(furnitureType))
+				.block(SkullBlossomsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Skull Blossoms".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.initialProperties(Material.DECORATION)
+				.strength(2.5F)
+				.sound(SoundType.STONE)
+				.blockstate((ctx, provider) -> provider
+						.horizontalBlock(ctx.get(), provider
+								.models()
+								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+								.texture("particle", "minecraft:block/basalt_top")
+						)
+				)
 		;
 	}
 

@@ -26,6 +26,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
 import java.util.Random;
 import java.util.function.Consumer;
@@ -147,8 +149,8 @@ public final class CandleBlock extends BaseBlock
 	{
 		var flame = ParticleTypes.SMALL_FLAME;
 
-		/*if(ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
-			flame = ParticleTypes.SOUL_FIRE_FLAME;*/
+		if(ModBlocks.BONE_CANDLES.has(blockState))
+			flame = ModElements.SMALL_SOUL_FLAME.get();
 
 		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
 
