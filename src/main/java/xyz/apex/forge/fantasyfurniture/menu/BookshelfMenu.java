@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.menu;
 
 import org.apache.commons.lang3.Validate;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,8 +15,6 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
 import xyz.apex.forge.commonality.tags.ItemTags;
-
-import javax.annotation.Nonnull;
 
 public final class BookshelfMenu extends BaseMenu
 {
@@ -42,7 +41,7 @@ public final class BookshelfMenu extends BaseMenu
 		}
 
 		@Override
-		public boolean mayPlace(@Nonnull ItemStack stack)
+		public boolean mayPlace(@NotNull ItemStack stack)
 		{
 			if(stack.is(ItemTags.Vanilla.LECTERN_BOOKS))
 				return true;
