@@ -9,11 +9,16 @@ import net.minecraftforge.fml.ModLoadingContext;
 
 import xyz.apex.forge.commonality.Mods;
 
+import static com.tterrag.registrate.providers.ProviderType.LANG;
+
 public final class ModRegistry
 {
 	public static final Registrate REGISTRATE = Registrate.create(Mods.FANTASY_FURNITURE);
 	public static final CreativeModeTab CREATIVE_MODE_TAB = new CreativeTab();
 	private static boolean bootstrap = false;
+
+	public static final String TXT_JEI_INGREDIENTS_KEY = "text.%s.jei.ingredients".formatted(Mods.FANTASY_FURNITURE);
+	public static final String TXT_JEI_RESULTS_KEY = "text.%s.jei.results".formatted(Mods.FANTASY_FURNITURE);
 
 	public static void bootstrap()
 	{
@@ -24,6 +29,11 @@ public final class ModRegistry
 		bootstrap = true;
 
 		REGISTRATE.creativeModeTab(() -> CREATIVE_MODE_TAB, "Fantasy's Furniture");
+
+		REGISTRATE.addDataGenerator(LANG, provider -> {
+			provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
+			provider.add(TXT_JEI_RESULTS_KEY, "Results");
+		});
 
 		FurnitureStation.bootstrap();
 		ModBlocks.bootstrap();
