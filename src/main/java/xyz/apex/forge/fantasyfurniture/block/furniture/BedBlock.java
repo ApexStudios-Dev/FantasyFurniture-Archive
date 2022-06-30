@@ -53,7 +53,7 @@ public abstract class BedBlock extends BaseMultiBlock
 
 	@Nullable
 	@Override
-	protected Direction getFourWayFacing(BlockPlaceContext ctx)
+	public Direction getFourWayFacing(BlockPlaceContext ctx)
 	{
 		return ctx.getHorizontalDirection();
 	}
