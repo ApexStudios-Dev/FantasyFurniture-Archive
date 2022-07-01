@@ -126,6 +126,40 @@ public class FloorLightBlock extends BaseMultiBlock
 		return super.getShape(blockState, level, pos, ctx);
 	}
 
+	public static class WithFacing extends FloorLightBlock
+	{
+		public WithFacing(Properties properties)
+		{
+			super(properties);
+		}
+
+		@Override
+		protected void registerProperties(Consumer<Property<?>> consumer)
+		{
+			super.registerProperties(consumer);
+			consumer.accept(FACING_4_WAY);
+		}
+
+		@Override
+		protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
+		{
+			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+			{
+				var x = pos.getX() + .5D;
+				var y = pos.getY() + .5D + .45D;
+				var z = pos.getZ() + .5D;
+
+				var facing = getFacing(blockState).getClockWise();
+				var stepX = facing.getStepX();
+				var stepZ = facing.getStepZ();
+
+				onLightParticle(level, pos, blockState, x, y, z, rng);
+				onLightParticle(level, pos, blockState, x + (stepX * .25D), y - .05D, z + (stepZ * .25D), rng);
+				onLightParticle(level, pos, blockState, x - (stepX * .25D), y - .05D, z - (stepZ * .25D), rng);
+			}
+		}
+	}
+
 	public enum Part implements StringRepresentable
 	{
 		TOP("top"),

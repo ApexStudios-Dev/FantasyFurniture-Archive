@@ -186,7 +186,7 @@ public final class ModBlocks
 	public static final BlockEntry<Block> BONE_SKELETON_WOOL = wool("bone/skeleton", Block::new).lang("Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_SKELETON_CARPET = carpet("bone/skeleton", CarpetBlock::new).lang("Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_SKELETON_WALL_LIGHT = wallLight("bone/skeleton", FurnitureWallLightBlock::new).lang("Bone Wall Light").register();
-	public static final BlockEntry<FloorLightBlock> BONE_SKELETON_FLOOR_LIGHT = floorLight("bone/skeleton", FloorLightBlock::new).lang("Bone Floor Light").register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_SKELETON_FLOOR_LIGHT = floorLight("bone/skeleton", FloorLightBlock.WithFacing::new).lang("Bone Floor Light").blockstate(ModBlocks::horizontalBlockState).register();
 	public static final BlockEntry<TableSmallBlock> BONE_SKELETON_TABLE_SMALL = tableSmall("bone/skeleton", TableSmallBlock::new).lang("Bone Table Small").register();
 	public static final BlockEntry<TableWideBlock> BONE_SKELETON_TABLE_WIDE = tableWide("bone/skeleton", TableWideBlock::new).lang("Bone Table Wide").register();
 	public static final BlockEntry<TableLargeBlock> BONE_SKELETON_TABLE_LARGE = tableLarge("bone/skeleton", TableLargeBlock::new).lang("Bone Table Large").register();
@@ -216,7 +216,7 @@ public final class ModBlocks
 	public static final BlockEntry<Block> BONE_WITHER_WOOL = wool("bone/wither", Block::new).lang("Wither Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_WITHER_CARPET = carpet("bone/wither", CarpetBlock::new).lang("Wither Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_WITHER_WALL_LIGHT = wallLight("bone/wither", FurnitureWallLightBlock::new).lang("Wither Bone Wall Light").register();
-	public static final BlockEntry<FloorLightBlock> BONE_WITHER_FLOOR_LIGHT = floorLight("bone/wither", FloorLightBlock::new).lang("Wither Bone Floor Light").register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_WITHER_FLOOR_LIGHT = floorLight("bone/wither", FloorLightBlock.WithFacing::new).lang("Wither Bone Floor Light").blockstate(ModBlocks::horizontalBlockState).register();
 	public static final BlockEntry<TableSmallBlock> BONE_WITHER_TABLE_SMALL = tableSmall("bone/wither", TableSmallBlock::new).lang("Wither Bone Table Small").register();
 	public static final BlockEntry<TableWideBlock> BONE_WITHER_TABLE_WIDE = tableWide("bone/wither", TableWideBlock::new).lang("Wither Bone Table Wide").register();
 	public static final BlockEntry<TableLargeBlock> BONE_WITHER_TABLE_LARGE = tableLarge("bone/wither", TableLargeBlock::new).lang("Wither Bone Table Large").register();
