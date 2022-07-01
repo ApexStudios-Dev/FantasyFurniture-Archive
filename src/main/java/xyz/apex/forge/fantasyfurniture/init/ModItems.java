@@ -417,7 +417,7 @@ public final class ModItems
 							.end()
 							.transform(ModelBuilder.Perspective.GUI)
 								.rotation(30F, -135F, 0F)
-								.translation(0F, 3F, 0F)
+								.translation(0F, 4F, 0F)
 								.scale(.5F, .5F, .5F)
 							.end()
 						.end()
