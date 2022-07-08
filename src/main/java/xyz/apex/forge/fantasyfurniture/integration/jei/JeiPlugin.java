@@ -36,7 +36,7 @@ public final class JeiPlugin implements IModPlugin
 	public void registerRecipes(IRecipeRegistration registration)
 	{
 		var jei = registration.getJeiHelpers();
-		var results = FurnitureStation.getCraftingResults();
+		var results = FurnitureStation.buildResultsList();
 		var recipes = Collections.singletonList(new FurnitureStationRecipes(results, jei));
 		registration.addRecipes(FurnitureStationRecipes.RECIPE_TYPE, recipes);
 	}

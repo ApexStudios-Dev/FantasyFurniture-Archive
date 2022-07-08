@@ -29,8 +29,10 @@ import net.minecraftforge.client.RenderProperties;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.revamp.client.screen.BaseMenuScreen;
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
+import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -622,7 +624,9 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 					{
 						Minecraft mc = getMinecraft();
 						mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
-						mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
+						// mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
+						menu.setSelectedResult(j);
+						FantasyFurniture.NETWORK.sendToServer(new C2SSyncSelectedResultPacket(j));
 						return true;
 					}
 				}

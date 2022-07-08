@@ -10,6 +10,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
@@ -30,7 +31,7 @@ public final class FurnitureStationMenu extends BaseMenu
 	private final Slot woodSlot;
 	private final Slot stoneSlot;
 	private final Slot resultSlot;
-
+	private final DataSlot selectedResult = DataSlot.standalone();
 	private final List<ItemStack> results = Lists.newArrayList();
 	private long lastSoundTime = 0L;
 
@@ -53,6 +54,7 @@ public final class FurnitureStationMenu extends BaseMenu
 		woodSlot = addSlot(new InputSlot(FurnitureStation.WOOD_SLOT, 34, 21, FurnitureStation::isValidWood));
 		stoneSlot = addSlot(new InputSlot(FurnitureStation.STONE_SLOT, 52, 21, FurnitureStation::isValidStone));
 		resultSlot = addSlot(new ResultSlot());
+		addDataSlot(selectedResult);
 
 		bindPlayerInventory(this, 8, 140);
 	}
@@ -77,6 +79,11 @@ public final class FurnitureStationMenu extends BaseMenu
 		return resultSlot;
 	}
 
+	public void setSelectedResult(int selectedResult)
+	{
+		setupResultSlot(selectedResult);
+	}
+
 	public List<ItemStack> getResults()
 	{
 		return results;
@@ -90,9 +97,9 @@ public final class FurnitureStationMenu extends BaseMenu
 		results.clear();
 
 		if(claySlot.hasItem() && woodSlot.hasItem() && stoneSlot.hasItem())
-			results.addAll(FurnitureStation.getCraftingResults());
+			results.addAll(FurnitureStation.buildResultsList());
 
-		setupResultSlot(-1);
+		setupResultSlot(selectedResult.get());
 	}
 
 	@Override
@@ -186,11 +193,13 @@ public final class FurnitureStationMenu extends BaseMenu
 
 		if(size == 0 || button < 0 || button > size - 1)
 		{
+			selectedResult.set(-1);
 			resultSlot.set(ItemStack.EMPTY);
 			broadcastChanges();
 			return;
 		}
 
+		selectedResult.set(button);
 		var stack = results.get(button).copy();
 		stack.setCount(1);
 		resultSlot.set(stack);
@@ -242,7 +251,7 @@ public final class FurnitureStationMenu extends BaseMenu
 			resultInventory.awardUsedRecipes(player);
 
 			decrementInput();
-			setupResultSlot(-1);
+			setupResultSlot(selectedResult.get());
 
 			var gameTime = player.level.getGameTime();
 
