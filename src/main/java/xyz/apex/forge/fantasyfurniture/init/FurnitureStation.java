@@ -33,6 +33,7 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.FurnitureStationBlock;
@@ -159,6 +160,7 @@ public final class FurnitureStation
 				.isSuffocating(BlockHelper::never)
 				.isViewBlocking(BlockHelper::never)
 				.addLayer(() -> RenderType::cutout)
+				.tag(BlockTags.Vanilla.MINEABLE_WITH_AXE)
 
 				.item()
 					.model((ctx, provider) -> provider
