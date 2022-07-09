@@ -14,8 +14,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
@@ -25,10 +23,11 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.RenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.revamp.client.screen.BaseMenuScreen;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
@@ -37,12 +36,11 @@ import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationMenu>
 {
-	public static final ResourceLocation TEXTURE = REGISTRATE.id("textures/gui/container/furniture_station.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/furniture_station.png");
 
 	private int clayIndex = 0;
 	private int woodIndex = 0;
@@ -92,7 +90,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		var x = leftPos + s;
 		var y = topPos + titleLabelY + font.lineHeight + 6;
 
-		searchBox = addRenderableWidget(new EditBox(font, x, y, w, h, new TranslatableComponent("gui.recipebook.search_hint")));
+		searchBox = addRenderableWidget(new EditBox(font, x, y, w, h, Component.translatable("gui.recipebook.search_hint")));
 		searchBox.setMaxLength(50);
 		searchBox.setBordered(true);
 		searchBox.setVisible(true);
@@ -164,18 +162,18 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				if(searchBox.isMouseOver(mouseX, mouseY))
 				{
 					renderComponentTooltip(pose, Arrays.asList(
-							new TextComponent("'")
-									.append(new TextComponent("@")
+							Component.literal("'")
+									.append(Component.literal("@")
 											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 									.append("' -> Search by ")
-									.append(new TextComponent("Mod ID")
+									.append(Component.literal("Mod ID")
 											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC)),
 
-							new TextComponent("'")
-									.append(new TextComponent("#")
+							Component.literal("'")
+									.append(Component.literal("#")
 											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 									.append("' -> Search by ")
-									.append(new TextComponent("ItemTag")
+									.append(Component.literal("ItemTag")
 											.withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC))
 
 							/*StringTextComponent.EMPTY,
@@ -434,7 +432,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 			var y = topPos + slot.y;
 
 			var stack = values.get(index);
-			var stackFont = RenderProperties.get(stack.getItem()).getFont(stack);
+			var stackFont = IClientItemExtensions.of(stack).getFont(stack, IClientItemExtensions.FontContext.TOOLTIP);
 			stackFont = stackFont == null ? font : stackFont;
 
 			renderTranslucentItem(pose, stack, x, y);
@@ -563,7 +561,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				RenderSystem.setShaderTexture(0, TEXTURE);
 				blit(pose, resultItemX - 1, resultItemY - 1, 176F, vOffset, 18, 18, 256, 256);
 
-				var stackFont = RenderProperties.get(resultItem.getItem()).getFont(resultItem);
+				var stackFont = IClientItemExtensions.of(resultItem).getFont(resultItem, IClientItemExtensions.FontContext.TOOLTIP);
 				stackFont = stackFont == null ? font : stackFont;
 
 				itemRenderer.renderGuiItem(resultItem, resultItemX, resultItemY);
@@ -645,7 +643,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 
 		modelViewStack.mulPoseMatrix(pose.last().pose());
 
-		var stackFont = RenderProperties.get(stack.getItem()).getFont(stack);
+		var stackFont = IClientItemExtensions.of(stack).getFont(stack, IClientItemExtensions.FontContext.TOOLTIP);
 		stackFont = stackFont == null ? font : stackFont;
 
 		itemRenderer.renderAndDecorateFakeItem(stack, x, y);

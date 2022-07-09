@@ -43,7 +43,7 @@ public final class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithout
 	{
 		super(mc.getBlockEntityRenderDispatcher(), mc.getEntityModels());
 
-		var ctx = new BlockEntityRendererProvider.Context(mc.getBlockEntityRenderDispatcher(), mc.getBlockRenderer(), mc.getEntityModels(), mc.font);
+		var ctx = new BlockEntityRendererProvider.Context(mc.getBlockEntityRenderDispatcher(), mc.getBlockRenderer(), mc.getItemRenderer(), mc.getEntityRenderDispatcher(), mc.getEntityModels(), mc.font);
 		widowBloomBlockEntityRenderer = new WidowBloomBlockEntityRenderer(ctx);
 		skullBlossomsBlockEntityRenderer = new SkullBlossomsBlockEntityRenderer(ctx);
 	}

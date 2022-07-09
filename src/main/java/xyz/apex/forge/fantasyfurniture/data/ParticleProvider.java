@@ -3,17 +3,20 @@ package xyz.apex.forge.fantasyfurniture.data;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -25,7 +28,6 @@ import java.util.Set;
 
 public abstract class ParticleProvider implements DataProvider
 {
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	protected static final ExistingFileHelper.ResourceType TEXTURE = new ExistingFileHelper.ResourceType(PackType.CLIENT_RESOURCES, ".png", "textures");
@@ -44,7 +46,7 @@ public abstract class ParticleProvider implements DataProvider
 	public abstract void registerParticleDefs();
 
 	@Override
-	public final void run(HashCache cache) throws IOException
+	public final void run(CachedOutput cache) throws IOException
 	{
 		particleDefinitions.clear();
 		registerParticleDefs();
@@ -70,13 +72,13 @@ public abstract class ParticleProvider implements DataProvider
 		});
 	}
 
-	public static void saveParticleDefinition(HashCache cache, ResourceLocation particleName, ParticleDefinition definition, Path dataPath)
+	public static void saveParticleDefinition(CachedOutput cache, ResourceLocation particleName, ParticleDefinition definition, Path dataPath)
 	{
 		try
 		{
 			var particlePath = dataPath.resolve(Paths.get(particleName.getNamespace(), "particles", "%s.json".formatted(particleName.getPath())));
 			var serialized = serializeParticleDefinition(definition);
-			DataProvider.save(GSON, cache, serialized, particlePath);
+			DataProvider.saveStable(cache, serialized, particlePath);
 		}
 		catch(IOException e)
 		{
@@ -107,7 +109,7 @@ public abstract class ParticleProvider implements DataProvider
 	 */
 	public ParticleDefinition definition(ParticleType<?> particleType)
 	{
-		var name = Objects.requireNonNull(particleType.getRegistryName());
+		var name = Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getKey(particleType));
 		return particleDefinitions.computeIfAbsent(name, $ -> new ParticleDefinition());
 	}
 
@@ -117,6 +119,12 @@ public abstract class ParticleProvider implements DataProvider
 
 		private ParticleDefinition()
 		{
+		}
+
+		public ParticleDefinition texture(ParticleType<?> particleType)
+		{
+			var name = Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getKey(particleType));
+			return texture(name);
 		}
 
 		public ParticleDefinition texture(ResourceLocation texture)

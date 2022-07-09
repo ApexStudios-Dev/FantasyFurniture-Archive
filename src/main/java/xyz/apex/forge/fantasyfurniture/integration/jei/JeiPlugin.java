@@ -1,3 +1,4 @@
+/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -44,14 +45,7 @@ public final class JeiPlugin implements IModPlugin
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration)
 	{
-		registration.addRecipeTransferHandler(
-				FurnitureStationMenu.class,
-				FurnitureStationRecipes.RECIPE_TYPE,
-				FurnitureStation.CLAY_SLOT,
-				3,
-				FurnitureStation.RESULT_SLOT + 1,
-				(9 * 3) + 9
-		);
+		registration.addRecipeTransferHandler(FurnitureStationMenu.class, FurnitureStationRecipes.RECIPE_TYPE, FurnitureStation.CLAY_SLOT, 3, FurnitureStation.RESULT_SLOT + 1, (9 * 3) + 9);
 	}
 
 	@Override
@@ -72,4 +66,4 @@ public final class JeiPlugin implements IModPlugin
 	{
 		registration.addRecipeCatalyst(FurnitureStation.BLOCK.asStack(), FurnitureStationRecipes.RECIPE_TYPE);
 	}
-}
+}*/

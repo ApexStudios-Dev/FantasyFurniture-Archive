@@ -8,7 +8,6 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -116,7 +115,7 @@ public abstract class StackedBlock extends BaseBlock
 
 	public MutableComponent getStackableTranslation()
 	{
-		return new TranslatableComponent(getStackableTranslationKey());
+		return Component.translatable(getStackableTranslationKey());
 	}
 
 	public final String getStackableTranslationKey()

@@ -5,15 +5,14 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.core.Registry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.MissingMappingsEvent;
 
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
@@ -39,19 +38,18 @@ public final class FantasyFurniture
 		// EventBusHelper breaks when using MissingMappings event
 		// It registers to the mod bus since the event implements the IModBus interface
 		// although the event is fired on the forge bus, notify forge about this? (should the event even implement the interface? it's a marker to say what bus events should be registered to and fired on)
-		MinecraftForge.EVENT_BUS.addGenericListener(Block.class, this::onMissingBlockMappings);
-		MinecraftForge.EVENT_BUS.addGenericListener(Item.class, this::onMissingItemMappings);
+		MinecraftForge.EVENT_BUS.addListener(this::onMissingMappings);
 	}
 
-	private void onMissingBlockMappings(RegistryEvent.MissingMappings<Block> event)
+	private void onMissingMappings(MissingMappingsEvent event)
 	{
-		var mappings = event.getMappings(Mods.FANTASY_FURNITURE);
+		var blockMappings = event.getMappings(Registry.BLOCK_REGISTRY, Mods.FANTASY_FURNITURE);
 
-		if(!mappings.isEmpty())
+		if(!blockMappings.isEmpty())
 		{
-			for(var mapping : mappings)
+			for(var mapping : blockMappings)
 			{
-				switch(mapping.key.toString())
+				switch(mapping.getKey().toString())
 				{
 					case "fantasyfurniture:bone/bed_double" -> mapping.remap(ModBlocks.BONE_SKELETON_BED_DOUBLE.get());
 					case "fantasyfurniture:bone/bed_single" -> mapping.remap(ModBlocks.BONE_SKELETON_BED_SINGLE.get());
@@ -116,17 +114,14 @@ public final class FantasyFurniture
 				}
 			}
 		}
-	}
 
-	private void onMissingItemMappings(RegistryEvent.MissingMappings<Item> event)
-	{
-		var mappings = event.getMappings(Mods.FANTASY_FURNITURE);
+		var itemMappings = event.getMappings(Registry.ITEM_REGISTRY, Mods.FANTASY_FURNITURE);
 
-		if(!mappings.isEmpty())
+		if(!itemMappings.isEmpty())
 		{
-			for(var mapping : mappings)
+			for(var mapping : itemMappings)
 			{
-				switch(mapping.key.toString())
+				switch(mapping.getKey().toString())
 				{
 					case "fantasyfurniture:bone/bed_double" -> mapping.remap(ModItems.BONE_SKELETON_BED_DOUBLE.get());
 					case "fantasyfurniture:bone/bed_single" -> mapping.remap(ModItems.BONE_SKELETON_BED_SINGLE.get());
@@ -202,7 +197,7 @@ public final class FantasyFurniture
 				event.registerLayerDefinition(SkullBlossomsModel.LAYER_LOCATION, SkullBlossomsModel::createBodyLayer);
 			});
 
-			EventBusHelper.addListener(ParticleFactoryRegisterEvent.class, event -> {
+			EventBusHelper.addListener(RegisterParticleProvidersEvent.class, event -> {
 				var particleEngine = Minecraft.getInstance().particleEngine;
 				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
 			});

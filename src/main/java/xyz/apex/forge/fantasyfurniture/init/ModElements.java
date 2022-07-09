@@ -43,9 +43,9 @@ public final class ModElements
 	private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Mods.FANTASY_FURNITURE);
 	public static final RegistryObject<SimpleParticleType> SMALL_SOUL_FLAME = PARTICLE_TYPES.register("small_soul_fire_flame", () -> new SimpleParticleType(false));
 
-	public static final ResourceLocation SMALL_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/small_storage.png");
-	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/medium_storage.png");
-	public static final ResourceLocation LARGE_STORAGE_TEXTURE = REGISTRATE.id("textures/gui/container/large_storage.png");
+	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
+	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
+	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
 
 	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = menu("large_inventory_menu", LargeInventoryMenu::new, () -> LargeInventoryMenuScreen::new);
 	public static final MenuEntry<MediumInventoryMenu> MEDIUM_INVENTORY_MENU = menu("medium_inventory_menu", MediumInventoryMenu::new, () -> MediumInventoryMenuScreen::new);
@@ -125,18 +125,18 @@ public final class ModElements
 		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		EventBusHelper.addListener(GatherDataEvent.class, event -> {
-			if(event.includeClient())
-			{
-				var generator = event.getGenerator();
+			var generator = event.getGenerator();
 
-				generator.addProvider(new ParticleProvider(generator, event.getExistingFileHelper()) {
-					@Override
-					public void registerParticleDefs()
-					{
-						SMALL_SOUL_FLAME.ifPresent(particleType -> definition(particleType).texture(ParticleTypes.SOUL_FIRE_FLAME.getRegistryName()));
-					}
-				});
-			}
+			var includeClient = event.includeClient();
+
+			generator.addProvider(includeClient, new ParticleProvider(generator, event.getExistingFileHelper()) {
+				@Override
+				public void registerParticleDefs()
+				{
+					SMALL_SOUL_FLAME.ifPresent(particleType -> definition(particleType).texture(ParticleTypes.SOUL_FIRE_FLAME));
+				}
+			});
+
 		});
 	}
 
@@ -146,7 +146,7 @@ public final class ModElements
 		return REGISTRATE.object(name).menu(menuFactory, screenFactorySupplier).register();
 	}
 
-	private static <BLOCK_ENTITY extends BlockEntity> BlockEntityBuilder<Registrate, BLOCK_ENTITY, Registrate> blockEntity(String name, BlockEntityBuilder.BlockEntityFactory<BLOCK_ENTITY> blockEntityFactory)
+	private static <BLOCK_ENTITY extends BlockEntity> BlockEntityBuilder<BLOCK_ENTITY, Registrate> blockEntity(String name, BlockEntityBuilder.BlockEntityFactory<BLOCK_ENTITY> blockEntityFactory)
 	{
 		return REGISTRATE.object(name).blockEntity(blockEntityFactory);
 	}

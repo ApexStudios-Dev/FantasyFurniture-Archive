@@ -60,10 +60,4 @@ public final class MushroomsRedBlock extends StackedBlock
 		var shape = shaper.get(facing);
 		return shape.move(offset.x, offset.y, offset.z);
 	}
-
-	@Override
-	public OffsetType getOffsetType()
-	{
-		return OffsetType.XZ;
-	}
 }

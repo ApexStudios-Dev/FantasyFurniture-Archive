@@ -14,8 +14,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.UpgradeRecipeBuilder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
@@ -86,7 +84,7 @@ public final class FurnitureStation
 
 	public static Component buildAcceptsAnyComponent(TagKey<Item> tag)
 	{
-		return new TranslatableComponent(TXT_ACCEPTS_ANY, new TextComponent(tag.location().toString())
+		return Component.translatable(TXT_ACCEPTS_ANY, Component.literal(tag.location().toString())
 				.withStyle(ChatFormatting.ITALIC)
 		)
 				.withStyle(ChatFormatting.GRAY)
@@ -117,7 +115,8 @@ public final class FurnitureStation
 
 			if(obj instanceof ItemStack stack)
 			{
-				FantasyFurniture.LOGGER.info("Received Furniture Station Result ('{}') from Mod: '{}'", stack.getItem().getRegistryName(), imc.getSenderModId());
+				var itemName = ForgeRegistries.ITEMS.getKey(stack.getItem());
+				FantasyFurniture.LOGGER.info("Received Furniture Station Result ('{}') from Mod: '{}'", itemName, imc.senderModId());
 				registerAdditionalCraftingResult(stack);
 			}
 		}));
@@ -141,9 +140,15 @@ public final class FurnitureStation
 				.block(FurnitureStationBlock::new)
 				.lang("Furniture Station")
 				.initialProperties(Material.WOOD)
-				.strength(2.5F)
-				.sound(SoundType.WOOD)
-				.noOcclusion()
+				.properties(properties -> properties
+						.strength(2.5F)
+						.sound(SoundType.WOOD)
+						.noOcclusion()
+						.isValidSpawn(BlockHelper::never)
+						.isRedstoneConductor(BlockHelper::never)
+						.isSuffocating(BlockHelper::never)
+						.isViewBlocking(BlockHelper::never)
+				)
 				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
 						.models()
 						.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
@@ -154,10 +159,6 @@ public final class FurnitureStation
 						.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 						.save(provider, ctx.getId())
 				)
-				.isValidSpawn(BlockHelper::never)
-				.isRedstoneConductor(BlockHelper::never)
-				.isSuffocating(BlockHelper::never)
-				.isViewBlocking(BlockHelper::never)
 				.addLayer(() -> RenderType::cutout)
 
 				.item()

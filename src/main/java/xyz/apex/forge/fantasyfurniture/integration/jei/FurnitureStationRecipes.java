@@ -1,3 +1,4 @@
+/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import com.google.common.collect.ImmutableList;
@@ -187,4 +188,4 @@ public final class FurnitureStationRecipes
 		pose.popPose();
 		pose.popPose();
 	}
-}
+}*/

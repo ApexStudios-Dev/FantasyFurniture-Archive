@@ -8,13 +8,13 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import xyz.apex.forge.commonality.tags.ItemTags;
@@ -233,30 +233,17 @@ public final class ModItems
 	}
 
 	// region: Constructors
-	private static <BLOCK extends Block> ItemBuilder<Registrate, BlockItem, Registrate> wool(BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block> ItemBuilder<BlockItem, Registrate> wool(BlockEntry<BLOCK> block)
 	{
 		return blockItem(block).tag(ItemTags.Vanilla.WOOL);
 	}
 
-	private static <BLOCK extends CarpetBlock> ItemBuilder<Registrate, BlockItem, Registrate> carpet(BlockEntry<BLOCK> block)
+	private static <BLOCK extends CarpetBlock> ItemBuilder<BlockItem, Registrate> carpet(BlockEntry<BLOCK> block)
 	{
-		return blockItem(block).tag(ItemTags.Vanilla.CARPETS);
+		return blockItem(block).tag(ItemTags.Vanilla.WOOL_CARPETS);
 	}
 
-	private static <BLOCK extends ShelfBlock> ItemBuilder<Registrate, BlockItem, Registrate> shelf(BlockEntry<BLOCK> block)
-	{
-		return blockItem(block)
-				.tag(ItemTags.Vanilla.BEDS)
-				.model((ctx, provider) -> provider
-						.withExistingParent(
-								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
-								new ResourceLocation(ctx.getId().getNamespace(), "block/%s_single".formatted(ctx.getId().getPath()))
-						)
-				)
-		;
-	}
-
-	private static <BLOCK extends SofaBlock> ItemBuilder<Registrate, BlockItem, Registrate> sofa(BlockEntry<BLOCK> block)
+	private static <BLOCK extends ShelfBlock> ItemBuilder<BlockItem, Registrate> shelf(BlockEntry<BLOCK> block)
 	{
 		return blockItem(block)
 				.tag(ItemTags.Vanilla.BEDS)
@@ -269,12 +256,25 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends BedBlock> ItemBuilder<Registrate, BlockItem, Registrate> bed(BlockEntry<BLOCK> block)
+	private static <BLOCK extends SofaBlock> ItemBuilder<BlockItem, Registrate> sofa(BlockEntry<BLOCK> block)
+	{
+		return blockItem(block)
+				.tag(ItemTags.Vanilla.BEDS)
+				.model((ctx, provider) -> provider
+						.withExistingParent(
+								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
+								new ResourceLocation(ctx.getId().getNamespace(), "block/%s_single".formatted(ctx.getId().getPath()))
+						)
+				)
+		;
+	}
+
+	private static <BLOCK extends BedBlock> ItemBuilder<BlockItem, Registrate> bed(BlockEntry<BLOCK> block)
 	{
 		return blockItem(block).tag(ItemTags.Vanilla.BEDS);
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock> ItemBuilder<Registrate, BlockItem, Registrate> door(BlockEntry<BLOCK> block)
+	private static <BLOCK extends FurnitureDoorBlock> ItemBuilder<BlockItem, Registrate> door(BlockEntry<BLOCK> block)
 	{
 		return blockItem(block)
 				.tag(ItemTags.Vanilla.WOODEN_DOORS)
@@ -287,7 +287,7 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends Block> ItemBuilder<Registrate, BlockItem, Registrate> blockItem(BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block> ItemBuilder<BlockItem, Registrate> blockItem(BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())
@@ -324,42 +324,42 @@ public final class ModItems
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.HEAD)
+							.transform(ItemTransforms.TransformType.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GROUND)
+							.transform(ItemTransforms.TransformType.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIXED)
+							.transform(ItemTransforms.TransformType.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GUI)
+							.transform(ItemTransforms.TransformType.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 3F, 0F)
 								.scale(.5F, .5F, .5F)
@@ -369,7 +369,7 @@ public final class ModItems
 		.register();
 	}
 
-	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<Registrate, SkullBlossomsBlockItem, Registrate> skullBlossoms(BlockEntry<BLOCK> block)
+	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<SkullBlossomsBlockItem, Registrate> skullBlossoms(BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())
@@ -380,42 +380,42 @@ public final class ModItems
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.HEAD)
+							.transform(ItemTransforms.TransformType.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GROUND)
+							.transform(ItemTransforms.TransformType.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIXED)
+							.transform(ItemTransforms.TransformType.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GUI)
+							.transform(ItemTransforms.TransformType.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 4F, 0F)
 								.scale(.5F, .5F, .5F)

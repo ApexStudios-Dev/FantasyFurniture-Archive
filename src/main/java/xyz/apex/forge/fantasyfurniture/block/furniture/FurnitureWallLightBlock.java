@@ -2,6 +2,7 @@ package xyz.apex.forge.fantasyfurniture.block.furniture;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +14,6 @@ import xyz.apex.forge.apexcore.revamp.block.WallLightBlock;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class FurnitureWallLightBlock extends WallLightBlock
@@ -32,7 +32,7 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	}
 
 	@Override
-	protected void spawnLightParticles(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	protected void spawnLightParticles(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
 	{
 		if(ModBlocks.NORDIC_WALL_LIGHT.has(blockState))
 			super.spawnLightParticles(level, pos, blockState, pX, pY, pZ, rng);
@@ -65,7 +65,7 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	}
 
 	@Override
-	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
 	{
 		var flame = ParticleTypes.FLAME;
 

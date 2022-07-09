@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +30,6 @@ import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
 public final class CandleBlock extends BaseBlock
@@ -70,7 +70,7 @@ public final class CandleBlock extends BaseBlock
 	}
 
 	@Override
-	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
+	public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
 		if(!isWaterLogged(blockState) && isLit(blockState))
 			spawnLightParticles(blockState, level, pos, rng);
@@ -102,7 +102,7 @@ public final class CandleBlock extends BaseBlock
 		return !isLit(blockState);
 	}
 
-	private void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
+	private void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
 		var facing = getFacing(blockState);
 
@@ -145,7 +145,7 @@ public final class CandleBlock extends BaseBlock
 			level.playLocalSound(x, y, z, SoundEvents.CANDLE_AMBIENT, SoundSource.BLOCKS, 1F + rng.nextFloat(), rng.nextFloat() * .7F + .3F, false);
 	}
 
-	private void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, float chance, Random rng)
+	private void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, float chance, RandomSource rng)
 	{
 		var flame = ParticleTypes.SMALL_FLAME;
 
@@ -158,7 +158,7 @@ public final class CandleBlock extends BaseBlock
 			level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 	}
 
-	private void onExtinguishParticle(LevelAccessor level, BlockPos pos, BlockState blockState, Random rng)
+	private void onExtinguishParticle(LevelAccessor level, BlockPos pos, BlockState blockState, RandomSource rng)
 	{
 		var facing = getFacing(blockState);
 

@@ -2,6 +2,7 @@ package xyz.apex.forge.fantasyfurniture.block.furniture;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,6 @@ import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 import xyz.apex.forge.fantasyfurniture.init.ModPatterns;
 
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class FloorLightBlock extends BaseMultiBlock
@@ -40,13 +40,13 @@ public class FloorLightBlock extends BaseMultiBlock
 	}
 
 	@Override
-	public void animateTick(BlockState blockState, Level level, BlockPos pos, Random rng)
+	public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
 		if(!isWaterLogged(blockState) && blockState.getOptionalValue(PART).orElse(Part.BOTTOM).isTop())
 			spawnLightParticles(blockState, level, pos, rng);
 	}
 
-	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
+	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
 		if(ModBlocks.NORDIC_FLOOR_LIGHT.has(blockState))
 		{
@@ -94,7 +94,7 @@ public class FloorLightBlock extends BaseMultiBlock
 		}
 	}
 
-	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, Random rng)
+	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
 	{
 		var flame = ParticleTypes.FLAME;
 
@@ -141,7 +141,7 @@ public class FloorLightBlock extends BaseMultiBlock
 		}
 
 		@Override
-		protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, Random rng)
+		protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 		{
 			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
 			{
