@@ -15,8 +15,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
-import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 import xyz.apex.forge.fantasyfurniture.init.ModPatterns;

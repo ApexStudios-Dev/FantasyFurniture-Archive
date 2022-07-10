@@ -7,8 +7,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Lazy;
 
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 
 import java.util.function.Supplier;
 

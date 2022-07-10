@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 
 public final class LargeInventoryMenu extends BaseMenu
 {

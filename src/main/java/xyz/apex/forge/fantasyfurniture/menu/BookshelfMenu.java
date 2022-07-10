@@ -13,7 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.commonality.tags.ItemTags;
 
 public final class BookshelfMenu extends BaseMenu
