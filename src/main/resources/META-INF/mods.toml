@@ -17,7 +17,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="forge"
 	mandatory=true
-	versionRange="[41,)"
+	versionRange="[41.0.88,)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
@@ -27,9 +27,15 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
+	modId="commonality"
+	mandatory=true
+	versionRange="[2.0.0,3.0.0)"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies.fantasyfurniture]]
 	modId="apexcore"
 	mandatory=true
-	versionRange="[1.19,1.20)"
+	versionRange="[5.0.0,6.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]

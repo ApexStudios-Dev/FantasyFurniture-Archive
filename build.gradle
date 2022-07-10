@@ -4,7 +4,6 @@ plugins {
 	id 'idea'
 	id 'maven-publish'
 
-	id 'com.github.johnrengelman.shadow' version '7.1.2'
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
 	id 'com.modrinth.minotaur' version '2.+'
 	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
@@ -12,17 +11,17 @@ plugins {
 	id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = "${minecraft_version}-${mod_version}"
+version = "${mod_version}"
 group = "${mod_base_package}"
-archivesBaseName = "${mod_id}"
+archivesBaseName = "${mod_id}-${minecraft_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+jarJar.enable()
 
 configurations {
 	library
 	implementation.extendsFrom library
-
-	shade
 }
 
 minecraft {
@@ -73,7 +72,7 @@ minecraft {
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
-			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', apexcore_mod_id
+			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', apexcore_mod_id, '--existing-mod', commonality_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
 			// a daemon is used for any reason.
 			forceExit false
@@ -118,22 +117,31 @@ repositories {
 			includeGroup "curse.maven"
 		}
 	}
+
+	maven {
+		url 'https://api.modrinth.com/maven'
+		content {
+			includeGroup 'maven.modrinth'
+		}
+	}
 }
 
 dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+	// compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+	// compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+	// runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
 	// compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
 	implementation fg.deobf("${registrate_package}:Registrate:MC${minecraft_version}-${registrate_version}")
-	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}:${minecraft_version}-${commonality_version}")
-	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}:${minecraft_version}-${apexcore_version}:slim")
+	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
+	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")
+
+	jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}", version: "${apexcore_version_range}")
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -142,22 +150,20 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.resources
 }
 
+tasks.jarJar.configure {
+	classifier ''
+}
+
 jar {
 	classifier 'slim'
 	from sourceSets.main.output.classesDirs
 	from sourceSets.main.output.resourcesDir
 }
 
-shadowJar {
-	classifier ''
-	configurations = [ project.configurations.shade ]
-	relocate "${registrate_package}", "xyz.apex.repack.${registrate_package}"
-}
-
 artifacts {
 	archives jar
 	archives sourcesJar
-	archives shadowJar
+	archives tasks.jarJar
 }
 
 if(System.getenv('GENERATE_CHANGELOG') != null) {
@@ -221,26 +227,25 @@ tasks.withType(Jar) {
 	}
 }
 
-reobf {
-	shadowJar { }
-}
-
 jar.finalizedBy('reobfJar')
-shadowJar.finalizedBy('reobfShadowJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
 
-if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
-	publishing {
-		publications {
-			mavenJava(MavenPublication) {
-				groupId = "${mod_base_package}"
-				artifactId = "${mod_id}"
-				version = "${minecraft_version}-${mod_version}"
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = "${mod_base_package}"
+			artifactId = "${mod_id}-${minecraft_version}"
+			version = "${mod_version}"
 
-				artifact jar
-				artifact sourcesJar
-			}
+			artifact jar
+			artifact sourcesJar
+			artifact tasks.jarJar
 		}
-		repositories {
+	}
+	repositories {
+		mavenLocal()
+
+		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
 			maven {
 				name 'ApexMods-Maven'
 				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
@@ -250,21 +255,6 @@ if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS
 					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
 				}
 			}
-		}
-	}
-} else {
-	publishing {
-		publications {
-			mavenJava(MavenPublication) {
-				groupId = "${mod_base_package}"
-				artifactId = "${mod_id}"
-				version = "${minecraft_version}-${mod_version}"
-				artifact jar
-				artifact sourcesJar
-			}
-		}
-		repositories {
-			mavenLocal()
 		}
 	}
 }
@@ -281,11 +271,12 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			changelog = file('CHANGELOG.md').text
 
 			relations {
-				requiredDependency "${apexcore_mod_id}"
+				optionalDependency "${apexcore_mod_id}"
 			}
 
-			mainArtifact shadowJar
+			mainArtifact tasks.jarJar
 			addArtifact sourcesJar
+			addArtifact jar
 		}
 
 		options {
@@ -303,13 +294,13 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		versionNumber = "${mod_version}"
 		versionName = "${mod_name}-${minecraft_version}-${mod_version}"
 		versionType = "${mod_release_type}"
-		uploadFile = shadowJar
-		additionalFiles = [ sourcesJar ]
+		uploadFile = tasks.jarJar
+		additionalFiles = [ jar, sourcesJar ]
 		gameVersions = [ "${minecraft_version}" ]
 		changelog = file('CHANGELOG.md').text
 		loaders = [ 'forge' ]
 		dependencies = [
-				new ModDependency('xl3myxch', 'required') // ApexCore
+				new ModDependency('xl3myxch', 'optional') // ApexCore
 		]
 	}
 }
