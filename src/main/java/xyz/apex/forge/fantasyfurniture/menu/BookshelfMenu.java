@@ -18,7 +18,7 @@ import xyz.apex.forge.commonality.tags.ItemTags;
 
 public final class BookshelfMenu extends BaseMenu
 {
-	public static final int ROWS = 3;
+	public static final int ROWS = 6;
 	public static final int COLS = 9;
 	public static final int SIZE = ROWS * COLS;
 
@@ -30,7 +30,7 @@ public final class BookshelfMenu extends BaseMenu
 		var itemHandler = blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().orElseThrow();
 
 		bindItemHandlerSlots(this, itemHandler, ROWS, COLS, 8, 18, BookSlotItemHandler::new);
-		bindPlayerInventory(this, 8, 84);
+		bindPlayerInventory(this, 8, 140);
 	}
 
 	public static final class BookSlotItemHandler extends SlotItemHandler
