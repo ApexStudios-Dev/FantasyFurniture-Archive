@@ -11,14 +11,14 @@ public final class BookshelfMenuScreen extends BaseMenuScreen<BookshelfMenu>
 {
 	public BookshelfMenuScreen(BookshelfMenu menu, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title, ModElements.MEDIUM_STORAGE_TEXTURE);
+		super(menu, playerInventory, title, ModElements.LARGE_STORAGE_TEXTURE);
 	}
 
 	@Override
 	protected void init()
 	{
 		imageWidth = 176;
-		imageHeight = 166;
+		imageHeight = 222;
 
 		super.init();
 
