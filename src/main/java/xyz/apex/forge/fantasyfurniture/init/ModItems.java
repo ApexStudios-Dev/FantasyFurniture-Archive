@@ -31,6 +31,7 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class ModItems
 {
+	// region: Decorations
 	public static final ItemEntry<BlockItem> BERRY_BASKET_EMPTY = blockItem(ModBlocks.BERRY_BASKET_EMPTY).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> BERRY_BASKET_SWEETBERRY = blockItem(ModBlocks.BERRY_BASKET_SWEETBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> BERRY_BASKET_BLUEBERRY = blockItem(ModBlocks.BERRY_BASKET_BLUEBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
@@ -51,11 +52,16 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> MUFFINS_CHOCOLATE = blockItem(ModBlocks.MUFFINS_CHOCOLATE).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> MUFFINS_SWEETBERRY = blockItem(ModBlocks.MUFFINS_SWEETBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> PAPER_STACK = blockItem(ModBlocks.PAPER_STACK).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
+
+	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();
 	public static final ItemEntry<BlockItem> NORDIC_SWEETROLLS = blockItem(ModBlocks.NORDIC_SWEETROLLS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, SweetRollsBlock.ROLLS)).register();
 	public static final ItemEntry<BlockItem> NORDIC_MEAD_BOTTLES = blockItem(ModBlocks.NORDIC_MEAD_BOTTLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MeadBottlesBlock.BOTTLES)).register();
 	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_LIGHT = blockItem(ModBlocks.NORDIC_SOUL_GEMS_LIGHT).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_SOUL_GEMS_DARK = blockItem(ModBlocks.NORDIC_SOUL_GEMS_DARK).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).register();
+	// endregion
+
+	// region: Venthyr
 	public static final ItemEntry<BlockItem> VENTHYR_FOOD_0 = blockItem(ModBlocks.VENTHYR_FOOD_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_FOOD_1 = blockItem(ModBlocks.VENTHYR_FOOD_1).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_TEA_SET = blockItem(ModBlocks.VENTHYR_TEA_SET).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).register();
@@ -65,16 +71,32 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES = blockItem(ModBlocks.VENTHYR_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TomesBlock.TOMES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CHALICES = blockItem(ModBlocks.VENTHYR_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CANDLES = blockItem(ModBlocks.VENTHYR_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG, ItemTags.Vanilla.CANDLES).register();
+	// endregion
+
+	// region: Dunmer
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_0 = blockItem(ModBlocks.DUNMER_POTTERY_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_POTTERY_1 = blockItem(ModBlocks.DUNMER_POTTERY_1).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.DUNMER_TAG).register();
+	// endregion
+
+	// region: Bone
 	public static final ItemEntry<BlockItem> BONE_CANDLES = blockItem(ModBlocks.BONE_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+
+	// region: Skeleton
 	public static final ItemEntry<BlockItem> BONE_SKELETON_CHALICES = blockItem(ModBlocks.BONE_SKELETON_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_PILE = blockItem(ModBlocks.BONE_SKELETON_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<SkullBlossomsBlockItem> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	// endregion
+
+	// region: Wither
 	public static final ItemEntry<BlockItem> BONE_WITHER_CHALICES = blockItem(ModBlocks.BONE_WITHER_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_PILE = blockItem(ModBlocks.BONE_WITHER_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<SkullBlossomsBlockItem> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_WITHER_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	// endregion
+	// endregion
+	// endregion
 
+	// region: Furniture Sets
+	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_WOOL = wool(ModBlocks.NORDIC_WOOL).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_CARPET = carpet(ModBlocks.NORDIC_CARPET).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_WALL_LIGHT = blockItem(ModBlocks.NORDIC_WALL_LIGHT).tag(ModItemGroupCategories.NORDIC_TAG).register();
@@ -104,7 +126,9 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_SINGLE = door(ModBlocks.NORDIC_DOOR_SINGLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_DOUBLE = door(ModBlocks.NORDIC_DOOR_DOUBLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_LOCKBOX = blockItem(ModBlocks.NORDIC_LOCKBOX).tag(ModItemGroupCategories.NORDIC_TAG).register();
+	// endregion
 
+	// region: Dunmer
 	public static final ItemEntry<BlockItem> DUNMER_WOOL = wool(ModBlocks.DUNMER_WOOL).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_CARPET = carpet(ModBlocks.DUNMER_CARPET).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_WALL_LIGHT = blockItem(ModBlocks.DUNMER_WALL_LIGHT).tag(ModItemGroupCategories.DUNMER_TAG).register();
@@ -134,7 +158,9 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_LOCKBOX = blockItem(ModBlocks.DUNMER_LOCKBOX).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	// endregion
 
+	// region: Venthyr
 	public static final ItemEntry<BlockItem> VENTHYR_WOOL = wool(ModBlocks.VENTHYR_WOOL).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CARPET = carpet(ModBlocks.VENTHYR_CARPET).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_WALL_LIGHT = blockItem(ModBlocks.VENTHYR_WALL_LIGHT).tag(ModItemGroupCategories.VENTHYR_TAG).register();
@@ -167,7 +193,10 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_SINGLE = door(ModBlocks.VENTHYR_DOOR_SINGLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_DOUBLE = door(ModBlocks.VENTHYR_DOOR_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_LOCKBOX = blockItem(ModBlocks.VENTHYR_LOCKBOX).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	// endregion
 
+	// region: Bone
+	// region: Skeleton
 	public static final ItemEntry<BlockItem> BONE_SKELETON_WOOL = wool(ModBlocks.BONE_SKELETON_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_CARPET = carpet(ModBlocks.BONE_SKELETON_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_WALL_LIGHT = blockItem(ModBlocks.BONE_SKELETON_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
@@ -198,6 +227,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 
+	// region: Wither
 	public static final ItemEntry<BlockItem> BONE_WITHER_WOOL = wool(ModBlocks.BONE_WITHER_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_CARPET = carpet(ModBlocks.BONE_WITHER_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_WALL_LIGHT = blockItem(ModBlocks.BONE_WITHER_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
@@ -227,6 +257,10 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	// endregion
+	// endregion
+	// endregion
+	// endregion
 
 	static void bootstrap()
 	{
