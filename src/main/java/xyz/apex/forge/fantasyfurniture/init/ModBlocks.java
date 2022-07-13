@@ -46,6 +46,7 @@ import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class ModBlocks
 {
+	// region: Decorations
 	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_EMPTY = berryBasket("empty").register();
 	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_SWEETBERRY = berryBasket("sweetberry").register();
 	public static final BlockEntry<BerryBasketBlock> BERRY_BASKET_BLUEBERRY = berryBasket("blueberry").register();
@@ -66,11 +67,16 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_CHOCOLATE = muffins("chocolate").register();
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
+
+	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
 	public static final BlockEntry<SweetRollsBlock> NORDIC_SWEETROLLS = sweetRolls("nordic").register();
 	public static final BlockEntry<MeadBottlesBlock> NORDIC_MEAD_BOTTLES = meadBottles("nordic").register();
 	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_LIGHT = soulGems("nordic", "light").register();
 	public static final BlockEntry<SoulGemsBlock> NORDIC_SOUL_GEMS_DARK = soulGems("nordic", "dark").register();
+	// endregion
+
+	// region: Venthyr
 	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_0 = food("venthyr", 0).register();
 	public static final BlockEntry<FoodBlock> VENTHYR_FOOD_1 = food("venthyr", 1).register();
 	public static final BlockEntry<TeaSetBlock> VENTHYR_TEA_SET = teaSet("venthyr").register();
@@ -80,16 +86,32 @@ public final class ModBlocks
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes("venthyr").register();
 	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr").register();
 	public static final BlockEntry<CandleBlock> VENTHYR_CANDLES = candles("venthyr").register();
+	// endregion
+
+	// region: Dunmer
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_0 = pottery("dunmer", 0).register();
 	public static final BlockEntry<PotteryBlock> DUNMER_POTTERY_1 = pottery("dunmer", 1).register();
+	// endregion
+
+	// region: Bone
 	public static final BlockEntry<CandleBlock> BONE_CANDLES = candles("bone").register();
+
+	// region: Skeleton
 	public static final BlockEntry<ChalicesBlock> BONE_SKELETON_CHALICES = chalices("bone_skeleton").lang("Bone Chalices").register();
 	public static final BlockEntry<BonePileBlock> BONE_SKELETON_PILE = bonePile("bone_skeleton").lang("Bone Pile").register();
 	public static final BlockEntry<SkullBlossomsBlock> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms("bone_skeleton").lang("Skull Blossoms").register();
+	// endregion
+
+	// region: Wither
 	public static final BlockEntry<ChalicesBlock> BONE_WITHER_CHALICES = chalices("bone_wither").lang("Wither Bone Chalices").register();
 	public static final BlockEntry<BonePileBlock> BONE_WITHER_PILE = bonePile("bone_wither").lang("Wither Bone Pile").register();
 	public static final BlockEntry<SkullBlossomsBlock> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms("bone_wither").lang("Wither Skull Blossoms").register();
+	// endregion
+	// endregion
+	// endregion
 
+	// region: Furniture Sets
+	// region: Nordic
 	public static final BlockEntry<Block> NORDIC_WOOL = wool("nordic", Block::new).register();
 	public static final BlockEntry<CarpetBlock> NORDIC_CARPET = carpet("nordic", CarpetBlock::new).register();
 	public static final BlockEntry<FurnitureWallLightBlock> NORDIC_WALL_LIGHT = wallLight("nordic", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -119,10 +141,12 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> NORDIC_DOOR_SINGLE = doorSingle("nordic", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> NORDIC_DOOR_DOUBLE = doorDouble("nordic", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> NORDIC_LOCKBOX = lockbox("nordic", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	// endregion
 
+	// region: Dunmer
 	public static final BlockEntry<Block> DUNMER_WOOL = wool("dunmer", Block::new).register();
 	public static final BlockEntry<CarpetBlock> DUNMER_CARPET = carpet("dunmer", CarpetBlock::new).register();
-	public static final BlockEntry<FurnitureWallLightBlock> DUNMER_WALL_LIGHT = wallLight("dunmer", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).lightLevel(blockState -> 14).register();
+	public static final BlockEntry<FurnitureWallLightBlock> DUNMER_WALL_LIGHT = wallLight("dunmer", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).properties(properties -> properties.lightLevel(blockState -> 14)).register();
 	public static final BlockEntry<FloorLightBlock> DUNMER_FLOOR_LIGHT = floorLight("dunmer", FloorLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> DUNMER_TABLE_SMALL = tableSmall("dunmer", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableWideBlock> DUNMER_TABLE_WIDE = tableWide("dunmer", TableWideBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -149,10 +173,12 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_SINGLE = doorSingle("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> DUNMER_LOCKBOX = lockbox("dunmer", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	// endregion
 
+	// region: Venthyr
 	public static final BlockEntry<Block> VENTHYR_WOOL = wool("venthyr", Block::new).register();
 	public static final BlockEntry<CarpetBlock> VENTHYR_CARPET = carpet("venthyr", CarpetBlock::new).register();
-	public static final BlockEntry<FurnitureWallLightBlock> VENTHYR_WALL_LIGHT = wallLight("venthyr", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).lightLevel(blockState -> 14).register();
+	public static final BlockEntry<FurnitureWallLightBlock> VENTHYR_WALL_LIGHT = wallLight("venthyr", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).properties(properties -> properties.lightLevel(blockState -> 14)).register();
 	public static final BlockEntry<FloorLightBlock> VENTHYR_FLOOR_LIGHT = floorLight("venthyr", FloorLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL = tableSmall("venthyr", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL_FANCY = tableSmallFancy("venthyr", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -182,7 +208,10 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_SINGLE = doorSingle("venthyr", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_DOUBLE = doorDouble("venthyr", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> VENTHYR_LOCKBOX = lockbox("venthyr", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	// endregion
 
+	// region: Bone
+	// region: Skeleton
 	public static final BlockEntry<Block> BONE_SKELETON_WOOL = wool("bone/skeleton", Block::new).lang("Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_SKELETON_CARPET = carpet("bone/skeleton", CarpetBlock::new).lang("Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_SKELETON_WALL_LIGHT = wallLight("bone/skeleton", FurnitureWallLightBlock::new).lang("Bone Wall Light").register();
@@ -212,7 +241,9 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_SINGLE = doorSingle("bone/skeleton", FurnitureDoorBlock::new).lang("Bone Door Single").register();
 	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_DOUBLE = doorDouble("bone/skeleton", FurnitureDoorBlock::new).lang("Bone Door Double").register();
 	public static final BlockEntry<LockboxBlock> BONE_SKELETON_LOCKBOX = lockbox("bone/skeleton", LockboxBlock::new).lang("Bone Lockbox").register();
+	// endregion
 
+	// region: Wither
 	public static final BlockEntry<Block> BONE_WITHER_WOOL = wool("bone/wither", Block::new).lang("Wither Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_WITHER_CARPET = carpet("bone/wither", CarpetBlock::new).lang("Wither Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_WITHER_WALL_LIGHT = wallLight("bone/wither", FurnitureWallLightBlock::new).lang("Wither Bone Wall Light").register();
@@ -242,6 +273,9 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_SINGLE = doorSingle("bone/wither", FurnitureDoorBlock::new).lang("Wither Bone Door Single").register();
 	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_DOUBLE = doorDouble("bone/wither", FurnitureDoorBlock::new).lang("Wither Bone Door Double").register();
 	public static final BlockEntry<LockboxBlock> BONE_WITHER_LOCKBOX = lockbox("bone/wither", LockboxBlock::new).lang("Wither Bone Lockbox").register();
+	// endregion
+	// endregion
+	// endregion
 
 	static void bootstrap()
 	{
