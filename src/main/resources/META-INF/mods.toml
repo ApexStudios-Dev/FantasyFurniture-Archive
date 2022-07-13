@@ -17,7 +17,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="forge"
 	mandatory=true
-	versionRange="[41.0.88,)"
+	versionRange="[41.0.98,)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
@@ -41,7 +41,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="jei"
 	mandatory=false
-	versionRange="[11.0.+,)"
+	versionRange="[11.0.0.211,)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
