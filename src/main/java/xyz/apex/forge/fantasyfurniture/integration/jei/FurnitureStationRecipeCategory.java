@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,7 +12,6 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 
@@ -31,21 +29,9 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	}
 
 	@Override
-	public ResourceLocation getUid()
-	{
-		return FurnitureStationRecipes.RECIPE_TYPE.getUid();
-	}
-
-	@Override
 	public RecipeType<FurnitureStationRecipes> getRecipeType()
 	{
 		return FurnitureStationRecipes.RECIPE_TYPE;
-	}
-
-	@Override
-	public Class<? extends FurnitureStationRecipes> getRecipeClass()
-	{
-		return FurnitureStationRecipes.class;
 	}
 
 	@Override
@@ -69,7 +55,6 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, FurnitureStationRecipes recipe, IFocusGroup focuses)
 	{
-		IRecipeCategory.super.setRecipe(builder, recipe, focuses);
 		recipe.setRecipe(builder);
 	}
 
@@ -79,4 +64,4 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 		IRecipeCategory.super.draw(recipe, recipeSlotsView, pose, mouseX, mouseY);
 		recipe.draw(pose, background);
 	}
-}*/
+}

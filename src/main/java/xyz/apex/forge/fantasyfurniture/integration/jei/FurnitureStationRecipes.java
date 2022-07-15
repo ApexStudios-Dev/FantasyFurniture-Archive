@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import com.google.common.collect.ImmutableList;
@@ -19,11 +18,11 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.client.model.data.ModelData;
 
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationMenuScreen;
@@ -140,8 +139,8 @@ public final class FurnitureStationRecipes
 		renderBlock(pose, background);
 
 		var font = Minecraft.getInstance().font;
-		font.drawShadow(pose, new TranslatableComponent(ModRegistry.TXT_JEI_INGREDIENTS_KEY), 0F, 52F, -1);
-		font.drawShadow(pose, new TranslatableComponent(ModRegistry.TXT_JEI_RESULTS_KEY), 0F, 84F, -1);
+		font.drawShadow(pose, Component.translatable(ModRegistry.TXT_JEI_INGREDIENTS_KEY), 0F, 52F, -1);
+		font.drawShadow(pose, Component.translatable(ModRegistry.TXT_JEI_RESULTS_KEY), 0F, 84F, -1);
 	}
 
 	private void renderBlock(PoseStack pose, IDrawable background)
@@ -182,10 +181,10 @@ public final class FurnitureStationRecipes
 		RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 
 		MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
-		mc.getBlockRenderer().renderSingleBlock(blockState, pose, buffer, 15728880, OverlayTexture.NO_OVERLAY, EmptyModelData.INSTANCE);
+		mc.getBlockRenderer().renderSingleBlock(blockState, pose, buffer, 15728880, OverlayTexture.NO_OVERLAY, ModelData.EMPTY, null);
 		buffer.endBatch();
 
 		pose.popPose();
 		pose.popPose();
 	}
-}*/
+}
