@@ -23,10 +23,31 @@ public interface IDyeableItem
 	{
 		var stackTag = stack.getTag();
 
-		if(stackTag != null && stackTag.contains(NBT_DYE_COLOR, Tag.TAG_STRING))
+		if(stackTag != null)
 		{
-			var dyeColorName = stackTag.getString(NBT_DYE_COLOR);
-			return IDyeableBlock.DYE_COLOR_PROPERTY.getValue(dyeColorName).orElseGet(() -> getDefaultDyeColor(stack));
+			if(stackTag.contains("BlockStateTag", Tag.TAG_COMPOUND))
+			{
+				var blockStateTag = stackTag.getCompound("BlockStateTag");
+				var name = IDyeableBlock.DYE_COLOR_PROPERTY.getName();
+
+				if(blockStateTag.contains(name, Tag.TAG_STRING))
+				{
+					var dyeColorName = blockStateTag.getString(name);
+					var opt = IDyeableBlock.DYE_COLOR_PROPERTY.getValue(dyeColorName);
+
+					if(opt.isPresent())
+						return opt.get();
+				}
+			}
+
+			if(stackTag.contains(NBT_DYE_COLOR, Tag.TAG_STRING))
+			{
+				var dyeColorName = stackTag.getString(NBT_DYE_COLOR);
+				var opt = IDyeableBlock.DYE_COLOR_PROPERTY.getValue(dyeColorName);
+
+				if(opt.isPresent())
+					return opt.get();
+			}
 		}
 
 		return getDefaultDyeColor(stack);

@@ -86,7 +86,9 @@ public class DyeableItemRecipe extends CustomRecipe
 		if(dyeColor == null || dyeableStack.isEmpty())
 			return ItemStack.EMPTY;
 
-		return IDyeableItem.withDyeColor(dyeableStack, dyeColor);
+		var stack = IDyeableItem.withDyeColor(dyeableStack, dyeColor);
+		stack.setCount(1);
+		return stack;
 	}
 
 	@Override
