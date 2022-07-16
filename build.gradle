@@ -11,9 +11,12 @@ plugins {
 	id 'org.spongepowered.mixin' version '0.7.+'
 }
 
+def IS_EARLY_ACCESS = false
+def USE_EARLY_ACCESS = false
+
 version = "${mod_version}"
 group = "${mod_base_package}"
-archivesBaseName = "${mod_id}-${minecraft_version}"
+archivesBaseName = IS_EARLY_ACCESS ? "${mod_id}-${minecraft_version}-EAP" : "${mod_id}-${minecraft_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -138,10 +141,16 @@ dependencies {
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
 	implementation fg.deobf("${registrate_package}:Registrate:MC${minecraft_version}-${registrate_version}")
-	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
-	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")
 
-	jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}", version: "${apexcore_version_range}")
+	if(USE_EARLY_ACCESS) {
+		implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}-EAP:${commonality_version}")
+		implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}-EAP:${apexcore_version}:slim")
+		jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}-EAP", version: "${apexcore_version_range}")
+	} else {
+		implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
+		implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")
+		jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}", version: "${apexcore_version_range}")
+	}
 
 	compileOnly "xyz.apex.java.utility:JavaUtilities:${java_utilities_version}:api"
 	compileOnly "xyz.apex.java.utility:JavaUtilities:${java_utilities_version}:api-sources"
@@ -240,7 +249,7 @@ publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			groupId = "${mod_base_package}"
-			artifactId = "${mod_id}-${minecraft_version}"
+			artifactId = IS_EARLY_ACCESS ? "${mod_id}-${minecraft_version}-EAP" : "${mod_id}-${minecraft_version}"
 			version = "${mod_version}"
 
 			artifact jar
