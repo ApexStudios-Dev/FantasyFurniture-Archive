@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import xyz.apex.forge.apexcore.revamp.block.MultiBlockPattern;
+import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.block.furniture.FloorLightBlock;
 
 public final class ModPatterns

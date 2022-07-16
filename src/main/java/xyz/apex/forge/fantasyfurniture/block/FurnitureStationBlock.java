@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.block.entity.FurnitureStationBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;

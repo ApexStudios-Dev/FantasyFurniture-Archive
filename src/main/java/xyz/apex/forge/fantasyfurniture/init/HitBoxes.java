@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.forge.apexcore.revamp.block.WallLightBlock;
+import xyz.apex.forge.apexcore.lib.block.WallLightBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
 import static net.minecraft.world.level.block.Block.box;

@@ -1,14 +1,15 @@
 package xyz.apex.forge.fantasyfurniture.menu;
 
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-import xyz.apex.forge.apexcore.revamp.container.BaseMenu;
+import xyz.apex.forge.apexcore.lib.container.BaseMenu;
+
+import java.util.Objects;
 
 public final class LargeInventoryMenu extends BaseMenu
 {
@@ -20,10 +21,23 @@ public final class LargeInventoryMenu extends BaseMenu
 	{
 		super(menuType, windowId, playerInventory, buffer);
 
-		Validate.notNull(blockEntity);
-		var itemHandler = blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().orElseThrow();
+		var itemHandler = Objects.requireNonNull(getItemHandler());
 
 		bindItemHandlerSlots(this, itemHandler, ROWS, COLS, 8, 18);
 		bindPlayerInventory(this, 8, 140);
+	}
+
+	@Nullable
+	@Override
+	protected IItemHandler getItemHandler()
+	{
+		var blockEntity = Objects.requireNonNull(player.level.getBlockEntity(pos));
+		return getItemHandlerFromBlockEntity(blockEntity).resolve().orElse(null);
+	}
+
+	@Override
+	protected void onInventoryChanges()
+	{
+		setBlockEntityChanged();
 	}
 }

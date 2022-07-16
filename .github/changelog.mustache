@@ -1,16 +1,11 @@
 {{#tags}}
 ## {{name}}
-{{#issues}}
-{{#hasIssue}}
-{{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}} {{#hasIssueType}} *{{issueType}}* {{/hasIssueType}} {{#hasLabels}} {{#labels}} *{{.}}* {{/labels}} {{/hasLabels}}
-{{/hasLink}}
-{{/hasIssue}}
 {{#commits}}
 * {{messageTitle}}
+{{#messageBodyItems}}
+	- {{.}}
+{{/messageBodyItems}}
 {{/commits}}
-{{/issues}}
-
 {{/tags}}
 
 *For more details, see [{last_tag}..{current_tag}]({mod_git_url}/compare/{last_tag}...{current_tag})*

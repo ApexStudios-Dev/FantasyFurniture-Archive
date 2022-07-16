@@ -26,8 +26,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.forge.apexcore.revamp.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 
 import java.util.function.Consumer;
 

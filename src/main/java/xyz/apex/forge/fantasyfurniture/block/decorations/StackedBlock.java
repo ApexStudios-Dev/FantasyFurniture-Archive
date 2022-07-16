@@ -22,8 +22,8 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.util.Lazy;
 
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
 
 import java.util.List;
 import java.util.function.Consumer;

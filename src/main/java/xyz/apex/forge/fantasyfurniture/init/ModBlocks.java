@@ -31,9 +31,9 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
+import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
-import xyz.apex.forge.apexcore.revamp.block.BaseBlock;
-import xyz.apex.forge.apexcore.revamp.block.ISeatBlock;
+import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
 import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;

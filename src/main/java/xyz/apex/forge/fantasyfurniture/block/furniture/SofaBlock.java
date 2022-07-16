@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import xyz.apex.forge.apexcore.revamp.block.SeatBlock;
+import xyz.apex.forge.apexcore.lib.block.SeatBlock;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
