@@ -1,11 +1,7 @@
-{{#tags}}
-## {{name}}
-{{#commits}}
-* {{messageTitle}}
-{{#messageBodyItems}}
-	- {{.}}
-{{/messageBodyItems}}
-{{/commits}}
-{{/tags}}
+## {{.Version}}
 
-*For more details, see [{last_tag}..{current_tag}]({mod_git_url}/compare/{last_tag}...{current_tag})*
+{{range .Items -}}
+* {{.Title}}{{if .IsPull}} ([contributed]({{.PullURL}}) by [{{.Author}}]({{.AuthorURL}})){{end}} \[[{{.CommitHashShort}}]({{.CommitURL}})\]
+{{end}}
+
+*For more details, see [{{.PreviousVersion}}..{{.Version}}]({{.CompareURL}})*
