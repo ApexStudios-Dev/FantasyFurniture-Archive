@@ -1,6 +1,5 @@
 package xyz.apex.forge.fantasyfurniture.menu;
 
-import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,12 +8,13 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.commonality.tags.ItemTags;
+
+import java.util.Objects;
 
 public final class BookshelfMenu extends BaseMenu
 {
@@ -26,11 +26,24 @@ public final class BookshelfMenu extends BaseMenu
 	{
 		super(menuType, windowId, playerInventory, buffer);
 
-		Validate.notNull(blockEntity);
-		var itemHandler = blockEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).resolve().orElseThrow();
+		var itemHandler = Objects.requireNonNull(getItemHandler());
 
 		bindItemHandlerSlots(this, itemHandler, ROWS, COLS, 8, 18, BookSlotItemHandler::new);
 		bindPlayerInventory(this, 8, 140);
+	}
+
+	@Nullable
+	@Override
+	protected IItemHandler getItemHandler()
+	{
+		var blockEntity = Objects.requireNonNull(player.level.getBlockEntity(pos));
+		return getItemHandlerFromBlockEntity(blockEntity).resolve().orElse(null);
+	}
+
+	@Override
+	protected void onInventoryChanges()
+	{
+		setBlockEntityChanged();
 	}
 
 	public static final class BookSlotItemHandler extends SlotItemHandler
