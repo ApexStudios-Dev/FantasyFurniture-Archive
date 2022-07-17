@@ -1,0 +1,9 @@
+# Dummy mods.toml file with bare minimum required to load a mod
+# Only required for Covers1624's WorkspaceTool to function correctly
+# Should be excluded from ANY compiled artifacts
+modLoader="javafml"
+loaderVersion="[40,)"
+license="GNU General Public License v3.0"
+
+[[mods]]
+	modId="fantasyfurniture"
