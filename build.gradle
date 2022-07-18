@@ -6,7 +6,6 @@ plugins {
 
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
 	id 'com.modrinth.minotaur' version '2.+'
-	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.71.8'
 	id 'net.minecraftforge.gradle' version '5.1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
 }
@@ -181,46 +180,8 @@ artifacts {
 	archives tasks.jarJar
 }
 
-if(System.getenv('GENERATE_CHANGELOG') != null) {
-	def previousGitTag
-	def prefix = 'v'
-	def suffix = ''
-
-	if(mod_release_type == 'prerelease') {
-		prefix = 'pv'
-	} else if(mod_release_type == 'alpha' || mod_release_type == 'beta') {
-		suffix = "${mod_release_type}".toUpperCase()
-	}
-
-	def currentGitTag = "${prefix}${mod_version}${suffix}"
-
-	try {
-		def code = new ByteArrayOutputStream()
-
-		exec {
-			commandLine 'git', 'describe', '--abbrev=0', '--tags', '--exclude', currentGitTag
-			standardOutput code
-		}
-
-		previousGitTag = code.toString().trim()
-	} catch(e) {
-		previousGitTag = ''
-	}
-
-	task gitChangelogTask(type: se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask) {
-		file = file("CHANGELOG.md")
-		fromRepo = file('.')
-		fromRef = "${previousGitTag}"
-		toRef = "v${mod_version}"
-		templateContent = file('.github/changelog.mustache').text
-		                                                    .replace('{current_tag}', "${currentGitTag}")
-		                                                    .replace('{mod_git_url}', "${mod_git_url}")
-		                                                    .replace('{last_tag}', "${previousGitTag}")
-	}
-}
-
 tasks.withType(Jar) {
-	from file('CHANGELOG.md')
+	from file('.github/CHANGELOG.md')
 	from file('LICENSE')
 
 	manifest {
@@ -283,10 +244,10 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			releaseType = "${mod_release_type}"
 			addGameVersion "${minecraft_version}"
 			changelogType = 'markdown'
-			changelog = file('CHANGELOG.md').text
+			changelog = file('.github/CHANGELOG.md').text
 
 			relations {
-				optionalDependency "${apexcore_mod_id}"
+				embeddedLibrary "${apexcore_mod_id}"
 			}
 
 			mainArtifact tasks.jarJar
@@ -312,7 +273,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		uploadFile = tasks.jarJar
 		additionalFiles = [ jar, sourcesJar ]
 		gameVersions = [ "${minecraft_version}" ]
-		changelog = file('CHANGELOG.md').text
+		changelog = file('.github/CHANGELOG.md').text
 		loaders = [ 'forge' ]
 		dependencies = [
 				new ModDependency('xl3myxch', 'optional') // ApexCore
