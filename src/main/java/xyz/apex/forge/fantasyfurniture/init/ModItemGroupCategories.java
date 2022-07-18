@@ -23,7 +23,7 @@ public final class ModItemGroupCategories
 	public static final TagKey<Item> BONE_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/bone");
 	public static final TagKey<Item> BONE_SKELETON_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/bone/skeleton");
 	public static final TagKey<Item> BONE_WITHER_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/bone/wither");
-	// public static final TagKey<Item> ROYAL_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/royal");
+	public static final TagKey<Item> ROYAL_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/royal");
 	public static final TagKey<Item> DECORATIONS_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/decorations");
 
 	public static final ItemGroupCategory NORDIC = ItemGroupCategory
@@ -62,12 +62,12 @@ public final class ModItemGroupCategories
 			.defaultIcon(() -> ModItems.BONE_WITHER_BED_SINGLE.asStack())
 	.build();*/
 
-	/*public static final ItemGroupCategory ROYAL = ItemGroupCategory
+	public static final ItemGroupCategory ROYAL = ItemGroupCategory
 			.builder("royal")
 			.tagged(ROYAL_TAG)
 			.defaultIcon(() -> ModItems.ROYAL_WOOL.asStack())
 			// .defaultIcon(() -> ModItems.ROYAL_BED_SINGLE.asStack())
-	.build();*/
+	.build();
 
 	public static final ItemGroupCategory DECORATIONS = ItemGroupCategory
 			.builder("decorations")
@@ -83,12 +83,12 @@ public final class ModItemGroupCategories
 		BONE.addTranslationGenerator(REGISTRATE, "Bone");
 		// BONE_SKELETON.addTranslationGenerator(REGISTRATE, "Bone - Skeleton");
 		// BONE_WITHER.addTranslationGenerator(REGISTRATE, "Bone - Wither");
-		// ROYAL.addTranslationGenerator(REGISTRATE, "Royal");
+		ROYAL.addTranslationGenerator(REGISTRATE, "Royal");
 		DECORATIONS.addTranslationGenerator(REGISTRATE, "Decorations");
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> ItemGroupCategoryManager
 				.getInstance(ModRegistry.CREATIVE_MODE_TAB)
-				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ /*ROYAL,*/ DECORATIONS)
+				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ ROYAL, DECORATIONS)
 		);
 
 		REGISTRATE.addDataGenerator(ITEM_TAGS, provider -> provider.tag(BONE_TAG).addTags(BONE_SKELETON_TAG, BONE_WITHER_TAG));

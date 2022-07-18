@@ -13,6 +13,7 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -34,8 +36,13 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
+import xyz.apex.forge.fantasyfurniture.block.dyeable.DyeableBlock;
+import xyz.apex.forge.fantasyfurniture.block.dyeable.DyeableCarpetBlock;
+import xyz.apex.forge.fantasyfurniture.block.dyeable.IDyeableBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
 import java.util.function.Predicate;
@@ -276,7 +283,7 @@ public final class ModBlocks
 	// endregion
 	// endregion
 
-	/*// region: Royal
+	// region: Royal
 	public static final BlockEntry<DyeableBlock> ROYAL_WOOL = wool("royal", DyeableBlock::new)
 			.transform(ModBlocks::applyDyeable)
 			.blockstate((ctx, provider) -> provider
@@ -392,7 +399,7 @@ public final class ModBlocks
 					)
 			)
 	.register();
-	// endregion*/
+	// endregion
 	// endregion
 
 	static void bootstrap()
@@ -1408,7 +1415,7 @@ public final class ModBlocks
 		;
 	}
 
-	/*private static <BLOCK extends Block> BlockBuilder<BLOCK, Registrate> applyDyeable(BlockBuilder<BLOCK, Registrate> builder)
+	private static <BLOCK extends Block> BlockBuilder<BLOCK, Registrate> applyDyeable(BlockBuilder<BLOCK, Registrate> builder)
 	{
 		return builder
 				.loot((lootTables, block) -> lootTables
@@ -1429,7 +1436,7 @@ public final class ModBlocks
 				)
 				.color(() -> () -> (blockState, level, pos, tintIndex) -> FantasyFurniture.tintFromDyeColor(IDyeableBlock.getDyeColor(blockState)))
 		;
-	}*/
+	}
 
 	private static ToIntFunction<BlockState> lightLevel()
 	{

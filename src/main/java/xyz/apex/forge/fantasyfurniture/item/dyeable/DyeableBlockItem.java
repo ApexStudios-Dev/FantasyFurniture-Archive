@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.item.dyeable;
 
 import net.minecraft.world.item.BlockItem;
@@ -17,4 +16,4 @@ public class DyeableBlockItem extends BlockItem implements IDyeableItem
 	{
 		return IDyeableItem.withDefaultDyeColor(super.getDefaultInstance());
 	}
-}*/
+}

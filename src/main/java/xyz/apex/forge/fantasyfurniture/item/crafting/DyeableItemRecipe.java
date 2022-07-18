@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.item.crafting;
 
 import net.minecraft.resources.ResourceLocation;
@@ -103,4 +102,4 @@ public class DyeableItemRecipe extends CustomRecipe
 	{
 		return ModElements.DYEABLE_ITEM_RECIPE.get();
 	}
-}*/
+}

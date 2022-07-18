@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.item.dyeable;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
@@ -73,4 +72,4 @@ public interface IDyeableItem
 	{
 		return withDyeColor(stack, getDefaultDyeColor(stack));
 	}
-}*/
+}
