@@ -1,3 +1,4 @@
+/*
 package xyz.apex.forge.fantasyfurniture.block.dyeable;
 
 import net.minecraft.world.item.DyeColor;
@@ -33,4 +34,4 @@ public interface IDyeableBlock
 	{
 		return withDyeColor(blockState, getDefaultDyeColor(blockState));
 	}
-}
+}*/

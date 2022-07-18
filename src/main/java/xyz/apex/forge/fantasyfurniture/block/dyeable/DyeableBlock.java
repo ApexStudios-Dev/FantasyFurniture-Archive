@@ -1,3 +1,4 @@
+/*
 package xyz.apex.forge.fantasyfurniture.block.dyeable;
 
 import org.jetbrains.annotations.Nullable;
@@ -54,4 +55,4 @@ public class DyeableBlock extends BaseBlock implements IDyeableBlock
 		var dyeColor = IDyeableBlock.getDyeColor(blockState);
 		return IDyeableItem.withDyeColor(stack, dyeColor);
 	}
-}
+}*/
