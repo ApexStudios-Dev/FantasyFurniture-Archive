@@ -27,6 +27,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -1342,29 +1343,27 @@ public final class ModBlocks
 
 	private static <BLOCK extends StackedBlock> void stackedLootTable(RegistrateBlockLootTables lootTables, BLOCK block)
 	{
-		var lootTable = LootTable.lootTable();
+		var pool = LootPool
+				.lootPool()
+				.setRolls(ConstantValue.exactly(1))
+				.add(LootItem.lootTableItem(block))
+		;
 
 		for(var value : block.getStackSizeProperty().getPossibleValues())
 		{
-			lootTable = lootTable
-					.withPool(RegistrateBlockLootTables
-							.applyExplosionCondition(block, LootPool
-									.lootPool()
-									.setRolls(ConstantValue.exactly(1))
-									.add(LootItem.lootTableItem(block))
-									.when(LootItemBlockStatePropertyCondition
-											.hasBlockStateProperties(block)
-											.setProperties(StatePropertiesPredicate.Builder
-													.properties()
-													.hasProperty(block.getStackSizeProperty(), value)
-											)
-									)
+			pool = pool.apply(SetItemCountFunction
+					.setCount(ConstantValue.exactly(value + 1))
+					.when(LootItemBlockStatePropertyCondition
+							.hasBlockStateProperties(block)
+							.setProperties(StatePropertiesPredicate.Builder
+									.properties()
+									.hasProperty(block.getStackSizeProperty(), value)
 							)
 					)
-			;
+			);
 		}
 
-		lootTables.add(block, lootTable);
+		lootTables.add(block, LootTable.lootTable().withPool(RegistrateBlockLootTables.applyExplosionCondition(block, pool)));
 	}
 	// endregion
 }
