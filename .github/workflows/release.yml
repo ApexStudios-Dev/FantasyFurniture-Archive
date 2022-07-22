@@ -19,8 +19,6 @@ jobs:
     outputs:
       mod_name: ${{ steps.mod_name.outputs.value }}
       mod_version: ${{ steps.mod_version.outputs.value }}
-      mod_release_type: ${{ steps.mod_release_type.outputs.value }}
-      mod_curseforge_id: ${{ steps.mod_curseforge_id.outputs.value }}
       minecraft_version: ${{ steps.minecraft_version.outputs.value }}
       forge_version: ${{ steps.forge_version.outputs.value }}
       tag_current: ${{ steps.tag_current.outputs.tag }}
@@ -46,20 +44,6 @@ jobs:
         with:
           path: './gradle.properties'
           property: 'mod_version'
-
-      - name: Mod Release Type
-        id: mod_release_type
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: './gradle.properties'
-          property: 'mod_release_type'
-
-      - name: CurseForge Project ID
-        id: mod_curseforge_id
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: './gradle.properties'
-          property: 'mod_curseforge_id'
 
       - name: Minecraft Version
         id: minecraft_version
@@ -95,8 +79,6 @@ jobs:
         run: |
           echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
           echo "'mod_version': => '${{ steps.mod_version.outputs.value }}'"
-          echo "'mod_release_type': => '${{ steps.mod_release_type.outputs.value }}'"
-          echo "'mod_curseforge_id': => '${{ steps.mod_curseforge_id.outputs.value }}'"
           echo "'minecraft_version': => '${{ steps.minecraft_version.outputs.value }}'"
           echo "'forge_version': => '${{ steps.forge_version.outputs.value }}'"
           echo "'tag_current': => '${{ steps.tag_current.outputs.tag }}'"
@@ -240,8 +222,8 @@ jobs:
           name: jars
           path: ./build/libs
 
-  publish_maven:
-    name: Publish to ModsMaven
+  publish:
+    name: Publish Mod
 
     strategy:
       matrix:
@@ -249,6 +231,7 @@ jobs:
         java: [ 17 ]
 
     runs-on: ${{ matrix.os }}
+    needs: [ vars, changelog, compile ]
 
     steps:
       - name: Install JQ
@@ -257,6 +240,12 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Download Changelog
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+          path: .github
 
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -293,10 +282,10 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' && hashFiles('./render_types.sh') != '' }}
         run: ./render_types.sh
 
-      - name: Publish Mod to Maven
+      - name: Publish to CurseForge, Modrinth & Maven
         uses: burrunan/gradle-cache-action@v1
         with:
-          arguments: publish
+          arguments: curseforge modrinth publish
           execution-only-caches: false
           job-id: java-${{ matrix.java }}
           gradle-version: wrapper
@@ -312,126 +301,7 @@ jobs:
         env:
           APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
           APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
-
-      - name: Cleanup Gradle Cache
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
-
-
-  publish_curseforge:
-    name: Publish Mod to CurseForge
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-        java: [ 17 ]
-
-    needs: [ vars, compile ]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Download Changelog
-        uses: actions/download-artifact@v2
-        with:
-          name: changelog
-          path: .github
-
-      - name: Download Mod Jars
-        uses: actions/download-artifact@v2
-        with:
-          name: jars
-          path: ./build/libs
-
-      - name: Load Changelog File
-        id: changelog
-        run: echo ::set-output name=changelog::$(cat .github/CHANGELOG.md)
-
-      - name: Create CurseForge Release
-        uses: itsmeow/curseforge-upload@master
-        with:
-          token: ${{ secrets.CURSEFORGE_TOKEN }}
-          project_id: ${{ needs.vars.outputs.mod_curseforge_id }}
-          game_endpoint: minecraft
-          file_path: './build/libs/${{ steps.filename.outputs.fullpath }}'
-          game_versions: java:Java ${{ matrix.java }},Forge
-          release_type: ${{ needs.vars.outputs.mod_release_type }}
-          display_name: '${{ needs.vars.outputs.mod_name }} - ${{ needs.vars.outputs.mod_version }} (${{ needs.vars.outputs.minecraft_version }}-${{ needs.vars.outputs.forge_version }})'
-          changelog: ${{ steps.changelog.outputs.changelog }}
-          changelog_type: markdown
-
-  publish_modrinth:
-    name: Publish to Modrinth
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-        java: [ 17 ]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Install JQ
-        if: ${{ matrix.os == 'ubuntu-latest' && hashFiles('./render_types.sh') != '' }}
-        run: sudo apt-get install jq -y
-
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Setup Java
-        uses: actions/setup-java@v2
-        with:
-          distribution: adopt
-          java-version: ${{ matrix.java }}
-
-      - name: Give Gradle Execute Permissions
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: chmod +x ./gradlew
-
-      - name: Give RenderTypes script Execute Permissions
-        if: ${{ matrix.os == 'ubuntu-latest' && hashFiles('./render_types.sh') != '' }}
-        run: chmod +x ./render_types.sh
-
-      - name: Generate Mod Data & Asset Files
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: data
-          execution-only-caches: true
-          job-id: java-${{ matrix.java }}
-          gradle-version: wrapper
-          save-generated-gradle-jars: true
-          save-local-build-cache: true
-          save-gradle-dependencies-cache: true
-          save-maven-dependencies-cache: true
-          gradle-distribution-sha-256-sum-warning: false
-
-          gradle-dependencies-cache-key: |
-            ~/.gradle/caches/forge_gradle/
-            ~/.gradle/caches/parchmentgradle/
-            accesstransformer.cfg
-
-      - name: Process model files (RenderTypes)
-        if: ${{ matrix.os == 'ubuntu-latest' && hashFiles('./render_types.sh') != '' }}
-        run: ./render_types.sh
-
-      - name: Publish Mod to Maven
-        uses: burrunan/gradle-cache-action@v1
-        with:
-          arguments: modrinth
-          execution-only-caches: false
-          job-id: java-${{ matrix.java }}
-          gradle-version: wrapper
-          save-generated-gradle-jars: true
-          save-local-build-cache: true
-          save-gradle-dependencies-cache: true
-          save-maven-dependencies-cache: true
-          gradle-distribution-sha-256-sum-warning: false
-          gradle-dependencies-cache-key: |
-            ~/.gradle/caches/forge_gradle/
-            ~/.gradle/caches/parchmentgradle/
-            accesstransformer.cfg
-        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
 
       - name: Cleanup Gradle Cache
@@ -439,35 +309,11 @@ jobs:
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
 
-  publish_github:
-    name: Publish Mod to GitHub
-
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-
-    needs: [ vars, compile ]
-
-    runs-on: ${{ matrix.os }}
-
-    steps:
-      - name: Download Changelog
-        uses: actions/download-artifact@v2
-        with:
-          name: changelog
-          path: .github
-
-      - name: Download Mod Jars
-        uses: actions/download-artifact@v2
-        with:
-          name: jars
-          path: ./build/libs
-
       - name: Load Changelog File
         id: changelog
         run: echo ::set-output name=changelog::$(cat .github/CHANGELOG.md)
 
-      - name: Create GitHub Release
+      - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.vars.outputs.tag_current }}
@@ -486,7 +332,7 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
 
-    needs: [ vars, changelog, compile, publish_maven, publish_curseforge, publish_modrinth, publish_github ]
+    needs: [ vars, changelog, compile, publish ]
 
     runs-on: ${{ matrix.os }}
 
