@@ -83,7 +83,7 @@ minecraft {
 
 		gameTestServer {
 			taskName 'GameTest-Server'
-			workingDirectory file('run/server')
+			workingDirectory file('run/gametest-server')
 			// property 'forge.logging.markers', 'REGISTRIES'
 			// property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
