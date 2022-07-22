@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import xyz.apex.forge.commonality.tags.ItemTags;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.FurnitureDoorBlock;
@@ -27,8 +26,6 @@ import xyz.apex.forge.fantasyfurniture.block.furniture.ShelfBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.SofaBlock;
 import xyz.apex.forge.fantasyfurniture.item.SkullBlossomsBlockItem;
 import xyz.apex.forge.fantasyfurniture.item.WidowBloomBlockItem;
-import xyz.apex.forge.fantasyfurniture.item.dyeable.DyeableBlockItem;
-import xyz.apex.forge.fantasyfurniture.item.dyeable.IDyeableItem;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
@@ -264,11 +261,6 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	// endregion
 	// endregion
-
-	// region: Royal
-	public static final ItemEntry<DyeableBlockItem> ROYAL_WOOL = wool(DyeableBlockItem::new, ModBlocks.ROYAL_WOOL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
-	public static final ItemEntry<DyeableBlockItem> ROYAL_CARPET = carpet(DyeableBlockItem::new, ModBlocks.ROYAL_CARPET).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
-	// endregion
 	// endregion
 
 	static void bootstrap()
@@ -343,13 +335,6 @@ public final class ModItems
 						)
 				)
 				.tag(FurnitureStation.CRAFTABLE)
-		;
-	}
-
-	private static <ITEM extends Item> ItemBuilder<ITEM, Registrate> applyDyeable(ItemBuilder<ITEM, Registrate> builder)
-	{
-		return builder
-				.color(() -> () -> (stack, tintIndex) -> FantasyFurniture.tintFromDyeColor(IDyeableItem.getDyeColor(stack)))
 		;
 	}
 

@@ -13,7 +13,6 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +27,6 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -36,13 +34,8 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
-import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
-import xyz.apex.forge.fantasyfurniture.block.dyeable.DyeableBlock;
-import xyz.apex.forge.fantasyfurniture.block.dyeable.DyeableCarpetBlock;
-import xyz.apex.forge.fantasyfurniture.block.dyeable.IDyeableBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
 import java.util.function.Predicate;
@@ -281,124 +274,6 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_DOUBLE = doorDouble("bone/wither", FurnitureDoorBlock::new).lang("Wither Bone Door Double").register();
 	public static final BlockEntry<LockboxBlock> BONE_WITHER_LOCKBOX = lockbox("bone/wither", LockboxBlock::new).lang("Wither Bone Lockbox").register();
 	// endregion
-	// endregion
-
-	// region: Royal
-	public static final BlockEntry<DyeableBlock> ROYAL_WOOL = wool("royal", DyeableBlock::new)
-			.transform(ModBlocks::applyDyeable)
-			.blockstate((ctx, provider) -> provider
-					.simpleBlock(ctx.get(), provider
-							.models()
-							.withExistingParent("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), "%s:block/block".formatted(Mods.MINECRAFT))
-							.texture("base", "%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-							.texture("tint", "%s:block/%s_tint".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-							.texture("particle", "#tint")
-							.renderType("cutout")
-							.element()
-								.from(0F, 0F, 0F)
-								.to(16F, 16F, 16F)
-								.allFaces((face, builder) -> builder
-										.texture("#tint")
-										.cullface(face)
-										.tintindex(0)
-								)
-							.end()
-							.element()
-								.from(0F, 0F, 0F)
-								.to(16F, 16F, 16F)
-								.allFaces((face, builder) -> builder
-										.texture("#base")
-										.cullface(face)
-								)
-							.end()
-					)
-			)
-	.register();
-	public static final BlockEntry<DyeableCarpetBlock> ROYAL_CARPET = carpet("royal", DyeableCarpetBlock::new)
-			.transform(ModBlocks::applyDyeable)
-			.blockstate((ctx, provider) -> provider
-					.simpleBlock(ctx.get(), provider
-							.models()
-							.withExistingParent("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), "%s:block/thin_block".formatted(Mods.MINECRAFT))
-							.texture("base", "%s:block/%s".formatted(ctx.getId().getNamespace(), ROYAL_WOOL.getId().getPath()))
-							.texture("tint", "%s:block/%s_tint".formatted(ctx.getId().getNamespace(), ROYAL_WOOL.getId().getPath()))
-							.texture("particle", "#tint")
-							.renderType("cutout")
-							.element()
-								.from(0F, 0F, 0F)
-								.to(16F, 1F, 16F)
-								.face(Direction.DOWN)
-									.texture("#tint")
-									.uvs(0F, 0F, 16F, 16F)
-									.cullface(Direction.DOWN)
-									.tintindex(1)
-								.end()
-								.face(Direction.UP)
-									.texture("#tint")
-									.uvs(0F, 0F, 16F, 16F)
-									.tintindex(1)
-								.end()
-								.face(Direction.NORTH)
-									.texture("#tint")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.NORTH)
-									.tintindex(1)
-								.end()
-								.face(Direction.SOUTH)
-									.texture("#tint")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.SOUTH)
-									.tintindex(1)
-								.end()
-								.face(Direction.WEST)
-									.texture("#tint")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.WEST)
-									.tintindex(1)
-								.end()
-								.face(Direction.EAST)
-									.texture("#tint")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.EAST)
-									.tintindex(1)
-								.end()
-							.end()
-							.element()
-								.from(0F, 0F, 0F)
-								.to(16F, 1F, 16F)
-								.face(Direction.DOWN)
-									.texture("#base")
-									.uvs(0F, 0F, 16F, 16F)
-									.cullface(Direction.DOWN)
-								.end()
-								.face(Direction.UP)
-									.texture("#base")
-									.uvs(0F, 0F, 16F, 16F)
-								.end()
-								.face(Direction.NORTH)
-									.texture("#base")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.NORTH)
-								.end()
-								.face(Direction.SOUTH)
-									.texture("#base")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.SOUTH)
-								.end()
-								.face(Direction.WEST)
-									.texture("#base")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.WEST)
-								.end()
-								.face(Direction.EAST)
-									.texture("#base")
-									.uvs(0F, 15F, 16F, 16F)
-									.cullface(Direction.EAST)
-								.end()
-							.end()
-					)
-			)
-	.register();
 	// endregion
 	// endregion
 
@@ -1412,29 +1287,6 @@ public final class ModBlocks
 						.isViewBlocking(BlockHelper::never)
 				)
 				.addLayer(() -> RenderType::cutout)
-		;
-	}
-
-	private static <BLOCK extends Block> BlockBuilder<BLOCK, Registrate> applyDyeable(BlockBuilder<BLOCK, Registrate> builder)
-	{
-		return builder
-				.loot((lootTables, block) -> lootTables
-						.add(block, LootTable
-								.lootTable()
-								.withPool(RegistrateBlockLootTables
-										.applyExplosionCondition(block, LootPool
-												.lootPool()
-												.setRolls(ConstantValue.exactly(1))
-												.add(LootItem.lootTableItem(block))
-												.apply(CopyBlockState
-														.copyState(block)
-														.copy(IDyeableBlock.DYE_COLOR_PROPERTY)
-												)
-										)
-								)
-						)
-				)
-				.color(() -> () -> (blockState, level, pos, tintIndex) -> FantasyFurniture.tintFromDyeColor(IDyeableBlock.getDyeColor(blockState)))
 		;
 	}
 

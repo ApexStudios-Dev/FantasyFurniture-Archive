@@ -5,20 +5,15 @@ import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.builders.MenuBuilder;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.MenuEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.MenuAccess;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -36,27 +31,17 @@ import xyz.apex.forge.fantasyfurniture.client.screen.LargeInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.MediumInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.client.screen.SmallInventoryMenuScreen;
 import xyz.apex.forge.fantasyfurniture.data.ParticleProvider;
-import xyz.apex.forge.fantasyfurniture.item.crafting.DyeableItemRecipe;
 import xyz.apex.forge.fantasyfurniture.menu.BookshelfMenu;
 import xyz.apex.forge.fantasyfurniture.menu.LargeInventoryMenu;
 import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
 import xyz.apex.forge.fantasyfurniture.menu.SmallInventoryMenu;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
-import static com.tterrag.registrate.providers.ProviderType.RECIPE;
 
 public final class ModElements
 {
 	private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Mods.FANTASY_FURNITURE);
 	public static final RegistryObject<SimpleParticleType> SMALL_SOUL_FLAME = PARTICLE_TYPES.register("small_soul_fire_flame", () -> new SimpleParticleType(false));
-
-	public static final RegistryEntry<SimpleRecipeSerializer<DyeableItemRecipe>> DYEABLE_ITEM_RECIPE = REGISTRATE
-			.object("crafting_special_dyeable_item")
-			.simple(Registry.RECIPE_SERIALIZER_REGISTRY, () -> new SimpleRecipeSerializer<>(DyeableItemRecipe::new));
-
-	public static final RegistryEntry<RecipeType<DyeableItemRecipe>> DYEABLE_ITEM_RECIPE_TYPE = REGISTRATE
-			.object("crafting_special_dyeable_item")
-			.simple(ForgeRegistries.Keys.RECIPE_TYPES, () -> RecipeType.simple(new ResourceLocation(Mods.FANTASY_FURNITURE, "crafting_special_dyeable_item")));
 
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
@@ -138,8 +123,6 @@ public final class ModElements
 	static void bootstrap()
 	{
 		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-		REGISTRATE.addDataGenerator(RECIPE, provider -> SpecialRecipeBuilder.special(DYEABLE_ITEM_RECIPE.get()).save(provider, "%s:dyeable_item".formatted(Mods.FANTASY_FURNITURE)));
 
 		EventBusHelper.addListener(GatherDataEvent.class, event -> {
 			var generator = event.getGenerator();
