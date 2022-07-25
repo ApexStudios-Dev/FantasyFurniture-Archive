@@ -1282,23 +1282,23 @@ public abstract class HitBoxes
 		@Override
 		protected VoxelShape doorDoubleShape()
 		{
-			return box(0, 0, 0.5, 16, 32, 2.5);
+			return box(0, 0, 0, 16, 32, 2);
 		}
 
 		@Override
 		protected VoxelShape doorSingleShape()
 		{
 			return VoxelShaper.or(
-					box(0, 0, 0.5, 16, 21, 2.5),
-					box(0, 29, 0.5, 16, 32, 2.5),
-					box(13, 21, 0.5, 16, 29, 2.5),
-					box(0, 21, 0.5, 3, 29, 2.5),
-					box(4, 21, 1, 5, 30, 2),
-					box(6, 21, 1, 7, 30, 2),
-					box(9, 21, 1, 10, 30, 2),
-					box(11, 21, 1, 12, 30, 2),
-					box(3, 27, 1, 13, 28, 2),
-					box(3, 22, 1, 13, 23, 2)
+					box(0, 0, 0, 16, 21, 2),
+					box(0, 29, 0, 16, 32, 2),
+					box(13, 21, 0, 16, 29, 2),
+					box(0, 21, 0, 3, 29, 2),
+					box(4, 21, 0.5, 5, 30, 1.5),
+					box(6, 21, 0.5, 7, 30, 1.5),
+					box(9, 21, 0.5, 10, 30, 1.5),
+					box(11, 21, 0.5, 12, 30, 1.5),
+					box(3, 27, 0.5, 13, 28, 1.5),
+					box(3, 22, 0.5, 13, 23, 1.5)
 			);
 		}
 	}
