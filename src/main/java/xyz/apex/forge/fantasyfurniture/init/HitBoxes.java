@@ -359,6 +359,15 @@ public abstract class HitBoxes
 			z -= (shapeFacing.getStepZ() * .81D);
 		}
 
+		if(ModBlocks.DUNMER_DOOR_DOUBLE.has(blockState))
+		{
+			if((hinge == DoorHingeSide.LEFT && open) || (hinge == DoorHingeSide.RIGHT && !open))
+			{
+				x -= (shapeFacing.getStepX() * .065D);
+				z -= (shapeFacing.getStepZ() * .065D);
+			}
+		}
+
 		return shape.move(x, y, z);
 	}
 
@@ -389,6 +398,15 @@ public abstract class HitBoxes
 		{
 			x -= (shapeFacing.getStepX() * .81D);
 			z -= (shapeFacing.getStepZ() * .81D);
+		}
+
+		if(ModBlocks.DUNMER_DOOR_SINGLE.has(blockState))
+		{
+			if((hinge == DoorHingeSide.LEFT && open) || (hinge == DoorHingeSide.RIGHT && !open))
+			{
+				x -= (shapeFacing.getStepX() * .065D);
+				z -= (shapeFacing.getStepZ() * .065D);
+			}
 		}
 
 		return shape.move(x, y, z);
