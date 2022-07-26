@@ -133,7 +133,7 @@ repositories {
 	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
-	maven { url 'https://maven.apexmods.xyz/' }
+	maven { url 'https://maven.apexstudios.dev/' }
 
 	maven {
 		url 'https://cursemaven.com'
