@@ -1,0 +1,168 @@
+name: Release Mod
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  # Gather variables used throughout the workflow
+  vars:
+    name: Gather workflow variables
+    runs-on: ubuntu-latest
+
+    outputs:
+      mod_name: ${{ steps.mod_name.outputs.value }}
+      mod_version: ${{ steps.mod_version.outputs.value }}
+      minecraft_version: ${{ steps.minecraft_version.outputs.value }}
+      forge_version: ${{ steps.forge_version.outputs.value }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Unshallow Repository
+        run: git fetch --prune --unshallow
+
+      - name: Mod Name
+        id: mod_name
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_name
+
+      - name: Mod Version
+        id: mod_version
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_version
+
+      - name: Release Type
+        id: mod_release_type
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_release_type
+
+      - name: Minecraft Version
+        id: minecraft_version
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: minecraft_version
+
+      - name: Forge Version
+        id: forge_version
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: forge_version
+
+      - name: View Variables
+        run: |
+          echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
+          echo "'mod_version': => '${{ steps.mod_version.outputs.value }}'"
+          echo "'minecraft_version': => '${{ steps.minecraft_version.outputs.value }}'"
+          echo "'forge_version': => '${{ steps.forge_version.outputs.value }}'"
+
+  # Run tests to ensure mod runs fine
+  tests:
+    name: Run Project CI Tests
+    uses: ApexStudios-Dev/.github/.github/workflows/call_tests.yml@master
+    with:
+      notification_color: 0x97C6E7
+    secrets:
+      DISCORD_CI_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
+
+  # Generate changelog
+  changelog:
+    name: Generate Changelog
+    uses: ApexStudios-Dev/.github/.github/workflows/call_changelog.yml@master
+
+  # Publish jars to various sources
+  compile:
+    name: Compile Project
+    uses: ApexStudios-Dev/.github/.github/workflows/call_compile.yml@master
+    needs: [ tests ]
+    secrets:
+      APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
+      APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
+
+  # Publish jars to various sources
+  publish:
+    name: Publish Project
+    uses: ApexStudios-Dev/.github/.github/workflows/call_publish.yml@master
+    needs: [ compile, changelog ]
+    secrets:
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+
+  # Dispatch mod publish notifications
+  notify:
+    name: Dispatch Notifications
+    runs-on: ubuntu-latest
+    needs: [ vars, changelog, publish ]
+    if: always()
+
+    steps:
+      - name: Download Changelog
+        if: ${{ (needs.publish.result == 'success') }}
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+          path: .github
+
+      - name: Notify Mod Publish Failure
+        if: ${{ (needs.publish.result == 'failure') }}
+        uses: sarisia/actions-status-discord@v1.9.0
+        with:
+          webhook: ${{ secrets.DISCORD_CI_WEBHOOK }}
+          title: '❌️ - **${{ needs.vars.outputs.mod_name }}** - _Failed to publish mod_!'
+          color: 0x97C6E7
+          username: ApexStudios
+          avatar_url: https://i.imgur.com/NkQg4yO.png
+          nodetail: true
+
+      - name: Send Version Release Announcement Messages
+        if: ${{ (needs.publish.result == 'success') }}
+        uses: sarisia/actions-status-discord@v1.9.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: '**${{ needs.vars.outputs.mod_name }}** has been updated to v**_${{ needs.vars.outputs.mod_version }}_**'
+          description: 'Compiled for **Minecraft** **_${{ needs.vars.outputs.minecraft_version }}_** and **MinecraftForge** **_${{ needs.vars.outputs.forge_version }}_** (_or newer_)'
+          color: 0x97C6E7
+          username: ApexStudios
+          avatar_url: https://i.imgur.com/NkQg4yO.png
+          nodetail: true
+
+      - name: Send Changelog to Discord
+        if: ${{ (needs.publish.result == 'success') }}
+        uses: sinshutu/upload-to-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
+        with:
+          args: ./.github/CHANGELOG.md
+
+      - name: Send Version Release Announcement Tweet
+        if: ${{ (needs.publish.result == 'success') }}
+        uses: ethomson/send-tweet-action@v1
+        with:
+          status: "${{ needs.vars.outputs.mod_name }} has been updated to v${{ needs.vars.outputs.mod_version }} for MinecraftForge ${{ needs.vars.outputs.minecraft_version }}-${{ needs.vars.outputs.forge_version }} (_or newer_)!"
+          consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+          consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
+          access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
+      - name: Notify CI Test Success
+        if: ${{ (needs.publish.result == 'success') }}
+        uses: sarisia/actions-status-discord@v1.9.0
+        with:
+          webhook: ${{ secrets.DISCORD_CI_WEBHOOK }}
+          title: '✅️ - **${{ needs.vars.outputs.mod_name }}** - _Published successfully_!'
+          color: 0x97C6E7
+          username: ApexStudios
+          avatar_url: https://i.imgur.com/NkQg4yO.png
