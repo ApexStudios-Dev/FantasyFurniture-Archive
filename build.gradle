@@ -162,7 +162,7 @@ dependencies {
 	// compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
-	implementation fg.deobf("${registrate_package}:Registrate:MC${minecraft_version}-${registrate_version}")
+	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
 
 	if(USE_EARLY_ACCESS) {
 		implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}-EAP:${commonality_version}")
