@@ -20,12 +20,16 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	versionRange="[41.1.0,)"
 	ordering="AFTER"
 	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		ignore=true
 [[dependencies.fantasyfurniture]]
 	modId="minecraft"
 	mandatory=true
 	versionRange="[1.19,1.20)"
 	ordering="AFTER"
 	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		ignore=true
 [[dependencies.fantasyfurniture]]
 	modId="commonality"
 	mandatory=true
@@ -38,15 +42,22 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	versionRange="[5.4.0,6.0.0)"
 	ordering="AFTER"
 	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		modrinth="apexcore"
+		curseforge="apexcore"
 [[dependencies.fantasyfurniture]]
 	modId="jei"
 	mandatory=false
 	versionRange="[11.0.0.211,)"
 	ordering="AFTER"
 	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		curseforge="jei"
 [[dependencies.fantasyfurniture]]
 	modId="ctm"
 	mandatory=false
 	versionRange="*" # ctm versions are funky, just allow all versions
 	ordering="AFTER"
 	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		curseforge="ctm"
