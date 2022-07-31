@@ -41,6 +41,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="apexcore"
 	mandatory=true
+	embedded=true
 	versionRange="[6.0.0,7.0.0)"
 	ordering="AFTER"
 	side="BOTH"
