@@ -1,5 +1,0 @@
-{
-	"resolve": "commits",
-	"sort": "asc",
-	"template": ".github/changelog.mustache"
-}
