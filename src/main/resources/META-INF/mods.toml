@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[42,)"
+loaderVersion="[43,)"
 license="GNU General Public License v3.0"
 issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 
@@ -17,7 +17,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="forge"
 	mandatory=true
-	versionRange="[42.0.2,43.0.0)"
+	versionRange="[43.0.0,44.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="[1.19.1,1.20)"
+	versionRange="[1.19.2,1.20)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
