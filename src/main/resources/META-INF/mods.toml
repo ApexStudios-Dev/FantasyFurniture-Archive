@@ -10,8 +10,8 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	updateJSONURL="https://raw.githubusercontent.com/ApexStudios-Dev/Version/master/fantasyfurniture.json"
 	displayURL="https://www.apexstudios.dev/fantasys-furniture"
 	logoFile="banner.png"
-	credits="Apex - Programming, FantasyGaming - Texture Artist"
-	authors="Apex, FantasyGaming"
+	credits="Apex - Programming, FantasyGaming - Artist"
+	authors="ApexStudios"
 	description="Mod requested by Fantasy which adds varying sets of furniture to your Minecraft world."
 
 [[dependencies.fantasyfurniture]]
