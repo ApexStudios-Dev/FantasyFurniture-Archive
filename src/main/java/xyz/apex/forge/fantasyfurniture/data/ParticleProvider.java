@@ -18,12 +18,13 @@ import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public abstract class ParticleProvider implements DataProvider
@@ -109,7 +110,7 @@ public abstract class ParticleProvider implements DataProvider
 	 */
 	public ParticleDefinition definition(ParticleType<?> particleType)
 	{
-		var name = Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getKey(particleType));
+		var name = RegistryHelper.getRegistryName(ForgeRegistries.PARTICLE_TYPES, particleType);
 		return particleDefinitions.computeIfAbsent(name, $ -> new ParticleDefinition());
 	}
 
@@ -123,7 +124,7 @@ public abstract class ParticleProvider implements DataProvider
 
 		public ParticleDefinition texture(ParticleType<?> particleType)
 		{
-			var name = Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getKey(particleType));
+			var name = RegistryHelper.getRegistryName(ForgeRegistries.PARTICLE_TYPES, particleType);
 			return texture(name);
 		}
 

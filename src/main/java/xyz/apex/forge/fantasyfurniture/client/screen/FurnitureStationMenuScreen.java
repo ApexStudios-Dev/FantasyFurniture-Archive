@@ -27,6 +27,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
+import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
@@ -418,7 +419,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 
 		if(!slot.hasItem())
 		{
-			var values = tagValues.computeIfAbsent(backgroundTag, $ -> ForgeRegistries.ITEMS.tags().getTag(backgroundTag).stream().map(Item::getDefaultInstance).collect(Collectors.toList()));
+			var values = tagValues.computeIfAbsent(backgroundTag, $ -> RegistryHelper.getTags(ForgeRegistries.ITEMS).getTag(backgroundTag).stream().map(Item::getDefaultInstance).collect(Collectors.toList()));
 
 			if(cycleCounter == 125)
 			{
@@ -471,7 +472,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 
 		var values = value.split("\\s+");
 		var item = stack.getItem();
-		var tags = itemTags.computeIfAbsent(item, $ -> ForgeRegistries.ITEMS.tags().getReverseTag(item).map(t -> t.getTagKeys().collect(Collectors.toList())).orElse(Collections.emptyList()));
+		var tags = itemTags.computeIfAbsent(item, $ -> RegistryHelper.getTags(ForgeRegistries.ITEMS).getReverseTag(item).map(t -> t.getTagKeys().collect(Collectors.toList())).orElse(Collections.emptyList()));
 		var displayName = stack.getHoverName().getString();
 
 		for(var filter : values)

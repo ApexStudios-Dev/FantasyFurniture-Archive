@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
+import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
@@ -40,7 +41,6 @@ import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
 import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
 
 import java.util.List;
-import java.util.Objects;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.ITEM_TAGS;
@@ -115,7 +115,7 @@ public final class FurnitureStation
 
 			if(obj instanceof ItemStack stack)
 			{
-				var itemName = ForgeRegistries.ITEMS.getKey(stack.getItem());
+				var itemName = RegistryHelper.getRegistryName(ForgeRegistries.ITEMS, stack.getItem());
 				FantasyFurniture.LOGGER.info("Received Furniture Station Result ('{}') from Mod: '{}'", itemName, imc.senderModId());
 				registerAdditionalCraftingResult(stack);
 			}
@@ -124,8 +124,7 @@ public final class FurnitureStation
 
 	public static List<ItemStack> buildResultsList()
 	{
-		var tags = Objects.requireNonNull(ForgeRegistries.ITEMS.tags());
-		var tag = tags.getTag(CRAFTABLE);
+		var tag = RegistryHelper.getTags(ForgeRegistries.ITEMS).getTag(CRAFTABLE);
 		var list = Lists.<ItemStack>newArrayList();
 		customStationResults.stream().map(ItemStack::copy).forEach(list::add);
 		tag.stream().map(Item::getDefaultInstance).forEach(list::add);
