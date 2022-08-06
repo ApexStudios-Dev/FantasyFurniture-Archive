@@ -33,7 +33,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="commonality"
 	mandatory=true
-	versionRange="[3.0.1,4.0.0)"
+	versionRange="[4.0.0,5.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
