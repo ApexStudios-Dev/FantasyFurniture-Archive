@@ -56,13 +56,13 @@ public class BookshelfBlock extends BaseMultiBlock.WithContainer<BookshelfBlockE
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_BOOKSHELF.has(blockState))
+		if(ModBlocks.NORDIC_BOOKSHELF.isIn(blockState))
 			return HitBoxes.NORDIC.bookshelf(this, blockState);
-		else if(ModBlocks.DUNMER_BOOKSHELF.has(blockState))
+		else if(ModBlocks.DUNMER_BOOKSHELF.isIn(blockState))
 			return HitBoxes.DUNMER.bookshelf(this, blockState);
-		else if(ModBlocks.VENTHYR_BOOKSHELF.has(blockState))
+		else if(ModBlocks.VENTHYR_BOOKSHELF.isIn(blockState))
 			return HitBoxes.VENTHYR.bookshelf(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_BOOKSHELF.has(blockState) || ModBlocks.BONE_WITHER_BOOKSHELF.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_BOOKSHELF.isIn(blockState) || ModBlocks.BONE_WITHER_BOOKSHELF.isIn(blockState))
 			return HitBoxes.BONE.bookshelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

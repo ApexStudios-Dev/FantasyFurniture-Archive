@@ -56,13 +56,13 @@ public class DresserBlock extends BaseMultiBlock.WithContainer<DresserBlockEntit
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_DRESSER.has(blockState))
+		if(ModBlocks.NORDIC_DRESSER.isIn(blockState))
 			return HitBoxes.NORDIC.dresser(this, blockState);
-		else if(ModBlocks.DUNMER_DRESSER.has(blockState))
+		else if(ModBlocks.DUNMER_DRESSER.isIn(blockState))
 			return HitBoxes.DUNMER.dresser(this, blockState);
-		else if(ModBlocks.VENTHYR_DRESSER.has(blockState))
+		else if(ModBlocks.VENTHYR_DRESSER.isIn(blockState))
 			return HitBoxes.VENTHYR.dresser(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_DRESSER.has(blockState) || ModBlocks.BONE_WITHER_DRESSER.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_DRESSER.isIn(blockState) || ModBlocks.BONE_WITHER_DRESSER.isIn(blockState))
 			return HitBoxes.BONE.dresser(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

@@ -56,13 +56,13 @@ public class ChestBlock extends BaseMultiBlock.WithContainer<ChestBlockEntity, L
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_CHEST.has(blockState))
+		if(ModBlocks.NORDIC_CHEST.isIn(blockState))
 			return HitBoxes.NORDIC.chest(this, blockState);
-		else if(ModBlocks.DUNMER_CHEST.has(blockState))
+		else if(ModBlocks.DUNMER_CHEST.isIn(blockState))
 			return HitBoxes.DUNMER.chest(this, blockState);
-		else if(ModBlocks.VENTHYR_CHEST.has(blockState))
+		else if(ModBlocks.VENTHYR_CHEST.isIn(blockState))
 			return HitBoxes.VENTHYR.chest(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_CHEST.has(blockState) || ModBlocks.BONE_WITHER_CHEST.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_CHEST.isIn(blockState) || ModBlocks.BONE_WITHER_CHEST.isIn(blockState))
 			return HitBoxes.BONE.chest(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

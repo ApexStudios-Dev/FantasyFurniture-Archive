@@ -53,7 +53,7 @@ public class BedSingleBlock extends BedBlock
 	@Override
 	public RenderShape getRenderShape(BlockState blockState)
 	{
-		if(ModBlocks.DUNMER_BED_SINGLE.has(blockState))
+		if(ModBlocks.DUNMER_BED_SINGLE.isIn(blockState))
 			return RenderShape.MODEL;
 
 		return super.getRenderShape(blockState);
@@ -62,13 +62,13 @@ public class BedSingleBlock extends BedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_BED_SINGLE.has(blockState))
+		if(ModBlocks.NORDIC_BED_SINGLE.isIn(blockState))
 			return HitBoxes.NORDIC.bedSingle(this, blockState);
-		else if(ModBlocks.DUNMER_BED_SINGLE.has(blockState))
+		else if(ModBlocks.DUNMER_BED_SINGLE.isIn(blockState))
 			return HitBoxes.DUNMER.bedSingle(this, blockState);
-		else if(ModBlocks.VENTHYR_BED_SINGLE.has(blockState))
+		else if(ModBlocks.VENTHYR_BED_SINGLE.isIn(blockState))
 			return HitBoxes.VENTHYR.bedSingle(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_BED_SINGLE.has(blockState) || ModBlocks.BONE_WITHER_BED_SINGLE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_BED_SINGLE.isIn(blockState) || ModBlocks.BONE_WITHER_BED_SINGLE.isIn(blockState))
 			return HitBoxes.BONE.bedSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

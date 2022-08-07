@@ -1,20 +1,9 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.builders.BlockEntityBuilder;
-import com.tterrag.registrate.builders.MenuBuilder;
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.entry.MenuEntry;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -22,6 +11,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
+import xyz.apex.forge.apexcore.registrate.entry.MenuEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
 import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
@@ -47,78 +38,119 @@ public final class ModElements
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
 
-	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = menu("large_inventory_menu", LargeInventoryMenu::new, () -> LargeInventoryMenuScreen::new);
-	public static final MenuEntry<MediumInventoryMenu> MEDIUM_INVENTORY_MENU = menu("medium_inventory_menu", MediumInventoryMenu::new, () -> MediumInventoryMenuScreen::new);
-	public static final MenuEntry<SmallInventoryMenu> SMALL_INVENTORY_MENU = menu("small_inventory_menu", SmallInventoryMenu::new, () -> SmallInventoryMenuScreen::new);
+	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = REGISTRATE
+			.object("large_inventory_menu")
+			.menu(LargeInventoryMenu::new, () -> LargeInventoryMenuScreen::new)
+	;
 
-	public static final MenuEntry<BookshelfMenu> BOOKSHELF_MENU = menu("bookshelf", BookshelfMenu::new, () -> BookshelfMenuScreen::new);
-	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = blockEntity("bookshelf", BookshelfBlockEntity::new)
-			.validBlocks(
+	public static final MenuEntry<MediumInventoryMenu> MEDIUM_INVENTORY_MENU = REGISTRATE
+			.object("medium_inventory_menu")
+			.menu(MediumInventoryMenu::new, () -> MediumInventoryMenuScreen::new)
+	;
+
+	public static final MenuEntry<SmallInventoryMenu> SMALL_INVENTORY_MENU = REGISTRATE
+			.object("small_inventory_menu")
+			.menu(SmallInventoryMenu::new, () -> SmallInventoryMenuScreen::new)
+	;
+
+	public static final MenuEntry<BookshelfMenu> BOOKSHELF_MENU = REGISTRATE
+			.object("bookshelf")
+			.menu(BookshelfMenu::new, () -> BookshelfMenuScreen::new)
+	;
+
+	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRATE
+			.object("bookshelf")
+			.blockEntity(BookshelfBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_BOOKSHELF, ModBlocks.DUNMER_BOOKSHELF,
 					ModBlocks.VENTHYR_BOOKSHELF, ModBlocks.BONE_SKELETON_BOOKSHELF,
 					ModBlocks.BONE_WITHER_BOOKSHELF
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<ChestBlockEntity> CHEST_BLOCK_ENTITY = blockEntity("chest", ChestBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<ChestBlockEntity> CHEST_BLOCK_ENTITY = REGISTRATE
+			.object("chest")
+			.blockEntity(ChestBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_CHEST, ModBlocks.DUNMER_CHEST,
 					ModBlocks.VENTHYR_CHEST, ModBlocks.BONE_SKELETON_CHEST,
 					ModBlocks.BONE_WITHER_CHEST
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<DeskBlockEntity> DESK_BLOCK_ENTITY = blockEntity("desk", DeskBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<DeskBlockEntity> DESK_BLOCK_ENTITY = REGISTRATE
+			.object("desk")
+			.blockEntity(DeskBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_DESK_LEFT, ModBlocks.NORDIC_DESK_RIGHT,
 					ModBlocks.DUNMER_DESK_LEFT, ModBlocks.DUNMER_DESK_RIGHT,
 					ModBlocks.VENTHYR_DESK_LEFT, ModBlocks.VENTHYR_DESK_RIGHT,
 					ModBlocks.BONE_SKELETON_DESK_LEFT, ModBlocks.BONE_SKELETON_DESK_RIGHT,
 					ModBlocks.BONE_WITHER_DESK_LEFT, ModBlocks.BONE_WITHER_DESK_RIGHT
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<DrawerBlockEntity> DRAWER_BLOCK_ENTITY = blockEntity("drawer", DrawerBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<DrawerBlockEntity> DRAWER_BLOCK_ENTITY = REGISTRATE
+			.object("drawer")
+			.blockEntity(DrawerBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_DRAWER, ModBlocks.DUNMER_DRAWER,
 					ModBlocks.VENTHYR_DRAWER, ModBlocks.BONE_SKELETON_DRAWER,
 					ModBlocks.BONE_WITHER_DRAWER
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<DresserBlockEntity> DRESSER_BLOCK_ENTITY = blockEntity("dresser", DresserBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<DresserBlockEntity> DRESSER_BLOCK_ENTITY = REGISTRATE
+			.object("dresser")
+			.blockEntity(DresserBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_DRESSER, ModBlocks.DUNMER_DRESSER,
 					ModBlocks.VENTHYR_DRESSER, ModBlocks.BONE_SKELETON_DRESSER,
 					ModBlocks.BONE_WITHER_DRESSER
 			)
 	.register();
 
-	public static final BlockEntityEntry<LockboxBlockEntity> LOCKBOX_BLOCK_ENTITY = blockEntity("lockbox", LockboxBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<LockboxBlockEntity> LOCKBOX_BLOCK_ENTITY = REGISTRATE
+			.object("lockbox")
+			.blockEntity(LockboxBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_LOCKBOX, ModBlocks.DUNMER_LOCKBOX,
 					ModBlocks.VENTHYR_LOCKBOX, ModBlocks.BONE_SKELETON_LOCKBOX,
 					ModBlocks.BONE_WITHER_LOCKBOX
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<WardrobeBlockEntity> WARDROBE_BLOCK_ENTITY = blockEntity("wardrobe", WardrobeBlockEntity::new)
-			.validBlocks(
+	public static final BlockEntityEntry<WardrobeBlockEntity> WARDROBE_BLOCK_ENTITY = REGISTRATE
+			.object("wardrobe")
+			.blockEntity(WardrobeBlockEntity::new)
+			.validBlock(
 					ModBlocks.NORDIC_WARDROBE_BOTTOM, ModBlocks.DUNMER_WARDROBE_BOTTOM,
 					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
 					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM
 			)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = blockEntity("decorations/widow_bloom", WidowBloomBlockEntity::new)
+	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = REGISTRATE
+			.object("decorations/widow_bloom")
+			.blockEntity(WidowBloomBlockEntity::new)
 			.validBlock(ModBlocks.VENTHYR_WIDOW_BLOOM)
 			.renderer(() -> WidowBloomBlockEntityRenderer::new)
-	.register();
+			.register()
+	;
 
-	public static final BlockEntityEntry<SkullBlossomsBlockEntity> BONE_SKULL_BLOSSOMS_BLOCK_ENTITY = blockEntity("decorations/bone_skull_blossoms", SkullBlossomsBlockEntity::new)
-			.validBlocks(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS, ModBlocks.BONE_WITHER_SKULL_BLOSSOMS)
+	public static final BlockEntityEntry<SkullBlossomsBlockEntity> BONE_SKULL_BLOSSOMS_BLOCK_ENTITY = REGISTRATE
+			.object("decorations/bone_skull_blossoms")
+			.blockEntity(SkullBlossomsBlockEntity::new)
+			.validBlock(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS, ModBlocks.BONE_WITHER_SKULL_BLOSSOMS)
 			.renderer(() -> SkullBlossomsBlockEntityRenderer::new)
-	.register();
+			.register()
+	;
 
 	static void bootstrap()
 	{
@@ -139,16 +171,4 @@ public final class ModElements
 
 		});
 	}
-
-	// region: Constructors
-	private static <MENU extends AbstractContainerMenu, SCREEN extends Screen & MenuAccess<MENU>> MenuEntry<MENU> menu(String name, MenuBuilder.ForgeMenuFactory<MENU> menuFactory, NonNullSupplier<MenuBuilder.ScreenFactory<MENU, SCREEN>> screenFactorySupplier)
-	{
-		return REGISTRATE.object(name).menu(menuFactory, screenFactorySupplier).register();
-	}
-
-	private static <BLOCK_ENTITY extends BlockEntity> BlockEntityBuilder<BLOCK_ENTITY, Registrate> blockEntity(String name, BlockEntityBuilder.BlockEntityFactory<BLOCK_ENTITY> blockEntityFactory)
-	{
-		return REGISTRATE.object(name).blockEntity(blockEntityFactory);
-	}
-	// endregion
 }

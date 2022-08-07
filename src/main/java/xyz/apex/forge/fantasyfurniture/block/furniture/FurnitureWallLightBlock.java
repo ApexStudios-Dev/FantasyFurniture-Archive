@@ -34,9 +34,9 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	@Override
 	protected void spawnLightParticles(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
 	{
-		if(ModBlocks.NORDIC_WALL_LIGHT.has(blockState))
+		if(ModBlocks.NORDIC_WALL_LIGHT.isIn(blockState))
 			super.spawnLightParticles(level, pos, blockState, pX, pY, pZ, rng);
-		else if(ModBlocks.VENTHYR_WALL_LIGHT.has(blockState))
+		else if(ModBlocks.VENTHYR_WALL_LIGHT.isIn(blockState))
 		{
 			var x = pX;
 			var y = pY + .35D;
@@ -60,7 +60,7 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
 			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
 		}
-		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.isIn(blockState))
 			super.spawnLightParticles(level, pos, blockState, pX, pY + .05D, pZ, rng);
 	}
 
@@ -69,7 +69,7 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	{
 		var flame = ParticleTypes.FLAME;
 
-		if(ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+		if(ModBlocks.BONE_WITHER_WALL_LIGHT.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
@@ -79,13 +79,13 @@ public class FurnitureWallLightBlock extends WallLightBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_WALL_LIGHT.has(blockState))
+		if(ModBlocks.NORDIC_WALL_LIGHT.isIn(blockState))
 			return HitBoxes.NORDIC.wallLight(this, blockState);
-		else if(ModBlocks.DUNMER_WALL_LIGHT.has(blockState))
+		else if(ModBlocks.DUNMER_WALL_LIGHT.isIn(blockState))
 			return HitBoxes.DUNMER.wallLight(this, blockState);
-		else if(ModBlocks.VENTHYR_WALL_LIGHT.has(blockState))
+		else if(ModBlocks.VENTHYR_WALL_LIGHT.isIn(blockState))
 			return HitBoxes.VENTHYR.wallLight(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_WALL_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_WALL_LIGHT.isIn(blockState))
 			return HitBoxes.BONE.wallLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

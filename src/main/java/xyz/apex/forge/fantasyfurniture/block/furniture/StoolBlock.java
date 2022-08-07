@@ -37,13 +37,13 @@ public class StoolBlock extends SeatBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_STOOL.has(blockState))
+		if(ModBlocks.NORDIC_STOOL.isIn(blockState))
 			return HitBoxes.NORDIC.stool(this, blockState);
-		else if(ModBlocks.DUNMER_STOOL.has(blockState))
+		else if(ModBlocks.DUNMER_STOOL.isIn(blockState))
 			return HitBoxes.DUNMER.stool(this, blockState);
-		else if(ModBlocks.VENTHYR_STOOL.has(blockState))
+		else if(ModBlocks.VENTHYR_STOOL.isIn(blockState))
 			return HitBoxes.VENTHYR.stool(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_STOOL.has(blockState) || ModBlocks.BONE_WITHER_STOOL.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_STOOL.isIn(blockState) || ModBlocks.BONE_WITHER_STOOL.isIn(blockState))
 			return HitBoxes.BONE.stool(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

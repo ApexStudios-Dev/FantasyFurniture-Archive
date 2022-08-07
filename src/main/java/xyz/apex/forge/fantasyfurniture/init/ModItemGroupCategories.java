@@ -78,7 +78,7 @@ public final class ModItemGroupCategories
 		DECORATIONS.addTranslationGenerator(REGISTRATE, "Decorations");
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> ItemGroupCategoryManager
-				.getInstance(ModRegistry.CREATIVE_MODE_TAB)
+				.getInstance(ModRegistry.CREATIVE_MODE_TAB.get())
 				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ DECORATIONS)
 		);
 

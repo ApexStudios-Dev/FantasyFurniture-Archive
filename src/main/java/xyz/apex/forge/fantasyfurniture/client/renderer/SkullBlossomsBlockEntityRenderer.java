@@ -24,7 +24,7 @@ public final class SkullBlossomsBlockEntityRenderer implements BlockEntityRender
 	@Override
 	public void render(SkullBlossomsBlockEntity blockEntity, float partialTicks, PoseStack pose, MultiBufferSource buffer, int combinedLight, int combinedOverlay)
 	{
-		var renderType = ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS.has(blockEntity.getBlockState()) ? model.renderType(SkullBlossomsModel.TEXTURE_SKELETON) : model.renderType(SkullBlossomsModel.TEXTURE_WITHER);
+		var renderType = ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS.isIn(blockEntity.getBlockState()) ? model.renderType(SkullBlossomsModel.TEXTURE_SKELETON) : model.renderType(SkullBlossomsModel.TEXTURE_WITHER);
 		var modelBuffer = buffer.getBuffer(renderType);
 
 		pose.pushPose();

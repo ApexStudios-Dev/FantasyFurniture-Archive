@@ -48,13 +48,13 @@ public class LockboxBlock extends BaseBlock.WithContainer<LockboxBlockEntity, Sm
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_LOCKBOX.has(blockState))
+		if(ModBlocks.NORDIC_LOCKBOX.isIn(blockState))
 			return HitBoxes.NORDIC.lockbox(this, blockState);
-		else if(ModBlocks.DUNMER_LOCKBOX.has(blockState))
+		else if(ModBlocks.DUNMER_LOCKBOX.isIn(blockState))
 			return HitBoxes.DUNMER.lockbox(this, blockState);
-		else if(ModBlocks.VENTHYR_LOCKBOX.has(blockState))
+		else if(ModBlocks.VENTHYR_LOCKBOX.isIn(blockState))
 			return HitBoxes.VENTHYR.lockbox(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_LOCKBOX.has(blockState) || ModBlocks.BONE_WITHER_LOCKBOX.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_LOCKBOX.isIn(blockState) || ModBlocks.BONE_WITHER_LOCKBOX.isIn(blockState))
 			return HitBoxes.BONE.lockbox(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

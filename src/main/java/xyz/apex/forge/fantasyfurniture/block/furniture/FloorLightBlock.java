@@ -48,7 +48,7 @@ public class FloorLightBlock extends BaseMultiBlock
 
 	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
-		if(ModBlocks.NORDIC_FLOOR_LIGHT.has(blockState))
+		if(ModBlocks.NORDIC_FLOOR_LIGHT.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .5D + .34D;
@@ -59,7 +59,7 @@ public class FloorLightBlock extends BaseMultiBlock
 			onLightParticle(level, pos, blockState, x, y, z + .27D, rng);
 			onLightParticle(level, pos, blockState, x, y, z - .27D, rng);
 		}
-		else if(ModBlocks.DUNMER_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.DUNMER_FLOOR_LIGHT.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .5D + .5D;
@@ -67,7 +67,7 @@ public class FloorLightBlock extends BaseMultiBlock
 
 			onLightParticle(level, pos, blockState, x, y, z, rng);
 		}
-		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.isIn(blockState))
 		{
 			if(blockState.getOptionalValue(PART).orElse(Part.BOTTOM) == Part.TOP)
 			{
@@ -82,7 +82,7 @@ public class FloorLightBlock extends BaseMultiBlock
 				onLightParticle(level, pos, blockState, x + .4D, y, z + .4D, rng);
 			}
 		}
-		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .5D + .45D;
@@ -98,7 +98,7 @@ public class FloorLightBlock extends BaseMultiBlock
 	{
 		var flame = ParticleTypes.FLAME;
 
-		if(ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+		if(ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
@@ -114,13 +114,13 @@ public class FloorLightBlock extends BaseMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_FLOOR_LIGHT.has(blockState))
+		if(ModBlocks.NORDIC_FLOOR_LIGHT.isIn(blockState))
 			return HitBoxes.NORDIC.floorLight(this, blockState);
-		else if(ModBlocks.DUNMER_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.DUNMER_FLOOR_LIGHT.isIn(blockState))
 			return HitBoxes.DUNMER.floorLight(this, blockState);
-		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.VENTHYR_FLOOR_LIGHT.isIn(blockState))
 			return HitBoxes.VENTHYR.floorLight(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState))
 			return HitBoxes.BONE.floorLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
@@ -143,7 +143,7 @@ public class FloorLightBlock extends BaseMultiBlock
 		@Override
 		protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 		{
-			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.has(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.has(blockState))
+			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState))
 			{
 				var x = pos.getX() + .5D;
 				var y = pos.getY() + .5D + .45D;

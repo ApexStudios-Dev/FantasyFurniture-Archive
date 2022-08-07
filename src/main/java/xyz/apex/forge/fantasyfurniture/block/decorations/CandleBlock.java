@@ -149,7 +149,7 @@ public final class CandleBlock extends BaseBlock
 	{
 		var flame = ParticleTypes.SMALL_FLAME;
 
-		if(ModBlocks.BONE_CANDLES.has(blockState))
+		if(ModBlocks.BONE_CANDLES.isIn(blockState))
 			flame = ModElements.SMALL_SOUL_FLAME.get();
 
 		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);

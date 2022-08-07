@@ -66,13 +66,13 @@ public class CushionBlock extends SeatBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_CUSHION.has(blockState))
+		if(ModBlocks.NORDIC_CUSHION.isIn(blockState))
 			return HitBoxes.NORDIC.cushion(this, blockState);
-		else if(ModBlocks.DUNMER_CUSHION.has(blockState))
+		else if(ModBlocks.DUNMER_CUSHION.isIn(blockState))
 			return HitBoxes.DUNMER.cushion(this, blockState);
-		else if(ModBlocks.VENTHYR_CUSHION.has(blockState))
+		else if(ModBlocks.VENTHYR_CUSHION.isIn(blockState))
 			return HitBoxes.VENTHYR.cushion(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_SKULL.has(blockState) || ModBlocks.BONE_WITHER_SKULL.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_SKULL.isIn(blockState) || ModBlocks.BONE_WITHER_SKULL.isIn(blockState))
 			return HitBoxes.BONE.cushion(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

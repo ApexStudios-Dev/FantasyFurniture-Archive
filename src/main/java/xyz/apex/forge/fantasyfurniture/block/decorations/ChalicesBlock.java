@@ -79,7 +79,7 @@ public final class ChalicesBlock extends StackedBlock
 		var facing = BaseBlock.getFacing(blockState);
 		var count = blockState.getValue(CHALICES);
 
-		if(ModBlocks.VENTHYR_CHALICES.has(blockState))
+		if(ModBlocks.VENTHYR_CHALICES.isIn(blockState))
 			return (count == 2 ? VENTHYR_SHAPER_2 : count == 1 ? VENTHYR_SHAPER_1 : VENTHYR_SHAPER_0).get(facing);
 		else
 			return (count == 2 ? BONE_SHAPER_2 : count == 1 ? BONE_SHAPER_1 : BONE_SHAPER_0).get(facing);

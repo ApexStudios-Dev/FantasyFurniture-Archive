@@ -1,11 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 
@@ -18,6 +14,10 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.client.model.generators.ModelFile;
 
+import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
+import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
@@ -268,17 +268,17 @@ public final class ModItems
 	}
 
 	// region: Constructors
-	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<ITEM, Registrate> wool(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> wool(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.WOOL);
 	}
 
-	private static <BLOCK extends CarpetBlock, ITEM extends Item> ItemBuilder<ITEM, Registrate> carpet(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends CarpetBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> carpet(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.WOOL_CARPETS);
 	}
 
-	private static <BLOCK extends ShelfBlock, ITEM extends Item> ItemBuilder<ITEM, Registrate> shelf(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends ShelfBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> shelf(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
 				.tag(ItemTags.Vanilla.BEDS)
@@ -291,7 +291,7 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends SofaBlock, ITEM extends Item> ItemBuilder<ITEM, Registrate> sofa(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends SofaBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> sofa(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
 				.tag(ItemTags.Vanilla.BEDS)
@@ -304,12 +304,12 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends BedBlock, ITEM extends Item> ItemBuilder<ITEM, Registrate> bed(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends BedBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> bed(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.BEDS);
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock, ITEM extends Item> ItemBuilder<ITEM, Registrate> door(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends FurnitureDoorBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> door(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
 				.tag(ItemTags.Vanilla.WOODEN_DOORS)
@@ -322,7 +322,7 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<ITEM, Registrate> blockItem(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> blockItem(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())
@@ -404,7 +404,7 @@ public final class ModItems
 		.register();
 	}
 
-	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<SkullBlossomsBlockItem, Registrate> skullBlossoms(BlockEntry<BLOCK> block)
+	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<BasicRegistrate, SkullBlossomsBlockItem, BasicRegistrate> skullBlossoms(BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())

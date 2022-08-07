@@ -4,10 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.MenuEntry;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.RenderType;
@@ -31,6 +27,10 @@ import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
 import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
+import xyz.apex.forge.apexcore.registrate.entry.MenuEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
@@ -139,16 +139,14 @@ public final class FurnitureStation
 				.block(FurnitureStationBlock::new)
 				.lang("Furniture Station")
 				.initialProperties(Material.WOOD)
-				.properties(properties -> properties
-						.strength(2.5F)
-						.sound(SoundType.WOOD)
-						.noOcclusion()
-						.isValidSpawn(BlockHelper::never)
-						.isRedstoneConductor(BlockHelper::never)
-						.isSuffocating(BlockHelper::never)
-						.isViewBlocking(BlockHelper::never)
-				)
-				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.noOcclusion()
+				.isValidSpawn(BlockHelper::never)
+				.isRedstoneConductor(BlockHelper::never)
+				.isSuffocating(BlockHelper::never)
+				.isViewBlocking(BlockHelper::never)
+				.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
 						.models()
 						.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
 				))
@@ -158,7 +156,7 @@ public final class FurnitureStation
 						.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 						.save(provider, ctx.getId())
 				)
-				.addLayer(() -> RenderType::cutout)
+				.renderType(() -> RenderType::cutout)
 
 				.item()
 					.model((ctx, provider) -> provider
@@ -181,6 +179,6 @@ public final class FurnitureStation
 						FurnitureStationMenu::new,
 						() -> FurnitureStationMenuScreen::new
 				)
-		.register();
+		;
 	}
 }

@@ -56,13 +56,13 @@ public class WardrobeBottomBlock extends BaseMultiBlock.WithContainer<WardrobeBl
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_WARDROBE_BOTTOM.has(blockState))
+		if(ModBlocks.NORDIC_WARDROBE_BOTTOM.isIn(blockState))
 			return HitBoxes.NORDIC.wardrobeBottom(this, blockState);
-		else if(ModBlocks.DUNMER_WARDROBE_BOTTOM.has(blockState))
+		else if(ModBlocks.DUNMER_WARDROBE_BOTTOM.isIn(blockState))
 			return HitBoxes.DUNMER.wardrobeBottom(this, blockState);
-		else if(ModBlocks.VENTHYR_WARDROBE_BOTTOM.has(blockState))
+		else if(ModBlocks.VENTHYR_WARDROBE_BOTTOM.isIn(blockState))
 			return HitBoxes.VENTHYR.wardrobeBottom(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM.has(blockState) || ModBlocks.BONE_WITHER_WARDROBE_BOTTOM.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM.isIn(blockState) || ModBlocks.BONE_WITHER_WARDROBE_BOTTOM.isIn(blockState))
 			return HitBoxes.BONE.wardrobeBottom(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

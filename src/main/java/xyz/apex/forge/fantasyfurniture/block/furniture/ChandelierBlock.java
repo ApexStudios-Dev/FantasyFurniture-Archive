@@ -39,7 +39,7 @@ public class ChandelierBlock extends BaseBlock
 
 	protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 	{
-		if(ModBlocks.NORDIC_CHANDELIER.has(blockState))
+		if(ModBlocks.NORDIC_CHANDELIER.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .65D;
@@ -50,7 +50,7 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x + .25D, y, z - .25D, rng);
 			onLightParticle(level, pos, blockState, x - .25D, y, z - .25D, rng);
 		}
-		else if(ModBlocks.DUNMER_CHANDELIER.has(blockState))
+		else if(ModBlocks.DUNMER_CHANDELIER.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .875D;
@@ -61,7 +61,7 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x - .275D, y, z + .275D, rng);
 			onLightParticle(level, pos, blockState, x - .275D, y, z - .275D, rng);
 		}
-		else if(ModBlocks.VENTHYR_CHANDELIER.has(blockState))
+		else if(ModBlocks.VENTHYR_CHANDELIER.isIn(blockState))
 		{
 			var x = pos.getX() + .2D;
 			var y = pos.getY() + .55D;
@@ -77,7 +77,7 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x + .1D + .4D, y + .2D, z + .1D + .4D, rng);
 			onLightParticle(level, pos, blockState, x + .1D, y + .2D, z + .1D + .4D, rng);
 		}
-		else if(ModBlocks.BONE_SKELETON_CHANDELIER.has(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_CHANDELIER.isIn(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .8D;
@@ -94,7 +94,7 @@ public class ChandelierBlock extends BaseBlock
 	{
 		var flame = ParticleTypes.FLAME;
 
-		if(ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+		if(ModBlocks.BONE_WITHER_CHANDELIER.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
@@ -104,13 +104,13 @@ public class ChandelierBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_CHANDELIER.has(blockState))
+		if(ModBlocks.NORDIC_CHANDELIER.isIn(blockState))
 			return HitBoxes.NORDIC.chandelier(this, blockState);
-		else if(ModBlocks.DUNMER_CHANDELIER.has(blockState))
+		else if(ModBlocks.DUNMER_CHANDELIER.isIn(blockState))
 			return HitBoxes.DUNMER.chandelier(this, blockState);
-		else if(ModBlocks.VENTHYR_CHANDELIER.has(blockState))
+		else if(ModBlocks.VENTHYR_CHANDELIER.isIn(blockState))
 			return HitBoxes.VENTHYR.chandelier(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_CHANDELIER.has(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_CHANDELIER.isIn(blockState) || ModBlocks.BONE_WITHER_CHANDELIER.isIn(blockState))
 			return HitBoxes.BONE.chandelier(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

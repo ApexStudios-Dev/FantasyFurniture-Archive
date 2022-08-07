@@ -31,13 +31,13 @@ public class TableSmallBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_TABLE_SMALL.has(blockState))
+		if(ModBlocks.NORDIC_TABLE_SMALL.isIn(blockState))
 			return HitBoxes.NORDIC.tableSmall(this, blockState);
-		else if(ModBlocks.DUNMER_TABLE_SMALL.has(blockState))
+		else if(ModBlocks.DUNMER_TABLE_SMALL.isIn(blockState))
 			return HitBoxes.DUNMER.tableSmall(this, blockState);
-		else if(ModBlocks.VENTHYR_TABLE_SMALL.has(blockState) || ModBlocks.VENTHYR_TABLE_SMALL_FANCY.has(blockState))
+		else if(ModBlocks.VENTHYR_TABLE_SMALL.isIn(blockState) || ModBlocks.VENTHYR_TABLE_SMALL_FANCY.isIn(blockState))
 			return HitBoxes.VENTHYR.tableSmall(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_TABLE_SMALL.has(blockState) || ModBlocks.BONE_WITHER_TABLE_SMALL.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_TABLE_SMALL.isIn(blockState) || ModBlocks.BONE_WITHER_TABLE_SMALL.isIn(blockState))
 			return HitBoxes.BONE.tableSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

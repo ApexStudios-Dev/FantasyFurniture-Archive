@@ -56,21 +56,21 @@ public class DeskBlock extends BaseMultiBlock.WithContainer<DeskBlockEntity, Sma
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_DESK_LEFT.has(blockState))
+		if(ModBlocks.NORDIC_DESK_LEFT.isIn(blockState))
 			return HitBoxes.NORDIC.deskLeft(this, blockState);
-		else if(ModBlocks.NORDIC_DESK_RIGHT.has(blockState))
+		else if(ModBlocks.NORDIC_DESK_RIGHT.isIn(blockState))
 			return HitBoxes.NORDIC.deskRight(this, blockState);
-		else if(ModBlocks.DUNMER_DESK_LEFT.has(blockState))
+		else if(ModBlocks.DUNMER_DESK_LEFT.isIn(blockState))
 			return HitBoxes.DUNMER.deskLeft(this, blockState);
-		else if(ModBlocks.DUNMER_DESK_RIGHT.has(blockState))
+		else if(ModBlocks.DUNMER_DESK_RIGHT.isIn(blockState))
 			return HitBoxes.DUNMER.deskRight(this, blockState);
-		else if(ModBlocks.VENTHYR_DESK_LEFT.has(blockState))
+		else if(ModBlocks.VENTHYR_DESK_LEFT.isIn(blockState))
 			return HitBoxes.VENTHYR.deskLeft(this, blockState);
-		else if(ModBlocks.VENTHYR_DESK_RIGHT.has(blockState))
+		else if(ModBlocks.VENTHYR_DESK_RIGHT.isIn(blockState))
 			return HitBoxes.VENTHYR.deskRight(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_DESK_LEFT.has(blockState) || ModBlocks.BONE_WITHER_DESK_LEFT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_DESK_LEFT.isIn(blockState) || ModBlocks.BONE_WITHER_DESK_LEFT.isIn(blockState))
 			return HitBoxes.BONE.deskLeft(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_DESK_RIGHT.has(blockState) || ModBlocks.BONE_WITHER_DESK_RIGHT.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_DESK_RIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_DESK_RIGHT.isIn(blockState))
 			return HitBoxes.BONE.deskRight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
