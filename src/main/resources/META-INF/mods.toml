@@ -42,7 +42,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	modId="apexcore"
 	mandatory=true
 	embedded=true
-	versionRange="[7.1.0,8.0.0)"
+	versionRange="[7.1.1,8.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
