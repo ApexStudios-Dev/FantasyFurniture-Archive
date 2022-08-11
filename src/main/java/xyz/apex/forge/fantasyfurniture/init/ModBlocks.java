@@ -6,7 +6,6 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
@@ -28,9 +27,12 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import xyz.apex.forge.apexcore.core.init.ACRegistry;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.BlockBuilder;
@@ -44,6 +46,7 @@ import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
+import static com.tterrag.registrate.providers.ProviderType.BLOCK_TAGS;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class ModBlocks
@@ -289,6 +292,17 @@ public final class ModBlocks
 			if(block instanceof StackedBlock stacked)
 				provider.add(stacked.getStackableTranslationKey(), "Stackable");
 		}));
+
+		REGISTRATE.addDataGenerator(BLOCK_TAGS, provider -> provider
+				.tag(ACRegistry.TAG_VISUALIZER)
+				.add(REGISTRATE
+						.getAll(ForgeRegistries.Keys.BLOCKS)
+						.stream()
+						.map(RegistryEntry::get)
+						.filter(IMultiBlock.class::isInstance)
+						.toArray(Block[]::new)
+				)
+		);
 	}
 
 	// region: Constructors
