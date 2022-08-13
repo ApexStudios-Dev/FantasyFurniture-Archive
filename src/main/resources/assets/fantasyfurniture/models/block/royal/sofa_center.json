@@ -3,8 +3,8 @@
 	"texture_size": [128, 128],
 	"textures": {
 		"sofa": "fantasyfurniture:models/royal/sofa",
-		"particle": "fantasyfurniture:particles/royal",
-		"sofa_tint": "fantasyfurniture:models/royal/sofa_tint"
+		"sofa_tint": "fantasyfurniture:models/royal/sofa_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -51,12 +51,12 @@
 			"from": [0, 6, 12],
 			"to": [16, 14, 14],
 			"faces": {
-				"north": {"uv": [0, 2.25, 2, 3.25], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [1.5, 7, 1.75, 8], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [2, 2.75, 4, 3.75], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [1.75, 7, 2, 8], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [7.25, 1.125, 5.25, 0.875], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [6, 5.5, 4, 5.75], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [0, 2.25, 2, 3.25], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [1.5, 7, 1.75, 8], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [2, 2.75, 4, 3.75], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [1.75, 7, 2, 8], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [7.25, 1.125, 5.25, 0.875], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [6, 5.5, 4, 5.75], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -64,12 +64,12 @@
 			"from": [0, 6, 3.5],
 			"to": [16, 6, 12.5],
 			"faces": {
-				"north": {"uv": [0, 0, 2, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 2, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [2, 1.125, 0, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [2, 1.125, 0, 2.25], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 2, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 2, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [2, 1.125, 0, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [2, 1.125, 0, 2.25], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -77,12 +77,12 @@
 			"from": [0, 4, 1.5],
 			"to": [16, 6, 3.5],
 			"faces": {
-				"north": {"uv": [4, 5.75, 6, 6], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [0.75, 7.5, 1, 7.75], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [5.875, 3.75, 7.875, 4], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [4.5, 7.5, 4.75, 7.75], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [7.875, 4.25, 5.875, 4], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [7.875, 4.25, 5.875, 4.5], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [4, 5.75, 6, 6], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [0.75, 7.5, 1, 7.75], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [5.875, 3.75, 7.875, 4], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [4.5, 7.5, 4.75, 7.75], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [7.875, 4.25, 5.875, 4], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [7.875, 4.25, 5.875, 4.5], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		}
 	],

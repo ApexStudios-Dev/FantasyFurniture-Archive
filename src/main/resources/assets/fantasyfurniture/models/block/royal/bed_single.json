@@ -3,8 +3,8 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"bed_single": "fantasyfurniture:models/royal/bed_single",
-		"particle": "fantasyfurniture:particles/royal",
-		"bed_single_tint": "fantasyfurniture:models/royal/bed_single_tint"
+		"bed_single_tint": "fantasyfurniture:models/royal/bed_single_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -332,12 +332,12 @@
 			"to": [13, 13, 1],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 5, 1]},
 			"faces": {
-				"north": {"uv": [5, 5.5, 7.5, 7.5], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [6, 0, 8.5, 2], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [5, 5.5, 7.5, 7.5], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [6, 0, 8.5, 2], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -388,12 +388,12 @@
 			"to": [13, 13, 31],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 5, 31]},
 			"faces": {
-				"north": {"uv": [0, 5.5, 2.5, 7.5], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [2.5, 5.5, 5, 7.5], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 5.5, 2.5, 7.5], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [2.5, 5.5, 5, 7.5], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [2.5, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -440,12 +440,12 @@
 			"from": [2, 5, 8],
 			"to": [14, 8, 8],
 			"faces": {
-				"north": {"uv": [0, 7.5, 3, 8.25], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [3, 7.5, 6, 8.25], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [3, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [3, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 7.5, 3, 8.25], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [3, 7.5, 6, 8.25], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [3, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [3, 0, 0, 0], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -453,12 +453,12 @@
 			"from": [2, 5, 8],
 			"to": [2, 8, 30],
 			"faces": {
-				"north": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [6, 2, 11.5, 2.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [6, 2.75, 11.5, 3.5], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [0, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [0, 0, 0, 5.5], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [6, 2, 11.5, 2.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [6, 2.75, 11.5, 3.5], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [0, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [0, 0, 0, 5.5], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -466,12 +466,12 @@
 			"from": [14, 5, 8],
 			"to": [14, 8, 30],
 			"faces": {
-				"north": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [6, 3.5, 11.5, 4.25], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [6, 4.25, 11.5, 5], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [0, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [0, 0, 0, 5.5], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [6, 3.5, 11.5, 4.25], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 0.75], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [6, 4.25, 11.5, 5], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [0, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [0, 0, 0, 5.5], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -479,12 +479,12 @@
 			"from": [2, 8, 8],
 			"to": [14, 8, 30],
 			"faces": {
-				"north": {"uv": [0, 0, 3, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 5.5, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 3, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 5.5, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [3, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [6, 0, 3, 5.5], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 3, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 5.5, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 3, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 5.5, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [3, 5.5, 0, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [6, 0, 3, 5.5], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -493,12 +493,12 @@
 			"to": [13, 8, 31],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 1]},
 			"faces": {
-				"north": {"uv": [0, 0, 2.5, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0.25, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 2.5, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0.25, 0], "texture": "#bed_single_tint", "tintindex": 0},
-				"up": {"uv": [8.5, 5.25, 6, 5], "texture": "#bed_single_tint", "tintindex": 0},
-				"down": {"uv": [8.5, 5.25, 6, 5.5], "texture": "#bed_single_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 2.5, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0.25, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 2.5, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0.25, 0], "texture": "#bed_single_tint", "tintindex": 1},
+				"up": {"uv": [8.5, 5.25, 6, 5], "texture": "#bed_single_tint", "tintindex": 1},
+				"down": {"uv": [8.5, 5.25, 6, 5.5], "texture": "#bed_single_tint", "tintindex": 1}
 			}
 		},
 		{

@@ -3,8 +3,8 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"shelf": "fantasyfurniture:models/royal/shelf",
-		"particle": "fantasyfurniture:particles/royal",
-		"shelf_tint": "fantasyfurniture:models/royal/shelf_tint"
+		"shelf_tint": "fantasyfurniture:models/royal/shelf_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -73,8 +73,8 @@
 				"east": {"uv": [3, 0, 0, 0], "texture": "#shelf_tint"},
 				"south": {"uv": [3.5, 0, 0, 0], "texture": "#shelf_tint"},
 				"west": {"uv": [3, 0, 0, 0], "texture": "#shelf_tint"},
-				"up": {"uv": [4, 3, 7.5, 0], "texture": "#shelf_tint", "tintindex": 0},
-				"down": {"uv": [4, 3, 7.5, 6], "texture": "#shelf_tint", "tintindex": 0}
+				"up": {"uv": [4, 3, 7.5, 0], "texture": "#shelf_tint", "tintindex": 1},
+				"down": {"uv": [4, 3, 7.5, 6], "texture": "#shelf_tint", "tintindex": 1}
 			}
 		},
 		{

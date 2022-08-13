@@ -3,8 +3,8 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"door_single": "fantasyfurniture:models/royal/door_single",
-		"particle": "fantasyfurniture:particles/royal",
-		"door_tint": "fantasyfurniture:models/royal/door_tint"
+		"door_tint": "fantasyfurniture:models/royal/door_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -41,12 +41,12 @@
 			"to": [16, 30, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
-				"north": {"uv": [3.5, 0, 0, 7.5], "texture": "#door_tint", "tintindex": 0},
-				"east": {"uv": [0.5, 7.5, 0, 15], "texture": "#door_tint", "tintindex": 0},
-				"south": {"uv": [7, 0, 3.5, 7.5], "texture": "#door_tint", "tintindex": 0},
-				"west": {"uv": [7.5, 0, 7, 7.5], "texture": "#door_tint", "tintindex": 0},
-				"up": {"uv": [7.5, 0.5, 11, 0], "texture": "#door_tint", "tintindex": 0},
-				"down": {"uv": [0.5, 7.5, 4, 8], "texture": "#door_tint", "tintindex": 0}
+				"north": {"uv": [3.5, 0, 0, 7.5], "texture": "#door_tint", "tintindex": 1},
+				"east": {"uv": [0.5, 7.5, 0, 15], "texture": "#door_tint", "tintindex": 1},
+				"south": {"uv": [7, 0, 3.5, 7.5], "texture": "#door_tint", "tintindex": 1},
+				"west": {"uv": [7.5, 0, 7, 7.5], "texture": "#door_tint", "tintindex": 1},
+				"up": {"uv": [7.5, 0.5, 11, 0], "texture": "#door_tint", "tintindex": 1},
+				"down": {"uv": [0.5, 7.5, 4, 8], "texture": "#door_tint", "tintindex": 1}
 			}
 		},
 		{

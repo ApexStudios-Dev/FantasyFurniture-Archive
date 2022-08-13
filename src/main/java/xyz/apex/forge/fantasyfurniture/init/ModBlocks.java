@@ -1398,7 +1398,7 @@ public final class ModBlocks
 
 	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDyeable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
-		return builder.color(() -> () -> (blockstate, level, pos, tintIndex) -> tintIndex == 0 ? FantasyFurniture.getDyeColor(blockstate).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
+		return builder.color(() -> () -> (blockstate, level, pos, tintIndex) -> tintIndex == 1 ? FantasyFurniture.getDyeColor(blockstate).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
 	}
 
 	private static <BLOCK extends Block> BlockModelBuilder getModelFile(DataGenContext<Block, BLOCK> ctx, BlockState blockState, BlockModelProvider provider)

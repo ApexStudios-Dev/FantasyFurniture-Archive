@@ -3,8 +3,8 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"table_large": "fantasyfurniture:models/royal/table_large",
-		"particle": "fantasyfurniture:particles/royal",
-		"table_large_tint": "fantasyfurniture:models/royal/table_large_tint"
+		"table_large_tint": "fantasyfurniture:models/royal/table_large_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -234,12 +234,12 @@
 			"from": [-14, 14, 2],
 			"to": [14, 16, 30],
 			"faces": {
-				"north": {"uv": [7, 0, 14, 0.5], "texture": "#table_large_tint", "tintindex": 0},
-				"east": {"uv": [7, 0.5, 14, 1], "texture": "#table_large_tint", "tintindex": 0},
-				"south": {"uv": [7, 1, 14, 1.5], "texture": "#table_large_tint", "tintindex": 0},
-				"west": {"uv": [7, 1.5, 14, 2], "texture": "#table_large_tint", "tintindex": 0},
-				"up": {"uv": [7, 7, 0, 0], "texture": "#table_large_tint", "tintindex": 0},
-				"down": {"uv": [7, 7, 0, 14], "texture": "#table_large_tint", "tintindex": 0}
+				"north": {"uv": [7, 0, 14, 0.5], "texture": "#table_large_tint", "tintindex": 1},
+				"east": {"uv": [7, 0.5, 14, 1], "texture": "#table_large_tint", "tintindex": 1},
+				"south": {"uv": [7, 1, 14, 1.5], "texture": "#table_large_tint", "tintindex": 1},
+				"west": {"uv": [7, 1.5, 14, 2], "texture": "#table_large_tint", "tintindex": 1},
+				"up": {"uv": [7, 7, 0, 0], "texture": "#table_large_tint", "tintindex": 1},
+				"down": {"uv": [7, 7, 0, 14], "texture": "#table_large_tint", "tintindex": 1}
 			}
 		}
 	],

@@ -3,8 +3,8 @@
 	"texture_size": [128, 128],
 	"textures": {
 		"sofa": "fantasyfurniture:models/royal/sofa",
-		"particle": "fantasyfurniture:particles/royal",
-		"sofa_tint": "fantasyfurniture:models/royal/sofa_tint"
+		"sofa_tint": "fantasyfurniture:models/royal/sofa_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -167,12 +167,12 @@
 			"to": [16, 13, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-8, 8.25, 6]},
 			"faces": {
-				"north": {"uv": [4.25, 3.75, 5.875, 4.625], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [7.25, 6.375, 7.5, 7.25], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [0, 4.375, 1.625, 5.25], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [6.5, 7.25, 6.75, 8.125], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [4.375, 6.25, 2.75, 6], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [6, 6, 4.375, 6.25], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [4.25, 3.75, 5.875, 4.625], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [7.25, 6.375, 7.5, 7.25], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [0, 4.375, 1.625, 5.25], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [6.5, 7.25, 6.75, 8.125], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [4.375, 6.25, 2.75, 6], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [6, 6, 4.375, 6.25], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -181,12 +181,12 @@
 			"to": [16, 14, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-8, 8.25, 6]},
 			"faces": {
-				"north": {"uv": [7.25, 1, 8.75, 1.125], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [6.375, 1.875, 6.625, 2], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [7.25, 7.25, 8.75, 7.375], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [7.5, 6.125, 7.75, 6.25], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [7.875, 1.875, 6.375, 1.625], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [3, 6.5, 1.5, 6.75], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [7.25, 1, 8.75, 1.125], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [6.375, 1.875, 6.625, 2], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [7.25, 7.25, 8.75, 7.375], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [7.5, 6.125, 7.75, 6.25], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [7.875, 1.875, 6.375, 1.625], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [3, 6.5, 1.5, 6.75], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -195,12 +195,12 @@
 			"to": [3, 9, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-8, 8.25, 6]},
 			"faces": {
-				"north": {"uv": [5, 2, 5.25, 2.375], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [3, 6.5, 4, 6.875], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [5, 2.375, 5.25, 2.75], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [6.25, 6.625, 7.25, 7], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [2.25, 8, 2, 7], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [2.5, 7, 2.25, 8], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [5, 2, 5.25, 2.375], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [3, 6.5, 4, 6.875], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [5, 2.375, 5.25, 2.75], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [6.25, 6.625, 7.25, 7], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [2.25, 8, 2, 7], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [2.5, 7, 2.25, 8], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -209,12 +209,12 @@
 			"to": [16, 6, 12.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-8, 8.25, 6]},
 			"faces": {
-				"north": {"uv": [0, 0, 1.625, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 1.625, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [1.625, 4.375, 0, 3.25], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [5.25, 0, 3.625, 1.125], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [0, 0, 1.625, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 1.625, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 1.125, 0], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [1.625, 4.375, 0, 3.25], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [5.25, 0, 3.625, 1.125], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -223,12 +223,12 @@
 			"to": [16, 6, 3.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-8, 8.25, 6]},
 			"faces": {
-				"north": {"uv": [5.875, 4.5, 7.5, 4.75], "texture": "#sofa_tint", "tintindex": 0},
-				"east": {"uv": [5.25, 2.375, 5.5, 2.625], "texture": "#sofa_tint", "tintindex": 0},
-				"south": {"uv": [5.875, 4.75, 7.5, 5], "texture": "#sofa_tint", "tintindex": 0},
-				"west": {"uv": [0, 7.5, 0.25, 7.75], "texture": "#sofa_tint", "tintindex": 0},
-				"up": {"uv": [7.5, 5.25, 5.875, 5], "texture": "#sofa_tint", "tintindex": 0},
-				"down": {"uv": [7.5, 5.25, 5.875, 5.5], "texture": "#sofa_tint", "tintindex": 0}
+				"north": {"uv": [5.875, 4.5, 7.5, 4.75], "texture": "#sofa_tint", "tintindex": 1},
+				"east": {"uv": [5.25, 2.375, 5.5, 2.625], "texture": "#sofa_tint", "tintindex": 1},
+				"south": {"uv": [5.875, 4.75, 7.5, 5], "texture": "#sofa_tint", "tintindex": 1},
+				"west": {"uv": [0, 7.5, 0.25, 7.75], "texture": "#sofa_tint", "tintindex": 1},
+				"up": {"uv": [7.5, 5.25, 5.875, 5], "texture": "#sofa_tint", "tintindex": 1},
+				"down": {"uv": [7.5, 5.25, 5.875, 5.5], "texture": "#sofa_tint", "tintindex": 1}
 			}
 		}
 	],

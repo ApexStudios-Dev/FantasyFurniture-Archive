@@ -3,8 +3,8 @@
 	"texture_size": [128, 128],
 	"textures": {
 		"wardrobe_bottom": "fantasyfurniture:models/royal/wardrobe",
-		"particle": "fantasyfurniture:particles/royal",
-		"wardrobe_bottom_tint": "fantasyfurniture:models/royal/wardrobe_tint"
+		"wardrobe_bottom_tint": "fantasyfurniture:models/royal/wardrobe_tint",
+		"particle": "fantasyfurniture:particles/royal"
 	},
 	"elements": [
 		{
@@ -293,10 +293,10 @@
 			"to": [13, 30, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [12, 5, 6]},
 			"faces": {
-				"north": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [3, 3.5, 4, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [4, 3.5, 5, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [3, 3.5, 4, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [4, 3.5, 5, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [0, 1, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [0, 0, 0, 1], "texture": "#wardrobe_bottom_tint"}
 			}
@@ -307,10 +307,10 @@
 			"to": [-13, 30, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-14, 5, 6]},
 			"faces": {
-				"north": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [5, 3.5, 6, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [0, 6, 1, 9], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [5, 3.5, 6, 6.5], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [0, 6, 1, 9], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [0, 1, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [0, 0, 0, 1], "texture": "#wardrobe_bottom_tint"}
 			}
@@ -321,10 +321,10 @@
 			"to": [12, 30, 13],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-12, 5, 7]},
 			"faces": {
-				"north": {"uv": [0, 0, 3, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [0, 3, 3, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [0, 0, 3, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [0, 3, 3, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 3], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [3, 0, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [3, 0, 0, 0], "texture": "#wardrobe_bottom_tint"}
 			}
@@ -335,10 +335,10 @@
 			"to": [12, 30, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-12, 5, -3]},
 			"faces": {
-				"north": {"uv": [6, 0, 7.375, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [1, 6, 2.375, 8], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [6, 0, 7.375, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [1, 6, 2.375, 8], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [1.375, 0, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [1.375, 0, 0, 0], "texture": "#wardrobe_bottom_tint"}
 			}
@@ -349,10 +349,10 @@
 			"to": [12, 12, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-12, -3, -3]},
 			"faces": {
-				"north": {"uv": [6, 6, 9, 6.75], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 0.75], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [2.375, 6.5, 5.375, 7.25], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 0.75], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [6, 6, 9, 6.75], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 0.75], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [2.375, 6.5, 5.375, 7.25], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 0.75], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [3, 0, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [3, 0, 0, 0], "texture": "#wardrobe_bottom_tint"}
 			}
@@ -363,10 +363,10 @@
 			"to": [-1, 30, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [-25, 5, -3]},
 			"faces": {
-				"north": {"uv": [6, 2, 7.375, 4], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"east": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"south": {"uv": [6, 4, 7.375, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
-				"west": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 0},
+				"north": {"uv": [6, 2, 7.375, 4], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"south": {"uv": [6, 4, 7.375, 6], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#wardrobe_bottom_tint", "tintindex": 1},
 				"up": {"uv": [1.375, 0, 0, 0], "texture": "#wardrobe_bottom_tint"},
 				"down": {"uv": [1.375, 0, 0, 0], "texture": "#wardrobe_bottom_tint"}
 			}
