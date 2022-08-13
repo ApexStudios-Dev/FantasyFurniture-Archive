@@ -154,6 +154,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> NORDIC_DOOR_SINGLE = doorSingle("nordic", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> NORDIC_DOOR_DOUBLE = doorDouble("nordic", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> NORDIC_LOCKBOX = lockbox("nordic", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<CounterBlock> NORDIC_COUNTER = counter("nordic", CounterBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 
 	// region: Dunmer
@@ -186,6 +187,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_SINGLE = doorSingle("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> DUNMER_LOCKBOX = lockbox("dunmer", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<CounterBlock> DUNMER_COUNTER = counter("dunmer", CounterBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 
 	// region: Venthyr
@@ -221,6 +223,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_SINGLE = doorSingle("venthyr", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> VENTHYR_DOOR_DOUBLE = doorDouble("venthyr", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> VENTHYR_LOCKBOX = lockbox("venthyr", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<CounterBlock> VENTHYR_COUNTER = counter("venthyr", CounterBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 
 	// region: Bone
@@ -254,6 +257,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_SINGLE = doorSingle("bone/skeleton", FurnitureDoorBlock::new).lang("Bone Door Single").register();
 	public static final BlockEntry<FurnitureDoorBlock> BONE_SKELETON_DOOR_DOUBLE = doorDouble("bone/skeleton", FurnitureDoorBlock::new).lang("Bone Door Double").register();
 	public static final BlockEntry<LockboxBlock> BONE_SKELETON_LOCKBOX = lockbox("bone/skeleton", LockboxBlock::new).lang("Bone Lockbox").register();
+	public static final BlockEntry<CounterBlock> BONE_SKELETON_COUNTER = counter("bone/skeleton", CounterBlock::new).register();
 	// endregion
 
 	// region: Wither
@@ -286,6 +290,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_SINGLE = doorSingle("bone/wither", FurnitureDoorBlock::new).lang("Wither Bone Door Single").register();
 	public static final BlockEntry<FurnitureDoorBlock> BONE_WITHER_DOOR_DOUBLE = doorDouble("bone/wither", FurnitureDoorBlock::new).lang("Wither Bone Door Double").register();
 	public static final BlockEntry<LockboxBlock> BONE_WITHER_LOCKBOX = lockbox("bone/wither", LockboxBlock::new).lang("Wither Bone Lockbox").register();
+	public static final BlockEntry<CounterBlock> BONE_WITHER_COUNTER = counter("bone/wither", CounterBlock::new).register();
 	// endregion
 	// endregion
 

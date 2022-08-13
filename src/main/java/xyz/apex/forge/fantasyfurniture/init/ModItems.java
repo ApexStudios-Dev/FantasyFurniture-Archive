@@ -133,6 +133,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_SINGLE = door(BlockItem::new, ModBlocks.NORDIC_DOOR_SINGLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.NORDIC_DOOR_DOUBLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_LOCKBOX = blockItem(BlockItem::new, ModBlocks.NORDIC_LOCKBOX).tag(ModItemGroupCategories.NORDIC_TAG).register();
+	public static final ItemEntry<BlockItem> NORDIC_COUNTER = counter(BlockItem::new, ModBlocks.NORDIC_COUNTER).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	// endregion
 
 	// region: Dunmer
@@ -165,6 +166,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.DUNMER_LOCKBOX).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_COUNTER = counter(BlockItem::new, ModBlocks.DUNMER_COUNTER).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	// endregion
 
 	// region: Venthyr
@@ -200,6 +202,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_SINGLE = door(BlockItem::new, ModBlocks.VENTHYR_DOOR_SINGLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.VENTHYR_DOOR_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_LOCKBOX = blockItem(BlockItem::new, ModBlocks.VENTHYR_LOCKBOX).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_COUNTER = counter(BlockItem::new, ModBlocks.VENTHYR_COUNTER).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	// endregion
 
 	// region: Bone
@@ -233,6 +236,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_COUNTER = counter(BlockItem::new, ModBlocks.BONE_SKELETON_COUNTER).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
 
 	// region: Wither
@@ -265,6 +269,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_COUNTER = counter(BlockItem::new, ModBlocks.BONE_WITHER_COUNTER).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	// endregion
 	// endregion
 

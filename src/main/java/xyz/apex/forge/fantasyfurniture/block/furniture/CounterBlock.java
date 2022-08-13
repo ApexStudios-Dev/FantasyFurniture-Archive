@@ -69,7 +69,7 @@ public class CounterBlock extends BaseBlock.WithContainer<CounterBlockEntity, Me
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		/*if(ModBlocks.NORDIC_COUNTER.isIn(blockState))
+		if(ModBlocks.NORDIC_COUNTER.isIn(blockState))
 			return HitBoxes.NORDIC.counter(this, blockState);
 		else if(ModBlocks.DUNMER_COUNTER.isIn(blockState))
 			return HitBoxes.DUNMER.counter(this, blockState);
@@ -77,7 +77,7 @@ public class CounterBlock extends BaseBlock.WithContainer<CounterBlockEntity, Me
 			return HitBoxes.VENTHYR.counter(this, blockState);
 		else if(ModBlocks.BONE_SKELETON_COUNTER.isIn(blockState) || ModBlocks.BONE_WITHER_COUNTER.isIn(blockState))
 			return HitBoxes.BONE.counter(this, blockState);
-		else */if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
+		else if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
 			return HitBoxes.ROYAL.counter(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
