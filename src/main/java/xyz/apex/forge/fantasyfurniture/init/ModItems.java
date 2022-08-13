@@ -531,7 +531,7 @@ public final class ModItems
 
 	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> applyDyeable(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> builder)
 	{
-		return builder.color(() -> () -> (stack, tintIndex) -> tintIndex == 0 ? FantasyFurniture.getDyeColor(stack).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
+		return builder.color(() -> () -> (stack, tintIndex) -> tintIndex == (ROYAL_WOOL.isIn(stack) || ROYAL_CARPET.isIn(stack) ? 0 : 1) ? FantasyFurniture.getDyeColor(stack).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
 	}
 	// endregion
 }
