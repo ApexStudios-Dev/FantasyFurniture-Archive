@@ -99,6 +99,7 @@ public final class ModItems
 
 	// region: Royal
 	public static final ItemEntry<WearableBlockItem> ROYAL_CROWN = blockItem((block, properties) -> new WearableBlockItem(block, properties, EquipmentSlot.HEAD), ModBlocks.ROYAL_CROWN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CANDELABRA = blockItem(BlockItem::new, ModBlocks.ROYAL_CANDELABRA).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	// endregion
 	// endregion
 

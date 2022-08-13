@@ -120,6 +120,7 @@ public final class ModBlocks
 
 	// region: Royal
 	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CROWN = crown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<CandelabraBlock> ROYAL_CANDELABRA = candelabra("royal").transform(ModBlocks::applyDyeable).register();
 	// endregion
 	// endregion
 
@@ -461,6 +462,20 @@ public final class ModBlocks
 				.initialProperties(Material.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, CandelabraBlock, BasicRegistrate> candelabra(String furnitureType)
+	{
+		return REGISTRATE
+				.object("decorations/%s_candelabra".formatted(furnitureType))
+				.block(CandelabraBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Candelabra".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
