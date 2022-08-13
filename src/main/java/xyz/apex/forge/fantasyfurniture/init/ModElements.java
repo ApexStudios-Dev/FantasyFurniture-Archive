@@ -136,6 +136,13 @@ public final class ModElements
 			.register()
 	;
 
+	public static final BlockEntityEntry<CounterBlockEntity> COUNTER_BLOCK_ENTITY = REGISTRATE
+			.object("counter")
+			.blockEntity(CounterBlockEntity::new)
+			.validBlock(ModBlocks.ROYAL_COUNTER)
+			.register()
+	;
+
 	public static final BlockEntityEntry<WidowBloomBlockEntity> VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY = REGISTRATE
 			.object("decorations/widow_bloom")
 			.blockEntity(WidowBloomBlockEntity::new)
