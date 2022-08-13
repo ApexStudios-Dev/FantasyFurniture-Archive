@@ -12,12 +12,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
@@ -153,8 +155,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DRESSER = blockItem(BlockItem::new, ModBlocks.DUNMER_DRESSER).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.DUNMER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.DUNMER_WARDROBE_TOP).tag(ModItemGroupCategories.DUNMER_TAG).register();
-	public static final ItemEntry<BlockItem> DUNMER_BED_SINGLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
-	public static final ItemEntry<BlockItem> DUNMER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_SINGLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_SINGLE).transform(ModItems::generatedModel).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_DOUBLE).transform(ModItems::generatedModel).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_CHANDELIER = blockItem(BlockItem::new, ModBlocks.DUNMER_CHANDELIER).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
@@ -402,6 +404,11 @@ public final class ModItems
 		.register();
 	}
 
+	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> generatedModel(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> builder)
+	{
+		return builder.model(ModItems::getModelFile);
+	}
+
 	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<BasicRegistrate, SkullBlossomsBlockItem, BasicRegistrate> skullBlossoms(BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
@@ -455,6 +462,22 @@ public final class ModItems
 							.end()
 						.end()
 				);
+	}
+
+	private static <ITEM extends Item> ItemModelBuilder getModelFile(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)
+	{
+		var suffix = "";
+
+		return provider
+				.withExistingParent(
+						// <namespace>:generated/item/<path>[suffix] | Model we are generating
+						"%s:generated/item/%s%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath(), suffix),
+						// <namespace>:item/<path>[suffix] | Existing model, exported from BlockBench
+						new ResourceLocation(ctx.getId().getNamespace(), "item/%s%s".formatted(ctx.getId().getPath(), suffix))
+				)
+				.renderType(new ResourceLocation(Mods.MINECRAFT, "cutout"))
+				.texture(ModBlocks.getTextureKey(ctx.getId()), ModBlocks.getTexturePath(ctx.getId()))
+		;
 	}
 	// endregion
 }

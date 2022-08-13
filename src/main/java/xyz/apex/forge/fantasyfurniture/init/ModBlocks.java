@@ -8,7 +8,6 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -26,6 +25,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -38,6 +39,7 @@ import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.BlockBuilder;
 import xyz.apex.forge.apexcore.registrate.builder.factory.BlockFactory;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
@@ -172,8 +174,8 @@ public final class ModBlocks
 	public static final BlockEntry<DresserBlock> DUNMER_DRESSER = dresser("dunmer", DresserBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<WardrobeBottomBlock> DUNMER_WARDROBE_BOTTOM = wardrobeBottom("dunmer", WardrobeBottomBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<WardrobeTopBlock> DUNMER_WARDROBE_TOP = wardrobeTop("dunmer", WardrobeTopBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<BedSingleBlock> DUNMER_BED_SINGLE = bedSingle("dunmer", BedSingleBlock::new).transform(ModBlocks::dunmerBed).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<BedDoubleBlock> DUNMER_BED_DOUBLE = bedDouble("dunmer", BedDoubleBlock::new).transform(ModBlocks::dunmerBed).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedSingleBlock> DUNMER_BED_SINGLE = bedSingle("dunmer", BedSingleBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedDoubleBlock> DUNMER_BED_DOUBLE = bedDouble("dunmer", BedDoubleBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<ChandelierBlock> DUNMER_CHANDELIER = chandelier("dunmer", ChandelierBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_SINGLE = doorSingle("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -344,7 +346,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -373,7 +375,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -392,7 +394,7 @@ public final class ModBlocks
 				.instabreak()
 				.hasPostProcess(BlockHelper::always)
 				.offsetType(BlockBehaviour.OffsetType.XZ)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -421,7 +423,7 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -450,7 +452,7 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -465,7 +467,7 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -480,7 +482,7 @@ public final class ModBlocks
 				.initialProperties(Material.GLASS)
 				.strength(.3F)
 				.sound(SoundType.GLASS)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -537,7 +539,7 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -552,7 +554,7 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -587,7 +589,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -602,7 +604,7 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockState(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
@@ -910,10 +912,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockstate -> {
-					var connection = blockstate.getOptionalValue(ShelfBlock.CONNECTION).orElse(ShelfBlock.Connection.SINGLE);
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), connection.serializedName)));
-				}))
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
@@ -926,10 +925,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockstate -> {
-					var connection = blockstate.getOptionalValue(SofaBlock.CONNECTION).orElse(SofaBlock.Connection.SINGLE);
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), connection.serializedName)));
-				}))
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
@@ -1126,22 +1122,13 @@ public final class ModBlocks
 	{
 		return builder
 				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
-					var leftModel = provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_left".formatted(ctx.getId().getPath())));
-					var rightModel = provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_right".formatted(ctx.getId().getPath())));
-					var model = leftModel;
-
+					var model = getModelFile(ctx, blockState, provider.models());
 					var rightHinge = blockState.getOptionalValue(DoorBlock.HINGE).orElse(DoorHingeSide.LEFT) == DoorHingeSide.RIGHT;
 					var yRot = (int) BaseBlock.getFacing(blockState).toYRot();
 					var open = blockState.getOptionalValue(DoorBlock.OPEN).orElse(false);
 
 					if(open)
-					{
 						yRot += 90;
-						model = rightHinge ? leftModel : rightModel;
-					}
-					else
-						model = rightHinge ? rightModel : leftModel;
-
 					if(rightHinge && open)
 						yRot += 180;
 
@@ -1186,7 +1173,6 @@ public final class ModBlocks
 				.isRedstoneConductor(BlockHelper::never)
 				.isSuffocating(BlockHelper::never)
 				.isViewBlocking(BlockHelper::never)
-				.renderType(() -> RenderType::cutout)
 		;
 	}
 
@@ -1205,39 +1191,15 @@ public final class ModBlocks
 		provider.getVariantBuilder(ctx.get())
 		        .forAllStates(blockState -> ConfiguredModel
 				        .builder()
-				        .modelFile(provider
-						        .models()
-						        .getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-				        )
+				        .modelFile(getModelFile(ctx, blockState, provider.models()))
 				        .build()
 		        )
 		;
 	}
 
-	private static <BLOCK extends StackedBlock> void horizontalStackableBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
-	{
-		provider.horizontalBlock(ctx.get(), blockState -> {
-			var count = blockState.getOptionalValue(ctx.get().getStackSizeProperty()).orElse(0);
-			return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%d".formatted(ctx.getId().getPath(), count)));
-		});
-	}
-
 	private static <BLOCK extends Block> void horizontalBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
 	{
-		provider.horizontalBlock(ctx.get(), provider
-						.models()
-						.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-		);
-	}
-
-	private static <BLOCK extends BedBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> dunmerBed(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
-	{
-		return builder
-				.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
-					var suffix = ctx.get().isMultiBlockOrigin(blockState) ? "head" : "foot";
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), suffix)));
-				}))
-		;
+		provider.horizontalBlock(ctx.get(), blockState -> getModelFile(ctx, blockState, provider.models()));
 	}
 
 	private static <BLOCK extends StackedBlock> void stackedLootTable(RegistrateBlockLootTables lootTables, BLOCK block)
@@ -1263,6 +1225,103 @@ public final class ModBlocks
 		}
 
 		lootTables.add(block, LootTable.lootTable().withPool(RegistrateBlockLootTables.applyExplosionCondition(block, pool)));
+	}
+
+	private static <BLOCK extends Block> BlockModelBuilder getModelFile(DataGenContext<Block, BLOCK> ctx, BlockState blockState, BlockModelProvider provider)
+	{
+		var suffix = "";
+
+		if(ctx.get() instanceof StackedBlock block)
+			suffix = "_%d".formatted(blockState.getValue(block.getStackSizeProperty()));
+		else if(ctx.get() instanceof ShelfBlock)
+			suffix = "_%s".formatted(blockState.getValue(ShelfBlock.CONNECTION).getSerializedName());
+		else if(ctx.get() instanceof SofaBlock)
+			suffix = "_%s".formatted(blockState.getValue(SofaBlock.CONNECTION).getSerializedName());
+		else if(DUNMER_BED_DOUBLE.is(ctx.get()) || DUNMER_BED_SINGLE.is(ctx.get()))
+			suffix = ((IMultiBlock) ctx.get()).isMultiBlockOrigin(blockState) ? "_head" : "_foot";
+		else if(ctx.get() instanceof FurnitureDoorBlock)
+		{
+			var hinge = blockState.getValue(FurnitureDoorBlock.HINGE);
+			var open = blockState.getValue(FurnitureDoorBlock.OPEN);
+
+			if(open)
+				suffix = hinge == DoorHingeSide.RIGHT ? "_left" : "_right";
+			else
+				suffix = hinge == DoorHingeSide.RIGHT ? "_right" : "_left";
+		}
+
+		return provider
+				.withExistingParent(
+						// <namespace>:generated/block/<path>[suffix] | Model we are generating
+						"%s:generated/block/%s%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath(), suffix),
+						// <namespace>:block/<path>[suffix] | Existing model, exported from BlockBench
+						new ResourceLocation(ctx.getId().getNamespace(), "block/%s%s".formatted(ctx.getId().getPath(), suffix))
+				)
+				.renderType(new ResourceLocation(Mods.MINECRAFT, "cutout"))
+				.texture("particle", getParticlePath(ctx.getId()))
+				.texture(getTextureKey(ctx.getId()), getTexturePath(ctx.getId()))
+		;
+	}
+
+	private static ResourceLocation getParticlePath(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		var type = path.substring(0, path.indexOf('/'));
+
+		if(type.equals("decorations"))
+		{
+			var name = path.substring(type.length() + 1);
+
+			if(name.startsWith("berry_basket"))
+				name = "berry_basket";
+			else if(name.startsWith("bowl"))
+				name = "bowl";
+			else if(name.startsWith("tankards"))
+				name = "tankards";
+			else if(name.startsWith("venthyr"))
+				name = "venthyr";
+			else if(name.startsWith("dunmer"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/dunmer");
+			else if(name.startsWith("bone"))
+			{
+				if(name.contains("wither"))
+					return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
+				return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+			}
+
+			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
+		}
+		else if(type.equals("bone"))
+		{
+			var subType = path.substring(type.length() + 1);
+
+			if(subType.contains("wither"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
+			return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+		}
+
+		return new ResourceLocation(registryName.getNamespace(), "particles/%s".formatted(type));
+	}
+
+	static String getTextureKey(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		return path.substring(path.lastIndexOf('/') + 1);
+	}
+
+	static ResourceLocation getTexturePath(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		var type = path.substring(0, path.lastIndexOf('/'));
+		var name = path.substring(type.length() + 1);
+
+		name = switch(name) {
+			case "desk_left", "desk_right" -> "desk";
+			case "wardrobe_bottom", "wardrobe_top" -> "wardrobe";
+			default -> name;
+		};
+
+		return new ResourceLocation(registryName.getNamespace(), "models/%s/%s".formatted(type, name));
 	}
 	// endregion
 }
