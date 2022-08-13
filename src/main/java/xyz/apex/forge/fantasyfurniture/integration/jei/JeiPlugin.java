@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -65,4 +64,4 @@ public final class JeiPlugin implements IModPlugin
 	{
 		registration.addRecipeCatalyst(FurnitureStation.BLOCK.asStack(), FurnitureStationRecipes.RECIPE_TYPE);
 	}
-}*/
+}

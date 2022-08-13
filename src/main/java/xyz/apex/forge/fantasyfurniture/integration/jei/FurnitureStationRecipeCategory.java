@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -65,4 +64,4 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 		IRecipeCategory.super.draw(recipe, recipeSlotsView, pose, mouseX, mouseY);
 		recipe.draw(pose, background);
 	}
-}*/
+}

@@ -1,4 +1,3 @@
-/*
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import com.google.common.collect.ImmutableList;
@@ -147,7 +146,7 @@ public final class FurnitureStationRecipes
 	private void renderBlock(PoseStack pose, IDrawable background)
 	{
 		var mc = Minecraft.getInstance();
-		var blockState = FurnitureStation.BLOCK.getDefaultState();
+		var blockState = FurnitureStation.BLOCK.defaultBlockState();
 		var model = mc.getBlockRenderer().getBlockModel(blockState);
 
 		var frameTime = mc.getFrameTime();
@@ -188,4 +187,4 @@ public final class FurnitureStationRecipes
 		pose.popPose();
 		pose.popPose();
 	}
-}*/
+}
