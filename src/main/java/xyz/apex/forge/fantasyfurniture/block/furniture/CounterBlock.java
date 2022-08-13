@@ -8,12 +8,14 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -24,12 +26,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.fantasyfurniture.block.entity.CounterBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
+import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
 
 import java.util.function.Consumer;
 
-public class CounterBlock extends BaseBlock
+public class CounterBlock extends BaseBlock.WithContainer<CounterBlockEntity, MediumInventoryMenu>
 {
 	public static final EnumProperty<Connection> CONNECTION = EnumProperty.create("connection", Connection.class);
 
@@ -38,6 +43,18 @@ public class CounterBlock extends BaseBlock
 		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(CONNECTION, Connection.SINGLE));
+	}
+
+	@Override
+	protected BlockEntityType<CounterBlockEntity> getBlockEntityType()
+	{
+		return ModElements.COUNTER_BLOCK_ENTITY.get();
+	}
+
+	@Override
+	protected MenuType<MediumInventoryMenu> getContainerType()
+	{
+		return ModElements.MEDIUM_INVENTORY_MENU.get();
 	}
 
 	@Override
@@ -52,7 +69,7 @@ public class CounterBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		/*if(ModBlocks.NORDIC_COUNTER.isIn(blockState))
+		if(ModBlocks.NORDIC_COUNTER.isIn(blockState))
 			return HitBoxes.NORDIC.counter(this, blockState);
 		else if(ModBlocks.DUNMER_COUNTER.isIn(blockState))
 			return HitBoxes.DUNMER.counter(this, blockState);
@@ -60,7 +77,7 @@ public class CounterBlock extends BaseBlock
 			return HitBoxes.VENTHYR.counter(this, blockState);
 		else if(ModBlocks.BONE_SKELETON_COUNTER.isIn(blockState) || ModBlocks.BONE_WITHER_COUNTER.isIn(blockState))
 			return HitBoxes.BONE.counter(this, blockState);
-		else */if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
+		else if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
 			return HitBoxes.ROYAL.counter(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
