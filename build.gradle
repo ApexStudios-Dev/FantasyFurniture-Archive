@@ -1,21 +1,17 @@
 plugins {
 	id 'java'
-	id 'eclipse'
 	id 'idea'
 	id 'maven-publish'
 
 	id 'net.minecraftforge.gradle' version '5.1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
+	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
-
-def IS_EARLY_ACCESS = false
-def USE_EARLY_ACCESS = false
 
 version = "${mod_version}"
 group = "${mod_base_package}"
-archivesBaseName = IS_EARLY_ACCESS ? "${mod_id}-${minecraft_version}-EAP" : "${mod_id}-${minecraft_version}"
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+archivesBaseName = "${mod_id}-${minecraft_version}"
 
 jarJar.enable()
 
@@ -24,19 +20,42 @@ configurations {
 	implementation.extendsFrom library
 }
 
+sourceSets {
+	main {
+		java {
+			srcDirs = [ 'src/main/java' ]
+		}
+
+		resources {
+			srcDirs = [ 'src/main/resources', 'src/generated/resources' ]
+		}
+	}
+
+	test {
+		java {
+			srcDirs = [ 'src/test/java' ]
+		}
+
+		resources {
+			srcDirs = [ 'src/test/resources' ]
+		}
+	}
+}
+
 minecraft {
-	mappings channel: 'official', version: "${minecraft_version}"
+	mappings channel: 'parchment', version: "${parchment_mappings}-${minecraft_version}"
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
 	runs {
 		client {
 			taskName 'Client'
 			workingDirectory file('run/client')
-			// property 'forge.logging.markers', 'REGISTRIES'
-			// property 'forge.logging.console.level', 'debug'
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
 			property 'forge.enableGameTest', 'true'
 			property 'forge.enabledGameTestNamespaces', "${mod_id}"
+			args '--width', 1920, '--height', 1080
 
 			mods {
 				"${mod_id}" {
@@ -56,8 +75,8 @@ minecraft {
 		server {
 			taskName 'Server'
 			workingDirectory file('run/server')
-			// property 'forge.logging.markers', 'REGISTRIES'
-			// property 'forge.logging.console.level', 'debug'
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
 			property 'forge.enableGameTest', 'true'
 			property 'forge.enabledGameTestNamespaces', "${mod_id}"
@@ -73,8 +92,8 @@ minecraft {
 		gameTestServer {
 			taskName 'GameTest-Server'
 			workingDirectory file('run/gametest-server')
-			// property 'forge.logging.markers', 'REGISTRIES'
-			// property 'forge.logging.console.level', 'debug'
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
 			property 'forge.enableGameTest', 'true'
 			property 'forge.enabledGameTestNamespaces', "${mod_id}"
@@ -92,8 +111,8 @@ minecraft {
 		data {
 			taskName 'Data'
 			workingDirectory file('run/client')
-			// property 'forge.logging.markers', 'REGISTRIES'
-			// property 'forge.logging.console.level', 'debug'
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
 			property 'fml.earlyprogresswindow', 'false'
 			args '--mod', mod_id, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', apexcore_mod_id, '--existing-mod', commonality_mod_id
 			// ForgeGradle will just force-exit the Gradle Daemon which fails our builds in case
@@ -120,10 +139,6 @@ if(file("./src/main/resources/${mod_id}.mixins.json").exists()) {
 		add sourceSets.main, "${mod_id}.refmap.json"
 		config "${mod_id}.mixins.json"
 	}
-}
-
-sourceSets.main.resources {
-	srcDir 'src/generated/resources'
 }
 
 repositories {
@@ -162,37 +177,20 @@ dependencies {
 
 	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
 
-	if(USE_EARLY_ACCESS) {
-		implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}-EAP:${commonality_version}")
-		implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}-EAP:${apexcore_version}:slim")
-		jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}-EAP", version: "${apexcore_version_range}")
-	} else {
-		implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
-		implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")
-		jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}", version: "${apexcore_version_range}")
+	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
+	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")
+	jarJar(group: "${mod_base_package}", name: "${apexcore_mod_id}-${minecraft_version}", version: "${apexcore_version_range}")
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(JavaLanguageVersion.of("${java_version}").asInt())
+
+	javaToolchains {
+		compilerFor {
+			languageVersion.set(JavaLanguageVersion.of("${java_version}"))
+		}
 	}
-}
-
-task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier 'sources'
-	from sourceSets.main.allJava
-	from sourceSets.main.resources
-}
-
-tasks.jarJar.configure {
-	classifier ''
-}
-
-jar {
-	classifier 'slim'
-	from sourceSets.main.output.classesDirs
-	from sourceSets.main.output.resourcesDir
-}
-
-artifacts {
-	archives jar
-	archives sourcesJar
-	archives tasks.jarJar
 }
 
 tasks.withType(Jar) {
@@ -201,12 +199,12 @@ tasks.withType(Jar) {
 
 	manifest {
 		attributes([
-				'Specification-Title': "${mod_name}",
-				'Specification-Vendor': "${mod_authors}",
-				'Specification-Version': "${mod_version}",
+				'Specification-Title': "${project.name}",
+				'Specification-Vendor': 'ApexStudios',
+				'Specification-Version': "${project.version}",
 				'Implementation-Title': "${mod_name}",
 				'Implementation-Version': "${project.version}",
-				'Implementation-Vendor' : "${mod_authors}",
+				'Implementation-Vendor' : 'ApexStudios',
 				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
 		])
 	}
@@ -218,15 +216,42 @@ tasks.withType(Jar) {
 	}
 }
 
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of("${java_version}"))
+	}
+
+	withSourcesJar()
+}
+
+tasks.jarJar.configure {
+	classifier ''
+}
+
+jar {
+	classifier 'slim'
+	from sourceSets.main.output
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+	archives tasks.jarJar
+}
+
+reobf {
+	jarJar { }
+}
+
 jar.finalizedBy('reobfJar')
 tasks.jarJar.finalizedBy('reobfJarJar')
 
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = "${mod_base_package}"
-			artifactId = IS_EARLY_ACCESS ? "${mod_id}-${minecraft_version}-EAP" : "${mod_id}-${minecraft_version}"
-			version = "${mod_version}"
+			groupId = "${project.group}"
+			artifactId = "${mod_id}-${minecraft_version}"
+			version = "${project.version}"
 
 			artifact jar
 			artifact sourcesJar
@@ -248,4 +273,8 @@ publishing {
 			}
 		}
 	}
+}
+
+idea.module {
+	excludeDirs << file('run')
 }
