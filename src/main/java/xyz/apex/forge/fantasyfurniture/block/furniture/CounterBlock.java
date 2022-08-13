@@ -52,15 +52,15 @@ public class CounterBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		/*if(ModBlocks.NORDIC_SOFA.isIn(blockState))
+		/*if(ModBlocks.NORDIC_COUNTER.isIn(blockState))
 			return HitBoxes.NORDIC.counter(this, blockState);
-		else if(ModBlocks.DUNMER_SOFA.isIn(blockState))
+		else if(ModBlocks.DUNMER_COUNTER.isIn(blockState))
 			return HitBoxes.DUNMER.counter(this, blockState);
-		else if(ModBlocks.VENTHYR_SOFA.isIn(blockState))
+		else if(ModBlocks.VENTHYR_COUNTER.isIn(blockState))
 			return HitBoxes.VENTHYR.counter(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_SOFA.isIn(blockState) || ModBlocks.BONE_WITHER_SOFA.isIn(blockState))
+		else if(ModBlocks.BONE_SKELETON_COUNTER.isIn(blockState) || ModBlocks.BONE_WITHER_COUNTER.isIn(blockState))
 			return HitBoxes.BONE.counter(this, blockState);
-		else */if(ModBlocks.ROYAL_SOFA.isIn(blockState))
+		else */if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
 			return HitBoxes.ROYAL.counter(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
@@ -92,9 +92,9 @@ public class CounterBlock extends BaseBlock
 		updateConnectionBlockState(level, pos, blockState, this);
 	}
 
-	public static void updateConnectionBlockState(LevelAccessor level, BlockPos pos, BlockState blockState, CounterBlock sofa)
+	public static void updateConnectionBlockState(LevelAccessor level, BlockPos pos, BlockState blockState, CounterBlock counter)
 	{
-		var newBlockState = getBlockState(level, pos, blockState, sofa);
+		var newBlockState = getBlockState(level, pos, blockState, counter);
 
 		if(newBlockState != blockState)
 			level.setBlock(pos, newBlockState, 3);
@@ -129,19 +129,19 @@ public class CounterBlock extends BaseBlock
 		return Connection.SINGLE;
 	}
 
-	public static boolean isCornerConnection(BlockState left, BlockState right, BlockState front, Direction facing, CounterBlock sofa)
+	public static boolean isCornerConnection(BlockState left, BlockState right, BlockState front, Direction facing, CounterBlock counter)
 	{
-		if(!front.is(sofa))
+		if(!front.is(counter))
 			return false;
 
 		var frontFacing = getFacing(front);
 
-		if(left.is(sofa))
+		if(left.is(counter))
 		{
 			var leftFacing = getFacing(left);
 			return isCornerFacing(facing, leftFacing, frontFacing);
 		}
-		else if(right.is(sofa))
+		else if(right.is(counter))
 		{
 			var rightFacing = getFacing(right);
 			return isCornerFacing(facing, rightFacing, frontFacing);
