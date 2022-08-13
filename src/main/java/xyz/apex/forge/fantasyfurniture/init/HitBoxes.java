@@ -2952,10 +2952,11 @@ public abstract class HitBoxes
 		protected VoxelShape doorSingleShape()
 		{
 			return VoxelShaper.or(
-					Block.box(0, 0, 0.5, 14, 30, 2.5),
+					Block.box(0, 0, 0, 2, 32, 3),
 					Block.box(14, 0, 0, 16, 32, 3),
-					Block.box(0, 30, 0, 14, 32, 3),
-					Block.box(1, 11, -0.5, 5, 15, 3.5)
+					Block.box(2, 30, 0, 14, 32, 3),
+					Block.box(2, 0, 0.5, 14, 30, 2.5),
+					Block.box(3, 11, -0.5, 7, 15, 3.5)
 			);
 		}
 
