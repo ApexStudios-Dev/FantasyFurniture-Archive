@@ -51,7 +51,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="jei"
 	mandatory=false
-	versionRange="[11.2.0.247,)"
+	versionRange="[11.2.0.246,)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
