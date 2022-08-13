@@ -8,6 +8,7 @@ import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -28,6 +29,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.core.init.ACRegistry;
@@ -41,6 +43,7 @@ import xyz.apex.forge.apexcore.registrate.builder.factory.BlockFactory;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
+import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
@@ -48,8 +51,7 @@ import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
-import static com.tterrag.registrate.providers.ProviderType.BLOCK_TAGS;
-import static com.tterrag.registrate.providers.ProviderType.LANG;
+import static com.tterrag.registrate.providers.ProviderType.*;
 
 public final class ModBlocks
 {
@@ -114,6 +116,10 @@ public final class ModBlocks
 	public static final BlockEntry<BonePileBlock> BONE_WITHER_PILE = bonePile("bone_wither").lang("Wither Bone Pile").register();
 	public static final BlockEntry<SkullBlossomsBlock> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms("bone_wither").lang("Wither Skull Blossoms").register();
 	// endregion
+	// endregion
+
+	// region: Royal
+	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CROWN = crown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	// endregion
 	// endregion
 
@@ -282,6 +288,39 @@ public final class ModBlocks
 	public static final BlockEntry<LockboxBlock> BONE_WITHER_LOCKBOX = lockbox("bone/wither", LockboxBlock::new).lang("Wither Bone Lockbox").register();
 	// endregion
 	// endregion
+
+	// region: Royal
+	public static final BlockEntry<DyeableBlock> ROYAL_WOOL = woolDyeable("royal", DyeableBlock::new).register();
+	public static final BlockEntry<DyeableCarpetBlock> ROYAL_CARPET = carpetDyeable("royal", DyeableCarpetBlock::new).register();
+	public static final BlockEntry<FurnitureWallLightBlock> ROYAL_WALL_LIGHT = wallLight("royal", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> ROYAL_FLOOR_LIGHT = floorLight("royal", FloorLightBlock.WithFacing::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).blockState(ModBlocks::horizontalBlockState).register();
+	public static final BlockEntry<TableSmallBlock.Dyeable> ROYAL_TABLE_SMALL = tableSmall("royal", TableSmallBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<TableWideBlock.Dyeable> ROYAL_TABLE_WIDE = tableWide("royal", TableWideBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<TableLargeBlock.Dyeable> ROYAL_TABLE_LARGE = tableLarge("royal", TableLargeBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<StoolBlock.Dyeable> ROYAL_STOOL = stool("royal", StoolBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<CushionBlock.Dyeable> ROYAL_CUSHION = cushion("royal", CushionBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<PaintingSmallBlock> ROYAL_PAINTING_SMALL = paintingSmall("royal", PaintingSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<PaintingWideBlock> ROYAL_PAINTING_WIDE = paintingWide("royal", PaintingWideBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<DrawerBlock.Dyeable> ROYAL_DRAWER = drawer("royal", DrawerBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<ShelfBlock.Dyeable> ROYAL_SHELF = shelf("royal", ShelfBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<SofaBlock.Dyeable> ROYAL_SOFA = sofa("royal", SofaBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<DeskBlock.Dyeable> ROYAL_DESK_LEFT = deskLeft("royal", DeskBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<DeskBlock.Dyeable> ROYAL_DESK_RIGHT = deskRight("royal", DeskBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<ChairBlock.DyeableOriginOnly> ROYAL_CHAIR = chair("royal", ChairBlock.DyeableOriginOnly::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BenchBlock.Dyeable> ROYAL_BENCH = bench("royal", BenchBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BookshelfBlock.Dyeable> ROYAL_BOOKSHELF = bookshelf("royal", BookshelfBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<ChestBlock.Dyeable> ROYAL_CHEST = chest("royal", ChestBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<DresserBlock.Dyeable> ROYAL_DRESSER = dresser("royal", DresserBlock.Dyeable::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<WardrobeBottomBlock.Dyeable> ROYAL_WARDROBE_BOTTOM = wardrobeBottom("royal", WardrobeBottomBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<WardrobeTopBlock.Dyeable> ROYAL_WARDROBE_TOP = wardrobeTop("royal", WardrobeTopBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedSingleBlock.Dyeable> ROYAL_BED_SINGLE = bedSingle("royal", BedSingleBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedDoubleBlock.Dyeable> ROYAL_BED_DOUBLE = bedDouble("royal", BedDoubleBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<ChandelierBlock> ROYAL_CHANDELIER = chandelier("royal", ChandelierBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<FurnitureDoorBlock.Dyeable> ROYAL_DOOR_SINGLE = doorSingle("royal", FurnitureDoorBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<FurnitureDoorBlock.Dyeable> ROYAL_DOOR_DOUBLE = doorDouble("royal", FurnitureDoorBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<LockboxBlock.Dyeable> ROYAL_LOCKBOX = lockbox("royal", LockboxBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<CounterBlock.Dyeable> ROYAL_COUNTER = counter("royal", CounterBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	// endregion
 	// endregion
 
 	static void bootstrap()
@@ -305,6 +344,77 @@ public final class ModBlocks
 						.toArray(Block[]::new)
 				)
 		);
+
+		REGISTRATE.addDataGenerator(BLOCKSTATE, provider -> {
+			// fantasyfurniture:block/dyeable/cube
+			var cubeDyeable = provider
+					.models()
+			        .withExistingParent("%s:block/dyeable/cube".formatted(Mods.FANTASY_FURNITURE), new ResourceLocation(Mods.MINECRAFT, "block/block"))
+					.renderType(new ResourceLocation(Mods.MINECRAFT, "cutout"))
+					.element()
+						.from(0F, 0F, 0F)
+						.to(16F, 16F, 16F)
+						.allFaces((face, builder) -> builder
+								.texture("#%s".formatted(face.getSerializedName()))
+								.cullface(face)
+						)
+					.end()
+					.element()
+						.from(0F, 0F, 0F)
+						.to(16F, 16F, 16F)
+						.allFaces((face, builder) -> builder
+								.texture("#tint_%s".formatted(face.getSerializedName()))
+								.cullface(face)
+								.tintindex(0)
+						)
+					.end()
+			;
+
+			// fantasyfurniture:block/dyeable/cube_all
+			provider.models()
+			        .getBuilder("%s:block/dyeable/cube_all".formatted(Mods.FANTASY_FURNITURE))
+					.parent(cubeDyeable)
+					.texture("particle", "#tint_all")
+					.texture("down", "#all")
+					.texture("up", "#all")
+					.texture("north", "#all")
+					.texture("south", "#all")
+					.texture("west", "#all")
+					.texture("east", "#all")
+					.texture("tint_down", "#tint_all")
+					.texture("tint_up", "#tint_all")
+					.texture("tint_north", "#tint_all")
+					.texture("tint_south", "#tint_all")
+					.texture("tint_west", "#tint_all")
+					.texture("tint_east", "#tint_all")
+			;
+
+			// fantasyfurniture:block/dyeable/carpet
+			provider.models()
+			        .withExistingParent("%s:block/dyeable/carpet".formatted(Mods.FANTASY_FURNITURE), new ResourceLocation(Mods.MINECRAFT, "block/thin_block"))
+					.texture("particle", "#tint_wool")
+					.renderType(new ResourceLocation(Mods.MINECRAFT, "cutout"))
+			        .element()
+						.from(0F, 0F, 0F)
+						.to(16F, 1F, 16F)
+						.allFaces((face, builder) -> builder
+								.texture("#wool")
+								.uvs(0F, face.getAxis().isVertical() ? 0F : 15F, 16F, 16F)
+								.cullface(face == Direction.UP ? null : face)
+						)
+					.end()
+					.element()
+						.from(0F, 0F, 0F)
+						.to(16F, 1F, 16F)
+						.allFaces((face, builder) -> builder
+								.texture("#tint_wool")
+								.tintindex(0)
+								.uvs(0F, face.getAxis().isVertical() ? 0F : 15F, 16F, 16F)
+								.cullface(face == Direction.UP ? null : face)
+						)
+					.end()
+			;
+		});
 	}
 
 	// region: Constructors
@@ -329,6 +439,20 @@ public final class ModBlocks
 				.block(BoltsOfClothBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Bolts of Cloth")
+				.initialProperties(Material.WOOL)
+				.strength(.8F)
+				.sound(SoundType.WOOL)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends CrownBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> crown(String furnitureType, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("decorations/%s_crown".formatted(furnitureType))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Crown".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
@@ -694,6 +818,22 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> woolDyeable(String type, BlockFactory<BLOCK> blockFactory)
+	{
+		return wool(type, blockFactory)
+				.transform(ModBlocks::applyDyeable)
+				.blockState((ctx, provider) -> provider
+						.simpleBlock(ctx.get(), provider
+								.models()
+								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/cube_all")))
+								.texture("all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
+								.texture("tint_all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s_tint".formatted(ctx.getId().getPath())))
+						)
+				)
+		;
+	}
+
 	private static <BLOCK extends CarpetBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> carpet(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
@@ -713,6 +853,22 @@ public final class ModBlocks
 						)
 				)
 				.tag(BlockTags.Vanilla.WOOL_CARPETS)
+		;
+	}
+
+	private static <BLOCK extends CarpetBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> carpetDyeable(String type, BlockFactory<BLOCK> blockFactory)
+	{
+		return carpet(type, blockFactory)
+				.transform(ModBlocks::applyDyeable)
+				.blockState((ctx, provider) -> provider
+						.simpleBlock(ctx.get(), provider
+								.models()
+								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/carpet")))
+								.texture("wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool".formatted(type)))
+								.texture("tint_wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool_tint".formatted(type)))
+						)
+				)
 		;
 	}
 
@@ -920,6 +1076,19 @@ public final class ModBlocks
 	{
 		return REGISTRATE
 				.object("%s/sofa".formatted(type))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends CounterBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> counter(String type, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/counter".formatted(type))
 				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.initialProperties(Material.WOOD)
@@ -1227,6 +1396,11 @@ public final class ModBlocks
 		lootTables.add(block, LootTable.lootTable().withPool(RegistrateBlockLootTables.applyExplosionCondition(block, pool)));
 	}
 
+	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDyeable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
+	{
+		return builder.color(() -> () -> (blockstate, level, pos, tintIndex) -> tintIndex == 0 ? FantasyFurniture.getDyeColor(blockstate).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
+	}
+
 	private static <BLOCK extends Block> BlockModelBuilder getModelFile(DataGenContext<Block, BLOCK> ctx, BlockState blockState, BlockModelProvider provider)
 	{
 		var suffix = "";
@@ -1237,6 +1411,8 @@ public final class ModBlocks
 			suffix = "_%s".formatted(blockState.getValue(ShelfBlock.CONNECTION).getSerializedName());
 		else if(ctx.get() instanceof SofaBlock)
 			suffix = "_%s".formatted(blockState.getValue(SofaBlock.CONNECTION).getSerializedName());
+		else if(ctx.get() instanceof CounterBlock)
+			suffix = "_%s".formatted(blockState.getValue(CounterBlock.CONNECTION).getSerializedName());
 		else if(DUNMER_BED_DOUBLE.is(ctx.get()) || DUNMER_BED_SINGLE.is(ctx.get()))
 			suffix = ((IMultiBlock) ctx.get()).isMultiBlockOrigin(blockState) ? "_head" : "_foot";
 		else if(ctx.get() instanceof FurnitureDoorBlock)
@@ -1288,6 +1464,8 @@ public final class ModBlocks
 					return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
 				return new ResourceLocation(registryName.getNamespace(), "particles/bone");
 			}
+			else if(name.startsWith("royal"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/royal");
 
 			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
 		}

@@ -1,6 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -19,6 +20,7 @@ public abstract class HitBoxes
 	public static final HitBoxes DUNMER = new Dunmer();
 	public static final HitBoxes VENTHYR = new Venthyr();
 	public static final HitBoxes BONE = new Bone();
+	public static final HitBoxes ROYAL = new Royal();
 
 	private final HitBox.WithShaper bedDouble = new HitBox.WithShaper(this::bedDoubleShape, Direction.NORTH);
 	private final HitBox.WithShaper bedSingle = new HitBox.WithShaper(this::bedSingleShape, Direction.NORTH);
@@ -54,6 +56,8 @@ public abstract class HitBoxes
 	private final HitBox.WithShaper wardrobeBottom = new HitBox.WithShaper(this::wardrobeBottomShape, Direction.NORTH);
 	private final HitBox.WithShaper doorDouble = new HitBox.WithShaper(this::doorDoubleShape, Direction.NORTH);
 	private final HitBox.WithShaper doorSingle = new HitBox.WithShaper(this::doorSingleShape, Direction.NORTH);
+	private final HitBox.WithShaper counterSingle = new HitBox.WithShaper(this::counterSingleShape, Direction.NORTH);
+	private final HitBox.WithShaper counterCorner = new HitBox.WithShaper(this::counterCornerShape, Direction.NORTH);
 
 	public final VoxelShape bedDouble(BedDoubleBlock block, BlockState blockState)
 	{
@@ -394,6 +398,19 @@ public abstract class HitBoxes
 		return shape.move(x, y, z);
 	}
 
+	public final VoxelShape counter(CounterBlock block, BlockState blockState)
+	{
+		var facing = BaseBlock.getFacing(blockState);
+		var connection = blockState.getOptionalValue(CounterBlock.CONNECTION).orElse(CounterBlock.Connection.SINGLE);
+
+		var shaper = switch(connection) {
+			case SINGLE -> counterSingle.shaper();
+			case CORNER -> counterCorner.shaper();
+		};
+
+		return shaper.get(facing);
+	}
+
 	protected abstract VoxelShape bedDoubleShape();
 	protected abstract VoxelShape bedSingleShape();
 	protected abstract VoxelShape benchShape();
@@ -428,6 +445,8 @@ public abstract class HitBoxes
 	protected abstract VoxelShape wardrobeBottomShape();
 	protected abstract VoxelShape doorDoubleShape();
 	protected abstract VoxelShape doorSingleShape();
+	protected abstract VoxelShape counterSingleShape();
+	protected abstract VoxelShape counterCornerShape();
 
 	private static final class Nordic extends HitBoxes
 	{
@@ -866,6 +885,26 @@ public abstract class HitBoxes
 					box(0, 2, 0.5, 13, 30, 2.5)
 			);
 		}
+
+		@Override
+		protected VoxelShape counterSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16),
+					box(1, 1, 2, 15, 12, 3)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterCornerShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 0, 13, 13, 4),
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16)
+			);
+		}
 	}
 
 	private static final class Dunmer extends HitBoxes
@@ -1299,6 +1338,34 @@ public abstract class HitBoxes
 					box(11, 21, 1, 12, 30, 2),
 					box(3, 27, 1, 13, 28, 2),
 					box(3, 22, 1, 13, 23, 2)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 3, 2, 1, 5),
+					box(0, 0, 14, 2, 1, 16),
+					box(14, 0, 14, 16, 1, 16),
+					box(14, 0, 3, 16, 1, 5),
+					box(0, 1, 3, 16, 14, 16),
+					box(0, 14, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterCornerShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 0, 2, 1, 2),
+					box(11, 0, 0, 13, 1, 5),
+					box(13, 0, 3, 16, 1, 5),
+					box(14, 0, 14, 16, 1, 16),
+					box(0, 0, 14, 2, 1, 16),
+					box(0, 1, 3, 16, 14, 16),
+					box(0, 1, 0, 13, 14, 3),
+					box(0, 14, 0, 16, 16, 16)
 			);
 		}
 	}
@@ -1769,6 +1836,26 @@ public abstract class HitBoxes
 					box(0, 30, 0, 14, 32, 3),
 					box(0, 1, 0, 1, 30, 3),
 					box(1, 1, 0.5, 14, 30, 2.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16),
+					box(1, 1, 2, 15, 12, 3)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterCornerShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16),
+					box(1, 1, 2, 15, 12, 3)
 			);
 		}
 	}
@@ -2333,6 +2420,565 @@ public abstract class HitBoxes
 					box(7, 2, 0.5, 9, 29, 2.5),
 					box(3.5, 2, 0.5, 5.5, 29, 2.5),
 					box(0, 2, 0.5, 2, 29, 2.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16),
+					box(1, 2, 2, 15, 11, 3)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterCornerShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 0, 13, 13, 3),
+					box(0, 0, 3, 16, 13, 16),
+					box(0, 13, 0, 16, 16, 16)
+			);
+		}
+	}
+
+	private static final class Royal extends HitBoxes
+	{
+		@Override
+		protected VoxelShape bedDoubleShape()
+		{
+			return VoxelShaper.or(
+					Block.box(-16, 0, 0, -13, 3, 2),
+					Block.box(-15, 3, 0, -13, 9, 2),
+					Block.box(-16, 9, 0, -13, 12, 2),
+					Block.box(-16, 9, 30, -13, 12, 32),
+					Block.box(-16, 0, 30, -13, 3, 32),
+					Block.box(-15, 3, 30, -13, 9, 32),
+					Block.box(13, 9, 30, 16, 12, 32),
+					Block.box(13, 0, 30, 16, 3, 32),
+					Block.box(13, 3, 30, 15, 9, 32),
+					Block.box(13, 9, 0, 16, 12, 2),
+					Block.box(13, 0, 0, 16, 3, 2),
+					Block.box(13, 3, 0, 15, 9, 2),
+					Block.box(-15, 3, 2, 15, 5, 32),
+					Block.box(-13, 2, 30, -12, 3, 32),
+					Block.box(12, 2, 30, 13, 3, 32),
+					Block.box(12, 2, 0, 13, 3, 2),
+					Block.box(-13, 2, 0, -12, 3, 2),
+					Block.box(-14, 3, 0, 14, 15, 2),
+					Block.box(-14, 3, 30, 14, 15, 32),
+					Block.box(-14, 3, 2, 14, 8, 30)
+			);
+		}
+
+		@Override
+		protected VoxelShape bedSingleShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0, 3, 3, 2),
+					Block.box(1, 3, 0, 3, 9, 2),
+					Block.box(0, 9, 0, 3, 12, 2),
+					Block.box(0, 9, 30, 3, 12, 32),
+					Block.box(0, 0, 30, 3, 3, 32),
+					Block.box(1, 3, 30, 3, 9, 32),
+					Block.box(13, 9, 30, 16, 12, 32),
+					Block.box(13, 0, 30, 16, 3, 32),
+					Block.box(13, 3, 30, 15, 9, 32),
+					Block.box(13, 9, 0, 16, 12, 2),
+					Block.box(13, 0, 0, 16, 3, 2),
+					Block.box(13, 3, 0, 15, 9, 2),
+					Block.box(1, 3, 2, 15, 5, 32),
+					Block.box(3, 2, 30, 4, 3, 32),
+					Block.box(12, 2, 30, 13, 3, 32),
+					Block.box(12, 2, 0, 13, 3, 2),
+					Block.box(3, 2, 0, 4, 3, 2),
+					Block.box(2, 3, 0, 14, 15, 2),
+					Block.box(2, 3, 30, 14, 15, 32),
+					Block.box(2, 3, 2, 14, 8, 30)
+			);
+		}
+
+		@Override
+		protected VoxelShape benchShape()
+		{
+			return VoxelShaper.or(
+					Block.box(-15, 0, 1, -11, 4, 5),
+					Block.box(-15, 0, 11, -11, 4, 15),
+					Block.box(11, 0, 11, 15, 4, 15),
+					Block.box(11, 0, 1, 15, 4, 5),
+					Block.box(-14.5, 4, 1.5, 14.5, 6, 14.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape bookshelfShape()
+		{
+			return VoxelShaper.or(
+					Block.box(12, 0, 0, 16, 4, 4),
+					Block.box(-16, 0, 0, -12, 4, 4),
+					Block.box(-16, 0, 12, -12, 4, 16),
+					Block.box(12, 0, 12, 16, 4, 16),
+					Block.box(-15, 4, 1, 15, 6, 15),
+					Block.box(-15, 30, 1, 15, 32, 15),
+					Block.box(12, 6, 2, 14, 30, 4),
+					Block.box(12, 6, 12, 14, 30, 14),
+					Block.box(-14, 6, 12, -12, 30, 14),
+					Block.box(-14, 6, 2, -12, 30, 4),
+					Block.box(-13, 6, 4, 13, 30, 13),
+					Block.box(-13, 17, 2, 13, 19, 4)
+			);
+		}
+
+		@Override
+		protected VoxelShape chairShape()
+		{
+			return VoxelShaper.or(
+					Block.box(1, 0, 1, 3, 5, 4),
+					Block.box(1, 0, 12, 3, 5, 15),
+					Block.box(13, 0, 12, 15, 5, 15),
+					Block.box(13, 0, 1, 15, 5, 4),
+					Block.box(13, 5, 1, 15, 15, 15),
+					Block.box(1, 5, 1, 3, 15, 15),
+					Block.box(3, 5, 1, 13, 9, 15),
+					Block.box(1, 9, 12, 15, 27, 15)
+			);
+		}
+
+		@Override
+		protected VoxelShape chandelierShape()
+		{
+			return Block.box(0, 0, 0, 16, 16, 16);
+		}
+
+		@Override
+		protected VoxelShape chestShape()
+		{
+			return VoxelShaper.or(
+					Block.box(7.5, 0, 0.75, 11.25, 4, 4.5),
+					Block.box(-11.25, 0, 0.75, -7.5, 4, 4.5),
+					Block.box(-11.25, 0, 11.5, -7.5, 4, 15.25),
+					Block.box(7.5, 0, 11.5, 11.25, 4, 15.25),
+					Block.box(-12, 4, 1, 12, 6, 15),
+					Block.box(-11, 6, 2, 11, 16, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape cushionShape()
+		{
+			return VoxelShaper.or(
+					Block.box(1, 0, 1, 5, 4, 5),
+					Block.box(1, 0, 11, 5, 4, 15),
+					Block.box(11, 0, 11, 15, 4, 15),
+					Block.box(11, 0, 1, 15, 4, 5),
+					Block.box(1.5, 4, 1.5, 14.5, 6, 14.5),
+					Block.box(2, 6, 2, 14, 9, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape deskLeftShape()
+		{
+			return VoxelShaper.or(
+					Block.box(-16, 14, 0, 16, 16, 16),
+					Block.box(13, 11, 1, 15, 14, 4),
+					Block.box(13, 3, 2, 15, 11, 4),
+					Block.box(13, 0, 1, 15, 3, 4),
+					Block.box(-15, 0, 1, -13, 3, 4),
+					Block.box(-15, 11, 1, -13, 14, 4),
+					Block.box(-15, 3, 2, -13, 11, 4),
+					Block.box(-15, 0, 12, -13, 3, 15),
+					Block.box(-15, 11, 12, -13, 14, 15),
+					Block.box(-15, 3, 12, -13, 11, 14),
+					Block.box(13, 0, 12, 15, 3, 15),
+					Block.box(13, 11, 12, 15, 14, 15),
+					Block.box(13, 3, 12, 15, 11, 14),
+					Block.box(4, 10, 2, 12, 14, 14),
+					Block.box(6, 12, 1, 10, 13, 2)
+			);
+		}
+
+		@Override
+		protected VoxelShape deskRightShape()
+		{
+			return VoxelShaper.or(
+					Block.box(-16, 14, 0, 16, 16, 16),
+					Block.box(13, 11, 1, 15, 14, 4),
+					Block.box(13, 3, 2, 15, 11, 4),
+					Block.box(13, 0, 1, 15, 3, 4),
+					Block.box(-15, 0, 1, -13, 3, 4),
+					Block.box(-15, 11, 1, -13, 14, 4),
+					Block.box(-15, 3, 2, -13, 11, 4),
+					Block.box(-15, 0, 12, -13, 3, 15),
+					Block.box(-15, 11, 12, -13, 14, 15),
+					Block.box(-15, 3, 12, -13, 11, 14),
+					Block.box(13, 0, 12, 15, 3, 15),
+					Block.box(13, 11, 12, 15, 14, 15),
+					Block.box(13, 3, 12, 15, 11, 14),
+					Block.box(-12, 10, 2, -4, 14, 14),
+					Block.box(-10, 12, 1, -6, 13, 2)
+			);
+		}
+
+		@Override
+		protected VoxelShape drawerShape()
+		{
+			return VoxelShaper.or(
+					Block.box(1, 0, 1, 3, 3, 4),
+					Block.box(1, 0, 12, 3, 3, 15),
+					Block.box(13, 0, 12, 15, 3, 15),
+					Block.box(13, 0, 1, 15, 3, 4),
+					Block.box(13, 3, 2, 15, 14, 4),
+					Block.box(1, 3, 2, 3, 14, 4),
+					Block.box(1, 3, 12, 3, 14, 14),
+					Block.box(13, 3, 12, 15, 14, 14),
+					Block.box(0.5, 5, 1.5, 15.5, 7, 14.5),
+					Block.box(0, 14, 0, 16, 16, 16),
+					Block.box(2, 7, 3, 14, 14, 13)
+			);
+		}
+
+		@Override
+		protected VoxelShape dresserShape()
+		{
+			return VoxelShaper.or(
+					box(-15, 0, 1, -13, 3, 4),
+					box(-15, 0, 12, -13, 3, 15),
+					box(13, 0, 12, 15, 3, 15),
+					box(13, 0, 1, 15, 3, 4),
+					box(13, 3, 2, 15, 14, 4),
+					box(-15, 3, 2, -13, 14, 4),
+					box(-15, 3, 12, -13, 14, 14),
+					box(13, 3, 12, 15, 14, 14),
+					box(-15.5, 5, 1.5, 15.5, 7, 14.5),
+					box(-16, 14, 0, 16, 16, 16),
+					box(-14, 7, 3, 14, 14, 13)
+			);
+		}
+
+		@Override
+		protected VoxelShape lockboxShape()
+		{
+			return box(2.5, 0, 3.5, 13.5, 9.25, 12.5);
+		}
+
+		@Override
+		protected VoxelShape floorLightShape()
+		{
+			return VoxelShaper.or(
+					box(6, 0, 6, 10, 2, 10),
+					box(7, 2, 7, 9, 30, 9),
+					box(3, 20, 7, 13, 22, 9),
+					box(11, 22, 7, 13, 29, 9),
+					box(3, 22, 7, 5, 29, 9),
+					box(2.5, 24, 6.5, 5.5, 25, 9.5),
+					box(6.5, 25, 6.5, 9.5, 26, 9.5),
+					box(10.5, 24, 6.5, 13.5, 25, 9.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape paintingSmallShape()
+		{
+			return VoxelShaper.or(
+					box(0, 0, 14, 3, 3, 16),
+					box(0, 13, 14, 3, 16, 16),
+					box(13, 13, 14, 16, 16, 16),
+					box(13, 0, 14, 16, 3, 16),
+					box(3, 1, 14, 13, 3, 16),
+					box(3, 13, 14, 13, 15, 16),
+					box(1, 3, 14, 15, 13, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape paintingWideShape()
+		{
+			return VoxelShaper.or(
+					box(-16, 0, 14, -13, 3, 16),
+					box(-16, 13, 14, -13, 16, 16),
+					box(13, 13, 14, 16, 16, 16),
+					box(13, 0, 14, 16, 3, 16),
+					box(-13, 1, 14, 13, 3, 16),
+					box(-13, 13, 14, 13, 15, 16),
+					box(-15, 3, 14, 15, 13, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape shelfSingleShape()
+		{
+			return VoxelShaper.or(
+					box(0, 14, 0, 16, 16, 16),
+					box(13, 11, 3, 15, 14, 6),
+					box(13, 12, 6, 15, 14, 16),
+					box(13, 8, 14, 15, 12, 16),
+					box(13, 5, 13, 15, 8, 16),
+					box(1, 5, 13, 3, 8, 16),
+					box(1, 11, 3, 3, 14, 6),
+					box(1, 12, 6, 3, 14, 16),
+					box(1, 8, 14, 3, 12, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape shelfCenterShape()
+		{
+			return box(0, 14, 0, 16, 16, 16);
+		}
+
+		@Override
+		protected VoxelShape shelfLeftShape()
+		{
+			return VoxelShaper.or(
+					box(0, 14, 0, 16, 16, 16),
+					box(13, 11, 3, 15, 14, 6),
+					box(13, 12, 6, 15, 14, 16),
+					box(13, 8, 14, 15, 12, 16),
+					box(13, 5, 13, 15, 8, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape shelfRightShape()
+		{
+			return VoxelShaper.or(
+					box(0, 14, 0, 16, 16, 16),
+					box(1, 11, 3, 3, 14, 6),
+					box(1, 12, 6, 3, 14, 16),
+					box(1, 8, 14, 3, 12, 16),
+					box(1, 5, 13, 3, 8, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaSingleShape()
+		{
+			return VoxelShaper.or(
+					box(13, 0, 12, 15, 3, 15),
+					box(13, 0, 1, 15, 3, 4),
+					box(1, 0, 1, 3, 3, 4),
+					box(1, 0, 12, 3, 3, 15),
+					box(1, 3, 12, 3, 4, 14),
+					box(13, 3, 12, 15, 4, 14),
+					box(13, 3, 2, 15, 4, 4),
+					box(1, 3, 2, 3, 4, 4),
+					box(1, 4, 1.5, 15, 6, 14.5),
+					box(13, 6, 2, 15, 9, 12),
+					box(1, 6, 2, 3, 9, 12),
+					box(1, 6, 12, 15, 13, 14),
+					box(2, 13, 12, 14, 15, 14),
+					box(4, 15, 12, 12, 16, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaCenterShape()
+		{
+			return VoxelShaper.or(
+					box(13, 0, 12, 15, 3, 15),
+					box(13, 0, 1, 15, 3, 4),
+					box(1, 0, 1, 3, 3, 4),
+					box(1, 0, 12, 3, 3, 15),
+					box(1, 3, 12, 3, 4, 14),
+					box(13, 3, 12, 15, 4, 14),
+					box(13, 3, 2, 15, 4, 4),
+					box(1, 3, 2, 3, 4, 4),
+					box(1, 4, 1.5, 15, 6, 14.5),
+					box(1, 6, 12, 15, 13, 14),
+					box(2, 13, 12, 14, 15, 14),
+					box(4, 15, 12, 12, 16, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaLeftShape()
+		{
+			return VoxelShaper.or(
+					box(13, 0, 12, 15, 3, 15),
+					box(13, 0, 1, 15, 3, 4),
+					box(1, 0, 1, 3, 3, 4),
+					box(1, 0, 12, 3, 3, 15),
+					box(1, 3, 12, 3, 4, 14),
+					box(13, 3, 12, 15, 4, 14),
+					box(13, 3, 2, 15, 4, 4),
+					box(1, 3, 2, 3, 4, 4),
+					box(1, 4, 1.5, 15, 6, 14.5),
+					box(13, 6, 2, 15, 9, 12),
+					box(1, 6, 12, 15, 13, 14),
+					box(2, 13, 12, 14, 15, 14),
+					box(4, 15, 12, 12, 16, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaRightShape()
+		{
+			return VoxelShaper.or(
+					box(13, 0, 12, 15, 3, 15),
+					box(13, 0, 1, 15, 3, 4),
+					box(1, 0, 1, 3, 3, 4),
+					box(1, 0, 12, 3, 3, 15),
+					box(1, 3, 12, 3, 4, 14),
+					box(13, 3, 12, 15, 4, 14),
+					box(13, 3, 2, 15, 4, 4),
+					box(1, 3, 2, 3, 4, 4),
+					box(1, 4, 1.5, 15, 6, 14.5),
+					box(1, 6, 2, 3, 9, 12),
+					box(1, 6, 12, 15, 13, 14),
+					box(2, 13, 12, 14, 15, 14),
+					box(4, 15, 12, 12, 16, 14)
+			);
+		}
+
+		@Override
+		protected VoxelShape sofaCornerShape()
+		{
+			return VoxelShaper.or(
+					box(0.5, 0, 0.25, 4.25, 4, 4),
+					box(11.5, 0, 11.25, 15.25, 4, 15),
+					box(0.75, 0, 11.75, 2.75, 3, 14.75),
+					box(0.75, 3, 11.75, 2.75, 4, 13.75),
+					box(11.75, 3, 0.75, 13.75, 4, 2.75),
+					box(11.75, 0, 0.75, 14.75, 3, 2.75),
+					box(1.5, 4, 0, 14.5, 6, 14.5),
+					box(0, 4, 1.5, 1.5, 6, 14.5),
+					box(0, 6, 12, 14, 16, 14),
+					box(12, 6, 0, 14, 16, 12)
+			);
+		}
+
+		@Override
+		protected VoxelShape stoolShape()
+		{
+			return VoxelShaper.or(
+					box(1, 0, 1, 5, 4, 5),
+					box(1, 0, 11, 5, 4, 15),
+					box(11, 0, 11, 15, 4, 15),
+					box(11, 0, 1, 15, 4, 5),
+					box(1.5, 4, 1.5, 14.5, 6, 14.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableLargeShape()
+		{
+			return VoxelShaper.or(
+					box(-15, 0, 1, -11, 14, 5),
+					box(-15, 0, 27, -11, 14, 31),
+					box(11, 0, 27, 15, 14, 31),
+					box(11, 0, 1, 15, 14, 5),
+					box(-16, 14, 0, 16, 16, 32)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableSmallShape()
+		{
+			return VoxelShaper.or(
+					box(1, 0, 1, 5, 14, 5),
+					box(1, 0, 11, 5, 14, 15),
+					box(11, 0, 11, 15, 14, 15),
+					box(11, 0, 1, 15, 14, 5),
+					box(0, 14, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape tableWideShape()
+		{
+			return VoxelShaper.or(
+					box(-15, 0, 1, -11, 14, 5),
+					box(-15, 0, 11, -11, 14, 15),
+					box(11, 0, 11, 15, 14, 15),
+					box(11, 0, 1, 15, 14, 5),
+					box(-16, 14, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape wallLightShape()
+		{
+			return box(4.75, 1, 11.75, 11.25, 13, 16);
+		}
+
+		@Override
+		protected VoxelShape wardrobeTopShape()
+		{
+			return VoxelShaper.or(
+					Block.box(12, 0, 2, 14, 14, 4),
+					Block.box(-14, 0, 2, -12, 14, 4),
+					Block.box(-14, 0, 12, -12, 14, 14),
+					Block.box(12, 0, 12, 14, 14, 14),
+					Block.box(-15, 14, 1, 15, 16, 15),
+					Block.box(-13, 0, 3, 13, 14, 13)
+			);
+		}
+
+		@Override
+		protected VoxelShape wardrobeBottomShape()
+		{
+			return VoxelShaper.or(
+					box(12, 0, 2, 14, 3, 5),
+					box(-14, 0, 2, -12, 3, 5),
+					box(-14, 0, 11, -12, 3, 14),
+					box(12, 0, 11, 14, 3, 14),
+					box(12, 3, 11, 14, 4, 13),
+					box(12, 3, 3, 14, 4, 5),
+					box(-14, 3, 3, -12, 4, 5),
+					box(-14, 3, 11, -12, 4, 13),
+					box(-15, 4, 1, 15, 6, 15),
+					box(12, 6, 2, 14, 30, 4),
+					box(-14, 6, 2, -12, 30, 4),
+					box(-14, 6, 12, -12, 30, 14),
+					box(12, 6, 12, 14, 30, 14),
+					box(-12, 6, 3, 12, 30, 13),
+					box(-15, 30, 1, 15, 32, 15)
+			);
+		}
+
+		@Override
+		protected VoxelShape doorDoubleShape()
+		{
+			return VoxelShaper.or(
+					Block.box(14, 0, 0, 16, 32, 3),
+					Block.box(13, 25, 0, 14, 32, 3),
+					Block.box(12, 27, 0, 13, 32, 3),
+					Block.box(9, 28, 0, 12, 32, 3),
+					Block.box(5, 29, 0, 9, 32, 3),
+					Block.box(0, 30, 0, 5, 32, 3),
+					Block.box(0, 0, 0.5, 14, 30, 2.5)
+			);
+		}
+
+		@Override
+		protected VoxelShape doorSingleShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0.5, 14, 30, 2.5),
+					Block.box(14, 0, 0, 16, 32, 3),
+					Block.box(0, 30, 0, 14, 32, 3)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterSingleShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 3, 16, 13, 16),
+					Block.box(0, 13, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape counterCornerShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0, 13, 13, 3),
+					Block.box(0, 0, 3, 16, 13, 16),
+					Block.box(0, 13, 0, 16, 16, 16)
 			);
 		}
 	}
