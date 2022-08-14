@@ -339,7 +339,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock.Dyeable> ROYAL_DOOR_DOUBLE = doorDouble("royal", FurnitureDoorBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock.Dyeable> ROYAL_LOCKBOX = lockbox("royal", LockboxBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<CounterBlock.Dyeable> ROYAL_COUNTER = counter("royal", CounterBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<OvenBlock> ROYAL_OVEN = oven("royal", OvenBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<OvenBlock.Dyeable> ROYAL_OVEN = oven("royal", OvenBlock.Dyeable::new).transform(ModBlocks::applyDyeable).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 	// endregion
 

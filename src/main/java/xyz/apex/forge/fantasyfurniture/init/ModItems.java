@@ -317,7 +317,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> ROYAL_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.ROYAL_DOOR_DOUBLE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_LOCKBOX = blockItem(BlockItem::new, ModBlocks.ROYAL_LOCKBOX).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_COUNTER = counter(BlockItem::new, ModBlocks.ROYAL_COUNTER).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
-	public static final ItemEntry<BlockItem> ROYAL_OVEN = blockItem(BlockItem::new, ModBlocks.ROYAL_OVEN).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_OVEN = blockItem(BlockItem::new, ModBlocks.ROYAL_OVEN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	// endregion
 	// endregion
 
