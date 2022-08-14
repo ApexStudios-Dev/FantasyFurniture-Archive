@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.block.WallLightBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
@@ -414,8 +415,17 @@ public abstract class HitBoxes
 
 	public final VoxelShape oven(Block block, BlockState blockState)
 	{
-		// block must be instance of OvenBlock or OvenMultiBlock
-		return oven.get(blockState);
+		var shape = oven.get(blockState);
+
+		if(block instanceof OvenMultiBlock multiBlock && !multiBlock.isMultiBlockOrigin(blockState))
+		{
+			var facing = BaseMultiBlock.getFacing(blockState).getClockWise();
+			var offX = facing.getStepX();
+			var offZ = facing.getStepZ();
+			shape = shape.move(offX, 0F, offZ);
+		}
+
+		return shape;
 	}
 
 	protected abstract VoxelShape bedDoubleShape();

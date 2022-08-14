@@ -199,7 +199,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> DUNMER_LOCKBOX = lockbox("dunmer", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<CounterBlock> DUNMER_COUNTER = counter("dunmer", CounterBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<OvenBlock> DUNMER_OVEN = oven("dunmer", OvenBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<OvenMultiBlock> DUNMER_OVEN = ovenMultiblock("dunmer", OvenMultiBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 
 	// region: Venthyr
@@ -1164,6 +1164,20 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends OvenMultiBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> ovenMultiblock(String type, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("%s/oven".formatted(type))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.STONE)
+				.strength(3.5F)
+				.sound(SoundType.STONE)
+				.lightLevel(blockState -> !BaseBlock.isWaterLogged(blockState) && blockState.getValue(BlockStateProperties.LIT) ? 13 : 0)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static <BLOCK extends ShelfBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> shelf(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
@@ -1530,6 +1544,8 @@ public final class ModBlocks
 			else
 				suffix = hinge == DoorHingeSide.RIGHT ? "_right" : "_left";
 		}
+		else if(DUNMER_OVEN.is(ctx.get()) && blockState.getValue(BlockStateProperties.LIT))
+			suffix = "_lit";
 
 		return provider
 				.withExistingParent(

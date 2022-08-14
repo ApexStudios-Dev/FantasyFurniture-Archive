@@ -3,6 +3,7 @@
 	"texture_size": [32, 32],
 	"textures": {
 		"oven": "fantasyfurniture:models/dunmer/oven",
+		"oven_fire": "fantasyfurniture:models/dunmer/oven_fire",
 		"particle": "fantasyfurniture:particles/dunmer"
 	},
 	"elements": [
@@ -229,6 +230,34 @@
 				"west": {"uv": [9, 6.75, 10.25, 8], "texture": "#oven"},
 				"up": {"uv": [2.5, 4.5, 0, 3.25], "texture": "#oven"},
 				"down": {"uv": [5, 3.25, 2.5, 4.5], "texture": "#oven"}
+			}
+		},
+		{
+			"name": "1",
+			"from": [-5, 0, 8],
+			"to": [5, 10, 8],
+			"rotation": {"angle": -45, "axis": "y", "origin": [0, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#oven_fire"},
+				"east": {"uv": [0, 0, 0, 5], "texture": "#oven_fire"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#oven_fire"},
+				"west": {"uv": [0, 0, 0, 5], "texture": "#oven_fire"},
+				"up": {"uv": [5, 0, 0, 0], "texture": "#oven_fire"},
+				"down": {"uv": [5, 0, 0, 0], "texture": "#oven_fire"}
+			}
+		},
+		{
+			"name": "2",
+			"from": [-5, 0, 8],
+			"to": [5, 10, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [0, 7, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#oven_fire"},
+				"east": {"uv": [0, 0, 0, 5], "texture": "#oven_fire"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#oven_fire"},
+				"west": {"uv": [0, 0, 0, 5], "texture": "#oven_fire"},
+				"up": {"uv": [5, 0, 0, 0], "texture": "#oven_fire"},
+				"down": {"uv": [5, 0, 0, 0], "texture": "#oven_fire"}
 			}
 		}
 	],

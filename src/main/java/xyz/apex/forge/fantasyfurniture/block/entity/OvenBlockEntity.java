@@ -24,6 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.entity.InventoryBlockEntity;
 import xyz.apex.forge.fantasyfurniture.menu.OvenMenu;
 
@@ -217,15 +218,53 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 			}
 		}
 
-		if(isBurning != blockState.getValue(BlockStateProperties.LIT))
+		if(isBurning != isBlockStateLit(level, pos, blockState))
 		{
-			dirty = true;
-			blockState = blockState.setValue(BlockStateProperties.LIT, isBurning);
-			level.setBlockAndUpdate(pos, blockState);
+			dirty = setBlockStateLit(level, pos, blockState, isBurning);
+			blockState = level.getBlockState(pos);
 		}
 
 		if(dirty)
 			setChanged(level, pos, blockState);
+	}
+
+	private boolean isBlockStateLit(Level level, BlockPos pos, BlockState blockState)
+	{
+		if(blockState.getBlock() instanceof IMultiBlock multiBlock)
+		{
+			var origin = multiBlock.getMultiBlockOriginPos(blockState, pos);
+			return level.getBlockState(origin).getValue(BlockStateProperties.LIT);
+		}
+
+		return blockState.getValue(BlockStateProperties.LIT);
+	}
+
+	private boolean setBlockStateLit(Level level, BlockPos pos, BlockState blockState, boolean lit)
+	{
+		if(blockState.getBlock() instanceof IMultiBlock multiBlock)
+		{
+			var origin = multiBlock.getMultiBlockOriginPos(blockState, pos);
+			var changed = false;
+
+			for(var localPos : multiBlock.getMultiBlockLocalPositions())
+			{
+				var worldPos = multiBlock.getMultiBlockWorldSpaceFromLocalSpace(blockState, origin, localPos);
+				var worldBlockState = level.getBlockState(worldPos);
+				var newWorldBlockState = worldBlockState.setValue(BlockStateProperties.LIT, lit);
+
+				if(newWorldBlockState != worldBlockState)
+					changed = level.setBlockAndUpdate(worldPos, newWorldBlockState) || changed;
+			}
+
+			return changed;
+		}
+
+		var newBlockState = blockState.setValue(BlockStateProperties.LIT, lit);
+
+		if(newBlockState != blockState)
+			return level.setBlockAndUpdate(pos, newBlockState);
+
+		return false;
 	}
 
 	private ItemStack decrementFuel(ItemStack fuel)
