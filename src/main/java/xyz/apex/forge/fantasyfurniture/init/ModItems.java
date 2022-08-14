@@ -23,7 +23,6 @@ import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 import xyz.apex.forge.fantasyfurniture.item.SkullBlossomsBlockItem;
@@ -551,7 +550,8 @@ public final class ModItems
 
 	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> applyDyeable(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> builder)
 	{
-		return builder.color(() -> () -> (stack, tintIndex) -> tintIndex == (ROYAL_WOOL.isIn(stack) || ROYAL_CARPET.isIn(stack) ? 0 : 1) ? FantasyFurniture.getDyeColor(stack).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
+		// NOTE: ROYAL_WOOL & ROYAL_CARPET should be any DyeableBlock / DyeableCarpet blocks
+		return builder.color(() -> () -> (stack, tintIndex) -> tintIndex == (ROYAL_WOOL.isIn(stack) || ROYAL_CARPET.isIn(stack) ? 0 : 1) ? IDyeable.getDyeColor(stack).map(IDyeable::tintFromDyeColor).orElse(-1) : -1);
 	}
 	// endregion
 }

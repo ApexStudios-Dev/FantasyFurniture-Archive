@@ -8,8 +8,8 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
 public final class DyeableRecipe extends CustomRecipe
 {
@@ -34,7 +34,7 @@ public final class DyeableRecipe extends CustomRecipe
 
 				if(dyeColor == null)
 				{
-					if(stack.is(ModRegistry.DYEABLE_ITEMS))
+					if(stack.is(IDyeable.TAG))
 					{
 						if(!dyeable.isEmpty())
 							return false;
@@ -71,7 +71,7 @@ public final class DyeableRecipe extends CustomRecipe
 
 				if(dyeColor == null)
 				{
-					if(stack.is(ModRegistry.DYEABLE_ITEMS))
+					if(stack.is(IDyeable.TAG))
 					{
 						if(!dyeable.isEmpty())
 							return ItemStack.EMPTY;
@@ -92,7 +92,7 @@ public final class DyeableRecipe extends CustomRecipe
 		if(color == null || dyeable.isEmpty())
 			return ItemStack.EMPTY;
 
-		return FantasyFurniture.setDyeColor(dyeable, color);
+		return IDyeable.setDyeColor(dyeable, color);
 	}
 
 	@Override
@@ -104,6 +104,6 @@ public final class DyeableRecipe extends CustomRecipe
 	@Override
 	public RecipeSerializer<?> getSerializer()
 	{
-		return ModRegistry.DYEABLE_RECIPE_SERIALIZER.get();
+		return ModElements.DYEABLE_RECIPE_SERIALIZER.get();
 	}
 }

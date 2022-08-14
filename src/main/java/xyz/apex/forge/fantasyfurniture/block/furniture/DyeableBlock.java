@@ -3,51 +3,45 @@ package xyz.apex.forge.fantasyfurniture.block.furniture;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
+import java.util.List;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-
-public class DyeableBlock extends Block
+public class DyeableBlock extends Block implements IDyeable
 {
 	public DyeableBlock(Properties properties)
 	{
 		super(properties);
 
-		registerDefaultState(registerDefaultBlockState(defaultBlockState()));
+		registerDefaultState(IDyeable.registerDefaultBlockState(defaultBlockState()));
 	}
 
 	@Override
 	public MaterialColor getMapColor(BlockState blockState, BlockGetter level, BlockPos pos, MaterialColor defaultColor)
 	{
 		var color = super.getMapColor(blockState, level, pos, defaultColor);
-		return DyeableBlock.getDyedMapColor(blockState, level, pos, color);
+		return IDyeable.getDyedMapColor(blockState, level, pos, color);
 	}
 
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		super.createBlockStateDefinition(builder);
-		registerProperties(builder::add);
+		IDyeable.registerProperties(builder::add);
 	}
 
 	@Nullable
@@ -55,13 +49,13 @@ public class DyeableBlock extends Block
 	public BlockState getStateForPlacement(BlockPlaceContext ctx)
 	{
 		var placementBlockState = super.getStateForPlacement(ctx);
-		return getStateForPlacement(ctx, placementBlockState);
+		return IDyeable.getStateForPlacement(ctx, placementBlockState);
 	}
 
 	@Override
 	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
 	{
-		var interactionResult = use(blockState, level, pos, player, hand);
+		var interactionResult = IDyeable.use(blockState, level, pos, player, hand);
 
 		if(interactionResult.consumesAction())
 			return interactionResult;
@@ -73,116 +67,13 @@ public class DyeableBlock extends Block
 	public ItemStack getCloneItemStack(BlockState blockState, HitResult target, BlockGetter level, BlockPos pos, Player player)
 	{
 		var stack = super.getCloneItemStack(blockState, target, level, pos, player);
-		return getCloneItemStack(blockState, level, pos, stack);
+		return IDyeable.getCloneItemStack(blockState, level, pos, stack);
 	}
 
-	public static BlockState registerDefaultBlockState(BlockState blockState)
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag)
 	{
-		return FantasyFurniture.setDyeColor(blockState, DyeColor.WHITE);
-	}
-
-	public static Optional<DyeColor> getDyeColor(BlockGetter level, BlockPos pos, BlockState blockState)
-	{
-		if(blockState.getBlock() instanceof IMultiBlock multiBlock)
-		{
-			var origin = multiBlock.getMultiBlockOriginPos(blockState, pos);
-			var originBlockState = level.getBlockState(origin);
-			return FantasyFurniture.getDyeColor(originBlockState).or(() -> FantasyFurniture.getDyeColor(blockState));
-		}
-
-		return FantasyFurniture.getDyeColor(blockState);
-	}
-
-	public static boolean setDyeColor(LevelAccessor level, BlockPos pos, BlockState blockState, DyeColor dyeColor)
-	{
-		var changed = false;
-
-		if(blockState.getBlock() instanceof IMultiBlock multiBlock)
-		{
-			var origin = multiBlock.getMultiBlockOriginPos(blockState, pos);
-
-			for(var localPos : multiBlock.getMultiBlockLocalPositions())
-			{
-				var worldPos = multiBlock.getMultiBlockWorldSpaceFromLocalSpace(blockState, origin, localPos);
-
-				if(worldPos.equals(pos))
-					continue;
-
-				var worldBlockState = level.getBlockState(worldPos);
-				var newBlockState = FantasyFurniture.setDyeColor(worldBlockState, dyeColor);
-
-				if(newBlockState != worldBlockState)
-					changed = level.setBlock(worldPos, newBlockState, Block.UPDATE_ALL) || changed;
-			}
-		}
-
-		if(blockState.getBlock() instanceof FurnitureDoorBlock)
-		{
-			var half = blockState.getValue(FurnitureDoorBlock.HALF);
-			var otherPos = half == DoubleBlockHalf.LOWER ? pos.above() : pos.below();
-			var otherBlockState = level.getBlockState(otherPos);
-			var newOtherBlockState = FantasyFurniture.setDyeColor(otherBlockState, dyeColor);
-
-			if(newOtherBlockState != otherBlockState)
-				changed = level.setBlock(otherPos, newOtherBlockState, Block.UPDATE_ALL) || changed;
-		}
-
-		var newBlockState = FantasyFurniture.setDyeColor(blockState, dyeColor);
-
-		if(newBlockState != blockState)
-			changed = level.setBlock(pos, newBlockState, Block.UPDATE_ALL) || changed;
-
-		return changed;
-	}
-
-	public static MaterialColor getDyedMapColor(BlockState blockState, BlockGetter level, BlockPos pos, MaterialColor defaultColor)
-	{
-		return getDyeColor(level, pos, blockState).map(DyeColor::getMaterialColor).orElse(defaultColor);
-	}
-
-	public static void registerProperties(Consumer<Property<?>> consumer)
-	{
-		consumer.accept(FantasyFurniture.DYE_COLOR_PROPERTY);
-	}
-
-	@Nullable
-	public static BlockState getStateForPlacement(BlockPlaceContext ctx, @Nullable BlockState placementBlockState)
-	{
-		if(placementBlockState != null)
-		{
-			var effectivelyFinal = new BlockState[] { placementBlockState };
-			effectivelyFinal[0] = FantasyFurniture.getDyeColor(ctx.getItemInHand()).map(c -> FantasyFurniture.setDyeColor(effectivelyFinal[0], c)).orElse(effectivelyFinal[0]);
-
-			// for stacked blocks, to retain colors when replacing
-			var existingBlockState = ctx.getLevel().getBlockState(ctx.getClickedPos());
-
-			if(existingBlockState.is(effectivelyFinal[0].getBlock()))
-				effectivelyFinal[0] = FantasyFurniture.getDyeColor(existingBlockState).map(color -> FantasyFurniture.setDyeColor(effectivelyFinal[0], color)).orElse(effectivelyFinal[0]);
-
-			placementBlockState = effectivelyFinal[0];
-		}
-
-		return placementBlockState;
-	}
-
-	public static InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand)
-	{
-		var stack = player.getItemInHand(hand);
-		var dyeColor = DyeColor.getColor(stack);
-
-		if(dyeColor != null && setDyeColor(level, pos, blockState, dyeColor))
-		{
-			if(!player.isCreative())
-				stack.shrink(1);
-
-			return InteractionResult.SUCCESS;
-		}
-
-		return InteractionResult.PASS;
-	}
-
-	public static ItemStack getCloneItemStack(BlockState blockState, BlockGetter level, BlockPos pos, ItemStack stack)
-	{
-		return getDyeColor(level, pos, blockState).map(color -> FantasyFurniture.setDyeColor(stack, color)).orElse(stack);
+		super.appendHoverText(stack, level, tooltip, flag);
+		IDyeable.appendHoverText(tooltip);
 	}
 }

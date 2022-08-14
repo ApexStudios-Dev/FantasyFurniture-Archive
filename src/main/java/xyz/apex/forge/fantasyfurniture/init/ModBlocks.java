@@ -44,7 +44,6 @@ import xyz.apex.forge.apexcore.registrate.builder.factory.BlockFactory;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
@@ -1517,7 +1516,7 @@ public final class ModBlocks
 
 	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDyeable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
-		return builder.color(() -> () -> (blockstate, level, pos, tintIndex) -> tintIndex == (ROYAL_WOOL.isIn(blockstate) || ROYAL_CARPET.isIn(blockstate) ? 0 : 1) ? FantasyFurniture.getDyeColor(blockstate).map(FantasyFurniture::tintFromDyeColor).orElse(-1) : -1);
+		return builder.color(() -> () -> (blockstate, level, pos, tintIndex) -> tintIndex == (blockstate.getBlock() instanceof DyeableBlock || blockstate.getBlock() instanceof DyeableCarpetBlock ? 0 : 1) ? IDyeable.getDyeColor(blockstate).map(IDyeable::tintFromDyeColor).orElse(-1) : -1);
 	}
 
 	private static <BLOCK extends Block> BlockModelBuilder getModelFile(DataGenContext<Block, BLOCK> ctx, BlockState blockState, BlockModelProvider provider)

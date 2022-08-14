@@ -1,9 +1,13 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.util.entry.RegistryEntry;
+
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -19,6 +23,7 @@ import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityR
 import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.data.ParticleProvider;
+import xyz.apex.forge.fantasyfurniture.item.crafting.DyeableRecipe;
 import xyz.apex.forge.fantasyfurniture.menu.*;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
@@ -32,6 +37,16 @@ public final class ModElements
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
 	public static final ResourceLocation OVEN_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/oven.png");
+
+	public static final RegistryEntry<SimpleRecipeSerializer<DyeableRecipe>> DYEABLE_RECIPE_SERIALIZER = REGISTRATE
+			.object("dyeable")
+			.simple(ForgeRegistries.Keys.RECIPE_SERIALIZERS, () -> new SimpleRecipeSerializer<>(DyeableRecipe::new))
+	;
+
+	public static final RegistryEntry<RecipeType<DyeableRecipe>> DYEABLE_RECIPE_TYPE = REGISTRATE
+			.object("dyeable")
+			.simple(ForgeRegistries.Keys.RECIPE_TYPES, () -> RecipeType.simple(new ResourceLocation(Mods.FANTASY_FURNITURE, "dyeable")))
+	;
 
 	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = REGISTRATE
 			.object("large_inventory_menu")
