@@ -3,13 +3,16 @@ package xyz.apex.forge.fantasyfurniture.block.furniture;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -59,6 +62,20 @@ public class OvenMultiBlock extends BaseMultiBlock.WithContainer<OvenBlockEntity
 			return HitBoxes.DUNMER.oven(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
+	}
+
+	@Override
+	public void onRemove(BlockState blockState, Level level, BlockPos pos, BlockState newBlockState, boolean isMoving)
+	{
+		if(!blockState.is(newBlockState.getBlock()) && level instanceof ServerLevel serverLevel)
+		{
+			var blockEntity = getBlockEntity(blockState, level, pos);
+
+			if(blockEntity != null)
+				blockEntity.awardRecipesAndExperience(serverLevel, null, Vec3.atCenterOf(pos));
+		}
+
+		super.onRemove(blockState, level, pos, newBlockState, isMoving);
 	}
 
 	@Override

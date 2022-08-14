@@ -1,12 +1,19 @@
 package xyz.apex.forge.fantasyfurniture.menu;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -22,14 +29,22 @@ public final class OvenMenu extends BaseMenu
 	public static final int SLOT_INPUT = 0;
 	public static final int SLOT_FUEL = 1;
 	public static final int SLOT_OUTPUT = 2;
-	public static final int DATA_SLOT_COUNT = 0;
+	public static final int DATA_SLOT_COUNT = 4;
+	public static final int DATA_SLOT_BURN_TIME = 0;
+	public static final int DATA_SLOT_TOTAL_BURN_TIME = 1;
+	public static final int DATA_SLOT_SMELT_TIME = 2;
+	public static final int DATA_SLOT_TOTAL_SMELT_TIME = 3;
 
-	public final Player player;
-	public final IItemHandler itemHandler;
+	private final Player player;
+	private final IItemHandler itemHandler;
 	private final OvenBlockEntity blockEntity;
-	public final Slot inputSlot;
-	public final Slot outputSlot;
-	public final Slot fuelSlot;
+	private final Slot inputSlot;
+	private final Slot outputSlot;
+	private final Slot fuelSlot;
+	private DataSlot burnTime;
+	private DataSlot totalBurnTime;
+	private DataSlot smeltTime;
+	private DataSlot totalSmeltTime;
 
 	public OvenMenu(@Nullable MenuType<? extends OvenMenu> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer)
 	{
@@ -45,6 +60,37 @@ public final class OvenMenu extends BaseMenu
 		bindPlayerInventory(this, 8, 84);
 
 		blockEntity = ModElements.OVEN_BLOCK_ENTITY.get(player.level, pos).orElseThrow();
+
+		burnTime = addDataSlot(DataSlot.forContainer(blockEntity, DATA_SLOT_BURN_TIME));
+		totalBurnTime = addDataSlot(DataSlot.forContainer(blockEntity, DATA_SLOT_TOTAL_BURN_TIME));
+		smeltTime = addDataSlot(DataSlot.forContainer(blockEntity, DATA_SLOT_SMELT_TIME));
+		totalSmeltTime = addDataSlot(DataSlot.forContainer(blockEntity, DATA_SLOT_TOTAL_SMELT_TIME));
+	}
+
+	public int getSmeltProgress()
+	{
+		var totalSmeltTime = this.totalSmeltTime.get();
+
+		if(totalSmeltTime <= 0)
+			return -1;
+
+		var smeltTime = this.smeltTime.get();
+		return smeltTime * 24 / totalSmeltTime;
+	}
+
+	public int getBurnProgress()
+	{
+		var burnTime = this.burnTime.get();
+
+		if(burnTime <= 0)
+			return -1;
+
+		var totalBurnTime = this.totalBurnTime.get();
+
+		if(totalBurnTime == 0)
+			totalBurnTime = AbstractFurnaceBlockEntity.BURN_TIME_STANDARD;
+
+		return burnTime * 100 / totalBurnTime;
 	}
 
 	@Nullable
@@ -72,9 +118,52 @@ public final class OvenMenu extends BaseMenu
 
 	public final class OutputSlot extends SlotItemHandler
 	{
+		private int removeCount;
+
 		public OutputSlot()
 		{
 			super(itemHandler, SLOT_OUTPUT, 116, 35);
+		}
+
+		@Override
+		public boolean mayPlace(@NotNull ItemStack stack)
+		{
+			return false;
+		}
+
+		@Override
+		public @NotNull ItemStack remove(int amount)
+		{
+			if(hasItem())
+				removeCount += Math.min(amount, getItem().getCount());
+
+			return super.remove(amount);
+		}
+
+		@Override
+		public void onTake(Player player, ItemStack stack)
+		{
+			checkTakeAchievements(stack);
+			super.onTake(player, stack);
+		}
+
+		@Override
+		protected void onQuickCraft(ItemStack stack, int amount)
+		{
+			removeCount += amount;
+			super.onQuickCraft(stack, amount);
+		}
+
+		@Override
+		protected void checkTakeAchievements(ItemStack stack)
+		{
+			stack.onCraftedBy(player.level, player, removeCount);
+
+			if(player instanceof ServerPlayer serverPlayer)
+				blockEntity.awardRecipesAndExperience(serverPlayer.getLevel(), serverPlayer, Vec3.atCenterOf(pos));
+
+			removeCount = 0;
+			ForgeEventFactory.firePlayerSmeltedEvent(player, stack);
 		}
 	}
 
@@ -83,6 +172,12 @@ public final class OvenMenu extends BaseMenu
 		public FuelSlot()
 		{
 			super(itemHandler, SLOT_FUEL, 56, 53);
+		}
+
+		@Override
+		public boolean mayPlace(@NotNull ItemStack stack)
+		{
+			return blockEntity.canBurn(stack);
 		}
 	}
 }
