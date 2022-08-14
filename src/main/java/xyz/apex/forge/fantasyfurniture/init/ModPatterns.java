@@ -11,7 +11,7 @@ public final class ModPatterns
 			.layer("X")
 			.build();
 
-	public static final MultiBlockPattern PATTERN_1x1x2_PAINTING = MultiBlockPattern
+	public static final MultiBlockPattern PATTERN_1x1x2_PAINTING = MultiBlockPattern // TODO: `_PAINTING`? but you are for floor light, rename in 1.20
 			.builder()
 			.layer("X")
 			.layer("X")

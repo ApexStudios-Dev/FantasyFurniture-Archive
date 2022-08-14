@@ -1,23 +1,15 @@
 package xyz.apex.forge.fantasyfurniture;
 
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -30,7 +22,7 @@ import net.minecraftforge.registries.MissingMappingsEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.fantasyfurniture.block.furniture.DyeableBlock;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
@@ -38,15 +30,11 @@ import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModItems;
 import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
 
-import java.util.Optional;
-
 @Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
 {
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final NetworkManager NETWORK = new NetworkManager(Mods.FANTASY_FURNITURE, "net", "1");
-	public static final String NBT_DYE_COLOR = "DyeColor";
-	public static final EnumProperty<DyeColor> DYE_COLOR_PROPERTY = EnumProperty.create("dye_color", DyeColor.class);
 
 	public FantasyFurniture()
 	{
@@ -215,14 +203,14 @@ public final class FantasyFurniture
 		{
 			var blockState = event.getPlacedBlock();
 
-			if(hasDyeColorProperty(blockState))
+			if(IDyeable.hasDyeColorProperty(blockState))
 			{
 				for(var hand : InteractionHand.values())
 				{
 					var stack = living.getItemInHand(hand);
 					var dyeColor = DyeColor.getColor(stack);
 
-					if(dyeColor != null && DyeableBlock.setDyeColor(event.getLevel(), event.getPos(), blockState, dyeColor))
+					if(dyeColor != null && IDyeable.setDyeColor(event.getLevel(), event.getPos(), blockState, dyeColor))
 					{
 						if(!(living instanceof Player player) || !player.isCreative())
 							stack.shrink(1);
@@ -231,69 +219,6 @@ public final class FantasyFurniture
 				}
 			}
 		}
-	}
-
-	public static int tintFromDyeColor(DyeColor color)
-	{
-		var colors = color.getTextureDiffuseColors();
-		var red = (int) (colors[0] * 255F);
-		var green = (int) (colors[1] * 255F);
-		var blue = (int) (colors[2] * 255F);
-
-		return FastColor.ARGB32.color(255, red, green, blue);
-	}
-
-	public static Optional<DyeColor> getDyeColor(ItemStack stack)
-	{
-		var tag = stack.getTag();
-
-		if(tag != null && tag.contains(NBT_DYE_COLOR, Tag.TAG_STRING))
-		{
-			var dyeName = tag.getString(NBT_DYE_COLOR);
-			return Optional.ofNullable(DyeColor.byName(dyeName, null));
-		}
-
-		return Optional.empty();
-	}
-
-	@CanIgnoreReturnValue
-	public static ItemStack setDyeColor(ItemStack stack, @Nullable DyeColor color)
-	{
-		var stackTag = stack.getTag();
-
-		if(color == null)
-		{
-			if(stackTag != null && stackTag.contains(NBT_DYE_COLOR, Tag.TAG_STRING))
-			{
-				stackTag.remove(NBT_DYE_COLOR);
-				stack.setTag(stackTag);
-			}
-		}
-		else
-		{
-			if(stackTag == null)
-				stackTag = new CompoundTag();
-
-			stackTag.putString(NBT_DYE_COLOR, color.getSerializedName());
-			stack.setTag(stackTag);
-		}
-
-		return stack;
-	}
-
-	public static boolean hasDyeColorProperty(BlockState blockState)
-	{
-		return blockState.hasProperty(DYE_COLOR_PROPERTY);
-	}
-
-	public static Optional<DyeColor> getDyeColor(BlockState blockState)
-	{
-		return blockState.getOptionalValue(DYE_COLOR_PROPERTY);
-	}
-
-	public static BlockState setDyeColor(BlockState blockState, DyeColor color)
-	{
-		return hasDyeColorProperty(blockState) ? blockState.setValue(DYE_COLOR_PROPERTY, color) : blockState;
 	}
 
 	private static final class Client

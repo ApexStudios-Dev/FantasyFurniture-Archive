@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.apexcore.lib.block.WallLightBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
@@ -58,6 +59,7 @@ public abstract class HitBoxes
 	private final HitBox.WithShaper doorSingle = new HitBox.WithShaper(this::doorSingleShape, Direction.NORTH);
 	private final HitBox.WithShaper counterSingle = new HitBox.WithShaper(this::counterSingleShape, Direction.NORTH);
 	private final HitBox.WithShaper counterCorner = new HitBox.WithShaper(this::counterCornerShape, Direction.NORTH);
+	private final HitBox.WithShaper oven = new HitBox.WithShaper(this::ovenShape, Direction.NORTH);
 
 	public final VoxelShape bedDouble(BedDoubleBlock block, BlockState blockState)
 	{
@@ -411,6 +413,21 @@ public abstract class HitBoxes
 		return shaper.get(facing);
 	}
 
+	public final VoxelShape oven(Block block, BlockState blockState)
+	{
+		var shape = oven.get(blockState);
+
+		if(block instanceof OvenMultiBlock multiBlock && !multiBlock.isMultiBlockOrigin(blockState))
+		{
+			var facing = BaseMultiBlock.getFacing(blockState).getClockWise();
+			var offX = facing.getStepX();
+			var offZ = facing.getStepZ();
+			shape = shape.move(offX, 0F, offZ);
+		}
+
+		return shape;
+	}
+
 	protected abstract VoxelShape bedDoubleShape();
 	protected abstract VoxelShape bedSingleShape();
 	protected abstract VoxelShape benchShape();
@@ -447,6 +464,7 @@ public abstract class HitBoxes
 	protected abstract VoxelShape doorSingleShape();
 	protected abstract VoxelShape counterSingleShape();
 	protected abstract VoxelShape counterCornerShape();
+	protected abstract VoxelShape ovenShape();
 
 	private static final class Nordic extends HitBoxes
 	{
@@ -903,6 +921,18 @@ public abstract class HitBoxes
 					box(0, 0, 0, 13, 13, 4),
 					box(0, 0, 3, 16, 13, 16),
 					box(0, 13, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape ovenShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0, 16, 1, 16),
+					Block.box(0, 1, 1, 16, 9, 16),
+					Block.box(0, 9, 0, 16, 10, 16),
+					Block.box(1, 10, 3, 15, 14, 16),
+					Block.box(2, 14, 3, 14, 16, 16)
 			);
 		}
 	}
@@ -1366,6 +1396,20 @@ public abstract class HitBoxes
 					box(0, 1, 3, 16, 14, 16),
 					box(0, 1, 0, 13, 14, 3),
 					box(0, 14, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape ovenShape()
+		{
+			return VoxelShaper.or(
+					Block.box(-9, 0, 0, 9, 3, 16),
+					Block.box(12.5, 0, 6.5, 15.5, 3, 9.5),
+					Block.box(-15.5, 0, 6.5, -12.5, 3, 9.5),
+					Block.box(-15, 3, 7, -13, 16, 9),
+					Block.box(13, 3, 7, 15, 16, 9),
+					Block.box(-16, 12, 7, 16, 14, 9),
+					Block.box(-5, 10.5, 5.5, 5, 15.5, 10.5)
 			);
 		}
 	}
@@ -1856,6 +1900,21 @@ public abstract class HitBoxes
 					box(0, 0, 3, 16, 13, 16),
 					box(0, 13, 0, 16, 16, 16),
 					box(1, 1, 2, 15, 12, 3)
+			);
+		}
+
+		@Override
+		protected VoxelShape ovenShape()
+		{
+			return VoxelShaper.or(
+					Block.box(1, 0, 1, 4, 2, 4),
+					Block.box(1, 0, 12, 4, 2, 15),
+					Block.box(12, 0, 12, 15, 2, 15),
+					Block.box(12, 0, 1, 15, 2, 4),
+					Block.box(0, 2, 0, 16, 4, 16),
+					Block.box(0, 14, 0, 16, 16, 16),
+					Block.box(1, 4, 1, 15, 14, 15),
+					Block.box(3, 5, 0, 13, 13, 1)
 			);
 		}
 	}
@@ -2442,6 +2501,23 @@ public abstract class HitBoxes
 					box(0, 13, 0, 16, 16, 16)
 			);
 		}
+
+		@Override
+		protected VoxelShape ovenShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0, 3, 2, 3),
+					Block.box(0, 0, 13, 3, 2, 16),
+					Block.box(13, 0, 13, 16, 2, 16),
+					Block.box(13, 0, 0, 16, 2, 3),
+					Block.box(13, 12, 0, 16, 14, 3),
+					Block.box(13, 12, 13, 16, 14, 16),
+					Block.box(0, 12, 13, 3, 14, 16),
+					Block.box(0, 12, 0, 3, 14, 3),
+					Block.box(0.5, 0.5, 0.5, 15.5, 14, 15.5),
+					Block.box(0, 14, 0, 16, 16, 16)
+			);
+		}
 	}
 
 	private static final class Royal extends HitBoxes
@@ -2976,6 +3052,21 @@ public abstract class HitBoxes
 					Block.box(0, 0, 0, 13, 13, 3),
 					Block.box(0, 0, 3, 16, 13, 16),
 					Block.box(0, 13, 0, 16, 16, 16)
+			);
+		}
+
+		@Override
+		protected VoxelShape ovenShape()
+		{
+			return VoxelShaper.or(
+					Block.box(0, 0, 0, 3.5, 4, 3.5),
+					Block.box(0, 0, 12.5, 3.5, 4, 16),
+					Block.box(12.5, 0, 12.5, 16, 4, 16),
+					Block.box(12.5, 0, 0, 16, 4, 3.5),
+					Block.box(0, 4, 0, 16, 6, 16),
+					Block.box(0, 14, 0, 16, 16, 16),
+					Block.box(0.5, 5, 0.5, 15.5, 14, 15.5),
+					Block.box(2.5, 7, -0.5, 11.5, 13, 0.5)
 			);
 		}
 	}
