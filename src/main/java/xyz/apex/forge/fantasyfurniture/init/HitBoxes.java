@@ -3065,8 +3065,8 @@ public abstract class HitBoxes
 					Block.box(12.5, 0, 0, 16, 4, 3.5),
 					Block.box(0, 4, 0, 16, 6, 16),
 					Block.box(0, 14, 0, 16, 16, 16),
-					Block.box(0.5, 5, 0.5, 15.5, 14, 15.5),
-					Block.box(2.5, 7, -0.5, 11.5, 13, 0.5)
+					Block.box(0.5, 6, 0.5, 15.5, 14, 15.5),
+					Block.box(2.5, 7, -0.5, 12.5, 13, 0.5)
 			);
 		}
 	}

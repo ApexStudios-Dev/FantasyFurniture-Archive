@@ -159,6 +159,9 @@ public interface IDyeable
 
 	static int tintFromDyeColor(DyeColor color)
 	{
+		if (color == DyeColor.BLACK)
+			return 0x212121;
+
 		var colors = color.getTextureDiffuseColors();
 		var red = (int) (colors[0] * 255F);
 		var green = (int) (colors[1] * 255F);

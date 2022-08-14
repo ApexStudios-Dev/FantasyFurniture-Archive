@@ -53,6 +53,10 @@ public class CushionBlock extends SeatBlock
 	@Override
 	public double getSeatYOffset(BlockState blockState)
 	{
+		if(ModBlocks.ROYAL_FLOOR_CUSHION.isIn(blockState))
+			return .0D;
+		else if(ModBlocks.ROYAL_CUSHION.isIn(blockState))
+			return .3D;
 		return .2D;
 	}
 
