@@ -22,14 +22,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.block.furniture.DyeableBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
 import java.util.function.Consumer;
 
 public class CrownBlock extends BaseBlock
 {
-	public static final VoxelShape SHAPE = box(2, 0, 2, 14, 5, 14);
+	public static final VoxelShape CROWN_SHAPE = box(2, 0, 2, 14, 5, 14);
+	public static final VoxelShape CUSHIONED_CROWN_SHAPE = box(2, 0, 2, 14, 8, 14);
 
-	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
+	public static final VoxelShaper CROWN_SHAPER = VoxelShaper.forHorizontal(CROWN_SHAPE, Direction.NORTH);
+	public static final VoxelShaper CUSHIONED_CROWN_SHAPER = VoxelShaper.forHorizontal(CUSHIONED_CROWN_SHAPE, Direction.NORTH);
 
 	public CrownBlock(Properties properties)
 	{
@@ -48,7 +51,13 @@ public class CrownBlock extends BaseBlock
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
 		var facing = BaseBlock.getFacing(blockState);
-		return SHAPER.get(facing);
+
+		if(ModBlocks.ROYAL_CROWN.isIn(blockState))
+			return CROWN_SHAPER.get(facing);
+		else if(ModBlocks.ROYAL_CUSHIONED_CROWN.isIn(blockState))
+			return CUSHIONED_CROWN_SHAPER.get(facing);
+
+		return super.getShape(blockState, level, pos, ctx);
 	}
 
 	public static class Dyeable extends CrownBlock

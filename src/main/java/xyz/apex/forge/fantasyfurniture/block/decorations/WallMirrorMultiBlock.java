@@ -1,4 +1,4 @@
-package xyz.apex.forge.fantasyfurniture.block.furniture;
+package xyz.apex.forge.fantasyfurniture.block.decorations;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -6,13 +6,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.MaterialColor;
@@ -22,19 +21,27 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
-import xyz.apex.forge.apexcore.lib.block.SeatBlock;
+import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
+import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
-import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
-import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.block.furniture.DyeableBlock;
+import xyz.apex.forge.fantasyfurniture.init.ModPatterns;
 
 import java.util.function.Consumer;
 
-public class CushionBlock extends SeatBlock
+public class WallMirrorMultiBlock extends BaseMultiBlock
 {
-	public static final VoxelShape ROYAL_FLOOR_CUSHION_SHAPE = box(2, 0, 2, 14, 3, 14);
-	public static final VoxelShaper ROYAL_FLOOR_CUSHION_SHAPER = VoxelShaper.forHorizontal(ROYAL_FLOOR_CUSHION_SHAPE, Direction.NORTH);
+	public static final VoxelShape SHAPE = VoxelShaper.or(
+			Block.box(1, 2, 15, 4, 5, 16),
+			Block.box(1, 27, 15, 4, 30, 16),
+			Block.box(12, 27, 15, 15, 30, 16),
+			Block.box(12, 2, 15, 15, 5, 16),
+			Block.box(2, 3, 15, 14, 29, 16)
+	);
 
-	public CushionBlock(Properties properties)
+	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
+
+	public WallMirrorMultiBlock(Properties properties)
 	{
 		super(properties);
 	}
@@ -48,57 +55,20 @@ public class CushionBlock extends SeatBlock
 	}
 
 	@Override
-	public double getSeatYOffset(BlockState blockState)
-	{
-		return .2D;
-	}
-
-	@Override
-	public void fallOn(Level level, BlockState blockState, BlockPos pos, Entity entity, float distance)
-	{
-		super.fallOn(level, blockState, pos, entity, distance * .5F);
-	}
-
-	@Override
-	public void updateEntityAfterFallOn(BlockGetter level, Entity entity)
-	{
-		if(entity.isSuppressingBounce())
-			super.updateEntityAfterFallOn(level, entity);
-		else
-			bounceUp(entity);
-	}
-
-	protected void bounceUp(Entity entity)
-	{
-		var deltaMovement = entity.getDeltaMovement();
-
-		if(deltaMovement.y < 0D)
-		{
-			var d0 = entity instanceof LivingEntity ? 1D : .8D;
-			entity.setDeltaMovement(deltaMovement.x, -deltaMovement.y * (double) .66F * d0, deltaMovement.z);
-		}
-	}
-
-	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_CUSHION.isIn(blockState))
-			return HitBoxes.NORDIC.cushion(this, blockState);
-		else if(ModBlocks.DUNMER_CUSHION.isIn(blockState))
-			return HitBoxes.DUNMER.cushion(this, blockState);
-		else if(ModBlocks.VENTHYR_CUSHION.isIn(blockState))
-			return HitBoxes.VENTHYR.cushion(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_SKULL.isIn(blockState) || ModBlocks.BONE_WITHER_SKULL.isIn(blockState))
-			return HitBoxes.BONE.cushion(this, blockState);
-		else if(ModBlocks.ROYAL_CUSHION.isIn(blockState))
-			return HitBoxes.ROYAL.cushion(this, blockState);
-		else if(ModBlocks.ROYAL_FLOOR_CUSHION.isIn(blockState))
-			return ROYAL_FLOOR_CUSHION_SHAPER.get(BaseBlock.getFacing(blockState));
-
-		return super.getShape(blockState, level, pos, ctx);
+		var facing = BaseBlock.getFacing(blockState);
+		var shape = SHAPER.get(facing);
+		return isMultiBlockOrigin(blockState) ? shape : shape.move(0D, -1D, 0D);
 	}
 
-	public static class Dyeable extends CushionBlock
+	@Override
+	public MultiBlockPattern getMultiBlockPattern()
+	{
+		return ModPatterns.PATTERN_1x1x2;
+	}
+
+	public static class Dyeable extends WallMirrorMultiBlock
 	{
 		public Dyeable(Properties properties)
 		{
@@ -110,8 +80,8 @@ public class CushionBlock extends SeatBlock
 		@Override
 		public MaterialColor getMapColor(BlockState blockState, BlockGetter level, BlockPos pos, MaterialColor defaultColor)
 		{
-			var color = super.getMapColor(blockState, level, pos, defaultColor);
-			return DyeableBlock.getDyedMapColor(blockState, level, pos, color);
+			var mapColor = super.getMapColor(blockState, level, pos, defaultColor);
+			return DyeableBlock.getDyedMapColor(blockState, level, pos, mapColor);
 		}
 
 		@Override

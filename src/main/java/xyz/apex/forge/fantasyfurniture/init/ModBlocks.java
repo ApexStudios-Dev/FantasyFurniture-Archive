@@ -93,7 +93,7 @@ public final class ModBlocks
 	public static final BlockEntry<PlatterBlock> VENTHYR_PLATTER = platter("venthyr").register();
 	public static final BlockEntry<WidowBloomBlock> VENTHYR_WIDOW_BLOOM = widowBloom("venthyr").register();
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes("venthyr").register();
-	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr").register();
+	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr", ChalicesBlock::new).register();
 	public static final BlockEntry<CandleBlock> VENTHYR_CANDLES = candles("venthyr").register();
 	// endregion
 
@@ -106,13 +106,13 @@ public final class ModBlocks
 	public static final BlockEntry<CandleBlock> BONE_CANDLES = candles("bone").register();
 
 	// region: Skeleton
-	public static final BlockEntry<ChalicesBlock> BONE_SKELETON_CHALICES = chalices("bone_skeleton").lang("Bone Chalices").register();
+	public static final BlockEntry<ChalicesBlock> BONE_SKELETON_CHALICES = chalices("bone_skeleton", ChalicesBlock::new).lang("Bone Chalices").register();
 	public static final BlockEntry<BonePileBlock> BONE_SKELETON_PILE = bonePile("bone_skeleton").lang("Bone Pile").register();
 	public static final BlockEntry<SkullBlossomsBlock> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms("bone_skeleton").lang("Skull Blossoms").register();
 	// endregion
 
 	// region: Wither
-	public static final BlockEntry<ChalicesBlock> BONE_WITHER_CHALICES = chalices("bone_wither").lang("Wither Bone Chalices").register();
+	public static final BlockEntry<ChalicesBlock> BONE_WITHER_CHALICES = chalices("bone_wither", ChalicesBlock::new).lang("Wither Bone Chalices").register();
 	public static final BlockEntry<BonePileBlock> BONE_WITHER_PILE = bonePile("bone_wither").lang("Wither Bone Pile").register();
 	public static final BlockEntry<SkullBlossomsBlock> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms("bone_wither").lang("Wither Skull Blossoms").register();
 	// endregion
@@ -121,6 +121,14 @@ public final class ModBlocks
 	// region: Royal
 	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CROWN = crown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<CandelabraBlock> ROYAL_CANDELABRA = candelabra("royal").transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<ChalicesBlock.Dyeable> ROYAL_CHALICES = chalices("royal", ChalicesBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CUSHIONED_CROWN = cushionedCrown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<FoodBlock> ROYAL_FOOD_0 = food("royal", 0).register();
+	public static final BlockEntry<FoodBlock> ROYAL_FOOD_1 = food("royal", 1).register();
+	public static final BlockEntry<PlatterBlock> ROYAL_PLATTER = platter("royal").register();
+	public static final BlockEntry<CushionBlock.Dyeable> ROYAL_FLOOR_CUSHION = floorCushion("royal", CushionBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<WallMirrorBlock.Dyeable> ROYAL_WALL_MIRROR_LARGE = wallMirror("royal", "small", WallMirrorBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<WallMirrorMultiBlock.Dyeable> ROYAL_WALL_MIRROR_SMALL = wallMirrorMultiBlock("royal", "large", WallMirrorMultiBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	// endregion
 	// endregion
 
@@ -466,6 +474,20 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends CrownBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> cushionedCrown(String furnitureType, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("decorations/%s_cushioned_crown".formatted(furnitureType))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Cushioned Crown".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
+				.initialProperties(Material.WOOL)
+				.strength(.8F)
+				.sound(SoundType.WOOL)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static BlockBuilder<BasicRegistrate, CandelabraBlock, BasicRegistrate> candelabra(String furnitureType)
 	{
 		return REGISTRATE
@@ -586,6 +608,34 @@ public final class ModBlocks
 		;
 	}
 
+	private static <BLOCK extends WallMirrorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wallMirror(String furnitureType, String mirrorType, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("decorations/%s_wall_mirror_%s".formatted(furnitureType, mirrorType))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Wall Mirror %s".formatted(RegistrateLangProvider.toEnglishName(furnitureType), RegistrateLangProvider.toEnglishName(mirrorType)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends WallMirrorMultiBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wallMirrorMultiBlock(String furnitureType, String mirrorType, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("decorations/%s_wall_mirror_%s".formatted(furnitureType, mirrorType))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Wall Mirror %s".formatted(RegistrateLangProvider.toEnglishName(furnitureType), RegistrateLangProvider.toEnglishName(mirrorType)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
 	private static BlockBuilder<BasicRegistrate, BoiledCremeTreatsBlock, BasicRegistrate> boiledCremeTreats(String furnitureType)
 	{
 		return REGISTRATE
@@ -694,7 +744,7 @@ public final class ModBlocks
 				.object("decorations/%s_platter".formatted(furnitureType))
 				.block(PlatterBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Platter")
+				.lang("%s Platter".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
@@ -738,11 +788,11 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<BasicRegistrate, ChalicesBlock, BasicRegistrate> chalices(String furnitureType)
+	private static <BLOCK extends ChalicesBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> chalices(String furnitureType, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("decorations/%s_chalices".formatted(furnitureType))
-				.block(ChalicesBlock::new)
+				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("%s Chalices".formatted(RegistrateLangProvider.toEnglishName(furnitureType)))
 				.initialProperties(Material.METAL)
@@ -1018,6 +1068,20 @@ public final class ModBlocks
 				.object("%s/cushion".formatted(type))
 				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static <BLOCK extends CushionBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> floorCushion(String type, BlockFactory<BLOCK> blockFactory)
+	{
+		return REGISTRATE
+				.object("decorations/%s_floor_cushion".formatted(type))
+				.block(blockFactory)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Floor Cushion".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
