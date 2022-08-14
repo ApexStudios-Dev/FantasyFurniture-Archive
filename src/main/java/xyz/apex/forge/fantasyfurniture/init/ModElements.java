@@ -17,15 +17,9 @@ import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
 import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;
-import xyz.apex.forge.fantasyfurniture.client.screen.BookshelfMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.LargeInventoryMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.MediumInventoryMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.SmallInventoryMenuScreen;
+import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.data.ParticleProvider;
-import xyz.apex.forge.fantasyfurniture.menu.BookshelfMenu;
-import xyz.apex.forge.fantasyfurniture.menu.LargeInventoryMenu;
-import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
-import xyz.apex.forge.fantasyfurniture.menu.SmallInventoryMenu;
+import xyz.apex.forge.fantasyfurniture.menu.*;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
@@ -37,6 +31,7 @@ public final class ModElements
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
+	public static final ResourceLocation OVEN_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/oven.png");
 
 	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = REGISTRATE
 			.object("large_inventory_menu")
@@ -56,6 +51,11 @@ public final class ModElements
 	public static final MenuEntry<BookshelfMenu> BOOKSHELF_MENU = REGISTRATE
 			.object("bookshelf")
 			.menu(BookshelfMenu::new, () -> BookshelfMenuScreen::new)
+	;
+
+	public static final MenuEntry<OvenMenu> OVEN_MENU = REGISTRATE
+			.object("oven")
+			.menu(OvenMenu::new, () -> OvenMenuScreen::new)
 	;
 
 	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRATE
@@ -139,7 +139,18 @@ public final class ModElements
 	public static final BlockEntityEntry<CounterBlockEntity> COUNTER_BLOCK_ENTITY = REGISTRATE
 			.object("counter")
 			.blockEntity(CounterBlockEntity::new)
-			.validBlock(ModBlocks.ROYAL_COUNTER)
+			.validBlock(ModBlocks.ROYAL_COUNTER) // TODO: Add other counter blocks
+			.register()
+	;
+
+	public static final BlockEntityEntry<OvenBlockEntity> OVEN_BLOCK_ENTITY = REGISTRATE
+			.object("oven")
+			.blockEntity(OvenBlockEntity::new)
+			.validBlock(
+					ModBlocks.NORDIC_OVEN, ModBlocks.DUNMER_OVEN,
+					ModBlocks.VENTHYR_OVEN, ModBlocks.BONE_SKELETON_OVEN,
+					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN
+			)
 			.register()
 	;
 
