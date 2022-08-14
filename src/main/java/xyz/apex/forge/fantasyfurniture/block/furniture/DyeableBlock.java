@@ -150,8 +150,16 @@ public class DyeableBlock extends Block
 	{
 		if(placementBlockState != null)
 		{
-			var effectivelyFinal = placementBlockState;
-			placementBlockState = FantasyFurniture.getDyeColor(ctx.getItemInHand()).map(c -> FantasyFurniture.setDyeColor(effectivelyFinal, c)).orElse(placementBlockState);
+			var effectivelyFinal = new BlockState[] { placementBlockState };
+			effectivelyFinal[0] = FantasyFurniture.getDyeColor(ctx.getItemInHand()).map(c -> FantasyFurniture.setDyeColor(effectivelyFinal[0], c)).orElse(effectivelyFinal[0]);
+
+			// for stacked blocks, to retain colors when replacing
+			var existingBlockState = ctx.getLevel().getBlockState(ctx.getClickedPos());
+
+			if(existingBlockState.is(effectivelyFinal[0].getBlock()))
+				effectivelyFinal[0] = FantasyFurniture.getDyeColor(existingBlockState).map(color -> FantasyFurniture.setDyeColor(effectivelyFinal[0], color)).orElse(effectivelyFinal[0]);
+
+			placementBlockState = effectivelyFinal[0];
 		}
 
 		return placementBlockState;
