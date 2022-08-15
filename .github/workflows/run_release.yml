@@ -143,7 +143,7 @@ jobs:
         if: ${{ (needs.publish.result == 'success') }}
         uses: sinshutu/upload-to-discord@master
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_CI_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           args: ./.github/CHANGELOG.md
 
