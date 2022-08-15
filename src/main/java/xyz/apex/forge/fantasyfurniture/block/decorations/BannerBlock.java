@@ -36,7 +36,8 @@ public final class BannerBlock extends BaseMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		return SHAPER.get(getFacing(blockState));
+		var shape = SHAPER.get(getFacing(blockState));
+		return isMultiBlockOrigin(blockState) ? shape : shape.move(0D, -1D, 0D);
 	}
 
 	@Override
