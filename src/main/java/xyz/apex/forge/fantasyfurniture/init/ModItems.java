@@ -54,6 +54,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> MUFFINS_CHOCOLATE = blockItem(BlockItem::new, ModBlocks.MUFFINS_CHOCOLATE).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> MUFFINS_SWEETBERRY = blockItem(BlockItem::new, ModBlocks.MUFFINS_SWEETBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> PAPER_STACK = blockItem(BlockItem::new, ModBlocks.PAPER_STACK).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
+	public static final ItemEntry<BlockItem> COOKIE_JAR = blockItem(BlockItem::new, ModBlocks.COOKIE_JAR).transform(ModItems::cookieJarModel).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 
 	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(BlockItem::new, ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();
@@ -530,6 +531,18 @@ public final class ModItems
 							.end()
 						.end()
 				);
+	}
+
+	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> cookieJarModel(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> buider)
+	{
+		return buider
+				.model((ctx, provider) -> provider
+						.withExistingParent(
+								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
+								new ResourceLocation(ctx.getId().getNamespace(), "block/%s_full".formatted(ctx.getId().getPath()))
+						)
+				)
+		;
 	}
 
 	private static <ITEM extends Item> ItemModelBuilder getModelFile(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)

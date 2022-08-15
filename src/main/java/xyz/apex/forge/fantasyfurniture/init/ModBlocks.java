@@ -76,6 +76,7 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_CHOCOLATE = muffins("chocolate").register();
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
+	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -530,6 +531,20 @@ public final class ModBlocks
 				.block(BowlBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang(type.equals("empty") ? "Bowl" : "%s Bowl".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, CookieJarBlock, BasicRegistrate> cookieJar()
+	{
+		return REGISTRATE
+				.object("decorations/cookie_jar")
+				.block(CookieJarBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Cookie Jar")
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
@@ -1545,6 +1560,8 @@ public final class ModBlocks
 		}
 		else if(DUNMER_OVEN.is(ctx.get()) && blockState.getValue(BlockStateProperties.LIT))
 			suffix = "_lit";
+		else if(ctx.get() instanceof CookieJarBlock)
+			suffix = "_%s".formatted(blockState.getValue(CookieJarBlock.FILL_STAGE).serializedName);
 
 		return provider
 				.withExistingParent(
