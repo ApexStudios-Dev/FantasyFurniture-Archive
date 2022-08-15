@@ -45,13 +45,13 @@ public class BenchBlock extends SeatMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_BENCH.has(blockState))
+		if(ModBlocks.NORDIC_BENCH.isIn(blockState))
 			return HitBoxes.NORDIC.bench(this, blockState);
-		else if(ModBlocks.DUNMER_BENCH.has(blockState))
+		else if(ModBlocks.DUNMER_BENCH.isIn(blockState))
 			return HitBoxes.DUNMER.bench(this, blockState);
-		else if(ModBlocks.VENTHYR_BENCH.has(blockState))
+		else if(ModBlocks.VENTHYR_BENCH.isIn(blockState))
 			return HitBoxes.VENTHYR.bench(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_BENCH.has(blockState) || ModBlocks.BONE_WITHER_BENCH.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_BENCH.isIn(blockState) || ModBlocks.BONE_WITHER_BENCH.isIn(blockState))
 			return HitBoxes.BONE.bench(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

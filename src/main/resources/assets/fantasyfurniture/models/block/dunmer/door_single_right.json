@@ -8,8 +8,8 @@
 	"elements": [
 		{
 			"name": "door_1",
-			"from": [0, 30, 0],
-			"to": [16, 32, 2],
+			"from": [0, 30, 0.5],
+			"to": [16, 32, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [5, 6.5, 1, 7], "texture": "#door_single"},
@@ -22,8 +22,8 @@
 		},
 		{
 			"name": "door_2",
-			"from": [0, 20, 0],
-			"to": [2, 30, 2],
+			"from": [0, 20, 0.5],
+			"to": [2, 30, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [4.5, 7.5, 4, 10], "texture": "#door_single"},
@@ -36,8 +36,8 @@
 		},
 		{
 			"name": "door_3",
-			"from": [14, 20, 0],
-			"to": [16, 30, 2],
+			"from": [14, 20, 0.5],
+			"to": [16, 30, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [6.5, 7.5, 6, 10], "texture": "#door_single"},
@@ -50,8 +50,8 @@
 		},
 		{
 			"name": "door_4",
-			"from": [0, 0, 0],
-			"to": [16, 20, 2],
+			"from": [0, 0, 0.5],
+			"to": [16, 20, 2.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [4, 0, 0, 5], "texture": "#door_single"},
@@ -64,8 +64,8 @@
 		},
 		{
 			"name": "handle_1",
-			"from": [13, 13, -1],
-			"to": [15, 18, 0],
+			"from": [13, 13, -0.5],
+			"to": [15, 18, 0.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [8.5, 0.5, 8, 1.75], "texture": "#door_single"},
@@ -78,8 +78,8 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [13, 13, 2],
-			"to": [15, 18, 3],
+			"from": [13, 13, 2.5],
+			"to": [15, 18, 3.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [8.5, 3, 8, 4.25], "texture": "#door_single"},
@@ -92,8 +92,8 @@
 		},
 		{
 			"name": "frame_1",
-			"from": [2, 20, -0.5],
-			"to": [14, 21, 2.5],
+			"from": [2, 20, 0],
+			"to": [14, 21, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [10, 6, 7, 6.25], "texture": "#door_single"},
@@ -106,8 +106,8 @@
 		},
 		{
 			"name": "frame_2",
-			"from": [2, 21, -0.5],
-			"to": [3, 29, 2.5],
+			"from": [2, 21, 0],
+			"to": [3, 29, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [8.75, 1.75, 8.5, 3.75], "texture": "#door_single"},
@@ -120,8 +120,8 @@
 		},
 		{
 			"name": "frame_3",
-			"from": [13, 21, -0.5],
-			"to": [14, 29, 2.5],
+			"from": [13, 21, 0],
+			"to": [14, 29, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9, 1.75, 8.75, 3.75], "texture": "#door_single"},
@@ -134,8 +134,8 @@
 		},
 		{
 			"name": "frame_4",
-			"from": [2, 29, -0.5],
-			"to": [14, 30, 2.5],
+			"from": [2, 29, 0],
+			"to": [14, 30, 3],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [11, 0, 8, 0.25], "texture": "#door_single"},
@@ -148,8 +148,8 @@
 		},
 		{
 			"name": "rope_1",
-			"from": [11, 21, 0.5],
-			"to": [12, 29, 1.5],
+			"from": [11, 21, 1],
+			"to": [12, 29, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [8.25, 8.75, 8, 10.75], "texture": "#door_single"},
@@ -162,8 +162,8 @@
 		},
 		{
 			"name": "rope_2",
-			"from": [4, 21, 0.5],
-			"to": [5, 29, 1.5],
+			"from": [4, 21, 1],
+			"to": [5, 29, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.25, 8.5, 9, 10.5], "texture": "#door_single"},
@@ -176,8 +176,8 @@
 		},
 		{
 			"name": "rope_3",
-			"from": [6, 21, 0.5],
-			"to": [7, 29, 1.5],
+			"from": [6, 21, 1],
+			"to": [7, 29, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [1.25, 9.5, 1, 11.5], "texture": "#door_single"},
@@ -190,8 +190,8 @@
 		},
 		{
 			"name": "rope_4",
-			"from": [9, 21, 0.5],
-			"to": [10, 29, 1.5],
+			"from": [9, 21, 1],
+			"to": [10, 29, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.75, 1.75, 9.5, 3.75], "texture": "#door_single"},
@@ -204,8 +204,8 @@
 		},
 		{
 			"name": "rope_5",
-			"from": [3, 27, 0.5],
-			"to": [13, 28, 1.5],
+			"from": [3, 27, 1],
+			"to": [13, 28, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [10.5, 4.25, 8, 4.5], "texture": "#door_single"},
@@ -218,8 +218,8 @@
 		},
 		{
 			"name": "rope_6",
-			"from": [3, 22, 0.5],
-			"to": [13, 23, 1.5],
+			"from": [3, 22, 1],
+			"to": [13, 23, 2],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [11, 0.75, 8.5, 1], "texture": "#door_single"},

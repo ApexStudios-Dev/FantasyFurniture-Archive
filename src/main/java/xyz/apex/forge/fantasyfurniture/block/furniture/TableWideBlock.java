@@ -39,13 +39,13 @@ public class TableWideBlock extends BaseMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_TABLE_WIDE.has(blockState))
+		if(ModBlocks.NORDIC_TABLE_WIDE.isIn(blockState))
 			return HitBoxes.NORDIC.tableWide(this, blockState);
-		else if(ModBlocks.DUNMER_TABLE_WIDE.has(blockState))
+		else if(ModBlocks.DUNMER_TABLE_WIDE.isIn(blockState))
 			return HitBoxes.DUNMER.tableWide(this, blockState);
-		else if(ModBlocks.VENTHYR_TABLE_WIDE.has(blockState) || ModBlocks.VENTHYR_TABLE_WIDE_FANCY.has(blockState))
+		else if(ModBlocks.VENTHYR_TABLE_WIDE.isIn(blockState) || ModBlocks.VENTHYR_TABLE_WIDE_FANCY.isIn(blockState))
 			return HitBoxes.VENTHYR.tableWide(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_TABLE_WIDE.has(blockState) || ModBlocks.BONE_WITHER_TABLE_WIDE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_TABLE_WIDE.isIn(blockState) || ModBlocks.BONE_WITHER_TABLE_WIDE.isIn(blockState))
 			return HitBoxes.BONE.tableWide(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

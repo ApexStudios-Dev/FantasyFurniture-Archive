@@ -29,6 +29,8 @@ import net.minecraftforge.client.RenderProperties;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
+import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
@@ -37,12 +39,11 @@ import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationMenu>
 {
-	public static final ResourceLocation TEXTURE = REGISTRATE.id("textures/gui/container/furniture_station.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/furniture_station.png");
 
 	private int clayIndex = 0;
 	private int woodIndex = 0;
@@ -420,7 +421,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 
 		if(!slot.hasItem())
 		{
-			var values = tagValues.computeIfAbsent(backgroundTag, $ -> ForgeRegistries.ITEMS.tags().getTag(backgroundTag).stream().map(Item::getDefaultInstance).collect(Collectors.toList()));
+			var values = tagValues.computeIfAbsent(backgroundTag, $ -> RegistryHelper.getTags(ForgeRegistries.ITEMS).getTag(backgroundTag).stream().map(Item::getDefaultInstance).collect(Collectors.toList()));
 
 			if(cycleCounter == 125)
 			{
@@ -473,7 +474,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 
 		var values = value.split("\\s+");
 		var item = stack.getItem();
-		var tags = itemTags.computeIfAbsent(item, $ -> ForgeRegistries.ITEMS.tags().getReverseTag(item).map(t -> t.getTagKeys().collect(Collectors.toList())).orElse(Collections.emptyList()));
+		var tags = itemTags.computeIfAbsent(item, $ -> RegistryHelper.getTags(ForgeRegistries.ITEMS).getReverseTag(item).map(t -> t.getTagKeys().collect(Collectors.toList())).orElse(Collections.emptyList()));
 		var displayName = stack.getHoverName().getString();
 
 		for(var filter : values)

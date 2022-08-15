@@ -146,7 +146,7 @@ public final class FurnitureStationRecipes
 	private void renderBlock(PoseStack pose, IDrawable background)
 	{
 		var mc = Minecraft.getInstance();
-		var blockState = FurnitureStation.BLOCK.getDefaultState();
+		var blockState = FurnitureStation.BLOCK.defaultBlockState();
 		var model = mc.getBlockRenderer().getBlockModel(blockState);
 
 		var frameTime = mc.getFrameTime();

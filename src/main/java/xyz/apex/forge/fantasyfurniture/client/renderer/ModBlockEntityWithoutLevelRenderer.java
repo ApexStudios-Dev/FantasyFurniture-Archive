@@ -25,17 +25,17 @@ public final class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithout
 	private final SkullBlossomsBlockEntityRenderer skullBlossomsBlockEntityRenderer;
 
 	private final Lazy<WidowBloomBlockEntity> widowBloomBlockEntity = Lazy.of(() -> {
-		var blockState = ModBlocks.VENTHYR_WIDOW_BLOOM.getDefaultState();
+		var blockState = ModBlocks.VENTHYR_WIDOW_BLOOM.defaultBlockState();
 		return ModElements.VENTHYR_WIDOW_BLOOM_BLOCK_ENTITY.create(BlockPos.ZERO, blockState);
 	});
 
 	private final Lazy<SkullBlossomsBlockEntity> skeletonSkullBlossomsBlockEntityLazy = Lazy.of(() -> {
-		var blockState = ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS.getDefaultState();
+		var blockState = ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS.defaultBlockState();
 		return ModElements.BONE_SKULL_BLOSSOMS_BLOCK_ENTITY.create(BlockPos.ZERO, blockState);
 	});
 
 	private final Lazy<SkullBlossomsBlockEntity> witherSkullBlossomsBlockEntityLazy = Lazy.of(() -> {
-		var blockState = ModBlocks.BONE_WITHER_SKULL_BLOSSOMS.getDefaultState();
+		var blockState = ModBlocks.BONE_WITHER_SKULL_BLOSSOMS.defaultBlockState();
 		return ModElements.BONE_SKULL_BLOSSOMS_BLOCK_ENTITY.create(BlockPos.ZERO, blockState);
 	});
 

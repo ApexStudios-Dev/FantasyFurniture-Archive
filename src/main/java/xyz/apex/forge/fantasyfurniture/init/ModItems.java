@@ -1,23 +1,24 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraftforge.client.model.generators.ModelBuilder;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 
+import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
+import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
@@ -80,17 +81,17 @@ public final class ModItems
 	// endregion
 
 	// region: Bone
-	public static final ItemEntry<BlockItem> BONE_CANDLES = blockItem(BlockItem::new, ModBlocks.BONE_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_CANDLES = blockItem(BlockItem::new, ModBlocks.BONE_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_SKELETON_TAG, ItemTags.Vanilla.CANDLES).register();
 
 	// region: Skeleton
-	public static final ItemEntry<BlockItem> BONE_SKELETON_CHALICES = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_PILE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHALICES = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PILE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<SkullBlossomsBlockItem> BONE_SKELETON_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_SKELETON_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
 
 	// region: Wither
-	public static final ItemEntry<BlockItem> BONE_WITHER_CHALICES = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_PILE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHALICES = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_WITHER_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PILE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<SkullBlossomsBlockItem> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_WITHER_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
 	// endregion
@@ -153,8 +154,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DRESSER = blockItem(BlockItem::new, ModBlocks.DUNMER_DRESSER).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.DUNMER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.DUNMER_WARDROBE_TOP).tag(ModItemGroupCategories.DUNMER_TAG).register();
-	public static final ItemEntry<BlockItem> DUNMER_BED_SINGLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
-	public static final ItemEntry<BlockItem> DUNMER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_SINGLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_SINGLE).transform(ModItems::generatedModel).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.DUNMER_BED_DOUBLE).transform(ModItems::generatedModel).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_CHANDELIER = blockItem(BlockItem::new, ModBlocks.DUNMER_CHANDELIER).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
@@ -198,67 +199,67 @@ public final class ModItems
 
 	// region: Bone
 	// region: Skeleton
-	public static final ItemEntry<BlockItem> BONE_SKELETON_WOOL = wool(BlockItem::new, ModBlocks.BONE_SKELETON_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_CARPET = carpet(BlockItem::new, ModBlocks.BONE_SKELETON_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_LARGE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_STOOL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_STOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_SKULL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_SKULL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DRAWER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DRAWER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_SHELF = shelf(BlockItem::new, ModBlocks.BONE_SKELETON_SHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_SOFA = sofa(BlockItem::new, ModBlocks.BONE_SKELETON_SOFA).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_LEFT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DESK_LEFT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_RIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DESK_RIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_CHAIR = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHAIR).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_BENCH = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_BENCH).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_BOOKSHELF = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_BOOKSHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_CHEST = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHEST).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DRESSER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DRESSER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_SINGLE = bed(BlockItem::new, ModBlocks.BONE_SKELETON_BED_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_DOUBLE = bed(BlockItem::new, ModBlocks.BONE_SKELETON_BED_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_CHANDELIER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHANDELIER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WOOL = wool(BlockItem::new, ModBlocks.BONE_SKELETON_WOOL).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CARPET = carpet(BlockItem::new, ModBlocks.BONE_SKELETON_CARPET).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WALL_LIGHT).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_SMALL).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_WIDE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_TABLE_LARGE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_STOOL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_STOOL).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SKULL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_SKULL).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_PAINTING_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DRAWER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DRAWER).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SHELF = shelf(BlockItem::new, ModBlocks.BONE_SKELETON_SHELF).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_SOFA = sofa(BlockItem::new, ModBlocks.BONE_SKELETON_SOFA).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_LEFT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DESK_LEFT).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DESK_RIGHT = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DESK_RIGHT).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHAIR = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHAIR).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BENCH = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_BENCH).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BOOKSHELF = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_BOOKSHELF).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHEST = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHEST).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DRESSER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_DRESSER).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_SINGLE = bed(BlockItem::new, ModBlocks.BONE_SKELETON_BED_SINGLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_BED_DOUBLE = bed(BlockItem::new, ModBlocks.BONE_SKELETON_BED_DOUBLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_CHANDELIER = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_CHANDELIER).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
 
 	// region: Wither
-	public static final ItemEntry<BlockItem> BONE_WITHER_WOOL = wool(BlockItem::new, ModBlocks.BONE_WITHER_WOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_CARPET = carpet(BlockItem::new, ModBlocks.BONE_WITHER_CARPET).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WALL_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_LARGE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_STOOL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_STOOL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_SKULL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_SKULL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DRAWER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DRAWER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_SHELF = shelf(BlockItem::new, ModBlocks.BONE_WITHER_SHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_SOFA = sofa(BlockItem::new, ModBlocks.BONE_WITHER_SOFA).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_LEFT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DESK_LEFT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_RIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DESK_RIGHT).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_CHAIR = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHAIR).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_BENCH = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_BENCH).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_BOOKSHELF = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_BOOKSHELF).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_CHEST = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHEST).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DRESSER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DRESSER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_BED_SINGLE = bed(BlockItem::new, ModBlocks.BONE_WITHER_BED_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.BONE_WITHER_BED_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_CHANDELIER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHANDELIER).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
-	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WOOL = wool(BlockItem::new, ModBlocks.BONE_WITHER_WOOL).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CARPET = carpet(BlockItem::new, ModBlocks.BONE_WITHER_CARPET).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WALL_LIGHT).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_FLOOR_LIGHT).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_SMALL).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_WIDE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_TABLE_LARGE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_STOOL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_STOOL).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SKULL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_SKULL).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_SMALL = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PAINTING_SMALL).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_PAINTING_WIDE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PAINTING_WIDE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DRAWER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DRAWER).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SHELF = shelf(BlockItem::new, ModBlocks.BONE_WITHER_SHELF).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_SOFA = sofa(BlockItem::new, ModBlocks.BONE_WITHER_SOFA).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_LEFT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DESK_LEFT).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DESK_RIGHT = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DESK_RIGHT).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHAIR = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHAIR).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BENCH = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_BENCH).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BOOKSHELF = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_BOOKSHELF).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHEST = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHEST).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DRESSER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_DRESSER).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WARDROBE_BOTTOM).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_WARDROBE_TOP).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BED_SINGLE = bed(BlockItem::new, ModBlocks.BONE_WITHER_BED_SINGLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_BED_DOUBLE = bed(BlockItem::new, ModBlocks.BONE_WITHER_BED_DOUBLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_CHANDELIER = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_CHANDELIER).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	// endregion
 	// endregion
 	// endregion
@@ -268,20 +269,19 @@ public final class ModItems
 	}
 
 	// region: Constructors
-	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> wool(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> wool(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.WOOL);
 	}
 
-	private static <BLOCK extends CarpetBlock, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> carpet(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends CarpetBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> carpet(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.CARPETS);
 	}
 
-	private static <BLOCK extends ShelfBlock, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> shelf(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends ShelfBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> shelf(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
-				.tag(ItemTags.Vanilla.BEDS)
 				.model((ctx, provider) -> provider
 						.withExistingParent(
 								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
@@ -291,10 +291,9 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends SofaBlock, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> sofa(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends SofaBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> sofa(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
-				.tag(ItemTags.Vanilla.BEDS)
 				.model((ctx, provider) -> provider
 						.withExistingParent(
 								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
@@ -304,12 +303,12 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends BedBlock, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> bed(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends BedBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> bed(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block).tag(ItemTags.Vanilla.BEDS);
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> door(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends FurnitureDoorBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> door(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
 				.tag(ItemTags.Vanilla.WOODEN_DOORS)
@@ -322,7 +321,7 @@ public final class ModItems
 		;
 	}
 
-	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<Registrate, ITEM, Registrate> blockItem(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	private static <BLOCK extends Block, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> blockItem(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())
@@ -359,42 +358,42 @@ public final class ModItems
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.HEAD)
+							.transform(ItemTransforms.TransformType.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GROUND)
+							.transform(ItemTransforms.TransformType.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIXED)
+							.transform(ItemTransforms.TransformType.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GUI)
+							.transform(ItemTransforms.TransformType.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 3F, 0F)
 								.scale(.5F, .5F, .5F)
@@ -404,59 +403,80 @@ public final class ModItems
 		.register();
 	}
 
-	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<Registrate, SkullBlossomsBlockItem, Registrate> skullBlossoms(BlockEntry<BLOCK> block)
+	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> generatedModel(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> builder)
+	{
+		return builder.model(ModItems::getModelFile);
+	}
+
+	private static <BLOCK extends SkullBlossomsBlock> ItemBuilder<BasicRegistrate, SkullBlossomsBlockItem, BasicRegistrate> skullBlossoms(BlockEntry<BLOCK> block)
 	{
 		return REGISTRATE
 				.object(block.getId().getPath())
 				.item(properties -> new SkullBlossomsBlockItem(block.get(), properties))
 				.setData(LANG, NonNullBiConsumer.noop())
-				.tag(FurnitureStation.CRAFTABLE, ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_TAG)
+				.tag(FurnitureStation.CRAFTABLE, ModItemGroupCategories.DECORATIONS_TAG)
 				.model((ctx, provider) -> provider
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ModelBuilder.Perspective.THIRDPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIRSTPERSON_LEFT)
+							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ModelBuilder.Perspective.HEAD)
+							.transform(ItemTransforms.TransformType.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GROUND)
+							.transform(ItemTransforms.TransformType.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ModelBuilder.Perspective.FIXED)
+							.transform(ItemTransforms.TransformType.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ModelBuilder.Perspective.GUI)
+							.transform(ItemTransforms.TransformType.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 4F, 0F)
 								.scale(.5F, .5F, .5F)
 							.end()
 						.end()
 				);
+	}
+
+	private static <ITEM extends Item> ItemModelBuilder getModelFile(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)
+	{
+		var suffix = "";
+
+		return provider
+				.withExistingParent(
+						// <namespace>:generated/item/<path>[suffix] | Model we are generating
+						"%s:generated/item/%s%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath(), suffix),
+						// <namespace>:item/<path>[suffix] | Existing model, exported from BlockBench
+						new ResourceLocation(ctx.getId().getNamespace(), "item/%s%s".formatted(ctx.getId().getPath(), suffix))
+				)
+				// .renderType(new ResourceLocation(Mods.MINECRAFT, "cutout")) // NOTE: Set on the block/java land in 1.18
+				.texture(ModBlocks.getTextureKey(ctx.getId()), ModBlocks.getTexturePath(ctx.getId()))
+		;
 	}
 	// endregion
 }

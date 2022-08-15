@@ -1,8 +1,8 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made by Fantasy",
 	"textures": {
-		"mead_bottles": "fantasyfurniture:models/decorations/nordic_mead_bottles",
-		"particle": "fantasyfurniture:particles/decorations/nordic_mead_bottle"
+		"nordic_mead_bottles": "fantasyfurniture:models/decorations/nordic_mead_bottles",
+		"particle": "fantasyfurniture:particles/decorations/nordic_mead_bottles"
 	},
 	"elements": [
 		{
@@ -10,12 +10,12 @@
 			"from": [7, 0, 10],
 			"to": [10, 6, 13],
 			"faces": {
-				"north": {"uv": [0, 0, 3, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 0, 6, 6], "texture": "#mead_bottles"},
-				"south": {"uv": [0, 6, 3, 12], "texture": "#mead_bottles"},
-				"west": {"uv": [6, 0, 9, 6], "texture": "#mead_bottles"},
-				"up": {"uv": [6, 9, 3, 6], "texture": "#mead_bottles"},
-				"down": {"uv": [9, 6, 6, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [0, 0, 3, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 0, 6, 6], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [0, 6, 3, 12], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [6, 0, 9, 6], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [6, 9, 3, 6], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [9, 6, 6, 9], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -23,12 +23,12 @@
 			"from": [7.5, 6, 10.5],
 			"to": [9.5, 9, 12.5],
 			"faces": {
-				"north": {"uv": [9, 3, 11, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [6, 9, 8, 12], "texture": "#mead_bottles"},
-				"south": {"uv": [9, 6, 11, 9], "texture": "#mead_bottles"},
-				"west": {"uv": [8, 9, 10, 12], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 11, 10, 9], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 3, 11, 5], "texture": "#mead_bottles"}
+				"north": {"uv": [9, 3, 11, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [6, 9, 8, 12], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [9, 6, 11, 9], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [8, 9, 10, 12], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 11, 10, 9], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 3, 11, 5], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -36,12 +36,12 @@
 			"from": [7.25, 9, 10.25],
 			"to": [9.75, 10, 12.75],
 			"faces": {
-				"north": {"uv": [10, 11, 13, 12], "texture": "#mead_bottles"},
-				"east": {"uv": [0, 12, 3, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [12, 0, 15, 1], "texture": "#mead_bottles"},
-				"west": {"uv": [12, 1, 15, 2], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 3, 9, 0], "texture": "#mead_bottles"},
-				"down": {"uv": [6, 9, 3, 12], "texture": "#mead_bottles"}
+				"north": {"uv": [10, 11, 13, 12], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [0, 12, 3, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [12, 0, 15, 1], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [12, 1, 15, 2], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 3, 9, 0], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [6, 9, 3, 12], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -49,12 +49,12 @@
 			"from": [7.75, 10, 10.75],
 			"to": [9.25, 10.5, 12.25],
 			"faces": {
-				"north": {"uv": [12, 2, 14, 3], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 12, 5, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [5, 12, 7, 13], "texture": "#mead_bottles"},
-				"west": {"uv": [7, 12, 9, 13], "texture": "#mead_bottles"},
-				"up": {"uv": [13, 7, 11, 5], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 7, 11, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [12, 2, 14, 3], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 12, 5, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [5, 12, 7, 13], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [7, 12, 9, 13], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [13, 7, 11, 5], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 7, 11, 9], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -63,12 +63,12 @@
 			"to": [5, 6, 8],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [2.5, 7.5625, 7.5]},
 			"faces": {
-				"north": {"uv": [0, 0, 3, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 0, 6, 6], "texture": "#mead_bottles"},
-				"south": {"uv": [0, 6, 3, 12], "texture": "#mead_bottles"},
-				"west": {"uv": [6, 0, 9, 6], "texture": "#mead_bottles"},
-				"up": {"uv": [6, 9, 3, 6], "texture": "#mead_bottles"},
-				"down": {"uv": [9, 6, 6, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [0, 0, 3, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 0, 6, 6], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [0, 6, 3, 12], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [6, 0, 9, 6], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [6, 9, 3, 6], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [9, 6, 6, 9], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -77,12 +77,12 @@
 			"to": [4.5, 9, 7.5],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [2.5, 7.5625, 7.5]},
 			"faces": {
-				"north": {"uv": [9, 3, 11, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [6, 9, 8, 12], "texture": "#mead_bottles"},
-				"south": {"uv": [9, 6, 11, 9], "texture": "#mead_bottles"},
-				"west": {"uv": [8, 9, 10, 12], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 11, 10, 9], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 3, 11, 5], "texture": "#mead_bottles"}
+				"north": {"uv": [9, 3, 11, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [6, 9, 8, 12], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [9, 6, 11, 9], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [8, 9, 10, 12], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 11, 10, 9], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 3, 11, 5], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -91,12 +91,12 @@
 			"to": [4.75, 10, 7.75],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [2.5, 7.5625, 7.5]},
 			"faces": {
-				"north": {"uv": [10, 11, 13, 12], "texture": "#mead_bottles"},
-				"east": {"uv": [0, 12, 3, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [12, 0, 15, 1], "texture": "#mead_bottles"},
-				"west": {"uv": [12, 1, 15, 2], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 3, 9, 0], "texture": "#mead_bottles"},
-				"down": {"uv": [6, 9, 3, 12], "texture": "#mead_bottles"}
+				"north": {"uv": [10, 11, 13, 12], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [0, 12, 3, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [12, 0, 15, 1], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [12, 1, 15, 2], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 3, 9, 0], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [6, 9, 3, 12], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -105,12 +105,12 @@
 			"to": [4.25, 10.5, 7.25],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [2.5, 7.5625, 7.5]},
 			"faces": {
-				"north": {"uv": [12, 2, 14, 3], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 12, 5, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [5, 12, 7, 13], "texture": "#mead_bottles"},
-				"west": {"uv": [7, 12, 9, 13], "texture": "#mead_bottles"},
-				"up": {"uv": [13, 7, 11, 5], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 7, 11, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [12, 2, 14, 3], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 12, 5, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [5, 12, 7, 13], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [7, 12, 9, 13], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [13, 7, 11, 5], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 7, 11, 9], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -119,12 +119,12 @@
 			"to": [14, 6, 6],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [12.5, 7.5625, 4.5]},
 			"faces": {
-				"north": {"uv": [0, 0, 3, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 0, 6, 6], "texture": "#mead_bottles"},
-				"south": {"uv": [0, 6, 3, 12], "texture": "#mead_bottles"},
-				"west": {"uv": [6, 0, 9, 6], "texture": "#mead_bottles"},
-				"up": {"uv": [6, 9, 3, 6], "texture": "#mead_bottles"},
-				"down": {"uv": [9, 6, 6, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [0, 0, 3, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 0, 6, 6], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [0, 6, 3, 12], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [6, 0, 9, 6], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [6, 9, 3, 6], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [9, 6, 6, 9], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -133,12 +133,12 @@
 			"to": [13.5, 9, 5.5],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [12.5, 7.5625, 4.5]},
 			"faces": {
-				"north": {"uv": [9, 3, 11, 6], "texture": "#mead_bottles"},
-				"east": {"uv": [6, 9, 8, 12], "texture": "#mead_bottles"},
-				"south": {"uv": [9, 6, 11, 9], "texture": "#mead_bottles"},
-				"west": {"uv": [8, 9, 10, 12], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 11, 10, 9], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 3, 11, 5], "texture": "#mead_bottles"}
+				"north": {"uv": [9, 3, 11, 6], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [6, 9, 8, 12], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [9, 6, 11, 9], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [8, 9, 10, 12], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 11, 10, 9], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 3, 11, 5], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -147,12 +147,12 @@
 			"to": [13.75, 10, 5.75],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [12.5, 7.5625, 4.5]},
 			"faces": {
-				"north": {"uv": [10, 11, 13, 12], "texture": "#mead_bottles"},
-				"east": {"uv": [0, 12, 3, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [12, 0, 15, 1], "texture": "#mead_bottles"},
-				"west": {"uv": [12, 1, 15, 2], "texture": "#mead_bottles"},
-				"up": {"uv": [12, 3, 9, 0], "texture": "#mead_bottles"},
-				"down": {"uv": [6, 9, 3, 12], "texture": "#mead_bottles"}
+				"north": {"uv": [10, 11, 13, 12], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [0, 12, 3, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [12, 0, 15, 1], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [12, 1, 15, 2], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [12, 3, 9, 0], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [6, 9, 3, 12], "texture": "#nordic_mead_bottles"}
 			}
 		},
 		{
@@ -161,12 +161,12 @@
 			"to": [13.25, 10.5, 5.25],
 			"rotation": {"angle": 22.5, "axis": "y", "origin": [12.5, 7.5625, 4.5]},
 			"faces": {
-				"north": {"uv": [12, 2, 14, 3], "texture": "#mead_bottles"},
-				"east": {"uv": [3, 12, 5, 13], "texture": "#mead_bottles"},
-				"south": {"uv": [5, 12, 7, 13], "texture": "#mead_bottles"},
-				"west": {"uv": [7, 12, 9, 13], "texture": "#mead_bottles"},
-				"up": {"uv": [13, 7, 11, 5], "texture": "#mead_bottles"},
-				"down": {"uv": [13, 7, 11, 9], "texture": "#mead_bottles"}
+				"north": {"uv": [12, 2, 14, 3], "texture": "#nordic_mead_bottles"},
+				"east": {"uv": [3, 12, 5, 13], "texture": "#nordic_mead_bottles"},
+				"south": {"uv": [5, 12, 7, 13], "texture": "#nordic_mead_bottles"},
+				"west": {"uv": [7, 12, 9, 13], "texture": "#nordic_mead_bottles"},
+				"up": {"uv": [13, 7, 11, 5], "texture": "#nordic_mead_bottles"},
+				"down": {"uv": [13, 7, 11, 9], "texture": "#nordic_mead_bottles"}
 			}
 		}
 	],

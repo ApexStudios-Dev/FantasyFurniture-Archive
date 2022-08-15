@@ -14,6 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,43 +49,70 @@ public abstract class StackedBlock extends BaseBlock
 	}
 
 	@Override
+	protected @Nullable BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
+	{
+		placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
+
+		if(placementBlockState != null)
+		{
+			var level = ctx.getLevel();
+			var pos = ctx.getClickedPos();
+			var blockState = level.getBlockState(pos);
+			var property = getStackSizeProperty();
+
+			if(blockState.hasProperty(property))
+			{
+				var current = blockState.getValue(property);
+				var amount = Math.min(maxValue.get(), current + 1);
+
+				if(amount != current || amount != placementBlockState.getValue(property))
+				{
+					placementBlockState = placementBlockState.setValue(property, amount);
+
+					for(int i = 0; i < 5; i++)
+					{
+						level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
+					}
+				}
+			}
+		}
+
+		return placementBlockState;
+	}
+
+	@Override
+	public boolean canBeReplaced(BlockState blockState, BlockPlaceContext ctx)
+	{
+		var property = getStackSizeProperty();
+
+		if(!blockState.hasProperty(property))
+			return false;
+
+		return !ctx.isSecondaryUseActive() && isForStack(ctx.getItemInHand()) && blockState.getValue(property) < maxValue.get() || super.canBeReplaced(blockState, ctx);
+	}
+
+	@Override
 	public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
 	{
 		var stack = player.getItemInHand(hand);
-		var stackSizeProperty = getStackSizeProperty();
-		var count = blockState.getValue(stackSizeProperty);
-		int newCount;
-		var minValue = this.minValue.get();
-		var maxValue = this.maxValue.get();
 
-		if(isForStack(stack))
-			newCount = count + 1;
-		else
-			newCount = count - 1;
-
-		if(newCount < minValue)
+		if(!isForStack(stack))
 		{
-			level.setBlockAndUpdate(pos, blockState.setValue(stackSizeProperty, minValue));
-			level.destroyBlock(pos, !player.isCreative(), player);
-			return InteractionResult.sidedSuccess(level.isClientSide);
-		}
+			var stackSizeProperty = getStackSizeProperty();
+			var count = blockState.getValue(stackSizeProperty);
+			var minValue = this.minValue.get();
+			int newCount = count - 1;
 
-		if(newCount <= maxValue)
-		{
-			if(newCount < count)
+			if(newCount < minValue)
 			{
-				BlockHelper.playBreakSound(level, pos, player);
-
-				if(!player.isCreative())
-					popResource(level, pos, new ItemStack(this));
+				level.destroyBlock(pos, !player.isCreative(), player);
+				return InteractionResult.sidedSuccess(level.isClientSide);
 			}
-			else
-			{
-				BlockHelper.playPlaceSound(level, pos, player);
 
-				if(!player.isCreative())
-					stack.shrink(1);
-			}
+			BlockHelper.playBreakSound(level, pos, player);
+
+			if(!player.isCreative())
+				popResource(level, pos, new ItemStack(this));
 
 			for(int i = 0; i < 5; i++)
 			{
@@ -95,7 +123,7 @@ public abstract class StackedBlock extends BaseBlock
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
-		return InteractionResult.FAIL;
+		return super.use(blockState, level, pos, player, hand, hit);
 	}
 
 	@Override

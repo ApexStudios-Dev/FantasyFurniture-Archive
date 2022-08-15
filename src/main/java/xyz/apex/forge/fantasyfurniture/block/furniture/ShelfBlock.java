@@ -43,13 +43,13 @@ public class ShelfBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_SHELF.has(blockState))
+		if(ModBlocks.NORDIC_SHELF.isIn(blockState))
 			return HitBoxes.NORDIC.shelf(this, blockState);
-		else if(ModBlocks.DUNMER_SHELF.has(blockState))
+		else if(ModBlocks.DUNMER_SHELF.isIn(blockState))
 			return HitBoxes.DUNMER.shelf(this, blockState);
-		else if(ModBlocks.VENTHYR_SHELF.has(blockState))
+		else if(ModBlocks.VENTHYR_SHELF.isIn(blockState))
 			return HitBoxes.VENTHYR.shelf(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_SHELF.has(blockState) || ModBlocks.BONE_WITHER_SHELF.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_SHELF.isIn(blockState) || ModBlocks.BONE_WITHER_SHELF.isIn(blockState))
 			return HitBoxes.BONE.shelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

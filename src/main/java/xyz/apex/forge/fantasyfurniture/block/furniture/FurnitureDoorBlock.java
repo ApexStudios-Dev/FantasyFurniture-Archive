@@ -29,21 +29,21 @@ public class FurnitureDoorBlock extends DoorBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_DOOR_DOUBLE.has(blockState))
+		if(ModBlocks.NORDIC_DOOR_DOUBLE.isIn(blockState))
 			return HitBoxes.NORDIC.doorDouble(this, blockState);
-		else if(ModBlocks.NORDIC_DOOR_SINGLE.has(blockState))
+		else if(ModBlocks.NORDIC_DOOR_SINGLE.isIn(blockState))
 			return HitBoxes.NORDIC.doorSingle(this, blockState);
-		else if(ModBlocks.DUNMER_DOOR_DOUBLE.has(blockState))
+		else if(ModBlocks.DUNMER_DOOR_DOUBLE.isIn(blockState))
 			return HitBoxes.DUNMER.doorDouble(this, blockState);
-		else if(ModBlocks.DUNMER_DOOR_SINGLE.has(blockState))
+		else if(ModBlocks.DUNMER_DOOR_SINGLE.isIn(blockState))
 			return HitBoxes.DUNMER.doorSingle(this, blockState);
-		else if(ModBlocks.VENTHYR_DOOR_DOUBLE.has(blockState))
+		else if(ModBlocks.VENTHYR_DOOR_DOUBLE.isIn(blockState))
 			return HitBoxes.VENTHYR.doorDouble(this, blockState);
-		else if(ModBlocks.VENTHYR_DOOR_SINGLE.has(blockState))
+		else if(ModBlocks.VENTHYR_DOOR_SINGLE.isIn(blockState))
 			return HitBoxes.VENTHYR.doorSingle(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_DOOR_DOUBLE.has(blockState) || ModBlocks.BONE_WITHER_DOOR_DOUBLE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_DOOR_DOUBLE.isIn(blockState) || ModBlocks.BONE_WITHER_DOOR_DOUBLE.isIn(blockState))
 			return HitBoxes.BONE.doorDouble(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_DOOR_SINGLE.has(blockState) || ModBlocks.BONE_WITHER_DOOR_SINGLE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_DOOR_SINGLE.isIn(blockState) || ModBlocks.BONE_WITHER_DOOR_SINGLE.isIn(blockState))
 			return HitBoxes.BONE.doorSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

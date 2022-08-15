@@ -1,15 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
 import com.google.common.base.Predicates;
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.renderer.RenderType;
@@ -19,7 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.material.Material;
@@ -30,11 +25,20 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.registries.ForgeRegistries;
 
+import xyz.apex.forge.apexcore.core.init.ACRegistry;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
+import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
+import xyz.apex.forge.apexcore.registrate.builder.BlockBuilder;
+import xyz.apex.forge.apexcore.registrate.builder.factory.BlockFactory;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
@@ -43,6 +47,7 @@ import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
+import static com.tterrag.registrate.providers.ProviderType.BLOCK_TAGS;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
 
 public final class ModBlocks
@@ -147,7 +152,7 @@ public final class ModBlocks
 	// region: Dunmer
 	public static final BlockEntry<Block> DUNMER_WOOL = wool("dunmer", Block::new).register();
 	public static final BlockEntry<CarpetBlock> DUNMER_CARPET = carpet("dunmer", CarpetBlock::new).register();
-	public static final BlockEntry<FurnitureWallLightBlock> DUNMER_WALL_LIGHT = wallLight("dunmer", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).properties(properties -> properties.lightLevel(blockState -> 14)).register();
+	public static final BlockEntry<FurnitureWallLightBlock> DUNMER_WALL_LIGHT = wallLight("dunmer", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).lightLevel(blockState -> 14).register();
 	public static final BlockEntry<FloorLightBlock> DUNMER_FLOOR_LIGHT = floorLight("dunmer", FloorLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> DUNMER_TABLE_SMALL = tableSmall("dunmer", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableWideBlock> DUNMER_TABLE_WIDE = tableWide("dunmer", TableWideBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -168,8 +173,8 @@ public final class ModBlocks
 	public static final BlockEntry<DresserBlock> DUNMER_DRESSER = dresser("dunmer", DresserBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<WardrobeBottomBlock> DUNMER_WARDROBE_BOTTOM = wardrobeBottom("dunmer", WardrobeBottomBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<WardrobeTopBlock> DUNMER_WARDROBE_TOP = wardrobeTop("dunmer", WardrobeTopBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<BedSingleBlock> DUNMER_BED_SINGLE = bedSingle("dunmer", BedSingleBlock::new).transform(ModBlocks::dunmerBed).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<BedDoubleBlock> DUNMER_BED_DOUBLE = bedDouble("dunmer", BedDoubleBlock::new).transform(ModBlocks::dunmerBed).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedSingleBlock> DUNMER_BED_SINGLE = bedSingle("dunmer", BedSingleBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<BedDoubleBlock> DUNMER_BED_DOUBLE = bedDouble("dunmer", BedDoubleBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<ChandelierBlock> DUNMER_CHANDELIER = chandelier("dunmer", ChandelierBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_SINGLE = doorSingle("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -179,7 +184,7 @@ public final class ModBlocks
 	// region: Venthyr
 	public static final BlockEntry<Block> VENTHYR_WOOL = wool("venthyr", Block::new).register();
 	public static final BlockEntry<CarpetBlock> VENTHYR_CARPET = carpet("venthyr", CarpetBlock::new).register();
-	public static final BlockEntry<FurnitureWallLightBlock> VENTHYR_WALL_LIGHT = wallLight("venthyr", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).properties(properties -> properties.lightLevel(blockState -> 14)).register();
+	public static final BlockEntry<FurnitureWallLightBlock> VENTHYR_WALL_LIGHT = wallLight("venthyr", FurnitureWallLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).lightLevel(blockState -> 14).register();
 	public static final BlockEntry<FloorLightBlock> VENTHYR_FLOOR_LIGHT = floorLight("venthyr", FloorLightBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL = tableSmall("venthyr", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<TableSmallBlock> VENTHYR_TABLE_SMALL_FANCY = tableSmallFancy("venthyr", TableSmallBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
@@ -216,7 +221,7 @@ public final class ModBlocks
 	public static final BlockEntry<Block> BONE_SKELETON_WOOL = wool("bone/skeleton", Block::new).lang("Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_SKELETON_CARPET = carpet("bone/skeleton", CarpetBlock::new).lang("Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_SKELETON_WALL_LIGHT = wallLight("bone/skeleton", FurnitureWallLightBlock::new).lang("Bone Wall Light").register();
-	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_SKELETON_FLOOR_LIGHT = floorLight("bone/skeleton", FloorLightBlock.WithFacing::new).lang("Bone Floor Light").blockstate(ModBlocks::horizontalBlockState).register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_SKELETON_FLOOR_LIGHT = floorLight("bone/skeleton", FloorLightBlock.WithFacing::new).lang("Bone Floor Light").blockState(ModBlocks::horizontalBlockState).register();
 	public static final BlockEntry<TableSmallBlock> BONE_SKELETON_TABLE_SMALL = tableSmall("bone/skeleton", TableSmallBlock::new).lang("Bone Table Small").register();
 	public static final BlockEntry<TableWideBlock> BONE_SKELETON_TABLE_WIDE = tableWide("bone/skeleton", TableWideBlock::new).lang("Bone Table Wide").register();
 	public static final BlockEntry<TableLargeBlock> BONE_SKELETON_TABLE_LARGE = tableLarge("bone/skeleton", TableLargeBlock::new).lang("Bone Table Large").register();
@@ -248,7 +253,7 @@ public final class ModBlocks
 	public static final BlockEntry<Block> BONE_WITHER_WOOL = wool("bone/wither", Block::new).lang("Wither Bone Wool").register();
 	public static final BlockEntry<CarpetBlock> BONE_WITHER_CARPET = carpet("bone/wither", CarpetBlock::new).lang("Wither Bone Carpet").register();
 	public static final BlockEntry<FurnitureWallLightBlock> BONE_WITHER_WALL_LIGHT = wallLight("bone/wither", FurnitureWallLightBlock::new).lang("Wither Bone Wall Light").register();
-	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_WITHER_FLOOR_LIGHT = floorLight("bone/wither", FloorLightBlock.WithFacing::new).lang("Wither Bone Floor Light").blockstate(ModBlocks::horizontalBlockState).register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> BONE_WITHER_FLOOR_LIGHT = floorLight("bone/wither", FloorLightBlock.WithFacing::new).lang("Wither Bone Floor Light").blockState(ModBlocks::horizontalBlockState).register();
 	public static final BlockEntry<TableSmallBlock> BONE_WITHER_TABLE_SMALL = tableSmall("bone/wither", TableSmallBlock::new).lang("Wither Bone Table Small").register();
 	public static final BlockEntry<TableWideBlock> BONE_WITHER_TABLE_WIDE = tableWide("bone/wither", TableWideBlock::new).lang("Wither Bone Table Wide").register();
 	public static final BlockEntry<TableLargeBlock> BONE_WITHER_TABLE_LARGE = tableLarge("bone/wither", TableLargeBlock::new).lang("Wither Bone Table Large").register();
@@ -288,10 +293,21 @@ public final class ModBlocks
 			if(block instanceof StackedBlock stacked)
 				provider.add(stacked.getStackableTranslationKey(), "Stackable");
 		}));
+
+		REGISTRATE.addDataGenerator(BLOCK_TAGS, provider -> provider
+				.tag(ACRegistry.TAG_VISUALIZER)
+				.add(REGISTRATE
+						.getAll(ForgeRegistries.Keys.BLOCKS)
+						.stream()
+						.map(RegistryEntry::get)
+						.filter(IMultiBlock.class::isInstance)
+						.toArray(Block[]::new)
+				)
+		);
 	}
 
 	// region: Constructors
-	private static BlockBuilder<Registrate, BerryBasketBlock, Registrate> berryBasket(String type)
+	private static BlockBuilder<BasicRegistrate, BerryBasketBlock, BasicRegistrate> berryBasket(String type)
 	{
 		return REGISTRATE
 				.object("decorations/berry_basket_%s".formatted(type))
@@ -301,11 +317,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, BoltsOfClothBlock, Registrate> boltsOfCloth()
+	private static BlockBuilder<BasicRegistrate, BoltsOfClothBlock, BasicRegistrate> boltsOfCloth()
 	{
 		return REGISTRATE
 				.object("decorations/bolts_of_cloth")
@@ -315,11 +331,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, BookStackBlock, Registrate> bookStack()
+	private static BlockBuilder<BasicRegistrate, BookStackBlock, BasicRegistrate> bookStack()
 	{
 		return REGISTRATE
 				.object("decorations/book_stack")
@@ -329,12 +345,12 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, BowlBlock, Registrate> bowl(String type)
+	private static BlockBuilder<BasicRegistrate, BowlBlock, BasicRegistrate> bowl(String type)
 	{
 		return REGISTRATE
 				.object("decorations/bowl_%s".formatted(type))
@@ -344,11 +360,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, TankardsBlock, Registrate> tankards(String type)
+	private static BlockBuilder<BasicRegistrate, TankardsBlock, BasicRegistrate> tankards(String type)
 	{
 		return REGISTRATE
 				.object("decorations/tankards_%s".formatted(type))
@@ -358,12 +374,12 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, MushroomsRedBlock, Registrate> mushroomsRed()
+	private static BlockBuilder<BasicRegistrate, MushroomsRedBlock, BasicRegistrate> mushroomsRed()
 	{
 		return REGISTRATE
 				.object("decorations/mushrooms_red")
@@ -376,12 +392,12 @@ public final class ModBlocks
 				.randomTicks()
 				.instabreak()
 				.hasPostProcess(BlockHelper::always)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, CoinStackBlock, Registrate> coinStack(String type)
+	private static BlockBuilder<BasicRegistrate, CoinStackBlock, BasicRegistrate> coinStack(String type)
 	{
 		return REGISTRATE
 				.object("decorations/coin_stack_%s".formatted(type))
@@ -391,11 +407,11 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, MuffinsBlock, Registrate> muffins(String type)
+	private static BlockBuilder<BasicRegistrate, MuffinsBlock, BasicRegistrate> muffins(String type)
 	{
 		return REGISTRATE
 				.object("decorations/muffins_%s".formatted(type))
@@ -405,12 +421,12 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, PaperStackBlock, Registrate> paperStack()
+	private static BlockBuilder<BasicRegistrate, PaperStackBlock, BasicRegistrate> paperStack()
 	{
 		return REGISTRATE
 				.object("decorations/paper_stack")
@@ -420,11 +436,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, BoiledCremeTreatsBlock, Registrate> boiledCremeTreats(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, BoiledCremeTreatsBlock, BasicRegistrate> boiledCremeTreats(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_boiled_creme_treats".formatted(furnitureType))
@@ -434,12 +450,12 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, SweetRollsBlock, Registrate> sweetRolls(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, SweetRollsBlock, BasicRegistrate> sweetRolls(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_sweetrolls".formatted(furnitureType))
@@ -449,12 +465,12 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(.5F)
 				.sound(SoundType.WOOL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, MeadBottlesBlock, Registrate> meadBottles(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, MeadBottlesBlock, BasicRegistrate> meadBottles(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_mead_bottles".formatted(furnitureType))
@@ -464,12 +480,12 @@ public final class ModBlocks
 				.initialProperties(Material.GLASS)
 				.strength(.3F)
 				.sound(SoundType.GLASS)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, SoulGemsBlock, Registrate> soulGems(String furnitureType, String type)
+	private static BlockBuilder<BasicRegistrate, SoulGemsBlock, BasicRegistrate> soulGems(String furnitureType, String type)
 	{
 		return REGISTRATE
 				.object("decorations/%s_soul_gems_%s".formatted(furnitureType, type))
@@ -479,11 +495,11 @@ public final class ModBlocks
 				.initialProperties(Material.GLASS)
 				.strength(.3F)
 				.sound(SoundType.GLASS)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, FoodBlock, Registrate> food(String furnitureType, int type)
+	private static BlockBuilder<BasicRegistrate, FoodBlock, BasicRegistrate> food(String furnitureType, int type)
 	{
 		return REGISTRATE
 				.object("decorations/%s_food_%d".formatted(furnitureType, type))
@@ -493,11 +509,11 @@ public final class ModBlocks
 				.initialProperties(Material.CAKE)
 				.strength(2.5F)
 				.sound(SoundType.WOOL)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, TeaSetBlock, Registrate> teaSet(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, TeaSetBlock, BasicRegistrate> teaSet(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_tea_set".formatted(furnitureType))
@@ -507,11 +523,11 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, TeaCupsBlock, Registrate> teaCups(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, TeaCupsBlock, BasicRegistrate> teaCups(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_tea_cups".formatted(furnitureType))
@@ -521,12 +537,12 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, PlatterBlock, Registrate> platter(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, PlatterBlock, BasicRegistrate> platter(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_platter".formatted(furnitureType))
@@ -536,12 +552,12 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, WidowBloomBlock, Registrate> widowBloom(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, WidowBloomBlock, BasicRegistrate> widowBloom(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_widow_bloom".formatted(furnitureType))
@@ -551,7 +567,7 @@ public final class ModBlocks
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
-				.blockstate((ctx, provider) -> provider
+				.blockState((ctx, provider) -> provider
 						.horizontalBlock(ctx.get(), provider
 								.models()
 								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
@@ -561,7 +577,7 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<Registrate, TomesBlock, Registrate> tomes(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, TomesBlock, BasicRegistrate> tomes(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_tomes".formatted(furnitureType))
@@ -571,12 +587,12 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, ChalicesBlock, Registrate> chalices(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, ChalicesBlock, BasicRegistrate> chalices(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_chalices".formatted(furnitureType))
@@ -586,12 +602,12 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalStackableBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
-	private static BlockBuilder<Registrate, BonePileBlock, Registrate> bonePile(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, BonePileBlock, BasicRegistrate> bonePile(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_pile".formatted(furnitureType))
@@ -601,11 +617,11 @@ public final class ModBlocks
 				.initialProperties(Material.METAL)
 				.strength(2.5F)
 				.sound(SoundType.METAL)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, PotteryBlock, Registrate> pottery(String furnitureType, int type)
+	private static BlockBuilder<BasicRegistrate, PotteryBlock, BasicRegistrate> pottery(String furnitureType, int type)
 	{
 		return REGISTRATE
 				.object("decorations/%s_pottery_%d".formatted(furnitureType, type))
@@ -615,11 +631,11 @@ public final class ModBlocks
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static BlockBuilder<Registrate, CandleBlock, Registrate> candles(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, CandleBlock, BasicRegistrate> candles(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_candles".formatted(furnitureType))
@@ -629,12 +645,12 @@ public final class ModBlocks
 				.initialProperties(Material.DECORATION, MaterialColor.SAND)
 				.strength(.1F)
 				.sound(SoundType.CANDLE)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.tag(BlockTags.Vanilla.CANDLES)
 		;
 	}
 
-	private static BlockBuilder<Registrate, SkullBlossomsBlock, Registrate> skullBlossoms(String furnitureType)
+	private static BlockBuilder<BasicRegistrate, SkullBlossomsBlock, BasicRegistrate> skullBlossoms(String furnitureType)
 	{
 		return REGISTRATE
 				.object("decorations/%s_skull_blossoms".formatted(furnitureType))
@@ -644,7 +660,7 @@ public final class ModBlocks
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
-				.blockstate((ctx, provider) -> provider
+				.blockState((ctx, provider) -> provider
 						.horizontalBlock(ctx.get(), provider
 								.models()
 								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
@@ -654,7 +670,7 @@ public final class ModBlocks
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> wool(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wool(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/wool".formatted(type))
@@ -663,7 +679,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOL, MaterialColor.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
-				.blockstate((ctx, provider) -> provider
+				.blockState((ctx, provider) -> provider
 						.simpleBlock(ctx.get(), provider
 								.models()
 								.cubeAll(
@@ -676,7 +692,7 @@ public final class ModBlocks
 		;
 	}
 
-	private static <BLOCK extends CarpetBlock> BlockBuilder<Registrate, BLOCK, Registrate> carpet(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends CarpetBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> carpet(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/carpet".formatted(type))
@@ -685,7 +701,7 @@ public final class ModBlocks
 				.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 				.strength(.1F)
 				.sound(SoundType.WOOL)
-				.blockstate((ctx, provider) -> provider
+				.blockState((ctx, provider) -> provider
 						.simpleBlock(ctx.get(), provider
 								.models()
 								.carpet(
@@ -698,7 +714,7 @@ public final class ModBlocks
 		;
 	}
 
-	private static <BLOCK extends FurnitureWallLightBlock> BlockBuilder<Registrate, BLOCK, Registrate> wallLight(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends FurnitureWallLightBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wallLight(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/wall_light".formatted(type))
@@ -709,11 +725,11 @@ public final class ModBlocks
 				.instabreak()
 				.noCollission()
 				.lightLevel(lightLevel())
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends FloorLightBlock> BlockBuilder<Registrate, BLOCK, Registrate> floorLight(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends FloorLightBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> floorLight(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/floor_light".formatted(type))
@@ -723,11 +739,11 @@ public final class ModBlocks
 				.sound(SoundType.WOOD)
 				.instabreak()
 				.lightLevel(lightLevel(blockState -> blockState.getOptionalValue(FloorLightBlock.PART).orElse(FloorLightBlock.Part.BOTTOM).isTop()))
-				.blockstate(ModBlocks::simpleBlockState)
+				.blockState(ModBlocks::simpleBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableSmallBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableSmall(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableSmallBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableSmall(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_small".formatted(type))
@@ -736,11 +752,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableSmallBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableSmallFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableSmallBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableSmallFancy(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_small_fancy".formatted(type))
@@ -749,11 +765,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableWideBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableWide(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableWideBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableWide(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_wide".formatted(type))
@@ -762,11 +778,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableWideBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableWideFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableWideBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableWideFancy(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_wide_fancy".formatted(type))
@@ -775,11 +791,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableLargeBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableLarge(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableLargeBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableLarge(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_large".formatted(type))
@@ -788,11 +804,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends TableLargeBlock> BlockBuilder<Registrate, BLOCK, Registrate> tableLargeFancy(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends TableLargeBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> tableLargeFancy(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/table_large_fancy".formatted(type))
@@ -801,11 +817,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends StoolBlock> BlockBuilder<Registrate, BLOCK, Registrate> stool(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends StoolBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> stool(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/stool".formatted(type))
@@ -814,11 +830,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends CushionBlock> BlockBuilder<Registrate, BLOCK, Registrate> cushion(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends CushionBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> cushion(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/cushion".formatted(type))
@@ -827,11 +843,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends CushionBlock> BlockBuilder<Registrate, BLOCK, Registrate> skull(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends CushionBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> skull(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/skull".formatted(type))
@@ -840,11 +856,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends PaintingSmallBlock> BlockBuilder<Registrate, BLOCK, Registrate> paintingSmall(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends PaintingSmallBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> paintingSmall(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/painting_small".formatted(type))
@@ -854,11 +870,11 @@ public final class ModBlocks
 				.sound(SoundType.WOOD)
 				.instabreak()
 				.noCollission()
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends PaintingWideBlock> BlockBuilder<Registrate, BLOCK, Registrate> paintingWide(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends PaintingWideBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> paintingWide(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/painting_wide".formatted(type))
@@ -868,11 +884,11 @@ public final class ModBlocks
 				.sound(SoundType.WOOD)
 				.instabreak()
 				.noCollission()
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends DrawerBlock> BlockBuilder<Registrate, BLOCK, Registrate> drawer(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends DrawerBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> drawer(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/drawer".formatted(type))
@@ -881,11 +897,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends ShelfBlock> BlockBuilder<Registrate, BLOCK, Registrate> shelf(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends ShelfBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> shelf(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/shelf".formatted(type))
@@ -894,14 +910,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockstate -> {
-					var connection = blockstate.getOptionalValue(ShelfBlock.CONNECTION).orElse(ShelfBlock.Connection.SINGLE);
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), connection.serializedName)));
-				}))
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends SofaBlock> BlockBuilder<Registrate, BLOCK, Registrate> sofa(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends SofaBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> sofa(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/sofa".formatted(type))
@@ -910,14 +923,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockstate -> {
-					var connection = blockstate.getOptionalValue(SofaBlock.CONNECTION).orElse(SofaBlock.Connection.SINGLE);
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), connection.serializedName)));
-				}))
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends DeskBlock> BlockBuilder<Registrate, BLOCK, Registrate> deskLeft(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends DeskBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> deskLeft(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/desk_left".formatted(type))
@@ -926,11 +936,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends DeskBlock> BlockBuilder<Registrate, BLOCK, Registrate> deskRight(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends DeskBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> deskRight(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/desk_right".formatted(type))
@@ -939,11 +949,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends ChairBlock> BlockBuilder<Registrate, BLOCK, Registrate> chair(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends ChairBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> chair(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/chair".formatted(type))
@@ -952,11 +962,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends BenchBlock> BlockBuilder<Registrate, BLOCK, Registrate> bench(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends BenchBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> bench(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/bench".formatted(type))
@@ -965,11 +975,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends BookshelfBlock> BlockBuilder<Registrate, BLOCK, Registrate> bookshelf(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends BookshelfBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> bookshelf(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/bookshelf".formatted(type))
@@ -978,11 +988,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends ChestBlock> BlockBuilder<Registrate, BLOCK, Registrate> chest(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends ChestBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> chest(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/chest".formatted(type))
@@ -991,11 +1001,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends DresserBlock> BlockBuilder<Registrate, BLOCK, Registrate> dresser(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends DresserBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> dresser(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/dresser".formatted(type))
@@ -1004,11 +1014,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends WardrobeBottomBlock> BlockBuilder<Registrate, BLOCK, Registrate> wardrobeBottom(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends WardrobeBottomBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wardrobeBottom(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/wardrobe_bottom".formatted(type))
@@ -1017,11 +1027,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends WardrobeTopBlock> BlockBuilder<Registrate, BLOCK, Registrate> wardrobeTop(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends WardrobeTopBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wardrobeTop(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/wardrobe_top".formatted(type))
@@ -1030,11 +1040,11 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends BedSingleBlock> BlockBuilder<Registrate, BLOCK, Registrate> bedSingle(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends BedSingleBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> bedSingle(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/bed_single".formatted(type))
@@ -1043,12 +1053,12 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.tag(BlockTags.Vanilla.BEDS)
 		;
 	}
 
-	private static <BLOCK extends BedDoubleBlock> BlockBuilder<Registrate, BLOCK, Registrate> bedDouble(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends BedDoubleBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> bedDouble(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/bed_double".formatted(type))
@@ -1057,12 +1067,12 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.tag(BlockTags.Vanilla.BEDS)
 		;
 	}
 
-	private static <BLOCK extends ChandelierBlock> BlockBuilder<Registrate, BLOCK, Registrate> chandelier(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends ChandelierBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> chandelier(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/chandelier".formatted(type))
@@ -1072,11 +1082,11 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.lightLevel(lightLevel())
-				.blockstate(ModBlocks::simpleBlockState)
+				.blockState(ModBlocks::simpleBlockState)
 		;
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<Registrate, BLOCK, Registrate> doorSingle(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> doorSingle(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/door_single".formatted(type))
@@ -1086,12 +1096,12 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.transform(ModBlocks::applyDoorProperties)
 		;
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<Registrate, BLOCK, Registrate> doorDouble(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> doorDouble(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/door_double".formatted(type))
@@ -1101,31 +1111,22 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 				.transform(ModBlocks::applyDoorProperties)
 		;
 	}
 
-	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<Registrate, BLOCK, Registrate> applyDoorProperties(BlockBuilder<Registrate, BLOCK, Registrate> builder)
+	private static <BLOCK extends FurnitureDoorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDoorProperties(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
 		return builder
-				.blockstate((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
-					var leftModel = provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_left".formatted(ctx.getId().getPath())));
-					var rightModel = provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_right".formatted(ctx.getId().getPath())));
-					var model = leftModel;
-
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+					var model = getModelFile(ctx, blockState, provider.models());
 					var rightHinge = blockState.getOptionalValue(DoorBlock.HINGE).orElse(DoorHingeSide.LEFT) == DoorHingeSide.RIGHT;
 					var yRot = (int) BaseBlock.getFacing(blockState).toYRot();
 					var open = blockState.getOptionalValue(DoorBlock.OPEN).orElse(false);
 
 					if(open)
-					{
 						yRot += 90;
-						model = rightHinge ? leftModel : rightModel;
-					}
-					else
-						model = rightHinge ? rightModel : leftModel;
-
 					if(rightHinge && open)
 						yRot += 180;
 
@@ -1142,7 +1143,7 @@ public final class ModBlocks
 		;
 	}
 
-	private static <BLOCK extends LockboxBlock> BlockBuilder<Registrate, BLOCK, Registrate> lockbox(String type, NonNullFunction<BlockBehaviour.Properties, BLOCK> blockFactory)
+	private static <BLOCK extends LockboxBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> lockbox(String type, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("%s/lockbox".formatted(type))
@@ -1152,16 +1153,16 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
-				.blockstate(ModBlocks::horizontalBlockState)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> applyBlockDefaults(BlockBuilder<Registrate, BLOCK, Registrate> builder)
+	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyBlockDefaults(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
 		return builder.lang(RegistrateLangProvider.toEnglishName(builder.getName().replace('/', '_')));
 	}
 
-	private static <BLOCK extends Block> BlockBuilder<Registrate, BLOCK, Registrate> applyFurnitureBlockDefaults(BlockBuilder<Registrate, BLOCK, Registrate> builder)
+	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyFurnitureBlockDefaults(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
 		return builder
 				.transform(ModBlocks::applyBlockDefaults)
@@ -1170,7 +1171,7 @@ public final class ModBlocks
 				.isRedstoneConductor(BlockHelper::never)
 				.isSuffocating(BlockHelper::never)
 				.isViewBlocking(BlockHelper::never)
-				.addLayer(() -> RenderType::cutout)
+				.renderType(() -> RenderType::cutout)
 		;
 	}
 
@@ -1189,39 +1190,15 @@ public final class ModBlocks
 		provider.getVariantBuilder(ctx.get())
 		        .forAllStates(blockState -> ConfiguredModel
 				        .builder()
-				        .modelFile(provider
-						        .models()
-						        .getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-				        )
+				        .modelFile(getModelFile(ctx, blockState, provider.models()))
 				        .build()
 		        )
 		;
 	}
 
-	private static <BLOCK extends StackedBlock> void horizontalStackableBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
-	{
-		provider.horizontalBlock(ctx.get(), blockState -> {
-			var count = blockState.getOptionalValue(ctx.get().getStackSizeProperty()).orElse(0);
-			return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%d".formatted(ctx.getId().getPath(), count)));
-		});
-	}
-
 	private static <BLOCK extends Block> void horizontalBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
 	{
-		provider.horizontalBlock(ctx.get(), provider
-						.models()
-						.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-		);
-	}
-
-	private static <BLOCK extends BedBlock> BlockBuilder<Registrate, BLOCK, Registrate> dunmerBed(BlockBuilder<Registrate, BLOCK, Registrate> builder)
-	{
-		return builder
-				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), blockState -> {
-					var suffix = ctx.get().isMultiBlockOrigin(blockState) ? "head" : "foot";
-					return provider.models().getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s_%s".formatted(ctx.getId().getPath(), suffix)));
-				}))
-		;
+		provider.horizontalBlock(ctx.get(), blockState -> getModelFile(ctx, blockState, provider.models()));
 	}
 
 	private static <BLOCK extends StackedBlock> void stackedLootTable(RegistrateBlockLootTables lootTables, BLOCK block)
@@ -1247,6 +1224,103 @@ public final class ModBlocks
 		}
 
 		lootTables.add(block, LootTable.lootTable().withPool(RegistrateBlockLootTables.applyExplosionCondition(block, pool)));
+	}
+
+	private static <BLOCK extends Block> BlockModelBuilder getModelFile(DataGenContext<Block, BLOCK> ctx, BlockState blockState, BlockModelProvider provider)
+	{
+		var suffix = "";
+
+		if(ctx.get() instanceof StackedBlock block)
+			suffix = "_%d".formatted(blockState.getValue(block.getStackSizeProperty()));
+		else if(ctx.get() instanceof ShelfBlock)
+			suffix = "_%s".formatted(blockState.getValue(ShelfBlock.CONNECTION).getSerializedName());
+		else if(ctx.get() instanceof SofaBlock)
+			suffix = "_%s".formatted(blockState.getValue(SofaBlock.CONNECTION).getSerializedName());
+		else if(DUNMER_BED_DOUBLE.is(ctx.get()) || DUNMER_BED_SINGLE.is(ctx.get()))
+			suffix = ((IMultiBlock) ctx.get()).isMultiBlockOrigin(blockState) ? "_head" : "_foot";
+		else if(ctx.get() instanceof FurnitureDoorBlock)
+		{
+			var hinge = blockState.getValue(FurnitureDoorBlock.HINGE);
+			var open = blockState.getValue(FurnitureDoorBlock.OPEN);
+
+			if(open)
+				suffix = hinge == DoorHingeSide.RIGHT ? "_left" : "_right";
+			else
+				suffix = hinge == DoorHingeSide.RIGHT ? "_right" : "_left";
+		}
+
+		return provider
+				.withExistingParent(
+						// <namespace>:generated/block/<path>[suffix] | Model we are generating
+						"%s:generated/block/%s%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath(), suffix),
+						// <namespace>:block/<path>[suffix] | Existing model, exported from BlockBench
+						new ResourceLocation(ctx.getId().getNamespace(), "block/%s%s".formatted(ctx.getId().getPath(), suffix))
+				)
+				// .renderType(new ResourceLocation(Mods.MINECRAFT, "cutout")) // NOTE: Set on the block / java land in 1.18
+				.texture("particle", getParticlePath(ctx.getId()))
+				.texture(getTextureKey(ctx.getId()), getTexturePath(ctx.getId()))
+		;
+	}
+
+	private static ResourceLocation getParticlePath(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		var type = path.substring(0, path.indexOf('/'));
+
+		if(type.equals("decorations"))
+		{
+			var name = path.substring(type.length() + 1);
+
+			if(name.startsWith("berry_basket"))
+				name = "berry_basket";
+			else if(name.startsWith("bowl"))
+				name = "bowl";
+			else if(name.startsWith("tankards"))
+				name = "tankards";
+			else if(name.startsWith("venthyr"))
+				name = "venthyr";
+			else if(name.startsWith("dunmer"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/dunmer");
+			else if(name.startsWith("bone"))
+			{
+				if(name.contains("wither"))
+					return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
+				return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+			}
+
+			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
+		}
+		else if(type.equals("bone"))
+		{
+			var subType = path.substring(type.length() + 1);
+
+			if(subType.contains("wither"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
+			return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+		}
+
+		return new ResourceLocation(registryName.getNamespace(), "particles/%s".formatted(type));
+	}
+
+	static String getTextureKey(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		return path.substring(path.lastIndexOf('/') + 1);
+	}
+
+	static ResourceLocation getTexturePath(ResourceLocation registryName)
+	{
+		var path = registryName.getPath();
+		var type = path.substring(0, path.lastIndexOf('/'));
+		var name = path.substring(type.length() + 1);
+
+		name = switch(name) {
+			case "desk_left", "desk_right" -> "desk";
+			case "wardrobe_bottom", "wardrobe_top" -> "wardrobe";
+			default -> name;
+		};
+
+		return new ResourceLocation(registryName.getNamespace(), "models/%s/%s".formatted(type, name));
 	}
 	// endregion
 }

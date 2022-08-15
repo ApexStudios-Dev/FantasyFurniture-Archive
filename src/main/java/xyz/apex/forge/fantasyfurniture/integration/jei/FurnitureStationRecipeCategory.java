@@ -30,21 +30,9 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	}
 
 	@Override
-	public ResourceLocation getUid()
-	{
-		return FurnitureStationRecipes.RECIPE_TYPE.getUid();
-	}
-
-	@Override
 	public RecipeType<FurnitureStationRecipes> getRecipeType()
 	{
 		return FurnitureStationRecipes.RECIPE_TYPE;
-	}
-
-	@Override
-	public Class<? extends FurnitureStationRecipes> getRecipeClass()
-	{
-		return FurnitureStationRecipes.class;
 	}
 
 	@Override
@@ -68,7 +56,6 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, FurnitureStationRecipes recipe, IFocusGroup focuses)
 	{
-		IRecipeCategory.super.setRecipe(builder, recipe, focuses);
 		recipe.setRecipe(builder);
 	}
 
@@ -77,5 +64,17 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 	{
 		IRecipeCategory.super.draw(recipe, recipeSlotsView, pose, mouseX, mouseY);
 		recipe.draw(pose, background);
+	}
+
+	@Override
+	public ResourceLocation getUid()
+	{
+		return FurnitureStationRecipes.RECIPE_TYPE.getUid();
+	}
+
+	@Override
+	public Class<? extends FurnitureStationRecipes> getRecipeClass()
+	{
+		return FurnitureStationRecipes.class;
 	}
 }

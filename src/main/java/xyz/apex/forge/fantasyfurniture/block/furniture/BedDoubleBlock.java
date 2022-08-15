@@ -54,7 +54,7 @@ public class BedDoubleBlock extends BedBlock
 	@Override
 	public RenderShape getRenderShape(BlockState blockState)
 	{
-		if(ModBlocks.DUNMER_BED_DOUBLE.has(blockState) && getMultiBlockIndex(blockState) == 2)
+		if(ModBlocks.DUNMER_BED_DOUBLE.isIn(blockState) && getMultiBlockIndex(blockState) == 2)
 			return RenderShape.MODEL;
 
 		return super.getRenderShape(blockState);
@@ -63,13 +63,13 @@ public class BedDoubleBlock extends BedBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_BED_DOUBLE.has(blockState))
+		if(ModBlocks.NORDIC_BED_DOUBLE.isIn(blockState))
 			return HitBoxes.NORDIC.bedDouble(this, blockState);
-		else if(ModBlocks.DUNMER_BED_DOUBLE.has(blockState))
+		else if(ModBlocks.DUNMER_BED_DOUBLE.isIn(blockState))
 			return HitBoxes.DUNMER.bedDouble(this, blockState);
-		else if(ModBlocks.VENTHYR_BED_DOUBLE.has(blockState))
+		else if(ModBlocks.VENTHYR_BED_DOUBLE.isIn(blockState))
 			return HitBoxes.VENTHYR.bedDouble(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_BED_DOUBLE.has(blockState) || ModBlocks.BONE_WITHER_BED_DOUBLE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_BED_DOUBLE.isIn(blockState) || ModBlocks.BONE_WITHER_BED_DOUBLE.isIn(blockState))
 			return HitBoxes.BONE.bedDouble(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

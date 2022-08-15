@@ -79,13 +79,13 @@ public class SofaBlock extends SeatBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_SOFA.has(blockState))
+		if(ModBlocks.NORDIC_SOFA.isIn(blockState))
 			return HitBoxes.NORDIC.sofa(this, blockState);
-		else if(ModBlocks.DUNMER_SOFA.has(blockState))
+		else if(ModBlocks.DUNMER_SOFA.isIn(blockState))
 			return HitBoxes.DUNMER.sofa(this, blockState);
-		else if(ModBlocks.VENTHYR_SOFA.has(blockState))
+		else if(ModBlocks.VENTHYR_SOFA.isIn(blockState))
 			return HitBoxes.VENTHYR.sofa(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_SOFA.has(blockState) || ModBlocks.BONE_WITHER_SOFA.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_SOFA.isIn(blockState) || ModBlocks.BONE_WITHER_SOFA.isIn(blockState))
 			return HitBoxes.BONE.sofa(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

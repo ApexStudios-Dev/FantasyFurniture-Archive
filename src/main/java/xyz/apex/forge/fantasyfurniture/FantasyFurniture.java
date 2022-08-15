@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
+import net.minecraft.util.FastColor;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
@@ -191,6 +193,16 @@ public final class FantasyFurniture
 				}
 			}
 		}
+	}
+
+	public static int tintFromDyeColor(DyeColor color)
+	{
+		var colors = color.getTextureDiffuseColors();
+		var red = (int) (colors[0] * 255F);
+		var green = (int) (colors[1] * 255F);
+		var blue = (int) (colors[2] * 255F);
+
+		return FastColor.ARGB32.color(255, red, green, blue);
 	}
 
 	private static final class Client

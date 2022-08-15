@@ -4,10 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
-import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.MenuEntry;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.RenderType;
@@ -32,8 +28,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.lib.util.InterModUtil;
+import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
+import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
+import xyz.apex.forge.apexcore.registrate.entry.MenuEntry;
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.FurnitureStationBlock;
@@ -43,7 +43,6 @@ import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
 import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
 
 import java.util.List;
-import java.util.Objects;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.ITEM_TAGS;
@@ -118,7 +117,8 @@ public final class FurnitureStation
 
 			if(obj instanceof ItemStack stack)
 			{
-				FantasyFurniture.LOGGER.info("Received Furniture Station Result ('{}') from Mod: '{}'", stack.getItem().getRegistryName(), imc.getSenderModId());
+				var itemName = RegistryHelper.getRegistryName(ForgeRegistries.ITEMS, stack.getItem());
+				FantasyFurniture.LOGGER.info("Received Furniture Station Result ('{}') from Mod: '{}'", itemName, imc.senderModId());
 				registerAdditionalCraftingResult(stack);
 			}
 		}));
@@ -126,8 +126,7 @@ public final class FurnitureStation
 
 	public static List<ItemStack> buildResultsList()
 	{
-		var tags = Objects.requireNonNull(ForgeRegistries.ITEMS.tags());
-		var tag = tags.getTag(CRAFTABLE);
+		var tag = RegistryHelper.getTags(ForgeRegistries.ITEMS).getTag(CRAFTABLE);
 		var list = Lists.<ItemStack>newArrayList();
 		customStationResults.stream().map(ItemStack::copy).forEach(list::add);
 		tag.stream().map(Item::getDefaultInstance).forEach(list::add);
@@ -145,7 +144,11 @@ public final class FurnitureStation
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
-				.blockstate((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
+				.isValidSpawn(BlockHelper::never)
+				.isRedstoneConductor(BlockHelper::never)
+				.isSuffocating(BlockHelper::never)
+				.isViewBlocking(BlockHelper::never)
+				.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
 						.models()
 						.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
 				))
@@ -155,12 +158,7 @@ public final class FurnitureStation
 						.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 						.save(provider, ctx.getId())
 				)
-				.isValidSpawn(BlockHelper::never)
-				.isRedstoneConductor(BlockHelper::never)
-				.isSuffocating(BlockHelper::never)
-				.isViewBlocking(BlockHelper::never)
-				.addLayer(() -> RenderType::cutout)
-				.tag(BlockTags.Vanilla.MINEABLE_WITH_AXE)
+				.renderType(() -> RenderType::cutout)
 
 				.item()
 					.model((ctx, provider) -> provider
@@ -183,6 +181,6 @@ public final class FurnitureStation
 						FurnitureStationMenu::new,
 						() -> FurnitureStationMenuScreen::new
 				)
-		.register();
+		;
 	}
 }

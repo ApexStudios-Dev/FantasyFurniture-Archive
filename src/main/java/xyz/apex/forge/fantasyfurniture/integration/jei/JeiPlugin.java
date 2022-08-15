@@ -6,18 +6,17 @@ import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationMenuScreen;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
 
 import java.util.Collections;
 
-import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
-
 @mezz.jei.api.JeiPlugin
 public final class JeiPlugin implements IModPlugin
 {
-	private static final ResourceLocation PLUGIN_ID = REGISTRATE.id("jei_integration");
+	private static final ResourceLocation PLUGIN_ID = new ResourceLocation(Mods.FANTASY_FURNITURE, "jei_integration");
 
 	@Override
 	public ResourceLocation getPluginUid()
@@ -44,14 +43,7 @@ public final class JeiPlugin implements IModPlugin
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration)
 	{
-		registration.addRecipeTransferHandler(
-				FurnitureStationMenu.class,
-				FurnitureStationRecipes.RECIPE_TYPE,
-				FurnitureStation.CLAY_SLOT,
-				3,
-				FurnitureStation.RESULT_SLOT + 1,
-				(9 * 3) + 9
-		);
+		registration.addRecipeTransferHandler(FurnitureStationMenu.class, FurnitureStationRecipes.RECIPE_TYPE, FurnitureStation.CLAY_SLOT, 3, FurnitureStation.RESULT_SLOT + 1, (9 * 3) + 9);
 	}
 
 	@Override

@@ -31,13 +31,13 @@ public class PaintingSmallBlock extends BaseBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_PAINTING_SMALL.has(blockState))
+		if(ModBlocks.NORDIC_PAINTING_SMALL.isIn(blockState))
 			return HitBoxes.NORDIC.paintingSmall(this, blockState);
-		else if(ModBlocks.DUNMER_PAINTING_SMALL.has(blockState))
+		else if(ModBlocks.DUNMER_PAINTING_SMALL.isIn(blockState))
 			return HitBoxes.DUNMER.paintingSmall(this, blockState);
-		else if(ModBlocks.VENTHYR_PAINTING_SMALL.has(blockState))
+		else if(ModBlocks.VENTHYR_PAINTING_SMALL.isIn(blockState))
 			return HitBoxes.VENTHYR.paintingSmall(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_PAINTING_SMALL.has(blockState) || ModBlocks.BONE_WITHER_PAINTING_SMALL.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_PAINTING_SMALL.isIn(blockState) || ModBlocks.BONE_WITHER_PAINTING_SMALL.isIn(blockState))
 			return HitBoxes.BONE.paintingSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

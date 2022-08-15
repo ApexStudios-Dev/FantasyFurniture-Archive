@@ -45,13 +45,13 @@ public class ChairBlock extends SeatMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_CHAIR.has(blockState))
+		if(ModBlocks.NORDIC_CHAIR.isIn(blockState))
 			return HitBoxes.NORDIC.chair(this, blockState);
-		else if(ModBlocks.DUNMER_CHAIR.has(blockState))
+		else if(ModBlocks.DUNMER_CHAIR.isIn(blockState))
 			return HitBoxes.DUNMER.chair(this, blockState);
-		else if(ModBlocks.VENTHYR_CHAIR.has(blockState))
+		else if(ModBlocks.VENTHYR_CHAIR.isIn(blockState))
 			return HitBoxes.VENTHYR.chair(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_CHAIR.has(blockState) || ModBlocks.BONE_WITHER_CHAIR.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_CHAIR.isIn(blockState) || ModBlocks.BONE_WITHER_CHAIR.isIn(blockState))
 			return HitBoxes.BONE.chair(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);

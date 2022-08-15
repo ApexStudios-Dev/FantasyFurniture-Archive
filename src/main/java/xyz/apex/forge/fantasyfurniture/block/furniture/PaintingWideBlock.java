@@ -33,13 +33,13 @@ public class PaintingWideBlock extends BaseMultiBlock
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
-		if(ModBlocks.NORDIC_PAINTING_WIDE.has(blockState))
+		if(ModBlocks.NORDIC_PAINTING_WIDE.isIn(blockState))
 			return HitBoxes.NORDIC.paintingWide(this, blockState);
-		else if(ModBlocks.DUNMER_PAINTING_WIDE.has(blockState))
+		else if(ModBlocks.DUNMER_PAINTING_WIDE.isIn(blockState))
 			return HitBoxes.DUNMER.paintingWide(this, blockState);
-		else if(ModBlocks.VENTHYR_PAINTING_WIDE.has(blockState))
+		else if(ModBlocks.VENTHYR_PAINTING_WIDE.isIn(blockState))
 			return HitBoxes.VENTHYR.paintingWide(this, blockState);
-		else if(ModBlocks.BONE_SKELETON_PAINTING_WIDE.has(blockState) || ModBlocks.BONE_WITHER_PAINTING_WIDE.has(blockState))
+		else if(ModBlocks.BONE_SKELETON_PAINTING_WIDE.isIn(blockState) || ModBlocks.BONE_WITHER_PAINTING_WIDE.isIn(blockState))
 			return HitBoxes.BONE.paintingWide(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
