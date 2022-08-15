@@ -37,6 +37,7 @@ public final class ModElements
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
 	public static final ResourceLocation OVEN_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/oven.png");
+	public static final ResourceLocation COOKIE_JAR_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/cookie_jar.png");
 
 	public static final RegistryEntry<SimpleRecipeSerializer<DyeableRecipe>> DYEABLE_RECIPE_SERIALIZER = REGISTRATE
 			.object("dyeable")
@@ -71,6 +72,11 @@ public final class ModElements
 	public static final MenuEntry<OvenMenu> OVEN_MENU = REGISTRATE
 			.object("oven")
 			.menu(OvenMenu::new, () -> OvenMenuScreen::new)
+	;
+
+	public static final MenuEntry<CookieJarMenu> COOKIE_JAR_MENU = REGISTRATE
+			.object("cookie_jar")
+			.menu(CookieJarMenu::new, () -> CookieJarMenuScreen::new)
 	;
 
 	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRATE
@@ -166,6 +172,13 @@ public final class ModElements
 					ModBlocks.VENTHYR_OVEN, ModBlocks.BONE_SKELETON_OVEN,
 					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN
 			)
+			.register()
+	;
+
+	public static final BlockEntityEntry<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTRATE
+			.object("cookie_jar")
+			.blockEntity(CookieJarBlockEntity::new)
+			.validBlock(ModBlocks.COOKIE_JAR)
 			.register()
 	;
 
