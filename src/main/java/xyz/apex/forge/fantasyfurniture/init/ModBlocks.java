@@ -96,6 +96,7 @@ public final class ModBlocks
 	public static final BlockEntry<TomesBlock> VENTHYR_TOMES = tomes("venthyr").register();
 	public static final BlockEntry<ChalicesBlock> VENTHYR_CHALICES = chalices("venthyr", ChalicesBlock::new).register();
 	public static final BlockEntry<CandleBlock> VENTHYR_CANDLES = candles("venthyr").register();
+	public static final BlockEntry<BannerBlock> VENTHYR_BANNER = banner("venthyr").register();
 	// endregion
 
 	// region: Dunmer
@@ -545,6 +546,20 @@ public final class ModBlocks
 				.block(CookieJarBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Cookie Jar")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, BannerBlock, BasicRegistrate> banner(String type)
+	{
+		return REGISTRATE
+				.object("decorations/%s_banner".formatted(type))
+				.block(BannerBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("%s Banner".formatted(RegistrateLangProvider.toEnglishName(type)))
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)

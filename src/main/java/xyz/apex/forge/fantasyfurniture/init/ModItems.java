@@ -74,6 +74,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES = blockItem(BlockItem::new, ModBlocks.VENTHYR_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TomesBlock.TOMES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CHALICES = blockItem(BlockItem::new, ModBlocks.VENTHYR_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CANDLES = blockItem(BlockItem::new, ModBlocks.VENTHYR_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG, ItemTags.Vanilla.CANDLES).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BANNER = blockItem(BlockItem::new, ModBlocks.VENTHYR_BANNER).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).register();
 	// endregion
 
 	// region: Dunmer
