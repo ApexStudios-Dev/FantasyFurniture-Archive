@@ -1,63 +1,11 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
 		"sofa": "fantasyfurniture:models/venthyr/sofa",
 		"particle": "fantasyfurniture:particles/venthyr"
 	},
 	"elements": [
-		{
-			"name": "post_2",
-			"from": [1, 0, 1],
-			"to": [4, 2, 4],
-			"faces": {
-				"north": {"uv": [1.5, 11.125, 1.875, 11.375], "texture": "#sofa"},
-				"east": {"uv": [11.125, 1.625, 11.5, 1.875], "texture": "#sofa"},
-				"south": {"uv": [11.125, 1.875, 11.5, 2.125], "texture": "#sofa"},
-				"west": {"uv": [11.125, 2.125, 11.5, 2.375], "texture": "#sofa"},
-				"up": {"uv": [10.75, 10.875, 10.375, 10.5], "texture": "#sofa"},
-				"down": {"uv": [0.75, 10.625, 0.375, 11], "texture": "#sofa"}
-			}
-		},
-		{
-			"name": "post_3",
-			"from": [1, 0, 12],
-			"to": [4, 2, 15],
-			"faces": {
-				"north": {"uv": [11.125, 2.375, 11.5, 2.625], "texture": "#sofa"},
-				"east": {"uv": [11.125, 2.625, 11.5, 2.875], "texture": "#sofa"},
-				"south": {"uv": [11.125, 2.875, 11.5, 3.125], "texture": "#sofa"},
-				"west": {"uv": [11.125, 3.125, 11.5, 3.375], "texture": "#sofa"},
-				"up": {"uv": [1.125, 11, 0.75, 10.625], "texture": "#sofa"},
-				"down": {"uv": [1.5, 10.625, 1.125, 11], "texture": "#sofa"}
-			}
-		},
-		{
-			"name": "post_4",
-			"from": [12, 0, 12],
-			"to": [15, 2, 15],
-			"faces": {
-				"north": {"uv": [11.125, 3.375, 11.5, 3.625], "texture": "#sofa"},
-				"east": {"uv": [11.125, 3.625, 11.5, 3.875], "texture": "#sofa"},
-				"south": {"uv": [11.125, 3.875, 11.5, 4.125], "texture": "#sofa"},
-				"west": {"uv": [11.125, 4.125, 11.5, 4.375], "texture": "#sofa"},
-				"up": {"uv": [3.875, 11, 3.5, 10.625], "texture": "#sofa"},
-				"down": {"uv": [4.25, 10.625, 3.875, 11], "texture": "#sofa"}
-			}
-		},
-		{
-			"name": "post_5",
-			"from": [12, 0, 1],
-			"to": [15, 2, 4],
-			"faces": {
-				"north": {"uv": [11.125, 4.375, 11.5, 4.625], "texture": "#sofa"},
-				"east": {"uv": [11.125, 4.625, 11.5, 4.875], "texture": "#sofa"},
-				"south": {"uv": [11.125, 4.875, 11.5, 5.125], "texture": "#sofa"},
-				"west": {"uv": [11.125, 5.125, 11.5, 5.375], "texture": "#sofa"},
-				"up": {"uv": [4.625, 11, 4.25, 10.625], "texture": "#sofa"},
-				"down": {"uv": [5, 10.625, 4.625, 11], "texture": "#sofa"}
-			}
-		},
 		{
 			"name": "seat",
 			"from": [0, 2, 0],
@@ -128,7 +76,7 @@
 			"name": "sofa_center",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5]
+			"children": [0, 1]
 		}
 	]
 }

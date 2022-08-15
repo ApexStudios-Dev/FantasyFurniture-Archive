@@ -1,39 +1,11 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
 		"sofa": "fantasyfurniture:models/nordic/sofa",
 		"particle": "fantasyfurniture:particles/nordic"
 	},
 	"elements": [
-		{
-			"name": "2",
-			"from": [13, 0, 1],
-			"to": [15, 3, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 1]},
-			"faces": {
-				"north": {"uv": [12, 12.125, 12.25, 12.5], "texture": "#sofa"},
-				"east": {"uv": [12.25, 0, 12.5, 0.375], "texture": "#sofa"},
-				"south": {"uv": [12.25, 0.375, 12.5, 0.75], "texture": "#sofa"},
-				"west": {"uv": [0.5, 12.25, 0.75, 12.625], "texture": "#sofa"},
-				"up": {"uv": [11.375, 12.75, 11.125, 12.5], "texture": "#sofa"},
-				"down": {"uv": [12.75, 11.125, 12.5, 11.375], "texture": "#sofa"}
-			}
-		},
-		{
-			"name": "3",
-			"from": [13, 0, 13],
-			"to": [15, 3, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 13]},
-			"faces": {
-				"north": {"uv": [1.5, 12.25, 1.75, 12.625], "texture": "#sofa"},
-				"east": {"uv": [1.75, 12.25, 2, 12.625], "texture": "#sofa"},
-				"south": {"uv": [2, 12.25, 2.25, 12.625], "texture": "#sofa"},
-				"west": {"uv": [2.25, 12.25, 2.5, 12.625], "texture": "#sofa"},
-				"up": {"uv": [11.625, 12.75, 11.375, 12.5], "texture": "#sofa"},
-				"down": {"uv": [12.75, 11.375, 12.5, 11.625], "texture": "#sofa"}
-			}
-		},
 		{
 			"name": "4",
 			"from": [1, 0, 13],
@@ -204,7 +176,7 @@
 			"name": "nordic_sofa_right",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8]
 		}
 	]
 }
