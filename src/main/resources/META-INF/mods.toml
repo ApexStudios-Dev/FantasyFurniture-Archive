@@ -17,13 +17,13 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="forge"
 	mandatory=true
-	versionRange="[40,)"
+	versionRange="[40.1.60,41)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="[1.18.2,)"
+	versionRange="[1.18.2,1.19)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
@@ -35,7 +35,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 [[dependencies.fantasyfurniture]]
 	modId="jei"
 	mandatory=false
-	versionRange="[9.5.+,)"
+	versionRange="[10.1.3.+,)"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies.fantasyfurniture]]
