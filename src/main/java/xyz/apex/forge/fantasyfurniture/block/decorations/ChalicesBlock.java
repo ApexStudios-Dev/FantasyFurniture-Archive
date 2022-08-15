@@ -1,18 +1,37 @@
 package xyz.apex.forge.fantasyfurniture.block.decorations;
 
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
-public final class ChalicesBlock extends StackedBlock
+import java.util.List;
+import java.util.function.Consumer;
+
+public class ChalicesBlock extends StackedBlock
 {
 	public static final VoxelShape VENTHYR_SHAPE_0 = box(6.5D, 0D, 6.5D, 9.5D, 8D, 9.5D);
 
@@ -54,6 +73,19 @@ public final class ChalicesBlock extends StackedBlock
 			box(3, 1, 4, 5, 4, 6)
 	);
 
+	public static final VoxelShape ROYAL_SHAPE_0 = box(6.5, 0, 6.5, 9.5, 8, 9.5);
+
+	public static final VoxelShape ROYAL_SHAPE_1 = VoxelShaper.or(
+			Block.box(9.5, 0, 5.5, 12.5, 8, 8.5),
+			Block.box(2.5, 0, 8.5, 5.5, 8, 11.5)
+	);
+
+	public static final VoxelShape ROYAL_SHAPE_2 = VoxelShaper.or(
+			Block.box(10.5, 0, 6.5, 13.5, 8, 9.5),
+			Block.box(2.5, 0, 9.5, 5.5, 8, 12.5),
+			Block.box(5.5, 0, 2.5, 8.5, 8, 5.5)
+	);
+
 	public static final IntegerProperty CHALICES = IntegerProperty.create("chalices", 0, 2);
 	public static final VoxelShaper VENTHYR_SHAPER_0 = VoxelShaper.forHorizontal(VENTHYR_SHAPE_0, Direction.NORTH);
 	public static final VoxelShaper VENTHYR_SHAPER_1 = VoxelShaper.forHorizontal(VENTHYR_SHAPE_1, Direction.NORTH);
@@ -61,6 +93,9 @@ public final class ChalicesBlock extends StackedBlock
 	public static final VoxelShaper BONE_SHAPER_0 = VoxelShaper.forHorizontal(BONE_SHAPE_0, Direction.NORTH);
 	public static final VoxelShaper BONE_SHAPER_1 = VoxelShaper.forHorizontal(BONE_SHAPE_1, Direction.NORTH);
 	public static final VoxelShaper BONE_SHAPER_2 = VoxelShaper.forHorizontal(BONE_SHAPE_2, Direction.NORTH);
+	public static final VoxelShaper ROYAL_SHAPER_0 = VoxelShaper.forHorizontal(ROYAL_SHAPE_0, Direction.NORTH);
+	public static final VoxelShaper ROYAL_SHAPER_1 = VoxelShaper.forHorizontal(ROYAL_SHAPE_1, Direction.NORTH);
+	public static final VoxelShaper ROYAL_SHAPER_2 = VoxelShaper.forHorizontal(ROYAL_SHAPE_2, Direction.NORTH);
 
 	public ChalicesBlock(Properties properties)
 	{
@@ -81,7 +116,67 @@ public final class ChalicesBlock extends StackedBlock
 
 		if(ModBlocks.VENTHYR_CHALICES.isIn(blockState))
 			return (count == 2 ? VENTHYR_SHAPER_2 : count == 1 ? VENTHYR_SHAPER_1 : VENTHYR_SHAPER_0).get(facing);
-		else
+		else if(ModBlocks.BONE_SKELETON_CHALICES.isIn(blockState) || ModBlocks.BONE_WITHER_CHALICES.isIn(blockState))
 			return (count == 2 ? BONE_SHAPER_2 : count == 1 ? BONE_SHAPER_1 : BONE_SHAPER_0).get(facing);
+		else if(ModBlocks.ROYAL_CHALICES.isIn(blockState))
+			return (count == 2 ? ROYAL_SHAPER_2 : count == 1 ? ROYAL_SHAPER_1 : ROYAL_SHAPER_0).get(facing);
+
+		return super.getShape(blockState, level, pos, ctx);
+	}
+
+	public static class Dyeable extends ChalicesBlock implements IDyeable
+	{
+		public Dyeable(Properties properties)
+		{
+			super(properties);
+
+			registerDefaultState(IDyeable.registerDefaultBlockState(defaultBlockState()));
+		}
+
+		@Override
+		public MaterialColor getMapColor(BlockState blockState, BlockGetter level, BlockPos pos, MaterialColor defaultColor)
+		{
+			var mapColor = super.getMapColor(blockState, level, pos, defaultColor);
+			return IDyeable.getDyedMapColor(blockState, level, pos, mapColor);
+		}
+
+		@Override
+		protected void registerProperties(Consumer<Property<?>> consumer)
+		{
+			super.registerProperties(consumer);
+			IDyeable.registerProperties(consumer);
+		}
+
+		@Override
+		protected @Nullable BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
+		{
+			placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
+			return IDyeable.getStateForPlacement(ctx, placementBlockState);
+		}
+
+		@Override
+		public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
+		{
+			var interactionResult = IDyeable.use(blockState, level, pos, player, hand);
+
+			if(interactionResult.consumesAction())
+				return interactionResult;
+
+			return super.use(blockState, level, pos, player, hand, result);
+		}
+
+		@Override
+		public ItemStack getCloneItemStack(BlockState blockState, HitResult target, BlockGetter level, BlockPos pos, Player player)
+		{
+			var stack = super.getCloneItemStack(blockState, target, level, pos, player);
+			return IDyeable.getCloneItemStack(blockState, level, pos, stack);
+		}
+
+		@Override
+		public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag)
+		{
+			super.appendHoverText(stack, level, tooltip, flag);
+			IDyeable.appendHoverText(tooltip);
+		}
 	}
 }

@@ -87,7 +87,7 @@ public final class FurnitureStation
 	public static Component buildAcceptsAnyComponent(TagKey<Item> tag)
 	{
 		return new TranslatableComponent(TXT_ACCEPTS_ANY, new TextComponent(tag.location().toString())
-				.withStyle(ChatFormatting.ITALIC)
+		                                                           .withStyle(ChatFormatting.ITALIC)
 		)
 				.withStyle(ChatFormatting.GRAY)
 		;

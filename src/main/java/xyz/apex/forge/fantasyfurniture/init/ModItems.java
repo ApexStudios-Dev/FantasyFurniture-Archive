@@ -7,6 +7,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -15,16 +16,14 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 
+import xyz.apex.forge.apexcore.lib.item.WearableBlockItem;
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
-import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
-import xyz.apex.forge.fantasyfurniture.block.furniture.FurnitureDoorBlock;
-import xyz.apex.forge.fantasyfurniture.block.furniture.ShelfBlock;
-import xyz.apex.forge.fantasyfurniture.block.furniture.SofaBlock;
+import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 import xyz.apex.forge.fantasyfurniture.item.SkullBlossomsBlockItem;
 import xyz.apex.forge.fantasyfurniture.item.WidowBloomBlockItem;
 
@@ -54,6 +53,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> MUFFINS_CHOCOLATE = blockItem(BlockItem::new, ModBlocks.MUFFINS_CHOCOLATE).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> MUFFINS_SWEETBERRY = blockItem(BlockItem::new, ModBlocks.MUFFINS_SWEETBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
 	public static final ItemEntry<BlockItem> PAPER_STACK = blockItem(BlockItem::new, ModBlocks.PAPER_STACK).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
+	public static final ItemEntry<BlockItem> COOKIE_JAR = blockItem(BlockItem::new, ModBlocks.COOKIE_JAR).transform(ModItems::cookieJarModel).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 
 	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(BlockItem::new, ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();
@@ -73,6 +73,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_TOMES = blockItem(BlockItem::new, ModBlocks.VENTHYR_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TomesBlock.TOMES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CHALICES = blockItem(BlockItem::new, ModBlocks.VENTHYR_CHALICES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> VENTHYR_CANDLES = blockItem(BlockItem::new, ModBlocks.VENTHYR_CANDLES).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG, ItemTags.Vanilla.CANDLES).register();
+	public static final ItemEntry<BlockItem> VENTHYR_BANNER = blockItem(BlockItem::new, ModBlocks.VENTHYR_BANNER).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.VENTHYR_TAG).register();
 	// endregion
 
 	// region: Dunmer
@@ -94,6 +95,19 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_WITHER_PILE = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_PILE).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<SkullBlossomsBlockItem> BONE_WITHER_SKULL_BLOSSOMS = skullBlossoms(ModBlocks.BONE_WITHER_SKULL_BLOSSOMS).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
+	// endregion
+
+	// region: Royal
+	public static final ItemEntry<WearableBlockItem> ROYAL_CROWN = blockItem((block, properties) -> new WearableBlockItem(block, properties, EquipmentSlot.HEAD), ModBlocks.ROYAL_CROWN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CANDELABRA = blockItem(BlockItem::new, ModBlocks.ROYAL_CANDELABRA).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CHALICES = blockItem(BlockItem::new, ModBlocks.ROYAL_CHALICES).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
+	public static final ItemEntry<BlockItem> ROYAL_CUSHIONED_CROWN = blockItem(BlockItem::new, ModBlocks.ROYAL_CUSHIONED_CROWN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_FOOD_0 = blockItem(BlockItem::new, ModBlocks.ROYAL_FOOD_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_FOOD_1 = blockItem(BlockItem::new, ModBlocks.ROYAL_FOOD_1).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_PLATTER = blockItem(BlockItem::new, ModBlocks.ROYAL_PLATTER).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, PlatterBlock.PLATTER)).register();
+	public static final ItemEntry<BlockItem> ROYAL_FLOOR_CUSHION = blockItem(BlockItem::new, ModBlocks.ROYAL_FLOOR_CUSHION).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_WALL_MIRROR_LARGE = blockItem(BlockItem::new, ModBlocks.ROYAL_WALL_MIRROR_LARGE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_WALL_MIRROR_SMALL = blockItem(BlockItem::new, ModBlocks.ROYAL_WALL_MIRROR_SMALL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
 	// endregion
 	// endregion
 
@@ -128,6 +142,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_SINGLE = door(BlockItem::new, ModBlocks.NORDIC_DOOR_SINGLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.NORDIC_DOOR_DOUBLE).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	public static final ItemEntry<BlockItem> NORDIC_LOCKBOX = blockItem(BlockItem::new, ModBlocks.NORDIC_LOCKBOX).tag(ModItemGroupCategories.NORDIC_TAG).register();
+	public static final ItemEntry<BlockItem> NORDIC_COUNTER = counter(BlockItem::new, ModBlocks.NORDIC_COUNTER).tag(ModItemGroupCategories.NORDIC_TAG).register();
+	public static final ItemEntry<BlockItem> NORDIC_OVEN = blockItem(BlockItem::new, ModBlocks.NORDIC_OVEN).tag(ModItemGroupCategories.NORDIC_TAG).register();
 	// endregion
 
 	// region: Dunmer
@@ -160,6 +176,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_SINGLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.DUNMER_DOOR_DOUBLE).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	public static final ItemEntry<BlockItem> DUNMER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.DUNMER_LOCKBOX).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_COUNTER = counter(BlockItem::new, ModBlocks.DUNMER_COUNTER).tag(ModItemGroupCategories.DUNMER_TAG).register();
+	public static final ItemEntry<BlockItem> DUNMER_OVEN = blockItem(BlockItem::new, ModBlocks.DUNMER_OVEN).tag(ModItemGroupCategories.DUNMER_TAG).register();
 	// endregion
 
 	// region: Venthyr
@@ -195,6 +213,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_SINGLE = door(BlockItem::new, ModBlocks.VENTHYR_DOOR_SINGLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.VENTHYR_DOOR_DOUBLE).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	public static final ItemEntry<BlockItem> VENTHYR_LOCKBOX = blockItem(BlockItem::new, ModBlocks.VENTHYR_LOCKBOX).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_COUNTER = counter(BlockItem::new, ModBlocks.VENTHYR_COUNTER).tag(ModItemGroupCategories.VENTHYR_TAG).register();
+	public static final ItemEntry<BlockItem> VENTHYR_OVEN = blockItem(BlockItem::new, ModBlocks.VENTHYR_OVEN).tag(ModItemGroupCategories.VENTHYR_TAG).register();
 	// endregion
 
 	// region: Bone
@@ -228,6 +248,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_SKELETON_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_SKELETON_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_LOCKBOX).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_COUNTER = counter(BlockItem::new, ModBlocks.BONE_SKELETON_COUNTER).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_SKELETON_OVEN = blockItem(BlockItem::new, ModBlocks.BONE_SKELETON_OVEN).tag(ModItemGroupCategories.BONE_SKELETON_TAG).register();
 	// endregion
 
 	// region: Wither
@@ -260,7 +282,43 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_SINGLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_SINGLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.BONE_WITHER_DOOR_DOUBLE).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	public static final ItemEntry<BlockItem> BONE_WITHER_LOCKBOX = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_LOCKBOX).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_COUNTER = counter(BlockItem::new, ModBlocks.BONE_WITHER_COUNTER).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
+	public static final ItemEntry<BlockItem> BONE_WITHER_OVEN = blockItem(BlockItem::new, ModBlocks.BONE_WITHER_OVEN).tag(ModItemGroupCategories.BONE_WITHER_TAG).register();
 	// endregion
+	// endregion
+
+	// region: Royal
+	public static final ItemEntry<BlockItem> ROYAL_WOOL = wool(BlockItem::new, ModBlocks.ROYAL_WOOL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CARPET = carpet(BlockItem::new, ModBlocks.ROYAL_CARPET).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.ROYAL_WALL_LIGHT).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.ROYAL_FLOOR_LIGHT).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_SMALL).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_WIDE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_LARGE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_STOOL = blockItem(BlockItem::new, ModBlocks.ROYAL_STOOL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CUSHION = blockItem(BlockItem::new, ModBlocks.ROYAL_CUSHION).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_PAINTING_SMALL = blockItem(BlockItem::new, ModBlocks.ROYAL_PAINTING_SMALL).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_PAINTING_WIDE = blockItem(BlockItem::new, ModBlocks.ROYAL_PAINTING_WIDE).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DRAWER = blockItem(BlockItem::new, ModBlocks.ROYAL_DRAWER).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_SHELF = shelf(BlockItem::new, ModBlocks.ROYAL_SHELF).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_SOFA = sofa(BlockItem::new, ModBlocks.ROYAL_SOFA).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DESK_LEFT = blockItem(BlockItem::new, ModBlocks.ROYAL_DESK_LEFT).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DESK_RIGHT = blockItem(BlockItem::new, ModBlocks.ROYAL_DESK_RIGHT).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CHAIR = blockItem(BlockItem::new, ModBlocks.ROYAL_CHAIR).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_BENCH = blockItem(BlockItem::new, ModBlocks.ROYAL_BENCH).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_BOOKSHELF = blockItem(BlockItem::new, ModBlocks.ROYAL_BOOKSHELF).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CHEST = blockItem(BlockItem::new, ModBlocks.ROYAL_CHEST).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DRESSER = blockItem(BlockItem::new, ModBlocks.ROYAL_DRESSER).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_WARDROBE_BOTTOM = blockItem(BlockItem::new, ModBlocks.ROYAL_WARDROBE_BOTTOM).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_WARDROBE_TOP = blockItem(BlockItem::new, ModBlocks.ROYAL_WARDROBE_TOP).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_BED_SINGLE = bed(BlockItem::new, ModBlocks.ROYAL_BED_SINGLE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_BED_DOUBLE = bed(BlockItem::new, ModBlocks.ROYAL_BED_DOUBLE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CHANDELIER = blockItem(BlockItem::new, ModBlocks.ROYAL_CHANDELIER).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DOOR_SINGLE = door(BlockItem::new, ModBlocks.ROYAL_DOOR_SINGLE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.ROYAL_DOOR_DOUBLE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_LOCKBOX = blockItem(BlockItem::new, ModBlocks.ROYAL_LOCKBOX).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_COUNTER = counter(BlockItem::new, ModBlocks.ROYAL_COUNTER).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_OVEN = blockItem(BlockItem::new, ModBlocks.ROYAL_OVEN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	// endregion
 	// endregion
 
@@ -292,6 +350,18 @@ public final class ModItems
 	}
 
 	private static <BLOCK extends SofaBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> sofa(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
+	{
+		return blockItem(itemFactory, block)
+				.model((ctx, provider) -> provider
+						.withExistingParent(
+								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
+								new ResourceLocation(ctx.getId().getNamespace(), "block/%s_single".formatted(ctx.getId().getPath()))
+						)
+				)
+		;
+	}
+
+	private static <BLOCK extends CounterBlock, ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> counter(NonNullBiFunction<BLOCK, Item.Properties, ITEM> itemFactory, BlockEntry<BLOCK> block)
 	{
 		return blockItem(itemFactory, block)
 				.model((ctx, provider) -> provider
@@ -463,6 +533,18 @@ public final class ModItems
 				);
 	}
 
+	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> cookieJarModel(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> buider)
+	{
+		return buider
+				.model((ctx, provider) -> provider
+						.withExistingParent(
+								"%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
+								new ResourceLocation(ctx.getId().getNamespace(), "block/%s_full".formatted(ctx.getId().getPath()))
+						)
+				)
+		;
+	}
+
 	private static <ITEM extends Item> ItemModelBuilder getModelFile(DataGenContext<Item, ITEM> ctx, RegistrateItemModelProvider provider)
 	{
 		var suffix = "";
@@ -474,9 +556,15 @@ public final class ModItems
 						// <namespace>:item/<path>[suffix] | Existing model, exported from BlockBench
 						new ResourceLocation(ctx.getId().getNamespace(), "item/%s%s".formatted(ctx.getId().getPath(), suffix))
 				)
-				// .renderType(new ResourceLocation(Mods.MINECRAFT, "cutout")) // NOTE: Set on the block/java land in 1.18
+				// .renderType(new ResourceLocation(Mods.MINECRAFT, "cutout"))
 				.texture(ModBlocks.getTextureKey(ctx.getId()), ModBlocks.getTexturePath(ctx.getId()))
 		;
+	}
+
+	private static <ITEM extends Item> ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> applyDyeable(ItemBuilder<BasicRegistrate, ITEM, BasicRegistrate> builder)
+	{
+		// NOTE: ROYAL_WOOL & ROYAL_CARPET should be any DyeableBlock / DyeableCarpet blocks
+		return builder.color(() -> () -> (stack, tintIndex) -> tintIndex == (ROYAL_WOOL.isIn(stack) || ROYAL_CARPET.isIn(stack) ? 0 : 1) ? IDyeable.getDyeColor(stack).map(IDyeable::tintFromDyeColor).orElse(-1) : -1);
 	}
 	// endregion
 }
