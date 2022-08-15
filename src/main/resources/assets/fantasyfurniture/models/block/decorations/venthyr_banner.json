@@ -45,11 +45,11 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"firstperson_righthand": {
-			"rotation": [0, 45, 0],
+			"rotation": [0, 30, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"firstperson_lefthand": {
-			"rotation": [0, 45, 0],
+			"rotation": [0, 30, 0],
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"ground": {
