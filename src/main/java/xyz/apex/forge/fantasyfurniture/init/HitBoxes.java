@@ -365,6 +365,15 @@ public abstract class HitBoxes
 			z -= (shapeFacing.getStepZ() * .81D);
 		}
 
+		if(ModBlocks.DUNMER_DOOR_DOUBLE.isIn(blockState))
+		{
+			if((hinge == DoorHingeSide.LEFT && open) || (hinge == DoorHingeSide.RIGHT && !open))
+			{
+				x -= (shapeFacing.getStepX() * .065D);
+				z -= (shapeFacing.getStepZ() * .065D);
+			}
+		}
+
 		return shape.move(x, y, z);
 	}
 
@@ -395,6 +404,15 @@ public abstract class HitBoxes
 		{
 			x -= (shapeFacing.getStepX() * .81D);
 			z -= (shapeFacing.getStepZ() * .81D);
+		}
+
+		if(ModBlocks.DUNMER_DOOR_SINGLE.isIn(blockState))
+		{
+			if((hinge == DoorHingeSide.LEFT && open) || (hinge == DoorHingeSide.RIGHT && !open))
+			{
+				x -= (shapeFacing.getStepX() * .065D);
+				z -= (shapeFacing.getStepZ() * .065D);
+			}
 		}
 
 		return shape.move(x, y, z);
@@ -1334,23 +1352,23 @@ public abstract class HitBoxes
 		@Override
 		protected VoxelShape doorDoubleShape()
 		{
-			return box(0, 0, 0.5, 16, 32, 2.5);
+			return box(0, 0, 0, 16, 32, 2);
 		}
 
 		@Override
 		protected VoxelShape doorSingleShape()
 		{
 			return VoxelShaper.or(
-					box(0, 0, 0.5, 16, 21, 2.5),
-					box(0, 29, 0.5, 16, 32, 2.5),
-					box(13, 21, 0.5, 16, 29, 2.5),
-					box(0, 21, 0.5, 3, 29, 2.5),
-					box(4, 21, 1, 5, 30, 2),
-					box(6, 21, 1, 7, 30, 2),
-					box(9, 21, 1, 10, 30, 2),
-					box(11, 21, 1, 12, 30, 2),
-					box(3, 27, 1, 13, 28, 2),
-					box(3, 22, 1, 13, 23, 2)
+					box(0, 0, 0, 16, 21, 2),
+					box(0, 29, 0, 16, 32, 2),
+					box(13, 21, 0, 16, 29, 2),
+					box(0, 21, 0, 3, 29, 2),
+					box(4, 21, 0.5, 5, 30, 1.5),
+					box(6, 21, 0.5, 7, 30, 1.5),
+					box(9, 21, 0.5, 10, 30, 1.5),
+					box(11, 21, 0.5, 12, 30, 1.5),
+					box(3, 27, 0.5, 13, 28, 1.5),
+					box(3, 22, 0.5, 13, 23, 1.5)
 			);
 		}
 
@@ -2966,14 +2984,13 @@ public abstract class HitBoxes
 		protected VoxelShape doorDoubleShape()
 		{
 			return VoxelShaper.or(
+					Block.box(0, 0, 0.5, 14, 30, 2.5),
 					Block.box(14, 0, 0, 16, 32, 3),
 					Block.box(13, 25, 0, 14, 32, 3),
 					Block.box(12, 27, 0, 13, 32, 3),
 					Block.box(9, 28, 0, 12, 32, 3),
 					Block.box(5, 29, 0, 9, 32, 3),
-					Block.box(0, 30, 0, 5, 32, 3),
-					Block.box(0, 0, 0.5, 14, 30, 2.5),
-					Block.box(1, 11, -0.5, 5, 15, 3.5)
+					Block.box(0, 30, 0, 5, 32, 3)
 			);
 		}
 
@@ -2982,10 +2999,9 @@ public abstract class HitBoxes
 		{
 			return VoxelShaper.or(
 					Block.box(0, 0, 0, 2, 32, 3),
-					Block.box(14, 0, 0, 16, 32, 3),
 					Block.box(2, 30, 0, 14, 32, 3),
-					Block.box(2, 0, 0.5, 14, 30, 2.5),
-					Block.box(3, 11, -0.5, 7, 15, 3.5)
+					Block.box(14, 0, 0, 16, 32, 3),
+					Block.box(2, 0, 0.5, 14, 30, 2.5)
 			);
 		}
 
