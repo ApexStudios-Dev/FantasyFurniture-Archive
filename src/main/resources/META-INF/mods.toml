@@ -12,7 +12,7 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 	logoFile="banner.png"
 	credits="Apex - Programming, FantasyGaming - Artist"
 	authors="ApexStudios"
-	description="Mod requested by Fantasy which adds varying sets of furniture to your Minecraft world."
+	description="Adds Fantasy-Themed Furniture & Decorational blocks to the game"
 
 [[dependencies.fantasyfurniture]]
 	modId="forge"
