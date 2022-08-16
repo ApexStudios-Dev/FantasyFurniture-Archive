@@ -733,12 +733,7 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 3D, 3D, 3D),
-					box(1D, 0D, 13D, 3D, 3D, 15D),
-					box(13D, 0D, 13D, 15D, 3D, 15D),
-					box(13D, 0D, 1D, 15D, 3D, 3D),
-					box(0D, 3D, 0D, 16D, 6D, 16D),
-					box(0D, 6D, 13D, 16D, 16D, 16D)
+					Block.box(0, 3, 0, 16, 6, 16), Block.box(0, 6, 13, 16, 16, 16)
 			);
 		}
 
@@ -746,14 +741,12 @@ public abstract class HitBoxes
 		protected VoxelShape sofaLeftShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 3D, 3D, 3D),
-					box(1D, 0D, 13D, 3D, 3D, 15D),
-					box(13D, 0D, 13D, 15D, 3D, 15D),
-					box(13D, 0D, 1D, 15D, 3D, 3D),
-					box(0D, 3D, 0D, 16D, 6D, 16D),
-					box(0D, 6D, 13D, 16D, 16D, 16D),
-					box(14D, 10D, 0D, 16D, 12D, 13D),
-					box(14D, 6D, 0D, 16D, 10D, 2D)
+					Block.box(0, 3, 0, 16, 6, 16),
+					Block.box(0, 6, 13, 16, 16, 16),
+					Block.box(14, 10, 0, 16, 12, 13),
+					Block.box(14, 6, 0, 16, 10, 2),
+					Block.box(13, 0, 1, 15, 3, 3),
+					Block.box(13, 0, 13, 15, 3, 15)
 			);
 		}
 
@@ -761,14 +754,12 @@ public abstract class HitBoxes
 		protected VoxelShape sofaRightShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 3D, 3D, 3D),
-					box(1D, 0D, 13D, 3D, 3D, 15D),
-					box(13D, 0D, 13D, 15D, 3D, 15D),
-					box(13D, 0D, 1D, 15D, 3D, 3D),
-					box(0D, 3D, 0D, 16D, 6D, 16D),
-					box(0D, 6D, 13D, 16D, 16D, 16D),
-					box(0D, 10D, 0D, 2D, 12D, 13D),
-					box(0D, 6D, 0D, 2D, 10D, 2D)
+					Block.box(0, 3, 0, 16, 6, 16),
+					Block.box(0, 6, 13, 16, 16, 16),
+					Block.box(0, 10, 0, 2, 12, 13),
+					Block.box(0, 6, 0, 2, 10, 2),
+					Block.box(1, 0, 1, 3, 3, 3),
+					Block.box(1, 0, 13, 3, 3, 15)
 			);
 		}
 
@@ -1196,13 +1187,9 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					box(2, 0, 2, 4, 4, 4),
-					box(12, 0, 2, 14, 4, 4),
-					box(12, 0, 12, 14, 4, 14),
-					box(2, 0, 12, 4, 4, 14),
-					box(0, 4, 1, 16, 6, 15),
-					box(0, 6, 12, 16, 16, 14),
-					box(0, 6, 2, 16, 7, 13)
+					Block.box(0, 4, 1, 16, 6, 15),
+					Block.box(0, 6, 2, 16, 7, 12),
+					Block.box(0, 6, 12, 16, 16, 14)
 			);
 		}
 
@@ -1210,15 +1197,13 @@ public abstract class HitBoxes
 		protected VoxelShape sofaLeftShape()
 		{
 			return VoxelShaper.or(
-					box(2, 0, 12, 4, 4, 14),
-					box(2, 0, 2, 4, 4, 4),
-					box(12, 0, 2, 14, 4, 4),
-					box(12, 0, 12, 14, 4, 14),
-					box(0, 4, 1, 15, 6, 15),
-					box(0, 6, 12, 15, 16, 14),
-					box(13, 10, 2, 15, 12, 12),
-					box(13, 6, 3, 15, 10, 5),
-					box(0, 6, 2, 13, 7, 13)
+					Block.box(0, 4, 1, 16, 6, 15),
+					Block.box(0, 6, 2, 13, 7, 12),
+					Block.box(0, 6, 12, 15, 16, 14),
+					Block.box(13, 10, 2, 15, 12, 12),
+					Block.box(13, 6, 3, 15, 10, 12),
+					Block.box(12, 0, 12, 14, 4, 14),
+					Block.box(12, 0, 2, 14, 4, 4)
 			);
 		}
 
@@ -1226,15 +1211,13 @@ public abstract class HitBoxes
 		protected VoxelShape sofaRightShape()
 		{
 			return VoxelShaper.or(
-					box(12, 0, 12, 14, 4, 14),
-					box(12, 0, 2, 14, 4, 4),
-					box(2, 0, 2, 4, 4, 4),
-					box(2, 0, 12, 4, 4, 14),
-					box(1, 4, 1, 16, 6, 15),
-					box(1, 6, 12, 16, 16, 14),
-					box(1, 10, 2, 3, 12, 12),
-					box(1, 6, 3, 3, 10, 5),
-					box(3, 6, 2, 16, 7, 13)
+					Block.box(0, 4, 1, 16, 6, 15),
+					Block.box(3, 6, 2, 16, 7, 12),
+					Block.box(1, 6, 12, 16, 16, 14),
+					Block.box(1, 10, 2, 3, 12, 12),
+					Block.box(1, 6, 3, 3, 10, 12),
+					Block.box(2, 0, 12, 4, 4, 14),
+					Block.box(2, 0, 2, 4, 4, 4)
 			);
 		}
 
@@ -1708,26 +1691,19 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 4D, 2D, 4D),
-					box(1D, 0D, 12D, 4D, 2D, 15D),
-					box(12D, 0D, 12D, 15D, 2D, 15D),
-					box(12D, 0D, 1D, 15D, 2D, 4D),
-					box(0D, 2D, 0D, 16D, 6D, 16D),
-					box(0D, 6D, 13D, 16D, 16D, 16D)
-			);
+					Block.box(0, 2, 0, 16, 6, 16), Block.box(0, 6, 13, 16, 16, 16
+			));
 		}
 
 		@Override
 		protected VoxelShape sofaLeftShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 4D, 2D, 4D),
-					box(1D, 0D, 12D, 4D, 2D, 15D),
-					box(12D, 0D, 12D, 15D, 2D, 15D),
-					box(12D, 0D, 1D, 15D, 2D, 4D),
-					box(0D, 2D, 0D, 16D, 6D, 16D),
-					box(13D, 6D, 0D, 16D, 10D, 13D),
-					box(0D, 6D, 13D, 16D, 16D, 16D)
+					Block.box(12, 0, 1, 15, 2, 4),
+					Block.box(12, 0, 12, 15, 2, 15),
+					Block.box(0, 2, 0, 16, 6, 16),
+					Block.box(13, 6, 0, 16, 10, 13),
+					Block.box(0, 6, 13, 16, 16, 16)
 			);
 		}
 
@@ -1735,13 +1711,11 @@ public abstract class HitBoxes
 		protected VoxelShape sofaRightShape()
 		{
 			return VoxelShaper.or(
-					box(1D, 0D, 1D, 4D, 2D, 4D),
-					box(1D, 0D, 12D, 4D, 2D, 15D),
-					box(12D, 0D, 12D, 15D, 2D, 15D),
-					box(12D, 0D, 1D, 15D, 2D, 4D),
-					box(0D, 2D, 0D, 16D, 6D, 16D),
-					box(0D, 6D, 13D, 16D, 16D, 16D),
-					box(0D, 6D, 0D, 3D, 10D, 13D)
+					Block.box(1, 0, 1, 4, 2, 4),
+					Block.box(1, 0, 12, 4, 2, 15),
+					Block.box(0, 2, 13, 16, 16, 16),
+					Block.box(0, 2, 0, 3, 10, 13),
+					Block.box(3, 2, 0, 16, 6, 13)
 			);
 		}
 
@@ -2255,40 +2229,24 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					box(1.5, 0, 1, 4.5, 2, 4),
-					box(1.5, 0, 12, 4.5, 2, 15),
-					box(11.5, 0, 12, 14.5, 2, 15),
-					box(11.5, 0, 1, 14.5, 2, 4),
-					box(12, 2, 1.5, 14, 4, 3.5),
-					box(2, 2, 1.5, 4, 4, 3.5),
-					box(2, 2, 12.5, 4, 4, 14.5),
-					box(12, 2, 12.5, 14, 4, 14.5),
-					box(12, 3, 3.5, 14, 4, 12.5),
-					box(2, 3, 3.5, 4, 4, 12.5),
-					box(0, 4, 1.5, 16, 6, 14.5),
-					box(0, 6, 12.5, 16, 15, 14.5)
-			);
+					Block.box(0, 4, 1.5, 16, 6, 14.5), Block.box(0, 6, 12.5, 16, 15, 14.5
+			));
 		}
 
 		@Override
 		protected VoxelShape sofaLeftShape()
 		{
 			return VoxelShaper.or(
-					box(1.5, 0, 1, 4.5, 2, 4),
-					box(1.5, 0, 12, 4.5, 2, 15),
-					box(11.5, 0, 12, 14.5, 2, 15),
-					box(11.5, 0, 1, 14.5, 2, 4),
-					box(12, 2, 1.5, 14, 4, 3.5),
-					box(2, 2, 1.5, 4, 4, 3.5),
-					box(2, 2, 12.5, 4, 4, 14.5),
-					box(12, 2, 12.5, 14, 4, 14.5),
-					box(12, 3, 3.5, 14, 4, 12.5),
-					box(2, 3, 3.5, 4, 4, 12.5),
-					box(0, 4, 1.5, 14, 6, 14.5),
-					box(0, 6, 12.5, 14, 15, 14.5),
-					box(14, 3.5, 12, 16, 15.5, 15),
-					box(14, 6, 2, 16, 11.5, 12),
-					box(14, 3.5, 1, 16, 6.5, 12)
+					Block.box(0, 4, 1.5, 14, 6, 14.5),
+					Block.box(0, 6, 12.5, 14, 15, 14.5),
+					Block.box(14, 3.5, 12, 16, 15.5, 15),
+					Block.box(14, 3.5, 2, 16, 11.5, 12),
+					Block.box(14, 3.5, 1, 16, 6.5, 2),
+					Block.box(12, 2, 1.5, 14, 4, 3.5),
+					Block.box(12, 2, 12.5, 14, 4, 14.5),
+					Block.box(12, 3, 3.5, 14, 4, 12.5),
+					Block.box(11.5, 0, 1, 14.5, 2, 4),
+					Block.box(11.5, 0, 12, 14.5, 2, 15)
 			);
 		}
 
@@ -2296,21 +2254,16 @@ public abstract class HitBoxes
 		protected VoxelShape sofaRightShape()
 		{
 			return VoxelShaper.or(
-					box(11.5, 0, 1, 14.5, 2, 4),
-					box(11.5, 0, 12, 14.5, 2, 15),
-					box(1.5, 0, 12, 4.5, 2, 15),
-					box(1.5, 0, 1, 4.5, 2, 4),
-					box(2, 2, 1.5, 4, 4, 3.5),
-					box(12, 2, 1.5, 14, 4, 3.5),
-					box(12, 2, 12.5, 14, 4, 14.5),
-					box(2, 2, 12.5, 4, 4, 14.5),
-					box(2, 3, 3.5, 4, 4, 12.5),
-					box(12, 3, 3.5, 14, 4, 12.5),
-					box(2, 4, 1.5, 16, 6, 14.5),
-					box(2, 6, 12.5, 16, 15, 14.5),
-					box(0, 3.5, 12, 2, 15.5, 15),
-					box(0, 6, 2, 2, 11.5, 12),
-					box(0, 3.5, 1, 2, 6.5, 12)
+					Block.box(2, 4, 1.5, 16, 6, 14.5),
+					Block.box(2, 6, 12.5, 16, 15, 14.5),
+					Block.box(0, 3.5, 12, 2, 15.5, 15),
+					Block.box(0, 3.5, 2, 2, 11.5, 12),
+					Block.box(0, 3.5, 1, 2, 6.5, 2),
+					Block.box(2, 2, 1.5, 4, 4, 3.5),
+					Block.box(2, 2, 12.5, 4, 4, 14.5),
+					Block.box(2, 3, 3.5, 4, 4, 12.5),
+					Block.box(1.5, 0, 1, 4.5, 2, 4),
+					Block.box(1.5, 0, 12, 4.5, 2, 15)
 			);
 		}
 
