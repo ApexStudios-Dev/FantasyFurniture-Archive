@@ -507,6 +507,7 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
+				.lightLevel(lightLevel())
 		;
 	}
 
