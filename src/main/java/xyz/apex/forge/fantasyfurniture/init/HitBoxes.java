@@ -1404,13 +1404,13 @@ public abstract class HitBoxes
 		protected VoxelShape ovenShape()
 		{
 			return VoxelShaper.or(
-					Block.box(-9, 0, 0, 9, 3, 16),
 					Block.box(12.5, 0, 6.5, 15.5, 3, 9.5),
 					Block.box(-15.5, 0, 6.5, -12.5, 3, 9.5),
 					Block.box(-15, 3, 7, -13, 16, 9),
 					Block.box(13, 3, 7, 15, 16, 9),
 					Block.box(-16, 12, 7, 16, 14, 9),
-					Block.box(-5, 10.5, 5.5, 5, 15.5, 10.5)
+					Block.box(-5, 10.5, 5.5, 5, 15.5, 10.5),
+					Block.box(-6, 0, 2, 6, 3, 14)
 			);
 		}
 	}
