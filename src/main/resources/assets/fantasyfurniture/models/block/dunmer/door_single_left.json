@@ -8,8 +8,8 @@
 	"elements": [
 		{
 			"name": "door_1",
-			"from": [0, 30, 0.5],
-			"to": [16, 32, 2.5],
+			"from": [0, 30, 0],
+			"to": [16, 32, 2],
 			"faces": {
 				"north": {"uv": [1, 6.5, 5, 7], "texture": "#door_single"},
 				"east": {"uv": [8.5, 3.75, 9, 4.25], "texture": "#door_single"},
@@ -21,8 +21,8 @@
 		},
 		{
 			"name": "door_2",
-			"from": [14, 20, 0.5],
-			"to": [16, 30, 2.5],
+			"from": [14, 20, 0],
+			"to": [16, 30, 2],
 			"faces": {
 				"north": {"uv": [4, 7.5, 4.5, 10], "texture": "#door_single"},
 				"east": {"uv": [4.5, 7.5, 5, 10], "texture": "#door_single"},
@@ -34,8 +34,8 @@
 		},
 		{
 			"name": "door_3",
-			"from": [0, 20, 0.5],
-			"to": [2, 30, 2.5],
+			"from": [0, 20, 0],
+			"to": [2, 30, 2],
 			"faces": {
 				"north": {"uv": [6, 7.5, 6.5, 10], "texture": "#door_single"},
 				"east": {"uv": [6.5, 7.5, 7, 10], "texture": "#door_single"},
@@ -47,8 +47,8 @@
 		},
 		{
 			"name": "door_4",
-			"from": [0, 0, 0.5],
-			"to": [16, 20, 2.5],
+			"from": [0, 0, 0],
+			"to": [16, 20, 2],
 			"faces": {
 				"north": {"uv": [0, 0, 4, 5], "texture": "#door_single"},
 				"east": {"uv": [0, 5, 0.5, 10], "texture": "#door_single"},
@@ -60,8 +60,8 @@
 		},
 		{
 			"name": "handle_1",
-			"from": [1, 13, -0.5],
-			"to": [3, 18, 0.5],
+			"from": [1, 13, -1],
+			"to": [3, 18, 0],
 			"faces": {
 				"north": {"uv": [8, 0.5, 8.5, 1.75], "texture": "#door_single"},
 				"east": {"uv": [2.75, 9.5, 3, 10.75], "texture": "#door_single"},
@@ -73,8 +73,8 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [1, 13, 2.5],
-			"to": [3, 18, 3.5],
+			"from": [1, 13, 2],
+			"to": [3, 18, 3],
 			"faces": {
 				"north": {"uv": [8, 3, 8.5, 4.25], "texture": "#door_single"},
 				"east": {"uv": [3.25, 9.5, 3.5, 10.75], "texture": "#door_single"},
@@ -86,8 +86,8 @@
 		},
 		{
 			"name": "frame_1",
-			"from": [2, 20, 0],
-			"to": [14, 21, 3],
+			"from": [2, 20, -0.5],
+			"to": [14, 21, 2.5],
 			"faces": {
 				"north": {"uv": [7, 6, 10, 6.25], "texture": "#door_single"},
 				"east": {"uv": [9.5, 8, 10.25, 8.25], "texture": "#door_single"},
@@ -99,8 +99,8 @@
 		},
 		{
 			"name": "frame_2",
-			"from": [13, 21, 0],
-			"to": [14, 29, 3],
+			"from": [13, 21, -0.5],
+			"to": [14, 29, 2.5],
 			"faces": {
 				"north": {"uv": [8.5, 1.75, 8.75, 3.75], "texture": "#door_single"},
 				"east": {"uv": [1, 7.5, 1.75, 9.5], "texture": "#door_single"},
@@ -112,8 +112,8 @@
 		},
 		{
 			"name": "frame_3",
-			"from": [2, 21, 0],
-			"to": [3, 29, 3],
+			"from": [2, 21, -0.5],
+			"to": [3, 29, 2.5],
 			"faces": {
 				"north": {"uv": [8.75, 1.75, 9, 3.75], "texture": "#door_single"},
 				"east": {"uv": [2.5, 7.5, 3.25, 9.5], "texture": "#door_single"},
@@ -125,8 +125,8 @@
 		},
 		{
 			"name": "frame_4",
-			"from": [2, 29, 0],
-			"to": [14, 30, 3],
+			"from": [2, 29, -0.5],
+			"to": [14, 30, 2.5],
 			"faces": {
 				"north": {"uv": [8, 0, 11, 0.25], "texture": "#door_single"},
 				"east": {"uv": [9.5, 9.25, 10.25, 9.5], "texture": "#door_single"},
@@ -138,8 +138,8 @@
 		},
 		{
 			"name": "rope_1",
-			"from": [4, 21, 1],
-			"to": [5, 29, 2],
+			"from": [4, 21, 0.5],
+			"to": [5, 29, 1.5],
 			"faces": {
 				"north": {"uv": [8, 8.75, 8.25, 10.75], "texture": "#door_single"},
 				"east": {"uv": [8.25, 8.75, 8.5, 10.75], "texture": "#door_single"},
@@ -151,8 +151,8 @@
 		},
 		{
 			"name": "rope_2",
-			"from": [11, 21, 1],
-			"to": [12, 29, 2],
+			"from": [11, 21, 0.5],
+			"to": [12, 29, 1.5],
 			"faces": {
 				"north": {"uv": [9, 8.5, 9.25, 10.5], "texture": "#door_single"},
 				"east": {"uv": [9.25, 1.75, 9.5, 3.75], "texture": "#door_single"},
@@ -164,8 +164,8 @@
 		},
 		{
 			"name": "rope_3",
-			"from": [9, 21, 1],
-			"to": [10, 29, 2],
+			"from": [9, 21, 0.5],
+			"to": [10, 29, 1.5],
 			"faces": {
 				"north": {"uv": [1, 9.5, 1.25, 11.5], "texture": "#door_single"},
 				"east": {"uv": [1.25, 9.5, 1.5, 11.5], "texture": "#door_single"},
@@ -177,8 +177,8 @@
 		},
 		{
 			"name": "rope_4",
-			"from": [6, 21, 1],
-			"to": [7, 29, 2],
+			"from": [6, 21, 0.5],
+			"to": [7, 29, 1.5],
 			"faces": {
 				"north": {"uv": [9.5, 1.75, 9.75, 3.75], "texture": "#door_single"},
 				"east": {"uv": [2, 9.5, 2.25, 11.5], "texture": "#door_single"},
@@ -190,8 +190,8 @@
 		},
 		{
 			"name": "rope_5",
-			"from": [3, 27, 1],
-			"to": [13, 28, 2],
+			"from": [3, 27, 0.5],
+			"to": [13, 28, 1.5],
 			"faces": {
 				"north": {"uv": [8, 4.25, 10.5, 4.5], "texture": "#door_single"},
 				"east": {"uv": [9.75, 9.75, 10, 10], "texture": "#door_single"},
@@ -203,8 +203,8 @@
 		},
 		{
 			"name": "rope_6",
-			"from": [3, 22, 1],
-			"to": [13, 23, 2],
+			"from": [3, 22, 0.5],
+			"to": [13, 23, 1.5],
 			"faces": {
 				"north": {"uv": [8.5, 0.75, 11, 1], "texture": "#door_single"},
 				"east": {"uv": [0.25, 10, 0.5, 10.25], "texture": "#door_single"},

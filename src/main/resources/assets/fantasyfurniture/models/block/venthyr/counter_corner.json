@@ -1,0 +1,87 @@
+{
+	"credit": "Made by Fantasy",
+	"textures": {
+		"0": "fantasyfurniture:models/venthyr/counter",
+		"particle": "fantasyfurniture:particles/venthyr"
+	},
+	"elements": [
+		{
+			"name": "top",
+			"from": [0, 13, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [9.25, 4.625, 11.25, 5], "texture": "#0"},
+				"east": {"uv": [9.25, 5, 11.25, 5.375], "texture": "#0"},
+				"south": {"uv": [9.25, 5.375, 11.25, 5.75], "texture": "#0"},
+				"west": {"uv": [9.25, 5.75, 11.25, 6.125], "texture": "#0"},
+				"up": {"uv": [2, 2, 0, 0], "texture": "#0"},
+				"down": {"uv": [2, 2, 0, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_1",
+			"from": [0, 0, 3],
+			"to": [16, 13, 16],
+			"faces": {
+				"north": {"uv": [2, 4, 4, 5.625], "texture": "#0"},
+				"east": {"uv": [6, 3.25, 7.625, 4.875], "texture": "#0"},
+				"south": {"uv": [4, 2, 6, 3.625], "texture": "#0"},
+				"west": {"uv": [6, 4.875, 7.625, 6.5], "texture": "#0"},
+				"up": {"uv": [6, 5.25, 4, 3.625], "texture": "#0"},
+				"down": {"uv": [6, 5.25, 4, 6.875], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_2",
+			"from": [0, 0, 0],
+			"to": [13, 13, 3],
+			"faces": {
+				"north": {"uv": [6, 6.5, 7.625, 8.125], "texture": "#0"},
+				"east": {"uv": [3.25, 8.875, 3.625, 10.5], "texture": "#0"},
+				"south": {"uv": [4, 6.875, 5.625, 8.5], "texture": "#0"},
+				"west": {"uv": [9.625, 0.375, 10, 2], "texture": "#0"},
+				"up": {"uv": [11.25, 2.375, 9.625, 2], "texture": "#0"},
+				"down": {"uv": [11.25, 2.375, 9.625, 2.75], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "counter_turn_in",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

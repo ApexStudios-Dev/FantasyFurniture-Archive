@@ -1,0 +1,186 @@
+{
+	"credit": "Made by Fantasy",
+	"textures": {
+		"royal_wall_mirror_small": "fantasyfurniture:models/decorations/royal_wall_mirror_small",
+		"royal_wall_mirror_small_tint": "fantasyfurniture:models/decorations/royal_wall_mirror_small_tint",
+		"particle": "fantasyfurniture:particles/royal"
+	},
+	"elements": [
+		{
+			"name": "frame_1",
+			"from": [1, 13, 15],
+			"to": [4, 16, 16],
+			"faces": {
+				"north": {"uv": [5.5, 8, 7, 9.5], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [5.5, 9.5, 6, 11], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [8, 6, 9.5, 7.5], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [6, 9.5, 6.5, 11], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [8, 10, 6.5, 9.5], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [1.5, 10, 0, 10.5], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_2",
+			"from": [12, 13, 15],
+			"to": [15, 16, 16],
+			"faces": {
+				"north": {"uv": [7, 8, 8.5, 9.5], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [8, 9.5, 8.5, 11], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [8.5, 1, 10, 2.5], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [10, 1, 10.5, 2.5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [3, 10.5, 1.5, 10], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [11.5, 2.5, 10, 3], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_3",
+			"from": [12, 0, 15],
+			"to": [15, 3, 16],
+			"faces": {
+				"north": {"uv": [8.5, 2.5, 10, 4], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [3, 10, 3.5, 11.5], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [8.5, 4, 10, 5.5], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [10, 3, 10.5, 4.5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [11.5, 5, 10, 4.5], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [11.5, 5, 10, 5.5], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_4",
+			"from": [1, 0, 15],
+			"to": [4, 3, 16],
+			"faces": {
+				"north": {"uv": [8.5, 7.5, 10, 9], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [3.5, 10, 4, 11.5], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [8.5, 9, 10, 10.5], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [6.5, 10, 7, 11.5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [11.5, 8, 10, 7.5], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [11.5, 8, 10, 8.5], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_5",
+			"from": [2, 3, 15],
+			"to": [4, 13, 16],
+			"faces": {
+				"north": {"uv": [0, 5, 1, 10], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [8, 1, 8.5, 6], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [1, 5, 2, 10], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [4, 8, 4.5, 13], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [8, 10.5, 7, 10], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [11, 8.5, 10, 9], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_6",
+			"from": [12, 3, 15],
+			"to": [14, 13, 16],
+			"faces": {
+				"north": {"uv": [2, 5, 3, 10], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [4.5, 8, 5, 13], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [3, 5, 4, 10], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [5, 8, 5.5, 13], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [11, 9.5, 10, 9], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [11, 9.5, 10, 10], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_7",
+			"from": [4, 13, 15],
+			"to": [12, 15, 16],
+			"faces": {
+				"north": {"uv": [4, 5, 8, 6], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [10, 10, 10.5, 11], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [4, 6, 8, 7], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [0, 10.5, 0.5, 11.5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [12.5, 6, 8.5, 5.5], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [13.5, 6, 9.5, 6.5], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "frame_8",
+			"from": [4, 1, 15],
+			"to": [12, 3, 16],
+			"faces": {
+				"north": {"uv": [4, 7, 8, 8], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [0.5, 10.5, 1, 11.5], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [8, 0, 12, 1], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [1, 10.5, 1.5, 11.5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [13.5, 7, 9.5, 6.5], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [13.5, 7, 9.5, 7.5], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "back",
+			"from": [4, 3, 16],
+			"to": [12, 13, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 5], "texture": "#royal_wall_mirror_small"},
+				"east": {"uv": [0, 0, 0, 5], "texture": "#royal_wall_mirror_small"},
+				"south": {"uv": [4, 0, 8, 5], "texture": "#royal_wall_mirror_small"},
+				"west": {"uv": [0, 0, 0, 5], "texture": "#royal_wall_mirror_small"},
+				"up": {"uv": [4, 0, 0, 0], "texture": "#royal_wall_mirror_small"},
+				"down": {"uv": [4, 0, 0, 0], "texture": "#royal_wall_mirror_small"}
+			}
+		},
+		{
+			"name": "tint",
+			"from": [4, 3, 15.5],
+			"to": [12, 13, 15.5],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 10], "texture": "#royal_wall_mirror_small_tint", "tintindex": 1},
+				"east": {"uv": [0, 0, 0, 10], "texture": "#royal_wall_mirror_small_tint"},
+				"south": {"uv": [8, 0, 16, 10], "texture": "#royal_wall_mirror_small_tint", "tintindex": 1},
+				"west": {"uv": [0, 0, 0, 10], "texture": "#royal_wall_mirror_small_tint"},
+				"up": {"uv": [8, 0, 0, 0], "texture": "#royal_wall_mirror_small_tint"},
+				"down": {"uv": [8, 0, 0, 0], "texture": "#royal_wall_mirror_small_tint"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [3.5, -1.5, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 0, -14.75]
+		},
+		"fixed": {
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "royal_wall_mirror_small",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+		}
+	]
+}

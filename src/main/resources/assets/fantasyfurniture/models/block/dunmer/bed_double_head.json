@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
 		"3": "fantasyfurniture:models/dunmer/bed_double",
@@ -105,9 +105,9 @@
 		},
 		{
 			"name": "branch_6",
-			"from": [0, 7, 0.5],
-			"to": [1, 10, 1.5],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, -30]},
+			"from": [-0.5, 7, 0.5],
+			"to": [0.5, 10, 1.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-0.5, 2, -30]},
 			"faces": {
 				"north": {"uv": [3, 10.125, 3.125, 10.5], "texture": "#3"},
 				"east": {"uv": [3.125, 10.125, 3.25, 10.5], "texture": "#3"},
@@ -119,9 +119,9 @@
 		},
 		{
 			"name": "branch_7",
-			"from": [-1, 9.25, 0.5],
-			"to": [0, 13.25, 1.5],
-			"rotation": {"angle": 45, "axis": "z", "origin": [-0.5, 10.75, 1]},
+			"from": [-1.5, 9.25, 0.5],
+			"to": [-0.5, 13.25, 1.5],
+			"rotation": {"angle": 45, "axis": "z", "origin": [-1, 10.75, 1]},
 			"faces": {
 				"north": {"uv": [10, 4.5, 10.125, 5], "texture": "#3"},
 				"east": {"uv": [4.75, 10, 4.875, 10.5], "texture": "#3"},
@@ -133,9 +133,9 @@
 		},
 		{
 			"name": "branch_8",
-			"from": [1, 9.25, 0.5],
-			"to": [2, 13.25, 1.5],
-			"rotation": {"angle": -45, "axis": "z", "origin": [1.5, 10.75, 1]},
+			"from": [0.5, 9.25, 0.5],
+			"to": [1.5, 13.25, 1.5],
+			"rotation": {"angle": -45, "axis": "z", "origin": [1, 10.75, 1]},
 			"faces": {
 				"north": {"uv": [10, 5, 10.125, 5.5], "texture": "#3"},
 				"east": {"uv": [5.125, 10, 5.25, 10.5], "texture": "#3"},

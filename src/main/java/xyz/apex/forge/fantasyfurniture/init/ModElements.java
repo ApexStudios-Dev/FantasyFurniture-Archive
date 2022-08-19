@@ -1,9 +1,13 @@
 package xyz.apex.forge.fantasyfurniture.init;
 
+import com.tterrag.registrate.util.entry.RegistryEntry;
+
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,15 +21,10 @@ import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.block.entity.*;
 import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;
-import xyz.apex.forge.fantasyfurniture.client.screen.BookshelfMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.LargeInventoryMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.MediumInventoryMenuScreen;
-import xyz.apex.forge.fantasyfurniture.client.screen.SmallInventoryMenuScreen;
+import xyz.apex.forge.fantasyfurniture.client.screen.*;
 import xyz.apex.forge.fantasyfurniture.data.ParticleProvider;
-import xyz.apex.forge.fantasyfurniture.menu.BookshelfMenu;
-import xyz.apex.forge.fantasyfurniture.menu.LargeInventoryMenu;
-import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
-import xyz.apex.forge.fantasyfurniture.menu.SmallInventoryMenu;
+import xyz.apex.forge.fantasyfurniture.item.crafting.DyeableRecipe;
+import xyz.apex.forge.fantasyfurniture.menu.*;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
@@ -37,6 +36,18 @@ public final class ModElements
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
 	public static final ResourceLocation LARGE_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/large_storage.png");
+	public static final ResourceLocation OVEN_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/oven.png");
+	public static final ResourceLocation COOKIE_JAR_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/cookie_jar.png");
+
+	public static final RegistryEntry<SimpleRecipeSerializer<DyeableRecipe>> DYEABLE_RECIPE_SERIALIZER = REGISTRATE
+			.object("dyeable")
+			.simple(ForgeRegistries.Keys.RECIPE_SERIALIZERS, () -> new SimpleRecipeSerializer<>(DyeableRecipe::new))
+	;
+
+	public static final RegistryEntry<RecipeType<DyeableRecipe>> DYEABLE_RECIPE_TYPE = REGISTRATE
+			.object("dyeable")
+			.simple(ForgeRegistries.Keys.RECIPE_TYPES, () -> RecipeType.simple(new ResourceLocation(Mods.FANTASY_FURNITURE, "dyeable")))
+	;
 
 	public static final MenuEntry<LargeInventoryMenu> LARGE_INVENTORY_MENU = REGISTRATE
 			.object("large_inventory_menu")
@@ -56,6 +67,16 @@ public final class ModElements
 	public static final MenuEntry<BookshelfMenu> BOOKSHELF_MENU = REGISTRATE
 			.object("bookshelf")
 			.menu(BookshelfMenu::new, () -> BookshelfMenuScreen::new)
+	;
+
+	public static final MenuEntry<OvenMenu> OVEN_MENU = REGISTRATE
+			.object("oven")
+			.menu(OvenMenu::new, () -> OvenMenuScreen::new)
+	;
+
+	public static final MenuEntry<CookieJarMenu> COOKIE_JAR_MENU = REGISTRATE
+			.object("cookie_jar")
+			.menu(CookieJarMenu::new, () -> CookieJarMenuScreen::new)
 	;
 
 	public static final BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRATE
@@ -133,6 +154,31 @@ public final class ModElements
 					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
 					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM
 			)
+			.register()
+	;
+
+	public static final BlockEntityEntry<CounterBlockEntity> COUNTER_BLOCK_ENTITY = REGISTRATE
+			.object("counter")
+			.blockEntity(CounterBlockEntity::new)
+			.validBlock(ModBlocks.ROYAL_COUNTER) // TODO: Add other counter blocks
+			.register()
+	;
+
+	public static final BlockEntityEntry<OvenBlockEntity> OVEN_BLOCK_ENTITY = REGISTRATE
+			.object("oven")
+			.blockEntity(OvenBlockEntity::new)
+			.validBlock(
+					ModBlocks.NORDIC_OVEN, ModBlocks.DUNMER_OVEN,
+					ModBlocks.VENTHYR_OVEN, ModBlocks.BONE_SKELETON_OVEN,
+					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN
+			)
+			.register()
+	;
+
+	public static final BlockEntityEntry<CookieJarBlockEntity> COOKIE_JAR_BLOCK_ENTITY = REGISTRATE
+			.object("cookie_jar")
+			.blockEntity(CookieJarBlockEntity::new)
+			.validBlock(ModBlocks.COOKIE_JAR)
 			.register()
 	;
 

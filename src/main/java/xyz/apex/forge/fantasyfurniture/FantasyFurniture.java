@@ -6,12 +6,15 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.Registry;
-import net.minecraft.util.FastColor;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.MissingMappingsEvent;
@@ -19,6 +22,7 @@ import net.minecraftforge.registries.MissingMappingsEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
@@ -41,6 +45,7 @@ public final class FantasyFurniture
 		// It registers to the mod bus since the event implements the IModBus interface
 		// although the event is fired on the forge bus, notify forge about this? (should the event even implement the interface? it's a marker to say what bus events should be registered to and fired on)
 		MinecraftForge.EVENT_BUS.addListener(this::onMissingMappings);
+		MinecraftForge.EVENT_BUS.addListener(this::onBlockPlaced);
 	}
 
 	private void onMissingMappings(MissingMappingsEvent event)
@@ -190,14 +195,30 @@ public final class FantasyFurniture
 		}
 	}
 
-	public static int tintFromDyeColor(DyeColor color)
+	private void onBlockPlaced(BlockEvent.EntityPlaceEvent event)
 	{
-		var colors = color.getTextureDiffuseColors();
-		var red = (int) (colors[0] * 255F);
-		var green = (int) (colors[1] * 255F);
-		var blue = (int) (colors[2] * 255F);
+		var entity = event.getEntity();
 
-		return FastColor.ARGB32.color(255, red, green, blue);
+		if(entity instanceof LivingEntity living)
+		{
+			var blockState = event.getPlacedBlock();
+
+			if(IDyeable.hasDyeColorProperty(blockState))
+			{
+				for(var hand : InteractionHand.values())
+				{
+					var stack = living.getItemInHand(hand);
+					var dyeColor = DyeColor.getColor(stack);
+
+					if(dyeColor != null && IDyeable.setDyeColor(event.getLevel(), event.getPos(), blockState, dyeColor))
+					{
+						if(!(living instanceof Player player) || !player.isCreative())
+							stack.shrink(1);
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	private static final class Client
