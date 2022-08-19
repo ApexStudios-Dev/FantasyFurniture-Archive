@@ -1,16 +1,20 @@
 package xyz.apex.forge.fantasyfurniture.integration.jei;
 
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 
+import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.client.screen.FurnitureStationMenuScreen;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
+import xyz.apex.forge.fantasyfurniture.init.ModItems;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @mezz.jei.api.JeiPlugin
@@ -63,5 +67,14 @@ public final class JeiPlugin implements IModPlugin
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
 		registration.addRecipeCatalyst(FurnitureStation.BLOCK.asStack(), FurnitureStationRecipes.RECIPE_TYPE);
+
+		// NOTE: Need to be updated with each new oven
+		Arrays.stream(new ItemEntry[] {
+				ModItems.NORDIC_OVEN, ModItems.DUNMER_OVEN,
+				ModItems.VENTHYR_OVEN, ModItems.BONE_SKELETON_OVEN,
+				ModItems.BONE_WITHER_OVEN, ModItems.ROYAL_OVEN
+		})
+		      .map(ItemEntry::asStack)
+		      .forEach(stack -> registration.addRecipeCatalyst(stack, RecipeTypes.SMOKING));
 	}
 }
