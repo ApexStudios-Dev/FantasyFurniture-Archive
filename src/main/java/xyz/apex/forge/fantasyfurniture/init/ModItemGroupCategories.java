@@ -87,7 +87,7 @@ public final class ModItemGroupCategories
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> ItemGroupCategoryManager
 				.getInstance(ModRegistry.CREATIVE_MODE_TAB.get())
-				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ DECORATIONS, ROYAL)
+				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ ROYAL, DECORATIONS)
 		);
 
 		REGISTRATE.addDataGenerator(ITEM_TAGS, provider -> provider.tag(BONE_TAG).addTags(BONE_SKELETON_TAG, BONE_WITHER_TAG));

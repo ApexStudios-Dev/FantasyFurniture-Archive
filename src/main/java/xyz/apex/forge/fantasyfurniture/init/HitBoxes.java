@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
@@ -1708,8 +1709,8 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					Block.box(0, 2, 0, 16, 6, 16), Block.box(0, 6, 13, 16, 16, 16)
-			);
+					Block.box(0, 2, 0, 16, 6, 16), Block.box(0, 6, 13, 16, 16, 16
+			));
 		}
 
 		@Override
@@ -2246,8 +2247,8 @@ public abstract class HitBoxes
 		protected VoxelShape sofaCenterShape()
 		{
 			return VoxelShaper.or(
-					Block.box(0, 4, 1.5, 16, 6, 14.5), Block.box(0, 6, 12.5, 16, 15, 14.5)
-			);
+					Block.box(0, 4, 1.5, 16, 6, 14.5), Block.box(0, 6, 12.5, 16, 15, 14.5
+			));
 		}
 
 		@Override

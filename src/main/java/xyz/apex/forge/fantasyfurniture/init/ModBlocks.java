@@ -200,7 +200,7 @@ public final class ModBlocks
 	public static final BlockEntry<FurnitureDoorBlock> DUNMER_DOOR_DOUBLE = doorDouble("dunmer", FurnitureDoorBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<LockboxBlock> DUNMER_LOCKBOX = lockbox("dunmer", LockboxBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	public static final BlockEntry<CounterBlock> DUNMER_COUNTER = counter("dunmer", CounterBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
-	public static final BlockEntry<OvenMultiBlock> DUNMER_OVEN = ovenMultiblock("dunmer", OvenMultiBlock::new).tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
+	public static final BlockEntry<OvenMultiBlock> DUNMER_OVEN = ovenMultiblock("dunmer", OvenMultiBlock::new).lang("Dunmer Cooking Spit").tag(BlockTags.Vanilla.MINEABLE_WITH_AXE).register();
 	// endregion
 
 	// region: Venthyr
@@ -507,6 +507,7 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
+				.lightLevel(lightLevel())
 		;
 	}
 
@@ -563,6 +564,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
+				.noCollission()
 				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}

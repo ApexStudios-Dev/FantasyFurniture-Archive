@@ -163,7 +163,7 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 		{
 			recipe = level.getRecipeManager().getRecipeFor(recipeType, container, level).orElse(null);
 
-			if(!isBurning && canBurn(fuel))
+			if(!isBurning && canSmelt(output, smeltAmount))
 			{
 				var burnTime = getBurnTime(fuel);
 
