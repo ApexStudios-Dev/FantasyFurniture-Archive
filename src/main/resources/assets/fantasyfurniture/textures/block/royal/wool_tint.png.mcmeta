@@ -7,7 +7,8 @@
 			"fantasyfurniture:block/royal/wool_tint_ctm"
 		],
 		"extra": {
-			"connect_inside": true
+			"connect_inside": true,
+			"ignore_states": true
 		}
 	}
 }
