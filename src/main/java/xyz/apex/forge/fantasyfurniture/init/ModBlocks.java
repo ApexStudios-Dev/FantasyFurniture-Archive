@@ -564,6 +564,7 @@ public final class ModBlocks
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
+				.noCollission()
 				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
