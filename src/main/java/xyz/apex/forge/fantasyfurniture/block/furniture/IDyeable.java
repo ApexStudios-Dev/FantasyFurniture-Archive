@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +42,16 @@ public interface IDyeable
 	EnumProperty<DyeColor> BLOCKSTATE_PROPERTY = EnumProperty.create("dye_color", DyeColor.class);
 	TagKey<Item> TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "dyeable");
 	String TRANSLATION_KEY = "text.%s.dyeable";
+
+	default String getDyeableTranslationKey()
+	{
+		return TRANSLATION_KEY.formatted(((Block) this).getDescriptionId());
+	}
+
+	default MutableComponent getDyeableComponent()
+	{
+		return Component.translatable(getDyeableTranslationKey()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+	}
 
 	static BlockState registerDefaultBlockState(BlockState blockState)
 	{
@@ -152,9 +163,9 @@ public interface IDyeable
 		return getDyeColor(level, pos, blockState).map(color -> setDyeColor(stack, color)).orElse(stack);
 	}
 
-	static void appendHoverText(List<Component> tooltip)
+	static void appendHoverText(IDyeable dyeable, List<Component> tooltip)
 	{
-		tooltip.add(Component.translatable(TRANSLATION_KEY).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		tooltip.add(dyeable.getDyeableComponent());
 	}
 
 	static int tintFromDyeColor(DyeColor color)
