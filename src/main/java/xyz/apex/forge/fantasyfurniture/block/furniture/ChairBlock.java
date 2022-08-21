@@ -139,7 +139,7 @@ public class ChairBlock extends SeatMultiBlock
 		public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag)
 		{
 			super.appendHoverText(stack, level, tooltip, flag);
-			IDyeable.appendHoverText(tooltip);
+			IDyeable.appendHoverText(this, tooltip);
 		}
 	}
 

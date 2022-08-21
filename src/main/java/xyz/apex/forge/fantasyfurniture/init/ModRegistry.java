@@ -28,7 +28,14 @@ public final class ModRegistry
 			.addDataGenerator(LANG, provider -> {
 				provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 				provider.add(TXT_JEI_RESULTS_KEY, "Results");
-				provider.add(IDyeable.TRANSLATION_KEY, "Dyeable");
+
+				registrate.getAll(ForgeRegistries.Keys.BLOCKS)
+				          .stream()
+						  .map(RegistryEntry::get)
+						  .filter(IDyeable.class::isInstance)
+						  .map(IDyeable.class::cast)
+						  .forEach(d -> provider.add(d.getDyeableTranslationKey(), "Dyeable"))
+				;
 			})
 			.addDataGenerator(ITEM_TAGS, provider -> {
 				var tag = provider.tag(IDyeable.TAG);

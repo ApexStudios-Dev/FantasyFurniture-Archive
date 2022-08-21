@@ -269,7 +269,7 @@ public class SofaBlock extends SeatBlock
 		public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag)
 		{
 			super.appendHoverText(stack, level, tooltip, flag);
-			IDyeable.appendHoverText(tooltip);
+			IDyeable.appendHoverText(this, tooltip);
 		}
 	}
 
