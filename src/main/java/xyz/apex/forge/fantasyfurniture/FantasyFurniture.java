@@ -42,6 +42,7 @@ import java.io.IOException;
 @Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
 {
+	public static final String OPTIFINE_ID = "optifine";
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final NetworkManager NETWORK = new NetworkManager(Mods.FANTASY_FURNITURE, "net", "1");
 
@@ -59,6 +60,7 @@ public final class FantasyFurniture
 		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
 			// registerBuiltInPack(event, <mod_id>);
 			registerBuiltInPack(event, Mods.CTM);
+			registerBuiltInPack(event, OPTIFINE_ID);
 		});
 	}
 
@@ -237,7 +239,9 @@ public final class FantasyFurniture
 
 	private static void registerBuiltInPack(AddPackFindersEvent event, String modId)
 	{
-		if(ModList.get().isLoaded(modId))
+		var modLoaded = modId.equals(OPTIFINE_ID) ?isOptifineInstalled() : ModList.get().isLoaded(modId);
+
+		if(modLoaded)
 		{
 			try
 			{
@@ -267,6 +271,23 @@ public final class FantasyFurniture
 				throw new IllegalStateException("Fatal Error occurred while initializing mod-support builtin-resource-pack: '%s'".formatted(modId), e);
 			}
 		}
+	}
+
+	private static boolean isOptifineInstalled()
+	{
+		if(ModList.get().isLoaded(OPTIFINE_ID))
+			return true;
+
+		try
+		{
+			Class.forName("net.optifine.ConnectedTextures");
+			return true;
+		}
+		catch(ClassNotFoundException ignored)
+		{
+		}
+
+		return false;
 	}
 
 	private static final class Client
