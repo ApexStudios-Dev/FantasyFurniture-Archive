@@ -58,6 +58,7 @@ public final class FantasyFurniture
 
 		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
 			// registerBuiltInPack(event, <mod_id>);
+			registerBuiltInPack(event, Mods.CTM);
 		});
 	}
 
