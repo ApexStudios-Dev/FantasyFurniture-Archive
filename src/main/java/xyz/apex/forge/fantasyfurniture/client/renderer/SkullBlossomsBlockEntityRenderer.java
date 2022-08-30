@@ -8,10 +8,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.block.entity.SkullBlossomsBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public final class SkullBlossomsBlockEntityRenderer implements BlockEntityRenderer<SkullBlossomsBlockEntity>
 {
 	private final SkullBlossomsModel model;

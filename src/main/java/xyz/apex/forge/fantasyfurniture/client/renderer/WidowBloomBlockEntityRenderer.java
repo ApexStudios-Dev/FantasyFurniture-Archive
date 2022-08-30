@@ -8,9 +8,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
+import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public final class WidowBloomBlockEntityRenderer implements BlockEntityRenderer<WidowBloomBlockEntity>
 {
 	private final WidowBloomModel model;

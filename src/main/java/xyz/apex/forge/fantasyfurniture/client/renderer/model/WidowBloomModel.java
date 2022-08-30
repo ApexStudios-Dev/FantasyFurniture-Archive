@@ -15,7 +15,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.SideOnly;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public final class WidowBloomModel extends Model
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/models/decorations/venthyr_widowbloom.png");

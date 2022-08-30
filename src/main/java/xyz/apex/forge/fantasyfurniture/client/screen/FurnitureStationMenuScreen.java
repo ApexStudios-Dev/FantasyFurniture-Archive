@@ -29,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
 import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
 import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationMenu>
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/furniture_station.png");

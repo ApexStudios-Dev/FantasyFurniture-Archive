@@ -11,12 +11,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Lazy;
 
+import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.block.entity.SkullBlossomsBlockEntity;
 import xyz.apex.forge.fantasyfurniture.block.entity.WidowBloomBlockEntity;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModItems;
 
+@SideOnly(SideOnly.Side.CLIENT)
 public final class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithoutLevelRenderer
 {
 	private static final Lazy<BlockEntityWithoutLevelRenderer> INSTANCE = Lazy.of(() -> new ModBlockEntityWithoutLevelRenderer(Minecraft.getInstance()));
