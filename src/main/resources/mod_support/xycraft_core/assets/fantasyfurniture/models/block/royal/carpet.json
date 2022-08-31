@@ -1,0 +1,12 @@
+{
+  "parent": "fantasyfurniture:block/dyeable/carpet",
+  "connection_handler": "same_block",
+  "loader": "xycraft_core:connected_textures",
+  "textures": {
+    "wool": "fantasyfurniture:block/royal/wool",
+    "tint_wool": "fantasyfurniture:block/royal/wool_tint",
+    
+    "texture_connected": "fantasyfurniture:block/royal/wool_ctm",
+    "texture_single": "#wool"
+  }
+}

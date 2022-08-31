@@ -175,6 +175,8 @@ dependencies {
 	// compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
+	runtimeOnly fg.deobf("curse.maven:xycraft-653786:3960430") // XyCraft: Core - v0.5.2
+
 	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
 
 	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
