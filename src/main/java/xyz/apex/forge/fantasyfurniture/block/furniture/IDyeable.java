@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.MaterialColor;
 
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
+import xyz.apex.forge.commonality.Constants;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.ItemTags;
 
@@ -185,10 +186,22 @@ public interface IDyeable
 	{
 		var tag = stack.getTag();
 
-		if(tag != null && tag.contains(NBT_KEY, Tag.TAG_STRING))
+		if(tag != null)
 		{
-			var dyeName = tag.getString(NBT_KEY);
-			return Optional.ofNullable(DyeColor.byName(dyeName, null));
+			if(tag.contains(Constants.NbtNames.ITEM_BLOCK_STATE, Tag.TAG_COMPOUND))
+			{
+				var blockStateTag = tag.getCompound(Constants.NbtNames.ITEM_BLOCK_STATE);
+				var name = BLOCKSTATE_PROPERTY.getName();
+
+				if(blockStateTag.contains(name, Tag.TAG_STRING))
+					return BLOCKSTATE_PROPERTY.getValue(blockStateTag.getString(name));
+			}
+
+			if(tag.contains(NBT_KEY, Tag.TAG_STRING))
+			{
+				var dyeName = tag.getString(NBT_KEY);
+				return Optional.ofNullable(DyeColor.byName(dyeName, null));
+			}
 		}
 
 		return Optional.empty();

@@ -19,11 +19,14 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.CopyBlockState;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -47,12 +50,14 @@ import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.*;
 
+@SuppressWarnings({ "SameParameterValue", "Guava", "SuspiciousToArrayCall" })
 public final class ModBlocks
 {
 	// region: Decorations
@@ -122,7 +127,7 @@ public final class ModBlocks
 
 	// region: Royal
 	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CROWN = crown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
-	public static final BlockEntry<CandelabraBlock> ROYAL_CANDELABRA = candelabra("royal").transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<CandelabraBlock> ROYAL_CANDELABRA = candelabra("royal").register();
 	public static final BlockEntry<ChalicesBlock.Dyeable> ROYAL_CHALICES = chalices("royal", ChalicesBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<CrownBlock.Dyeable> ROYAL_CUSHIONED_CROWN = cushionedCrown("royal", CrownBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<FoodBlock> ROYAL_FOOD_0 = food("royal", 0).register();
@@ -522,7 +527,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -580,7 +584,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -599,7 +602,6 @@ public final class ModBlocks
 				.hasPostProcess(BlockHelper::always)
 				.offsetType(BlockBehaviour.OffsetType.XZ)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -628,7 +630,6 @@ public final class ModBlocks
 				.strength(.5F)
 				.sound(SoundType.WOOL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -685,7 +686,6 @@ public final class ModBlocks
 				.strength(.5F)
 				.sound(SoundType.WOOL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -700,7 +700,6 @@ public final class ModBlocks
 				.strength(.5F)
 				.sound(SoundType.WOOL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -715,7 +714,6 @@ public final class ModBlocks
 				.strength(.3F)
 				.sound(SoundType.GLASS)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -772,7 +770,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.METAL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -787,7 +784,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.METAL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -822,7 +818,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -837,7 +832,6 @@ public final class ModBlocks
 				.strength(2.5F)
 				.sound(SoundType.METAL)
 				.blockState(ModBlocks::horizontalBlockState)
-				.loot(ModBlocks::stackedLootTable)
 		;
 	}
 
@@ -1460,7 +1454,6 @@ public final class ModBlocks
 							.build();
 				}))
 				.tag(BlockTags.Vanilla.WOODEN_DOORS)
-				.loot((lootTables, block) -> lootTables.add(block, RegistrateBlockLootTables.createDoorTable(block)))
 		;
 	}
 
@@ -1480,7 +1473,10 @@ public final class ModBlocks
 
 	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyBlockDefaults(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
-		return builder.lang(RegistrateLangProvider.toEnglishName(builder.getName().replace('/', '_')));
+		return builder
+				.lang(RegistrateLangProvider.toEnglishName(builder.getName().replace('/', '_')))
+				.loot(ModBlocks::lootTable)
+		;
 	}
 
 	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyFurnitureBlockDefaults(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
@@ -1519,31 +1515,6 @@ public final class ModBlocks
 	private static <BLOCK extends Block> void horizontalBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
 	{
 		provider.horizontalBlock(ctx.get(), blockState -> getModelFile(ctx, blockState, provider.models()));
-	}
-
-	private static <BLOCK extends StackedBlock> void stackedLootTable(RegistrateBlockLootTables lootTables, BLOCK block)
-	{
-		var pool = LootPool
-				.lootPool()
-				.setRolls(ConstantValue.exactly(1))
-				.add(LootItem.lootTableItem(block))
-		;
-
-		for(var value : block.getStackSizeProperty().getPossibleValues())
-		{
-			pool = pool.apply(SetItemCountFunction
-					.setCount(ConstantValue.exactly(value + 1))
-					.when(LootItemBlockStatePropertyCondition
-							.hasBlockStateProperties(block)
-							.setProperties(StatePropertiesPredicate.Builder
-									.properties()
-									.hasProperty(block.getStackSizeProperty(), value)
-							)
-					)
-			);
-		}
-
-		lootTables.add(block, LootTable.lootTable().withPool(RegistrateBlockLootTables.applyExplosionCondition(block, pool)));
 	}
 
 	private static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDyeable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
@@ -1633,6 +1604,54 @@ public final class ModBlocks
 		}
 
 		return new ResourceLocation(registryName.getNamespace(), "particles/%s".formatted(type));
+	}
+
+	private static <BLOCK extends Block> void lootTable(RegistrateBlockLootTables lootTables, BLOCK block)
+	{
+		final AtomicReference<LootPoolEntryContainer.Builder<?>> item = new AtomicReference<>(LootItem.lootTableItem(block));
+
+		final AtomicReference<LootPool.Builder> pool = new AtomicReference<>( RegistrateBlockLootTables
+				.applyExplosionCondition(block, LootPool.lootPool())
+				.setRolls(ConstantValue.exactly(1F))
+		);
+
+		if(block instanceof StackedBlock stacked)
+		{
+			for(var value : stacked.getStackSizeProperty().getPossibleValues())
+			{
+				pool.getAndUpdate(builder -> builder.apply(SetItemCountFunction
+						.setCount(ConstantValue.exactly(value + 1))
+						.when(LootItemBlockStatePropertyCondition
+								.hasBlockStateProperties(block)
+								.setProperties(StatePropertiesPredicate.Builder
+										.properties()
+										.hasProperty(stacked.getStackSizeProperty(), value)
+								)
+						)
+				));
+			}
+		}
+
+		if(block instanceof FurnitureDoorBlock)
+		{
+			item.getAndUpdate(builder -> builder.when(LootItemBlockStatePropertyCondition
+					.hasBlockStateProperties(block)
+					.setProperties(StatePropertiesPredicate.Builder
+							.properties()
+							.hasProperty(FurnitureDoorBlock.HALF, DoubleBlockHalf.LOWER)
+					)
+			));
+		}
+
+		if(block instanceof IDyeable)
+		{
+			pool.getAndUpdate(builder -> builder.apply(CopyBlockState
+					.copyState(block)
+					.copy(IDyeable.BLOCKSTATE_PROPERTY)
+			));
+		}
+
+		lootTables.add(block, LootTable.lootTable().withPool(pool.get().add(item.get())));
 	}
 
 	static String getTextureKey(ResourceLocation registryName)

@@ -100,7 +100,7 @@ public final class ModItems
 
 	// region: Royal
 	public static final ItemEntry<WearableBlockItem> ROYAL_CROWN = blockItem((block, properties) -> new WearableBlockItem(block, properties, EquipmentSlot.HEAD), ModBlocks.ROYAL_CROWN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
-	public static final ItemEntry<BlockItem> ROYAL_CANDELABRA = blockItem(BlockItem::new, ModBlocks.ROYAL_CANDELABRA).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_CANDELABRA = blockItem(BlockItem::new, ModBlocks.ROYAL_CANDELABRA).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_CHALICES = blockItem(BlockItem::new, ModBlocks.ROYAL_CHALICES).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, ChalicesBlock.CHALICES)).register();
 	public static final ItemEntry<BlockItem> ROYAL_CUSHIONED_CROWN = blockItem(BlockItem::new, ModBlocks.ROYAL_CUSHIONED_CROWN).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_FOOD_0 = blockItem(BlockItem::new, ModBlocks.ROYAL_FOOD_0).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.ROYAL_TAG).register();
