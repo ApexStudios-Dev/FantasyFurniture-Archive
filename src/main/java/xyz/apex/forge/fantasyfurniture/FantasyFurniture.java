@@ -241,13 +241,13 @@ public final class FantasyFurniture
 			EventBusHelper.addListener(this::onModifyVisualizer);
 		}
 
-		private void onModifyVisualizer(BlockVisualizerEvent.ModifyBlockState event)
+		private void onModifyVisualizer(BlockVisualizerEvent.ModifyContext event)
 		{
-			var blockState = event.getBlockState();
+			var ctx = event.getContext();
+			var blockState = ctx.blockState();
 
 			if(IDyeable.hasDyeColorProperty(blockState))
 			{
-				var ctx = event.getContext();
 				var stack = ctx.stack();
 				var otherHand = ctx.hand() == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
 				var otherStack = ctx.player().getItemInHand(otherHand);
@@ -262,7 +262,12 @@ public final class FantasyFurniture
 				                    .orElse(DyeColor.WHITE)
 				;
 
-				event.setBlockState(IDyeable.setDyeColor(blockState, color));
+				event.setContext(ctx
+						// actual color that will be set
+						.with(IDyeable.setDyeColor(blockState, color))
+						// required tint index for coloring to function
+						.with(1)
+				);
 			}
 		}
 	}
