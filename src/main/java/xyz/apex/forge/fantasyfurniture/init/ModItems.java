@@ -293,7 +293,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> ROYAL_CARPET = carpet(BlockItem::new, ModBlocks.ROYAL_CARPET).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_WALL_LIGHT = blockItem(BlockItem::new, ModBlocks.ROYAL_WALL_LIGHT).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_FLOOR_LIGHT = blockItem(BlockItem::new, ModBlocks.ROYAL_FLOOR_LIGHT).tag(ModItemGroupCategories.ROYAL_TAG).register();
-	public static final ItemEntry<BlockItem> ROYAL_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_SMALL).tag(ModItemGroupCategories.ROYAL_TAG).register();
+	public static final ItemEntry<BlockItem> ROYAL_TABLE_SMALL = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_SMALL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_TABLE_WIDE = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_WIDE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_TABLE_LARGE = blockItem(BlockItem::new, ModBlocks.ROYAL_TABLE_LARGE).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
 	public static final ItemEntry<BlockItem> ROYAL_STOOL = blockItem(BlockItem::new, ModBlocks.ROYAL_STOOL).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.ROYAL_TAG).register();
