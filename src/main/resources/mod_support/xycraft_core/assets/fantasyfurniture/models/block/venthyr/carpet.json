@@ -1,10 +1,16 @@
 {
-  "parent": "minecraft:block/carpet",
-  "connection_handler": "same_block",
   "loader": "xycraft_core:connected_textures",
+  "connection_handler": "same_block",
+  
+  "parent": "minecraft:block/carpet",
+  "render_type": "minecraft:cutout",
+  
   "textures": {
-    "all": "fantasyfurniture:block/venthyr/wool",
-    "texture_connected": "fantasyfurniture:block/venthyr/wool_ctm",
-    "texture_single": "#all"
+    "wool": "fantasyfurniture:block/venthyr/wool",
+    "base": "fantasyfurniture:block/venthyr/wool_xyctm",
+    "texture_connected": "fantasyfurniture:block/venthyr/wool_xyctm_borders",
+  
+    "particle": "#base",
+    "texture_single": "#wool"
   }
 }

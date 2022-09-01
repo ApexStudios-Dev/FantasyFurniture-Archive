@@ -1,10 +1,16 @@
 {
-  "parent": "minecraft:block/carpet",
-  "connection_handler": "same_block",
   "loader": "xycraft_core:connected_textures",
+  "connection_handler": "same_block",
+  
+  "parent": "minecraft:block/carpet",
+  "render_type": "minecraft:cutout",
+  
   "textures": {
-    "all": "fantasyfurniture:block/bone/skeleton/wool",
-    "texture_connected": "fantasyfurniture:block/bone/skeleton/wool_ctm",
-    "texture_single": "#all"
+    "wool": "fantasyfurniture:block/bone/skeleton/wool",
+    "base": "fantasyfurniture:block/bone/skeleton/wool_xyctm",
+    "texture_connected": "fantasyfurniture:block/bone/skeleton/wool_xyctm_borders",
+  
+    "particle": "#base",
+    "texture_single": "#wool"
   }
 }
