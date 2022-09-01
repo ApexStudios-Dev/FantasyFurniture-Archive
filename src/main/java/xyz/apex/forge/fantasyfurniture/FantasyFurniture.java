@@ -20,6 +20,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 
+import xyz.apex.forge.apexcore.lib.event.client.BlockVisualizerEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
@@ -30,6 +31,8 @@ import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
 import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModItems;
 import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
+
+import java.util.Optional;
 
 @Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
@@ -240,6 +243,38 @@ public final class FantasyFurniture
 				var particleEngine = Minecraft.getInstance().particleEngine;
 				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
 			});
+
+			EventBusHelper.addListener(this::onModifyVisualizer);
+		}
+
+		private void onModifyVisualizer(BlockVisualizerEvent.ModifyContext event)
+		{
+			var ctx = event.getContext();
+			var blockState = ctx.blockState();
+
+			if(IDyeable.hasDyeColorProperty(blockState))
+			{
+				var stack = ctx.stack();
+				var otherHand = ctx.hand() == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+				var otherStack = ctx.player().getItemInHand(otherHand);
+
+				// try pull color from offhand item
+				// if that fails pull from itemstack trying to be placed
+				// if that fails pull from render blockstate
+				// if that fails default to white
+				var color = Optional.ofNullable(DyeColor.getColor(otherStack))
+				                    .or(() -> IDyeable.getDyeColor(stack))
+				                    .or(() -> IDyeable.getDyeColor(blockState))
+				                    .orElse(DyeColor.WHITE)
+				;
+
+				event.setContext(ctx
+						// actual color that will be set
+						.with(IDyeable.setDyeColor(blockState, color))
+						// required tint index for coloring to function
+						.with(1)
+				);
+			}
 		}
 	}
 }

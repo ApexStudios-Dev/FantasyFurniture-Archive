@@ -15,6 +15,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -186,10 +187,22 @@ public interface IDyeable
 	{
 		var tag = stack.getTag();
 
-		if(tag != null && tag.contains(NBT_KEY, Tag.TAG_STRING))
+		if(tag != null)
 		{
-			var dyeName = tag.getString(NBT_KEY);
-			return Optional.ofNullable(DyeColor.byName(dyeName, null));
+			if(tag.contains(BlockItem.BLOCK_STATE_TAG, Tag.TAG_COMPOUND))
+			{
+				var blockStateTag = tag.getCompound(BlockItem.BLOCK_STATE_TAG);
+				var name = BLOCKSTATE_PROPERTY.getName();
+
+				if(blockStateTag.contains(name, Tag.TAG_STRING))
+					return BLOCKSTATE_PROPERTY.getValue(blockStateTag.getString(name));
+			}
+
+			if(tag.contains(NBT_KEY, Tag.TAG_STRING))
+			{
+				var dyeName = tag.getString(NBT_KEY);
+				return Optional.ofNullable(DyeColor.byName(dyeName, null));
+			}
 		}
 
 		return Optional.empty();
