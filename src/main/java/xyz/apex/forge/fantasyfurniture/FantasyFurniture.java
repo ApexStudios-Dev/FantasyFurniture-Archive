@@ -6,6 +6,10 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,10 +18,13 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.MissingMappingsEvent;
+import net.minecraftforge.resource.PathPackResources;
 
 import xyz.apex.forge.apexcore.lib.event.client.BlockVisualizerEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
@@ -31,11 +38,13 @@ import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModItems;
 import xyz.apex.forge.fantasyfurniture.init.ModRegistry;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Mod(Mods.FANTASY_FURNITURE)
 public final class FantasyFurniture
 {
+	public static final String OPTIFINE_ID = "optifine";
 	public static final Logger LOGGER = LogManager.getLogger();
 	public static final NetworkManager NETWORK = new NetworkManager(Mods.FANTASY_FURNITURE, "net", "1");
 
@@ -49,6 +58,12 @@ public final class FantasyFurniture
 		// although the event is fired on the forge bus, notify forge about this? (should the event even implement the interface? it's a marker to say what bus events should be registered to and fired on)
 		MinecraftForge.EVENT_BUS.addListener(this::onMissingMappings);
 		MinecraftForge.EVENT_BUS.addListener(this::onBlockPlaced);
+
+		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
+			// registerBuiltInPack(event, <mod_id>);
+			registerBuiltInPack(event, Mods.CTM);
+			registerBuiltInPack(event, OPTIFINE_ID);
+		});
 	}
 
 	private void onMissingMappings(MissingMappingsEvent event)
@@ -222,6 +237,59 @@ public final class FantasyFurniture
 				}
 			}
 		}
+	}
+
+	private static void registerBuiltInPack(AddPackFindersEvent event, String modId)
+	{
+		var modLoaded = modId.equals(OPTIFINE_ID) ?isOptifineInstalled() : ModList.get().isLoaded(modId);
+
+		if(modLoaded)
+		{
+			try
+			{
+				var modFile = ModList.get().getModFileById(Mods.FANTASY_FURNITURE).getFile();
+				var resourcePath = modFile.findResource("mod_support", modId);
+				var pack = new PathPackResources("%s:%s".formatted(modFile.getFileName(), resourcePath), resourcePath);
+				var metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+
+				if(metadataSection != null)
+				{
+					event.addRepositorySource((consumer, constructor) -> consumer
+							.accept(constructor.create(
+									"builtin/mod_support/%s".formatted(modId),
+									Component.literal("Fantasy's Furniture Mod-Support-Pack"),
+									false,
+									() -> pack,
+									metadataSection,
+									Pack.Position.TOP,
+									PackSource.BUILT_IN,
+									false
+							))
+					);
+				}
+			}
+			catch(IOException e)
+			{
+				throw new IllegalStateException("Fatal Error occurred while initializing mod-support builtin-resource-pack: '%s'".formatted(modId), e);
+			}
+		}
+	}
+
+	private static boolean isOptifineInstalled()
+	{
+		if(ModList.get().isLoaded(OPTIFINE_ID))
+			return true;
+
+		try
+		{
+			Class.forName("net.optifine.ConnectedTextures");
+			return true;
+		}
+		catch(ClassNotFoundException ignored)
+		{
+		}
+
+		return false;
 	}
 
 	private static final class Client
