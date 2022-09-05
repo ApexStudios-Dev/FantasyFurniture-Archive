@@ -42,9 +42,9 @@ various decorational blocks being stackable, and various furniture set blocks be
 
 <summary><b>Recipes</b></summary>
 
-<img src="https://github.com/ApexStudios-Dev/.github/blob/master/furniture_station_recipe.png?raw=true" width=25%></img>
+<img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/minecraft/furniture_station_recipe.png?raw=true" width=25%></img>
 
-<img src="https://github.com/ApexStudios-Dev/.github/blob/master/furniture_station_recipes.gif?raw=true" width=25%></img>
+<img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/minecraft/furniture_station_recipes.gif?raw=true" width=25%></img>
 
 </details>
 
