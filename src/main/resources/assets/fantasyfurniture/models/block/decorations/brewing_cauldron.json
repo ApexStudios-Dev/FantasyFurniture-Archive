@@ -1,0 +1,198 @@
+{
+	"credit": "Made by Fantasy",
+	"texture_size": [32, 32],
+	"textures": {
+		"brewing_cauldron": "fantasyfurniture:models/decorations/brewing_cauldron",
+		"brewing_cauldron_tint": "fantasyfurniture:models/decorations/brewing_cauldron_tint",
+		"particle": "fantasyfurniture:particles/decorations/brewing_cauldron"
+	},
+	"elements": [
+		{
+			"name": "pot_1",
+			"from": [2, 2, 2],
+			"to": [14, 9, 14],
+			"faces": {
+				"north": {"uv": [3, 0, 6, 1.75], "texture": "#brewing_cauldron"},
+				"east": {"uv": [3, 1.75, 6, 3.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [3, 3.5, 6, 5.25], "texture": "#brewing_cauldron"},
+				"west": {"uv": [3, 5.25, 6, 7], "texture": "#brewing_cauldron"},
+				"up": {"uv": [3, 3, 0, 0], "texture": "#brewing_cauldron"},
+				"down": {"uv": [3, 3, 0, 6], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_2",
+			"from": [13, 9, 3],
+			"to": [15, 11, 13],
+			"faces": {
+				"north": {"uv": [0.5, 7, 1, 7.5], "texture": "#brewing_cauldron"},
+				"east": {"uv": [0, 6, 2.5, 6.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [1, 7, 1.5, 7.5], "texture": "#brewing_cauldron"},
+				"west": {"uv": [6, 4, 8.5, 4.5], "texture": "#brewing_cauldron"},
+				"up": {"uv": [3, 8.5, 2.5, 6], "texture": "#brewing_cauldron"},
+				"down": {"uv": [6.5, 4.5, 6, 7], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_3",
+			"from": [1, 9, 3],
+			"to": [3, 11, 13],
+			"faces": {
+				"north": {"uv": [1.5, 7, 2, 7.5], "texture": "#brewing_cauldron"},
+				"east": {"uv": [0, 6.5, 2.5, 7], "texture": "#brewing_cauldron"},
+				"south": {"uv": [2, 7, 2.5, 7.5], "texture": "#brewing_cauldron"},
+				"west": {"uv": [6.5, 4.5, 9, 5], "texture": "#brewing_cauldron"},
+				"up": {"uv": [7, 7.5, 6.5, 5], "texture": "#brewing_cauldron"},
+				"down": {"uv": [0.5, 7, 0, 9.5], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_4",
+			"from": [1, 9, 1],
+			"to": [15, 11, 3],
+			"faces": {
+				"north": {"uv": [6, 0, 9.5, 0.5], "texture": "#brewing_cauldron"},
+				"east": {"uv": [3, 7, 3.5, 7.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [6, 0.5, 9.5, 1], "texture": "#brewing_cauldron"},
+				"west": {"uv": [3.5, 7, 4, 7.5], "texture": "#brewing_cauldron"},
+				"up": {"uv": [9.5, 1.5, 6, 1], "texture": "#brewing_cauldron"},
+				"down": {"uv": [9.5, 1.5, 6, 2], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_5",
+			"from": [1, 9, 13],
+			"to": [15, 11, 15],
+			"faces": {
+				"north": {"uv": [6, 2, 9.5, 2.5], "texture": "#brewing_cauldron"},
+				"east": {"uv": [4, 7, 4.5, 7.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [6, 2.5, 9.5, 3], "texture": "#brewing_cauldron"},
+				"west": {"uv": [4.5, 7, 5, 7.5], "texture": "#brewing_cauldron"},
+				"up": {"uv": [9.5, 3.5, 6, 3], "texture": "#brewing_cauldron"},
+				"down": {"uv": [9.5, 3.5, 6, 4], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_6",
+			"from": [11, 0, 11],
+			"to": [13, 2, 13],
+			"faces": {
+				"north": {"uv": [5, 7, 5.5, 7.5], "texture": "#brewing_cauldron"},
+				"east": {"uv": [7, 5, 7.5, 5.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [5.5, 7, 6, 7.5], "texture": "#brewing_cauldron"},
+				"west": {"uv": [7, 5.5, 7.5, 6], "texture": "#brewing_cauldron"},
+				"up": {"uv": [6.5, 7.5, 6, 7], "texture": "#brewing_cauldron"},
+				"down": {"uv": [7.5, 6, 7, 6.5], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_7",
+			"from": [11, 0, 3],
+			"to": [13, 2, 5],
+			"faces": {
+				"north": {"uv": [7, 6.5, 7.5, 7], "texture": "#brewing_cauldron"},
+				"east": {"uv": [7, 7, 7.5, 7.5], "texture": "#brewing_cauldron"},
+				"south": {"uv": [0.5, 7.5, 1, 8], "texture": "#brewing_cauldron"},
+				"west": {"uv": [1, 7.5, 1.5, 8], "texture": "#brewing_cauldron"},
+				"up": {"uv": [2, 8, 1.5, 7.5], "texture": "#brewing_cauldron"},
+				"down": {"uv": [2.5, 7.5, 2, 8], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_8",
+			"from": [3, 0, 3],
+			"to": [5, 2, 5],
+			"faces": {
+				"north": {"uv": [3, 7.5, 3.5, 8], "texture": "#brewing_cauldron"},
+				"east": {"uv": [3.5, 7.5, 4, 8], "texture": "#brewing_cauldron"},
+				"south": {"uv": [4, 7.5, 4.5, 8], "texture": "#brewing_cauldron"},
+				"west": {"uv": [4.5, 7.5, 5, 8], "texture": "#brewing_cauldron"},
+				"up": {"uv": [5.5, 8, 5, 7.5], "texture": "#brewing_cauldron"},
+				"down": {"uv": [8, 5, 7.5, 5.5], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "pot_9",
+			"from": [3, 0, 11],
+			"to": [5, 2, 13],
+			"faces": {
+				"north": {"uv": [5.5, 7.5, 6, 8], "texture": "#brewing_cauldron"},
+				"east": {"uv": [7.5, 5.5, 8, 6], "texture": "#brewing_cauldron"},
+				"south": {"uv": [6, 7.5, 6.5, 8], "texture": "#brewing_cauldron"},
+				"west": {"uv": [7.5, 6, 8, 6.5], "texture": "#brewing_cauldron"},
+				"up": {"uv": [7, 8, 6.5, 7.5], "texture": "#brewing_cauldron"},
+				"down": {"uv": [8, 6.5, 7.5, 7], "texture": "#brewing_cauldron"}
+			}
+		},
+		{
+			"name": "brew",
+			"from": [3, 10, 3],
+			"to": [13, 10, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"east": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"south": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"west": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"up": {"uv": [10, 5, 5, 0], "texture": "#brewing_cauldron_tint", "tintindex": 0},
+				"down": {"uv": [10, 5, 5, 10], "texture": "#brewing_cauldron_tint", "tintindex": 0}
+			}
+		},
+		{
+			"name": "bubbles",
+			"from": [3, 10.5, 3],
+			"to": [13, 10.5, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"east": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"south": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"west": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
+				"up": {"uv": [5, 5, 0, 0], "texture": "#brewing_cauldron_tint", "tintindex": 0},
+				"down": {"uv": [5, 5, 0, 10], "texture": "#brewing_cauldron_tint", "tintindex": 0}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "cauldron",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+		}
+	]
+}
