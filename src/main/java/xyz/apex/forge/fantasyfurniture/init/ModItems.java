@@ -56,7 +56,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> PAPER_STACK = blockItem(BlockItem::new, ModBlocks.PAPER_STACK).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> COOKIE_JAR = blockItem(BlockItem::new, ModBlocks.COOKIE_JAR).transform(ModItems::cookieJarModel).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> BREWING_CAULDRON = blockItem(BlockItem::new, ModBlocks.BREWING_CAULDRON).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
-	// public static final ItemEntry<BlockItem> FLOATING_TOMES = blockItem(BlockItem::new, ModBlocks.FLOATING_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, FloatingTomesBlock.TOMES)).register(); // TODO
+	public static final ItemEntry<BlockItem> FLOATING_TOMES = blockItem(BlockItem::new, ModBlocks.FLOATING_TOMES).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, FloatingTomesBlock.TOMES)).register();
 	public static final ItemEntry<BlockItem> GRAVESTONE = blockItem(BlockItem::new, ModBlocks.GRAVESTONE).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> HANGING_HERBS = blockItem(BlockItem::new, ModBlocks.HANGING_HERBS).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> SPIDER_WEB_SMALL = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_SMALL).tag(ModItemGroupCategories.DECORATIONS_TAG).register();

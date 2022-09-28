@@ -84,7 +84,7 @@ public final class ModBlocks
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
 	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
 	public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register();
-	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
+	public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register();
 	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
 	public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register();
 	public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWebSmall().register();
@@ -570,6 +570,20 @@ public final class ModBlocks
 				.block(BookStackBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Book Stack")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, FloatingTomesBlock, BasicRegistrate> floatingTomes()
+	{
+		return REGISTRATE
+				.object("decorations/floating_tomes")
+				.block(FloatingTomesBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Floating Tomes")
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
