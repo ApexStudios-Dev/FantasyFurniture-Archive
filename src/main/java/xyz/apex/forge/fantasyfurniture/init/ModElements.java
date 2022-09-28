@@ -160,7 +160,11 @@ public final class ModElements
 	public static final BlockEntityEntry<CounterBlockEntity> COUNTER_BLOCK_ENTITY = REGISTRATE
 			.object("counter")
 			.blockEntity(CounterBlockEntity::new)
-			.validBlock(ModBlocks.ROYAL_COUNTER) // TODO: Add other counter blocks
+			.validBlock(
+					ModBlocks.NORDIC_COUNTER, ModBlocks.DUNMER_COUNTER,
+					ModBlocks.VENTHYR_COUNTER, ModBlocks.BONE_SKELETON_COUNTER,
+					ModBlocks.BONE_WITHER_COUNTER, ModBlocks.ROYAL_COUNTER
+			)
 			.register()
 	;
 
