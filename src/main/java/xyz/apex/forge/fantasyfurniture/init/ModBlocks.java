@@ -83,8 +83,8 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
 	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
-	public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register();
-	public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register();
+	public static final BlockEntry<BrewingCauldronBlock.Dyeable> BREWING_CAULDRON = brewingCauldron(BrewingCauldronBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<FloatingTomesBlock.Dyeable> FLOATING_TOMES = floatingTomes(FloatingTomesBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
 	public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register();
 	public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWebSmall().register();
@@ -577,11 +577,11 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<BasicRegistrate, FloatingTomesBlock, BasicRegistrate> floatingTomes()
+	private static <BLOCK extends FloatingTomesBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> floatingTomes(BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("decorations/floating_tomes")
-				.block(FloatingTomesBlock::new)
+				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.lang("Floating Tomes")
 				.initialProperties(Material.WOOD)
@@ -824,11 +824,11 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<BasicRegistrate, BrewingCauldronBlock, BasicRegistrate> brewingCauldron()
+	private static <BLOCK extends BrewingCauldronBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> brewingCauldron(BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
 				.object("decorations/brewing_cauldron")
-				.block(BrewingCauldronBlock::new)
+				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.transform(ModBlocks::mineablePickaxe)
 				.lang("Brewing Cauldron")
