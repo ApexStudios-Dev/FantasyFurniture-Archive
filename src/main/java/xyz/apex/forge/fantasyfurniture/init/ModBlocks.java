@@ -85,7 +85,7 @@ public final class ModBlocks
 	public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register();
 	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
 	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
-	// public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register(); // TODO
+	public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register();
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWeb("small").register(); // TODO
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_WIDE = spiderWeb("wide").register(); // TODO
 	// public static final BlockEntry<StackedPumpkinsBlock> STACKED_PUMPKINS = stackedPumpkins().register(); // TODO
@@ -804,6 +804,19 @@ public final class ModBlocks
 				.initialProperties(Material.STONE, MaterialColor.STONE)
 				.strength(.3F)
 				.sound(SoundType.STONE)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, HangingHerbsBlock, BasicRegistrate> hangingHerbs()
+	{
+		return REGISTRATE
+				.object("decorations/hanging_herbs")
+				.block(HangingHerbsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.WOOD, MaterialColor.WOOD)
+				.strength(.3F)
+				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
