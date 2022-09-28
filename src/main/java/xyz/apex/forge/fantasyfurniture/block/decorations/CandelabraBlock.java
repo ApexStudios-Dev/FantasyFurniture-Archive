@@ -33,7 +33,7 @@ public final class CandelabraBlock extends BaseBlock
 	);
 
 	public static final VoxelShape NECROLORD_SHAPE = VoxelShaper.or(
-			Block.box(6.5, 0, 6.5, 9.5, 2, 9.5),
+			Block.box(6, 0, 6, 10, 2, 10),
 			Block.box(7, 2, 7, 9, 5, 9),
 			Block.box(1.25, 5, 6.5, 14.75, 12, 9.5),
 			Block.box(12.25, 12, 7, 14.25, 15, 9),
