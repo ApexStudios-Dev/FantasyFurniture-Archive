@@ -32,6 +32,19 @@
 				"up": {"uv": [11.5, 3.5, 8, 0], "texture": "#stackable_pumpkins"},
 				"down": {"uv": [11.5, 3.5, 8, 7], "texture": "#stackable_pumpkins"}
 			}
+		},
+		{
+			"name": "3",
+			"from": [5.5, 12, 5.5],
+			"to": [10.5, 16, 10.5],
+			"faces": {
+				"north": {"uv": [11.5, 5, 14, 7], "texture": "#stackable_pumpkins"},
+				"east": {"uv": [11.5, 7, 14, 9], "texture": "#stackable_pumpkins"},
+				"south": {"uv": [11.5, 9, 14, 11], "texture": "#stackable_pumpkins"},
+				"west": {"uv": [11.5, 11, 14, 13], "texture": "#stackable_pumpkins"},
+				"up": {"uv": [14, 2.5, 11.5, 0], "texture": "#stackable_pumpkins"},
+				"down": {"uv": [14, 2.5, 11.5, 5], "texture": "#stackable_pumpkins"}
+			}
 		}
 	],
 	"display": {
@@ -75,7 +88,7 @@
 			"name": "stackable_pumpkins",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1]
+			"children": [0, 1, 2]
 		}
 	]
 }
