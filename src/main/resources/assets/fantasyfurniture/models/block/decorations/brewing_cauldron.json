@@ -133,8 +133,8 @@
 				"east": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
 				"south": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
 				"west": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
-				"up": {"uv": [10, 5, 5, 0], "texture": "#brewing_cauldron_tint", "tintindex": 0},
-				"down": {"uv": [10, 5, 5, 10], "texture": "#brewing_cauldron_tint", "tintindex": 0}
+				"up": {"uv": [10, 5, 5, 0], "texture": "#brewing_cauldron_tint", "tintindex": 1},
+				"down": {"uv": [10, 5, 5, 10], "texture": "#brewing_cauldron_tint", "tintindex": 1}
 			}
 		},
 		{
@@ -146,8 +146,8 @@
 				"east": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
 				"south": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
 				"west": {"uv": [0, 0, 5, 0], "texture": "#brewing_cauldron_tint"},
-				"up": {"uv": [5, 5, 0, 0], "texture": "#brewing_cauldron_tint", "tintindex": 0},
-				"down": {"uv": [5, 5, 0, 10], "texture": "#brewing_cauldron_tint", "tintindex": 0}
+				"up": {"uv": [5, 5, 0, 0], "texture": "#brewing_cauldron_tint", "tintindex": 1},
+				"down": {"uv": [5, 5, 0, 10], "texture": "#brewing_cauldron_tint", "tintindex": 1}
 			}
 		}
 	],
