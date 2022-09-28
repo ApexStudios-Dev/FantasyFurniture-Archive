@@ -62,6 +62,7 @@ public final class ModItems
 	// public static final ItemEntry<BlockItem> SPIDER_WEB_SMALL = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_SMALL).tag(ModItemGroupCategories.DECORATIONS_TAG).register(); // TODO
 	// public static final ItemEntry<BlockItem> SPIDER_WEB_WIDE = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_WIDE).tag(ModItemGroupCategories.DECORATIONS_TAG).register(); // TODO
 	// public static final ItemEntry<BlockItem> STACKED_PUMPKINS = blockItem(BlockItem::new, ModBlocks.STACKED_PUMPKINS).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, StackedPumpkinsBlock.PUMPKINS)).register(); // TODO
+	public static final ItemEntry<BlockItem> BRONZE_CHAIN = blockItem(BlockItem::new, ModBlocks.BRONZE_CHAIN).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 
 	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(BlockItem::new, ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();
@@ -119,7 +120,6 @@ public final class ModItems
 	// endregion
 
 	// region: Necrolord
-	// public static final ItemEntry<BlockItem> NECROLORD_BRONZE_CHAIN = blockItem(BlockItem::new, ModBlocks.NECROLORD_BRONZE_CHAIN).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NECROLORD_TAG).register(); // TODO:
 	public static final ItemEntry<BlockItem> NECROLORD_CANDELABRA = blockItem(BlockItem::new, ModBlocks.NECROLORD_CANDELABRA).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NECROLORD_TAG).register();
 	//endregion
 	// endregion

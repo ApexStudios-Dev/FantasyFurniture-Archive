@@ -11,10 +11,7 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CarpetBlock;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -47,7 +44,11 @@ import xyz.apex.forge.apexcore.registrate.builder.factory.BlockFactory;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
+import xyz.apex.forge.fantasyfurniture.block.decorations.BannerBlock;
+import xyz.apex.forge.fantasyfurniture.block.decorations.CandleBlock;
 import xyz.apex.forge.fantasyfurniture.block.decorations.*;
+import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
+import xyz.apex.forge.fantasyfurniture.block.furniture.ChestBlock;
 import xyz.apex.forge.fantasyfurniture.block.furniture.*;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -89,6 +90,7 @@ public final class ModBlocks
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWeb("small").register(); // TODO
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_WIDE = spiderWeb("wide").register(); // TODO
 	// public static final BlockEntry<StackedPumpkinsBlock> STACKED_PUMPKINS = stackedPumpkins().register(); // TODO
+	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -146,7 +148,6 @@ public final class ModBlocks
 	// endregion
 
 	// region: Necrolord
-	// public static final BlockEntry<ChainBlock> NECROLORD_BRONZE_CHAIN = chain("necrolord").register(); // TODO:
 	public static final BlockEntry<CandelabraBlock> NECROLORD_CANDELABRA = candelabra("necrolord").register();
 	//endregion
 	// endregion
@@ -818,6 +819,40 @@ public final class ModBlocks
 				.strength(.3F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, ChainBlock, BasicRegistrate> chain(String type)
+	{
+		return REGISTRATE
+				.object("decorations/%s_chain".formatted(type))
+				.block(ChainBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.initialProperties(Material.METAL, MaterialColor.NONE)
+				.strength(5F, 6F)
+				.sound(SoundType.CHAIN)
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+					var model = getModelFile(ctx, blockState, provider.models());
+					var axis = blockState.getValue(RotatedPillarBlock.AXIS);
+
+					var xRot = 0;
+					var yRot = 0;
+
+					if(axis == Direction.Axis.X)
+					{
+						xRot = 90;
+						yRot = 90;
+					}
+					else if(axis == Direction.Axis.Z)
+						xRot = 90;
+
+					return ConfiguredModel
+							.builder()
+							.modelFile(model)
+							.rotationX(xRot)
+							.rotationY(yRot)
+					.build();
+				}))
 		;
 	}
 
