@@ -84,7 +84,7 @@ public final class ModBlocks
 	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
 	// public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register(); // TODO
 	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
-	// public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register(); // TODO
+	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
 	// public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register(); // TODO
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWeb("small").register(); // TODO
 	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_WIDE = spiderWeb("wide").register(); // TODO
@@ -776,6 +776,20 @@ public final class ModBlocks
 				.initialProperties(Material.GLASS)
 				.strength(.3F)
 				.sound(SoundType.GLASS)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, GravestoneBlock, BasicRegistrate> gravestone()
+	{
+		return REGISTRATE
+				.object("decorations/gravestone")
+				.block(GravestoneBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.transform(ModBlocks::mineablePickaxe)
+				.initialProperties(Material.STONE, MaterialColor.STONE)
+				.strength(.3F)
+				.sound(SoundType.STONE)
 				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
