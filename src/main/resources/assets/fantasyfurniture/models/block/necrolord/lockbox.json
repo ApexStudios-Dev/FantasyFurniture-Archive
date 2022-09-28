@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"particle": "fantasyfurniture:models/template/lockbox",
-		"lockbox": "fantasyfurniture:models/template/lockbox"
+		"particle": "fantasyfurniture:models/necrolord/lockbox",
+		"lockbox": "fantasyfurniture:models/necrolord/lockbox"
 	},
 	"elements": [
 		{
@@ -370,7 +370,7 @@
 	},
 	"groups": [
 		{
-			"name": "template_lockbox",
+			"name": "necrolord_lockbox",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [
