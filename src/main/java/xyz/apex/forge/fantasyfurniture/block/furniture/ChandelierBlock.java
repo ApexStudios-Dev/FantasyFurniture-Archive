@@ -25,6 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -101,6 +102,14 @@ public class ChandelierBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x, y, z + .4D, rng);
 			onLightParticle(level, pos, blockState, x, y, z - .4D, rng);
 		}
+		else if(ModBlocks.NECROLORD_CHANDELIER.isIn(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .65D;
+			var z = pos.getZ() + .5D;
+
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+		}
 	}
 
 	protected void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
@@ -109,6 +118,8 @@ public class ChandelierBlock extends BaseBlock
 
 		if(ModBlocks.BONE_WITHER_CHANDELIER.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
+		else if(ModBlocks.NECROLORD_CHANDELIER.isIn(blockState))
+			flame = ModElements.NECROLORD_FLAME.get();
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
@@ -127,6 +138,8 @@ public class ChandelierBlock extends BaseBlock
 			return HitBoxes.BONE.chandelier(this, blockState);
 		else if(ModBlocks.ROYAL_CHANDELIER.isIn(blockState))
 			return HitBoxes.ROYAL.chandelier(this, blockState);
+		else if(ModBlocks.NECROLORD_CHANDELIER.isIn(blockState))
+			return HitBoxes.NECROLORD.chandelier(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

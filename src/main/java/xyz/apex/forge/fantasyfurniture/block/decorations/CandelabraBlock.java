@@ -15,6 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
 import java.util.function.Consumer;
 
@@ -31,7 +32,17 @@ public final class CandelabraBlock extends BaseBlock
 			Block.box(10.5, 9, 6.5, 13.5, 10, 9.5)
 	);
 
+	public static final VoxelShape NECROLORD_SHAPE = VoxelShaper.or(
+			Block.box(6.5, 0, 6.5, 9.5, 2, 9.5),
+			Block.box(7, 2, 7, 9, 5, 9),
+			Block.box(1.25, 5, 6.5, 14.75, 12, 9.5),
+			Block.box(12.25, 12, 7, 14.25, 15, 9),
+			Block.box(1.75, 12, 7, 3.75, 15, 9),
+			Block.box(7, 12, 7, 9, 16, 9)
+	);
+
 	public static final VoxelShaper SHAPER = VoxelShaper.forHorizontal(SHAPE, Direction.NORTH);
+	public static final VoxelShaper NECROLORD_SHAPER = VoxelShaper.forHorizontal(NECROLORD_SHAPE, Direction.NORTH);
 
 	public CandelabraBlock(Properties properties)
 	{
@@ -50,7 +61,8 @@ public final class CandelabraBlock extends BaseBlock
 	public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext ctx)
 	{
 		var facing = getFacing(blockState);
-		return SHAPER.get(facing);
+		var shaper = (ModBlocks.NECROLORD_CANDELABRA.is(this) ? NECROLORD_SHAPER : SHAPER);
+		return shaper.get(facing);
 	}
 
 	@Override
@@ -76,11 +88,30 @@ public final class CandelabraBlock extends BaseBlock
 			onLightParticle(level, pos, blockState, x + (stepX * .25D), y - .05D, z + (stepZ * .25D), rng);
 			onLightParticle(level, pos, blockState, x - (stepX * .25D), y - .05D, z - (stepZ * .25D), rng);
 		}
+		else if(ModBlocks.NECROLORD_CANDELABRA.isIn(blockState))
+		{
+			var x = pos.getX() + .5D;
+			var y = pos.getY() + .5D + .6D;
+			var z = pos.getZ() + .5D;
+
+			var facing = getFacing(blockState).getClockWise();
+			var stepX = facing.getStepX();
+			var stepZ = facing.getStepZ();
+
+			onLightParticle(level, pos, blockState, x, y, z, rng);
+			onLightParticle(level, pos, blockState, x + (stepX * .3D), y - .05D, z + (stepZ * .3D), rng);
+			onLightParticle(level, pos, blockState, x - (stepX * .3D), y - .05D, z - (stepZ * .3D), rng);
+		}
 	}
 
 	private void onLightParticle(Level level, BlockPos pos, BlockState blockState, double pX, double pY, double pZ, RandomSource rng)
 	{
-		level.addParticle(ParticleTypes.SMALL_FLAME, pX, pY, pZ, 0D, 0D, 0D);
+		var flame = ParticleTypes.SMALL_FLAME;
+
+		if(ModBlocks.NECROLORD_CANDELABRA.isIn(blockState))
+			flame = ModElements.SMALL_NECROLORD_FLAME.get();
+
+		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 	}
 }

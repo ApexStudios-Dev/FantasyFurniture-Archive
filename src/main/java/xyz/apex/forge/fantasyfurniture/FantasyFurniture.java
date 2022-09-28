@@ -304,6 +304,8 @@ public final class FantasyFurniture
 			EventBusHelper.addListener(RegisterParticleProvidersEvent.class, event -> {
 				var particleEngine = Minecraft.getInstance().particleEngine;
 				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
+				particleEngine.register(ModElements.NECROLORD_FLAME.get(), FlameParticle.Provider::new);
+				particleEngine.register(ModElements.SMALL_NECROLORD_FLAME.get(), FlameParticle.SmallFlameProvider::new);
 			});
 
 			EventBusHelper.addListener(this::onModifyVisualizer);

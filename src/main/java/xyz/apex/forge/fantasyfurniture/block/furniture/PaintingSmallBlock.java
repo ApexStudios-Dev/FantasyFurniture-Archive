@@ -55,6 +55,8 @@ public class PaintingSmallBlock extends BaseBlock
 			return HitBoxes.BONE.paintingSmall(this, blockState);
 		else if(ModBlocks.ROYAL_PAINTING_SMALL.isIn(blockState))
 			return HitBoxes.ROYAL.paintingSmall(this, blockState);
+		else if(ModBlocks.NECROLORD_PAINTING_SMALL.isIn(blockState))
+			return HitBoxes.NECROLORD.paintingSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

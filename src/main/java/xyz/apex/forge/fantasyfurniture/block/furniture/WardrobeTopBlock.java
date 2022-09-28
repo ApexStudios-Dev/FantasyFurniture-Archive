@@ -117,6 +117,8 @@ public class WardrobeTopBlock extends BaseMultiBlock
 			return HitBoxes.BONE.wardrobeTop(this, blockState);
 		else if(ModBlocks.ROYAL_WARDROBE_TOP.isIn(blockState))
 			return HitBoxes.ROYAL.wardrobeTop(this, blockState);
+		else if(ModBlocks.NECROLORD_WARDROBE_TOP.isIn(blockState))
+			return HitBoxes.NECROLORD.wardrobeTop(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

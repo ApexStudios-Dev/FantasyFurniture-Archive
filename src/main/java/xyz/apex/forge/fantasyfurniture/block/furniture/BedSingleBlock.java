@@ -88,6 +88,8 @@ public class BedSingleBlock extends BedBlock
 			return HitBoxes.BONE.bedSingle(this, blockState);
 		else if(ModBlocks.ROYAL_BED_SINGLE.isIn(blockState))
 			return HitBoxes.ROYAL.bedSingle(this, blockState);
+		else if(ModBlocks.NECROLORD_BED_SINGLE.isIn(blockState))
+			return HitBoxes.NECROLORD.bedSingle(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

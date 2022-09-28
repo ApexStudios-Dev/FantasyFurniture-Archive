@@ -25,6 +25,7 @@ public final class ModItemGroupCategories
 	public static final TagKey<Item> BONE_WITHER_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/bone/wither");
 	public static final TagKey<Item> DECORATIONS_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/decorations");
 	public static final TagKey<Item> ROYAL_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/royal");
+	public static final TagKey<Item> NECROLORD_TAG = ItemTags.tag(Mods.FANTASY_FURNITURE, "item_group_category/necrolord");
 
 	public static final ItemGroupCategory NORDIC = ItemGroupCategory
 			.builder("nordic")
@@ -74,6 +75,12 @@ public final class ModItemGroupCategories
 			.defaultIcon(() -> ModItems.ROYAL_BED_SINGLE.asStack())
 	.build();
 
+	public static final ItemGroupCategory NECROLORD = ItemGroupCategory
+			.builder("necrolord")
+			.tagged(NECROLORD_TAG)
+			.defaultIcon(() -> ModItems.NECROLORD_BED_SINGLE.asStack())
+	.build();
+
 	static void bootstrap()
 	{
 		NORDIC.addTranslationGenerator(REGISTRATE, "Nordic");
@@ -84,10 +91,11 @@ public final class ModItemGroupCategories
 		// BONE_WITHER.addTranslationGenerator(REGISTRATE, "Bone - Wither");
 		DECORATIONS.addTranslationGenerator(REGISTRATE, "Decorations");
 		ROYAL.addTranslationGenerator(REGISTRATE, "Royal");
+		NECROLORD.addTranslationGenerator(REGISTRATE, "Necrolord");
 
 		EventBusHelper.addEnqueuedListener(FMLCommonSetupEvent.class, event -> ItemGroupCategoryManager
 				.getInstance(ModRegistry.CREATIVE_MODE_TAB.get())
-				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ ROYAL, DECORATIONS)
+				.addCategories(NORDIC, DUNMER, VENTHYR, BONE, /*BONE_SKELETON,*/ /*BONE_WITHER,*/ ROYAL, DECORATIONS, NECROLORD)
 		);
 
 		REGISTRATE.addDataGenerator(ITEM_TAGS, provider -> provider.tag(BONE_TAG).addTags(BONE_SKELETON_TAG, BONE_WITHER_TAG));

@@ -91,6 +91,9 @@ public class OvenBlock extends BaseBlock.WithContainer<OvenBlockEntity, OvenMenu
 			return HitBoxes.BONE.oven(this, blockState);
 		else if(ModBlocks.ROYAL_OVEN.isIn(blockState))
 			return HitBoxes.ROYAL.oven(this, blockState);
+		// TODO:
+		/*else if(ModBlocks.NECROLORD_OVEN.isIn(blockState))
+			return HitBoxes.NECROLORD.oven(this, blockState);*/
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

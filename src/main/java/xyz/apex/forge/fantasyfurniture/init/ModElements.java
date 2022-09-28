@@ -30,8 +30,11 @@ import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
 public final class ModElements
 {
+	// TODO: Change to use Registrate rather than DeferredRegister
 	private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Mods.FANTASY_FURNITURE);
 	public static final RegistryObject<SimpleParticleType> SMALL_SOUL_FLAME = PARTICLE_TYPES.register("small_soul_fire_flame", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> NECROLORD_FLAME = PARTICLE_TYPES.register("necrolord_flame", () -> new SimpleParticleType(false));
+	public static final RegistryObject<SimpleParticleType> SMALL_NECROLORD_FLAME = PARTICLE_TYPES.register("small_necrolord_flame", () -> new SimpleParticleType(false));
 
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
@@ -85,7 +88,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_BOOKSHELF, ModBlocks.DUNMER_BOOKSHELF,
 					ModBlocks.VENTHYR_BOOKSHELF, ModBlocks.BONE_SKELETON_BOOKSHELF,
-					ModBlocks.BONE_WITHER_BOOKSHELF, ModBlocks.ROYAL_BOOKSHELF
+					ModBlocks.BONE_WITHER_BOOKSHELF, ModBlocks.ROYAL_BOOKSHELF,
+					ModBlocks.NECROLORD_BOOKSHELF
 			)
 			.register()
 	;
@@ -96,7 +100,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_CHEST, ModBlocks.DUNMER_CHEST,
 					ModBlocks.VENTHYR_CHEST, ModBlocks.BONE_SKELETON_CHEST,
-					ModBlocks.BONE_WITHER_CHEST, ModBlocks.ROYAL_CHEST
+					ModBlocks.BONE_WITHER_CHEST, ModBlocks.ROYAL_CHEST,
+					ModBlocks.NECROLORD_CHEST
 			)
 			.register()
 	;
@@ -110,7 +115,8 @@ public final class ModElements
 					ModBlocks.VENTHYR_DESK_LEFT, ModBlocks.VENTHYR_DESK_RIGHT,
 					ModBlocks.BONE_SKELETON_DESK_LEFT, ModBlocks.BONE_SKELETON_DESK_RIGHT,
 					ModBlocks.BONE_WITHER_DESK_LEFT, ModBlocks.BONE_WITHER_DESK_RIGHT,
-					ModBlocks.ROYAL_DESK_LEFT, ModBlocks.ROYAL_DESK_RIGHT
+					ModBlocks.ROYAL_DESK_LEFT, ModBlocks.ROYAL_DESK_RIGHT,
+					ModBlocks.NECROLORD_DESK_LEFT, ModBlocks.NECROLORD_DESK_RIGHT
 			)
 			.register()
 	;
@@ -121,7 +127,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_DRAWER, ModBlocks.DUNMER_DRAWER,
 					ModBlocks.VENTHYR_DRAWER, ModBlocks.BONE_SKELETON_DRAWER,
-					ModBlocks.BONE_WITHER_DRAWER, ModBlocks.ROYAL_DRAWER
+					ModBlocks.BONE_WITHER_DRAWER, ModBlocks.ROYAL_DRAWER,
+					ModBlocks.NECROLORD_DRAWER
 			)
 			.register()
 	;
@@ -132,7 +139,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_DRESSER, ModBlocks.DUNMER_DRESSER,
 					ModBlocks.VENTHYR_DRESSER, ModBlocks.BONE_SKELETON_DRESSER,
-					ModBlocks.BONE_WITHER_DRESSER, ModBlocks.ROYAL_DRESSER
+					ModBlocks.BONE_WITHER_DRESSER, ModBlocks.ROYAL_DRESSER,
+					ModBlocks.NECROLORD_DRESSER
 			)
 	.register();
 
@@ -142,7 +150,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_LOCKBOX, ModBlocks.DUNMER_LOCKBOX,
 					ModBlocks.VENTHYR_LOCKBOX, ModBlocks.BONE_SKELETON_LOCKBOX,
-					ModBlocks.BONE_WITHER_LOCKBOX, ModBlocks.ROYAL_LOCKBOX
+					ModBlocks.BONE_WITHER_LOCKBOX, ModBlocks.ROYAL_LOCKBOX,
+					ModBlocks.NECROLORD_LOCKBOX
 			)
 			.register()
 	;
@@ -153,7 +162,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_WARDROBE_BOTTOM, ModBlocks.DUNMER_WARDROBE_BOTTOM,
 					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
-					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM, ModBlocks.ROYAL_WARDROBE_BOTTOM
+					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM, ModBlocks.ROYAL_WARDROBE_BOTTOM,
+					ModBlocks.NECROLORD_WARDROBE_BOTTOM
 			)
 			.register()
 	;
@@ -165,6 +175,8 @@ public final class ModElements
 					ModBlocks.NORDIC_COUNTER, ModBlocks.DUNMER_COUNTER,
 					ModBlocks.VENTHYR_COUNTER, ModBlocks.BONE_SKELETON_COUNTER,
 					ModBlocks.BONE_WITHER_COUNTER, ModBlocks.ROYAL_COUNTER
+					// TODO:
+					/*ModBlocks.NECROLORD_COUNTER*/
 			)
 			.register()
 	;
@@ -175,7 +187,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_OVEN, ModBlocks.DUNMER_OVEN,
 					ModBlocks.VENTHYR_OVEN, ModBlocks.BONE_SKELETON_OVEN,
-					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN
+					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN,
+					ModBlocks.NECROLORD_LOCKBOX
 			)
 			.register()
 	;
@@ -216,7 +229,9 @@ public final class ModElements
 				@Override
 				public void registerParticleDefs()
 				{
-					SMALL_SOUL_FLAME.ifPresent(particleType -> definition(particleType).texture(ParticleTypes.SOUL_FIRE_FLAME));
+					definition(SMALL_SOUL_FLAME.get()).texture(ParticleTypes.SOUL_FIRE_FLAME);
+					definition(NECROLORD_FLAME.get()).texture(NECROLORD_FLAME.get());
+					definition(SMALL_NECROLORD_FLAME.get()).texture(NECROLORD_FLAME.get());
 				}
 			});
 

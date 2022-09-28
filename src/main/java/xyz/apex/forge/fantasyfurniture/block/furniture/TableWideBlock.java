@@ -63,6 +63,8 @@ public class TableWideBlock extends BaseMultiBlock
 			return HitBoxes.BONE.tableWide(this, blockState);
 		else if(ModBlocks.ROYAL_TABLE_WIDE.isIn(blockState))
 			return HitBoxes.ROYAL.tableWide(this, blockState);
+		else if(ModBlocks.NECROLORD_TABLE_WIDE.isIn(blockState))
+			return HitBoxes.NECROLORD.tableWide(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

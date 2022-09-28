@@ -82,6 +82,13 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
 	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
+	// public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register(); // TODO
+	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
+	// public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register(); // TODO
+	// public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register(); // TODO
+	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWeb("small").register(); // TODO
+	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_WIDE = spiderWeb("wide").register(); // TODO
+	// public static final BlockEntry<StackedPumpkinsBlock> STACKED_PUMPKINS = stackedPumpkins().register(); // TODO
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -137,6 +144,11 @@ public final class ModBlocks
 	public static final BlockEntry<WallMirrorBlock.Dyeable> ROYAL_WALL_MIRROR_LARGE = wallMirror("royal", "small", WallMirrorBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<WallMirrorMultiBlock.Dyeable> ROYAL_WALL_MIRROR_SMALL = wallMirrorMultiBlock("royal", "large", WallMirrorMultiBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	// endregion
+
+	// region: Necrolord
+	// public static final BlockEntry<ChainBlock> NECROLORD_BRONZE_CHAIN = chain("necrolord").register(); // TODO:
+	public static final BlockEntry<CandelabraBlock> NECROLORD_CANDELABRA = candelabra("necrolord").register();
+	//endregion
 	// endregion
 
 	// region: Furniture Sets
@@ -347,6 +359,40 @@ public final class ModBlocks
 	public static final BlockEntry<LockboxBlock.Dyeable> ROYAL_LOCKBOX = lockbox("royal", LockboxBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<CounterBlock.Dyeable> ROYAL_COUNTER = counter("royal", CounterBlock.Dyeable::new).transform(ModBlocks::applyDyeable).register();
 	public static final BlockEntry<OvenBlock.Dyeable> ROYAL_OVEN = oven("royal", OvenBlock.Dyeable::new).transform(ModBlocks::applyDyeable).transform(ModBlocks::mineablePickaxe).register();
+	// endregion
+
+	// region: Necrolord
+	public static final BlockEntry<Block> NECROLORD_WOOL = wool("necrolord", Block::new).register();
+	public static final BlockEntry<CarpetBlock> NECROLORD_CARPET = carpet("necrolord", CarpetBlock::new).register();
+	public static final BlockEntry<FurnitureWallLightBlock> NECROLORD_WALL_LIGHT = wallLight("necrolord", FurnitureWallLightBlock::new).register();
+	public static final BlockEntry<FloorLightBlock> NECROLORD_FLOOR_LIGHT = floorLight("necrolord", FloorLightBlock::new).register();
+	public static final BlockEntry<TableSmallBlock> NECROLORD_TABLE_SMALL = tableSmall("necrolord", TableSmallBlock::new).register();
+	public static final BlockEntry<TableWideBlock> NECROLORD_TABLE_WIDE = tableWide("necrolord", TableWideBlock::new).register();
+	public static final BlockEntry<TableLargeBlock> NECROLORD_TABLE_LARGE = tableLarge("necrolord", TableLargeBlock::new).register();
+	public static final BlockEntry<StoolBlock> NECROLORD_STOOL = stool("necrolord", StoolBlock::new).register();
+	public static final BlockEntry<CushionBlock> NECROLORD_CUSHION = cushion("necrolord", CushionBlock::new).register();
+	public static final BlockEntry<PaintingSmallBlock> NECROLORD_PAINTING_SMALL = paintingSmall("necrolord", PaintingSmallBlock::new).register();
+	public static final BlockEntry<PaintingWideBlock> NECROLORD_PAINTING_WIDE = paintingWide("necrolord", PaintingWideBlock::new).register();
+	public static final BlockEntry<DrawerBlock> NECROLORD_DRAWER = drawer("necrolord", DrawerBlock::new).register();
+	public static final BlockEntry<ShelfBlock> NECROLORD_SHELF = shelf("necrolord", ShelfBlock::new).register();
+	public static final BlockEntry<SofaBlock> NECROLORD_SOFA = sofa("necrolord", SofaBlock::new).register();
+	public static final BlockEntry<DeskBlock> NECROLORD_DESK_LEFT = deskLeft("necrolord", DeskBlock::new).register();
+	public static final BlockEntry<DeskBlock> NECROLORD_DESK_RIGHT = deskRight("necrolord", DeskBlock::new).register();
+	public static final BlockEntry<ChairBlock.OriginOnly> NECROLORD_CHAIR = chair("necrolord", ChairBlock.OriginOnly::new).register();
+	public static final BlockEntry<BenchBlock> NECROLORD_BENCH = bench("necrolord", BenchBlock::new).register();
+	public static final BlockEntry<BookshelfBlock> NECROLORD_BOOKSHELF = bookshelf("necrolord", BookshelfBlock::new).register();
+	public static final BlockEntry<ChestBlock> NECROLORD_CHEST = chest("necrolord", ChestBlock::new).register();
+	public static final BlockEntry<DresserBlock> NECROLORD_DRESSER = dresser("necrolord", DresserBlock::new).register();
+	public static final BlockEntry<WardrobeBottomBlock> NECROLORD_WARDROBE_BOTTOM = wardrobeBottom("necrolord", WardrobeBottomBlock::new).register();
+	public static final BlockEntry<WardrobeTopBlock> NECROLORD_WARDROBE_TOP = wardrobeTop("necrolord", WardrobeTopBlock::new).register();
+	public static final BlockEntry<BedSingleBlock> NECROLORD_BED_SINGLE = bedSingle("necrolord", BedSingleBlock::new).register();
+	public static final BlockEntry<BedDoubleBlock> NECROLORD_BED_DOUBLE = bedDouble("necrolord", BedDoubleBlock::new).register();
+	public static final BlockEntry<ChandelierBlock> NECROLORD_CHANDELIER = chandelier("necrolord", ChandelierBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> NECROLORD_DOOR_SINGLE = doorSingle("necrolord", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> NECROLORD_DOOR_DOUBLE = doorDouble("necrolord", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<LockboxBlock> NECROLORD_LOCKBOX = lockbox("necrolord", LockboxBlock::new).register();
+	// public static final BlockEntry<CounterBlock> NECROLORD_COUNTER = counter("necrolord", CounterBlock::new).register();
+	// public static final BlockEntry<OvenBlock> NECROLORD_OVEN = oven("necrolord", OvenBlock::new).transform(ModBlocks::mineablePickaxe).register();
 	// endregion
 	// endregion
 
@@ -1605,6 +1651,8 @@ public final class ModBlocks
 			}
 			else if(name.startsWith("royal"))
 				return new ResourceLocation(registryName.getNamespace(), "particles/royal");
+			else if(name.startsWith("necrolord"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/necrolord");
 
 			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
 		}

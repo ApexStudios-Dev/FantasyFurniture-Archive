@@ -89,6 +89,8 @@ public class BedDoubleBlock extends BedBlock
 			return HitBoxes.BONE.bedDouble(this, blockState);
 		else if(ModBlocks.ROYAL_BED_DOUBLE.isIn(blockState))
 			return HitBoxes.ROYAL.bedDouble(this, blockState);
+		else if(ModBlocks.NECROLORD_BED_DOUBLE.isIn(blockState))
+			return HitBoxes.NECROLORD.bedDouble(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
