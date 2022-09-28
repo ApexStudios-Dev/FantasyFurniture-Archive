@@ -82,7 +82,7 @@ public final class ModBlocks
 	public static final BlockEntry<MuffinsBlock> MUFFINS_SWEETBERRY = muffins("sweetberry").register();
 	public static final BlockEntry<PaperStackBlock> PAPER_STACK = paperStack().register();
 	public static final BlockEntry<CookieJarBlock> COOKIE_JAR = cookieJar().register();
-	// public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register(); // TODO
+	public static final BlockEntry<BrewingCauldronBlock> BREWING_CAULDRON = brewingCauldron().register();
 	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
 	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
 	// public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register(); // TODO
@@ -785,6 +785,20 @@ public final class ModBlocks
 		return REGISTRATE
 				.object("decorations/gravestone")
 				.block(GravestoneBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.transform(ModBlocks::mineablePickaxe)
+				.initialProperties(Material.STONE, MaterialColor.STONE)
+				.strength(.3F)
+				.sound(SoundType.STONE)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, BrewingCauldronBlock, BasicRegistrate> brewingCauldron()
+	{
+		return REGISTRATE
+				.object("decorations/brewing_cauldron")
+				.block(BrewingCauldronBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.transform(ModBlocks::mineablePickaxe)
 				.initialProperties(Material.STONE, MaterialColor.STONE)
