@@ -66,10 +66,10 @@ public class FurnitureDoorBlock extends DoorBlock
 			return HitBoxes.ROYAL.doorDouble(this, blockState);
 		else if(ModBlocks.ROYAL_DOOR_SINGLE.isIn(blockState))
 			return HitBoxes.ROYAL.doorSingle(this, blockState);
-		else if(ModBlocks.NECROLORD_DOOR_DOUBLE.isIn(blockState))
+		/*else if(ModBlocks.NECROLORD_DOOR_DOUBLE.isIn(blockState))
 			return HitBoxes.NECROLORD.doorDouble(this, blockState);
 		else if(ModBlocks.NECROLORD_DOOR_SINGLE.isIn(blockState))
-			return HitBoxes.NECROLORD.doorSingle(this, blockState);
+			return HitBoxes.NECROLORD.doorSingle(this, blockState);*/
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -150,8 +150,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_LOCKBOX, ModBlocks.DUNMER_LOCKBOX,
 					ModBlocks.VENTHYR_LOCKBOX, ModBlocks.BONE_SKELETON_LOCKBOX,
-					ModBlocks.BONE_WITHER_LOCKBOX, ModBlocks.ROYAL_LOCKBOX,
-					ModBlocks.NECROLORD_LOCKBOX
+					ModBlocks.BONE_WITHER_LOCKBOX, ModBlocks.ROYAL_LOCKBOX
+					// ModBlocks.NECROLORD_LOCKBOX
 			)
 			.register()
 	;
@@ -187,8 +187,8 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_OVEN, ModBlocks.DUNMER_OVEN,
 					ModBlocks.VENTHYR_OVEN, ModBlocks.BONE_SKELETON_OVEN,
-					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN,
-					ModBlocks.NECROLORD_LOCKBOX
+					ModBlocks.BONE_WITHER_OVEN, ModBlocks.ROYAL_OVEN
+					// ModBlocks.NECROLORD_OVEN
 			)
 			.register()
 	;
