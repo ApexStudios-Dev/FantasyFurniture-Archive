@@ -87,8 +87,8 @@ public final class ModBlocks
 	// public static final BlockEntry<FloatingTomesBlock> FLOATING_TOMES = floatingTomes().register(); // TODO
 	public static final BlockEntry<GravestoneBlock> GRAVESTONE = gravestone().register();
 	public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register();
-	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWeb("small").register(); // TODO
-	// public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_WIDE = spiderWeb("wide").register(); // TODO
+	public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWebSmall().register();
+	public static final BlockEntry<SpiderWebMultiBlock> SPIDER_WEB_WIDE = spiderWebWide().register();
 	// public static final BlockEntry<StackedPumpkinsBlock> STACKED_PUMPKINS = stackedPumpkins().register(); // TODO
 	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
 
@@ -857,6 +857,36 @@ public final class ModBlocks
 							.rotationY(yRot)
 					.build();
 				}))
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, SpiderWebBlock, BasicRegistrate> spiderWebSmall()
+	{
+		return REGISTRATE
+				.object("decorations/spider_web_small")
+				.block(SpiderWebBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.noCollission()
+				.lang("Spider Web Small")
+				.initialProperties(Material.WEB)
+				.strength(4F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, SpiderWebMultiBlock, BasicRegistrate> spiderWebWide()
+	{
+		return REGISTRATE
+				.object("decorations/spider_web_wide")
+				.block(SpiderWebMultiBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.noCollission()
+				.lang("Spider Web Wide")
+				.initialProperties(Material.WEB)
+				.strength(4F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
 		;
 	}
 
@@ -1733,6 +1763,8 @@ public final class ModBlocks
 				return new ResourceLocation(registryName.getNamespace(), "particles/royal");
 			else if(name.startsWith("necrolord"))
 				return new ResourceLocation(registryName.getNamespace(), "particles/necrolord");
+			else if(name.startsWith("spider_web"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/spider_webs");
 
 			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
 		}
