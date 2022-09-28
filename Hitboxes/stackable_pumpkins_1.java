@@ -1,1 +1,0 @@
-VoxelShapes.join(Block.box(4, 0, 4, 12, 7, 12), Block.box(3.25, 7, 3.25, 12.75, 12, 12.75), IBooleanFunction.OR)

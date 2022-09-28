@@ -89,7 +89,7 @@ public final class ModBlocks
 	public static final BlockEntry<HangingHerbsBlock> HANGING_HERBS = hangingHerbs().register();
 	public static final BlockEntry<SpiderWebBlock> SPIDER_WEB_SMALL = spiderWebSmall().register();
 	public static final BlockEntry<SpiderWebMultiBlock> SPIDER_WEB_WIDE = spiderWebWide().register();
-	// public static final BlockEntry<StackedPumpkinsBlock> STACKED_PUMPKINS = stackedPumpkins().register(); // TODO
+	public static final BlockEntry<StackablePumpkinsBlock> STACKABLE_PUMPKINS = stackablePumpkins().register();
 	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
 
 	// region: Nordic
@@ -572,6 +572,20 @@ public final class ModBlocks
 				.lang("Book Stack")
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, StackablePumpkinsBlock, BasicRegistrate> stackablePumpkins()
+	{
+		return REGISTRATE
+				.object("decorations/stackable_pumpkins")
+				.block(StackablePumpkinsBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.lang("Stackable Pumpkins")
+				.initialProperties(Material.WOOD, MaterialColor.COLOR_ORANGE)
+				.strength(1F)
 				.sound(SoundType.WOOD)
 				.blockState(ModBlocks::horizontalBlockState)
 		;
