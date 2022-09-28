@@ -85,7 +85,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_BOOKSHELF, ModBlocks.DUNMER_BOOKSHELF,
 					ModBlocks.VENTHYR_BOOKSHELF, ModBlocks.BONE_SKELETON_BOOKSHELF,
-					ModBlocks.BONE_WITHER_BOOKSHELF
+					ModBlocks.BONE_WITHER_BOOKSHELF, ModBlocks.ROYAL_BOOKSHELF
 			)
 			.register()
 	;
@@ -96,7 +96,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_CHEST, ModBlocks.DUNMER_CHEST,
 					ModBlocks.VENTHYR_CHEST, ModBlocks.BONE_SKELETON_CHEST,
-					ModBlocks.BONE_WITHER_CHEST
+					ModBlocks.BONE_WITHER_CHEST, ModBlocks.ROYAL_CHEST
 			)
 			.register()
 	;
@@ -109,7 +109,8 @@ public final class ModElements
 					ModBlocks.DUNMER_DESK_LEFT, ModBlocks.DUNMER_DESK_RIGHT,
 					ModBlocks.VENTHYR_DESK_LEFT, ModBlocks.VENTHYR_DESK_RIGHT,
 					ModBlocks.BONE_SKELETON_DESK_LEFT, ModBlocks.BONE_SKELETON_DESK_RIGHT,
-					ModBlocks.BONE_WITHER_DESK_LEFT, ModBlocks.BONE_WITHER_DESK_RIGHT
+					ModBlocks.BONE_WITHER_DESK_LEFT, ModBlocks.BONE_WITHER_DESK_RIGHT,
+					ModBlocks.ROYAL_DESK_LEFT, ModBlocks.ROYAL_DESK_RIGHT
 			)
 			.register()
 	;
@@ -120,7 +121,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_DRAWER, ModBlocks.DUNMER_DRAWER,
 					ModBlocks.VENTHYR_DRAWER, ModBlocks.BONE_SKELETON_DRAWER,
-					ModBlocks.BONE_WITHER_DRAWER
+					ModBlocks.BONE_WITHER_DRAWER, ModBlocks.ROYAL_DRAWER
 			)
 			.register()
 	;
@@ -131,7 +132,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_DRESSER, ModBlocks.DUNMER_DRESSER,
 					ModBlocks.VENTHYR_DRESSER, ModBlocks.BONE_SKELETON_DRESSER,
-					ModBlocks.BONE_WITHER_DRESSER
+					ModBlocks.BONE_WITHER_DRESSER, ModBlocks.ROYAL_DRESSER
 			)
 	.register();
 
@@ -141,7 +142,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_LOCKBOX, ModBlocks.DUNMER_LOCKBOX,
 					ModBlocks.VENTHYR_LOCKBOX, ModBlocks.BONE_SKELETON_LOCKBOX,
-					ModBlocks.BONE_WITHER_LOCKBOX
+					ModBlocks.BONE_WITHER_LOCKBOX, ModBlocks.ROYAL_LOCKBOX
 			)
 			.register()
 	;
@@ -152,7 +153,7 @@ public final class ModElements
 			.validBlock(
 					ModBlocks.NORDIC_WARDROBE_BOTTOM, ModBlocks.DUNMER_WARDROBE_BOTTOM,
 					ModBlocks.VENTHYR_WARDROBE_BOTTOM, ModBlocks.BONE_SKELETON_WARDROBE_BOTTOM,
-					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM
+					ModBlocks.BONE_WITHER_WARDROBE_BOTTOM, ModBlocks.ROYAL_WARDROBE_BOTTOM
 			)
 			.register()
 	;
