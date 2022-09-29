@@ -47,7 +47,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> TANKARD_HONEYMEAD = blockItem(BlockItem::new, ModBlocks.TANKARD_HONEYMEAD).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TankardsBlock.TANKARDS)).register();
 	public static final ItemEntry<BlockItem> TANKARD_MILK = blockItem(BlockItem::new, ModBlocks.TANKARD_MILK).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TankardsBlock.TANKARDS)).register();
 	public static final ItemEntry<BlockItem> TANKARD_SWEETBERRY = blockItem(BlockItem::new, ModBlocks.TANKARD_SWEETBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, TankardsBlock.TANKARDS)).register();
-	public static final ItemEntry<BlockItem> MUSHROOMS_RED = blockItem(BlockItem::new, ModBlocks.MUSHROOMS_RED).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MushroomsRedBlock.MUSHROOMS)).register();
+	public static final ItemEntry<BlockItem> MUSHROOMS_RED = blockItem(BlockItem::new, ModBlocks.MUSHROOMS_RED).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MushroomsBlock.MUSHROOMS)).register();
 	public static final ItemEntry<BlockItem> COIN_STOCK_GOLD = blockItem(BlockItem::new, ModBlocks.COIN_STOCK_GOLD).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> COIN_STOCK_IRON = blockItem(BlockItem::new, ModBlocks.COIN_STOCK_IRON).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> MUFFINS_BLUEBERRY = blockItem(BlockItem::new, ModBlocks.MUFFINS_BLUEBERRY).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MuffinsBlock.MUFFINS)).register();
@@ -63,6 +63,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> SPIDER_WEB_WIDE = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_WIDE).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> STACKABLE_PUMPKINS = blockItem(BlockItem::new, ModBlocks.STACKABLE_PUMPKINS).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, StackablePumpkinsBlock.PUMPKINS)).register(); // TODO
 	public static final ItemEntry<BlockItem> BRONZE_CHAIN = blockItem(BlockItem::new, ModBlocks.BRONZE_CHAIN).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
+	public static final ItemEntry<BlockItem> MUSHROOMS_BROWN = blockItem(BlockItem::new, ModBlocks.MUSHROOMS_BROWN).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MushroomsBlock.MUSHROOMS)).register();
 
 	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(BlockItem::new, ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();

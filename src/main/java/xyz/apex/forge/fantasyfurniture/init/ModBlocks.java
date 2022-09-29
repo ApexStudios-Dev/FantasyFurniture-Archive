@@ -75,7 +75,7 @@ public final class ModBlocks
 	public static final BlockEntry<TankardsBlock> TANKARD_HONEYMEAD = tankards("honeymead").register();
 	public static final BlockEntry<TankardsBlock> TANKARD_MILK = tankards("milk").register();
 	public static final BlockEntry<TankardsBlock> TANKARD_SWEETBERRY = tankards("sweetberry").register();
-	public static final BlockEntry<MushroomsRedBlock> MUSHROOMS_RED = mushroomsRed().register();
+	public static final BlockEntry<MushroomsBlock> MUSHROOMS_RED = mushrooms("red", MaterialColor.COLOR_RED).register();
 	public static final BlockEntry<CoinStackBlock> COIN_STOCK_GOLD = coinStack("gold").register();
 	public static final BlockEntry<CoinStackBlock> COIN_STOCK_IRON = coinStack("iron").register();
 	public static final BlockEntry<MuffinsBlock> MUFFINS_BLUEBERRY = muffins("blueberry").register();
@@ -91,6 +91,7 @@ public final class ModBlocks
 	public static final BlockEntry<SpiderWebMultiBlock> SPIDER_WEB_WIDE = spiderWebWide().register();
 	public static final BlockEntry<StackablePumpkinsBlock> STACKABLE_PUMPKINS = stackablePumpkins().register();
 	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
+	public static final BlockEntry<MushroomsBlock> MUSHROOMS_BROWN = mushrooms("brown", MaterialColor.COLOR_BROWN).register();
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -663,14 +664,14 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<BasicRegistrate, MushroomsRedBlock, BasicRegistrate> mushroomsRed()
+	private static BlockBuilder<BasicRegistrate, MushroomsBlock, BasicRegistrate> mushrooms(String type, MaterialColor color)
 	{
 		return REGISTRATE
-				.object("decorations/mushrooms_red")
-				.block(MushroomsRedBlock::new)
+				.object("decorations/mushrooms_%s".formatted(type))
+				.block(MushroomsBlock::new)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
-				.lang("Red Mushrooms")
-				.initialProperties(Material.PLANT, MaterialColor.COLOR_RED)
+				.lang("%s Mushrooms".formatted(RegistrateLangProvider.toEnglishName(type)))
+				.initialProperties(Material.PLANT, color)
 				.sound(SoundType.GRASS)
 				.noCollission()
 				.randomTicks()
