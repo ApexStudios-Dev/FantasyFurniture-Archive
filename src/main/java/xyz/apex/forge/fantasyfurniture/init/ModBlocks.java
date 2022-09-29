@@ -92,6 +92,7 @@ public final class ModBlocks
 	public static final BlockEntry<StackablePumpkinsBlock> STACKABLE_PUMPKINS = stackablePumpkins().register();
 	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
 	public static final BlockEntry<MushroomsBlock> MUSHROOMS_BROWN = mushrooms("brown", MaterialColor.COLOR_BROWN).register();
+	public static final BlockEntry<PotionBottlesBlock> POTION_BOTTLES = potionBottles().transform(ModBlocks::applyDyeable).register();
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -788,6 +789,21 @@ public final class ModBlocks
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.transform(ModBlocks::mineablePickaxe)
 				.lang("Mead Bottles")
+				.initialProperties(Material.GLASS)
+				.strength(.3F)
+				.sound(SoundType.GLASS)
+				.blockState(ModBlocks::horizontalBlockState)
+		;
+	}
+
+	private static BlockBuilder<BasicRegistrate, PotionBottlesBlock, BasicRegistrate> potionBottles()
+	{
+		return REGISTRATE
+				.object("decorations/potion_bottles")
+				.block(PotionBottlesBlock::new)
+				.transform(ModBlocks::applyFurnitureBlockDefaults)
+				.transform(ModBlocks::mineablePickaxe)
+				.lang("Potion Bottles")
 				.initialProperties(Material.GLASS)
 				.strength(.3F)
 				.sound(SoundType.GLASS)
