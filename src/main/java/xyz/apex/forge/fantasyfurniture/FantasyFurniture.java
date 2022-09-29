@@ -30,6 +30,7 @@ import xyz.apex.forge.apexcore.lib.event.client.BlockVisualizerEvent;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.trust.TrustManager;
 import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;
@@ -50,6 +51,7 @@ public final class FantasyFurniture
 
 	public FantasyFurniture()
 	{
+		TrustManager.throwIfUntrusted(Mods.FANTASY_FURNITURE);
 		ModRegistry.bootstrap();
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> Client::new);
 
