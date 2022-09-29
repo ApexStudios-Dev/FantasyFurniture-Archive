@@ -64,7 +64,8 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> STACKABLE_PUMPKINS = blockItem(BlockItem::new, ModBlocks.STACKABLE_PUMPKINS).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, StackablePumpkinsBlock.PUMPKINS)).register(); // TODO
 	public static final ItemEntry<BlockItem> BRONZE_CHAIN = blockItem(BlockItem::new, ModBlocks.BRONZE_CHAIN).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> MUSHROOMS_BROWN = blockItem(BlockItem::new, ModBlocks.MUSHROOMS_BROWN).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MushroomsBlock.MUSHROOMS)).register();
-	public static final ItemEntry<BlockItem> POTION_BOTTLES = blockItem(BlockItem::new, ModBlocks.POTION_BOTTLES).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, PotionBottlesBlock.POTIONS)).register();
+	public static final ItemEntry<BlockItem> POTION_BOTTLES = blockItem(BlockItem::new, ModBlocks.POTION_BOTTLES).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, PotionBottlesBlock.POTIONS)).register();
+	public static final ItemEntry<BlockItem> DYEABLE_POTION_BOTTLES = blockItem(BlockItem::new, ModBlocks.DYEABLE_POTION_BOTTLES).transform(ModItems::applyDyeable).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, PotionBottlesBlock.POTIONS)).register();
 
 	// region: Nordic
 	public static final ItemEntry<BlockItem> NORDIC_BOILED_CREME_TREATS = blockItem(BlockItem::new, ModBlocks.NORDIC_BOILED_CREME_TREATS).tag(ModItemGroupCategories.DECORATIONS_TAG, ModItemGroupCategories.NORDIC_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, BoiledCremeTreatsBlock.TREATS)).register();

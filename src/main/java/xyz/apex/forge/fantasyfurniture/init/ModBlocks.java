@@ -92,7 +92,8 @@ public final class ModBlocks
 	public static final BlockEntry<StackablePumpkinsBlock> STACKABLE_PUMPKINS = stackablePumpkins().register();
 	public static final BlockEntry<ChainBlock> BRONZE_CHAIN = chain("bronze").register();
 	public static final BlockEntry<MushroomsBlock> MUSHROOMS_BROWN = mushrooms("brown", MaterialColor.COLOR_BROWN).register();
-	public static final BlockEntry<PotionBottlesBlock> POTION_BOTTLES = potionBottles().transform(ModBlocks::applyDyeable).register();
+	public static final BlockEntry<PotionBottlesBlock> POTION_BOTTLES = potionBottles(PotionBottlesBlock::new, "").register();
+	public static final BlockEntry<PotionBottlesBlock.Dyeable> DYEABLE_POTION_BOTTLES = potionBottles(PotionBottlesBlock.Dyeable::new, "_dyeable").transform(ModBlocks::applyDyeable).register();
 
 	// region: Nordic
 	public static final BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();
@@ -796,11 +797,11 @@ public final class ModBlocks
 		;
 	}
 
-	private static BlockBuilder<BasicRegistrate, PotionBottlesBlock, BasicRegistrate> potionBottles()
+	private static <BLOCK extends PotionBottlesBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> potionBottles(BlockFactory<BLOCK> blockFactory, String suffix)
 	{
 		return REGISTRATE
-				.object("decorations/potion_bottles")
-				.block(PotionBottlesBlock::new)
+				.object("decorations/potion_bottles%s".formatted(suffix))
+				.block(blockFactory)
 				.transform(ModBlocks::applyFurnitureBlockDefaults)
 				.transform(ModBlocks::mineablePickaxe)
 				.lang("Potion Bottles")
@@ -1810,6 +1811,8 @@ public final class ModBlocks
 				return new ResourceLocation(registryName.getNamespace(), "particles/necrolord");
 			else if(name.startsWith("spider_web"))
 				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/spider_webs");
+			else if(name.startsWith("potion_bottles"))
+				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/potion_bottles");
 
 			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
 		}
