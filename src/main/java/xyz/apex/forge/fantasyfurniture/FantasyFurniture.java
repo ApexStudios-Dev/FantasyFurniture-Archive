@@ -63,6 +63,7 @@ public final class FantasyFurniture
 			// registerBuiltInPack(event, <mod_id>);
 			registerBuiltInPack(event, Mods.CTM);
 			registerBuiltInPack(event, OPTIFINE_ID);
+			registerBuiltInPack(event, "xycraft_core");
 		});
 	}
 
