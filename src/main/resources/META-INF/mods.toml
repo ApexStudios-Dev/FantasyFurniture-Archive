@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[40,)"
 license="GNU General Public License v3.0"
-issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
+issueTrackerURL="https://discord.apexstudios.dev/"
 
 [[mods]]
 	modId="fantasyfurniture"
