@@ -3561,17 +3561,14 @@ public abstract class HitBoxes
 		@Override
 		protected VoxelShape doorDoubleShape()
 		{
-			// TODO:
 			return VoxelShaper.or(
-					box(0, 0, 0, 13, 2, 3),
-					box(0, 10, 0, 13, 12, 3),
-					box(0, 20, 0, 13, 22, 3),
-					box(13, 0, 0, 16, 32, 3),
-					box(12, 28, 0, 13, 32, 3),
-					box(10, 29, 0, 12, 32, 3),
-					box(8, 30, 0, 10, 32, 3),
-					box(3, 31, 0, 8, 32, 3),
-					box(0, 2, 0.5, 13, 32, 2.5)
+					Block.box(0, 0, 0.5, 13, 29, 2.5),
+					Block.box(13, 0, 0, 16, 32, 3),
+					Block.box(12, 20, 0, 13, 32, 3),
+					Block.box(11, 24, 0, 12, 32, 3),
+					Block.box(9, 27, 0, 11, 32, 3),
+					Block.box(4, 28, 0, 9, 32, 3),
+					Block.box(0, 29, 0, 4, 32, 3)
 			);
 		}
 

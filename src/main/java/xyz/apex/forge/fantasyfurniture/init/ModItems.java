@@ -365,7 +365,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NECROLORD_BED_DOUBLE = bed(BlockItem::new, ModBlocks.NECROLORD_BED_DOUBLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	public static final ItemEntry<BlockItem> NECROLORD_CHANDELIER = blockItem(BlockItem::new, ModBlocks.NECROLORD_CHANDELIER).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	// public static final ItemEntry<BlockItem> NECROLORD_DOOR_SINGLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_SINGLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
-	// public static final ItemEntry<BlockItem> NECROLORD_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_DOUBLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
+	public static final ItemEntry<BlockItem> NECROLORD_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_DOUBLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	// public static final ItemEntry<BlockItem> NECROLORD_LOCKBOX = blockItem(BlockItem::new, ModBlocks.NECROLORD_LOCKBOX).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	// public static final ItemEntry<BlockItem> NECROLORD_COUNTER = counter(BlockItem::new, ModBlocks.NECROLORD_COUNTER).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	// public static final ItemEntry<BlockItem> NECROLORD_OVEN = blockItem(BlockItem::new, ModBlocks.NECROLORD_OVEN).tag(ModItemGroupCategories.NECROLORD_TAG).transform(ModBlocks::mineablePickaxe).register();
