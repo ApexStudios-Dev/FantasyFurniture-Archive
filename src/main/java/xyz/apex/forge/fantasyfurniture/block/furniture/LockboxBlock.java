@@ -72,8 +72,8 @@ public class LockboxBlock extends BaseBlock.WithContainer<LockboxBlockEntity, Sm
 			return HitBoxes.BONE.lockbox(this, blockState);
 		else if(ModBlocks.ROYAL_LOCKBOX.isIn(blockState))
 			return HitBoxes.ROYAL.lockbox(this, blockState);
-		/*else if(ModBlocks.NECROLORD_LOCKBOX.isIn(blockState))
-			return HitBoxes.NECROLORD.lockbox(this, blockState);*/
+		else if(ModBlocks.NECROLORD_LOCKBOX.isIn(blockState))
+			return HitBoxes.NECROLORD.lockbox(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

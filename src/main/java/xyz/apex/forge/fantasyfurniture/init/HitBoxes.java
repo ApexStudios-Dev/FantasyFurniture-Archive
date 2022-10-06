@@ -3277,11 +3277,7 @@ public abstract class HitBoxes
 		@Override
 		protected VoxelShape lockboxShape()
 		{
-			// TODO:
-			return VoxelShaper.or(
-					box(2, 0, 3, 14, 9, 13),
-					box(2, 9, 5, 14, 10, 11)
-			);
+			return Block.box(0.5, 0, 2.5, 15.5, 10, 13.5);
 		}
 
 		@Override
@@ -3575,49 +3571,38 @@ public abstract class HitBoxes
 		@Override
 		protected VoxelShape doorSingleShape()
 		{
-			// TODO:
-			return VoxelShaper.or(
-					box(0, 0, 0, 13, 2, 3),
-					box(0, 10, 0, 13, 12, 3),
-					box(0, 20, 0, 13, 22, 3),
-					box(0, 30, 0, 13, 32, 3),
-					box(13, 0, 0, 16, 32, 3),
-					box(0, 2, 0.5, 13, 30, 2.5)
-			);
+			return Block.box(0, 0, 0, 16, 32, 3);
 		}
 
 		@Override
 		protected VoxelShape counterSingleShape()
 		{
-			// TODO:
 			return VoxelShaper.or(
-					box(0, 0, 3, 16, 13, 16),
-					box(0, 13, 0, 16, 16, 16),
-					box(1, 1, 2, 15, 12, 3)
+					Block.box(0, 0, 3, 16, 13, 16),
+					Block.box(1, 1, 2, 15, 12, 3),
+					Block.box(0, 13, 0, 16, 16, 16)
 			);
 		}
 
 		@Override
 		protected VoxelShape counterCornerShape()
 		{
-			// TODO:
 			return VoxelShaper.or(
-					box(0, 0, 0, 13, 13, 4),
-					box(0, 0, 3, 16, 13, 16),
-					box(0, 13, 0, 16, 16, 16)
+					Block.box(0, 0, 0, 13, 13, 3),
+					Block.box(0, 0, 3, 16, 13, 16),
+					Block.box(0, 13, 0, 16, 16, 16)
 			);
 		}
 
 		@Override
 		protected VoxelShape ovenShape()
 		{
-			// TODO:
 			return VoxelShaper.or(
-					Block.box(0, 0, 0, 16, 1, 16),
-					Block.box(0, 1, 1, 16, 9, 16),
-					Block.box(0, 9, 0, 16, 10, 16),
-					Block.box(1, 10, 3, 15, 14, 16),
-					Block.box(2, 14, 3, 14, 16, 16)
+					Block.box(1, 0, 1, 4, 2, 4),
+					Block.box(1, 0, 12, 4, 2, 15),
+					Block.box(12, 0, 12, 15, 2, 15),
+					Block.box(12, 0, 1, 15, 2, 4),
+					Block.box(0, 2, 0, 16, 16, 16)
 			);
 		}
 	}

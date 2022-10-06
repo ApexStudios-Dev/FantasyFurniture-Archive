@@ -61,7 +61,7 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> HANGING_HERBS = blockItem(BlockItem::new, ModBlocks.HANGING_HERBS).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> SPIDER_WEB_SMALL = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_SMALL).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> SPIDER_WEB_WIDE = blockItem(BlockItem::new, ModBlocks.SPIDER_WEB_WIDE).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
-	public static final ItemEntry<BlockItem> STACKABLE_PUMPKINS = blockItem(BlockItem::new, ModBlocks.STACKABLE_PUMPKINS).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, StackablePumpkinsBlock.PUMPKINS)).register(); // TODO
+	public static final ItemEntry<BlockItem> STACKABLE_PUMPKINS = blockItem(BlockItem::new, ModBlocks.STACKABLE_PUMPKINS).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, StackablePumpkinsBlock.PUMPKINS)).register();
 	public static final ItemEntry<BlockItem> BRONZE_CHAIN = blockItem(BlockItem::new, ModBlocks.BRONZE_CHAIN).tag(ModItemGroupCategories.DECORATIONS_TAG).register();
 	public static final ItemEntry<BlockItem> MUSHROOMS_BROWN = blockItem(BlockItem::new, ModBlocks.MUSHROOMS_BROWN).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, MushroomsBlock.MUSHROOMS)).register();
 	public static final ItemEntry<BlockItem> POTION_BOTTLES = blockItem(BlockItem::new, ModBlocks.POTION_BOTTLES).tag(ModItemGroupCategories.DECORATIONS_TAG).model((ctx, provider) -> stackedBlockItemModel(ctx, provider, PotionBottlesBlock.POTIONS)).register();
@@ -364,11 +364,11 @@ public final class ModItems
 	public static final ItemEntry<BlockItem> NECROLORD_BED_SINGLE = bed(BlockItem::new, ModBlocks.NECROLORD_BED_SINGLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	public static final ItemEntry<BlockItem> NECROLORD_BED_DOUBLE = bed(BlockItem::new, ModBlocks.NECROLORD_BED_DOUBLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	public static final ItemEntry<BlockItem> NECROLORD_CHANDELIER = blockItem(BlockItem::new, ModBlocks.NECROLORD_CHANDELIER).tag(ModItemGroupCategories.NECROLORD_TAG).register();
-	// public static final ItemEntry<BlockItem> NECROLORD_DOOR_SINGLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_SINGLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
+	public static final ItemEntry<BlockItem> NECROLORD_DOOR_SINGLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_SINGLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	public static final ItemEntry<BlockItem> NECROLORD_DOOR_DOUBLE = door(BlockItem::new, ModBlocks.NECROLORD_DOOR_DOUBLE).tag(ModItemGroupCategories.NECROLORD_TAG).register();
-	// public static final ItemEntry<BlockItem> NECROLORD_LOCKBOX = blockItem(BlockItem::new, ModBlocks.NECROLORD_LOCKBOX).tag(ModItemGroupCategories.NECROLORD_TAG).register();
-	// public static final ItemEntry<BlockItem> NECROLORD_COUNTER = counter(BlockItem::new, ModBlocks.NECROLORD_COUNTER).tag(ModItemGroupCategories.NECROLORD_TAG).register();
-	// public static final ItemEntry<BlockItem> NECROLORD_OVEN = blockItem(BlockItem::new, ModBlocks.NECROLORD_OVEN).tag(ModItemGroupCategories.NECROLORD_TAG).transform(ModBlocks::mineablePickaxe).register();
+	public static final ItemEntry<BlockItem> NECROLORD_LOCKBOX = blockItem(BlockItem::new, ModBlocks.NECROLORD_LOCKBOX).tag(ModItemGroupCategories.NECROLORD_TAG).register();
+	public static final ItemEntry<BlockItem> NECROLORD_COUNTER = counter(BlockItem::new, ModBlocks.NECROLORD_COUNTER).tag(ModItemGroupCategories.NECROLORD_TAG).register();
+	public static final ItemEntry<BlockItem> NECROLORD_OVEN = blockItem(BlockItem::new, ModBlocks.NECROLORD_OVEN).tag(ModItemGroupCategories.NECROLORD_TAG).register();
 	// endregion
 	// endregion
 

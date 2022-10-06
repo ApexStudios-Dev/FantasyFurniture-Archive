@@ -392,11 +392,11 @@ public final class ModBlocks
 	public static final BlockEntry<BedSingleBlock> NECROLORD_BED_SINGLE = bedSingle("necrolord", BedSingleBlock::new).register();
 	public static final BlockEntry<BedDoubleBlock> NECROLORD_BED_DOUBLE = bedDouble("necrolord", BedDoubleBlock::new).register();
 	public static final BlockEntry<ChandelierBlock> NECROLORD_CHANDELIER = chandelier("necrolord", ChandelierBlock::new).register();
-	// public static final BlockEntry<FurnitureDoorBlock> NECROLORD_DOOR_SINGLE = doorSingle("necrolord", FurnitureDoorBlock::new).register();
+	public static final BlockEntry<FurnitureDoorBlock> NECROLORD_DOOR_SINGLE = doorSingle("necrolord", FurnitureDoorBlock::new).register();
 	public static final BlockEntry<FurnitureDoorBlock> NECROLORD_DOOR_DOUBLE = doorDouble("necrolord", FurnitureDoorBlock::new).register();
-	// public static final BlockEntry<LockboxBlock> NECROLORD_LOCKBOX = lockbox("necrolord", LockboxBlock::new).register();
-	// public static final BlockEntry<CounterBlock> NECROLORD_COUNTER = counter("necrolord", CounterBlock::new).register();
-	// public static final BlockEntry<OvenBlock> NECROLORD_OVEN = oven("necrolord", OvenBlock::new).transform(ModBlocks::mineablePickaxe).register();
+	public static final BlockEntry<LockboxBlock> NECROLORD_LOCKBOX = lockbox("necrolord", LockboxBlock::new).register();
+	public static final BlockEntry<CounterBlock> NECROLORD_COUNTER = counter("necrolord", CounterBlock::new).register();
+	public static final BlockEntry<OvenBlock> NECROLORD_OVEN = oven("necrolord", OvenBlock::new).transform(ModBlocks::mineablePickaxe).register();
 	// endregion
 	// endregion
 

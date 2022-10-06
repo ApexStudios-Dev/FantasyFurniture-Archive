@@ -82,9 +82,8 @@ public class CounterBlock extends BaseBlock.WithContainer<CounterBlockEntity, Me
 			return HitBoxes.BONE.counter(this, blockState);
 		else if(ModBlocks.ROYAL_COUNTER.isIn(blockState))
 			return HitBoxes.ROYAL.counter(this, blockState);
-		// TODO:
-		/*else if(ModBlocks.NECROLORD_COUNTER.isIn(blockState))
-			return HitBoxes.NECROLORD.counter(this, blockState);*/
+		else if(ModBlocks.NECROLORD_COUNTER.isIn(blockState))
+			return HitBoxes.NECROLORD.counter(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
