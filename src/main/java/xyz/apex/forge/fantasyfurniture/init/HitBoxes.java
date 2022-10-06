@@ -3458,11 +3458,24 @@ public abstract class HitBoxes
 		protected VoxelShape tableLargeShape()
 		{
 			return VoxelShaper.or(
-					box(12D, 0D, 2D, 14D, 13D, 4D),
-					box(-14D, 0D, 2D, -12D, 13D, 4D),
-					box(-14D, 0D, 28D, -12D, 13D, 30D),
-					box(12D, 0D, 28D, 14D, 13D, 30D),
-					box(-16D, 13D, 0D, 16D, 16D, 32D)
+					Block.box(12, 0, 0, 16, 2, 4),
+					Block.box(-16, 0, 0, -12, 2, 4),
+					Block.box(-16, 0, 28, -12, 2, 32),
+					Block.box(12, 0, 28, 16, 2, 32),
+					Block.box(12, 9, 28, 16, 11, 32),
+					Block.box(-16, 9, 28, -12, 11, 32),
+					Block.box(-16, 9, 0, -12, 11, 4),
+					Block.box(12, 9, 0, 16, 11, 4),
+					Block.box(12, 9, 28, 16, 11, 32),
+					Block.box(12, 14, 28, 16, 16, 32),
+					Block.box(12, 14, 0, 16, 16, 4),
+					Block.box(-16, 14, 0, -12, 16, 4),
+					Block.box(-16, 14, 28, -12, 16, 32),
+					Block.box(-15, 2, 29, -13, 14, 31),
+					Block.box(13, 2, 29, 15, 14, 31),
+					Block.box(13, 2, 1, 15, 14, 3),
+					Block.box(-15, 2, 1, -13, 14, 3),
+					Block.box(-15, 14, 1, 15, 16, 31)
 			);
 		}
 
