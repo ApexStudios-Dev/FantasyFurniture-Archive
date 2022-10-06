@@ -2,17 +2,13 @@ package xyz.apex.forge.fantasyfurniture.init;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import xyz.apex.forge.apexcore.lib.util.EventBusHelper;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
@@ -30,11 +26,18 @@ import static xyz.apex.forge.fantasyfurniture.init.ModRegistry.REGISTRATE;
 
 public final class ModElements
 {
-	// TODO: Change to use Registrate rather than DeferredRegister
-	private static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Mods.FANTASY_FURNITURE);
-	public static final RegistryObject<SimpleParticleType> SMALL_SOUL_FLAME = PARTICLE_TYPES.register("small_soul_fire_flame", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> NECROLORD_FLAME = PARTICLE_TYPES.register("necrolord_flame", () -> new SimpleParticleType(false));
-	public static final RegistryObject<SimpleParticleType> SMALL_NECROLORD_FLAME = PARTICLE_TYPES.register("small_necrolord_flame", () -> new SimpleParticleType(false));
+	public static final RegistryEntry<SimpleParticleType> SMALL_SOUL_FLAME = REGISTRATE
+			.object("small_soul_fire_flame")
+			.simple(ForgeRegistries.Keys.PARTICLE_TYPES, () -> new SimpleParticleType(false))
+	;
+	public static final RegistryEntry<SimpleParticleType> NECROLORD_FLAME = REGISTRATE
+			.object("necrolord_flame")
+			.simple(ForgeRegistries.Keys.PARTICLE_TYPES, () -> new SimpleParticleType(false))
+	;
+	public static final RegistryEntry<SimpleParticleType> SMALL_NECROLORD_FLAME = REGISTRATE
+			.object("small_necrolord_flame")
+			.simple(ForgeRegistries.Keys.PARTICLE_TYPES, () -> new SimpleParticleType(false))
+	;
 
 	public static final ResourceLocation SMALL_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/small_storage.png");
 	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
@@ -218,8 +221,6 @@ public final class ModElements
 
 	static void bootstrap()
 	{
-		PARTICLE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-
 		EventBusHelper.addListener(GatherDataEvent.class, event -> {
 			var generator = event.getGenerator();
 
