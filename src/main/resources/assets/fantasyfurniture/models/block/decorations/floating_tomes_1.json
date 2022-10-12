@@ -65,9 +65,9 @@
 		},
 		{
 			"name": "base_2",
-			"from": [2.9, 9, 5.75],
-			"to": [11.9, 9, 12.75],
-			"rotation": {"angle": -22.5, "axis": "x", "origin": [6.9, 9.25, 9]},
+			"from": [2.4, 9, 5.75],
+			"to": [12.4, 9, 12.75],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [7.4, 9.25, 9]},
 			"faces": {
 				"north": {"uv": [0, 0, 4.5, 0], "texture": "#floating_tomes_tint"},
 				"east": {"uv": [0, 0, 3.5, 0], "texture": "#floating_tomes_tint"},
@@ -79,9 +79,9 @@
 		},
 		{
 			"name": "base_3",
-			"from": [2.9, 9, -0.55],
-			"to": [11.9, 9, 6.45],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [6.9, 9.25, 3.2]},
+			"from": [2.4, 9, -0.55],
+			"to": [12.4, 9, 6.45],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [7.4, 9.25, 3.2]},
 			"faces": {
 				"north": {"uv": [0, 0, 4.5, 0], "texture": "#floating_tomes_tint"},
 				"east": {"uv": [0, 0, 3.5, 0], "texture": "#floating_tomes_tint"},
