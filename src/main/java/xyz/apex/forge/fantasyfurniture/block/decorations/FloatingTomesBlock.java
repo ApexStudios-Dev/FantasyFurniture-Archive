@@ -118,5 +118,12 @@ public class FloatingTomesBlock extends StackedBlock
 			super.appendHoverText(stack, level, tooltip, flag);
 			IDyeable.appendHoverText(this, tooltip);
 		}
+
+		@Override
+		protected ItemStack getPoppedStack(Level level, BlockPos pos, BlockState blockState, int count, Player player, InteractionHand hand)
+		{
+			var stack = super.getPoppedStack(level, pos, blockState, count, player, hand);
+			return IDyeable.getCloneItemStack(blockState, level, pos, stack);
+		}
 	}
 }
