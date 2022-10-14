@@ -24,6 +24,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.forge.apexcore.lib.block.WallLightBlock;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 
 import java.util.List;
 import java.util.Random;
@@ -99,6 +100,8 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			onLightParticle(level, pos, blockState, x + xOffset, y, z + zOffset, rng);
 			onLightParticle(level, pos, blockState, x - xOffset, y, z - zOffset, rng);
 		}
+		else if(ModBlocks.NECROLORD_WALL_LIGHT.isIn(blockState))
+			super.spawnLightParticles(level, pos, blockState, pX, pY + .1D, pZ, rng);
 	}
 
 	@Override
@@ -108,6 +111,8 @@ public class FurnitureWallLightBlock extends WallLightBlock
 
 		if(ModBlocks.BONE_WITHER_WALL_LIGHT.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
+		else if(ModBlocks.NECROLORD_WALL_LIGHT.isIn(blockState))
+			flame = ModElements.NECROLORD_FLAME.get();
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
@@ -126,6 +131,8 @@ public class FurnitureWallLightBlock extends WallLightBlock
 			return HitBoxes.BONE.wallLight(this, blockState);
 		else if(ModBlocks.ROYAL_WALL_LIGHT.isIn(blockState))
 			return HitBoxes.ROYAL.wallLight(this, blockState);
+		else if(ModBlocks.NECROLORD_WALL_LIGHT.isIn(blockState))
+			return HitBoxes.NECROLORD.wallLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

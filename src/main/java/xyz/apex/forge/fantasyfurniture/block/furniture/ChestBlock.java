@@ -80,6 +80,8 @@ public class ChestBlock extends BaseMultiBlock.WithContainer<ChestBlockEntity, L
 			return HitBoxes.BONE.chest(this, blockState);
 		else if(ModBlocks.ROYAL_CHEST.isIn(blockState))
 			return HitBoxes.ROYAL.chest(this, blockState);
+		else if(ModBlocks.NECROLORD_CHEST.isIn(blockState))
+			return HitBoxes.NECROLORD.chest(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

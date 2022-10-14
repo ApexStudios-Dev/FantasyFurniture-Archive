@@ -1,0 +1,84 @@
+{
+	"credit": "Made by Fantasy",
+	"parent": "block/block",
+	"textures": {
+		"bronze_chain": "fantasyfurniture:models/decorations/bronze_chain",
+		"particle": "fantasyfurniture:particles/decorations/bronze_chain"
+	},
+	"elements": [
+		{
+			"name": "1",
+			"from": [6.5, 0, 8],
+			"to": [9.5, 16, 8],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [3, 0, 0, 16], "texture": "#bronze_chain"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"south": {"uv": [0, 0, 3, 16], "texture": "#bronze_chain"},
+				"west": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"}
+			}
+		},
+		{
+			"name": "2",
+			"from": [8, 0, 6.5],
+			"to": [8, 16, 9.5],
+			"shade": false,
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"east": {"uv": [3, 0, 6, 16], "texture": "#bronze_chain"},
+				"south": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"west": {"uv": [6, 0, 3, 16], "texture": "#bronze_chain"},
+				"up": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"},
+				"down": {"uv": [0, 0, 0, 0], "texture": "#bronze_chain"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 90, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "chain",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

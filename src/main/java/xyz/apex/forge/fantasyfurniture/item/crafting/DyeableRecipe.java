@@ -92,6 +92,7 @@ public final class DyeableRecipe extends CustomRecipe
 		if(color == null || dyeable.isEmpty())
 			return ItemStack.EMPTY;
 
+		dyeable.setCount(1);
 		return IDyeable.setDyeColor(dyeable, color);
 	}
 

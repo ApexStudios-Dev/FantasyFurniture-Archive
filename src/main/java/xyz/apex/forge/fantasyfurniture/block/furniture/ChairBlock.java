@@ -69,6 +69,8 @@ public class ChairBlock extends SeatMultiBlock
 			return HitBoxes.BONE.chair(this, blockState);
 		else if(ModBlocks.ROYAL_CHAIR.isIn(blockState))
 			return HitBoxes.ROYAL.chair(this, blockState);
+		else if(ModBlocks.NECROLORD_CHAIR.isIn(blockState))
+			return HitBoxes.NECROLORD.chair(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="[40,)"
 license="GNU General Public License v3.0"
-issueTrackerURL="https://discord.apexstudios.dev/"
+issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 
 [[mods]]
 	modId="fantasyfurniture"
 	version="${file.jarVersion}"
 	displayName="Fantasy's Furniture"
-	updateJSONURL="https://raw.githubusercontent.com/ApexStudios-Dev/Version/master/fantasyfurniture.json"
+	updateJSONURL="https://api.modrinth.com/updates/fantasy-furniture/forge_updates.json"
 	displayURL="https://www.apexstudios.dev/fantasys-furniture"
 	logoFile="banner.png"
 	credits="Apex - Programming, FantasyGaming - Artist"
@@ -31,6 +31,14 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	[dependencies.fantasyfurniture.custom.mc-publish]
 		ignore=true
 [[dependencies.fantasyfurniture]]
+	modId="commonality"
+	mandatory=true
+	versionRange="[1.4.0,2.0.0)"
+	ordering="AFTER"
+	side="BOTH"
+	[dependencies.fantasyfurniture.custom.mc-publish]
+		ignore=true
+[[dependencies.fantasyfurniture]]
 	modId="apexcore"
 	mandatory=false
 	versionRange="[4.13.0,5.0.0)"
@@ -39,14 +47,6 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	[dependencies.fantasyfurniture.custom.mc-publish]
 		modrinth="apexcore"
 		curseforge="apexcore"
-[[dependencies.fantasyfurniture]]
-	modId="commonality"
-	mandatory=true
-	versionRange="[1.4.0,2.0.0)"
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.fantasyfurniture.custom.mc-publish]
-		ignore=true
 [[dependencies.fantasyfurniture]]
 	modId="jei"
 	mandatory=false

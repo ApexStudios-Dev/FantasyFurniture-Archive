@@ -101,6 +101,8 @@ public class CushionBlock extends SeatBlock
 			return HitBoxes.ROYAL.cushion(this, blockState);
 		else if(ModBlocks.ROYAL_FLOOR_CUSHION.isIn(blockState))
 			return ROYAL_FLOOR_CUSHION_SHAPER.get(BaseBlock.getFacing(blockState));
+		else if(ModBlocks.NECROLORD_CUSHION.isIn(blockState))
+			return HitBoxes.NECROLORD.cushion(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

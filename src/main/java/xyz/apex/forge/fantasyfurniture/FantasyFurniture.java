@@ -56,16 +56,18 @@ public final class FantasyFurniture
 		ModRegistry.bootstrap();
 		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> Client::new);
 
-		EventBusHelper.addListener(this::onBlockPlaced);
-
 		// EventBusHelper breaks when using MissingMappings event
 		// It registers to the mod bus since the event implements the IModBus interface
 		// although the event is fired on the forge bus, notify forge about this? (should the event even implement the interface? it's a marker to say what bus events should be registered to and fired on)
 		MinecraftForge.EVENT_BUS.addGenericListener(Block.class, this::onMissingBlockMappings);
 		MinecraftForge.EVENT_BUS.addGenericListener(Item.class, this::onMissingItemMappings);
+		MinecraftForge.EVENT_BUS.addListener(this::onBlockPlaced);
+
 		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
+			// registerBuiltInPack(event, <mod_id>);
 			registerBuiltInPack(event, Mods.CTM);
-			registerBuiltInPack(event, "optifine");
+			registerBuiltInPack(event, OPTIFINE_ID);
+			registerBuiltInPack(event, "xycraft_core");
 		});
 	}
 
@@ -310,6 +312,8 @@ public final class FantasyFurniture
 			EventBusHelper.addListener(ParticleFactoryRegisterEvent.class, event -> {
 				var particleEngine = Minecraft.getInstance().particleEngine;
 				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
+				particleEngine.register(ModElements.NECROLORD_FLAME.get(), FlameParticle.Provider::new);
+				particleEngine.register(ModElements.SMALL_NECROLORD_FLAME.get(), FlameParticle.SmallFlameProvider::new);
 			});
 
 			EventBusHelper.addListener(this::onModifyVisualizer);

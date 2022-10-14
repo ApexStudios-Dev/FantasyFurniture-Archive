@@ -61,6 +61,8 @@ public class StoolBlock extends SeatBlock
 			return HitBoxes.BONE.stool(this, blockState);
 		else if(ModBlocks.ROYAL_STOOL.isIn(blockState))
 			return HitBoxes.ROYAL.stool(this, blockState);
+		else if(ModBlocks.NECROLORD_STOOL.isIn(blockState))
+			return HitBoxes.NECROLORD.stool(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

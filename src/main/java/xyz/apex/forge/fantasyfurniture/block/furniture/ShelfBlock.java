@@ -63,6 +63,8 @@ public class ShelfBlock extends BaseBlock
 			return HitBoxes.BONE.shelf(this, blockState);
 		else if(ModBlocks.ROYAL_SHELF.isIn(blockState))
 			return HitBoxes.ROYAL.shelf(this, blockState);
+		else if(ModBlocks.NECROLORD_SHELF.isIn(blockState))
+			return HitBoxes.NECROLORD.shelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

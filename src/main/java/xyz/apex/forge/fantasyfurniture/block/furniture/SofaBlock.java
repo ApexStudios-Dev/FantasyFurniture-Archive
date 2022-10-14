@@ -99,6 +99,8 @@ public class SofaBlock extends SeatBlock
 			return HitBoxes.BONE.sofa(this, blockState);
 		else if(ModBlocks.ROYAL_SOFA.isIn(blockState))
 			return HitBoxes.ROYAL.sofa(this, blockState);
+		else if(ModBlocks.NECROLORD_SOFA.isIn(blockState))
+			return HitBoxes.NECROLORD.sofa(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

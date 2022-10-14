@@ -69,6 +69,8 @@ public class BenchBlock extends SeatMultiBlock
 			return HitBoxes.BONE.bench(this, blockState);
 		else if(ModBlocks.ROYAL_BENCH.isIn(blockState))
 			return HitBoxes.ROYAL.bench(this, blockState);
+		else if(ModBlocks.NECROLORD_BENCH.isIn(blockState))
+			return HitBoxes.NECROLORD.bench(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

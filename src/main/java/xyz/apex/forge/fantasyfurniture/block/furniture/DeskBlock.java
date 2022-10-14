@@ -90,6 +90,10 @@ public class DeskBlock extends BaseMultiBlock.WithContainer<DeskBlockEntity, Sma
 			return HitBoxes.ROYAL.deskLeft(this, blockState);
 		else if(ModBlocks.ROYAL_DESK_RIGHT.isIn(blockState))
 			return HitBoxes.ROYAL.deskRight(this, blockState);
+		if(ModBlocks.NECROLORD_DESK_LEFT.isIn(blockState))
+			return HitBoxes.NECROLORD.deskLeft(this, blockState);
+		else if(ModBlocks.NECROLORD_DESK_RIGHT.isIn(blockState))
+			return HitBoxes.NECROLORD.deskRight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

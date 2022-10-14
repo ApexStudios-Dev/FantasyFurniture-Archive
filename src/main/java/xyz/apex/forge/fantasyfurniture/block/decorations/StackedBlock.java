@@ -20,11 +20,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.common.util.Lazy;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -105,21 +108,30 @@ public abstract class StackedBlock extends BaseBlock
 
 			if(newCount < minValue)
 			{
-				level.destroyBlock(pos, !player.isCreative(), player);
+				var poppedStack = getPoppedStack(level, pos, blockState, minValue, player, hand);
+				level.destroyBlock(pos, false, player);
+
+				if(!player.isCreative())
+					popResource(level, pos, poppedStack);
+
 				return InteractionResult.sidedSuccess(level.isClientSide);
 			}
 
+			var newBlockState = blockState.setValue(stackSizeProperty, newCount);
 			BlockHelper.playBreakSound(level, pos, player);
 
 			if(!player.isCreative())
-				popResource(level, pos, new ItemStack(this));
+			{
+				var poppedStack = getPoppedStack(level, pos, newBlockState, newCount, player, hand);
+				popResource(level, pos, poppedStack);
+			}
 
 			for(int i = 0; i < 5; i++)
 			{
-				level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
+				level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, newBlockState), pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 0D, 0D, 0D);
 			}
 
-			level.setBlockAndUpdate(pos, blockState.setValue(stackSizeProperty, newCount));
+			level.setBlockAndUpdate(pos, newBlockState);
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
@@ -147,6 +159,11 @@ public abstract class StackedBlock extends BaseBlock
 		return new TranslatableComponent(getStackableTranslationKey());
 	}
 
+	protected ItemStack getPoppedStack(Level level, BlockPos pos, BlockState blockState, int count, Player player, InteractionHand hand)
+	{
+		return new ItemStack(this);
+	}
+
 	public final String getStackableTranslationKey()
 	{
 		return "%s.stacked".formatted(getDescriptionId());
@@ -160,5 +177,68 @@ public abstract class StackedBlock extends BaseBlock
 	public static int getMaxValue(IntegerProperty property)
 	{
 		return property.getPossibleValues().stream().mapToInt(i -> i).filter(i -> i >= 0).max().orElse(0);
+	}
+
+	public static abstract class Dyeable extends StackedBlock implements IDyeable
+	{
+		public Dyeable(Properties properties)
+		{
+			super(properties);
+
+			registerDefaultState(IDyeable.registerDefaultBlockState(defaultBlockState()));
+		}
+
+		@Override
+		public MaterialColor getMapColor(BlockState blockState, BlockGetter level, BlockPos pos, MaterialColor defaultColor)
+		{
+			var mapColor = super.getMapColor(blockState, level, pos, defaultColor);
+			return IDyeable.getDyedMapColor(blockState, level, pos, mapColor);
+		}
+
+		@Override
+		protected void registerProperties(Consumer<Property<?>> consumer)
+		{
+			super.registerProperties(consumer);
+			IDyeable.registerProperties(consumer);
+		}
+
+		@Override
+		protected @Nullable BlockState modifyPlacementState(BlockState placementBlockState, BlockPlaceContext ctx)
+		{
+			placementBlockState = super.modifyPlacementState(placementBlockState, ctx);
+			return IDyeable.getStateForPlacement(ctx, placementBlockState);
+		}
+
+		@Override
+		public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
+		{
+			var interactionResult = IDyeable.use(blockState, level, pos, player, hand);
+
+			if(interactionResult.consumesAction())
+				return interactionResult;
+
+			return super.use(blockState, level, pos, player, hand, result);
+		}
+
+		@Override
+		public ItemStack getCloneItemStack(BlockState blockState, HitResult target, BlockGetter level, BlockPos pos, Player player)
+		{
+			var stack = super.getCloneItemStack(blockState, target, level, pos, player);
+			return IDyeable.getCloneItemStack(blockState, level, pos, stack);
+		}
+
+		@Override
+		public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flag)
+		{
+			super.appendHoverText(stack, level, tooltip, flag);
+			IDyeable.appendHoverText(this, tooltip);
+		}
+
+		@Override
+		protected ItemStack getPoppedStack(Level level, BlockPos pos, BlockState blockState, int count, Player player, InteractionHand hand)
+		{
+			var stack = super.getPoppedStack(level, pos, blockState, count, player, hand);
+			return IDyeable.getCloneItemStack(blockState, level, pos, stack);
+		}
 	}
 }

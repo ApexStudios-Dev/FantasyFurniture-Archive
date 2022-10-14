@@ -72,6 +72,8 @@ public class DrawerBlock extends BaseBlock.WithContainer<DrawerBlockEntity, Smal
 			return HitBoxes.BONE.drawer(this, blockState);
 		else if(ModBlocks.ROYAL_DRAWER.isIn(blockState))
 			return HitBoxes.ROYAL.drawer(this, blockState);
+		else if(ModBlocks.NECROLORD_DRAWER.isIn(blockState))
+			return HitBoxes.NECROLORD.drawer(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
