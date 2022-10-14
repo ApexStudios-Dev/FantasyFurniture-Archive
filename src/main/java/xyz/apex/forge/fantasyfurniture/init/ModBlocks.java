@@ -369,7 +369,7 @@ public final class ModBlocks
 	public static final BlockEntry<Block> NECROLORD_WOOL = wool("necrolord", Block::new).register();
 	public static final BlockEntry<CarpetBlock> NECROLORD_CARPET = carpet("necrolord", CarpetBlock::new).register();
 	public static final BlockEntry<FurnitureWallLightBlock> NECROLORD_WALL_LIGHT = wallLight("necrolord", FurnitureWallLightBlock::new).register();
-	public static final BlockEntry<FloorLightBlock> NECROLORD_FLOOR_LIGHT = floorLight("necrolord", FloorLightBlock::new).register();
+	public static final BlockEntry<FloorLightBlock.WithFacing> NECROLORD_FLOOR_LIGHT = floorLight("necrolord", FloorLightBlock.WithFacing::new).blockState(ModBlocks::horizontalBlockState).register();
 	public static final BlockEntry<TableSmallBlock> NECROLORD_TABLE_SMALL = tableSmall("necrolord", TableSmallBlock::new).register();
 	public static final BlockEntry<TableWideBlock> NECROLORD_TABLE_WIDE = tableWide("necrolord", TableWideBlock::new).register();
 	public static final BlockEntry<TableLargeBlock> NECROLORD_TABLE_LARGE = tableLarge("necrolord", TableLargeBlock::new).register();
