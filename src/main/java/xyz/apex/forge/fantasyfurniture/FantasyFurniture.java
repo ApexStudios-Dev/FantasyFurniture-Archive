@@ -66,7 +66,7 @@ public final class FantasyFurniture
 		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
 			// registerBuiltInPack(event, <mod_id>);
 			registerBuiltInPack(event, Mods.CTM);
-			registerBuiltInPack(event, OPTIFINE_ID);
+			// registerBuiltInPack(event, OPTIFINE_ID);
 			registerBuiltInPack(event, "xycraft_core");
 		});
 	}
