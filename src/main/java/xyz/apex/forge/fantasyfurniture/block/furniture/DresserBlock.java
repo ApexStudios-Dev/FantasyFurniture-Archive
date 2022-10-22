@@ -80,6 +80,8 @@ public class DresserBlock extends BaseMultiBlock.WithContainer<DresserBlockEntit
 			return HitBoxes.BONE.dresser(this, blockState);
 		else if(ModBlocks.ROYAL_DRESSER.isIn(blockState))
 			return HitBoxes.ROYAL.dresser(this, blockState);
+		else if(ModBlocks.NECROLORD_DRESSER.isIn(blockState))
+			return HitBoxes.NECROLORD.dresser(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

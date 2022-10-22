@@ -28,6 +28,7 @@ import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.init.HitBoxes;
 import xyz.apex.forge.fantasyfurniture.init.ModBlocks;
+import xyz.apex.forge.fantasyfurniture.init.ModElements;
 import xyz.apex.forge.fantasyfurniture.init.ModPatterns;
 
 import java.util.List;
@@ -95,18 +96,26 @@ public class FloorLightBlock extends BaseMultiBlock
 				onLightParticle(level, pos, blockState, x + .4D, y, z + .4D, rng);
 			}
 		}
-		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState) || ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState))
+		else if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState) || ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState) || ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
 		{
 			var x = pos.getX() + .5D;
 			var y = pos.getY() + .5D + .45D;
 			var z = pos.getZ() + .5D;
 
+			var offsetH = .25D;
+			var offsetV = .05D;
+
 			if(ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState))
 				y += .075D;
+			else if(ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
+			{
+				offsetH = .3D;
+				y += .05D;
+			}
 
 			onLightParticle(level, pos, blockState, x, y, z, rng);
-			onLightParticle(level, pos, blockState, x + .25D, y - .05D, z, rng);
-			onLightParticle(level, pos, blockState, x - .25D, y - .05D, z, rng);
+			onLightParticle(level, pos, blockState, x + offsetH, y - offsetV, z, rng);
+			onLightParticle(level, pos, blockState, x - offsetH, y - offsetV, z, rng);
 		}
 	}
 
@@ -116,6 +125,8 @@ public class FloorLightBlock extends BaseMultiBlock
 
 		if(ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState))
 			flame = ParticleTypes.SOUL_FIRE_FLAME;
+		else if(ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
+			flame = ModElements.NECROLORD_FLAME.get();
 
 		level.addParticle(ParticleTypes.SMOKE, pX, pY, pZ, 0D, 0D, 0D);
 		level.addParticle(flame, pX, pY, pZ, 0D, 0D, 0D);
@@ -140,6 +151,8 @@ public class FloorLightBlock extends BaseMultiBlock
 			return HitBoxes.BONE.floorLight(this, blockState);
 		else if(ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState))
 			return HitBoxes.ROYAL.floorLight(this, blockState);
+		else if(ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
+			return HitBoxes.NECROLORD.floorLight(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}
@@ -161,22 +174,30 @@ public class FloorLightBlock extends BaseMultiBlock
 		@Override
 		protected void spawnLightParticles(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
 		{
-			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState) || ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState))
+			if(ModBlocks.BONE_SKELETON_FLOOR_LIGHT.isIn(blockState) || ModBlocks.BONE_WITHER_FLOOR_LIGHT.isIn(blockState) || ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState) || ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
 			{
 				var x = pos.getX() + .5D;
 				var y = pos.getY() + .5D + .45D;
 				var z = pos.getZ() + .5D;
 
+				var offsetH = .25D;
+				var offsetV = .05D;
+
 				if(ModBlocks.ROYAL_FLOOR_LIGHT.isIn(blockState))
 					y += .075D;
+				else if(ModBlocks.NECROLORD_FLOOR_LIGHT.isIn(blockState))
+				{
+					offsetH = .3D;
+					y += .05D;
+				}
 
 				var facing = getFacing(blockState).getClockWise();
 				var stepX = facing.getStepX();
 				var stepZ = facing.getStepZ();
 
 				onLightParticle(level, pos, blockState, x, y, z, rng);
-				onLightParticle(level, pos, blockState, x + (stepX * .25D), y - .05D, z + (stepZ * .25D), rng);
-				onLightParticle(level, pos, blockState, x - (stepX * .25D), y - .05D, z - (stepZ * .25D), rng);
+				onLightParticle(level, pos, blockState, x + (stepX * offsetH), y - offsetV, z + (stepZ * offsetH), rng);
+				onLightParticle(level, pos, blockState, x - (stepX * offsetH), y - offsetV, z - (stepZ * offsetH), rng);
 			}
 		}
 	}

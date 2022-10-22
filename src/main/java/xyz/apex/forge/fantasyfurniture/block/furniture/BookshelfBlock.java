@@ -80,6 +80,8 @@ public class BookshelfBlock extends BaseMultiBlock.WithContainer<BookshelfBlockE
 			return HitBoxes.BONE.bookshelf(this, blockState);
 		else if(ModBlocks.ROYAL_BOOKSHELF.isIn(blockState))
 			return HitBoxes.ROYAL.bookshelf(this, blockState);
+		else if(ModBlocks.NECROLORD_BOOKSHELF.isIn(blockState))
+			return HitBoxes.NECROLORD.bookshelf(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

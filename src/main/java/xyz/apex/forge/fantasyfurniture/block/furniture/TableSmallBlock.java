@@ -55,6 +55,8 @@ public class TableSmallBlock extends BaseBlock
 			return HitBoxes.BONE.tableSmall(this, blockState);
 		else if(ModBlocks.ROYAL_TABLE_SMALL.isIn(blockState))
 			return HitBoxes.ROYAL.tableSmall(this, blockState);
+		else if(ModBlocks.NECROLORD_TABLE_SMALL.isIn(blockState))
+			return HitBoxes.NECROLORD.tableSmall(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

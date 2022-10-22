@@ -57,6 +57,8 @@ public class PaintingWideBlock extends BaseMultiBlock
 			return HitBoxes.BONE.paintingWide(this, blockState);
 		else if(ModBlocks.ROYAL_PAINTING_WIDE.isIn(blockState))
 			return HitBoxes.ROYAL.paintingWide(this, blockState);
+		else if(ModBlocks.NECROLORD_PAINTING_WIDE.isIn(blockState))
+			return HitBoxes.NECROLORD.paintingWide(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

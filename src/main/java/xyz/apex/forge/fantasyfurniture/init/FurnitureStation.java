@@ -32,6 +32,7 @@ import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.apexcore.registrate.entry.MenuEntry;
 import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
 import xyz.apex.forge.fantasyfurniture.block.FurnitureStationBlock;
@@ -140,6 +141,7 @@ public final class FurnitureStation
 				.lang("Furniture Station")
 				.initialProperties(Material.WOOD)
 				.strength(2.5F)
+				.tag(BlockTags.Vanilla.MINEABLE_WITH_AXE)
 				.sound(SoundType.WOOD)
 				.noOcclusion()
 				.isValidSpawn(BlockHelper::never)

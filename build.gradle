@@ -172,8 +172,12 @@ dependencies {
 	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
 	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
+	runtimeOnly fg.deobf("curse.maven:jade-${jade_id}:${jade_version}")
+
 	// compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
+
+	runtimeOnly fg.deobf("curse.maven:xycraft-653786:3960430") // XyCraft: Core - v0.5.2
 
 	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
 

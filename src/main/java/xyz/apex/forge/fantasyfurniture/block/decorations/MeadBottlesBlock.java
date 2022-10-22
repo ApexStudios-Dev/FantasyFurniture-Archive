@@ -2,7 +2,11 @@ package xyz.apex.forge.fantasyfurniture.block.decorations;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -10,6 +14,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
+import xyz.apex.forge.fantasyfurniture.block.furniture.IDyeable;
 
 public final class MeadBottlesBlock extends StackedBlock
 {
@@ -55,5 +60,12 @@ public final class MeadBottlesBlock extends StackedBlock
 			shaper = SHAPER_2;
 
 		return shaper.get(facing);
+	}
+
+	@Override
+	protected ItemStack getPoppedStack(Level level, BlockPos pos, BlockState blockState, int count, Player player, InteractionHand hand)
+	{
+		var stack = super.getPoppedStack(level, pos, blockState, count, player, hand);
+		return IDyeable.getCloneItemStack(blockState, level, pos, stack);
 	}
 }

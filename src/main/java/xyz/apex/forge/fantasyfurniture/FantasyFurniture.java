@@ -64,7 +64,8 @@ public final class FantasyFurniture
 		EventBusHelper.addListener(AddPackFindersEvent.class, event -> {
 			// registerBuiltInPack(event, <mod_id>);
 			registerBuiltInPack(event, Mods.CTM);
-			registerBuiltInPack(event, OPTIFINE_ID);
+			// registerBuiltInPack(event, OPTIFINE_ID);
+			registerBuiltInPack(event, "xycraft_core");
 		});
 	}
 
@@ -306,6 +307,8 @@ public final class FantasyFurniture
 			EventBusHelper.addListener(RegisterParticleProvidersEvent.class, event -> {
 				var particleEngine = Minecraft.getInstance().particleEngine;
 				particleEngine.register(ModElements.SMALL_SOUL_FLAME.get(), FlameParticle.SmallFlameProvider::new);
+				particleEngine.register(ModElements.NECROLORD_FLAME.get(), FlameParticle.Provider::new);
+				particleEngine.register(ModElements.SMALL_NECROLORD_FLAME.get(), FlameParticle.SmallFlameProvider::new);
 			});
 
 			EventBusHelper.addListener(this::onModifyVisualizer);

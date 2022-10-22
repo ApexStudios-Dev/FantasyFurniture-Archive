@@ -80,6 +80,8 @@ public class WardrobeBottomBlock extends BaseMultiBlock.WithContainer<WardrobeBl
 			return HitBoxes.BONE.wardrobeBottom(this, blockState);
 		else if(ModBlocks.ROYAL_WARDROBE_BOTTOM.isIn(blockState))
 			return HitBoxes.ROYAL.wardrobeBottom(this, blockState);
+		else if(ModBlocks.NECROLORD_WARDROBE_BOTTOM.isIn(blockState))
+			return HitBoxes.NECROLORD.wardrobeBottom(this, blockState);
 
 		return super.getShape(blockState, level, pos, ctx);
 	}

@@ -1,0 +1,179 @@
+{
+	"credit": "Made by Fantasy",
+	"texture_size": [64, 64],
+	"textures": {
+		"door_double": "fantasyfurniture:models/necrolord/door_double",
+		"particle": "fantasyfurniture:particles/necrolord"
+	},
+	"elements": [
+		{
+			"name": "frame_2",
+			"from": [0, 29, 0],
+			"to": [16, 32, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [5.75, 7.25, 1.75, 8], "texture": "#door_double"},
+				"east": {"uv": [9.75, 1.5, 9, 2.25], "texture": "#door_double"},
+				"south": {"uv": [11.25, 5, 7.25, 5.75], "texture": "#door_double"},
+				"west": {"uv": [6.5, 7.25, 5.75, 8], "texture": "#door_double"},
+				"up": {"uv": [7.25, 6.5, 11.25, 5.75], "texture": "#door_double"},
+				"down": {"uv": [7.25, 6.5, 11.25, 7.25], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "frame_3",
+			"from": [0, 27, 0],
+			"to": [7, 29, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [9, 8.25, 7.25, 8.75], "texture": "#door_double"},
+				"east": {"uv": [4, 9.25, 3.25, 9.75], "texture": "#door_double"},
+				"south": {"uv": [4.5, 8.75, 2.75, 9.25], "texture": "#door_double"},
+				"west": {"uv": [9.75, 8.25, 9, 8.75], "texture": "#door_double"},
+				"up": {"uv": [8, 0.75, 9.75, 0], "texture": "#door_double"},
+				"down": {"uv": [8, 0.75, 9.75, 1.5], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "frame_4",
+			"from": [7, 28, 0],
+			"to": [12, 29, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [9.25, 4.75, 8, 5], "texture": "#door_double"},
+				"east": {"uv": [10, 4.25, 9.25, 4.5], "texture": "#door_double"},
+				"south": {"uv": [10.5, 3.75, 9.25, 4], "texture": "#door_double"},
+				"west": {"uv": [10, 4, 9.25, 4.25], "texture": "#door_double"},
+				"up": {"uv": [8, 3.25, 9.25, 2.5], "texture": "#door_double"},
+				"down": {"uv": [2.75, 8, 4, 8.75], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "frame_5",
+			"from": [0, 24, 0],
+			"to": [5, 27, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [9.25, 3.25, 8, 4], "texture": "#door_double"},
+				"east": {"uv": [10, 2.25, 9.25, 3], "texture": "#door_double"},
+				"south": {"uv": [5.25, 8, 4, 8.75], "texture": "#door_double"},
+				"west": {"uv": [2.5, 9, 1.75, 9.75], "texture": "#door_double"},
+				"up": {"uv": [8, 4.75, 9.25, 4], "texture": "#door_double"},
+				"down": {"uv": [5.25, 8, 6.5, 8.75], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "frame_6",
+			"from": [0, 20, 0],
+			"to": [4, 24, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [9, 1.5, 8, 2.5], "texture": "#door_double"},
+				"east": {"uv": [6, 8.75, 5.25, 9.75], "texture": "#door_double"},
+				"south": {"uv": [2.75, 8, 1.75, 9], "texture": "#door_double"},
+				"west": {"uv": [5.25, 8.75, 4.5, 9.75], "texture": "#door_double"},
+				"up": {"uv": [7.25, 9.5, 8.25, 8.75], "texture": "#door_double"},
+				"down": {"uv": [8.25, 8.75, 9.25, 9.5], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "frame_7",
+			"from": [0, 0, 0],
+			"to": [3, 20, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [7.25, 0, 6.5, 5], "texture": "#door_double"},
+				"east": {"uv": [8, 0, 7.25, 5], "texture": "#door_double"},
+				"south": {"uv": [0.75, 7.25, 0, 12.25], "texture": "#door_double"},
+				"west": {"uv": [7.25, 5, 6.5, 10], "texture": "#door_double"},
+				"up": {"uv": [2.5, 10, 3.25, 9.25], "texture": "#door_double"},
+				"down": {"uv": [9.25, 3, 10, 3.75], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "door",
+			"from": [3, 0, 0.5],
+			"to": [16, 29, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [3.25, 0, 0, 7.25], "texture": "#door_double"},
+				"east": {"uv": [1.75, 7.25, 1.25, 14.5], "texture": "#door_double"},
+				"south": {"uv": [6.5, 0, 3.25, 7.25], "texture": "#door_double"},
+				"west": {"uv": [1.25, 7.25, 0.75, 14.5], "texture": "#door_double"},
+				"up": {"uv": [7.25, 7.75, 10.5, 7.25], "texture": "#door_double"},
+				"down": {"uv": [7.25, 7.75, 10.5, 8.25], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "handle_1",
+			"from": [12, 11, -0.5],
+			"to": [13, 16, 0.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [6.25, 8.75, 6, 10], "texture": "#door_double"},
+				"east": {"uv": [4.5, 9.25, 4.25, 10.5], "texture": "#door_double"},
+				"south": {"uv": [4.25, 9.25, 4, 10.5], "texture": "#door_double"},
+				"west": {"uv": [6.5, 8.75, 6.25, 10], "texture": "#door_double"},
+				"up": {"uv": [9, 2.5, 9.25, 2.25], "texture": "#door_double"},
+				"down": {"uv": [2.5, 9, 2.75, 9.25], "texture": "#door_double"}
+			}
+		},
+		{
+			"name": "handle_2",
+			"from": [12, 11, 2.5],
+			"to": [13, 16, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
+			"faces": {
+				"north": {"uv": [9.5, 8.75, 9.25, 10], "texture": "#door_double"},
+				"east": {"uv": [8, 9.5, 7.75, 10.75], "texture": "#door_double"},
+				"south": {"uv": [7.75, 9.5, 7.5, 10.75], "texture": "#door_double"},
+				"west": {"uv": [7.5, 9.5, 7.25, 10.75], "texture": "#door_double"},
+				"up": {"uv": [9.25, 4.75, 9.5, 4.5], "texture": "#door_double"},
+				"down": {"uv": [9.25, 4.75, 9.5, 5], "texture": "#door_double"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [3.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [3.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, -2.25, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"fixed": {
+			"translation": [0, -4, 2.5],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "double_door",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+		}
+	]
+}

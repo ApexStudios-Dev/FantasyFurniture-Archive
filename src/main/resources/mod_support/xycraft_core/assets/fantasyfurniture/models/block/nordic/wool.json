@@ -1,0 +1,16 @@
+{
+  "loader": "xycraft_core:connected_textures",
+  "connection_handler": "same_block",
+  
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:cutout",
+  
+  "textures": {
+    "all": "fantasyfurniture:block/nordic/wool",
+    "base": "fantasyfurniture:block/nordic/wool_xyctm",
+    "texture_connected": "fantasyfurniture:block/nordic/wool_xyctm_borders",
+  
+    "particle": "#base",
+    "texture_single": "#all"
+  }
+}
