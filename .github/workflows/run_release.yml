@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  # Gather variables used throughout the workflow
+    # Gather variables used throughout the workflow
   vars:
     name: Gather workflow variables
     runs-on: ubuntu-latest
@@ -32,54 +32,12 @@ jobs:
       - name: Unshallow Repository
         run: git fetch --prune --unshallow
 
-      - name: Mod Name
-        id: mod_name
+      - name: Gradle Properties
+        id: gradle
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: ./gradle.properties
-          properties: mod_name
-
-      - name: Mod Version
-        id: mod_version
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: mod_version
-
-      - name: CurseForge ID
-        id: mod_curseforge_id
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: mod_curseforge_id
-
-      - name: Modrinth ID
-        id: mod_modrinth_id
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: mod_modrinth_id
-
-      - name: Release Type
-        id: mod_release_type
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: mod_release_type
-
-      - name: Minecraft Version
-        id: minecraft_version
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: minecraft_version
-
-      - name: Forge Version
-        id: forge_version
-        uses: christian-draeger/read-properties@1.1.1
-        with:
-          path: ./gradle.properties
-          properties: forge_version
+          properties: mod_name mod_version mod_curseforge_id mod_modrinth_id mod_release_type minecraft_version forge_version
 
       - name: Find Current Tag
         id: tag_current
@@ -99,13 +57,13 @@ jobs:
 
       - name: View Variables
         run: |
-          echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
-          echo "'mod_version': => '${{ steps.mod_version.outputs.value }}'"
-          echo "'mod_curseforge_id': => '${{ steps.mod_curseforge_id.outputs.value }}'"
-          echo "'mod_modrinth_id': => '${{ steps.mod_modrinth_id.outputs.value }}'"
-          echo "'mod_release_type': => '${{ steps.mod_release_type.outputs.value }}'"
-          echo "'minecraft_version': => '${{ steps.minecraft_version.outputs.value }}'"
-          echo "'forge_version': => '${{ steps.forge_version.outputs.value }}'"
+          echo "'mod_name': => '${{ steps.gradle.outputs.mod_name }}'"
+          echo "'mod_version': => '${{ steps.gradle.outputs.mod_version }}'"
+          echo "'mod_curseforge_id': => '${{ steps.gradle.outputs.mod_curseforge_id }}'"
+          echo "'mod_modrinth_id': => '${{ steps.gradle.outputs.mod_modrinth_id }}'"
+          echo "'mod_release_type': => '${{ steps.gradle.outputs.mod_release_type }}'"
+          echo "'minecraft_version': => '${{ steps.gradle.outputs.minecraft_version }}'"
+          echo "'forge_version': => '${{ steps.gradle.outputs.forge_version }}'"
           echo "'tag_current': => '${{ steps.tag_current.outputs.tag }}'"
           echo "'tag_previous': => '${{ steps.tag_previous.outputs.tag }}'"
 
