@@ -10,7 +10,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.LivingEntity;
 
-import xyz.apex.forge.fantasyfurniture.block.furniture.BedBlock;
+import xyz.apex.forge.fantasyfurniture.common.block.furniture.BedBlock;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingRendererMixin<T extends LivingEntity, M extends EntityModel<T>>

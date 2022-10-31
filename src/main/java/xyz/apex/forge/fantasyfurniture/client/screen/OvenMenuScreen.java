@@ -3,19 +3,22 @@ package xyz.apex.forge.fantasyfurniture.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
+import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.SideOnly;
-import xyz.apex.forge.fantasyfurniture.init.ModElements;
-import xyz.apex.forge.fantasyfurniture.menu.OvenMenu;
+import xyz.apex.forge.fantasyfurniture.common.menu.OvenMenu;
 
 @SideOnly(SideOnly.Side.CLIENT)
 public final class OvenMenuScreen extends BaseMenuScreen<OvenMenu>
 {
+	public static final ResourceLocation OVEN_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/oven.png");
+
 	public OvenMenuScreen(OvenMenu menu, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title, ModElements.OVEN_TEXTURE);
+		super(menu, playerInventory, title, OVEN_TEXTURE);
 	}
 
 	@Override
