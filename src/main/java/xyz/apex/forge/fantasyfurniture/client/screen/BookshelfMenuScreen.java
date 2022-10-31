@@ -4,14 +4,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
-import xyz.apex.forge.fantasyfurniture.init.ModElements;
-import xyz.apex.forge.fantasyfurniture.menu.BookshelfMenu;
+import xyz.apex.forge.fantasyfurniture.common.menu.BookshelfMenu;
 
 public final class BookshelfMenuScreen extends BaseMenuScreen<BookshelfMenu>
 {
 	public BookshelfMenuScreen(BookshelfMenu menu, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title, ModElements.LARGE_STORAGE_TEXTURE);
+		super(menu, playerInventory, title, LargeInventoryMenuScreen.LARGE_STORAGE_TEXTURE);
 	}
 
 	@Override

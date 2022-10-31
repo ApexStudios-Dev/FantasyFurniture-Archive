@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[40,)"
 license="GNU General Public License v3.0"
-issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
+issueTrackerURL="https://discord.apexstudios.dev/"
 
 [[mods]]
 	modId="fantasyfurniture"
@@ -40,7 +40,8 @@ issueTrackerURL="https://github.com/ApexStudios-Dev/FantasyFurniture/issues"
 		ignore=true
 [[dependencies.fantasyfurniture]]
 	modId="apexcore"
-	mandatory=false
+	mandatory=true
+	embedded=true
 	versionRange="[4.13.0,5.0.0)"
 	ordering="AFTER"
 	side="BOTH"

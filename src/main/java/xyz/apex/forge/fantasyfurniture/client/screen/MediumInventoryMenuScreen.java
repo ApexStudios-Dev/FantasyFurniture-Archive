@@ -1,17 +1,20 @@
 package xyz.apex.forge.fantasyfurniture.client.screen;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
-import xyz.apex.forge.fantasyfurniture.init.ModElements;
-import xyz.apex.forge.fantasyfurniture.menu.MediumInventoryMenu;
+import xyz.apex.forge.commonality.Mods;
+import xyz.apex.forge.fantasyfurniture.common.menu.MediumInventoryMenu;
 
 public final class MediumInventoryMenuScreen extends BaseMenuScreen<MediumInventoryMenu>
 {
+	public static final ResourceLocation MEDIUM_STORAGE_TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/gui/container/medium_storage.png");
+
 	public MediumInventoryMenuScreen(MediumInventoryMenu menu, Inventory playerInventory, Component title)
 	{
-		super(menu, playerInventory, title, ModElements.MEDIUM_STORAGE_TEXTURE);
+		super(menu, playerInventory, title, MEDIUM_STORAGE_TEXTURE);
 	}
 
 	@Override

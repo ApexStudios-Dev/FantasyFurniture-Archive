@@ -31,10 +31,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
 import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.fantasyfurniture.FantasyFurniture;
-import xyz.apex.forge.fantasyfurniture.init.FurnitureStation;
-import xyz.apex.forge.fantasyfurniture.menu.FurnitureStationMenu;
-import xyz.apex.forge.fantasyfurniture.net.C2SSyncSelectedResultPacket;
+import xyz.apex.forge.commonality.tags.ItemTags;
+import xyz.apex.forge.fantasyfurniture.common.menu.FurnitureStationMenu;
+import xyz.apex.forge.fantasyfurniture.core.FurnitureStation;
+import xyz.apex.forge.fantasyfurniture.core.ModInitializer;
+import xyz.apex.forge.fantasyfurniture.core.net.C2SSyncSelectedResultPacket;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -406,8 +407,8 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		var stoneSlot = menu.getStoneSlot();
 
 		clayIndex = renderSlotBackground(claySlot, FurnitureStation.CLAY, pose, mouseX, mouseY, clayIndex);
-		woodIndex = renderSlotBackground(woodSlot, FurnitureStation.WOOD, pose, mouseX, mouseY, woodIndex);
-		stoneIndex = renderSlotBackground(stoneSlot, FurnitureStation.STONE, pose, mouseX, mouseY, stoneIndex);
+		woodIndex = renderSlotBackground(woodSlot, ItemTags.Vanilla.PLANKS, pose, mouseX, mouseY, woodIndex);
+		stoneIndex = renderSlotBackground(stoneSlot, ItemTags.Vanilla.STONE_CRAFTING_MATERIALS, pose, mouseX, mouseY, stoneIndex);
 
 		cycleCounter++;
 
@@ -627,7 +628,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 						mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_STONECUTTER_SELECT_RECIPE, 1F));
 						// mc.gameMode.handleInventoryButtonClick(menu.containerId, j);
 						menu.setSelectedResult(j);
-						FantasyFurniture.NETWORK.sendToServer(new C2SSyncSelectedResultPacket(j));
+						ModInitializer.NETWORK.sendToServer(new C2SSyncSelectedResultPacket(j));
 						return true;
 					}
 				}
