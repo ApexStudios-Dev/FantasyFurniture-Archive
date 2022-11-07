@@ -415,7 +415,7 @@ public interface BlockBuilders
 				.initialProperties(Material.METAL, MaterialColor.NONE)
 				.strength(5F, 6F)
 				.sound(SoundType.CHAIN)
-				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStatesExcept(blockState -> {
 					var model = BlockTransformers.getModelFile(ctx, blockState, provider.models());
 					var axis = blockState.getValue(RotatedPillarBlock.AXIS);
 
@@ -436,7 +436,8 @@ public interface BlockBuilders
 							.rotationX(xRot)
 							.rotationY(yRot)
 					.build();
-				}))
+				}, BlockTransformers.getIgnoredProperties(ctx.get())
+				))
 		;
 	}
 
@@ -540,12 +541,15 @@ public interface BlockBuilders
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
-				.blockState((ctx, provider) -> provider
-						.horizontalBlock(ctx.get(), provider
-								.models()
-								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-								.texture("particle", "minecraft:block/basalt_top")
-						)
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStatesExcept(blockState -> ConfiguredModel
+								.builder()
+								.modelFile(provider
+										.models()
+										.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+										.texture("particle", "minecraft:block/basalt_top")
+								)
+						.build(),
+						BlockTransformers.getIgnoredProperties(ctx.get()))
 				)
 		;
 	}
@@ -635,12 +639,15 @@ public interface BlockBuilders
 				.initialProperties(Material.DECORATION)
 				.strength(2.5F)
 				.sound(SoundType.STONE)
-				.blockState((ctx, provider) -> provider
-						.horizontalBlock(ctx.get(), provider
-								.models()
-								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-								.texture("particle", "minecraft:block/basalt_top")
-						)
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStatesExcept(blockState -> ConfiguredModel
+								.builder()
+								.modelFile(provider
+										.models()
+										.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+										.texture("particle", "minecraft:block/basalt_top")
+								)
+						.build(),
+						BlockTransformers.getIgnoredProperties(ctx.get()))
 				)
 		;
 	}
@@ -655,15 +662,10 @@ public interface BlockBuilders
 				.initialProperties(Material.WOOL, MaterialColor.WOOL)
 				.strength(.8F)
 				.sound(SoundType.WOOL)
-				.blockState((ctx, provider) -> provider
-						.simpleBlock(ctx.get(), provider
-								.models()
-								.cubeAll(
-										"%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
-										new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath()))
-								)
-						)
-				)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> provider
+						.models()
+						.cubeAll("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
+				))
 				.tag(BlockTags.Vanilla.WOOL)
 		;
 	}
@@ -672,15 +674,13 @@ public interface BlockBuilders
 	{
 		return wool(type, blockFactory)
 				.transform(BlockTransformers::applyDyeable)
-				.blockState((ctx, provider) -> provider
-						.simpleBlock(ctx.get(), provider
-								.models()
-								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/cube_all")))
-								.texture("all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-								.texture("tint_all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s_tint".formatted(ctx.getId().getPath())))
-						)
-				)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> provider
+						.models()
+						.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+						.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/cube_all")))
+						.texture("all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
+						.texture("tint_all", new ResourceLocation(ctx.getId().getNamespace(), "block/%s_tint".formatted(ctx.getId().getPath())))
+				))
 		;
 	}
 
@@ -694,15 +694,10 @@ public interface BlockBuilders
 				.initialProperties(Material.CLOTH_DECORATION, MaterialColor.WOOL)
 				.strength(.1F)
 				.sound(SoundType.WOOL)
-				.blockState((ctx, provider) -> provider
-						.simpleBlock(ctx.get(), provider
-								.models()
-								.carpet(
-										"%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()),
-										new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool".formatted(type))
-								)
-						)
-				)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> provider
+						.models()
+						.carpet("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()), new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool".formatted(type)))
+				))
 				.tag(BlockTags.Vanilla.WOOL_CARPETS)
 		;
 	}
@@ -711,15 +706,13 @@ public interface BlockBuilders
 	{
 		return carpet(type, blockFactory)
 				.transform(BlockTransformers::applyDyeable)
-				.blockState((ctx, provider) -> provider
-						.simpleBlock(ctx.get(), provider
-								.models()
-								.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
-								.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/carpet")))
-								.texture("wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool".formatted(type)))
-								.texture("tint_wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool_tint".formatted(type)))
-						)
-				)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> provider
+						.models()
+						.getBuilder("%s:block/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
+						.parent(new ModelFile.UncheckedModelFile(new ResourceLocation(Mods.FANTASY_FURNITURE, "block/dyeable/carpet")))
+						.texture("wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool".formatted(type)))
+						.texture("tint_wool", new ResourceLocation(ctx.getId().getNamespace(), "block/%s/wool_tint".formatted(type)))
+				))
 		;
 	}
 
@@ -748,7 +741,7 @@ public interface BlockBuilders
 				.sound(SoundType.WOOD)
 				.instabreak()
 				.lightLevel(BlockTransformers.lightLevel(blockState -> blockState.getOptionalValue(FloorLightBlock.PART).orElse(FloorLightBlock.Part.BOTTOM).isTop()))
-				.blockState(BlockTransformers::simpleBlockState)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> BlockTransformers.getModelFile(ctx, blockState, provider.models())))
 		;
 	}
 
@@ -1146,7 +1139,7 @@ public interface BlockBuilders
 				.strength(2.5F)
 				.sound(SoundType.WOOD)
 				.lightLevel(BlockTransformers.lightLevel())
-				.blockState(BlockTransformers::simpleBlockState)
+				.blockState((ctx, provider) -> BlockTransformers.simpleBlockState(ctx, provider, blockState -> BlockTransformers.getModelFile(ctx, blockState, provider.models())))
 		;
 	}
 

@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.core.registrate;
 
+import com.google.common.collect.Lists;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
@@ -9,10 +10,12 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -24,29 +27,63 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
+import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.BlockBuilder;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.tags.BlockTags;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
+import xyz.apex.forge.fantasyfurniture.common.block.decorations.CandleBlock;
 import xyz.apex.forge.fantasyfurniture.common.block.decorations.CookieJarBlock;
 import xyz.apex.forge.fantasyfurniture.common.block.decorations.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.common.block.furniture.*;
 
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 
 public interface BlockTransformers
 {
+	static Property<?>[] getIgnoredProperties(Block block)
+	{
+		var list = Lists.<Property<?>>newArrayList();
+
+		if(block instanceof IDyeable)
+			list.add(IDyeable.BLOCKSTATE_PROPERTY);
+		if(block instanceof BedBlock)
+			list.add(BedBlock.OCCUPIED);
+		if(block instanceof FloorLightBlock)
+			list.add(FloorLightBlock.PART);
+		if(block instanceof SimpleWaterloggedBlock)
+			list.add(BlockStateProperties.WATERLOGGED);
+		if(block instanceof IMultiBlock multiBlock)
+			list.add(multiBlock.getMultiBlockPattern().getBlockProperty());
+		if(block instanceof ISeatBlock)
+			list.add(ISeatBlock.OCCUPIED);
+		if(block instanceof FurnitureDoorBlock)
+			list.addAll(Arrays.asList(FurnitureDoorBlock.POWERED, FurnitureDoorBlock.HALF));
+		if(block instanceof CandleBlock || block instanceof OvenBlock || block instanceof OvenMultiBlock)
+		{
+			// lit is needed for dunmer oven blocks, flame only visible when active
+			// other oven blocks do not currently make use of this property other than light
+			if(!AllBlocks.DUNMER_OVEN.is(block))
+				list.add(CandleBlock.LIT);
+		}
+
+		return list.toArray(Property[]::new);
+	}
+
 	static <BLOCK extends FurnitureDoorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDoorProperties(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)
 	{
 		return builder
-				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStates(blockState -> {
+				.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStatesExcept(blockState -> {
 					var model = getModelFile(ctx, blockState, provider.models());
 					var rightHinge = blockState.getOptionalValue(DoorBlock.HINGE).orElse(DoorHingeSide.LEFT) == DoorHingeSide.RIGHT;
 					var yRot = (int) BaseBlock.getFacing(blockState).toYRot();
@@ -64,7 +101,7 @@ public interface BlockTransformers
 							.modelFile(model)
 							.rotationY(yRot)
 							.build();
-				}))
+				}, getIgnoredProperties(ctx.get())))
 				.tag(BlockTags.Vanilla.WOODEN_DOORS)
 		;
 	}
@@ -100,20 +137,29 @@ public interface BlockTransformers
 		return blockState -> lightLevelPredicate.test(blockState) && !BaseBlock.isWaterLogged(blockState) ? 14 : 0;
 	}
 
-	static <BLOCK extends Block> void simpleBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
+	static <BLOCK extends Block> void simpleBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider, Function<BlockState, ModelFile> modelGetter)
 	{
 		provider.getVariantBuilder(ctx.get())
-		        .forAllStates(blockState -> ConfiguredModel
-				        .builder()
-				        .modelFile(getModelFile(ctx, blockState, provider.models()))
-				        .build()
-		        )
+				.forAllStatesExcept(blockState -> ConfiguredModel
+								.builder()
+								.modelFile(modelGetter.apply(blockState))
+								.build(),
+						getIgnoredProperties(ctx.get())
+				)
 		;
 	}
 
 	static <BLOCK extends Block> void horizontalBlockState(DataGenContext<Block, BLOCK> ctx, RegistrateBlockstateProvider provider)
 	{
-		provider.horizontalBlock(ctx.get(), blockState -> getModelFile(ctx, blockState, provider.models()));
+		provider.getVariantBuilder(ctx.get())
+				.forAllStatesExcept(blockState -> ConfiguredModel
+								.builder()
+								.rotationY(((int) blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+								.modelFile(getModelFile(ctx, blockState, provider.models()))
+								.build(),
+						getIgnoredProperties(ctx.get())
+				)
+		;
 	}
 
 	static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> applyDyeable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)

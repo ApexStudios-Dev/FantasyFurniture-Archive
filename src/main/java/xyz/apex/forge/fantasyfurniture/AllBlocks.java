@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
@@ -382,10 +383,15 @@ public interface AllBlocks
 			.isRedstoneConductor(BlockHelper::never)
 			.isSuffocating(BlockHelper::never)
 			.isViewBlocking(BlockHelper::never)
-			.blockState((ctx, provider) -> provider.horizontalBlock(ctx.get(), provider
-					.models()
-					.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
-			))
+			.blockState((ctx, provider) -> provider.getVariantBuilder(ctx.get()).forAllStatesExcept(blockState -> ConfiguredModel
+							.builder()
+							.modelFile(provider
+									.models()
+									.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
+							)
+							.build(),
+					BlockTransformers.getIgnoredProperties(ctx.get()))
+			)
 			.recipe((ctx, provider) -> UpgradeRecipeBuilder
 					.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), ctx.get().asItem())
 					.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
