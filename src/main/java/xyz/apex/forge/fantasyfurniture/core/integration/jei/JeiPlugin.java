@@ -74,7 +74,8 @@ public final class JeiPlugin implements IModPlugin
 		Arrays.stream(new ItemEntry[] {
 				      AllItems.NORDIC_OVEN, AllItems.DUNMER_OVEN,
 				      AllItems.VENTHYR_OVEN, AllItems.BONE_SKELETON_OVEN,
-				      AllItems.BONE_WITHER_OVEN, AllItems.ROYAL_OVEN
+				      AllItems.BONE_WITHER_OVEN, AllItems.ROYAL_OVEN,
+				      AllItems.NECROLORD_OVEN
 		})
 		      .map(ItemEntry::asStack)
 		      .forEach(stack -> registration.addRecipeCatalyst(stack, RecipeTypes.SMOKING));
