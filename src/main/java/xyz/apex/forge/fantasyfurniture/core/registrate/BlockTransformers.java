@@ -6,6 +6,7 @@ import com.tterrag.registrate.providers.RegistrateLangProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
@@ -74,6 +75,7 @@ public interface BlockTransformers
 				.lang(RegistrateLangProvider.toEnglishName(builder.getName().replace('/', '_')))
 				.loot(BlockTransformers::lootTable)
 				.transform(BlockTransformers::mineableAxe)
+				.renderType(() -> RenderType::cutout)
 		;
 	}
 
