@@ -15,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      mod_name: ${{ steps.mod_name.outputs.value }}
-      mod_version: ${{ steps.mod_version.outputs.value }}
-      mod_curseforge_id: ${{ steps.mod_curseforge_id.outputs.value }}
-      mod_modrinth_id: ${{ steps.mod_modrinth_id.outputs.value }}
-      mod_release_type: ${{ steps.mod_release_type.outputs.value }}
-      minecraft_version: ${{ steps.minecraft_version.outputs.value }}
-      forge_version: ${{ steps.forge_version.outputs.value }}
+      mod_name: ${{ steps.gradle.outputs.mod_name }}
+      mod_version: ${{ steps.gradle.outputs.mod_version }}
+      mod_curseforge_id: ${{ steps.gradle.outputs.mod_curseforge_id }}
+      mod_modrinth_id: ${{ steps.gradle.outputs.mod_modrinth_id }}
+      mod_release_type: ${{ steps.gradle.outputs.mod_release_type }}
+      minecraft_version: ${{ steps.gradle.outputs.minecraft_version }}
+      forge_version: ${{ steps.gradle.outputs.forge_version }}
       tag_current: ${{ steps.tag_current.outputs.tag }}
       tag_previous: ${{ steps.tag_previous.outputs.tag }}
 
