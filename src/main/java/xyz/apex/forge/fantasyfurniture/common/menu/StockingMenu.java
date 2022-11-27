@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public final class StockingMenu extends BaseMenu
 {
-	public static final int ROWS = 3;
-	public static final int COLS = 2;
+	public static final int ROWS = 2;
+	public static final int COLS = 3;
 	public static final int SIZE = ROWS * COLS;
 
 	public StockingMenu(@Nullable MenuType<? extends StockingMenu> menuType, int windowId, Inventory playerInventory, FriendlyByteBuf buffer)
@@ -23,7 +23,7 @@ public final class StockingMenu extends BaseMenu
 
 		var itemHandler = Objects.requireNonNull(getItemHandler());
 
-		bindItemHandlerSlots(this, itemHandler, COLS, ROWS, 62, 26);
+		bindItemHandlerSlots(this, itemHandler, ROWS, COLS, 62, 26);
 		bindPlayerInventory(this, 8, 84);
 	}
 
