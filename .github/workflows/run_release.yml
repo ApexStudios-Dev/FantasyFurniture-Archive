@@ -89,7 +89,7 @@ jobs:
   publish:
     name: Publish Project
     uses: ApexStudios-Dev/.github/.github/workflows/call_publish.yml@master
-    needs: [ compile, changelog ]
+    needs: [ vars, compile, changelog ]
     secrets:
       MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
       CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
