@@ -1,0 +1,130 @@
+{
+	"credit": "Made by Fantasy",
+	"textures": {
+		"fairy_lights_2": "fantasyfurniture:models/decorations/fairy_lights_2",
+		"particle": "fantasyfurniture:particles/decorations/fairy_lights_1"
+	},
+	"elements": [
+		{
+			"name": "string_1",
+			"from": [1.5, 12, 15],
+			"to": [14.5, 16, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 13, 4], "texture": "#fairy_lights_2"},
+				"east": {"uv": [0, 0, 0, 4], "texture": "#fairy_lights_2"},
+				"south": {"uv": [0, 4, 13, 8], "texture": "#fairy_lights_2"},
+				"west": {"uv": [0, 0, 0, 4], "texture": "#fairy_lights_2"},
+				"up": {"uv": [13, 0, 0, 0], "texture": "#fairy_lights_2"},
+				"down": {"uv": [13, 0, 0, 0], "texture": "#fairy_lights_2"}
+			}
+		},
+		{
+			"name": "string_2",
+			"from": [5.5, 10, 15],
+			"to": [10.5, 12, 15],
+			"faces": {
+				"north": {"uv": [0, 8, 5, 10], "texture": "#fairy_lights_2"},
+				"east": {"uv": [0, 0, 0, 2], "texture": "#fairy_lights_2"},
+				"south": {"uv": [5, 8, 10, 10], "texture": "#fairy_lights_2"},
+				"west": {"uv": [0, 0, 0, 2], "texture": "#fairy_lights_2"},
+				"up": {"uv": [5, 0, 0, 0], "texture": "#fairy_lights_2"},
+				"down": {"uv": [5, 0, 0, 0], "texture": "#fairy_lights_2"}
+			}
+		},
+		{
+			"name": "light_1",
+			"from": [12, 10, 14],
+			"to": [14, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 10, 2, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"east": {"uv": [2, 10, 4, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"south": {"uv": [4, 10, 6, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"west": {"uv": [6, 10, 8, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"up": {"uv": [10, 12, 8, 10], "texture": "#fairy_lights_2", "tintindex": 1},
+				"down": {"uv": [12, 8, 10, 10], "texture": "#fairy_lights_2", "tintindex": 1}
+			}
+		},
+		{
+			"name": "light_2",
+			"from": [9, 8, 14],
+			"to": [11, 10, 16],
+			"faces": {
+				"north": {"uv": [10, 10, 12, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"east": {"uv": [0, 12, 2, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"south": {"uv": [2, 12, 4, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"west": {"uv": [4, 12, 6, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"up": {"uv": [8, 14, 6, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"down": {"uv": [10, 12, 8, 14], "texture": "#fairy_lights_2", "tintindex": 1}
+			}
+		},
+		{
+			"name": "light_3",
+			"from": [5, 8, 14],
+			"to": [7, 10, 16],
+			"faces": {
+				"north": {"uv": [12, 8, 14, 10], "texture": "#fairy_lights_2", "tintindex": 1},
+				"east": {"uv": [10, 12, 12, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"south": {"uv": [12, 10, 14, 12], "texture": "#fairy_lights_2", "tintindex": 1},
+				"west": {"uv": [12, 12, 14, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"up": {"uv": [15, 2, 13, 0], "texture": "#fairy_lights_2", "tintindex": 1},
+				"down": {"uv": [15, 2, 13, 4], "texture": "#fairy_lights_2", "tintindex": 1}
+			}
+		},
+		{
+			"name": "light_4",
+			"from": [2, 10, 14],
+			"to": [4, 12, 16],
+			"faces": {
+				"north": {"uv": [13, 4, 15, 6], "texture": "#fairy_lights_2", "tintindex": 1},
+				"east": {"uv": [13, 6, 15, 8], "texture": "#fairy_lights_2", "tintindex": 1},
+				"south": {"uv": [0, 14, 2, 16], "texture": "#fairy_lights_2", "tintindex": 1},
+				"west": {"uv": [2, 14, 4, 16], "texture": "#fairy_lights_2", "tintindex": 1},
+				"up": {"uv": [6, 16, 4, 14], "texture": "#fairy_lights_2", "tintindex": 1},
+				"down": {"uv": [8, 14, 6, 16], "texture": "#fairy_lights_2", "tintindex": 1}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 0, -14.5]
+		},
+		"fixed": {
+			"translation": [0, 0, -3],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "fairy_lights",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}

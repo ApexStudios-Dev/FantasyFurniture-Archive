@@ -146,6 +146,13 @@ public interface AllBlockEntities
 
 	BlockEntityEntry<FurnitureStationBlockEntity> FURNITURE_STATION = BlockEntityEntry.cast(AllBlocks.FURNITURE_STATION.getSibling(Registry.BLOCK_ENTITY_TYPE_REGISTRY));
 
+	BlockEntityEntry<StockingBlockEntity> STOCKING_BLOCK_ENTITY = REGISTRATE
+			.object("stocking")
+			.blockEntity(StockingBlockEntity::new)
+			.validBlock(AllBlocks.STOCKING)
+			.register()
+	;
+
 	static void bootstrap()
 	{
 	}
