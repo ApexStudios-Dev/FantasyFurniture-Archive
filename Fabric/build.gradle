@@ -75,6 +75,24 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
 	modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
 
+	// Uncomment all of the below to enable shaders
+	// ome of these may or may not be required
+	// as fabric brings in some of them
+	// but unsure if sodium/iris uses newer versions
+	// than what fabric brings in
+	// these are just copy pastes from their build scripts
+	// to ensure we have everything
+	// modRuntimeOnly 'maven.modrinth:sodium:mc1.19.2-0.4.4'
+	// modRuntimeOnly 'maven.modrinth:iris:1.19.2-v1.4.3'
+	// runtimeOnly 'it.unimi.dsi:fastutil:8.5.6'
+	// runtimeOnly 'org.lwjgl:lwjgl:3.3.1'
+	// runtimeOnly 'org.lwjgl:lwjgl-opengl:3.3.1'
+	// runtimeOnly 'org.apache.commons:commons-lang3:3.12.0'
+	// runtimeOnly 'org.joml:joml:1.10.4'
+	// runtimeOnly 'org.jetbrains:annotations:23.0.0'
+	// runtimeOnly 'io.github.douira:glsl-transformer:1.0.1'
+	// runtimeOnly 'org.anarres:jcpp:1.4.14'
+
 	modImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}" // Jade-1.19.1-fabric-8.6.0
 	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
 	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
