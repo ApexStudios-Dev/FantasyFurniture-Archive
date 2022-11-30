@@ -9,5 +9,6 @@ public final class FantasyFurnitureForge
 {
     public FantasyFurnitureForge()
     {
+        FantasyFurniture.bootstrap();
     }
 }

@@ -17,6 +17,15 @@ archivesBaseName = "${MOD_ID}-forge"
 
 jarJar.enable()
 
+sourceSets {
+	datagen {
+		compileClasspath += configurations.getByName('minecraft')
+
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
+	}
+}
+
 minecraft {
 	mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -48,6 +57,24 @@ minecraft {
 			mods {
 				"${MOD_ID}" {
 					source sourceSets.main
+					source project(':Common').sourceSets.main
+				}
+			}
+		}
+
+		data {
+			taskName 'data'
+			workingDirectory file('run/client')
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
+			ideaModule "${rootProject.name}.${project.name}.main"
+			args '--mod', MOD_ID, '--client', '--server', '--validate', '--output', project(':Common').file('src/generated/resources'), '--existing', file('src/main/resources'), '--existing', project(':Common').file('src/main/resources'), '--existing-mod', APEXCORE_ID
+			forceExit false
+
+			mods {
+				"${MOD_ID}" {
+					source sourceSets.main
+					source sourceSets.datagen
 					source project(':Common').sourceSets.main
 				}
 			}
@@ -86,6 +113,7 @@ dependencies {
 	minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
 	annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
 	compileOnly project(':Common')
+	datagenCompileOnly project(':Common')
 
 	implementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}") // Jade-1.19.1-forge-8.6.0
 	compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
@@ -93,6 +121,8 @@ dependencies {
 	runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
 
 	implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+	datagenImplementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+
 	jarJar(group: "${APEX_GROUP}.${APEXCORE_ID}.forge", name: "${APEXCORE_ID}-forge", version: "${APEXCORE_VERSION_RANGE}")
 }
 
