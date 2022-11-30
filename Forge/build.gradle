@@ -1,0 +1,199 @@
+plugins {
+	id 'java-library'
+	id 'idea'
+	id 'maven-publish'
+
+	id 'net.minecraftforge.gradle' version '5.1.+'
+	id 'org.spongepowered.mixin' version '0.7.+'
+	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+}
+
+evaluationDependsOn(':Common')
+
+group = "${APEX_GROUP}.${MOD_ID}.forge"
+version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
+archivesBaseName = "${MOD_ID}-forge"
+
+jarJar.enable()
+
+minecraft {
+	mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+	runs {
+		client {
+			taskName 'client'
+			workingDirectory file('run/client')
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
+			ideaModule "${rootProject.name}.${project.name}.main"
+
+			mods {
+				"${MOD_ID}" {
+					source sourceSets.main
+					source project(':Common').sourceSets.main
+				}
+			}
+		}
+
+		server {
+			taskName 'server'
+			workingDirectory file('run/server')
+			property 'forge.logging.markers', ''
+			property 'forge.logging.console.level', 'debug'
+			args 'nogui'
+			ideaModule "${rootProject.name}.${project.name}.main"
+
+			mods {
+				"${MOD_ID}" {
+					source sourceSets.main
+					source project(':Common').sourceSets.main
+				}
+			}
+		}
+	}
+}
+
+mixin {
+	add sourceSets.main, "${MOD_ID}.refmap.json"
+	add project(':Common').sourceSets.main, "${MOD_ID}-common.refmap.json"
+
+	config "${MOD_ID}.mixins.json"
+	config "${MOD_ID}-common.mixins.json"
+}
+
+repositories {
+	mavenLocal()
+	maven { url "file:///${rootProject.projectDir}/maven" }
+	maven { url 'https://maven.parchmentmc.org' }
+	maven { url 'https://maven.terraformersmc.com/releases/' }
+	maven { url 'https://dvs1.progwml6.com/files/maven/' }
+	maven { url 'https://modmaven.dev/' }
+
+	maven {
+		url 'https://www.cursemaven.com'
+		content { includeGroup 'curse.maven' }
+	}
+
+	maven {
+		url 'https://api.modrinth.com/maven'
+		content { includeGroup 'maven.modrinth' }
+	}
+}
+
+dependencies {
+	minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+	annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
+	compileOnly project(':Common')
+
+	implementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}") // Jade-1.19.1-forge-8.6.0
+	compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
+	compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
+	runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
+
+	implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+	jarJar(group: "${APEX_GROUP}.${APEXCORE_ID}.forge", name: "${APEXCORE_ID}-forge", version: "${APEXCORE_VERSION_RANGE}")
+}
+
+processResources {
+	duplicatesStrategy DuplicatesStrategy.WARN
+
+	project.properties.each { key, value ->
+		inputs.property "${key}", "${value}"
+	}
+
+	filesMatching([ '*.mixins.json', 'pack.mcmeta', 'META-INF/mods.toml' ]) {
+		expand project.properties
+	}
+
+	from project(':Common').sourceSets.main.resources
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
+
+	source(project(':Common').sourceSets.main.allSource)
+
+	javaToolchains {
+		compilerFor {
+			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+		}
+	}
+}
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+	}
+
+	withSourcesJar()
+}
+
+tasks.jarJar.configure {
+	classifier = ''
+}
+
+jar {
+	classifier = 'slim'
+
+	manifest {
+		attributes([
+				'Specification-Title': "${MOD_ID}",
+				'Specification-Vendor': 'ApexStudios',
+				'Specification-Version': '1',
+				'Implementation-Title': "${project.name}",
+				'Implementation-Version': "${project.version}",
+				'Implementation-Vendor': 'ApexStudios',
+				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+				'MixinConfigs': "${MOD_ID}.mixins.json,${MOD_ID}-common.mixins.json"
+		])
+	}
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+	archives tasks.jarJar
+}
+
+reobf {
+	jarJar { }
+}
+
+jar.finalizedBy('reobfJar')
+tasks.jar.finalizedBy('reobfJarJar')
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = "${project.group}"
+			artifactId = "${project.archivesBaseName}"
+			version = "${project.version}"
+
+			artifact jar
+			artifact sourcesJar
+			artifact tasks.jarJar
+		}
+	}
+	repositories {
+		maven { url "file:///${rootProject.projectDir}/maven" }
+
+		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
+			maven {
+				name 'ApexMods-Maven'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
+
+				credentials {
+					username System.getenv('APEX_MODS_MAVEN_USERNAME')
+					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
+				}
+			}
+		}
+	}
+}
+
+idea.module {
+	excludeDirs << file('run')
+}

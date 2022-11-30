@@ -1,0 +1,79 @@
+{
+    "schemaVersion": 1,
+    "id": "${MOD_ID}",
+    "version": "${MOD_VERSION}",
+    "name": "${MOD_NAME}",
+    "description": "${MOD_DESCRIPTION}",
+    "authors": [
+        {
+            "name": "ApexStudios",
+            "contact": {
+                "homepage": "https://apexstudios.dev",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        },
+        {
+            "name": "Apex - [Founder & Lead Programmer]",
+            "contact": {
+                "homepage": "https://apexmodder.xyz",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        },
+        {
+            "name": "FantasyGaming (Viscerus) - [Co-Founder & Artist]",
+            "contact": {
+                "homepage": "https://bio.link/Viscerus",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/Viscerus"
+            }
+        }
+    ],
+    "icon": "banner.png",
+    "contact": {
+        "homepage": "https://apexstudios.dev/",
+        "issues": "https://discord.apexstudios.dev",
+        "sources": "https://github.com/ApexStudios-Dev/"
+    },
+    "contributors": [
+        {
+            "name": "RudySPG - [Web-Developer, Supporter, Beta Tester]",
+            "contact": {
+                "homepage": "https://github.com/RudySPG",
+                "sources": "https://github.com/RudySPG"
+            }
+        },
+        {
+            "name": "TobiSPG - [Supporter & Beta Tester]",
+            "contact": {
+                "homepage": "https://lexzandersaplan.com/",
+                "sources": "https://github.com/zanderlx"
+            }
+        }
+    ],
+    "license": "GNU GENERAL PUBLIC LICENSE",
+    "environment": "*",
+    "entrypoints": {
+        "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric" ],
+        "client": [ ],
+        "server": [ ]
+    },
+    "mixins": [
+        "${MOD_ID}.mixins.json",
+        "${MOD_ID}-common.mixins.json"
+    ],
+    "depends": {
+        "minecraft": "~${MINECRAFT_VERSION}",
+        "java": ">=${JAVA_VERSION}",
+        "fabricloader": ">=${FABRIC_LOADER_VERSION}",
+        "fabric-api": ">=${FABRIC_VERSION}",
+        "${APEXCORE_ID}": ">=${APEXCORE_VERSION}"
+    },
+    "custom": {
+        "modmenu": {
+            "modmenu.discord": "https://discord.apexstudios.dev/",
+            "parent": "${APEXCORE_ID}"
+        }
+    }
+}

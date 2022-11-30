@@ -1,0 +1,174 @@
+plugins {
+	id 'java-library'
+	id 'idea'
+	id 'maven-publish'
+
+	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+}
+
+evaluationDependsOn(':Common')
+
+group = "${APEX_GROUP}.${MOD_ID}.fabric"
+version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
+archivesBaseName = "${MOD_ID}-fabric"
+
+loom {
+	accessWidenerPath = file("src/main/resources/${MOD_ID}.accesswidener")
+	enableTransitiveAccessWideners = true
+
+	runs {
+		client {
+			client()
+			setConfigName('fabric client')
+			ideConfigGenerated(true)
+			runDir('run')
+		}
+
+		server {
+			server()
+			setConfigName('fabric server')
+			ideConfigGenerated(true)
+			runDir('run')
+		}
+	}
+
+	mods {
+		"${MOD_ID}" {
+			sourceSet sourceSets.main
+			sourceSet project(':Common').sourceSets.main
+		}
+	}
+}
+
+repositories {
+	mavenLocal()
+	maven { url "file:///${rootProject.projectDir}/maven" }
+	maven { url 'https://maven.parchmentmc.org' }
+	maven { url 'https://maven.terraformersmc.com/releases/' }
+	maven { url 'https://dvs1.progwml6.com/files/maven/' }
+	maven { url 'https://modmaven.dev/' }
+
+	maven {
+		url 'https://www.cursemaven.com'
+		content { includeGroup 'curse.maven' }
+	}
+
+	maven {
+		url 'https://api.modrinth.com/maven'
+		content { includeGroup 'maven.modrinth' }
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+	}
+
+	modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
+	compileOnly project(':Common')
+
+	modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
+	modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
+
+	modImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}" // Jade-1.19.1-fabric-8.6.0
+	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
+	modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+
+	modImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	include "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+}
+
+processResources {
+	duplicatesStrategy DuplicatesStrategy.WARN
+
+	project.properties.each { key, value ->
+		inputs.property "${key}", "${value}"
+	}
+
+	filesMatching([ '*.mixins.json', 'pack.mcmeta', 'fabric.mod.json' ]) {
+		expand project.properties
+	}
+
+	from project(':Common').sourceSets.main.resources
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
+
+	source(project(':Common').sourceSets.main.allSource)
+
+	javaToolchains {
+		compilerFor {
+			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+		}
+	}
+}
+
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+	}
+
+	withSourcesJar()
+}
+
+jar {
+	manifest {
+		attributes([
+				'Specification-Title': "${MOD_ID}",
+				'Specification-Vendor': 'ApexStudios',
+				'Specification-Version': '1',
+				'Implementation-Title': "${project.name}",
+				'Implementation-Version': "${project.version}",
+				'Implementation-Vendor': 'ApexStudios',
+				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+		])
+	}
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+	archives remapJar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = "${project.group}"
+			artifactId = "${project.archivesBaseName}"
+			version = "${project.version}"
+
+			artifact jar
+			artifact sourcesJar
+			artifact remapJar
+		}
+	}
+	repositories {
+		maven { url "file:///${rootProject.projectDir}/maven" }
+
+		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
+			maven {
+				name 'ApexMods-Maven'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
+
+				credentials {
+					username System.getenv('APEX_MODS_MAVEN_USERNAME')
+					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
+				}
+			}
+		}
+	}
+}
+
+idea.module {
+	excludeDirs << file('run')
+}

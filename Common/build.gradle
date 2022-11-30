@@ -1,0 +1,104 @@
+plugins {
+	id 'java-library'
+	id 'idea'
+	id 'maven-publish'
+
+	id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
+}
+
+group = "${APEX_GROUP}.${MOD_ID}.shared"
+version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
+archivesBaseName = "${MOD_ID}-shared"
+
+minecraft {
+	version("${MINECRAFT_VERSION}")
+}
+
+repositories {
+	mavenLocal()
+	maven { url "file:///${rootProject.projectDir}/maven" }
+}
+
+dependencies {
+	compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
+	implementation "${APEX_GROUP}.${APEXCORE_ID}.shared:${APEXCORE_ID}-shared:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+}
+
+processResources {
+	duplicatesStrategy DuplicatesStrategy.WARN
+
+	project.properties.each { key, value ->
+		inputs.property "${key}", "${value}"
+	}
+
+	filesMatching([ '*.mixins.json', 'pack.mcmeta' ]) {
+		expand project.properties
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
+
+	javaToolchains {
+		compilerFor {
+			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+		}
+	}
+}
+
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+	}
+
+	withSourcesJar()
+}
+
+jar {
+	manifest {
+		attributes([
+				'Specification-Title': "${MOD_ID}",
+				'Specification-Vendor': 'ApexStudios',
+				'Specification-Version': '1',
+				'Implementation-Title': "${project.name}",
+				'Implementation-Version': "${project.version}",
+				'Implementation-Vendor': 'ApexStudios',
+				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+		])
+	}
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId = "${project.group}"
+			artifactId = "${project.archivesBaseName}"
+			version = "${project.version}"
+
+			artifact jar
+			artifact sourcesJar
+		}
+	}
+	repositories {
+		maven { url "file:///${rootProject.projectDir}/maven" }
+
+		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
+			maven {
+				name 'ApexMods-Maven'
+				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
+
+				credentials {
+					username System.getenv('APEX_MODS_MAVEN_USERNAME')
+					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
+				}
+			}
+		}
+	}
+}
