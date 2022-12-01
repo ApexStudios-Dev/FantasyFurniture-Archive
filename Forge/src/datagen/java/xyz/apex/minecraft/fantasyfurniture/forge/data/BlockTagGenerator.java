@@ -18,5 +18,6 @@ public final class BlockTagGenerator extends BlockTagsProvider
     protected void addTags()
     {
         tag(BlockTags.WOOL).add(NordicSet.WOOL.get());
+        tag(BlockTags.WOOL_CARPETS).add(NordicSet.CARPET.get());
     }
 }

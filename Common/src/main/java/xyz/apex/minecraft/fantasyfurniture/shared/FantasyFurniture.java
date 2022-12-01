@@ -3,7 +3,6 @@ package xyz.apex.minecraft.fantasyfurniture.shared;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
@@ -13,6 +12,7 @@ import xyz.apex.minecraft.apexcore.shared.registry.ModdedRegistries;
 import xyz.apex.minecraft.apexcore.shared.registry.ModdedRegistry;
 import xyz.apex.minecraft.apexcore.shared.registry.RegistryKeys;
 import xyz.apex.minecraft.apexcore.shared.registry.block.BlockRegistry;
+import xyz.apex.minecraft.apexcore.shared.registry.item.DefaultedItemProperties;
 import xyz.apex.minecraft.apexcore.shared.registry.item.ItemRegistry;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.*;
 
@@ -22,13 +22,14 @@ public interface FantasyFurniture
 {
     String ID = "fantasyfurniture";
 
-    Supplier<Item.Properties> ITEM_PROPERTIES = () -> new Item.Properties().tab(CreativeModeTab.TAB_MISC);
     Supplier<BlockBehaviour.Properties> STONE_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.STONE);
     Supplier<BlockBehaviour.Properties> WOOL_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL);
     Supplier<BlockBehaviour.Properties> CARPET_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.WHITE_CARPET);
 
     static void bootstrap()
     {
+        DefaultedItemProperties.register(ID, properties -> properties.tab(CreativeModeTab.TAB_MISC));
+
         Registries.bootstrap();
 
         NordicSet.bootstrap();

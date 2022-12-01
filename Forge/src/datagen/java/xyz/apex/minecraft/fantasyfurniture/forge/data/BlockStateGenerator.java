@@ -1,14 +1,15 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.shared.registry.RegistryEntry;
-import xyz.apex.minecraft.apexcore.shared.registry.block.BlockRegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
+
+import java.util.function.Function;
 
 public final class BlockStateGenerator extends BlockStateProvider
 {
@@ -20,19 +21,45 @@ public final class BlockStateGenerator extends BlockStateProvider
     @Override
     protected void registerStatesAndModels()
     {
-        wool(NordicSet.WOOL);
+        simpleBlock(NordicSet.WOOL);
+        carpet(NordicSet.CARPET, NordicSet.WOOL);
     }
 
-    private void wool(BlockRegistryEntry<?> entry)
+    private VariantBlockStateBuilder simpleBlock(RegistryEntry<? extends Block> entry)
     {
-        var block = entry.get();
+        return simpleBlock(entry, cubeAll(entry));
+    }
 
-        var blockModelPath = nameWithPrefix(entry, ModelProvider.BLOCK_FOLDER);
-        var itemModelPath = nameWithPrefix(entry, ModelProvider.ITEM_FOLDER);
+    private VariantBlockStateBuilder simpleBlock(RegistryEntry<? extends Block> entry, Function<ModelFile, ConfiguredModel[]> expander)
+    {
+        return simpleBlock(entry, expander.apply(cubeAll(entry)));
+    }
 
-        var model = models().cubeAll(blockModelPath.toString(), blockTexture(block));
-        simpleBlock(block, model);
-        itemModels().getBuilder(itemModelPath.toString()).parent(model);
+    private VariantBlockStateBuilder simpleBlock(RegistryEntry<? extends Block> entry, ModelFile model)
+    {
+        return simpleBlock(entry, new ConfiguredModel(model));
+    }
+
+    private VariantBlockStateBuilder simpleBlock(RegistryEntry<? extends Block> entry, ConfiguredModel... models)
+    {
+        return getVariantBuilder(entry.get()).partialState().setModels(models);
+    }
+
+    private VariantBlockStateBuilder carpet(RegistryEntry<? extends Block> carpet, RegistryEntry<?> wool)
+    {
+        var model = models().carpet(blockFolder(carpet).toString(), blockFolder(wool));
+        return simpleBlock(carpet, model);
+    }
+
+    private ModelFile cubeAll(RegistryEntry<?> entry)
+    {
+        var path = blockFolder(entry);
+        return models().cubeAll(path.toString(), path);
+    }
+
+    private ResourceLocation blockFolder(RegistryEntry<?> entry)
+    {
+        return nameWithPrefix(entry, ModelProvider.BLOCK_FOLDER);
     }
 
     private ResourceLocation nameWithPrefix(RegistryEntry<?> entry, String prefix)

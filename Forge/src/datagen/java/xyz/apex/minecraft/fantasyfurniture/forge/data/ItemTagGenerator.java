@@ -18,5 +18,6 @@ public final class ItemTagGenerator extends ItemTagsProvider
     protected void addTags()
     {
         copy(BlockTags.WOOL, ItemTags.WOOL);
+        copy(BlockTags.WOOL_CARPETS, ItemTags.WOOL_CARPETS);
     }
 }

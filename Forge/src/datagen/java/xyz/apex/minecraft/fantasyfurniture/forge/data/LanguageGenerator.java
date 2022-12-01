@@ -17,5 +17,6 @@ public final class LanguageGenerator extends LanguageProvider
     protected void addTranslations()
     {
         addBlock(NordicSet.WOOL, "Nordic Wool");
+        addBlock(NordicSet.CARPET, "Nordic Carpet");
     }
 }
