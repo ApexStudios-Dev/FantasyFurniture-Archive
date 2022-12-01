@@ -57,7 +57,8 @@
     "entrypoints": {
         "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric" ],
         "client": [ ],
-        "server": [ ]
+        "server": [ ],
+        "fabric-datagen": [ "${APEX_GROUP}.${MOD_ID}.fabric.data.DataGenerators" ]
     },
     "mixins": [
         "${MOD_ID}.mixins.json",

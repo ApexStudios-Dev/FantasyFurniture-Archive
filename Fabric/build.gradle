@@ -13,6 +13,8 @@ group = "${APEX_GROUP}.${MOD_ID}.fabric"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-fabric"
 
+sourceSets.main.resources.srcDirs += 'src/generated/resources'
+
 loom {
 	accessWidenerPath = file("src/main/resources/${MOD_ID}.accesswidener")
 	enableTransitiveAccessWideners = true
@@ -30,6 +32,16 @@ loom {
 			setConfigName('fabric server')
 			ideConfigGenerated(true)
 			runDir('run')
+		}
+
+		data {
+			inherit(client)
+			setConfigName('fabric data')
+			ideConfigGenerated(true)
+			runDir('run')
+			vmArg('-Dfabric-api.datagen')
+			vmArg("-Dfabric-api.datagen.output-dir=${file('src/generated/resources')}")
+			vmArg("-Dfabric-api.datagen.modid=${MOD_ID}")
 		}
 	}
 
