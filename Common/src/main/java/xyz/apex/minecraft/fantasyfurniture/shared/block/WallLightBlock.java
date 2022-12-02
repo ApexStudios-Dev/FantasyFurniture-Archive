@@ -8,6 +8,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
+
 import java.util.function.Supplier;
 
 // Modified version of vanilla class
@@ -42,6 +44,20 @@ public class WallLightBlock extends WallTorchBlock
         var x = (double) pos.getX() + .5D;
         var y = (double) pos.getY() + .7D;
         var z = (double) pos.getZ() + .5D;
+
+        var facing = blockState.getValue(FACING);
+
+        if(NordicSet.WALL_LIGHT.is(this))
+        {
+            y -= .2D;
+
+            var hStep = .12D;
+            var vStep = .24D;
+
+            x = x - (hStep * facing.getStepX());
+            y = y + .2D + vStep;
+            z = z - (hStep * facing.getStepZ());
+        }
 
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
         level.addParticle(getFlameParticle(), x, y, z, 0D, 0D, 0D);
