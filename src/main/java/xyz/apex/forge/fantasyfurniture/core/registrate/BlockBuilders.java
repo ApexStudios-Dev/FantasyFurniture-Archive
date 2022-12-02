@@ -493,7 +493,7 @@ public interface BlockBuilders
 							.rotationX(xRot)
 							.rotationY(yRot)
 					.build();
-				}, BlockTransformers.getIgnoredProperties(ctx.get())
+				}, BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath())
 				))
 		;
 	}
@@ -606,7 +606,7 @@ public interface BlockBuilders
 										.texture("particle", "minecraft:block/basalt_top")
 								)
 						.build(),
-						BlockTransformers.getIgnoredProperties(ctx.get()))
+						BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 				)
 		;
 	}
@@ -704,7 +704,7 @@ public interface BlockBuilders
 										.texture("particle", "minecraft:block/basalt_top")
 								)
 						.build(),
-						BlockTransformers.getIgnoredProperties(ctx.get()))
+						BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 				)
 		;
 	}

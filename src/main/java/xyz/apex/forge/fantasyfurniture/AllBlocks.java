@@ -396,7 +396,7 @@ public interface AllBlocks
 									.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
 							)
 							.build(),
-					BlockTransformers.getIgnoredProperties(ctx.get()))
+					BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 			)
 			.recipe((ctx, provider) -> UpgradeRecipeBuilder
 					.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), ctx.get().asItem())
