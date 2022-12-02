@@ -1,0 +1,134 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"shelf": "fantasyfurniture:models/nordic/shelf",
+		"particle": "fantasyfurniture:particles/nordic"
+	},
+	"elements": [
+		{
+			"name": "shelf",
+			"from": [0, 14, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
+			"faces": {
+				"north": {"uv": [4, 0, 8, 0.5], "texture": "#shelf"},
+				"east": {"uv": [4, 0.5, 8, 1], "texture": "#shelf"},
+				"south": {"uv": [4, 1, 8, 1.5], "texture": "#shelf"},
+				"west": {"uv": [4, 1.5, 8, 2], "texture": "#shelf"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#shelf"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#shelf"}
+			}
+		},
+		{
+			"name": "support_1",
+			"from": [13, 6, 13],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
+			"faces": {
+				"north": {"uv": [4, 5, 4.75, 7], "texture": "#shelf"},
+				"east": {"uv": [4.75, 5, 5.5, 7], "texture": "#shelf"},
+				"south": {"uv": [5.5, 5, 6.25, 7], "texture": "#shelf"},
+				"west": {"uv": [6.25, 5, 7, 7], "texture": "#shelf"},
+				"up": {"uv": [8.5, 6, 7.75, 5.25], "texture": "#shelf"},
+				"down": {"uv": [1.25, 8, 0.5, 8.75], "texture": "#shelf"}
+			}
+		},
+		{
+			"name": "support_2",
+			"from": [13.5, 9, 2],
+			"to": [15.5, 14, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
+			"faces": {
+				"north": {"uv": [5.5, 7.5, 6, 8.75], "texture": "#shelf"},
+				"east": {"uv": [6, 7.5, 6.5, 8.75], "texture": "#shelf"},
+				"south": {"uv": [6.5, 7.5, 7, 8.75], "texture": "#shelf"},
+				"west": {"uv": [7, 7.5, 7.5, 8.75], "texture": "#shelf"},
+				"up": {"uv": [7, 4.5, 6.5, 4], "texture": "#shelf"},
+				"down": {"uv": [7, 4.5, 6.5, 5], "texture": "#shelf"}
+			}
+		},
+		{
+			"name": "arch_1",
+			"from": [14, 10.76956, 8.15851],
+			"to": [15, 12.76956, 14.15851],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [14.5, 10.76956, 9.15851]},
+			"faces": {
+				"north": {"uv": [8.25, 4, 8.5, 4.5], "texture": "#shelf"},
+				"east": {"uv": [7.25, 2.5, 8.75, 3], "texture": "#shelf"},
+				"south": {"uv": [8.25, 4.5, 8.5, 5], "texture": "#shelf"},
+				"west": {"uv": [7.25, 3, 8.75, 3.5], "texture": "#shelf"},
+				"up": {"uv": [3.25, 9.5, 3, 8], "texture": "#shelf"},
+				"down": {"uv": [3.5, 8, 3.25, 9.5], "texture": "#shelf"}
+			}
+		},
+		{
+			"name": "arch_2",
+			"from": [14, 11, 2],
+			"to": [15, 13, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14.5, 10.76537, 10.15224]},
+			"faces": {
+				"north": {"uv": [8.5, 0, 8.75, 0.5], "texture": "#shelf"},
+				"east": {"uv": [5.5, 7, 7.25, 7.5], "texture": "#shelf"},
+				"south": {"uv": [8.5, 0.5, 8.75, 1], "texture": "#shelf"},
+				"west": {"uv": [7, 6, 8.75, 6.5], "texture": "#shelf"},
+				"up": {"uv": [2.25, 9.75, 2, 8], "texture": "#shelf"},
+				"down": {"uv": [2.5, 8, 2.25, 9.75], "texture": "#shelf"}
+			}
+		},
+		{
+			"name": "panel_1",
+			"from": [14.5, 11, 4],
+			"to": [14.5, 14, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 0.75], "texture": "#shelf"},
+				"east": {"uv": [4, 2, 6.5, 2.75], "texture": "#shelf"},
+				"south": {"uv": [0, 0, 0, 0.75], "texture": "#shelf"},
+				"west": {"uv": [4, 2.75, 6.5, 3.5], "texture": "#shelf"},
+				"up": {"uv": [0, 2.5, 0, 0], "texture": "#shelf"},
+				"down": {"uv": [0, 0, 0, 2.5], "texture": "#shelf"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, -0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 145, 0],
+			"translation": [0, -3.5, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "nordic_shelf",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}

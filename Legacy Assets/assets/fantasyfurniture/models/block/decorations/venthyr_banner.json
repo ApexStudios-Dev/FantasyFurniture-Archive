@@ -1,0 +1,80 @@
+{
+	"credit": "Made by Fantasy",
+	"texture_size": [64, 64],
+	"textures": {
+		"venthyr_banner": "fantasyfurniture:models/decorations/venthyr_banner",
+		"particle": "fantasyfurniture:particles/venthyr"
+	},
+	"elements": [
+		{
+			"name": "1",
+			"from": [0, 30, 14],
+			"to": [16, 32, 16],
+			"faces": {
+				"north": {"uv": [0, 7.5, 4, 8], "texture": "#venthyr_banner"},
+				"east": {"uv": [8, 0.5, 8.5, 1], "texture": "#venthyr_banner"},
+				"south": {"uv": [4, 7.5, 8, 8], "texture": "#venthyr_banner"},
+				"west": {"uv": [8, 1, 8.5, 1.5], "texture": "#venthyr_banner"},
+				"up": {"uv": [4, 8.5, 0, 8], "texture": "#venthyr_banner"},
+				"down": {"uv": [12, 0, 8, 0.5], "texture": "#venthyr_banner"}
+			}
+		},
+		{
+			"name": "2",
+			"from": [0, 0, 15],
+			"to": [16, 30, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 7.5], "texture": "#venthyr_banner"},
+				"east": {"uv": [0, 0, 0, 7.5], "texture": "#venthyr_banner"},
+				"south": {"uv": [4, 0, 8, 7.5], "texture": "#venthyr_banner"},
+				"west": {"uv": [0, 0, 0, 7.5], "texture": "#venthyr_banner"},
+				"up": {"uv": [4, 0, 0, 0], "texture": "#venthyr_banner"},
+				"down": {"uv": [4, 0, 0, 0], "texture": "#venthyr_banner"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 30, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 30, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [2.5, -5.75, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"head": {
+			"translation": [0, -17.5, -14.5]
+		},
+		"fixed": {
+			"translation": [0, -4, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "banner",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

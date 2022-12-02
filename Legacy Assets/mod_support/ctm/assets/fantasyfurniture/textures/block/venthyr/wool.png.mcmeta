@@ -1,0 +1,13 @@
+{
+	"ctm": {
+		"ctm_version": 1,
+		"type": "CTM",
+		"layer": "CUTOUT",
+		"textures": [
+			"fantasyfurniture:block/venthyr/wool_ctm"
+		],
+		"extra": {
+			"connect_inside": true
+		}
+	}
+}
