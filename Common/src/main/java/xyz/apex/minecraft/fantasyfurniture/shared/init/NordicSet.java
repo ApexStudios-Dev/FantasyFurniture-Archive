@@ -10,22 +10,11 @@ import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
 public interface NordicSet
 {
-    BlockRegistryEntry<Block> WOOL = FantasyFurniture.Registries.BLOCKS
-            .generic("nordic/wool")
-            .flammability(30, 60)
-            .initialProperties(FantasyFurniture.WOOL_PROPERTIES)
-    .register();
+    String NAME = "nordic";
 
-    BlockRegistryEntry<CarpetBlock> CARPET = FantasyFurniture.Registries.BLOCKS
-            .builder("nordic/carpet", CarpetBlock::new)
-            .flammability(60, 20)
-            .initialProperties(FantasyFurniture.CARPET_PROPERTIES)
-    .register();
-
-    BlockRegistryEntry<WallLightBlock> WALL_LIGHT = FantasyFurniture.Registries.BLOCKS
-            .builder("nordic/wall_light", WallLightBlock::torchLike)
-            .initialProperties(FantasyFurniture.TORCH_PROPERTIES)
-    .register();
+    BlockRegistryEntry<Block> WOOL = FurnitureSets.wool(NAME).register();
+    BlockRegistryEntry<CarpetBlock> CARPET = FurnitureSets.carpet(NAME).register();
+    BlockRegistryEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(NAME).register();
 
     static void bootstrap()
     {

@@ -62,9 +62,4 @@ public class WallLightBlock extends WallTorchBlock
         level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
         level.addParticle(getFlameParticle(), x, y, z, 0D, 0D, 0D);
     }
-
-    public static WallLightBlock torchLike(Properties properties)
-    {
-        return new WallLightBlock(properties, () -> ParticleTypes.FLAME);
-    }
 }
