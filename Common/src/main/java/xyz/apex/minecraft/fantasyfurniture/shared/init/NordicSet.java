@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.init;
 
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
@@ -22,7 +23,7 @@ public interface NordicSet
     .register();
 
     BlockRegistryEntry<WallLightBlock> WALL_LIGHT = FantasyFurniture.Registries.BLOCKS
-            .builder("nordic/carpet", WallLightBlock::torchLike)
+            .builder("nordic/wall_light", WallLightBlock::torchLike)
             .initialProperties(FantasyFurniture.TORCH_PROPERTIES)
     .register();
 
@@ -30,6 +31,6 @@ public interface NordicSet
     {
         FantasyFurniture.Registries.ITEMS.genericBlockBuilder(WOOL).register();
         FantasyFurniture.Registries.ITEMS.genericBlockBuilder(CARPET).register();
-        FantasyFurniture.Registries.ITEMS.genericBlockBuilder(WALL_LIGHT).register();
+        FantasyFurniture.Registries.ITEMS.blockBuilder(WALL_LIGHT, ItemNameBlockItem::new).register();
     }
 }

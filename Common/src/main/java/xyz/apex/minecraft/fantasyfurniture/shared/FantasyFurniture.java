@@ -25,6 +25,7 @@ public interface FantasyFurniture
     Supplier<BlockBehaviour.Properties> STONE_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.STONE);
     Supplier<BlockBehaviour.Properties> WOOL_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.WHITE_WOOL);
     Supplier<BlockBehaviour.Properties> CARPET_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.WHITE_CARPET);
+    Supplier<BlockBehaviour.Properties> TORCH_PROPERTIES = () -> BlockBehaviour.Properties.copy(Blocks.TORCH);
 
     static void bootstrap()
     {

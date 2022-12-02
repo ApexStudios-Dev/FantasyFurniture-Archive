@@ -121,7 +121,7 @@ processResources {
 		inputs.property "${key}", "${value}"
 	}
 
-	filesMatching([ '*.mixins.json', 'pack.mcmeta', 'fabric.mod.json' ]) {
+	filesMatching([ '*.mixins.json', 'pack.mcmeta', 'fabric.mod.json', '**/models/**/*.json' ]) {
 		expand project.properties
 	}
 

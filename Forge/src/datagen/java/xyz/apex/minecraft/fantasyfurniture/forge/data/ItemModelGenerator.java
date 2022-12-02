@@ -23,6 +23,7 @@ public final class ItemModelGenerator extends ItemModelProvider
     {
         blockItem(NordicSet.WOOL);
         blockItem(NordicSet.CARPET);
+        blockItem(NordicSet.WALL_LIGHT);
     }
 
     private ItemModelBuilder blockItem(RegistryEntry<?> item, ModelFile blockModel)

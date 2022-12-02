@@ -13,6 +13,7 @@ public final class BlockLootTableGenerator extends BlockLoot
     {
         dropSelf(NordicSet.WOOL.get());
         dropSelf(NordicSet.CARPET.get());
+        dropSelf(NordicSet.WALL_LIGHT.get());
     }
 
     @Override
