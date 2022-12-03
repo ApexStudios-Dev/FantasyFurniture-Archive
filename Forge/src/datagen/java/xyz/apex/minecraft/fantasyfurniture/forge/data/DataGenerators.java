@@ -20,6 +20,7 @@ public final class DataGenerators
 
         var blockTags = new BlockTagGenerator(event);
 
+        generator.addProvider(client, new BlockBenchConverter(event)); // conversion *MUST* run before block states
         generator.addProvider(client, new BlockStateGenerator(event));
         generator.addProvider(client, new ItemModelGenerator(event));
 

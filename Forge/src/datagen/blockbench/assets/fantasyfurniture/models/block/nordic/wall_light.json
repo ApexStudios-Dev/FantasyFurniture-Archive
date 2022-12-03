@@ -1,10 +1,9 @@
 {
-	"credit": "Made by Fantasy",
+	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
-	"parent": "${MOD_ID}:block/templates/wall_light",
 	"textures": {
-		"wall_light": "${MOD_ID}:models/nordic/wall_light",
-		"particle": "${MOD_ID}:particle/nordic"
+		"wall_light": "fantasyfurniture:models/nordic/wall_light",
+		"particle": "fantasyfurniture:particle/nordic"
 	},
 	"elements": [
 		{
@@ -118,14 +117,6 @@
 				"up": {"uv": [8.5, 3, 7, 1.5], "texture": "#wall_light"},
 				"down": {"uv": [8.5, 3, 7, 4.5], "texture": "#wall_light"}
 			}
-		}
-	],
-	"groups": [
-		{
-			"name": "nordic_wall_light",
-			"origin": [8, 8, 8],
-			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7]
 		}
 	]
 }

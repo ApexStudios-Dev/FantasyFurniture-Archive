@@ -68,7 +68,7 @@ minecraft {
 			property 'forge.logging.markers', ''
 			property 'forge.logging.console.level', 'debug'
 			ideaModule "${rootProject.name}.${project.name}.main"
-			args '--mod', MOD_ID, '--client', '--server', '--validate', '--output', project(':Common').file('src/generated/resources'), '--existing', file('src/main/resources'), '--existing', project(':Common').file('src/main/resources'), '--existing-mod', APEXCORE_ID
+			args '--mod', MOD_ID, '--client', '--server', '--validate', '--input', file('src/datagen/blockbench'), '--output', project(':Common').file('src/generated/resources'), '--existing', file('src/main/resources'), '--existing', project(':Common').file('src/main/resources'), '--existing-mod', APEXCORE_ID
 			forceExit false
 
 			mods {
