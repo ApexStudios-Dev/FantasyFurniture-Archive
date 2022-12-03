@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,6 +30,17 @@ public final class BlockStateGenerator extends BlockStateProvider
 
         // NOTE: All main line models created in BlockBench *MUST* parent these models in order for them to function correctly
         template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light")).renderType(cutout);
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
+                .renderType(cutout)
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -2.75F, 0F)
+                        .scale(.5F, .5F, .5F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -39,6 +51,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         simpleBlock(NordicSet.WOOL);
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
+        floorLight(NordicSet.FLOOR_LIGHT);
     }
 
     private void wallLight(RegistryEntry<? extends Block> entry)
@@ -49,6 +62,11 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .modelFile(model)
                 .build()
         );
+    }
+
+    private void floorLight(RegistryEntry<? extends Block> entry)
+    {
+        getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
     }
 
     private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models, Property<?>... ignoredProperties)

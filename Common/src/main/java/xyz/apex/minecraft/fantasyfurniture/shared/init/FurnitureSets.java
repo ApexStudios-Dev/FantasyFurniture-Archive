@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.CarpetBlock;
 
 import xyz.apex.minecraft.apexcore.shared.registry.block.BlockBuilder;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
 import java.util.function.Supplier;
@@ -42,5 +43,18 @@ public interface FurnitureSets
     static BlockBuilder<WallLightBlock> wallLight(String furnitureSet)
     {
         return wallLight(furnitureSet, () -> ParticleTypes.FLAME);
+    }
+
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, Supplier<ParticleOptions> flameParticle)
+    {
+        return FantasyFurniture.Registries.BLOCKS
+                .builder("%s/floor_light".formatted(furnitureSet), properties -> new FloorLightBlock(properties, flameParticle))
+                .initialProperties(FantasyFurniture.TORCH_PROPERTIES)
+        ;
+    }
+
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet)
+    {
+        return floorLight(furnitureSet, () -> ParticleTypes.FLAME);
     }
 }
