@@ -29,7 +29,15 @@ public final class BlockStateGenerator extends BlockStateProvider
         var cutout = new ResourceLocation("minecraft", "cutout");
 
         // NOTE: All main line models created in BlockBench *MUST* parent these models in order for them to function correctly
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light")).renderType(cutout);
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light"))
+                .renderType(cutout)
+                .transforms()
+                    .transform(ItemTransforms.TransformType.FIXED)
+                        .translation(0F, 0F, -4F)
+                        .scale(.5F, .5F, .5F)
+                    .end()
+                .end()
+        ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
                 .renderType(cutout)
