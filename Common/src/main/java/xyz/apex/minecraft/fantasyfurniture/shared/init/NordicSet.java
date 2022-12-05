@@ -20,9 +20,9 @@ public interface NordicSet
 
     static void bootstrap()
     {
-        FantasyFurniture.Registries.ITEMS.genericBlockBuilder(WOOL).register();
-        FantasyFurniture.Registries.ITEMS.genericBlockBuilder(CARPET).register();
+        FantasyFurniture.Registries.ITEMS.blockBuilder(WOOL).register();
+        FantasyFurniture.Registries.ITEMS.blockBuilder(CARPET).register();
         FantasyFurniture.Registries.ITEMS.blockBuilder(WALL_LIGHT, ItemNameBlockItem::new).register();
-        FantasyFurniture.Registries.ITEMS.genericBlockBuilder(FLOOR_LIGHT).register();
+        FantasyFurniture.Registries.ITEMS.blockBuilder(FLOOR_LIGHT).register();
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
 import xyz.apex.minecraft.apexcore.shared.registry.block.BlockBuilder;
+import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
@@ -19,7 +20,7 @@ public interface FurnitureSets
         return FantasyFurniture.Registries.BLOCKS
                 .generic("%s/wool".formatted(furnitureSet))
                 .flammability(30, 60)
-                .initialProperties(FantasyFurniture.WOOL_PROPERTIES)
+                .initialProperties(Properties.BLOCK_WOOL)
         ;
     }
 
@@ -28,7 +29,7 @@ public interface FurnitureSets
         return FantasyFurniture.Registries.BLOCKS
                 .builder("%s/carpet".formatted(furnitureSet), CarpetBlock::new)
                 .flammability(60, 20)
-                .initialProperties(FantasyFurniture.CARPET_PROPERTIES)
+                .initialProperties(Properties.BLOCK_CARPET)
         ;
     }
 
@@ -36,7 +37,7 @@ public interface FurnitureSets
     {
         return FantasyFurniture.Registries.BLOCKS
                 .builder("%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(properties, flameParticle))
-                .initialProperties(FantasyFurniture.TORCH_PROPERTIES)
+                .initialProperties(Properties.BLOCK_TORCH)
         ;
     }
 
@@ -49,7 +50,7 @@ public interface FurnitureSets
     {
         return FantasyFurniture.Registries.BLOCKS
                 .builder("%s/floor_light".formatted(furnitureSet), properties -> new FloorLightBlock(properties, flameParticle))
-                .initialProperties(FantasyFurniture.TORCH_PROPERTIES)
+                .initialProperties(Properties.BLOCK_TORCH)
         ;
     }
 
