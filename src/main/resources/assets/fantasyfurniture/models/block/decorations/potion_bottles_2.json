@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"3": "fantasyfurniture:models/decorations/potion_bottles",
-		"particle": "fantasyfurniture:particles/decorations/potion_bottles"
+		"3": "fantasyfurniture:block/models/decorations/potion_bottles",
+		"particle": "fantasyfurniture:block/particles/decorations/potion_bottles"
 	},
 	"elements": [
 		{

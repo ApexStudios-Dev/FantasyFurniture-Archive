@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"royal_crown": "fantasyfurniture:models/decorations/royal_crown",
-		"royal_crown_tint": "fantasyfurniture:models/decorations/royal_crown_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_crown": "fantasyfurniture:block/models/decorations/royal_crown",
+		"royal_crown_tint": "fantasyfurniture:block/models/decorations/royal_crown_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

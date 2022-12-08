@@ -4,9 +4,11 @@ import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -16,7 +18,6 @@ import xyz.apex.forge.apexcore.core.init.ACRegistry;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.fantasyfurniture.AllItemGroupCategories;
 import xyz.apex.forge.fantasyfurniture.AllRecipeSerializers;
 import xyz.apex.forge.fantasyfurniture.common.block.decorations.StackedBlock;
 import xyz.apex.forge.fantasyfurniture.common.block.furniture.BedBlock;
@@ -31,6 +32,7 @@ public interface DataGenerators
 	String TXT_JEI_INGREDIENTS_KEY = "text.%s.jei.ingredients".formatted(Mods.FANTASY_FURNITURE);
 	String TXT_JEI_RESULTS_KEY = "text.%s.jei.results".formatted(Mods.FANTASY_FURNITURE);
 	String TXT_ACCEPTS_ANY = "text.%s.recipe.accepts_any".formatted(Mods.FANTASY_FURNITURE);
+	String ITEM_GROUP_KEY = "itemGroup.%s".formatted(Mods.FANTASY_FURNITURE);
 
 	static void recipes(RegistrateRecipeProvider provider)
 	{
@@ -39,7 +41,7 @@ public interface DataGenerators
 
 	static void lang(RegistrateLangProvider provider)
 	{
-		REGISTRATE.getAll(Registry.BLOCK_REGISTRY).stream().map(RegistryEntry::get).forEach(block -> {
+		REGISTRATE.getAll(Registries.BLOCK).stream().map(RegistryEntry::get).forEach(block -> {
 			if(block instanceof ISeatBlock seat)
 				provider.add(seat.getOccupiedTranslationKey(), "This seat is occupied");
 			if(block instanceof BedBlock bed)
@@ -50,6 +52,7 @@ public interface DataGenerators
 
 		provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 		provider.add(TXT_JEI_RESULTS_KEY, "Results");
+		provider.add(ITEM_GROUP_KEY, "Fantasy's Furniture");
 
 		REGISTRATE.getAll(ForgeRegistries.Keys.BLOCKS)
 		          .stream()
@@ -64,14 +67,16 @@ public interface DataGenerators
 
 	static void blockTags(RegistrateTagsProvider<Block> provider)
 	{
-		provider.tag(ACRegistry.TAG_VISUALIZER)
-		        .add(REGISTRATE
-				        .getAll(ForgeRegistries.Keys.BLOCKS)
-						.stream()
-						.map(RegistryEntry::get)
-						.filter(IMultiBlock.class::isInstance)
-						.toArray(Block[]::new)
-		        )
+		var tag = provider.tag(ACRegistry.TAG_VISUALIZER);
+
+		REGISTRATE
+				.getAll(Registries.BLOCK)
+				.stream()
+				.map(RegistryEntry::get)
+				.filter(IMultiBlock.class::isInstance)
+				.map(Block::builtInRegistryHolder)
+				.map(Holder.Reference::key)
+				.forEach(tag::add)
 		;
 	}
 
@@ -84,15 +89,17 @@ public interface DataGenerators
 		          .map(RegistryEntry::get)
 		          .filter(IDyeable.class::isInstance)
 		          .map(ItemLike::asItem)
+				  .map(Item::builtInRegistryHolder)
+				  .map(Holder.Reference::key)
 		          .forEach(tag::add)
 		;
 
-		provider.tag(AllItemGroupCategories.BONE_TAG)
+		/*provider.tag(AllItemGroupCategories.BONE_TAG)
 		        .addTags(AllItemGroupCategories.BONE_SKELETON_TAG, AllItemGroupCategories.BONE_WITHER_TAG)
-		;
+		;*/
 
 		provider.tag(FurnitureStation.CRAFTABLE);
-		provider.tag(FurnitureStation.CLAY).add(Items.CLAY_BALL);
+		provider.tag(FurnitureStation.CLAY).add(Items.CLAY_BALL.builtInRegistryHolder().key());
 	}
 
 	static void blockState(RegistrateBlockstateProvider provider)

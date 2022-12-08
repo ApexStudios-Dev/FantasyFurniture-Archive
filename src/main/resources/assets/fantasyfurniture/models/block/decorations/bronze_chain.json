@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"parent": "block/block",
 	"textures": {
-		"bronze_chain": "fantasyfurniture:models/decorations/bronze_chain",
-		"particle": "fantasyfurniture:particles/decorations/bronze_chain"
+		"bronze_chain": "fantasyfurniture:block/models/decorations/bronze_chain",
+		"particle": "fantasyfurniture:block/particles/decorations/bronze_chain"
 	},
 	"elements": [
 		{

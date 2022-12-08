@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"stocking": "fantasyfurniture:models/decorations/stocking",
-		"stocking_tint": "fantasyfurniture:models/decorations/stocking_tint",
-		"particle": "fantasyfurniture:particles/decorations/stocking"
+		"stocking": "fantasyfurniture:block/models/decorations/stocking",
+		"stocking_tint": "fantasyfurniture:block/models/decorations/stocking_tint",
+		"particle": "fantasyfurniture:block/particles/decorations/stocking"
 	},
 	"elements": [
 		{

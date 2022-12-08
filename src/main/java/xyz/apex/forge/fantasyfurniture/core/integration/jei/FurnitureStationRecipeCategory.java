@@ -1,3 +1,5 @@
+// TODO: Readd once JEI updates
+/*
 package xyz.apex.forge.fantasyfurniture.core.integration.jei;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -65,3 +67,4 @@ public final class FurnitureStationRecipeCategory implements IRecipeCategory<Fur
 		recipe.draw(pose, background);
 	}
 }
+*/

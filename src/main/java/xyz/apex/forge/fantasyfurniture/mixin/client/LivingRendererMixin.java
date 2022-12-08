@@ -15,7 +15,7 @@ import xyz.apex.forge.fantasyfurniture.common.block.furniture.BedBlock;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingRendererMixin<T extends LivingEntity, M extends EntityModel<T>>
 {
-	@Inject(method = "setupRotations", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lcom/mojang/math/Quaternion;)V", ordinal = 6, shift = At.Shift.AFTER))
+	@Inject(method = "setupRotations", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", ordinal = 6, shift = At.Shift.AFTER))
 	private void setupRotations(T entity, PoseStack pose, float ageInTicks, float rotationYaw, float partialTick, CallbackInfo ci)
 	{
 		var pos = entity.blockPosition();

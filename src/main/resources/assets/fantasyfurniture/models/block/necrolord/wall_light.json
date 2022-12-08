@@ -1,8 +1,8 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"particle": "fantasyfurniture:particles/necrolord",
-		"wall_light": "fantasyfurniture:models/necrolord/wall_light"
+		"particle": "fantasyfurniture:block/particles/necrolord",
+		"wall_light": "fantasyfurniture:block/models/necrolord/wall_light"
 	},
 	"elements": [
 		{

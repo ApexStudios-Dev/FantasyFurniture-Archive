@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"venthyr_banner": "fantasyfurniture:models/decorations/venthyr_banner",
-		"particle": "fantasyfurniture:particles/venthyr"
+		"venthyr_banner": "fantasyfurniture:block/models/decorations/venthyr_banner",
+		"particle": "fantasyfurniture:block/particles/venthyr"
 	},
 	"elements": [
 		{

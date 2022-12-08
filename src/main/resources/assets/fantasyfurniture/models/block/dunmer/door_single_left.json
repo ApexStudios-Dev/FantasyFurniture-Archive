@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_single": "fantasyfurniture:models/dunmer/door_single",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"door_single": "fantasyfurniture:block/models/dunmer/door_single",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

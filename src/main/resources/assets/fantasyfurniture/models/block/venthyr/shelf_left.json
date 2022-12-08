@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"shelf": "fantasyfurniture:models/venthyr/shelf",
-		"particle": "fantasyfurniture:particles/venthyr"
+		"shelf": "fantasyfurniture:block/models/venthyr/shelf",
+		"particle": "fantasyfurniture:block/particles/venthyr"
 	},
 	"elements": [
 		{

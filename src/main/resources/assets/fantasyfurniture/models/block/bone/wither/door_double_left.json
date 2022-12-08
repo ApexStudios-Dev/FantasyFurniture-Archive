@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_double": "fantasyfurniture:models/bone/wither/door_double_wither",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"door_double": "fantasyfurniture:block/models/bone/wither/door_double_wither",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

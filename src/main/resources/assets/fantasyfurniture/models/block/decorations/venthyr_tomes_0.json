@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"tomes": "fantasyfurniture:models/decorations/venthyr_tomes",
-		"particle": "fantasyfurniture:particles/decorations/book_stack"
+		"tomes": "fantasyfurniture:block/models/decorations/venthyr_tomes",
+		"particle": "fantasyfurniture:block/particles/decorations/book_stack"
 	},
 	"elements": [
 		{

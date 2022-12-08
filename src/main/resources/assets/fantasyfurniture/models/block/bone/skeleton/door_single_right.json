@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_single": "fantasyfurniture:models/bone/skeleton/door_single",
-		"particle": "fantasyfurniture:particles/bone"
+		"door_single": "fantasyfurniture:block/models/bone/skeleton/door_single",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"brewing_cauldron": "fantasyfurniture:models/decorations/brewing_cauldron",
-		"brewing_cauldron_tint": "fantasyfurniture:models/decorations/brewing_cauldron_tint",
-		"particle": "fantasyfurniture:particles/decorations/brewing_cauldron"
+		"brewing_cauldron": "fantasyfurniture:block/models/decorations/brewing_cauldron",
+		"brewing_cauldron_tint": "fantasyfurniture:block/models/decorations/brewing_cauldron_tint",
+		"particle": "fantasyfurniture:block/particles/decorations/brewing_cauldron"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"coin_stack_iron": "fantasyfurniture:models/decorations/coin_stack_iron",
-		"particle": "fantasyfurniture:particles/decorations/coin_stack_iron"
+		"coin_stack_iron": "fantasyfurniture:block/models/decorations/coin_stack_iron",
+		"particle": "fantasyfurniture:block/particles/decorations/coin_stack_iron"
 	},
 	"elements": [
 		{

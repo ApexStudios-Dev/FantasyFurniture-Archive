@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"tea_cups": "fantasyfurniture:models/decorations/venthyr_tea_cups",
-		"particle": "fantasyfurniture:particles/decorations/venthyr"
+		"tea_cups": "fantasyfurniture:block/models/decorations/venthyr_tea_cups",
+		"particle": "fantasyfurniture:block/particles/decorations/venthyr"
 	},
 	"elements": [
 		{

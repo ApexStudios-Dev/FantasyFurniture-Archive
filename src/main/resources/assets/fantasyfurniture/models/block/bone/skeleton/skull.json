@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"skull": "fantasyfurniture:models/bone/skeleton/skull",
-		"particle": "fantasyfurniture:particles/bone"
+		"skull": "fantasyfurniture:block/models/bone/skeleton/skull",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

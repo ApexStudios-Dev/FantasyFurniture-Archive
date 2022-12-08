@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"chalices": "fantasyfurniture:models/decorations/bone_wither_chalices",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"chalices": "fantasyfurniture:block/models/decorations/bone_wither_chalices",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

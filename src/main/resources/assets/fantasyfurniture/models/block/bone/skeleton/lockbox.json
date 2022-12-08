@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"lockbox": "fantasyfurniture:models/bone/skeleton/lockbox",
-		"particle": "fantasyfurniture:particles/bone"
+		"lockbox": "fantasyfurniture:block/models/bone/skeleton/lockbox",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

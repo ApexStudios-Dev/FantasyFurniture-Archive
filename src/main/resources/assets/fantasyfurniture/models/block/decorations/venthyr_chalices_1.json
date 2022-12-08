@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"chalices": "fantasyfurniture:models/decorations/venthyr_chalices",
-		"particle": "fantasyfurniture:particles/decorations/venthyr"
+		"chalices": "fantasyfurniture:block/models/decorations/venthyr_chalices",
+		"particle": "fantasyfurniture:block/particles/decorations/venthyr"
 	},
 	"elements": [
 		{

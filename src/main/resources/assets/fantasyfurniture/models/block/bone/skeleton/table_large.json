@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"table_large": "fantasyfurniture:models/bone/skeleton/table_large",
-		"particle": "fantasyfurniture:particles/bone"
+		"table_large": "fantasyfurniture:block/models/bone/skeleton/table_large",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

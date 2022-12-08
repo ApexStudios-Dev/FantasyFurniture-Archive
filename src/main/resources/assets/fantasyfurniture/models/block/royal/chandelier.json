@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"chandelier": "fantasyfurniture:models/royal/chandelier",
-		"particle": "fantasyfurniture:particles/royal"
+		"chandelier": "fantasyfurniture:block/models/royal/chandelier",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

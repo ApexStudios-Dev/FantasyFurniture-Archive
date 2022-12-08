@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"soul_gems": "fantasyfurniture:models/decorations/nordic_soul_gems_light",
-		"particle": "fantasyfurniture:particles/decorations/nordic_soul_gems_light"
+		"soul_gems": "fantasyfurniture:block/models/decorations/nordic_soul_gems_light",
+		"particle": "fantasyfurniture:block/particles/decorations/nordic_soul_gems_light"
 	},
 	"elements": [
 		{

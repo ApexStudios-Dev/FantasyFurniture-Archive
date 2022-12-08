@@ -1,8 +1,8 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"counter_corner": "fantasyfurniture:models/bone/wither/counter",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"counter_corner": "fantasyfurniture:block/models/bone/wither/counter",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

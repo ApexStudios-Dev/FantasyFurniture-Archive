@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[44,)"
 license="GNU General Public License v3.0"
 issueTrackerURL="https://discord.apexstudios.dev/"
 
@@ -17,7 +17,7 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 [[dependencies.fantasyfurniture]]
 	modId="forge"
 	mandatory=true
-	versionRange="[43.1.0,44.0.0)"
+	versionRange="[44.0.0,45.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
@@ -25,7 +25,7 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 [[dependencies.fantasyfurniture]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="[1.19.2,1.20)"
+	versionRange="[1.19.3,1.19.4)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
@@ -33,7 +33,7 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 [[dependencies.fantasyfurniture]]
 	modId="commonality"
 	mandatory=true
-	versionRange="[4.2.0,5.0.0)"
+	versionRange="[5.0.0,6.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
@@ -42,25 +42,25 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	modId="apexcore"
 	mandatory=true
 	embedded=true
-	versionRange="[7.3.0,8.0.0)"
+	versionRange="[8.0.0,9.0.0)"
 	ordering="AFTER"
 	side="BOTH"
 	[dependencies.fantasyfurniture.custom.mc-publish]
 		modrinth="apexcore"
 		curseforge="apexcore"
-[[dependencies.fantasyfurniture]]
-	modId="jei"
-	mandatory=false
-	versionRange="[11.2.0.246,)"
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.fantasyfurniture.custom.mc-publish]
-		curseforge="jei"
-[[dependencies.fantasyfurniture]]
-	modId="ctm"
-	mandatory=false
-	versionRange="*" # ctm versions are funky, just allow all versions
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.fantasyfurniture.custom.mc-publish]
-		curseforge="ctm"
+#[[dependencies.fantasyfurniture]]
+#	modId="jei"
+#	mandatory=false
+#	versionRange="[11.2.0.246,)"
+#	ordering="AFTER"
+#	side="BOTH"
+#	[dependencies.fantasyfurniture.custom.mc-publish]
+#		curseforge="jei"
+#[[dependencies.fantasyfurniture]]
+#	modId="ctm"
+#	mandatory=false
+#	versionRange="*" # ctm versions are funky, just allow all versions
+#	ordering="AFTER"
+#	side="BOTH"
+#	[dependencies.fantasyfurniture.custom.mc-publish]
+#		curseforge="ctm"

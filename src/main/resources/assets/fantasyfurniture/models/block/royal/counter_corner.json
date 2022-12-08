@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"counter_tint": "fantasyfurniture:models/royal/counters_tint",
-		"counter": "fantasyfurniture:models/royal/counters",
-		"particle": "fantasyfurniture:particles/royal"
+		"counter_tint": "fantasyfurniture:block/models/royal/counters_tint",
+		"counter": "fantasyfurniture:block/models/royal/counters",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

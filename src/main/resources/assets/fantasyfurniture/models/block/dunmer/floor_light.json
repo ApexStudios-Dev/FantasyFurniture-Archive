@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"floor_light": "fantasyfurniture:models/dunmer/floor_light",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"floor_light": "fantasyfurniture:block/models/dunmer/floor_light",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

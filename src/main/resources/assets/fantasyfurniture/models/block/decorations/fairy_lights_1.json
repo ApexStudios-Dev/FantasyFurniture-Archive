@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"fairy_lights_1_tint": "fantasyfurniture:models/decorations/fairy_lights_1_tint",
-		"fairy_lights_1": "fantasyfurniture:models/decorations/fairy_lights_1",
-		"particle": "fantasyfurniture:particles/decorations/fairy_lights_1"
+		"fairy_lights_1_tint": "fantasyfurniture:block/models/decorations/fairy_lights_1_tint",
+		"fairy_lights_1": "fantasyfurniture:block/models/decorations/fairy_lights_1",
+		"particle": "fantasyfurniture:block/particles/decorations/fairy_lights_1"
 	},
 	"elements": [
 		{

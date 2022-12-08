@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"boiled_creme_treats": "fantasyfurniture:models/decorations/nordic_boiled_creme_treats",
-		"particle": "fantasyfurniture:particles/decorations/nordic_boiled_creme_treats"
+		"boiled_creme_treats": "fantasyfurniture:block/models/decorations/nordic_boiled_creme_treats",
+		"particle": "fantasyfurniture:block/particles/decorations/nordic_boiled_creme_treats"
 	},
 	"elements": [
 		{

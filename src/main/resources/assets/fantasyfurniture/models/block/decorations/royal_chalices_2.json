@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"royal_chalices": "fantasyfurniture:models/decorations/royal_chalices",
-		"royal_chalices_tint": "fantasyfurniture:models/decorations/royal_chalices_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_chalices": "fantasyfurniture:block/models/decorations/royal_chalices",
+		"royal_chalices_tint": "fantasyfurniture:block/models/decorations/royal_chalices_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

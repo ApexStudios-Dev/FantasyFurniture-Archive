@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"presents_stack_1": "fantasyfurniture:models/decorations/presents_stack_1",
-		"particle": "fantasyfurniture:particles/decorations/presents_stack_1"
+		"presents_stack_1": "fantasyfurniture:block/models/decorations/presents_stack_1",
+		"particle": "fantasyfurniture:block/particles/decorations/presents_stack_1"
 	},
 	"elements": [
 		{

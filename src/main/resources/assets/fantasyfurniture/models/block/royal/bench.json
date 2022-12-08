@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"bench": "fantasyfurniture:models/royal/bench",
-		"bench_tint": "fantasyfurniture:models/royal/bench_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"bench": "fantasyfurniture:block/models/royal/bench",
+		"bench_tint": "fantasyfurniture:block/models/royal/bench_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

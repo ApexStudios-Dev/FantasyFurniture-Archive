@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"chandelier": "fantasyfurniture:models/dunmer/chandelier",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"chandelier": "fantasyfurniture:block/models/dunmer/chandelier",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"sofa": "fantasyfurniture:models/nordic/sofa",
-		"particle": "fantasyfurniture:particles/nordic"
+		"sofa": "fantasyfurniture:block/models/nordic/sofa",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

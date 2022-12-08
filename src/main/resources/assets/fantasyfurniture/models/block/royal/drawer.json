@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"drawer": "fantasyfurniture:models/royal/drawer",
-		"drawer_tint": "fantasyfurniture:models/royal/drawer_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"drawer": "fantasyfurniture:block/models/royal/drawer",
+		"drawer_tint": "fantasyfurniture:block/models/royal/drawer_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

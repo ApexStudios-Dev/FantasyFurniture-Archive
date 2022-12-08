@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"furniture_station": "fantasyfurniture:models/furniture_station",
-		"particle": "fantasyfurniture:particles/furniture_station"
+		"furniture_station": "fantasyfurniture:block/models/furniture_station",
+		"particle": "fantasyfurniture:block/particles/furniture_station"
 	},
 	"elements": [
 		{

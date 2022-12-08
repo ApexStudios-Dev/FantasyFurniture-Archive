@@ -2,7 +2,7 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"oven": "fantasyfurniture:models/necrolord/oven"
+		"oven": "fantasyfurniture:block/models/necrolord/oven"
 	},
 	"elements": [
 		{

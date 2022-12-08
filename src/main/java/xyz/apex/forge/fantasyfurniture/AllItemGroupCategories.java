@@ -1,3 +1,5 @@
+// TODO: See ApexCore
+/*
 package xyz.apex.forge.fantasyfurniture;
 
 import net.minecraft.tags.TagKey;
@@ -44,17 +46,21 @@ public interface AllItemGroupCategories
 			.defaultIcon(() -> AllItems.BONE_SKELETON_BED_SINGLE.asStack())
 	.build();
 
-	/*ItemGroupCategory BONE_SKELETON = ItemGroupCategory
+	*/
+/*ItemGroupCategory BONE_SKELETON = ItemGroupCategory
 			.builder("bone/skeleton")
 			.tagged(BONE_SKELETON_TAG)
 			.defaultIcon(() -> AllItems.BONE_SKELETON_BED_SINGLE.asStack())
-	.build();*/
+	.build();*//*
 
-	/*ItemGroupCategory BONE_WITHER = ItemGroupCategory
+
+	*/
+/*ItemGroupCategory BONE_WITHER = ItemGroupCategory
 			.builder("bone/wither")
 			.tagged(BONE_WITHER_TAG)
 			.defaultIcon(() -> AllItems.BONE_WITHER_BED_SINGLE.asStack())
-	.build();*/
+	.build();*//*
+
 
 	ItemGroupCategory DECORATIONS = ItemGroupCategory
 			.builder("decorations")
@@ -78,3 +84,4 @@ public interface AllItemGroupCategories
 	{
 	}
 }
+*/

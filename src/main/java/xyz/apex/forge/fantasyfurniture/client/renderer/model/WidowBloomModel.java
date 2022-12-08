@@ -20,7 +20,7 @@ import xyz.apex.forge.commonality.SideOnly;
 @SideOnly(SideOnly.Side.CLIENT)
 public final class WidowBloomModel extends Model
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/models/decorations/venthyr_widowbloom.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/block/models/decorations/venthyr_widowbloom.png");
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Mods.FANTASY_FURNITURE, "venthyr_widowbloom"), "main");
 
 	private final ModelPart model;

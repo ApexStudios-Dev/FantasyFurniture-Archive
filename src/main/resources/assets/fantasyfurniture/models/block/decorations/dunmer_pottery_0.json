@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"pottery": "fantasyfurniture:models/decorations/dunmer_pottery_0",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"pottery": "fantasyfurniture:block/models/decorations/dunmer_pottery_0",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

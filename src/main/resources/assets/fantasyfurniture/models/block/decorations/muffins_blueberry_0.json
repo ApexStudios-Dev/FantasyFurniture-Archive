@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"muffins_blueberry": "fantasyfurniture:models/decorations/muffins_blueberry",
-		"particle": "fantasyfurniture:particles/decorations/muffins_blueberry"
+		"muffins_blueberry": "fantasyfurniture:block/models/decorations/muffins_blueberry",
+		"particle": "fantasyfurniture:block/particles/decorations/muffins_blueberry"
 	},
 	"elements": [
 		{

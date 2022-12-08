@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"drawer": "fantasyfurniture:models/bone/skeleton/drawer",
-		"particle": "fantasyfurniture:particles/bone"
+		"drawer": "fantasyfurniture:block/models/bone/skeleton/drawer",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

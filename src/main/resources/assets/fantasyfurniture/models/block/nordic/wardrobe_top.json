@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"wardrobe": "fantasyfurniture:models/nordic/wardrobe",
-		"particle": "fantasyfurniture:particles/nordic"
+		"wardrobe": "fantasyfurniture:block/models/nordic/wardrobe",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

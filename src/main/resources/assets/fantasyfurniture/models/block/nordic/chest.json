@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"nordic_chest": "fantasyfurniture:models/nordic/chest",
-		"particle": "fantasyfurniture:particles/nordic"
+		"nordic_chest": "fantasyfurniture:block/models/nordic/chest",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

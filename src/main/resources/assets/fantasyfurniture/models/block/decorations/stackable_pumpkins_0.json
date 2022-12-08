@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"stackable_pumpkins": "fantasyfurniture:models/decorations/stackable_pumpkins",
-		"particle": "fantasyfurniture:particles/decorations/stackable_pumpkins"
+		"stackable_pumpkins": "fantasyfurniture:block/models/decorations/stackable_pumpkins",
+		"particle": "fantasyfurniture:block/particles/decorations/stackable_pumpkins"
 	},
 	"elements": [
 		{

@@ -2,7 +2,8 @@ package xyz.apex.forge.fantasyfurniture.events;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -11,18 +12,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.resource.PathPackResources;
 
-import xyz.apex.forge.apexcore.lib.item.ItemGroupCategoryManager;
 import xyz.apex.forge.commonality.Mods;
-import xyz.apex.forge.fantasyfurniture.AllItemGroupCategories;
 import xyz.apex.forge.fantasyfurniture.AllParticleTypes;
 import xyz.apex.forge.fantasyfurniture.core.ModInitializer;
-import xyz.apex.forge.fantasyfurniture.core.ModRegistry;
 import xyz.apex.forge.fantasyfurniture.core.data.ParticleProvider;
 import xyz.apex.forge.fantasyfurniture.core.net.C2SSyncSelectedResultPacket;
-
-import java.io.IOException;
 
 @SuppressWarnings({ "resource", "unused" })
 @Mod.EventBusSubscriber(modid = Mods.FANTASY_FURNITURE, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -35,13 +30,14 @@ public final class CommonModEvents
 	{
 		ModInitializer.NETWORK.registerPacket(C2SSyncSelectedResultPacket.class);
 
-		ItemGroupCategoryManager.getInstance(ModRegistry.CREATIVE_MODE_TAB.get()).addCategories(
+		// TODO: See ApexCore
+		/*ItemGroupCategoryManager.getInstance(ModRegistry.CREATIVE_MODE_TAB.get()).addCategories(
 				AllItemGroupCategories.NORDIC, AllItemGroupCategories.DUNMER,
 				AllItemGroupCategories.VENTHYR, AllItemGroupCategories.BONE,
-				/*AllItemGroupCategories.BONE_SKELETON,*/ /*AllItemGroupCategories.BONE_WITHER,*/
+				*//*AllItemGroupCategories.BONE_SKELETON,*//* *//*AllItemGroupCategories.BONE_WITHER,*//*
 				AllItemGroupCategories.ROYAL, AllItemGroupCategories.NECROLORD,
 				AllItemGroupCategories.DECORATIONS
-		);
+		);*/
 	}
 
 	@SubscribeEvent
@@ -50,7 +46,7 @@ public final class CommonModEvents
 		var generator = event.getGenerator();
 		var includeClient = event.includeClient();
 
-		generator.addProvider(includeClient, new ParticleProvider(generator, event.getExistingFileHelper()) {
+		generator.addProvider(includeClient, new ParticleProvider(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()) {
 			@Override
 			public void registerParticleDefs()
 			{
@@ -76,33 +72,15 @@ public final class CommonModEvents
 
 		if(modLoaded)
 		{
-			try
-			{
-				var modFile = ModList.get().getModFileById(Mods.FANTASY_FURNITURE).getFile();
-				var resourcePath = modFile.findResource("mod_support", modId);
-				var pack = new PathPackResources("%s:%s".formatted(modFile.getFileName(), resourcePath), resourcePath);
-				var metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-
-				if(metadataSection != null)
-				{
-					event.addRepositorySource((consumer, constructor) -> consumer
-							.accept(constructor.create(
-									"builtin/mod_support/%s".formatted(modId),
-									Component.literal("Fantasy's Furniture Mod-Support-Pack"),
-									false,
-									() -> pack,
-									metadataSection,
-									Pack.Position.TOP,
-									PackSource.BUILT_IN,
-									false
-							))
-					);
-				}
-			}
-			catch(IOException e)
-			{
-				throw new IllegalStateException("Fatal Error occurred while initializing mod-support builtin-resource-pack: '%s'".formatted(modId), e);
-			}
+			event.addRepositorySource(consumer -> consumer.accept(Pack.readMetaAndCreate(
+					"%s:builtin/mod_support/%s".formatted(Mods.FANTASY_FURNITURE, modId),
+					Component.literal("Fantasy's Furniture Mod-Support-Pack"),
+					false,
+					path -> new PathPackResources(path, ModList.get().getModFileById(Mods.FANTASY_FURNITURE).getFile().findResource("mod_support", modId), true),
+					PackType.CLIENT_RESOURCES,
+					Pack.Position.TOP,
+					PackSource.BUILT_IN
+			)));
 		}
 	}
 

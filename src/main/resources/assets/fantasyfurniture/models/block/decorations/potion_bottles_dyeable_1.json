@@ -1,9 +1,9 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"potion_bottles_dyeable": "fantasyfurniture:models/decorations/potion_bottles_dyeable",
-		"potion_bottles_dyeable_tint": "fantasyfurniture:models/decorations/potion_bottles_dyeable_tint",
-		"particle": "fantasyfurniture:particles/decorations/potion_bottles"
+		"potion_bottles_dyeable": "fantasyfurniture:block/models/decorations/potion_bottles_dyeable",
+		"potion_bottles_dyeable_tint": "fantasyfurniture:block/models/decorations/potion_bottles_dyeable_tint",
+		"particle": "fantasyfurniture:block/particles/decorations/potion_bottles"
 	},
 	"elements": [
 		{

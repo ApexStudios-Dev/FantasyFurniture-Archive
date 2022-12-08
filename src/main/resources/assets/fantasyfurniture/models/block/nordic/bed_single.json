@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"bed_single": "fantasyfurniture:models/nordic/bed_single",
-		"particle": "fantasyfurniture:particles/nordic"
+		"bed_single": "fantasyfurniture:block/models/nordic/bed_single",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

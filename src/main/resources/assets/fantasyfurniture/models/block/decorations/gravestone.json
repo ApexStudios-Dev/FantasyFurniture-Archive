@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"gravestone": "fantasyfurniture:models/decorations/gravestone",
-		"particle": "fantasyfurniture:particles/decorations/gravestone"
+		"gravestone": "fantasyfurniture:block/models/decorations/gravestone",
+		"particle": "fantasyfurniture:block/particles/decorations/gravestone"
 	},
 	"elements": [
 		{

@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"table_small": "fantasyfurniture:models/royal/table_small",
-		"table_small_tint": "fantasyfurniture:models/royal/table_small_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"table_small": "fantasyfurniture:block/models/royal/table_small",
+		"table_small_tint": "fantasyfurniture:block/models/royal/table_small_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

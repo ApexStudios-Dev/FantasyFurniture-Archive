@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"particle": "fantasyfurniture:particles/necrolord",
-		"bookshelf": "fantasyfurniture:models/necrolord/bookshelf"
+		"particle": "fantasyfurniture:block/particles/necrolord",
+		"bookshelf": "fantasyfurniture:block/models/necrolord/bookshelf"
 	},
 	"elements": [
 		{

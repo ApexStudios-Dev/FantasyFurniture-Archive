@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"particle": "fantasyfurniture:particles/necrolord",
-		"painting_small": "fantasyfurniture:models/necrolord/painting_small"
+		"particle": "fantasyfurniture:block/particles/necrolord",
+		"painting_small": "fantasyfurniture:block/models/necrolord/painting_small"
 	},
 	"elements": [
 		{

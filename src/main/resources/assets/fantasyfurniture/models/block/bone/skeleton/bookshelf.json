@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"bookshelf": "fantasyfurniture:models/bone/skeleton/bookshelf",
-		"particle": "fantasyfurniture:particles/bone"
+		"bookshelf": "fantasyfurniture:block/models/bone/skeleton/bookshelf",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

@@ -9,10 +9,11 @@ import com.google.gson.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -20,12 +21,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class ParticleProvider implements DataProvider
 {
@@ -33,27 +34,37 @@ public abstract class ParticleProvider implements DataProvider
 
 	protected static final ExistingFileHelper.ResourceType TEXTURE = new ExistingFileHelper.ResourceType(PackType.CLIENT_RESOURCES, ".png", "textures");
 
-	protected final DataGenerator generator;
+	protected final PackOutput output;
+	protected final CompletableFuture<HolderLookup.Provider> registriesLookup;
 	protected final ExistingFileHelper fileHelper;
 
 	private final Map<ResourceLocation, ParticleDefinition> particleDefinitions = Maps.newHashMap();
 
-	public ParticleProvider(DataGenerator generator, ExistingFileHelper fileHelper)
+	public ParticleProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesLookup, ExistingFileHelper fileHelper)
 	{
-		this.generator = generator;
+		this.output = output;
+		this.registriesLookup = registriesLookup;
 		this.fileHelper = fileHelper;
 	}
 
 	public abstract void registerParticleDefs();
 
 	@Override
-	public final void run(CachedOutput cache) throws IOException
+	public final CompletableFuture<?> run(CachedOutput cache)
 	{
-		particleDefinitions.clear();
-		registerParticleDefs();
-		validateParticleDefs();
-		var dataPath = generator.getOutputFolder().resolve("assets");
-		particleDefinitions.forEach((particleName, def) -> saveParticleDefinition(cache, particleName, def, dataPath));
+		return registriesLookup.thenCompose(provider -> {
+			particleDefinitions.clear();
+			registerParticleDefs();
+			validateParticleDefs();
+			var dataPath = output.getOutputFolder(PackOutput.Target.RESOURCE_PACK);
+
+			return CompletableFuture.allOf(particleDefinitions
+					.entrySet()
+					.stream()
+					.map(entry -> saveParticleDefinition(cache, entry.getKey(), entry.getValue(), dataPath))
+					.toArray(CompletableFuture[]::new)
+			);
+		});
 	}
 
 	@Override
@@ -73,18 +84,11 @@ public abstract class ParticleProvider implements DataProvider
 		});
 	}
 
-	public static void saveParticleDefinition(CachedOutput cache, ResourceLocation particleName, ParticleDefinition definition, Path dataPath)
+	public static CompletableFuture<?> saveParticleDefinition(CachedOutput cache, ResourceLocation particleName, ParticleDefinition definition, Path dataPath)
 	{
-		try
-		{
-			var particlePath = dataPath.resolve(Paths.get(particleName.getNamespace(), "particles", "%s.json".formatted(particleName.getPath())));
-			var serialized = serializeParticleDefinition(definition);
-			DataProvider.saveStable(cache, serialized, particlePath);
-		}
-		catch(IOException e)
-		{
-			LOGGER.error("Couldn't save ParticleDefinition {}", particleName);
-		}
+		var particlePath = dataPath.resolve(Paths.get(particleName.getNamespace(), "particles", "%s.json".formatted(particleName.getPath())));
+		var serialized = serializeParticleDefinition(definition);
+		return DataProvider.saveStable(cache, serialized, particlePath);
 	}
 
 	private static JsonElement serializeParticleDefinition(ParticleDefinition definition)

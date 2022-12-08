@@ -1,7 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -38,14 +38,14 @@ public final class SkullBlossomsBlockEntityRenderer implements BlockEntityRender
 			var facing = BaseBlock.getFacing(blockState);
 
 			pose.translate(.5D, .5D, .5D);
-			pose.mulPose(Vector3f.YP.rotationDegrees(-facing.toYRot()));
-			pose.mulPose(Vector3f.XP.rotationDegrees(180F));
+			pose.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
+			pose.mulPose(Axis.XP.rotationDegrees(180F));
 			pose.translate(0D, -1D, 0D);
 		}
 		else
 		{
 			pose.translate(.5D, .5D, .5D);
-			pose.mulPose(Vector3f.ZP.rotationDegrees(180F));
+			pose.mulPose(Axis.ZP.rotationDegrees(180F));
 		}
 
 		model.renderToBuffer(pose, modelBuffer, combinedLight, combinedOverlay, 1F, 1F, 1F, 1F);

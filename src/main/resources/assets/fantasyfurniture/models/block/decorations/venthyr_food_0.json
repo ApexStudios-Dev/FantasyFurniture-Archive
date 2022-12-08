@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"food": "fantasyfurniture:models/decorations/venthyr_food_0",
-		"particle": "fantasyfurniture:particles/decorations/venthyr"
+		"food": "fantasyfurniture:block/models/decorations/venthyr_food_0",
+		"particle": "fantasyfurniture:block/particles/decorations/venthyr"
 	},
 	"elements": [
 		{

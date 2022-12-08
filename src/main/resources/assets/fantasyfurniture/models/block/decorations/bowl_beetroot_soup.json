@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"bowl_beetroot_soup": "fantasyfurniture:models/decorations/bowl_beetroot_soup",
-		"particle": "fantasyfurniture:particles/decorations/bowl"
+		"bowl_beetroot_soup": "fantasyfurniture:block/models/decorations/bowl_beetroot_soup",
+		"particle": "fantasyfurniture:block/particles/decorations/bowl"
 	},
 	"elements": [
 		{
