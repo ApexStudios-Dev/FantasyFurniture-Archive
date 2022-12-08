@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"spider_web_wide": "fantasyfurniture:models/decorations/spider_web_wide",
-		"particle": "fantasyfurniture:particles/decorations/spider_webs"
+		"spider_web_wide": "fantasyfurniture:block/models/decorations/spider_web_wide",
+		"particle": "fantasyfurniture:block/particles/decorations/spider_webs"
 	},
 	"elements": [
 		{

@@ -74,8 +74,6 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		imageWidth = 176;
 		imageHeight = 222;
 
-		minecraft.keyboardHandler.setSendRepeatsToGui(true);
-
 		super.init();
 
 		inventoryLabelY = imageHeight - 94;
@@ -145,7 +143,6 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 	public void removed()
 	{
 		searchBox = null;
-		minecraft.keyboardHandler.setSendRepeatsToGui(false);
 		super.removed();
 	}
 
@@ -155,7 +152,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		super.render(pose, mouseX, mouseY, partialTicks);
 
 		if(searchBox != null && searchBox.isVisible() && !searchBox.isFocused() && searchBox.getValue().isEmpty())
-			drawString(pose, font, searchBox.getMessage().copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), searchBox.x + 2, searchBox.y + (font.lineHeight / 2), searchBox.getFGColor());
+			drawString(pose, font, searchBox.getMessage().copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC), searchBox.getX() + 2, searchBox.getY() + (font.lineHeight / 2), searchBox.getFGColor());
 
 		renderResults(pose, mouseX, mouseY);
 		renderSlotBackgrounds(pose, mouseX, mouseY);

@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"sofa": "fantasyfurniture:models/bone/wither/sofa",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"sofa": "fantasyfurniture:block/models/bone/wither/sofa",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

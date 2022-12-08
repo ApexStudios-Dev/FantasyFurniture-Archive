@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"bed_double": "fantasyfurniture:models/royal/bed_double",
-		"bed_double_tint": "fantasyfurniture:models/royal/bed_double_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"bed_double": "fantasyfurniture:block/models/royal/bed_double",
+		"bed_double_tint": "fantasyfurniture:block/models/royal/bed_double_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

@@ -15,7 +15,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -129,7 +128,7 @@ public abstract class BedBlock extends BaseMultiBlock
 	protected InteractionResult onBadBedSetSpawn(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
 		level.removeBlock(pos, false);
-		level.explode(null, DamageSource.badRespawnPointExplosion(), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Explosion.BlockInteraction.DESTROY);
+		level.explode(null, DamageSource.badRespawnPointExplosion(pos.getCenter()), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Level.ExplosionInteraction.BLOCK);
 		return InteractionResult.SUCCESS;
 	}
 

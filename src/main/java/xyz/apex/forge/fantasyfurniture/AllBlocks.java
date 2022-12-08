@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.UpgradeRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -390,10 +391,10 @@ public interface AllBlocks
 									.getExistingFile(new ResourceLocation(ctx.getId().getNamespace(), "block/%s".formatted(ctx.getId().getPath())))
 							)
 							.build(),
-					BlockTransformers.getIgnoredProperties(ctx.get()))
+					BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 			)
 			.recipe((ctx, provider) -> UpgradeRecipeBuilder
-					.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), ctx.get().asItem())
+					.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), RecipeCategory.DECORATIONS, ctx.get().asItem())
 					.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
 					.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 					.save(provider, ctx.getId())

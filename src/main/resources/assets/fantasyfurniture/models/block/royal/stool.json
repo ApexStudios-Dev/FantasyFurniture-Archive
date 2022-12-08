@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"royal_stool": "fantasyfurniture:models/royal/stool",
-		"stool_tint": "fantasyfurniture:models/royal/stool_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_stool": "fantasyfurniture:block/models/royal/stool",
+		"stool_tint": "fantasyfurniture:block/models/royal/stool_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

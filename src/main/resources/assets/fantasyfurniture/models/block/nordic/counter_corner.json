@@ -1,8 +1,8 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"counter_corner": "fantasyfurniture:models/nordic/counter",
-		"particle": "fantasyfurniture:particles/nordic"
+		"counter_corner": "fantasyfurniture:block/models/nordic/counter",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

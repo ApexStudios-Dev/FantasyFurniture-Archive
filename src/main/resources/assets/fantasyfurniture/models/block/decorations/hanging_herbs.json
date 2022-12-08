@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"hanging_herbs": "fantasyfurniture:models/decorations/hanging_herbs",
-		"particle": "fantasyfurniture:particles/decorations/hanging_herbs"
+		"hanging_herbs": "fantasyfurniture:block/models/decorations/hanging_herbs",
+		"particle": "fantasyfurniture:block/particles/decorations/hanging_herbs"
 	},
 	"elements": [
 		{

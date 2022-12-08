@@ -51,7 +51,7 @@ import java.util.function.ToIntFunction;
 
 public interface BlockTransformers
 {
-	static Property<?>[] getIgnoredProperties(Block block)
+	static Property<?>[] getIgnoredProperties(Block block, String blockName)
 	{
 		var list = Lists.<Property<?>>newArrayList();
 
@@ -63,7 +63,7 @@ public interface BlockTransformers
 			list.add(FloorLightBlock.PART);
 		if(block instanceof SimpleWaterloggedBlock)
 			list.add(BlockStateProperties.WATERLOGGED);
-		if(block instanceof IMultiBlock multiBlock)
+		if(!(blockName.equals("dunmer/bed_single") || blockName.equals("dunmer/bed_double")) && block instanceof IMultiBlock multiBlock)
 			list.add(multiBlock.getMultiBlockPattern().getBlockProperty());
 		if(block instanceof ISeatBlock)
 			list.add(ISeatBlock.OCCUPIED);
@@ -101,7 +101,7 @@ public interface BlockTransformers
 							.modelFile(model)
 							.rotationY(yRot)
 							.build();
-				}, getIgnoredProperties(ctx.get())))
+				}, getIgnoredProperties(ctx.get(), ctx.getId().getPath())))
 				.tag(BlockTags.Vanilla.WOODEN_DOORS)
 		;
 	}
@@ -144,7 +144,7 @@ public interface BlockTransformers
 								.builder()
 								.modelFile(modelGetter.apply(blockState))
 								.build(),
-						getIgnoredProperties(ctx.get())
+						getIgnoredProperties(ctx.get(), ctx.getId().getPath())
 				)
 		;
 	}
@@ -157,7 +157,7 @@ public interface BlockTransformers
 								.rotationY(((int) blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
 								.modelFile(getModelFile(ctx, blockState, provider.models()))
 								.build(),
-						getIgnoredProperties(ctx.get())
+						getIgnoredProperties(ctx.get(), ctx.getId().getPath())
 				)
 		;
 	}
@@ -227,41 +227,41 @@ public interface BlockTransformers
 			else if(name.startsWith("venthyr"))
 				name = "venthyr";
 			else if(name.startsWith("dunmer"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/dunmer");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/dunmer");
 			else if(name.startsWith("bone"))
 			{
 				if(name.contains("wither"))
-					return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
-				return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+					return new ResourceLocation(registryName.getNamespace(), "block/particles/bone_wither");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/bone");
 			}
 			else if(name.startsWith("royal"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/royal");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/royal");
 			else if(name.startsWith("necrolord"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/necrolord");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/necrolord");
 			else if(name.startsWith("spider_web"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/spider_webs");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/decorations/spider_webs");
 			else if(name.startsWith("potion_bottles"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/potion_bottles");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/decorations/potion_bottles");
 
-			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
+			return new ResourceLocation(registryName.getNamespace(), "block/particles/%s/%s".formatted(type, name));
 		}
 		else if(type.equals("bone"))
 		{
 			var subType = path.substring(type.length() + 1);
 
 			if(subType.contains("wither"))
-				return new ResourceLocation(registryName.getNamespace(), "particles/bone_wither");
-			return new ResourceLocation(registryName.getNamespace(), "particles/bone");
+				return new ResourceLocation(registryName.getNamespace(), "block/particles/bone_wither");
+			return new ResourceLocation(registryName.getNamespace(), "block/particles/bone");
 		}
 
-		return new ResourceLocation(registryName.getNamespace(), "particles/%s".formatted(type));
+		return new ResourceLocation(registryName.getNamespace(), "block/particles/%s".formatted(type));
 	}
 
 	static <BLOCK extends Block> void lootTable(RegistrateBlockLootTables lootTables, BLOCK block)
 	{
 		final AtomicReference<LootPoolEntryContainer.Builder<?>> item = new AtomicReference<>(LootItem.lootTableItem(block));
 
-		final AtomicReference<LootPool.Builder> pool = new AtomicReference<>(RegistrateBlockLootTables
+		final AtomicReference<LootPool.Builder> pool = new AtomicReference<>(lootTables
 				.applyExplosionCondition(block, LootPool.lootPool())
 				.setRolls(ConstantValue.exactly(1F))
 		);
@@ -323,7 +323,7 @@ public interface BlockTransformers
 			default -> name;
 		};
 
-		return new ResourceLocation(registryName.getNamespace(), "models/%s/%s".formatted(type, name));
+		return new ResourceLocation(registryName.getNamespace(), "block/models/%s/%s".formatted(type, name));
 	}
 
 	static <BLOCK extends Block> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> clearMineable(BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> builder)

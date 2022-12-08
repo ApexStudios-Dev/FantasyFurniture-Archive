@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"dresser": "fantasyfurniture:models/royal/dresser",
-		"dresser_tint": "fantasyfurniture:models/royal/dresser_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"dresser": "fantasyfurniture:block/models/royal/dresser",
+		"dresser_tint": "fantasyfurniture:block/models/royal/dresser_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

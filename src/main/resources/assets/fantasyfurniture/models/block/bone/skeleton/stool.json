@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"bone_stool": "fantasyfurniture:models/bone/skeleton/stool",
-		"particle": "fantasyfurniture:particles/bone"
+		"bone_stool": "fantasyfurniture:block/models/bone/skeleton/stool",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"painting_wide": "fantasyfurniture:models/bone/wither/painting_wide",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"painting_wide": "fantasyfurniture:block/models/bone/wither/painting_wide",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

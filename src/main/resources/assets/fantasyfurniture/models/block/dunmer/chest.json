@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"dunmer_chest": "fantasyfurniture:models/dunmer/chest",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"dunmer_chest": "fantasyfurniture:block/models/dunmer/chest",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

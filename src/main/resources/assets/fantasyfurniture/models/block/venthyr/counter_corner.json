@@ -1,8 +1,8 @@
 {
 	"credit": "Made by Fantasy",
 	"textures": {
-		"0": "fantasyfurniture:models/venthyr/counter",
-		"particle": "fantasyfurniture:particles/venthyr"
+		"0": "fantasyfurniture:block/models/venthyr/counter",
+		"particle": "fantasyfurniture:block/particles/venthyr"
 	},
 	"elements": [
 		{

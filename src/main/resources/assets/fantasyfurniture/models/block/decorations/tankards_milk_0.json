@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"tankards_milk": "fantasyfurniture:models/decorations/tankards_milk",
-		"particle": "fantasyfurniture:particles/decorations/tankards"
+		"tankards_milk": "fantasyfurniture:block/models/decorations/tankards_milk",
+		"particle": "fantasyfurniture:block/particles/decorations/tankards"
 	},
 	"elements": [
 		{

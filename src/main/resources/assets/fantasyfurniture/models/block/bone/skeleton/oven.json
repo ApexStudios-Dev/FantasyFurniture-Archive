@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"oven": "fantasyfurniture:models/bone/skeleton/oven",
-		"particle": "fantasyfurniture:particles/bone"
+		"oven": "fantasyfurniture:block/models/bone/skeleton/oven",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

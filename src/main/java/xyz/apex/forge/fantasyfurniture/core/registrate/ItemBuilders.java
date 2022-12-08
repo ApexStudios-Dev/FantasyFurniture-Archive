@@ -16,7 +16,6 @@ import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
-import xyz.apex.forge.fantasyfurniture.AllItemGroupCategories;
 import xyz.apex.forge.fantasyfurniture.common.block.decorations.SkullBlossomsBlock;
 import xyz.apex.forge.fantasyfurniture.common.block.furniture.*;
 import xyz.apex.forge.fantasyfurniture.common.item.SkullBlossomsBlockItem;
@@ -114,7 +113,9 @@ public interface ItemBuilders
 				.object(AllBlocks.VENTHYR_WIDOW_BLOOM.getId().getPath())
 				.item(properties -> new WidowBloomBlockItem(AllBlocks.VENTHYR_WIDOW_BLOOM.get(), properties))
 				.setData(LANG, NonNullBiConsumer.noop())
-				.tag(FurnitureStation.CRAFTABLE, AllItemGroupCategories.DECORATIONS_TAG, AllItemGroupCategories.VENTHYR_TAG)
+				// TODO: See ApexCore
+				// .tag(FurnitureStation.CRAFTABLE, AllItemGroupCategories.DECORATIONS_TAG, AllItemGroupCategories.VENTHYR_TAG)
+				.tag(FurnitureStation.CRAFTABLE)
 				.model((ctx, provider) -> provider
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
@@ -170,7 +171,9 @@ public interface ItemBuilders
 				.object(block.getId().getPath())
 				.item(properties -> new SkullBlossomsBlockItem(block.get(), properties))
 				.setData(LANG, NonNullBiConsumer.noop())
-				.tag(FurnitureStation.CRAFTABLE, AllItemGroupCategories.DECORATIONS_TAG)
+				// TODO: See ApexCore
+				// .tag(FurnitureStation.CRAFTABLE, AllItemGroupCategories.DECORATIONS_TAG)
+				.tag(FurnitureStation.CRAFTABLE)
 				.model((ctx, provider) -> provider
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))

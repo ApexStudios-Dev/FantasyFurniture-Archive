@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"bookshelf": "fantasyfurniture:models/royal/bookshelf",
-		"bookshelf_tint": "fantasyfurniture:models/royal/bookshelf_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"bookshelf": "fantasyfurniture:block/models/royal/bookshelf",
+		"bookshelf_tint": "fantasyfurniture:block/models/royal/bookshelf_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_single": "fantasyfurniture:models/venthyr/door_single",
-		"particle": "fantasyfurniture:particles/venthyr"
+		"door_single": "fantasyfurniture:block/models/venthyr/door_single",
+		"particle": "fantasyfurniture:block/particles/venthyr"
 	},
 	"elements": [
 		{

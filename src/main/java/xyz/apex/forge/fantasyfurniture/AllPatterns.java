@@ -11,7 +11,7 @@ public interface AllPatterns
 			.layer("X")
 			.build();
 
-	MultiBlockPattern PATTERN_1x1x2_PAINTING = MultiBlockPattern // TODO: `_PAINTING`? but you are for floor light, rename in 1.20
+	MultiBlockPattern PATTERN_1x1x2_LIGHT = MultiBlockPattern
 			.builder()
 			.layer("X")
 			.layer("X")

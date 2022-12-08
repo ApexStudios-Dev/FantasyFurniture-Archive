@@ -1,6 +1,6 @@
 package xyz.apex.forge.fantasyfurniture;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
 import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
@@ -144,7 +144,7 @@ public interface AllBlockEntities
 			.register()
 	;
 
-	BlockEntityEntry<FurnitureStationBlockEntity> FURNITURE_STATION = BlockEntityEntry.cast(AllBlocks.FURNITURE_STATION.getSibling(Registry.BLOCK_ENTITY_TYPE_REGISTRY));
+	BlockEntityEntry<FurnitureStationBlockEntity> FURNITURE_STATION = BlockEntityEntry.cast(AllBlocks.FURNITURE_STATION.getSibling(Registries.BLOCK_ENTITY_TYPE));
 
 	static void bootstrap()
 	{

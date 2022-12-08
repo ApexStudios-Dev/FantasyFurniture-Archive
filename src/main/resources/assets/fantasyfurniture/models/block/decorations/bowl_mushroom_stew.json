@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"bowl_mushroom_stew": "fantasyfurniture:models/decorations/bowl_mushroom_stew",
-		"particle": "fantasyfurniture:particles/decorations/bowl"
+		"bowl_mushroom_stew": "fantasyfurniture:block/models/decorations/bowl_mushroom_stew",
+		"particle": "fantasyfurniture:block/particles/decorations/bowl"
 	},
 	"elements": [
 		{

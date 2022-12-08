@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"mead_bottles": "fantasyfurniture:models/decorations/nordic_mead_bottles",
-		"particle": "fantasyfurniture:particles/decorations/nordic_mead_bottle"
+		"mead_bottles": "fantasyfurniture:block/models/decorations/nordic_mead_bottles",
+		"particle": "fantasyfurniture:block/particles/decorations/nordic_mead_bottle"
 	},
 	"elements": [
 		{

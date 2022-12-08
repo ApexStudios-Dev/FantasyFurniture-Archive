@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"3": "fantasyfurniture:models/necrolord/chandelier",
-		"particle": "fantasyfurniture:particles/necrolord"
+		"3": "fantasyfurniture:block/models/necrolord/chandelier",
+		"particle": "fantasyfurniture:block/particles/necrolord"
 	},
 	"elements": [
 		{

@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"royal_chest": "fantasyfurniture:models/royal/chest",
-		"chest_tint": "fantasyfurniture:models/royal/chest_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_chest": "fantasyfurniture:block/models/royal/chest",
+		"chest_tint": "fantasyfurniture:block/models/royal/chest_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

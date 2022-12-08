@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"oven": "fantasyfurniture:models/bone/wither/oven",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"oven": "fantasyfurniture:block/models/bone/wither/oven",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

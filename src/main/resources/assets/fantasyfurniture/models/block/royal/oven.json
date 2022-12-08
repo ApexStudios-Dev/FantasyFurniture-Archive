@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"oven": "fantasyfurniture:models/royal/oven",
-		"oven_tint": "fantasyfurniture:models/royal/oven_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"oven": "fantasyfurniture:block/models/royal/oven",
+		"oven_tint": "fantasyfurniture:block/models/royal/oven_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

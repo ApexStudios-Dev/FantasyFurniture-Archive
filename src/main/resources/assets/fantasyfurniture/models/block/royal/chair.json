@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"royal_chair": "fantasyfurniture:models/royal/chair",
-		"chair_tint": "fantasyfurniture:models/royal/chair_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_chair": "fantasyfurniture:block/models/royal/chair",
+		"chair_tint": "fantasyfurniture:block/models/royal/chair_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

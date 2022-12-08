@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"counter_single_tint": "fantasyfurniture:models/royal/counters_tint",
-		"counter_single": "fantasyfurniture:models/royal/counters",
-		"particle": "fantasyfurniture:particles/royal"
+		"counter_single_tint": "fantasyfurniture:block/models/royal/counters_tint",
+		"counter_single": "fantasyfurniture:block/models/royal/counters",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

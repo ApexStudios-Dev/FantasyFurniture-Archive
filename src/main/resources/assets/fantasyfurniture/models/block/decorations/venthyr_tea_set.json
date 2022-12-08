@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"tea_set": "fantasyfurniture:models/decorations/venthyr_tea_set",
-		"particle": "fantasyfurniture:particles/decorations/venthyr"
+		"tea_set": "fantasyfurniture:block/models/decorations/venthyr_tea_set",
+		"particle": "fantasyfurniture:block/particles/decorations/venthyr"
 	},
 	"elements": [
 		{

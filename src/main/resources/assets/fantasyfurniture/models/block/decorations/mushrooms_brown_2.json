@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"mushrooms_brown": "fantasyfurniture:models/decorations/mushrooms_brown",
-		"particle": "fantasyfurniture:particles/decorations/mushrooms_brown"
+		"mushrooms_brown": "fantasyfurniture:block/models/decorations/mushrooms_brown",
+		"particle": "fantasyfurniture:block/particles/decorations/mushrooms_brown"
 	},
 	"elements": [
 		{

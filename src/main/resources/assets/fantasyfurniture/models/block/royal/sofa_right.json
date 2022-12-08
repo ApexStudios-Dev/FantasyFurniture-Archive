@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"sofa": "fantasyfurniture:models/royal/sofa",
-		"sofa_tint": "fantasyfurniture:models/royal/sofa_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"sofa": "fantasyfurniture:block/models/royal/sofa",
+		"sofa_tint": "fantasyfurniture:block/models/royal/sofa_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

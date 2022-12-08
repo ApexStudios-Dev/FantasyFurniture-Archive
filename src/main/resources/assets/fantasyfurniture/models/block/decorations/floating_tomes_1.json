@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"floating_tomes_tint": "fantasyfurniture:models/decorations/floating_tomes_tint",
-		"floating_tomes": "fantasyfurniture:models/decorations/floating_tomes",
-		"particle": "fantasyfurniture:particles/decorations/floating_tomes"
+		"floating_tomes_tint": "fantasyfurniture:block/models/decorations/floating_tomes_tint",
+		"floating_tomes": "fantasyfurniture:block/models/decorations/floating_tomes",
+		"particle": "fantasyfurniture:block/particles/decorations/floating_tomes"
 	},
 	"elements": [
 		{

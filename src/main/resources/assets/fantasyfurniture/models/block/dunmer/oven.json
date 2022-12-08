@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"2": "fantasyfurniture:models/dunmer/oven",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"2": "fantasyfurniture:block/models/dunmer/oven",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

@@ -20,8 +20,8 @@ import xyz.apex.forge.commonality.SideOnly;
 @SideOnly(SideOnly.Side.CLIENT)
 public final class SkullBlossomsModel extends Model
 {
-	public static final ResourceLocation TEXTURE_SKELETON = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/models/decorations/bone_skeleton_skull_blossoms.png");
-	public static final ResourceLocation TEXTURE_WITHER = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/models/decorations/bone_wither_skull_blossoms.png");
+	public static final ResourceLocation TEXTURE_SKELETON = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/block/models/decorations/bone_skeleton_skull_blossoms.png");
+	public static final ResourceLocation TEXTURE_WITHER = new ResourceLocation(Mods.FANTASY_FURNITURE, "textures/block/models/decorations/bone_wither_skull_blossoms.png");
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Mods.FANTASY_FURNITURE, "bone_skull_blossoms"), "main");
 
 	private final ModelPart model;

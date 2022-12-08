@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"table_large": "fantasyfurniture:models/nordic/table_large",
-		"particle": "fantasyfurniture:particles/nordic"
+		"table_large": "fantasyfurniture:block/models/nordic/table_large",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

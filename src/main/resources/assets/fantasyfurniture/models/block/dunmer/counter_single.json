@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"counter_single": "fantasyfurniture:models/dunmer/counter",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"counter_single": "fantasyfurniture:block/models/dunmer/counter",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

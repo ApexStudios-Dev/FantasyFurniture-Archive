@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_double": "fantasyfurniture:models/necrolord/door_double",
-		"particle": "fantasyfurniture:particles/necrolord"
+		"door_double": "fantasyfurniture:block/models/necrolord/door_double",
+		"particle": "fantasyfurniture:block/particles/necrolord"
 	},
 	"elements": [
 		{

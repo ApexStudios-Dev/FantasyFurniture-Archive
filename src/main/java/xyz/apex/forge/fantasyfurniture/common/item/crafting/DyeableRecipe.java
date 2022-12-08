@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -13,9 +14,9 @@ import xyz.apex.forge.fantasyfurniture.common.block.furniture.IDyeable;
 
 public final class DyeableRecipe extends CustomRecipe
 {
-	public DyeableRecipe(ResourceLocation recipeId)
+	public DyeableRecipe(ResourceLocation recipeId, CraftingBookCategory bookCategory)
 	{
-		super(recipeId);
+		super(recipeId, bookCategory);
 	}
 
 	@Override

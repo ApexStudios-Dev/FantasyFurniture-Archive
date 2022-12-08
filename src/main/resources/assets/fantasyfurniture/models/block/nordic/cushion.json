@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"cushion": "fantasyfurniture:models/nordic/cushion",
-		"particle": "fantasyfurniture:particles/nordic"
+		"cushion": "fantasyfurniture:block/models/nordic/cushion",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

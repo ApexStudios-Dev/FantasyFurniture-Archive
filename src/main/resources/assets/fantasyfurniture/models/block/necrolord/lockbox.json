@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"particle": "fantasyfurniture:models/necrolord/lockbox",
-		"lockbox": "fantasyfurniture:models/necrolord/lockbox"
+		"particle": "fantasyfurniture:block/models/necrolord/lockbox",
+		"lockbox": "fantasyfurniture:block/models/necrolord/lockbox"
 	},
 	"elements": [
 		{

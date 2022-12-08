@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "fantasyfurniture:models/decorations/royal_candelabra",
-		"particle": "fantasyfurniture:particles/royal"
+		"1": "fantasyfurniture:block/models/decorations/royal_candelabra",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

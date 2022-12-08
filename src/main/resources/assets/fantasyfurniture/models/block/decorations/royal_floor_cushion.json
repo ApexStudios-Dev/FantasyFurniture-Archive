@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"royal_floor_cushion": "fantasyfurniture:models/decorations/royal_floor_cushion",
-		"particle": "fantasyfurniture:models/decorations/royal_floor_cushion_tint",
-		"royal_floor_cushion_tint": "fantasyfurniture:models/decorations/royal_floor_cushion_tint"
+		"royal_floor_cushion": "fantasyfurniture:block/models/decorations/royal_floor_cushion",
+		"particle": "fantasyfurniture:block/models/decorations/royal_floor_cushion_tint",
+		"royal_floor_cushion_tint": "fantasyfurniture:block/models/decorations/royal_floor_cushion_tint"
 	},
 	"elements": [
 		{

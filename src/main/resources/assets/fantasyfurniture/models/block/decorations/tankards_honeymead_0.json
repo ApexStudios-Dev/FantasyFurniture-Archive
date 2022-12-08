@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"tankards_honeymead": "fantasyfurniture:models/decorations/tankards_honeymead",
-		"particle": "fantasyfurniture:particles/decorations/tankards"
+		"tankards_honeymead": "fantasyfurniture:block/models/decorations/tankards_honeymead",
+		"particle": "fantasyfurniture:block/particles/decorations/tankards"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"nordic_chair": "fantasyfurniture:models/nordic/chair",
-		"particle": "fantasyfurniture:particles/nordic"
+		"nordic_chair": "fantasyfurniture:block/models/nordic/chair",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

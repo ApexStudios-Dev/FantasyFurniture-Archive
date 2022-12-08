@@ -1,3 +1,5 @@
+// TODO: Readd once JEI updates
+/*
 package xyz.apex.forge.fantasyfurniture.core.integration.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -81,3 +83,4 @@ public final class JeiPlugin implements IModPlugin
 		      .forEach(stack -> registration.addRecipeCatalyst(stack, RecipeTypes.SMOKING));
 	}
 }
+*/

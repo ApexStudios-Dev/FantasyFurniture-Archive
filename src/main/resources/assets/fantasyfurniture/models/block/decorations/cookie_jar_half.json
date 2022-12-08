@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"cookie_jar": "fantasyfurniture:models/decorations/cookie_jar",
-		"particle": "fantasyfurniture:particles/decorations/cookie_jar"
+		"cookie_jar": "fantasyfurniture:block/models/decorations/cookie_jar",
+		"particle": "fantasyfurniture:block/particles/decorations/cookie_jar"
 	},
 	"elements": [
 		{

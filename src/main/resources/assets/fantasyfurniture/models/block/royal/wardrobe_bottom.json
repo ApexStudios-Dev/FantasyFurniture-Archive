@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"wardrobe_bottom": "fantasyfurniture:models/royal/wardrobe",
-		"wardrobe_bottom_tint": "fantasyfurniture:models/royal/wardrobe_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"wardrobe_bottom": "fantasyfurniture:block/models/royal/wardrobe",
+		"wardrobe_bottom_tint": "fantasyfurniture:block/models/royal/wardrobe_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

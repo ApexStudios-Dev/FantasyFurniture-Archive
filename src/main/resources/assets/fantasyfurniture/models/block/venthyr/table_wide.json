@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"table_wide": "fantasyfurniture:models/venthyr/table_wide",
-		"particle": "fantasyfurniture:particles/venthyr"
+		"table_wide": "fantasyfurniture:block/models/venthyr/table_wide",
+		"particle": "fantasyfurniture:block/particles/venthyr"
 	},
 	"elements": [
 		{

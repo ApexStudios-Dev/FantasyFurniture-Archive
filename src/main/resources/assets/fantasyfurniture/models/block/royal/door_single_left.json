@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"door_single": "fantasyfurniture:models/royal/door_single",
-		"door_tint": "fantasyfurniture:models/royal/door_tint",
-		"particle": "fantasyfurniture:particles/royal"
+		"door_single": "fantasyfurniture:block/models/royal/door_single",
+		"door_tint": "fantasyfurniture:block/models/royal/door_tint",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

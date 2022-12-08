@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"particle": "fantasyfurniture:particles/necrolord",
-		"necrolord_candelabra": "fantasyfurniture:models/decorations/necrolord_candelabra"
+		"particle": "fantasyfurniture:block/particles/necrolord",
+		"necrolord_candelabra": "fantasyfurniture:block/models/decorations/necrolord_candelabra"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"floor_light": "fantasyfurniture:models/royal/floor_light",
-		"particle": "fantasyfurniture:particles/royal"
+		"floor_light": "fantasyfurniture:block/models/royal/floor_light",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"3": "fantasyfurniture:models/dunmer/bed_double",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"3": "fantasyfurniture:block/models/dunmer/bed_double",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

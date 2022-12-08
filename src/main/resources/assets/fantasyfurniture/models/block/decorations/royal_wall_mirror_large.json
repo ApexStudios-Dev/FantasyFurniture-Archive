@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"royal_wall_mirror_large_tint": "fantasyfurniture:models/decorations/royal_wall_mirror_large_tint",
-		"royal_wall_mirror_large": "fantasyfurniture:models/decorations/royal_wall_mirror_large",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_wall_mirror_large_tint": "fantasyfurniture:block/models/decorations/royal_wall_mirror_large_tint",
+		"royal_wall_mirror_large": "fantasyfurniture:block/models/decorations/royal_wall_mirror_large",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

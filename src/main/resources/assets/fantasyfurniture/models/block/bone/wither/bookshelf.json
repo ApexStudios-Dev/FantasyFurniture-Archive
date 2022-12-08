@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"bookshelf": "fantasyfurniture:models/bone/wither/bookshelf",
-		"particle": "fantasyfurniture:particles/bone_wither"
+		"bookshelf": "fantasyfurniture:block/models/bone/wither/bookshelf",
+		"particle": "fantasyfurniture:block/particles/bone_wither"
 	},
 	"elements": [
 		{

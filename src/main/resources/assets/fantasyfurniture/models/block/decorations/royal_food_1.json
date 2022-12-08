@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"royal_food_1": "fantasyfurniture:models/decorations/royal_food_1",
-		"particle": "fantasyfurniture:particles/royal"
+		"royal_food_1": "fantasyfurniture:block/models/decorations/royal_food_1",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{

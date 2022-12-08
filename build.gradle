@@ -5,7 +5,7 @@ plugins {
 
 	id 'net.minecraftforge.gradle' version '5.1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
-	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+	// id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
 
@@ -43,7 +43,8 @@ sourceSets {
 }
 
 minecraft {
-	mappings channel: 'parchment', version: "${parchment_mappings}-${minecraft_version}"
+	// mappings channel: 'parchment', version: "${parchment_mappings}-${minecraft_version}"
+	mappings channel: 'official', version: "${minecraft_version}"
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
 	runs {
@@ -168,18 +169,18 @@ dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-
-	runtimeOnly fg.deobf("curse.maven:jade-${jade_id}:${jade_version}")
+//	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+//	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+//	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+//
+//	runtimeOnly fg.deobf("curse.maven:jade-${jade_id}:${jade_version}")
 
 	// compileOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}:api")
 	// runtimeOnly fg.deobf("team.chisel.ctm:CTM:${minecraft_version}-${ctm_version}")
 
-	runtimeOnly fg.deobf("curse.maven:xycraft-653786:3960430") // XyCraft: Core - v0.5.2
+//	runtimeOnly fg.deobf("curse.maven:xycraft-653786:3960430") // XyCraft: Core - v0.5.2
 
-	implementation fg.deobf("${registrate_package}:Registrate:MC1.19-${registrate_version}") // TODO: Change back to ${minecraft_version} in 1.20
+	implementation fg.deobf("${registrate_package}:Registrate:MC${minecraft_version}-${registrate_version}")
 
 	implementation fg.deobf("${mod_base_package}:${commonality_mod_id}-${minecraft_version}:${commonality_version}")
 	implementation fg.deobf("${mod_base_package}:${apexcore_mod_id}-${minecraft_version}:${apexcore_version}:slim")

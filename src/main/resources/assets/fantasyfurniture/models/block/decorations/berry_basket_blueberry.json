@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"berry_basket_blueberry": "fantasyfurniture:models/decorations/berry_basket_blueberry",
-		"particle": "fantasyfurniture:particles/decorations/berry_basket"
+		"berry_basket_blueberry": "fantasyfurniture:block/models/decorations/berry_basket_blueberry",
+		"particle": "fantasyfurniture:block/particles/decorations/berry_basket"
 	},
 	"elements": [
 		{

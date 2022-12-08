@@ -135,7 +135,7 @@ public class FloorLightBlock extends BaseMultiBlock
 	@Override
 	public MultiBlockPattern getMultiBlockPattern()
 	{
-		return AllPatterns.PATTERN_1x1x2_PAINTING;
+		return AllPatterns.PATTERN_1x1x2_LIGHT;
 	}
 
 	@Override

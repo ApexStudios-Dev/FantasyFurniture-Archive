@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"sofa": "fantasyfurniture:models/bone/skeleton/sofa",
-		"particle": "fantasyfurniture:particles/bone"
+		"sofa": "fantasyfurniture:block/models/bone/skeleton/sofa",
+		"particle": "fantasyfurniture:block/particles/bone"
 	},
 	"elements": [
 		{

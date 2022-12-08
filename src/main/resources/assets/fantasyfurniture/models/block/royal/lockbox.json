@@ -2,9 +2,9 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [32, 32],
 	"textures": {
-		"particle": "fantasyfurniture:models/royal/lockbox",
-		"lockbox": "fantasyfurniture:models/royal/lockbox",
-		"lockbox_tint": "fantasyfurniture:models/royal/lockbox_tint"
+		"particle": "fantasyfurniture:block/models/royal/lockbox",
+		"lockbox": "fantasyfurniture:block/models/royal/lockbox",
+		"lockbox_tint": "fantasyfurniture:block/models/royal/lockbox_tint"
 	},
 	"elements": [
 		{

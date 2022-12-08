@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"nordic_stool": "fantasyfurniture:models/nordic/stool",
-		"particle": "fantasyfurniture:particles/nordic"
+		"nordic_stool": "fantasyfurniture:block/models/nordic/stool",
+		"particle": "fantasyfurniture:block/particles/nordic"
 	},
 	"elements": [
 		{

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"dunmer_stool": "fantasyfurniture:models/dunmer/stool",
-		"particle": "fantasyfurniture:particles/dunmer"
+		"dunmer_stool": "fantasyfurniture:block/models/dunmer/stool",
+		"particle": "fantasyfurniture:block/particles/dunmer"
 	},
 	"elements": [
 		{

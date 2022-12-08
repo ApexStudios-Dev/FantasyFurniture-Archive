@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"book_stack": "fantasyfurniture:models/decorations/book_stack",
-		"particle": "fantasyfurniture:particles/decorations/book_stack"
+		"book_stack": "fantasyfurniture:block/models/decorations/book_stack",
+		"particle": "fantasyfurniture:block/particles/decorations/book_stack"
 	},
 	"elements": [
 		{

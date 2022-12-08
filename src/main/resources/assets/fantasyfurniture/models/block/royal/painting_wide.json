@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [64, 64],
 	"textures": {
-		"painting_wide": "fantasyfurniture:models/royal/painting_wide",
-		"particle": "fantasyfurniture:particles/royal"
+		"painting_wide": "fantasyfurniture:block/models/royal/painting_wide",
+		"particle": "fantasyfurniture:block/particles/royal"
 	},
 	"elements": [
 		{
