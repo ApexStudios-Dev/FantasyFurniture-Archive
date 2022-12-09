@@ -1,3 +1,9 @@
+buildscript {
+	dependencies {
+		classpath 'org.parchmentmc:librarian:1.+'
+	}
+}
+
 plugins {
 	id 'java-library'
 	id 'idea'
@@ -5,8 +11,11 @@ plugins {
 
 	id 'net.minecraftforge.gradle' version '5.1.+'
 	id 'org.spongepowered.mixin' version '0.7.+'
-	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+}
+
+if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+	apply plugin: 'org.parchmentmc.librarian.forgegradle'
 }
 
 evaluationDependsOn(':Common')
@@ -23,16 +32,38 @@ sourceSets {
 
 		compileClasspath += sourceSets.main.output
 		runtimeClasspath += sourceSets.main.output
+
+		compileClasspath += sourceSets.main.compileClasspath
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
+
+sourceSets {
+	datagen {
+		compileClasspath += configurations.getByName('minecraft')
+
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
 	}
 }
 
 minecraft {
-	mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+		if(rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION')) {
+			mappings channel: 'parchment', version: "${PARCHMENT_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+		} else {
+			mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+		}
+	} else {
+		mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+	}
+
+	if(file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
+		accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	}
 
 	runs {
 		client {
-			taskName 'client'
 			workingDirectory file('run/client')
 			property 'forge.logging.markers', ''
 			property 'forge.logging.console.level', 'debug'
@@ -46,8 +77,14 @@ minecraft {
 			}
 		}
 
+		clientLogin {
+			parent runs.client
+			main 'net.covers1624.devlogin.DevLogin'
+			args '--launch_target', '{LAUNCH_TARGET}'
+			lazyToken("LAUNCH_TARGET", { runs.client.main })
+		}
+
 		server {
-			taskName 'server'
 			workingDirectory file('run/server')
 			property 'forge.logging.markers', ''
 			property 'forge.logging.console.level', 'debug'
@@ -63,13 +100,19 @@ minecraft {
 		}
 
 		data {
-			taskName 'data'
+			ideaModule "${rootProject.name}.${project.name}.main"
+			source sourceSets.main
 			workingDirectory file('run/client')
 			property 'forge.logging.markers', ''
 			property 'forge.logging.console.level', 'debug'
-			ideaModule "${rootProject.name}.${project.name}.main"
-			args '--mod', MOD_ID, '--client', '--server', '--validate', '--input', file('src/datagen/blockbench'), '--output', project(':Common').file('src/generated/resources'), '--existing', file('src/main/resources'), '--existing', project(':Common').file('src/main/resources'), '--existing-mod', APEXCORE_ID
 			forceExit false
+
+			args '--mod', MOD_ID
+			args '--client', '--server', '--validate'
+			args '--input', file('src/datagen/blockbench')
+			args '--output', project(':Common').file('src/main/generated')
+			args '--existing', file('src/main/resources')
+			args '--existing', project(':Common').file('src/main/resources')
 
 			mods {
 				"${MOD_ID}" {
@@ -111,19 +154,35 @@ repositories {
 
 dependencies {
 	minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+
+	// Main
 	annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
-	compileOnly project(':Common')
-	datagenCompileOnly project(':Common')
-
-	implementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}") // Jade-1.19.1-forge-8.6.0
-	compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
-	compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
-	runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
-
+	implementation project(':Common')
+	runtimeClasspath "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
 	implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+	jarJar(group: "${APEX_GROUP}.${APEXCORE_ID}.forge", name: "${APEXCORE_ID}-forge", version: "${APEXCORE_VERSION_RANGE}")
+
+	// Data Gen
+	datagenImplementation sourceSets.main.output
+	datagenImplementation project(':Common')
 	datagenImplementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
 
-	jarJar(group: "${APEX_GROUP}.${APEXCORE_ID}.forge", name: "${APEXCORE_ID}-forge", version: "${APEXCORE_VERSION_RANGE}")
+	// JEI
+	if(rootProject.hasProperty('JEI_VERSION')) {
+		compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
+		compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
+		runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
+
+		datagenCompileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
+		datagenCompileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
+		datagenRuntimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
+	}
+
+	// Jade
+	if(rootProject.hasProperty('JADE_CF_ID') && rootProject.hasProperty('FORGE_JADE_CF_FILE_ID')) {
+		implementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}")
+		datagenImplementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}")
+	}
 }
 
 processResources {
@@ -140,11 +199,13 @@ processResources {
 	from project(':Common').sourceSets.main.resources
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'
 	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
 
-	source(project(':Common').sourceSets.main.allSource)
+	if(it.name.equals('compileJava')) {
+		source(project(':Common').sourceSets.main.allSource)
+	}
 
 	javaToolchains {
 		compilerFor {

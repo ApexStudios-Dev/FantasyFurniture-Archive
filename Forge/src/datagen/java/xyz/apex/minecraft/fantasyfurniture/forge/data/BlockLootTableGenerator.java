@@ -1,15 +1,15 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.world.level.block.Block;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
-public final class BlockLootTableGenerator extends BlockLoot
+public final class BlockLootTableGenerator extends VanillaBlockLoot
 {
     @Override
-    protected void addTables()
+    protected void generate()
     {
         dropSelf(NordicSet.WOOL.get());
         dropSelf(NordicSet.CARPET.get());

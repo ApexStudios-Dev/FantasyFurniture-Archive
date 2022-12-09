@@ -3,7 +3,7 @@ plugins {
 	id 'idea'
 	id 'maven-publish'
 
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
 
@@ -13,34 +13,45 @@ group = "${APEX_GROUP}.${MOD_ID}.fabric"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-fabric"
 
-sourceSets.main.resources.srcDirs += 'src/generated/resources'
+sourceSets {
+	main {
+		resources.srcDirs += 'src/main/generated'
+	}
+
+	datagen {
+		compileClasspath += sourceSets.main.output
+		runtimeClasspath += sourceSets.main.output
+
+		compileClasspath += sourceSets.main.compileClasspath
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
 
 loom {
-	accessWidenerPath = file("src/main/resources/${MOD_ID}.accesswidener")
-	enableTransitiveAccessWideners = true
+	if(file("src/main/resources/${MOD_ID}.accesswidener").exists()) {
+		accessWidenerPath = file("src/main/resources/${MOD_ID}.accesswidener")
+	}
 
 	runs {
 		client {
 			client()
-			setConfigName('fabric client')
 			ideConfigGenerated(true)
 			runDir('run')
 		}
 
 		server {
 			server()
-			setConfigName('fabric server')
 			ideConfigGenerated(true)
 			runDir('run')
 		}
 
 		data {
 			inherit(client)
-			setConfigName('fabric data')
 			ideConfigGenerated(true)
 			runDir('run')
+			source(sourceSets.main)
 			vmArg('-Dfabric-api.datagen')
-			vmArg("-Dfabric-api.datagen.output-dir=${file('src/generated/resources')}")
+			vmArg("-Dfabric-api.datagen.output-dir=${file('src/main/generated')}")
 			vmArg("-Dfabric-api.datagen.modid=${MOD_ID}")
 		}
 	}
@@ -48,9 +59,12 @@ loom {
 	mods {
 		"${MOD_ID}" {
 			sourceSet sourceSets.main
+			sourceSet sourceSets.datagen
 			sourceSet project(':Common').sourceSets.main
 		}
 	}
+
+	createRemapConfigurations(sourceSets.datagen)
 }
 
 repositories {
@@ -77,15 +91,20 @@ dependencies {
 
 	mappings loom.layered() {
 		officialMojangMappings()
-		parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+
+		if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+			def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
+			parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
+		}
 	}
 
+	// Main
 	modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
-	compileOnly project(':Common')
-
-	modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
-	modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
+	implementation project(':Common')
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	modImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	include "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
 
 	// Uncomment all of the below to enable shaders
 	// ome of these may or may not be required
@@ -105,13 +124,36 @@ dependencies {
 	// runtimeOnly 'io.github.douira:glsl-transformer:1.0.1'
 	// runtimeOnly 'org.anarres:jcpp:1.4.14'
 
-	modImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}" // Jade-1.19.1-fabric-8.6.0
-	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
-	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
-	modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+	// Data Gen
+	modDatagenImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
+	modDatagenImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
+	modDatagenImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	datagenImplementation sourceSets.main.output
+	datagenImplementation project(':Common')
+	datagenImplementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-	modImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
-	include "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	// JEI
+	if(rootProject.hasProperty('JEI_VERSION')) {
+		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
+		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+	}
+
+	// Jade
+	if(rootProject.hasProperty('JADE_CF_ID') && rootProject.hasProperty('FABRIC_JADE_CF_FILE_ID')) {
+		modImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}"
+	}
+
+	// Lazy DFU
+	if(rootProject.hasProperty('FABRIC_LAZY_DFU_VERSION')) {
+		modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
+		modDatagenRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
+	}
+
+	// ModMenu
+	if(rootProject.hasProperty('FABRIC_MOD_MENU_VERSION')) {
+		modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
+	}
 }
 
 processResources {
@@ -128,11 +170,13 @@ processResources {
 	from project(':Common').sourceSets.main.resources
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'
 	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
 
-	source(project(':Common').sourceSets.main.allSource)
+	if(it.name.equals('compileJava')) {
+		source(project(':Common').sourceSets.main.allSource)
+	}
 
 	javaToolchains {
 		compilerFor {
@@ -140,7 +184,6 @@ tasks.withType(JavaCompile) {
 		}
 	}
 }
-
 
 java {
 	toolchain {

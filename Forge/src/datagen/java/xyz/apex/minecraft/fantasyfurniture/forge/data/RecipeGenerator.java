@@ -10,11 +10,11 @@ public final class RecipeGenerator extends RecipeProvider
 {
     RecipeGenerator(GatherDataEvent event)
     {
-        super(event.getGenerator());
+        super(event.getGenerator().getPackOutput());
     }
 
     @Override
-    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer)
     {
     }
 }

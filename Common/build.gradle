@@ -10,7 +10,11 @@ group = "${APEX_GROUP}.${MOD_ID}.shared"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-shared"
 
-sourceSets.main.resources.srcDirs += 'src/generated/resources'
+sourceSets {
+	main {
+		resources.srcDirs += 'src/main/generated'
+	}
+}
 
 minecraft {
 	version("${MINECRAFT_VERSION}")
@@ -38,7 +42,7 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'
 	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
 
@@ -48,7 +52,6 @@ tasks.withType(JavaCompile) {
 		}
 	}
 }
-
 
 java {
 	toolchain {

@@ -8,8 +8,5 @@ public final class DataGenerators implements DataGeneratorEntrypoint
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator generator)
     {
-        var blockTags = new BlockTagGenerator(generator);
-        generator.addProvider(true, blockTags);
-        generator.addProvider(true, new ItemTagGenerator(generator, blockTags));
     }
 }
