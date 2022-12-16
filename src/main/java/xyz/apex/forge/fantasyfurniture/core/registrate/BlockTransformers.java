@@ -51,7 +51,7 @@ import java.util.function.ToIntFunction;
 
 public interface BlockTransformers
 {
-	static Property<?>[] getIgnoredProperties(Block block)
+	static Property<?>[] getIgnoredProperties(Block block, String blockName)
 	{
 		var list = Lists.<Property<?>>newArrayList();
 
@@ -63,7 +63,7 @@ public interface BlockTransformers
 			list.add(FloorLightBlock.PART);
 		if(block instanceof SimpleWaterloggedBlock)
 			list.add(BlockStateProperties.WATERLOGGED);
-		if(block instanceof IMultiBlock multiBlock)
+		if(!(blockName.equals("dunmer/bed_single") || blockName.equals("dunmer/bed_double")) && block instanceof IMultiBlock multiBlock)
 			list.add(multiBlock.getMultiBlockPattern().getBlockProperty());
 		if(block instanceof ISeatBlock)
 			list.add(ISeatBlock.OCCUPIED);
@@ -101,7 +101,7 @@ public interface BlockTransformers
 							.modelFile(model)
 							.rotationY(yRot)
 							.build();
-				}, getIgnoredProperties(ctx.get())))
+				}, getIgnoredProperties(ctx.get(), ctx.getId().getPath())))
 				.tag(BlockTags.Vanilla.WOODEN_DOORS)
 		;
 	}
@@ -144,7 +144,7 @@ public interface BlockTransformers
 								.builder()
 								.modelFile(modelGetter.apply(blockState))
 								.build(),
-						getIgnoredProperties(ctx.get())
+						getIgnoredProperties(ctx.get(), ctx.getId().getPath())
 				)
 		;
 	}
@@ -157,7 +157,7 @@ public interface BlockTransformers
 								.rotationY(((int) blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
 								.modelFile(getModelFile(ctx, blockState, provider.models()))
 								.build(),
-						getIgnoredProperties(ctx.get())
+						getIgnoredProperties(ctx.get(), ctx.getId().getPath())
 				)
 		;
 	}
@@ -242,6 +242,7 @@ public interface BlockTransformers
 				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/spider_webs");
 			else if(name.startsWith("potion_bottles"))
 				return new ResourceLocation(registryName.getNamespace(), "particles/decorations/potion_bottles");
+			else if(name.startsWith("fairy_lights")) return new ResourceLocation(registryName.getNamespace(), "particles/decorations/fairy_lights_1");
 
 			return new ResourceLocation(registryName.getNamespace(), "particles/%s/%s".formatted(type, name));
 		}
