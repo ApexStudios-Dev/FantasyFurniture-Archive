@@ -62,6 +62,12 @@ public interface AllBlocks
 	BlockEntry<MushroomsBlock> MUSHROOMS_BROWN = mushrooms("brown", MaterialColor.COLOR_BROWN).register();
 	BlockEntry<PotionBottlesBlock> POTION_BOTTLES = potionBottles(PotionBottlesBlock::new, "").register();
 	BlockEntry<PotionBottlesBlock.Dyeable> DYEABLE_POTION_BOTTLES = potionBottles(PotionBottlesBlock.Dyeable::new, "_dyeable").transform(BlockTransformers::applyDyeable).register();
+	BlockEntry<FairyLightsBlock.Dyeable> FAIRY_LIGHTS_1 = fairyLights(FairyLightsBlock.Dyeable::new, 1).transform(BlockTransformers::applyDyeable).register();
+	BlockEntry<FairyLightsBlock> FAIRY_LIGHTS_2 = fairyLights(FairyLightsBlock::new, 2).register();
+	BlockEntry<PresentsStackBlock> PRESENTS_STACK_1 = presentsStack(PresentsStackBlock::new, 1).register();
+	BlockEntry<PresentsStackBlock.Dyeable> PRESENTS_STACK_2 = presentsStack(PresentsStackBlock.Dyeable::new, 2).transform(BlockTransformers::applyDyeable).register();
+	BlockEntry<SnowballsBlock> SNOWBALLS = snowballs().register();
+	BlockEntry<StockingBlock> STOCKING = stocking().transform(BlockTransformers::applyDyeable).register();
 
 	// region: Nordic
 	BlockEntry<BoiledCremeTreatsBlock> NORDIC_BOILED_CREME_TREATS = boiledCremeTreats("nordic").register();

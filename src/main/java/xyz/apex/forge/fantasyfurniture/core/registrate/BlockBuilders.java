@@ -258,6 +258,35 @@ public interface BlockBuilders
 		;
 	}
 
+	static <BLOCK extends FairyLightsBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> fairyLights(BlockFactory<BLOCK> blockFactory, int type)
+	{
+		return REGISTRATE
+				.object("decorations/fairy_lights_%s".formatted(type))
+				.block(blockFactory)
+				.transform(BlockTransformers::applyFurnitureBlockDefaults)
+				.lang("Fairy Lights (%d)".formatted(type))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.lightLevel(blockState -> 8)
+				.blockState(BlockTransformers::horizontalBlockState)
+				;
+	}
+
+	static BlockBuilder<BasicRegistrate, StockingBlock, BasicRegistrate> stocking()
+	{
+		return REGISTRATE
+				.object("decorations/stocking")
+				.block(StockingBlock::new)
+				.transform(BlockTransformers::applyFurnitureBlockDefaults)
+				.lang("Stocking")
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(BlockTransformers::horizontalBlockState)
+				;
+	}
+
 	static <BLOCK extends WallMirrorBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> wallMirror(String furnitureType, String mirrorType, BlockFactory<BLOCK> blockFactory)
 	{
 		return REGISTRATE
@@ -312,6 +341,34 @@ public interface BlockBuilders
 				.sound(SoundType.WOOL)
 				.blockState(BlockTransformers::horizontalBlockState)
 		;
+	}
+
+	static <BLOCK extends PresentsStackBlock> BlockBuilder<BasicRegistrate, BLOCK, BasicRegistrate> presentsStack(BlockFactory<BLOCK> blockFactory, int type)
+	{
+		return REGISTRATE
+				.object("decorations/presents_stack_%s".formatted(type))
+				.block(blockFactory)
+				.transform(BlockTransformers::applyFurnitureBlockDefaults)
+				.lang("Presents Stack (%d)".formatted(type))
+				.initialProperties(Material.WOOD)
+				.strength(2.5F)
+				.sound(SoundType.WOOD)
+				.blockState(BlockTransformers::horizontalBlockState)
+				;
+	}
+
+	static BlockBuilder<BasicRegistrate, SnowballsBlock, BasicRegistrate> snowballs()
+	{
+		return REGISTRATE
+				.object("decorations/snowballs")
+				.block(SnowballsBlock::new)
+				.transform(BlockTransformers::applyFurnitureBlockDefaults)
+				.lang("Snowballs")
+				.initialProperties(Material.SNOW)
+				.strength(1.5F)
+				.sound(SoundType.SNOW)
+				.blockState(BlockTransformers::horizontalBlockState)
+				;
 	}
 
 	static BlockBuilder<BasicRegistrate, MeadBottlesBlock, BasicRegistrate> meadBottles(String furnitureType)
