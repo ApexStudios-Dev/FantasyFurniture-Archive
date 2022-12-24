@@ -5,8 +5,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
-import xyz.apex.minecraft.apexcore.shared.registry.BlockBuilder;
-import xyz.apex.minecraft.apexcore.shared.registry.BlockBuilders;
+import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilder;
+import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilders;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
@@ -20,7 +20,7 @@ public interface FurnitureSets
     {
         return BlockBuilders
                 .builder(FantasyFurniture.ID, "%s/wool".formatted(furnitureSet))
-                // .flammability(30, 60) // TODO
+                .flammability(30, 60)
                 .initialProperties(Properties.BLOCK_WOOL)
         ;
     }
@@ -29,7 +29,7 @@ public interface FurnitureSets
     {
         return BlockBuilders
                 .builder(FantasyFurniture.ID, "%s/carpet".formatted(furnitureSet), CarpetBlock::new)
-                // .flammability(60, 20) // TODO
+                .flammability(60, 20)
                 .initialProperties(Properties.BLOCK_CARPET)
         ;
     }
