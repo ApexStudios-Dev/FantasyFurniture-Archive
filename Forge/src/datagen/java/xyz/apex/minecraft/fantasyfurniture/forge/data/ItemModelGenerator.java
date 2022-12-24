@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -7,15 +8,15 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-import xyz.apex.minecraft.apexcore.shared.registry.RegistryEntry;
+import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
 public final class ItemModelGenerator extends ItemModelProvider
 {
-    ItemModelGenerator(GatherDataEvent event)
+    ItemModelGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(event.getGenerator(), FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     @Override

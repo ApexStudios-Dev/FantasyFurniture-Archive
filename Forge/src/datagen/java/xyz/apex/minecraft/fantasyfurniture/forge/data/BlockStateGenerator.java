@@ -1,6 +1,7 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -8,7 +9,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-import xyz.apex.minecraft.apexcore.shared.registry.RegistryEntry;
+import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
@@ -19,9 +20,9 @@ public final class BlockStateGenerator extends BlockStateProvider
 {
     private final ModelFile blockBlock = new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/block"));
 
-    BlockStateGenerator(GatherDataEvent event)
+    BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(event.getGenerator(), FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     private void registerTemplates()

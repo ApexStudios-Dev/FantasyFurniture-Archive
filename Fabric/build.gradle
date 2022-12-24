@@ -17,14 +17,6 @@ sourceSets {
 	main {
 		resources.srcDirs += 'src/main/generated'
 	}
-
-	datagen {
-		compileClasspath += sourceSets.main.output
-		runtimeClasspath += sourceSets.main.output
-
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.main.runtimeClasspath
-	}
 }
 
 loom {
@@ -37,6 +29,7 @@ loom {
 			client()
 			ideConfigGenerated(true)
 			runDir('run')
+			vmArgs '-Dmixin.debug.export=true'
 		}
 
 		server {
@@ -44,27 +37,14 @@ loom {
 			ideConfigGenerated(true)
 			runDir('run')
 		}
-
-		data {
-			inherit(client)
-			ideConfigGenerated(true)
-			runDir('run')
-			source(sourceSets.main)
-			vmArg('-Dfabric-api.datagen')
-			vmArg("-Dfabric-api.datagen.output-dir=${file('src/main/generated')}")
-			vmArg("-Dfabric-api.datagen.modid=${MOD_ID}")
-		}
 	}
 
 	mods {
 		"${MOD_ID}" {
 			sourceSet sourceSets.main
-			sourceSet sourceSets.datagen
 			sourceSet project(':Common').sourceSets.main
 		}
 	}
-
-	createRemapConfigurations(sourceSets.datagen)
 }
 
 repositories {
@@ -124,14 +104,6 @@ dependencies {
 	// runtimeOnly 'io.github.douira:glsl-transformer:1.0.1'
 	// runtimeOnly 'org.anarres:jcpp:1.4.14'
 
-	// Data Gen
-	modDatagenImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
-	modDatagenImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
-	modDatagenImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
-	datagenImplementation sourceSets.main.output
-	datagenImplementation project(':Common')
-	datagenImplementation 'com.google.code.findbugs:jsr305:3.0.2'
-
 	// JEI
 	if(rootProject.hasProperty('JEI_VERSION')) {
 		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
@@ -147,7 +119,6 @@ dependencies {
 	// Lazy DFU
 	if(rootProject.hasProperty('FABRIC_LAZY_DFU_VERSION')) {
 		modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
-		modDatagenRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
 	}
 
 	// ModMenu
@@ -219,6 +190,8 @@ publishing {
 			groupId = "${project.group}"
 			artifactId = "${project.archivesBaseName}"
 			version = "${project.version}"
+
+			loom.disableDeprecatedPomGeneration(it)
 
 			artifact jar
 			artifact sourcesJar

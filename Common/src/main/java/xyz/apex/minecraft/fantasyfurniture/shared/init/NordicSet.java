@@ -4,8 +4,7 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
-import xyz.apex.minecraft.apexcore.shared.registry.block.BlockRegistryEntry;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
@@ -13,16 +12,12 @@ public interface NordicSet
 {
     String NAME = "nordic";
 
-    BlockRegistryEntry<Block> WOOL = FurnitureSets.wool(NAME).register();
-    BlockRegistryEntry<CarpetBlock> CARPET = FurnitureSets.carpet(NAME).register();
-    BlockRegistryEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(NAME).register();
-    BlockRegistryEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(NAME).register();
+    BlockEntry<Block> WOOL = FurnitureSets.wool(NAME).register();
+    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(NAME).register();
+    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(NAME).item(ItemNameBlockItem::new).register();
+    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(NAME).register();
 
     static void bootstrap()
     {
-        FantasyFurniture.Registries.ITEMS.blockBuilder(WOOL).register();
-        FantasyFurniture.Registries.ITEMS.blockBuilder(CARPET).register();
-        FantasyFurniture.Registries.ITEMS.blockBuilder(WALL_LIGHT, ItemNameBlockItem::new).register();
-        FantasyFurniture.Registries.ITEMS.blockBuilder(FLOOR_LIGHT).register();
     }
 }

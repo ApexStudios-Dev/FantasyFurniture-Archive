@@ -1,13 +1,23 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
-import net.minecraft.data.loot.packs.VanillaBlockLoot;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 
+import xyz.apex.minecraft.apexcore.shared.platform.Platform;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
-public final class BlockLootTableGenerator extends VanillaBlockLoot
+import java.util.Set;
+
+public final class BlockLootTableGenerator extends BlockLootSubProvider
 {
+    BlockLootTableGenerator()
+    {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    }
+
     @Override
     protected void generate()
     {
@@ -20,6 +30,6 @@ public final class BlockLootTableGenerator extends VanillaBlockLoot
     @Override
     protected Iterable<Block> getKnownBlocks()
     {
-        return FantasyFurniture.Registries.BLOCKS.values();
+        return Platform.INSTANCE.registries().getAllKnown(Registries.BLOCK, FantasyFurniture.ID);
     }
 }

@@ -1,16 +1,16 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
 
 import java.util.function.Consumer;
 
 public final class RecipeGenerator extends RecipeProvider
 {
-    RecipeGenerator(GatherDataEvent event)
+    RecipeGenerator(PackOutput packOutput)
     {
-        super(event.getGenerator().getPackOutput());
+        super(packOutput);
     }
 
     @Override

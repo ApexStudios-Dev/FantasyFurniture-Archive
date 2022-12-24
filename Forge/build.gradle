@@ -127,10 +127,12 @@ minecraft {
 
 mixin {
 	add sourceSets.main, "${MOD_ID}.refmap.json"
-	add project(':Common').sourceSets.main, "${MOD_ID}-common.refmap.json"
-
 	config "${MOD_ID}.mixins.json"
+
+	add project(':Common').sourceSets.main, "${MOD_ID}-common.refmap.json"
 	config "${MOD_ID}-common.mixins.json"
+
+	debug.export = true
 }
 
 repositories {
