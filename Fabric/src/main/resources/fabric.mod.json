@@ -56,7 +56,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric" ],
-        "client": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabricClient" ],
+        "client": [ ],
         "server": [ ],
         "fabric-datagen": [ "${APEX_GROUP}.${MOD_ID}.fabric.data.DataGenerators" ]
     },

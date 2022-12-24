@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.init;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +40,7 @@ public interface FurnitureSets
         return BlockBuilders
                 .builder(FantasyFurniture.ID, "%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(properties, flameParticle))
                 .initialProperties(Properties.BLOCK_TORCH)
+                .renderType(() -> RenderType::cutout)
         ;
     }
 
