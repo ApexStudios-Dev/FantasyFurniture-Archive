@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 
+import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilder;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilders;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
@@ -49,16 +50,16 @@ public interface FurnitureSets
         return wallLight(furnitureSet, () -> ParticleTypes.FLAME);
     }
 
-    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, Supplier<ParticleOptions> flameParticle)
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle)
     {
         return BlockBuilders
-                .builder(FantasyFurniture.ID, "%s/floor_light".formatted(furnitureSet), properties -> new FloorLightBlock(properties, flameParticle))
+                .multiBlock(FantasyFurniture.ID, "%s/floor_light".formatted(furnitureSet), multiBlockType, (multiBlockType1, properties) -> new FloorLightBlock(multiBlockType1, properties, flameParticle))
                 .initialProperties(Properties.BLOCK_TORCH)
         ;
     }
 
-    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet)
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType)
     {
-        return floorLight(furnitureSet, () -> ParticleTypes.FLAME);
+        return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME);
     }
 }
