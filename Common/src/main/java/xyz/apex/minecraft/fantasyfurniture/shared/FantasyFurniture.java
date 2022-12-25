@@ -10,6 +10,7 @@ public interface FantasyFurniture
     {
         // DefaultedItemProperties.register(ID, properties -> properties.tab(CreativeModeTab.TAB_MISC));
 
+        AllVoxelShapes.bootstrap();
         NordicSet.bootstrap();
         DunmerSet.bootstrap();
         VenthyrSet.bootstrap();
