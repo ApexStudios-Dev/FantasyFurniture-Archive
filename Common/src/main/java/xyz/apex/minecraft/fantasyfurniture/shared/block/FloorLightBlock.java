@@ -53,12 +53,41 @@ public class FloorLightBlock extends TorchBlock implements MultiBlock
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
     {
+        if(multiBlockType.isOrigin(blockState)) return;
+
         var x = (double) pos.getX() + .5D;
-        var y = (double) pos.getY() + .7D;
+        var y = (double) pos.getY() + .85D;
         var z = (double) pos.getZ() + .5D;
 
-        level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-        level.addParticle(getFlameParticle(), x, y, z, 0D, 0D, 0D);
+        var flameParticle = getFlameParticle();
+        var offset = .25D;
+
+        for(var i = 0; i < 4; i++)
+        {
+            // offset x for odds only, negate if index is 1
+            // offset z for events only, negate if index is 2
+            var xOff = (i % 2 == 1) ? (i == 1) ? -offset : offset : 0D;
+            var zOff = (i % 2 == 0) ? (i == 2) ? -offset : offset : 0D;
+
+            level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
+        }
+
+        /*// back
+        level.addParticle(ParticleTypes.SMOKE, x, y, z - .25D, 0D, 0D, 0D);
+        level.addParticle(flameParticle, x, y, z - .25D, 0D, 0D, 0D);
+
+        // front
+        level.addParticle(ParticleTypes.SMOKE, x, y, z + .25D, 0D, 0D, 0D);
+        level.addParticle(flameParticle, x, y, z + .25D, 0D, 0D, 0D);
+
+        // left
+        level.addParticle(ParticleTypes.SMOKE, x - .25D, y, z, 0D, 0D, 0D);
+        level.addParticle(flameParticle, x - .25D, y, z, 0D, 0D, 0D);
+
+        // right
+        level.addParticle(ParticleTypes.SMOKE, x + .25D, y, z, 0D, 0D, 0D);
+        level.addParticle(flameParticle, x + .25D, y, z, 0D, 0D, 0D);*/
     }
 
     @Override
