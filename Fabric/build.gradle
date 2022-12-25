@@ -29,13 +29,14 @@ loom {
 			client()
 			ideConfigGenerated(true)
 			runDir('run')
-			vmArgs '-Dmixin.debug.export=true'
+			vmArgs('-Dmixin.debug.export=true', '-Dfabric.log.level=debug')
 		}
 
 		server {
 			server()
 			ideConfigGenerated(true)
 			runDir('run')
+			vmArgs('-Dfabric.log.level=debug')
 		}
 	}
 
