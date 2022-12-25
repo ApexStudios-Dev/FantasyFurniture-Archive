@@ -26,6 +26,9 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NordicSet.CARPET);
         blockItem(NordicSet.WALL_LIGHT);
         blockItem(NordicSet.FLOOR_LIGHT);
+        blockItem(NordicSet.TABLE_LARGE);
+        blockItem(NordicSet.TABLE_SMALL);
+        blockItem(NordicSet.TABLE_WIDE);
     }
 
     private ItemModelBuilder blockItem(RegistryEntry<?> item, ModelFile blockModel)

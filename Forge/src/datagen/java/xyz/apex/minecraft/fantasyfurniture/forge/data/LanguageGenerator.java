@@ -20,5 +20,8 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.CARPET, "Nordic Carpet");
         addBlock(NordicSet.WALL_LIGHT, "Nordic Wall Light");
         addBlock(NordicSet.FLOOR_LIGHT, "Nordic Floor Light");
+        addBlock(NordicSet.TABLE_LARGE, "Nordic Table Large");
+        addBlock(NordicSet.TABLE_SMALL, "Nordic Table Small");
+        addBlock(NordicSet.TABLE_WIDE, "Nordic Table Wide");
     }
 }

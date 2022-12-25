@@ -25,6 +25,9 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(NordicSet.CARPET.get());
         dropSelf(NordicSet.WALL_LIGHT.get());
         dropSelf(NordicSet.FLOOR_LIGHT.get());
+        dropSelf(NordicSet.TABLE_LARGE.get());
+        dropSelf(NordicSet.TABLE_WIDE.get());
+        dropSelf(NordicSet.TABLE_SMALL.get());
     }
 
     @Override

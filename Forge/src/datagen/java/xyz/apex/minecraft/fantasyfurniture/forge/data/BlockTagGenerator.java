@@ -31,6 +31,11 @@ public final class BlockTagGenerator extends BlockTagsProvider
     {
         tag(Tags.Blocks.Vanilla.WOOL, NordicSet.WOOL);
         tag(Tags.Blocks.Vanilla.WOOL_CARPETS, NordicSet.CARPET);
+
+        // multi-blocks have restricted movement
+        tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
+                NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE
+        );
     }
 
     private void tag(TagKey<Block> tag, @Nullable Object... values)

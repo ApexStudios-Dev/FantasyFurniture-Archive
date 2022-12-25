@@ -55,6 +55,34 @@ public interface AllVoxelShapes
                 box(7D, 16.75D, 9D, 9D, 20.75, 13D)
         );
 
+        VoxelShape TABLE_LARGE = shape(
+                box(12D, 0D, 2D, 14D, 13D, 4D),
+                box(-14D, 0D, 2D, -12D, 13D, 4D),
+                box(-14D, 0D, 28D, -12D, 13D, 30D),
+                box(12D, 0D, 28D, 14D, 13D, 30D),
+                box(-16D, 13D, 0D, 16D, 16D, 32D)
+        );
+
+        VoxelShape TABLE_SMALL = shape(
+                box(1D, 0D, 1D, 3D, 13D, 3D),
+                box(1D, 0D, 13D, 3D, 13D, 15D),
+                box(13D, 0D, 13D, 15D, 13D, 15D),
+                box(13D, 0D, 1D, 15D, 13D, 3D),
+                box(0D, 13D, 0D, 16D, 16D, 16D)
+        );
+
+        VoxelShape TABLE_WIDE = shape(
+                box(13D, 0D, 0D, 15D, 9D, 2D),
+                box(13D, 7D, 1D, 15D, 13D, 3D),
+                box(13D, 7D, 13D, 15D, 13D, 15D),
+                box(-15D, 7D, 13D, -13D, 13D, 15D),
+                box(-15D, 0D, 0D, -13D, 9D, 2D),
+                box(-15D, 0D, 14D, -13D, 9D, 16D),
+                box(13D, 0D, 14D, 15D, 9D, 16D),
+                box(-16D, 13D, 0D, 16D, 16D, 16D),
+                box(-15D, 7D, 1D, -13D, 13D, 3D)
+        );
+
         private static void bootstrap() {}
     }
 

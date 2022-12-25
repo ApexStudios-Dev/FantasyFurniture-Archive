@@ -1,16 +1,22 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 
+import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.TableMultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
@@ -41,12 +47,40 @@ public final class BlockStateGenerator extends BlockStateProvider
         ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
-                .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
                         .translation(0F, -2.75F, 0F)
                         .scale(.5F, .5F, .5F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_large"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -3.5F, 0F)
+                        .scale(.35F, .35F, .35F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_small"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .scale(.625F, .625F, .625F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_wide"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
                     .end()
                 .end()
         ;
@@ -61,6 +95,21 @@ public final class BlockStateGenerator extends BlockStateProvider
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
         floorLight(NordicSet.FLOOR_LIGHT);
+        table(NordicSet.TABLE_LARGE, true);
+        table(NordicSet.TABLE_SMALL, false);
+        table(NordicSet.TABLE_WIDE, true);
+    }
+
+    @SuppressWarnings("SuspiciousToArrayCall")
+    private Property<?>[] gatherIgnoredProperties(RegistryEntry<? extends Block> entry)
+    {
+        var block = entry.get();
+        var properties = Lists.newArrayList();
+
+        if(block instanceof MultiBlock multiBlock) properties.add(multiBlock.getMultiBlockType().getBlockProperty());
+        if(block instanceof SimpleWaterloggedBlock) properties.add(BlockStateProperties.WATERLOGGED);
+
+        return properties.toArray(Property<?>[]::new);
     }
 
     private void wallLight(RegistryEntry<? extends Block> entry)
@@ -78,10 +127,24 @@ public final class BlockStateGenerator extends BlockStateProvider
         getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
     }
 
-    private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models, Property<?>... ignoredProperties)
+    private void table(RegistryEntry<? extends Block> entry, boolean withFacing)
+    {
+        if(withFacing)
+        {
+            complexBlock(entry, (blockState, model) -> ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(TableMultiBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(model)
+                    .build()
+            );
+        }
+        else getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
+    }
+
+    private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)
     {
         var modelFile = existingModel(entry);
-        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> models.apply(blockState, modelFile), ignoredProperties);
+        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> models.apply(blockState, modelFile), gatherIgnoredProperties(entry));
     }
 
     private BlockModelBuilder template(ResourceLocation modelPath)

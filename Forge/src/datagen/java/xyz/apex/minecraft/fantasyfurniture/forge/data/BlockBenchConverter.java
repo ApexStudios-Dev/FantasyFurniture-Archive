@@ -8,6 +8,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelConverter;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
 public final class BlockBenchConverter extends BlockBenchModelConverter
 {
@@ -19,8 +20,16 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
     @Override
     protected void convertModels()
     {
-        convertWallLight("nordic");
-        convertFloorLight("nordic");
+        convertFurnitureSet(NordicSet.NAME);
+    }
+
+    private void convertFurnitureSet(String furnitureSet)
+    {
+        convertWallLight(furnitureSet);
+        convertFloorLight(furnitureSet);
+        convertTable(furnitureSet, "small");
+        convertTable(furnitureSet, "large");
+        convertTable(furnitureSet, "wide");
     }
 
     private BlockModelBuilder convertWallLight(String furnitureSet)
@@ -31,6 +40,11 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
     private BlockModelBuilder convertFloorLight(String furnitureSet)
     {
         return convertGeneric(furnitureSet, "floor_light");
+    }
+
+    private BlockModelBuilder convertTable(String furnitureSet, String type)
+    {
+        return convertGeneric(furnitureSet, "table_%s".formatted(type));
     }
 
     private BlockModelBuilder convertGeneric(String furnitureSet, String blockType)
