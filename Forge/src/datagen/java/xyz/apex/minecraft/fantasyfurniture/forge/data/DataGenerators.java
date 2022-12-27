@@ -27,6 +27,7 @@ public final class DataGenerators
 
         var blockTags = generator.addProvider(server, (DataProvider.Factory<BlockTagGenerator>) output -> new BlockTagGenerator(event, output));
         generator.addProvider(server, (DataProvider.Factory<ItemTagGenerator>) output -> new ItemTagGenerator(event, output, blockTags));
+        generator.addProvider(server, (DataProvider.Factory<EntityTypeTagGenerator>) output -> new EntityTypeTagGenerator(event, output));
 
         generator.addProvider(server, (DataProvider.Factory<LootTableGenerator>) LootTableGenerator::new);
         generator.addProvider(server, (DataProvider.Factory<RecipeGenerator>) RecipeGenerator::new);
