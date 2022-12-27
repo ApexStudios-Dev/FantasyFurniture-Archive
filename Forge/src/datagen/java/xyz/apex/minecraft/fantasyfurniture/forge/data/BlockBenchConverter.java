@@ -30,6 +30,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertTable(furnitureSet, "small");
         convertTable(furnitureSet, "large");
         convertTable(furnitureSet, "wide");
+        convertBench(furnitureSet);
     }
 
     private BlockModelBuilder convertWallLight(String furnitureSet)
@@ -45,6 +46,11 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
     private BlockModelBuilder convertTable(String furnitureSet, String type)
     {
         return convertGeneric(furnitureSet, "table_%s".formatted(type));
+    }
+
+    private BlockModelBuilder convertBench(String furnitureSet)
+    {
+        return convertGeneric(furnitureSet, "bench");
     }
 
     private BlockModelBuilder convertGeneric(String furnitureSet, String blockType)

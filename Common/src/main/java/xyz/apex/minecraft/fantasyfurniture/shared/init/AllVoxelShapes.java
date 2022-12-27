@@ -7,6 +7,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 
 public interface AllVoxelShapes
 {
@@ -86,6 +87,20 @@ public interface AllVoxelShapes
                 box(-15D, 7D, 1D, -13D, 13D, 3D)
         );
 
+        VoxelShape BENCH = shape(
+                box(12D, 0D, 2D, 14D, 3D, 4D),
+                box(-14D, 0D, 2D, -12D, 3D, 4D),
+                box(-14D, 0D, 12D, -12D, 3D, 14D),
+                box(12D, 0D, 12D, 14D, 3D, 14D),
+                box(12D, 3D, 11.5D, 14D, 5D, 13.5D),
+                box(12D, 3D, 2.5D, 14D, 5D, 4.5D),
+                box(-14D, 3D, 2.5D, -12D, 5D, 4.5D),
+                box(-14D, 3D, 11.5D, -12D, 5D, 13.5D),
+                box(-13.5D, 3.5D, 4.5D, -12.5D, 4.5D, 11.5D),
+                box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D),
+                box(-15D, 5D, 2D, 15D, 7D, 14D)
+        );
+
         private static void bootstrap() {}
     }
 
@@ -142,6 +157,20 @@ public interface AllVoxelShapes
         }
 
         if(index == 2 || index == 3) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+
+        return shape;
+    }
+
+    static VoxelShape getBenchShape(VoxelShape current, SimpleSeatBlock.WithMultiBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var other = facing.getClockWise();
+            shape = shape.move(other.getStepX(), 0D, other.getStepZ());
+        }
 
         return shape;
     }

@@ -15,6 +15,8 @@ import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilders;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.SeatBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
 import java.util.function.Supplier;
@@ -114,6 +116,34 @@ public interface FurnitureSets
         return table(furnitureSet, "large", MB_TABLE_LARGE)
                 .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
         ;
+    }
+    // endregion
+
+    // region: Seat
+    private static <T extends Block & SeatBlock> BlockBuilder<T> applySeatProperties(BlockBuilder<T> blockBuilder)
+    {
+        return blockBuilder.initialProperties(Properties.BLOCK_PLANKS);
+    }
+
+    private static BlockBuilder<SimpleSeatBlock> seat(String furnitureSet, String seatType)
+    {
+        return BlockBuilders
+                .builder(FantasyFurniture.ID, "%s/%s".formatted(furnitureSet, seatType), SimpleSeatBlock::new)
+                .transform(FurnitureSets::applySeatProperties)
+        ;
+    }
+
+    private static BlockBuilder<SimpleSeatBlock.WithMultiBlock> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType)
+    {
+        return BlockBuilders
+                .multiBlock(FantasyFurniture.ID, "%s/%s".formatted(furnitureSet, seatType), multiBlockType, SimpleSeatBlock.WithMultiBlock::new)
+                .transform(FurnitureSets::applySeatProperties)
+        ;
+    }
+
+    static BlockBuilder<SimpleSeatBlock.WithMultiBlock> bench(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return seat(furnitureSet, "bench", MB_TABLE_WIDE).hitbox(baseShape, AllVoxelShapes::getBenchShape);
     }
     // endregion
 }

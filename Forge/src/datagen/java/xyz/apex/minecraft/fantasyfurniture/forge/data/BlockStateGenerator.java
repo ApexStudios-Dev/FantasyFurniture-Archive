@@ -17,6 +17,7 @@ import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
@@ -84,6 +85,16 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/bench"))
+                /*.transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()*/
+        ;
     }
 
     @Override
@@ -98,6 +109,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         table(NordicSet.TABLE_LARGE, true);
         table(NordicSet.TABLE_SMALL, false);
         table(NordicSet.TABLE_WIDE, true);
+        bench(NordicSet.BENCH);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -139,6 +151,16 @@ public final class BlockStateGenerator extends BlockStateProvider
             );
         }
         else getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
+    }
+
+    private void bench(RegistryEntry<? extends Block> entry)
+    {
+        complexBlock(entry, (blockState, model) -> ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(SimpleSeatBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(model)
+                    .build()
+            );
     }
 
     private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)

@@ -17,7 +17,10 @@ public final class LootTableGenerator extends LootTableProvider
 {
     LootTableGenerator(PackOutput packOutput)
     {
-        super(packOutput, ImmutableSet.of(), ImmutableList.of(new SubProviderEntry(BlockLootTableGenerator::new, LootContextParamSets.BLOCK)));
+        super(packOutput, ImmutableSet.of(), ImmutableList.of(
+                new SubProviderEntry(BlockLootTableGenerator::new, LootContextParamSets.BLOCK),
+                new SubProviderEntry(EntityLootTableGenerator::new, LootContextParamSets.ENTITY)
+        ));
     }
 
     @Override

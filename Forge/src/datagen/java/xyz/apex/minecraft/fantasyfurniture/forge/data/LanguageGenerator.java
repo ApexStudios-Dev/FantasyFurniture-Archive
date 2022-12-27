@@ -23,5 +23,6 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.TABLE_LARGE, "Nordic Table Large");
         addBlock(NordicSet.TABLE_SMALL, "Nordic Table Small");
         addBlock(NordicSet.TABLE_WIDE, "Nordic Table Wide");
+        addBlock(NordicSet.BENCH, "Nordic Bench");
     }
 }
