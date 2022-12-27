@@ -14,9 +14,9 @@ import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
+import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.TableMultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
@@ -133,7 +133,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         {
             complexBlock(entry, (blockState, model) -> ConfiguredModel
                     .builder()
-                    .rotationY((int) blockState.getValue(TableMultiBlock.FACING).getOpposite().toYRot() % 360)
+                    .rotationY((int) blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING).getOpposite().toYRot() % 360)
                     .modelFile(model)
                     .build()
             );

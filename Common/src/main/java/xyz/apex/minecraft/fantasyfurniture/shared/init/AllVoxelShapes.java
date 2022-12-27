@@ -1,9 +1,12 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.init;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.util.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
 
 public interface AllVoxelShapes
 {
@@ -104,6 +107,43 @@ public interface AllVoxelShapes
         Nordic.bootstrap();
         Royal.bootstrap();
         Venthyr.bootstrap();
+    }
+
+    static VoxelShape getFloorLightShape(VoxelShape current, FloorLightBlock block, BlockState blockState)
+    {
+        if(block.getMultiBlockType().isOrigin(blockState)) return current;
+        return current.move(0D, -1D, 0D);
+    }
+
+    static VoxelShape getTableWideShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
+    }
+
+    static VoxelShape getTableLargeShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+        var index = block.getMultiBlockType().getIndex(blockState);
+
+        if(index == 1 || index == 3)
+        {
+            var offset = facing.getClockWise();
+            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        if(index == 2 || index == 3) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+
+        return shape;
     }
 
     private static VoxelShape shape(VoxelShape... shapes)

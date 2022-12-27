@@ -5,16 +5,16 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockTypes;
+import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilder;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilders;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.TableMultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
 import java.util.function.Supplier;
@@ -57,24 +57,25 @@ public interface FurnitureSets
     // endregion
 
     // region: Floor
-    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle)
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
     {
         return BlockBuilders
                 .multiBlock(FantasyFurniture.ID, "%s/floor_light".formatted(furnitureSet), multiBlockType, (multiBlockType1, properties) -> new FloorLightBlock(multiBlockType1, properties, flameParticle))
                 .initialProperties(Properties.BLOCK_TORCH)
+                .hitbox(baseShape, AllVoxelShapes::getFloorLightShape)
         ;
     }
 
-    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType)
+    static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<VoxelShape> baseShape)
     {
-        return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME);
+        return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
     }
     // endregion
     // endregion
 
     // region: Table
-    MultiBlockType MB_TABLE_WIDE = MultiBlockTypes.MB_1x1x2.clone().rotateLocalSpaceForFacing(TableMultiBlock.FACING).build();
-    MultiBlockType MB_TABLE_LARGE = MultiBlockTypes.MB_2x1x2.clone().rotateLocalSpaceForFacing(TableMultiBlock.FACING).build();
+    MultiBlockType MB_TABLE_WIDE = MultiBlockTypes.MB_1x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
+    MultiBlockType MB_TABLE_LARGE = MultiBlockTypes.MB_2x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
 
     private static <T extends Block> BlockBuilder<T> applyTableProperties(BlockBuilder<T> builder)
     {
@@ -85,30 +86,34 @@ public interface FurnitureSets
         ;
     }
 
-    static BlockBuilder<SimpleBlock> tableSmall(String furnitureSet)
+    static BlockBuilder<Block> tableSmall(String furnitureSet)
     {
         return BlockBuilders
-                .builder(FantasyFurniture.ID, "%s/table_small".formatted(furnitureSet), SimpleBlock::new)
+                .builder(FantasyFurniture.ID, "%s/table_small".formatted(furnitureSet))
                 .transform(FurnitureSets::applyTableProperties)
         ;
     }
 
-    private static BlockBuilder<TableMultiBlock> table(String furnitureSet, String type, MultiBlockType multiBlockType)
+    private static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing> table(String furnitureSet, String type, MultiBlockType multiBlockType)
     {
         return BlockBuilders
-                .multiBlock(FantasyFurniture.ID, "%s/table_%s".formatted(furnitureSet, type), multiBlockType, TableMultiBlock::new)
+                .multiBlock(FantasyFurniture.ID, "%s/table_%s".formatted(furnitureSet, type), multiBlockType, SimpleMultiBlock.WithHorizontalFacing::new)
                 .transform(FurnitureSets::applyTableProperties)
         ;
     }
 
-    static BlockBuilder<TableMultiBlock> tableWide(String furnitureSet)
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing> tableWide(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "wide", MB_TABLE_WIDE);
+        return table(furnitureSet, "wide", MB_TABLE_WIDE)
+                .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
+        ;
     }
 
-    static BlockBuilder<TableMultiBlock> tableLarge(String furnitureSet)
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "large", MB_TABLE_LARGE);
+        return table(furnitureSet, "large", MB_TABLE_LARGE)
+                .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
+        ;
     }
     // endregion
 }
