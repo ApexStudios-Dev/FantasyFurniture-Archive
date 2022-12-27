@@ -87,13 +87,13 @@ public final class BlockStateGenerator extends BlockStateProvider
         ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/bench"))
-                /*.transforms()
+                .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
                         .translation(-2.5F, -2.25F, 0F)
                         .scale(.45F, .45F, .45F)
                     .end()
-                .end()*/
+                .end()
         ;
     }
 
