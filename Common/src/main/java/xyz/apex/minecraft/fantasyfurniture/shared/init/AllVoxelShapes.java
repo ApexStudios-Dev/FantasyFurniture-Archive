@@ -116,6 +116,8 @@ public interface AllVoxelShapes
                 box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
         );
 
+        VoxelShape CHANDELIER = box(1D, 0D, 1D, 15, 16D, 15D);
+
         private static void bootstrap() {}
     }
 

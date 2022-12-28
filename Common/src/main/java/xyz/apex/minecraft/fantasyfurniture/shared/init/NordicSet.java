@@ -8,6 +8,7 @@ import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockTypes;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.LightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
@@ -24,6 +25,7 @@ public interface NordicSet
     BlockEntry<SimpleMultiBlock.WithHorizontalFacing> TABLE_WIDE = FurnitureSets.tableWide(NAME, () -> AllVoxelShapes.Nordic.TABLE_WIDE).register();
     BlockEntry<SimpleSeatBlock.WithMultiBlock> BENCH = FurnitureSets.bench(NAME, () -> AllVoxelShapes.Nordic.BENCH).register();
     BlockEntry<SimpleSeatBlock.WithMultiBlock.AtOriginOnly> CHAIR = FurnitureSets.chair(NAME, () -> AllVoxelShapes.Nordic.CHAIR).register();
+    BlockEntry<LightBlock> CHANDELIER = FurnitureSets.chandelier(NAME, () -> AllVoxelShapes.Nordic.CHANDELIER).register();
 
     static void bootstrap()
     {
@@ -39,6 +41,7 @@ public interface NordicSet
                     output.accept(TABLE_WIDE);
                     output.accept(BENCH);
                     output.accept(CHAIR);
+                    output.accept(CHANDELIER);
                 })
         );
     }

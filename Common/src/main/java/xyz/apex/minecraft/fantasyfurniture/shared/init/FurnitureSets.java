@@ -18,10 +18,7 @@ import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilder;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.BlockBuilders;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SeatBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.*;
 
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -87,6 +84,22 @@ public interface FurnitureSets
     static BlockBuilder<FloorLightBlock> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<VoxelShape> baseShape)
     {
         return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
+    }
+    // endregion
+
+    // region: Chandelier
+    static BlockBuilder<LightBlock> chandelier(String furnitureSet, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
+    {
+        return BlockBuilders
+                .builder(FantasyFurniture.ID, "%s/chandelier".formatted(furnitureSet), properties -> new LightBlock(flameParticle, properties))
+                .initialProperties(Properties.BLOCK_TORCH)
+                .hitbox(baseShape)
+        ;
+    }
+
+    static BlockBuilder<LightBlock> chandelier(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return chandelier(furnitureSet, () -> ParticleTypes.FLAME, baseShape);
     }
     // endregion
     // endregion

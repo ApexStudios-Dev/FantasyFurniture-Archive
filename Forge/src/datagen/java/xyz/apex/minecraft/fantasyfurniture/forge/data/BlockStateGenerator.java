@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -107,6 +108,16 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/chandelier"))
+                /*.transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -1.5F, 0F)
+                        .scale(.5F, .5F, .5F)
+                    .end()
+                .end()*/
+        ;
     }
 
     @Override
@@ -117,12 +128,13 @@ public final class BlockStateGenerator extends BlockStateProvider
         simpleBlock(NordicSet.WOOL);
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
-        floorLight(NordicSet.FLOOR_LIGHT);
+        templatedBlock(NordicSet.FLOOR_LIGHT);
         table(NordicSet.TABLE_LARGE, true);
         table(NordicSet.TABLE_SMALL, false);
         table(NordicSet.TABLE_WIDE, true);
-        bench(NordicSet.BENCH);
-        chair(NordicSet.CHAIR);
+        facingBlock(NordicSet.BENCH, SimpleSeatBlock.FACING);
+        facingBlock(NordicSet.CHAIR, SimpleSeatBlock.FACING);
+        templatedBlock(NordicSet.CHANDELIER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -147,43 +159,25 @@ public final class BlockStateGenerator extends BlockStateProvider
         );
     }
 
-    private void floorLight(RegistryEntry<? extends Block> entry)
+    private void templatedBlock(RegistryEntry<? extends Block> entry)
     {
-        getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
+        simpleBlock(entry, existingModel(entry));
     }
 
     private void table(RegistryEntry<? extends Block> entry, boolean withFacing)
     {
-        if(withFacing)
-        {
-            complexBlock(entry, (blockState, model) -> ConfiguredModel
-                    .builder()
-                    .rotationY((int) blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING).getOpposite().toYRot() % 360)
-                    .modelFile(model)
-                    .build()
-            );
-        }
+        if(withFacing) facingBlock(entry, SimpleMultiBlock.WithHorizontalFacing.FACING);
         else getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
     }
 
-    private void bench(RegistryEntry<? extends Block> entry)
+    private void facingBlock(RegistryEntry<? extends Block> entry, DirectionProperty facingProperty)
     {
         complexBlock(entry, (blockState, model) -> ConfiguredModel
-                    .builder()
-                    .rotationY((int) blockState.getValue(SimpleSeatBlock.FACING).getOpposite().toYRot() % 360)
-                    .modelFile(model)
-                    .build()
-            );
-    }
-
-    private void chair(RegistryEntry<? extends Block> entry)
-    {
-        complexBlock(entry, (blockState, model) -> ConfiguredModel
-                    .builder()
-                    .rotationY((int) blockState.getValue(SimpleSeatBlock.FACING).getOpposite().toYRot() % 360)
-                    .modelFile(model)
-                    .build()
-            );
+                .builder()
+                .rotationY((int) blockState.getValue(facingProperty).getOpposite().toYRot() % 360)
+                .modelFile(model)
+                .build()
+        );
     }
 
     private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)
