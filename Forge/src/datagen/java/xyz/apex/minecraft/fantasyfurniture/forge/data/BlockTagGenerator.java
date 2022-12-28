@@ -35,7 +35,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         // multi-blocks have restricted movement
         tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
                 NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
-                NordicSet.BENCH
+                NordicSet.BENCH, NordicSet.CHAIR
         );
     }
 

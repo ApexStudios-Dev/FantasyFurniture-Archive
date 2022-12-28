@@ -41,7 +41,7 @@ public class SimpleSeatBlock extends Block implements SeatBlock
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
     {
-        return useSeat(level, pos, player);
+        return useSeat(blockState, level, pos, player);
     }
 
     @Nullable
@@ -57,7 +57,7 @@ public class SimpleSeatBlock extends Block implements SeatBlock
         builder.add(FACING);
     }
 
-    public static class WithMultiBlock extends SimpleMultiBlock.WithHorizontalFacing implements SeatBlock
+    public static class WithMultiBlock extends SimpleMultiBlock.WithHorizontalFacing implements SeatBlock.MultiBlock
     {
         public WithMultiBlock(MultiBlockType multiBlockType, Properties properties)
         {
@@ -73,7 +73,21 @@ public class SimpleSeatBlock extends Block implements SeatBlock
         @Override
         public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result)
         {
-            return useSeat(level, pos, player);
+            return useSeat(blockState, level, pos, player);
+        }
+
+        public static class AtOriginOnly extends WithMultiBlock
+        {
+            public AtOriginOnly(MultiBlockType multiBlockType, Properties properties)
+            {
+                super(multiBlockType, properties);
+            }
+
+            @Override
+            public boolean sitAtOriginOnly()
+            {
+                return true;
+            }
         }
     }
 }

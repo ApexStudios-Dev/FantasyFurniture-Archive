@@ -3,13 +3,13 @@ package xyz.apex.minecraft.fantasyfurniture.shared.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
@@ -27,32 +27,30 @@ public interface SeatBlock
 
     default void seatEntityAfterFallOn(BlockGetter level, Entity entity, BiConsumer<BlockGetter, Entity> superFallOn)
     {
+        if(entity instanceof Player || !FantasyFurniture.isEntityValidForSeat(entity)) return;
         var pos = entity.blockPosition();
-
-        if(entity instanceof Player || !(entity instanceof LivingEntity) || !FantasyFurniture.isEntityValidForSeat(entity) || isSeatOccupied(entity.level, pos))
-        {
-            if(entity.isSuppressingBounce())
-            {
-                superFallOn.accept(level, entity);
-                return;
-            }
-
-            var vec = entity.getDeltaMovement();
-
-            if(vec.y < 0D)
-            {
-                var d = entity instanceof LivingEntity ? 1D : .8D;
-                entity.setDeltaMovement(vec.x, -vec.y * (double) .66F * d, vec.z);
-            }
-            return;
-        }
-
-        if(!level.getBlockState(pos).is(asBlock())) return;
+        var block = asBlock();
+        var blockState = level.getBlockState(pos);
+        if(!blockState.is(block)) return;
+        if(block instanceof MultiBlock multi && multi.sitAtOriginOnly() && !multi.getMultiBlockType().isOrigin(blockState)) return;
         sitDown(entity.level, pos, entity);
     }
 
-    default InteractionResult useSeat(Level level, BlockPos pos, Player player)
+    default InteractionResult useSeat(BlockState blockState, Level level, BlockPos pos, Player player)
     {
+        if(asBlock() instanceof MultiBlock multi)
+        {
+            var multiBlockType = multi.getMultiBlockType();
+
+            if(multi.sitAtOriginOnly() && !multiBlockType.isOrigin(blockState))
+            {
+                var originPos = multiBlockType.getOriginPos(multi, blockState, pos);
+                var originBlockState = level.getBlockState(originPos);
+                if(!multi.isSameBlockTypeForMultiBlock(originBlockState)) return InteractionResult.PASS;
+                return multi.useSeat(originBlockState, level, originPos, player);
+            }
+        }
+
         if(player.isShiftKeyDown()) return InteractionResult.PASS;
 
         var seats = level.getEntitiesOfClass(Seat.class, new AABB(pos));
@@ -106,5 +104,13 @@ public interface SeatBlock
         level.addFreshEntity(seat);
         entity.startRiding(seat, false);
         if(entity instanceof TamableAnimal tamable) tamable.setInSittingPose(true);
+    }
+
+    interface MultiBlock extends SeatBlock, xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock
+    {
+        default boolean sitAtOriginOnly()
+        {
+            return false;
+        }
     }
 }

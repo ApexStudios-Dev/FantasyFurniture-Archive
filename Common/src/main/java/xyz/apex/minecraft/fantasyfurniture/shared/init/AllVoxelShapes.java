@@ -101,6 +101,21 @@ public interface AllVoxelShapes
                 box(-15D, 5D, 2D, 15D, 7D, 14D)
         );
 
+        VoxelShape CHAIR = shape(
+                box(2D, 0D, 2D, 4D, 4D, 4D),
+                box(2.5D, 4.5D, 4.5D, 3.5D, 5.5D, 11.5D),
+                box(12.5D, 4.5D, 4.5D, 13.5D, 5.5D, 11.5D),
+                box(12D, 0D, 2D, 14D, 4D, 4D),
+                box(2D, 0D, 12D, 4D, 4D, 14D),
+                box(2D, 7D, 2D, 14D, 9D, 14D),
+                box(2D, 9D, 13D, 14D, 25D, 14D),
+                box(12D, 0D, 12D, 14D, 4D, 14D),
+                box(2D, 4D, 11.5D, 4D, 7D, 13.5D),
+                box(12D, 4D, 11.5D, 14D, 7D, 13.5D),
+                box(2D, 4D, 2.5D, 4D, 7D, 4.5D),
+                box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
+        );
+
         private static void bootstrap() {}
     }
 
@@ -172,6 +187,14 @@ public interface AllVoxelShapes
             shape = shape.move(other.getStepX(), 0D, other.getStepZ());
         }
 
+        return shape;
+    }
+
+    static VoxelShape getChairShape(VoxelShape current, SimpleSeatBlock.WithMultiBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+        if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
         return shape;
     }
 

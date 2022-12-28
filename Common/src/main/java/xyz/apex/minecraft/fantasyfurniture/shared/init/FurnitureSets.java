@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockFactory;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockTypes;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
@@ -23,6 +24,12 @@ import java.util.function.Supplier;
 
 public interface FurnitureSets
 {
+    // region: MultiBlock Types
+    MultiBlockType MB_1x1x2_FACING = MultiBlockTypes.MB_1x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
+    MultiBlockType MB_2x1x2_FACING = MultiBlockTypes.MB_2x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
+    MultiBlockType MB_1x2x1_FACING = MultiBlockTypes.MB_1x2x1.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
+    // endregion
+
     static BlockBuilder<Block> wool(String furnitureSet)
     {
         return BlockBuilders
@@ -76,9 +83,6 @@ public interface FurnitureSets
     // endregion
 
     // region: Table
-    MultiBlockType MB_TABLE_WIDE = MultiBlockTypes.MB_1x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
-    MultiBlockType MB_TABLE_LARGE = MultiBlockTypes.MB_2x1x2.clone().rotateLocalSpaceForFacing(SimpleMultiBlock.WithHorizontalFacing.FACING).build();
-
     private static <T extends Block> BlockBuilder<T> applyTableProperties(BlockBuilder<T> builder)
     {
         return builder
@@ -106,14 +110,14 @@ public interface FurnitureSets
 
     static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing> tableWide(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "wide", MB_TABLE_WIDE)
+        return table(furnitureSet, "wide", MB_1x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
         ;
     }
 
     static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "large", MB_TABLE_LARGE)
+        return table(furnitureSet, "large", MB_2x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
         ;
     }
@@ -133,17 +137,27 @@ public interface FurnitureSets
         ;
     }
 
-    private static BlockBuilder<SimpleSeatBlock.WithMultiBlock> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType)
+    private static <T extends Block & SeatBlock.MultiBlock> BlockBuilder<T> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType, MultiBlockFactory<T> factory)
     {
         return BlockBuilders
-                .multiBlock(FantasyFurniture.ID, "%s/%s".formatted(furnitureSet, seatType), multiBlockType, SimpleSeatBlock.WithMultiBlock::new)
+                .multiBlock(FantasyFurniture.ID, "%s/%s".formatted(furnitureSet, seatType), multiBlockType, factory)
                 .transform(FurnitureSets::applySeatProperties)
         ;
     }
 
+    private static BlockBuilder<SimpleSeatBlock.WithMultiBlock> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType)
+    {
+        return seat(furnitureSet, seatType, multiBlockType, SimpleSeatBlock.WithMultiBlock::new);
+    }
+
     static BlockBuilder<SimpleSeatBlock.WithMultiBlock> bench(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return seat(furnitureSet, "bench", MB_TABLE_WIDE).hitbox(baseShape, AllVoxelShapes::getBenchShape);
+        return seat(furnitureSet, "bench", MB_1x1x2_FACING).hitbox(baseShape, AllVoxelShapes::getBenchShape);
+    }
+
+    static BlockBuilder<SimpleSeatBlock.WithMultiBlock.AtOriginOnly> chair(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return seat(furnitureSet, "chair", MB_1x2x1_FACING, SimpleSeatBlock.WithMultiBlock.AtOriginOnly::new).hitbox(baseShape, AllVoxelShapes::getChairShape);
     }
     // endregion
 }

@@ -95,6 +95,16 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/chair"))
+                /*.transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()*/
+        ;
     }
 
     @Override
@@ -110,6 +120,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         table(NordicSet.TABLE_SMALL, false);
         table(NordicSet.TABLE_WIDE, true);
         bench(NordicSet.BENCH);
+        chair(NordicSet.CHAIR);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -154,6 +165,16 @@ public final class BlockStateGenerator extends BlockStateProvider
     }
 
     private void bench(RegistryEntry<? extends Block> entry)
+    {
+        complexBlock(entry, (blockState, model) -> ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(SimpleSeatBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(model)
+                    .build()
+            );
+    }
+
+    private void chair(RegistryEntry<? extends Block> entry)
     {
         complexBlock(entry, (blockState, model) -> ConfiguredModel
                     .builder()
