@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
+import xyz.apex.minecraft.apexcore.shared.platform.Platform;
 import xyz.apex.minecraft.apexcore.shared.registry.builders.EntityBuilders;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.EntityEntry;
 import xyz.apex.minecraft.apexcore.shared.util.Tags;
@@ -42,8 +43,8 @@ public interface FantasyFurniture
 
     static boolean isEntityValidForSeat(Entity entity)
     {
-        // if(Platform.INSTANCE.isFakePlayer(entity)) return false; // disallow FakePlayers
-        // if(entity.getType().is(SEAT_BLACKLIST)) return false;
+        if(Platform.INSTANCE.isFakePlayer(entity)) return false; // disallow FakePlayers
+        if(entity.getType().is(SEAT_BLACKLIST)) return false;
         return entity instanceof LivingEntity;
     }
 }

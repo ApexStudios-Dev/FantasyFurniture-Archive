@@ -27,7 +27,7 @@ public final class EntityTypeTagGenerator extends EntityTypeTagsProvider
     @Override
     protected void addTags(HolderLookup.Provider pProvider)
     {
-        tag(FantasyFurniture.SEAT_BLACKLIST).add(EntityType.SHULKER, EntityType.PLAYER);
+        tag(FantasyFurniture.SEAT_BLACKLIST).add(EntityType.SHULKER);
     }
 
     private void tag(TagKey<EntityType<?>> tag, @Nullable Object... values)
