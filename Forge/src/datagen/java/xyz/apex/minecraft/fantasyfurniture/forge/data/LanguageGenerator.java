@@ -25,5 +25,11 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.TABLE_WIDE, "Nordic Table Wide");
         addBlock(NordicSet.BENCH, "Nordic Bench");
         addBlock(NordicSet.CHAIR, "Nordic Chair");
+        addCreativeModeTab(NordicSet.NAME, "Nordic");
+    }
+
+    private void addCreativeModeTab(String key, String name)
+    {
+        add("itemGroup.%s.%s".formatted(FantasyFurniture.ID, key), name);
     }
 }

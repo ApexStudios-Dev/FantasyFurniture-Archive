@@ -27,5 +27,19 @@ public interface NordicSet
 
     static void bootstrap()
     {
+        FurnitureSets.creativeModeTab(NAME, builder -> builder
+                .icon(WOOL::asStack)
+                .displayItems((featureFlagSet, output, b) -> {
+                    output.accept(WOOL);
+                    output.accept(CARPET);
+                    output.accept(WALL_LIGHT);
+                    output.accept(FLOOR_LIGHT);
+                    output.accept(TABLE_LARGE);
+                    output.accept(TABLE_SMALL);
+                    output.accept(TABLE_WIDE);
+                    output.accept(BENCH);
+                    output.accept(CHAIR);
+                })
+        );
     }
 }

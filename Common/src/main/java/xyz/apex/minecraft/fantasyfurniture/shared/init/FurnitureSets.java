@@ -3,10 +3,13 @@ package xyz.apex.minecraft.fantasyfurniture.shared.init;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.minecraft.apexcore.shared.event.events.CreativeModeTabEvent;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockFactory;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockTypes;
@@ -21,6 +24,7 @@ import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
 
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public interface FurnitureSets
 {
@@ -46,6 +50,11 @@ public interface FurnitureSets
                 .flammability(60, 20)
                 .initialProperties(Properties.BLOCK_CARPET)
         ;
+    }
+
+    static void creativeModeTab(String furnitureSet, UnaryOperator<CreativeModeTab.Builder> builderFunc)
+    {
+        CreativeModeTabEvent.REGISTER.addListener(register -> register.registerCreativeModeTab(furnitureSet, builder -> builderFunc.apply(builder.title(Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, furnitureSet))))));
     }
 
     // region: Light
@@ -112,6 +121,7 @@ public interface FurnitureSets
     {
         return table(furnitureSet, "wide", MB_1x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
+                .renderType(() -> RenderType::cutout)
         ;
     }
 
@@ -157,7 +167,10 @@ public interface FurnitureSets
 
     static BlockBuilder<SimpleSeatBlock.WithMultiBlock.AtOriginOnly> chair(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return seat(furnitureSet, "chair", MB_1x2x1_FACING, SimpleSeatBlock.WithMultiBlock.AtOriginOnly::new).hitbox(baseShape, AllVoxelShapes::getChairShape);
+        return seat(furnitureSet, "chair", MB_1x2x1_FACING, SimpleSeatBlock.WithMultiBlock.AtOriginOnly::new)
+                .hitbox(baseShape, AllVoxelShapes::getChairShape)
+                .renderType(() -> RenderType::cutout)
+        ;
     }
     // endregion
 }
