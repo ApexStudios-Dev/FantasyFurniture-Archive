@@ -26,6 +26,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.BENCH, "Nordic Bench");
         addBlock(NordicSet.CHAIR, "Nordic Chair");
         addBlock(NordicSet.CHANDELIER, "Nordic Chandelier");
+        addBlock(NordicSet.CUSHION, "Nordic Cushion");
         addCreativeModeTab(NordicSet.NAME, "Nordic");
     }
 

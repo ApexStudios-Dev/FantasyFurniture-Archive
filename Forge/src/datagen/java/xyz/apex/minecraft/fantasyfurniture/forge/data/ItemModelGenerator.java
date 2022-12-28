@@ -32,6 +32,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NordicSet.BENCH);
         blockItem(NordicSet.CHAIR);
         blockItem(NordicSet.CHANDELIER);
+        blockItem(NordicSet.CUSHION);
     }
 
     private ItemModelBuilder blockItem(RegistryEntry<?> item, ModelFile blockModel)

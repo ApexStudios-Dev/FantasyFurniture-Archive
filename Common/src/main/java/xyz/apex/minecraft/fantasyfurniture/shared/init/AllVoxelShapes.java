@@ -118,6 +118,21 @@ public interface AllVoxelShapes
 
         VoxelShape CHANDELIER = box(1D, 0D, 1D, 15, 16D, 15D);
 
+        VoxelShape CUSHION = shape(
+                box(2D, 0D, 2D, 4D, 2D, 4D),
+                box(2D, 0D, 12D, 4D, 2D, 14D),
+                box(12D, 0D, 12D, 14D, 2D, 14D),
+                box(12D, 0D, 2D, 14D, 2D, 4D),
+                box(2D, 5D, 2.25D, 14D, 7D, 13.75D),
+                box(1.75D, 4D, 2D, 14.25D, 5D, 14D),
+                box(2D, 2D, 2.5D, 4D, 4D, 4.5D),
+                box(12D, 2D, 2.5D, 14D, 4D, 4.5D),
+                box(12D, 2D, 11.5D, 14D, 4D, 13.5D),
+                box(2D, 2D, 11.5D, 4D, 4D, 13.5D),
+                box(2.5D, 2.5D, 4.5D, 3.5D, 3.5D, 11.5D),
+                box(12.5D, 2.5D, 4.5D, 13.5D, 3.5D, 11.5D)
+        );
+
         private static void bootstrap() {}
     }
 
@@ -198,6 +213,12 @@ public interface AllVoxelShapes
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
         if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
         return shape;
+    }
+
+    static VoxelShape getCushionShape(VoxelShape current, SimpleSeatBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
     private static VoxelShape shape(VoxelShape... shapes)

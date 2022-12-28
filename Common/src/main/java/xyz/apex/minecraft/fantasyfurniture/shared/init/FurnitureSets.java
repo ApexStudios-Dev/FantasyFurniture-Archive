@@ -185,5 +185,12 @@ public interface FurnitureSets
                 .renderType(() -> RenderType::cutout)
         ;
     }
+
+    static BlockBuilder<SimpleSeatBlock> cushion(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return seat(furnitureSet, "cushion")
+                .hitbox(baseShape, AllVoxelShapes::getCushionShape)
+        ;
+    }
     // endregion
 }

@@ -26,6 +26,7 @@ public interface NordicSet
     BlockEntry<SimpleSeatBlock.WithMultiBlock> BENCH = FurnitureSets.bench(NAME, () -> AllVoxelShapes.Nordic.BENCH).register();
     BlockEntry<SimpleSeatBlock.WithMultiBlock.AtOriginOnly> CHAIR = FurnitureSets.chair(NAME, () -> AllVoxelShapes.Nordic.CHAIR).register();
     BlockEntry<LightBlock> CHANDELIER = FurnitureSets.chandelier(NAME, () -> AllVoxelShapes.Nordic.CHANDELIER).register();
+    BlockEntry<SimpleSeatBlock> CUSHION = FurnitureSets.cushion(NAME, () -> AllVoxelShapes.Nordic.CUSHION).register();
 
     static void bootstrap()
     {
@@ -42,6 +43,7 @@ public interface NordicSet
                     output.accept(BENCH);
                     output.accept(CHAIR);
                     output.accept(CHANDELIER);
+                    output.accept(CUSHION);
                 })
         );
     }
