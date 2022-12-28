@@ -112,6 +112,8 @@ public final class BlockStateGenerator extends BlockStateProvider
         template(new ResourceLocation(FantasyFurniture.ID, "templates/chandelier"));
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/cushion"));
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/stool"));
     }
 
     @Override
@@ -130,6 +132,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(NordicSet.CHAIR, SimpleSeatBlock.FACING);
         templatedBlock(NordicSet.CHANDELIER);
         facingBlock(NordicSet.CUSHION, SimpleSeatBlock.FACING);
+        facingBlock(NordicSet.STOOL, SimpleSeatBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

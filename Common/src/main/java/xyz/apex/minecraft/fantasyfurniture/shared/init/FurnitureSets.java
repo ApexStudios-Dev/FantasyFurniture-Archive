@@ -192,5 +192,12 @@ public interface FurnitureSets
                 .hitbox(baseShape, AllVoxelShapes::getCushionShape)
         ;
     }
+
+    static BlockBuilder<SimpleSeatBlock> stool(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return seat(furnitureSet, "stool")
+                .hitbox(baseShape, AllVoxelShapes::getStoolShape)
+        ;
+    }
     // endregion
 }
