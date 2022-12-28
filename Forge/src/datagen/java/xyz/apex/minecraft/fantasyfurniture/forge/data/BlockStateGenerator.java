@@ -77,6 +77,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/table_wide"))
+                .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -97,13 +98,14 @@ public final class BlockStateGenerator extends BlockStateProvider
         ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/chair"))
-                /*.transforms()
+                .renderType(cutout)
+                .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
+                        .translation(0F, -1.5F, 0F)
+                        .scale(.5F, .5F, .5F)
                     .end()
-                .end()*/
+                .end()
         ;
     }
 
