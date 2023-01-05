@@ -1,36 +1,36 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.Validate;
 
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
-import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
-import xyz.apex.minecraft.apexcore.shared.registry.entry.RegistryEntry;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
+import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 public final class BlockStateGenerator extends BlockStateProvider
 {
     private final ModelFile blockBlock = new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/block"));
 
-    BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
+    public BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
     }
 
     private void registerTemplates()
@@ -38,7 +38,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         var cutout = new ResourceLocation("minecraft", "cutout");
 
         // NOTE: All main line models created in BlockBench *MUST* parent these models in order for them to function correctly
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wall_light"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.FIXED)
@@ -48,7 +48,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/floor_light"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -58,7 +58,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_large"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_large"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -68,7 +68,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_small"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_small"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -77,7 +77,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_wide"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_wide"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -88,7 +88,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/bench"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/bench"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -98,7 +98,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/chair"))
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chair"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -109,11 +109,11 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/chandelier"));
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chandelier"));
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/cushion"));
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/cushion"));
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/stool"));
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/stool"));
     }
 
     @Override
@@ -121,54 +121,54 @@ public final class BlockStateGenerator extends BlockStateProvider
     {
         registerTemplates();
 
-        simpleBlock(NordicSet.WOOL);
-        carpet(NordicSet.CARPET, NordicSet.WOOL);
-        wallLight(NordicSet.WALL_LIGHT);
-        templatedBlock(NordicSet.FLOOR_LIGHT);
-        table(NordicSet.TABLE_LARGE, true);
-        table(NordicSet.TABLE_SMALL, false);
-        table(NordicSet.TABLE_WIDE, true);
-        facingBlock(NordicSet.BENCH, SimpleSeatBlock.FACING);
-        facingBlock(NordicSet.CHAIR, SimpleSeatBlock.FACING);
-        templatedBlock(NordicSet.CHANDELIER);
-        facingBlock(NordicSet.CUSHION, SimpleSeatBlock.FACING);
-        facingBlock(NordicSet.STOOL, SimpleSeatBlock.FACING);
+        simpleBlock(Nordic.WOOL);
+        carpet(Nordic.CARPET, Nordic.WOOL);
+        wallLight(Nordic.WALL_LIGHT);
+        templatedBlock(Nordic.FLOOR_LIGHT);
+        table(Nordic.TABLE_LARGE, true);
+        table(Nordic.TABLE_SMALL, false);
+        table(Nordic.TABLE_WIDE, true);
+        facingBlock(Nordic.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.CHAIR, HorizontalDirectionalBlock.FACING);
+        templatedBlock(Nordic.CHANDELIER);
+        facingBlock(Nordic.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.STOOL, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
-    private Property<?>[] gatherIgnoredProperties(RegistryEntry<? extends Block> entry)
+    private Property<?>[] gatherIgnoredProperties(Supplier<? extends Block> entry)
     {
         var block = entry.get();
         var properties = Lists.newArrayList();
 
-        if(block instanceof MultiBlock multiBlock) properties.add(multiBlock.getMultiBlockType().getBlockProperty());
+        // if(block instanceof MultiBlock multiBlock) properties.add(multiBlock.getMultiBlockType().getBlockProperty());
         if(block instanceof SimpleWaterloggedBlock) properties.add(BlockStateProperties.WATERLOGGED);
 
         return properties.toArray(Property<?>[]::new);
     }
 
-    private void wallLight(RegistryEntry<? extends Block> entry)
+    private void wallLight(Supplier<? extends Block> entry)
     {
         complexBlock(entry, (blockState, model) -> ConfiguredModel
                 .builder()
-                .rotationY((int) (blockState.getValue(WallLightBlock.FACING).toYRot() + 180F) % 360)
+                .rotationY((int) (blockState.getValue(WallTorchBlock.FACING).toYRot() + 180F) % 360)
                 .modelFile(model)
                 .build()
         );
     }
 
-    private void templatedBlock(RegistryEntry<? extends Block> entry)
+    private void templatedBlock(Supplier<? extends Block> entry)
     {
         simpleBlock(entry, existingModel(entry));
     }
 
-    private void table(RegistryEntry<? extends Block> entry, boolean withFacing)
+    private void table(Supplier<? extends Block> entry, boolean withFacing)
     {
-        if(withFacing) facingBlock(entry, SimpleMultiBlock.WithHorizontalFacing.FACING);
+        if(withFacing) facingBlock(entry, HorizontalDirectionalBlock.FACING);
         else getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
     }
 
-    private void facingBlock(RegistryEntry<? extends Block> entry, DirectionProperty facingProperty)
+    private void facingBlock(Supplier<? extends Block> entry, DirectionProperty facingProperty)
     {
         complexBlock(entry, (blockState, model) -> ConfiguredModel
                 .builder()
@@ -178,7 +178,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         );
     }
 
-    private void complexBlock(RegistryEntry<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)
+    private void complexBlock(Supplier<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)
     {
         var modelFile = existingModel(entry);
         getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> models.apply(blockState, modelFile), gatherIgnoredProperties(entry));
@@ -192,23 +192,23 @@ public final class BlockStateGenerator extends BlockStateProvider
         ;
     }
 
-    private void simpleBlock(RegistryEntry<? extends Block> entry)
+    private void simpleBlock(Supplier<? extends Block> entry)
     {
         var path = blockFolder(entry);
         simpleBlock(entry, models().cubeAll(path.toString(), path));
     }
 
-    private void simpleBlock(RegistryEntry<? extends Block> entry, ModelFile model)
+    private void simpleBlock(Supplier<? extends Block> entry, ModelFile model)
     {
         getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(model));
     }
 
-    private void carpet(RegistryEntry<? extends Block> carpet, RegistryEntry<?> wool)
+    private void carpet(Supplier<? extends Block> carpet, Supplier<? extends Block> wool)
     {
         simpleBlock(carpet, models().carpet(blockFolder(carpet).toString(), blockFolder(wool)));
     }
 
-    private ResourceLocation blockFolder(RegistryEntry<?> entry)
+    private ResourceLocation blockFolder(Supplier<? extends Block> entry)
     {
         return nameWithPrefix(entry, ModelProvider.BLOCK_FOLDER);
     }
@@ -218,9 +218,11 @@ public final class BlockStateGenerator extends BlockStateProvider
         return withPrefix(name, ModelProvider.BLOCK_FOLDER);
     }
 
-    private ResourceLocation nameWithPrefix(RegistryEntry<?> entry, String prefix)
+    private ResourceLocation nameWithPrefix(Supplier<? extends Block> entry, String prefix)
     {
-        return withPrefix(entry.getRegistryName(), prefix);
+        var registryName = ForgeRegistries.BLOCKS.getKey(entry.get());
+        Validate.notNull(registryName);
+        return withPrefix(registryName, prefix);
     }
 
     private ResourceLocation withPrefix(ResourceLocation name, String prefix)
@@ -230,7 +232,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         return new ResourceLocation(name.getNamespace(), "%s/%s".formatted(prefix, path));
     }
 
-    private ModelFile.ExistingModelFile existingModel(RegistryEntry<? extends Block> entry)
+    private ModelFile.ExistingModelFile existingModel(Supplier<? extends Block> entry)
     {
         return models().getExistingFile(blockFolder(entry));
     }

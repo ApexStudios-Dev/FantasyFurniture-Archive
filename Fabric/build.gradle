@@ -1,10 +1,7 @@
 plugins {
-	id 'java-library'
-	id 'idea'
 	id 'maven-publish'
 
-	id 'fabric-loom' version '1.0-SNAPSHOT'
-	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 evaluationDependsOn(':Common')
@@ -13,48 +10,28 @@ group = "${APEX_GROUP}.${MOD_ID}.fabric"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-fabric"
 
-sourceSets {
-	main {
-		resources.srcDirs += 'src/main/generated'
-	}
+configurations {
+	common
+	shadowCommon
+	compileClasspath.extendsFrom common
+	runtimeClasspath.extendsFrom common
+	developmentFabric.extendsFrom common
 }
 
-loom {
-	if(file("src/main/resources/${MOD_ID}.accesswidener").exists()) {
-		accessWidenerPath = file("src/main/resources/${MOD_ID}.accesswidener")
-	}
-
-	runs {
-		client {
-			client()
-			ideConfigGenerated(true)
-			runDir('run')
-			vmArgs('-Dmixin.debug.export=true', '-Dfabric.log.level=debug')
-		}
-
-		server {
-			server()
-			ideConfigGenerated(true)
-			runDir('run')
-			vmArgs('-Dfabric.log.level=debug')
-		}
-	}
-
-	mods {
-		"${MOD_ID}" {
-			sourceSet sourceSets.main
-			sourceSet project(':Common').sourceSets.main
-		}
-	}
+architectury {
+	platformSetupLoomIde()
+	fabric()
 }
 
 repositories {
 	mavenLocal()
+	mavenCentral()
 	maven { url "file:///${rootProject.projectDir}/maven" }
 	maven { url 'https://maven.parchmentmc.org' }
 	maven { url 'https://maven.terraformersmc.com/releases/' }
 	maven { url 'https://dvs1.progwml6.com/files/maven/' }
 	maven { url 'https://modmaven.dev/' }
+	maven { url 'https://maven.covers1624.net/' }
 
 	maven {
 		url 'https://www.cursemaven.com'
@@ -68,24 +45,15 @@ repositories {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
-
-	mappings loom.layered() {
-		officialMojangMappings()
-
-		if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-			def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
-			parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
-		}
-	}
-
 	// Main
 	modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
-	implementation project(':Common')
+	modApi "dev.architectury:architectury-fabric:${ARCHITECTURY_VERSION}"
+	common(project(path: ':Common', configuration: 'namedElements')) { transitive false }
+	shadowCommon(project(path: ':Common', configuration: 'transformProductionFabric')) { transitive false }
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 	modImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
-	include "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 
 	// Uncomment all of the below to enable shaders
 	// ome of these may or may not be required
@@ -107,7 +75,6 @@ dependencies {
 
 	// JEI
 	if(rootProject.hasProperty('JEI_VERSION')) {
-		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
 		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
 		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
 	}
@@ -128,9 +95,19 @@ dependencies {
 	}
 }
 
-processResources {
-	duplicatesStrategy DuplicatesStrategy.WARN
+shadowJar {
+	configurations = [ project.configurations.shadowCommon ]
+	classifier 'dev-shadow'
+}
 
+remapJar {
+	injectAccessWidener = true
+	input.set shadowJar.archiveFile
+	dependsOn shadowJar
+	classifier null
+}
+
+processResources {
 	project.properties.each { key, value ->
 		inputs.property "${key}", "${value}"
 	}
@@ -142,61 +119,30 @@ processResources {
 	from project(':Common').sourceSets.main.resources
 }
 
-tasks.withType(JavaCompile).configureEach {
-	options.encoding = 'UTF-8'
-	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
-
-	if(it.name.equals('compileJava')) {
-		source(project(':Common').sourceSets.main.allSource)
-	}
-
-	javaToolchains {
-		compilerFor {
-			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-		}
-	}
-}
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-	}
-
-	withSourcesJar()
-}
-
 jar {
-	manifest {
-		attributes([
-				'Specification-Title': "${MOD_ID}",
-				'Specification-Vendor': 'ApexStudios',
-				'Specification-Version': '1',
-				'Implementation-Title': "${project.name}",
-				'Implementation-Version': "${project.version}",
-				'Implementation-Vendor': 'ApexStudios',
-				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-		])
-	}
+	classifier 'dev'
 }
 
-artifacts {
-	archives jar
-	archives sourcesJar
-	archives remapJar
+sourcesJar {
+	def commonSources = project(':Common').sourcesJar
+	dependsOn commonSources
+	from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+	withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+		skip()
+	}
 }
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		mavenFabric(MavenPublication) {
 			groupId = "${project.group}"
 			artifactId = "${project.archivesBaseName}"
 			version = "${project.version}"
 
-			loom.disableDeprecatedPomGeneration(it)
-
-			artifact jar
-			artifact sourcesJar
-			artifact remapJar
+			from components.java
 		}
 	}
 	repositories {
@@ -214,8 +160,4 @@ publishing {
 			}
 		}
 	}
-}
-
-idea.module {
-	excludeDirs << file('run')
 }

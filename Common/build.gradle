@@ -1,9 +1,5 @@
 plugins {
-	id 'java-library'
-	id 'idea'
 	id 'maven-publish'
-
-	id 'org.spongepowered.gradle.vanilla' version '0.2.2-SNAPSHOT'
 }
 
 group = "${APEX_GROUP}.${MOD_ID}.shared"
@@ -16,27 +12,40 @@ sourceSets {
 	}
 }
 
-minecraft {
-	version("${MINECRAFT_VERSION}")
-
-	if(file("src/main/resources/${MOD_ID}-common.accesswidener").exists()) {
-		accessWideners("src/main/resources/${MOD_ID}-common.accesswidener")
-	}
+architectury {
+	common(['forge', 'fabric'])
 }
 
 repositories {
 	mavenLocal()
+	mavenCentral()
 	maven { url "file:///${rootProject.projectDir}/maven" }
+	maven { url 'https://maven.parchmentmc.org' }
+	maven { url 'https://maven.terraformersmc.com/releases/' }
+	maven { url 'https://dvs1.progwml6.com/files/maven/' }
+	maven { url 'https://modmaven.dev/' }
+	maven { url 'https://maven.covers1624.net/' }
+
+	maven {
+		url 'https://www.cursemaven.com'
+		content { includeGroup 'curse.maven' }
+	}
+
+	maven {
+		url 'https://api.modrinth.com/maven'
+		content { includeGroup 'maven.modrinth' }
+	}
 }
 
 dependencies {
 	compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
-	implementation "${APEX_GROUP}.${APEXCORE_ID}.shared:${APEXCORE_ID}-shared:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+	modApi "dev.architectury:architectury:${ARCHITECTURY_VERSION}"
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	implementation 'com.google.errorprone:error_prone_annotations:2.11.0'
+	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.shared:${APEXCORE_ID}-shared:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 }
 
 processResources {
-	duplicatesStrategy DuplicatesStrategy.WARN
-
 	project.properties.each { key, value ->
 		inputs.property "${key}", "${value}"
 	}
@@ -46,53 +55,14 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	options.encoding = 'UTF-8'
-	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
-
-	javaToolchains {
-		compilerFor {
-			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-		}
-	}
-}
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-	}
-
-	withSourcesJar()
-}
-
-jar {
-	manifest {
-		attributes([
-				'Specification-Title': "${MOD_ID}",
-				'Specification-Vendor': 'ApexStudios',
-				'Specification-Version': '1',
-				'Implementation-Title': "${project.name}",
-				'Implementation-Version': "${project.version}",
-				'Implementation-Vendor': 'ApexStudios',
-				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-		])
-	}
-}
-
-artifacts {
-	archives jar
-	archives sourcesJar
-}
-
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		mavenCommon(MavenPublication) {
 			groupId = "${project.group}"
 			artifactId = "${project.archivesBaseName}"
 			version = "${project.version}"
 
-			artifact jar
-			artifact sourcesJar
+			from components.java
 		}
 	}
 	repositories {

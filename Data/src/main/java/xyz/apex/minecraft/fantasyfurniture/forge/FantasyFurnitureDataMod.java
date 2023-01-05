@@ -1,0 +1,89 @@
+package xyz.apex.minecraft.fantasyfurniture.forge;
+
+import net.minecraft.data.DataProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+import xyz.apex.minecraft.fantasyfurniture.forge.data.*;
+import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyEntity;
+
+import java.util.function.Function;
+
+@Mod(FantasyFurnitureDataMod.ID)
+public final class FantasyFurnitureDataMod
+{
+    public static final String ID = "fantasyfurniture";
+
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ID);
+
+    public static final RegistryObject<EntityType<?>> SEAT_ENTITY_TYPE = dummyEntityType("seat");
+
+    public FantasyFurnitureDataMod()
+    {
+        var modBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        Nordic.bootstrap();
+
+        BLOCKS.register(modBus);
+        ITEMS.register(modBus);
+        ENTITY_TYPES.register(modBus);
+
+        modBus.addListener(this::onGatherData);
+    }
+
+    private void onGatherData(GatherDataEvent event)
+    {
+        var generator = event.getGenerator();
+
+        var client = event.includeClient();
+        var server = event.includeServer();
+
+        generator.addProvider(client, (DataProvider.Factory<BlockBenchConverter>) output -> new BlockBenchConverter(event, output));
+        generator.addProvider(client, (DataProvider.Factory<BlockStateGenerator>) output -> new BlockStateGenerator(event, output));
+        generator.addProvider(client, (DataProvider.Factory<ItemModelGenerator>) output -> new ItemModelGenerator(event, output));
+
+        generator.addProvider(client, (DataProvider.Factory<LanguageGenerator>) LanguageGenerator::new);
+
+        var blockTags = generator.addProvider(server, (DataProvider.Factory<BlockTagGenerator>) output -> new BlockTagGenerator(event, output));
+        generator.addProvider(server, (DataProvider.Factory<ItemTagGenerator>) output -> new ItemTagGenerator(event, output, blockTags));
+        generator.addProvider(server, (DataProvider.Factory<EntityTypeTagGenerator>) output -> new EntityTypeTagGenerator(event, output));
+
+        generator.addProvider(server, (DataProvider.Factory<LootTableGenerator>) LootTableGenerator::new);
+        generator.addProvider(server, (DataProvider.Factory<RecipeGenerator>) RecipeGenerator::new);
+    }
+
+    static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory)
+    {
+        var block = BLOCKS.register(blockName, () -> blockFactory.apply(BlockBehaviour.Properties.copy(Blocks.STONE)));
+        ITEMS.register(blockName, () -> new BlockItem(block.get(), new Item.Properties()));
+        return block;
+    }
+
+    static RegistryObject<Block> dummyBlock(String blockName)
+    {
+        return dummyBlock(blockName, Block::new);
+    }
+
+    static RegistryObject<Item> dummyItem(String itemName)
+    {
+        return ITEMS.register(itemName, () -> new Item(new Item.Properties()));
+    }
+
+    private static RegistryObject<EntityType<?>> dummyEntityType(String entityTypeName)
+    {
+        return ENTITY_TYPES.register(entityTypeName, () -> EntityType.Builder.of(DummyEntity::new, MobCategory.MISC).build("%s:%s".formatted(ID, entityTypeName)));
+    }
+}

@@ -6,12 +6,13 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -19,15 +20,17 @@ import java.util.function.Supplier;
 
 public final class EntityTypeTagGenerator extends EntityTypeTagsProvider
 {
-    EntityTypeTagGenerator(GatherDataEvent event, PackOutput packOutput)
+    private static final TagKey<EntityType<?>> SEAT_BLACKLIST = tag(FantasyFurnitureDataMod.ID, "seat_blacklist");
+
+    public EntityTypeTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider)
     {
-        tag(FantasyFurniture.SEAT_BLACKLIST).add(EntityType.SHULKER);
+        tag(SEAT_BLACKLIST).add(EntityType.SHULKER);
     }
 
     private void tag(TagKey<EntityType<?>> tag, @Nullable Object... values)
@@ -50,5 +53,10 @@ public final class EntityTypeTagGenerator extends EntityTypeTagsProvider
         }
         else if(obj instanceof Supplier<?> supplier) tag(builder, supplier.get()); // should wrap back around to Block instanceof branch
         else LogManager.getLogger().error("Unknown ObjectType: {}", obj.getClass().getCanonicalName());
+    }
+
+    private static TagKey<EntityType<?>> tag(String namespace, String path)
+    {
+        return TagKey.create(ForgeRegistries.Keys.ENTITY_TYPES, new ResourceLocation(namespace, path));
     }
 }

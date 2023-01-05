@@ -6,14 +6,15 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -21,16 +22,16 @@ import java.util.function.Supplier;
 
 public final class ItemTagGenerator extends ItemTagsProvider
 {
-    ItemTagGenerator(GatherDataEvent event, PackOutput packOutput, BlockTagGenerator blockTags)
+    public ItemTagGenerator(GatherDataEvent event, PackOutput packOutput, BlockTagGenerator blockTags)
     {
-        super(packOutput, event.getLookupProvider(), blockTags, FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), blockTags, FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
-        copy(Tags.Blocks.Vanilla.WOOL, Tags.Items.Vanilla.WOOL);
-        copy(Tags.Blocks.Vanilla.WOOL_CARPETS, Tags.Items.Vanilla.WOOL_CARPETS);
+        copy(BlockTags.WOOL, ItemTags.WOOL);
+        copy(BlockTags.WOOL_CARPETS, ItemTags.WOOL_CARPETS);
     }
 
     private void tag(TagKey<Item> tag, @Nullable Object... values)

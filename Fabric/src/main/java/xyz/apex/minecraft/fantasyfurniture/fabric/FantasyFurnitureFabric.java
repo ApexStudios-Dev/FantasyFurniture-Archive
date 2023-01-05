@@ -1,14 +1,14 @@
 package xyz.apex.minecraft.fantasyfurniture.fabric;
 
-import net.fabricmc.api.ModInitializer;
-
+import xyz.apex.minecraft.apexcore.fabric.platform.FabricModPlatform;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 
-public final class FantasyFurnitureFabric implements ModInitializer
+public final class FantasyFurnitureFabric extends FabricModPlatform implements FantasyFurniture
 {
-    @Override
-    public void onInitialize()
+    public static final FabricModPlatform INSTANCE = new FantasyFurnitureFabric();
+
+    private FantasyFurnitureFabric()
     {
-        FantasyFurniture.bootstrap();
+        super(ID, REGISTRAR);
     }
 }

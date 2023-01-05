@@ -1,0 +1,102 @@
+buildscript {
+    dependencies {
+        classpath 'org.parchmentmc:librarian:1.+'
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'idea'
+
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+}
+
+evaluationDependsOn(':Common')
+
+if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+    apply plugin: 'org.parchmentmc.librarian.forgegradle'
+}
+
+group = "${APEX_GROUP}.${MOD_ID}.forge.data"
+version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
+archivesBaseName = "${MOD_ID}-forge-data"
+
+minecraft {
+    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+        if(rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION')) {
+            mappings channel: 'parchment', version: "${PARCHMENT_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        } else {
+            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        }
+    } else {
+        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+    }
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        data {
+            ideaModule "${rootProject.name}.${project.name}.main"
+            workingDirectory file('run')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            property 'fml.earlyprogresswindow', 'false'
+            args '--mod', MOD_ID
+            args '--client', '--server', '--validate'
+            args '--input', file('blockbench')
+            args '--output', project(':Common').file('src/main/generated')
+            args '--existing', file('src/main/resources')
+            args '--existing', project(':Common').file('src/main/resources')
+            forceExit false
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "file:///${rootProject.projectDir}/maven" }
+    maven { url 'https://maven.parchmentmc.org' }
+    maven { url 'https://maven.terraformersmc.com/releases/' }
+    maven { url 'https://dvs1.progwml6.com/files/maven/' }
+    maven { url 'https://modmaven.dev/' }
+    maven { url 'https://maven.covers1624.net/' }
+    maven { url 'https://maven.architectury.dev/' }
+
+    maven {
+        url 'https://www.cursemaven.com'
+        content { includeGroup 'curse.maven' }
+    }
+
+    maven {
+        url 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+}
+
+processResources {
+    project.properties.each { key, value ->
+        inputs.property "${key}", "${value}"
+    }
+
+    filesMatching([ '*.mixins.json', 'pack.mcmeta', 'META-INF/mods.toml', '**/models/**/*.json' ]) {
+        expand project.properties
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+idea.module {
+    excludeDirs << file('run')
+}

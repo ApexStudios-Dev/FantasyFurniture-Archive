@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-import xyz.apex.minecraft.apexcore.shared.util.Lazy;
+import xyz.apex.minecraft.apexcore.shared.util.function.Lazy;
 
 import java.util.function.Supplier;
 

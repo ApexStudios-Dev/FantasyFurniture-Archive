@@ -6,21 +6,21 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.data.event.GatherDataEvent;
 
-import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelConverter;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
+import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
+import xyz.apex.minecraft.fantasyfurniture.forge.data.providers.BlockBenchModelConverter;
 
 public final class BlockBenchConverter extends BlockBenchModelConverter
 {
-    BlockBenchConverter(GatherDataEvent event, PackOutput packOutput)
+    public BlockBenchConverter(GatherDataEvent event, PackOutput packOutput)
     {
-        super(event, packOutput, FantasyFurniture.ID);
+        super(event, packOutput, FantasyFurnitureDataMod.ID);
     }
 
     @Override
     protected void convertModels()
     {
-        convertFurnitureSet(NordicSet.NAME);
+        convertFurnitureSet(Nordic.NAME);
     }
 
     private void convertFurnitureSet(String furnitureSet)
@@ -44,14 +44,14 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
 
     private BlockModelBuilder convertGeneric(String furnitureSet, String blockType)
     {
-        return blockModelBuilder(new ResourceLocation(FantasyFurniture.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
+        return blockModelBuilder(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
                 // unchecked as template generation is done during block state generation
                 // which fires after the conversion
                 // this means the templates wont have been marked as "existing" yet
                 // and system will throw errors, saying model could not be found
-                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/%s".formatted(blockType))))
-                .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet)))
-                .texture(blockType, new ResourceLocation(FantasyFurniture.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/templates/%s".formatted(blockType))))
+                .texture("particle", new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/particle".formatted(furnitureSet)))
+                .texture(blockType, new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
         ;
     }
 }

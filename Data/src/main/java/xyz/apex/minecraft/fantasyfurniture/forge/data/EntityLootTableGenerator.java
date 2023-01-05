@@ -1,18 +1,17 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraftforge.registries.RegistryObject;
 
-import xyz.apex.minecraft.apexcore.shared.platform.Platform;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
 
 import java.util.stream.Stream;
 
 public final class EntityLootTableGenerator extends EntityLootSubProvider
 {
-    EntityLootTableGenerator()
+    public EntityLootTableGenerator()
     {
         super(FeatureFlags.REGISTRY.allFlags());
     }
@@ -25,6 +24,6 @@ public final class EntityLootTableGenerator extends EntityLootSubProvider
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes()
     {
-        return Platform.INSTANCE.registries().getAllKnown(Registries.ENTITY_TYPE, FantasyFurniture.ID).stream();
+        return FantasyFurnitureDataMod.ENTITY_TYPES.getEntries().stream().map(RegistryObject::get);
     }
 }

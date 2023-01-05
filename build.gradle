@@ -1,0 +1,86 @@
+plugins {
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'dev.architectury.loom' version '1.0-SNAPSHOT' apply false
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1' apply false
+}
+
+architectury {
+    minecraft = "${MINECRAFT_VERSION}"
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
+
+    repositories {
+        maven { url 'https://maven.parchmentmc.org' }
+    }
+
+    dependencies {
+        // JEI
+        if(rootProject.hasProperty('JEI_VERSION')) {
+            modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+        }
+
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
+
+        javaToolchains {
+            compilerFor {
+                languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+            }
+        }
+    }
+
+    jar {
+        manifest {
+            attributes([
+                    'Specification-Title': "${MOD_ID}",
+                    'Specification-Vendor': 'ApexStudios',
+                    'Specification-Version': '1',
+                    'Implementation-Title': "${project.name}",
+                    'Implementation-Version': "${project.version}",
+                    'Implementation-Vendor': 'ApexStudios',
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            ])
+        }
+    }
+
+    idea.module {
+        excludeDirs << file('run')
+    }
+
+    if(project.name != 'Data') {
+        apply plugin: 'architectury-plugin'
+        apply plugin: 'dev.architectury.loom'
+
+        loom {
+            silentMojangMappingsLicense()
+            accessWidenerPath = project(':Common').file("src/main/resources/${MOD_ID}.accesswidener")
+        }
+
+        dependencies {
+            minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+
+            mappings(loom.layered {
+                officialMojangMappings()
+
+                if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+                    def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
+                    parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
+                }
+            })
+        }
+    }
+}

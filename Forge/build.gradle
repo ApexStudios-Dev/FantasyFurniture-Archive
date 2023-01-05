@@ -1,21 +1,7 @@
-buildscript {
-	dependencies {
-		classpath 'org.parchmentmc:librarian:1.+'
-	}
-}
-
 plugins {
-	id 'java-library'
-	id 'idea'
 	id 'maven-publish'
 
-	id 'net.minecraftforge.gradle' version '5.1.+'
-	id 'org.spongepowered.mixin' version '0.7.+'
-	id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
-}
-
-if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-	apply plugin: 'org.parchmentmc.librarian.forgegradle'
+	id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 evaluationDependsOn(':Common')
@@ -24,124 +10,38 @@ group = "${APEX_GROUP}.${MOD_ID}.forge"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-forge"
 
-jarJar.enable()
-
-sourceSets {
-	datagen {
-		compileClasspath += configurations.getByName('minecraft')
-
-		compileClasspath += sourceSets.main.output
-		runtimeClasspath += sourceSets.main.output
-
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.main.runtimeClasspath
-	}
+configurations {
+	common
+	shadowCommon
+	compileClasspath.extendsFrom common
+	runtimeClasspath.extendsFrom common
+	developmentForge.extendsFrom common
 }
 
-sourceSets {
-	datagen {
-		compileClasspath += configurations.getByName('minecraft')
-
-		compileClasspath += sourceSets.main.output
-		runtimeClasspath += sourceSets.main.output
-	}
+architectury {
+	platformSetupLoomIde()
+	forge()
 }
 
-minecraft {
-	if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-		if(rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION')) {
-			mappings channel: 'parchment', version: "${PARCHMENT_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-		} else {
-			mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-		}
-	} else {
-		mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+loom {
+	forge {
+		convertAccessWideners = true
+		extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+
+		mixinConfig "${MOD_ID}.mixins.json"
+		mixinConfig "${MOD_ID}-common.mixins.json"
 	}
-
-	if(file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
-		accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-	}
-
-	runs {
-		client {
-			workingDirectory file('run/client')
-			property 'forge.logging.markers', ''
-			property 'forge.logging.console.level', 'debug'
-			ideaModule "${rootProject.name}.${project.name}.main"
-
-			mods {
-				"${MOD_ID}" {
-					source sourceSets.main
-					source project(':Common').sourceSets.main
-				}
-			}
-		}
-
-		clientLogin {
-			parent runs.client
-			main 'net.covers1624.devlogin.DevLogin'
-			args '--launch_target', '{LAUNCH_TARGET}'
-			lazyToken("LAUNCH_TARGET", { runs.client.main })
-		}
-
-		server {
-			workingDirectory file('run/server')
-			property 'forge.logging.markers', ''
-			property 'forge.logging.console.level', 'debug'
-			args 'nogui'
-			ideaModule "${rootProject.name}.${project.name}.main"
-
-			mods {
-				"${MOD_ID}" {
-					source sourceSets.main
-					source project(':Common').sourceSets.main
-				}
-			}
-		}
-
-		data {
-			ideaModule "${rootProject.name}.${project.name}.main"
-			source sourceSets.main
-			workingDirectory file('run/client')
-			property 'forge.logging.markers', ''
-			property 'forge.logging.console.level', 'debug'
-			forceExit false
-
-			args '--mod', MOD_ID
-			args '--client', '--server', '--validate'
-			args '--input', file('src/datagen/blockbench')
-			args '--output', project(':Common').file('src/main/generated')
-			args '--existing', file('src/main/resources')
-			args '--existing', project(':Common').file('src/main/resources')
-
-			mods {
-				"${MOD_ID}" {
-					source sourceSets.main
-					source sourceSets.datagen
-					source project(':Common').sourceSets.main
-				}
-			}
-		}
-	}
-}
-
-mixin {
-	add sourceSets.main, "${MOD_ID}.refmap.json"
-	config "${MOD_ID}.mixins.json"
-
-	add project(':Common').sourceSets.main, "${MOD_ID}-common.refmap.json"
-	config "${MOD_ID}-common.mixins.json"
-
-	debug.export = true
 }
 
 repositories {
 	mavenLocal()
+	mavenCentral()
 	maven { url "file:///${rootProject.projectDir}/maven" }
 	maven { url 'https://maven.parchmentmc.org' }
 	maven { url 'https://maven.terraformersmc.com/releases/' }
 	maven { url 'https://dvs1.progwml6.com/files/maven/' }
 	maven { url 'https://modmaven.dev/' }
+	maven { url 'https://maven.covers1624.net/' }
 
 	maven {
 		url 'https://www.cursemaven.com'
@@ -155,41 +55,38 @@ repositories {
 }
 
 dependencies {
-	minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+	forge "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+	modApi "dev.architectury:architectury-forge:${ARCHITECTURY_VERSION}"
 
 	// Main
-	annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
-	implementation project(':Common')
-	runtimeClasspath "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
-	implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
-	jarJar(group: "${APEX_GROUP}.${APEXCORE_ID}.forge", name: "${APEXCORE_ID}-forge", version: "${APEXCORE_VERSION_RANGE}")
-
-	// Data Gen
-	datagenImplementation sourceSets.main.output
-	datagenImplementation project(':Common')
-	datagenImplementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+	common(project(path: ':Common', configuration: 'namedElements')) { transitive false }
+	shadowCommon(project(path: ':Common', configuration: 'transformProductionForge')) { transitive false }
+	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 
 	// JEI
 	if(rootProject.hasProperty('JEI_VERSION')) {
-		compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
-		compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
-		runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
-
-		datagenCompileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
-		datagenCompileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
-		datagenRuntimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
+		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}"
+		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}"
 	}
 
 	// Jade
 	if(rootProject.hasProperty('JADE_CF_ID') && rootProject.hasProperty('FORGE_JADE_CF_FILE_ID')) {
-		implementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}")
-		datagenImplementation fg.deobf("curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}")
+		modImplementation "curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}"
 	}
 }
 
-processResources {
-	duplicatesStrategy DuplicatesStrategy.WARN
+shadowJar {
+	configurations = [ project.configurations.shadowCommon ]
+	classifier 'dev-shadow'
+}
 
+remapJar {
+	input.set shadowJar.archiveFile
+	dependsOn shadowJar
+	classifier null
+}
+
+processResources {
 	project.properties.each { key, value ->
 		inputs.property "${key}", "${value}"
 	}
@@ -201,73 +98,30 @@ processResources {
 	from project(':Common').sourceSets.main.resources
 }
 
-tasks.withType(JavaCompile).configureEach {
-	options.encoding = 'UTF-8'
-	options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
-
-	if(it.name.equals('compileJava')) {
-		source(project(':Common').sourceSets.main.allSource)
-	}
-
-	javaToolchains {
-		compilerFor {
-			languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-		}
-	}
-}
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
-	}
-
-	withSourcesJar()
-}
-
-tasks.jarJar.configure {
-	classifier = ''
-}
-
 jar {
-	classifier = 'slim'
+	classifier 'dev'
+}
 
-	manifest {
-		attributes([
-				'Specification-Title': "${MOD_ID}",
-				'Specification-Vendor': 'ApexStudios',
-				'Specification-Version': '1',
-				'Implementation-Title': "${project.name}",
-				'Implementation-Version': "${project.version}",
-				'Implementation-Vendor': 'ApexStudios',
-				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-				'MixinConfigs': "${MOD_ID}.mixins.json,${MOD_ID}-common.mixins.json"
-		])
+sourcesJar {
+	def commonSources = project(':Common').sourcesJar
+	dependsOn commonSources
+	from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+	withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+		skip()
 	}
 }
-
-artifacts {
-	archives jar
-	archives sourcesJar
-	archives tasks.jarJar
-}
-
-reobf {
-	jarJar { }
-}
-
-jar.finalizedBy('reobfJar')
-tasks.jar.finalizedBy('reobfJarJar')
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
+		mavenForge(MavenPublication) {
 			groupId = "${project.group}"
 			artifactId = "${project.archivesBaseName}"
 			version = "${project.version}"
 
-			artifact jar
-			artifact sourcesJar
-			artifact tasks.jarJar
+			from components.java
 		}
 	}
 	repositories {
@@ -285,8 +139,4 @@ publishing {
 			}
 		}
 	}
-}
-
-idea.module {
-	excludeDirs << file('run')
 }

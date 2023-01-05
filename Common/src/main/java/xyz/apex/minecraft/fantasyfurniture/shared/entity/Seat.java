@@ -1,5 +1,7 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.entity;
 
+import dev.architectury.networking.NetworkManager;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -18,7 +20,6 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-import xyz.apex.minecraft.apexcore.shared.platform.Platform;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.SeatBlock;
 
@@ -90,7 +91,7 @@ public final class Seat extends Entity
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket()
     {
-        return Platform.INSTANCE.getEntityClientSpawnPacket(this);
+        return NetworkManager.createAddEntityPacket(this);
     }
 
     public static double getCustomEntitySeatOffset(Entity entity)

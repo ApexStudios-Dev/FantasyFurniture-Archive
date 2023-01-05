@@ -15,7 +15,7 @@ import java.util.Map;
 
 public final class LootTableGenerator extends LootTableProvider
 {
-    LootTableGenerator(PackOutput packOutput)
+    public LootTableGenerator(PackOutput packOutput)
     {
         super(packOutput, ImmutableSet.of(), ImmutableList.of(
                 new SubProviderEntry(BlockLootTableGenerator::new, LootContextParamSets.BLOCK),

@@ -30,21 +30,3 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	side="BOTH"
 	[dependencies.${MOD_ID}.custom.mc-publish]
 		ignore=true
-[[dependencies.${MOD_ID}]]
-	modId="${APEXCORE_ID}"
-	mandatory=false
-	versionRange="${APEXCORE_VERSION_RANGE}"
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.${MOD_ID}.custom.mc-publish]
-		modrinth="${APEXCORE_ID}"
-		curseforge="${APEXCORE_ID}"
-[[dependencies.${MOD_ID}]]
-	modId="${ARCHITECTURY_ID}"
-	mandatory=true
-	versionRange="${ARCHITECTURY_VERSION_RANGE}"
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.${MOD_ID}.custom.mc-publish]
-		modrinth="${ARCHITECTURY_DEPENDENCY_ID}"
-		curseforge="${ARCHITECTURY_DEPENDENCY_ID}"

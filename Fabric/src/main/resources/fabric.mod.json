@@ -55,20 +55,17 @@
     "license": "GNU GENERAL PUBLIC LICENSE",
     "environment": "*",
     "entrypoints": {
-        "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric" ],
-        "client": [ ],
-        "server": [ ],
-        "fabric-datagen": [ "${APEX_GROUP}.${MOD_ID}.fabric.data.DataGenerators" ]
+        "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "client": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "server": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ]
     },
-    "mixins": [
-        "${MOD_ID}.mixins.json",
-        "${MOD_ID}-common.mixins.json"
-    ],
+    "mixins": [ "${MOD_ID}.mixins.json", "${MOD_ID}-common.mixins.json" ],
     "depends": {
         "minecraft": "~${MINECRAFT_VERSION}",
         "java": ">=${JAVA_VERSION}",
         "fabricloader": ">=${FABRIC_LOADER_VERSION}",
         "fabric-api": ">=${FABRIC_VERSION}",
+        "${ARCHITECTURY_ID}": ">=${ARCHITECTURY_VERSION}",
         "${APEXCORE_ID}": ">=${APEXCORE_VERSION}"
     },
     "custom": {

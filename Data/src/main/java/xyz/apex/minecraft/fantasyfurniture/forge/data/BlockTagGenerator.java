@@ -5,15 +5,16 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
-import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
+import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -21,21 +22,23 @@ import java.util.function.Supplier;
 
 public final class BlockTagGenerator extends BlockTagsProvider
 {
-    BlockTagGenerator(GatherDataEvent event, PackOutput packOutput)
+    private static final TagKey<Block> MOVEMENT_RESTRICTED = tag("c", "movement_restricted");
+
+    public BlockTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
-        tag(Tags.Blocks.Vanilla.WOOL, NordicSet.WOOL);
-        tag(Tags.Blocks.Vanilla.WOOL_CARPETS, NordicSet.CARPET);
+        tag(BlockTags.WOOL, Nordic.WOOL);
+        tag(BlockTags.WOOL_CARPETS, Nordic.CARPET);
 
         // multi-blocks have restricted movement
-        tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
-                NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
-                NordicSet.BENCH, NordicSet.CHAIR
+        tag(MOVEMENT_RESTRICTED,
+                Nordic.FLOOR_LIGHT, Nordic.TABLE_LARGE, Nordic.TABLE_WIDE,
+                Nordic.BENCH, Nordic.CHAIR
         );
     }
 
@@ -59,5 +62,10 @@ public final class BlockTagGenerator extends BlockTagsProvider
         }
         else if(obj instanceof Supplier<?> supplier) tag(builder, supplier.get()); // should wrap back around to Block instanceof branch
         else LogManager.getLogger().error("Unknown ObjectType: {}", obj.getClass().getCanonicalName());
+    }
+
+    private static TagKey<Block> tag(String namespace, String path)
+    {
+        return TagKey.create(ForgeRegistries.Keys.BLOCKS, new ResourceLocation(namespace, path));
     }
 }

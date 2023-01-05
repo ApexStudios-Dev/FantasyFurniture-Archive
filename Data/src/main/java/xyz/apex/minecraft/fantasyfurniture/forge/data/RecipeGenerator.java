@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 
 public final class RecipeGenerator extends RecipeProvider
 {
-    RecipeGenerator(PackOutput packOutput)
+    public RecipeGenerator(PackOutput packOutput)
     {
         super(packOutput);
     }
