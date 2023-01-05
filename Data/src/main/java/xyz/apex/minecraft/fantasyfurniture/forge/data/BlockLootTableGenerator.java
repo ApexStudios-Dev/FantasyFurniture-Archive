@@ -32,6 +32,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(Nordic.CHANDELIER.get());
         dropSelf(Nordic.CUSHION.get());
         dropSelf(Nordic.STOOL.get());
+        dropSelf(Nordic.CHEST.get());
     }
 
     @Override

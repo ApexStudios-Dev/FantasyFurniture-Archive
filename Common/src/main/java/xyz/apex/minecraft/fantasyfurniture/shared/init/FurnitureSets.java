@@ -191,4 +191,13 @@ public interface FurnitureSets
         ;
     }
     // endregion
+
+    static BlockBuilder<ChestBlock, Registrar, Registrar> chest(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/chest".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, ChestBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getChestShape)
+        ;
+    }
 }

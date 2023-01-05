@@ -6,6 +6,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.util.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.ChestBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
 
@@ -147,6 +148,8 @@ public interface AllVoxelShapes
                 box(12.5D, 3.5D, 4.5D, 13.5D, 4.5D, 11.5D)
         );
 
+        VoxelShape CHEST = box(-15D, 0D, 2D, 15D, 14D, 16D);
+
         private static void bootstrap() {}
     }
 
@@ -239,6 +242,20 @@ public interface AllVoxelShapes
     {
         var facing = blockState.getValue(SimpleSeatBlock.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    static VoxelShape getChestShape(VoxelShape current, ChestBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
     }
 
     private static VoxelShape shape(VoxelShape... shapes)

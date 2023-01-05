@@ -114,6 +114,16 @@ public final class BlockStateGenerator extends BlockStateProvider
         template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/cushion"));
 
         template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/stool"));
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chest"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.25F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -133,6 +143,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         templatedBlock(Nordic.CHANDELIER);
         facingBlock(Nordic.CUSHION, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.CHEST, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

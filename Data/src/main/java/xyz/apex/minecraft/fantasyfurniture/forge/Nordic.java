@@ -24,6 +24,7 @@ public interface Nordic
     RegistryObject<Block> CHANDELIER = dummyBlock("chandelier");
     RegistryObject<DummyHorizontalFacingBlock> CUSHION = dummyBlock("cushion", DummyHorizontalFacingBlock::new);
     RegistryObject<DummyHorizontalFacingBlock> STOOL = dummyBlock("stool", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> CHEST = dummyBlock("chest", DummyHorizontalFacingBlock::new);
 
     static void bootstrap() {}
 

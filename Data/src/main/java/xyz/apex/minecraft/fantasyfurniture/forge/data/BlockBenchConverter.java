@@ -35,6 +35,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertGeneric(furnitureSet, "chandelier");
         convertGeneric(furnitureSet, "cushion");
         convertGeneric(furnitureSet, "stool");
+        convertGeneric(furnitureSet, "chest");
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)

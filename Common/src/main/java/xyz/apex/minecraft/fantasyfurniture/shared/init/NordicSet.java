@@ -6,10 +6,7 @@ import net.minecraft.world.level.block.CarpetBlock;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.LightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.WallLightBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.*;
 
 public interface NordicSet
 {
@@ -27,6 +24,7 @@ public interface NordicSet
     BlockEntry<LightBlock> CHANDELIER = FurnitureSets.chandelier(NAME, () -> AllVoxelShapes.Nordic.CHANDELIER).register();
     BlockEntry<SimpleSeatBlock> CUSHION = FurnitureSets.cushion(NAME, () -> AllVoxelShapes.Nordic.CUSHION).register();
     BlockEntry<SimpleSeatBlock> STOOL = FurnitureSets.stool(NAME, () -> AllVoxelShapes.Nordic.STOOL).register();
+    BlockEntry<ChestBlock> CHEST = FurnitureSets.chest(NAME, () -> AllVoxelShapes.Nordic.CHEST).register();
 
     static void bootstrap()
     {
@@ -45,6 +43,7 @@ public interface NordicSet
                     output.accept(CHANDELIER);
                     output.accept(CUSHION);
                     output.accept(STOOL);
+                    output.accept(CHEST);
                 })
         );
     }

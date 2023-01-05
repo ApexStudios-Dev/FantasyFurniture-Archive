@@ -45,6 +45,8 @@ public interface FantasyFurniture extends ModPlatform
         BoneSet.bootstrap();
         RoyalSet.bootstrap();
         NecrolordSet.bootstrap();
+        AllBlockEntityTypes.bootstrap();
+        AllMenuTypes.bootstrap();
     }
 
     static boolean isEntityValidForSeat(Entity entity)
