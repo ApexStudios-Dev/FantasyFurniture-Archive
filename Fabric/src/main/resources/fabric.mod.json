@@ -72,6 +72,10 @@
         "modmenu": {
             "modmenu.discord": "https://discord.apexstudios.dev/",
             "parent": "${APEXCORE_ID}"
+        },
+        "mc-publish": {
+            "modrinth": "${MOD_ID}",
+            "curseforge": "${MOD_ID}"
         }
     }
 }
