@@ -8,7 +8,7 @@ import xyz.apex.minecraft.fantasyfurniture.shared.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.shared.menu.ChestMenu;
 
-public final class ChestBlock extends HorizontalInventoryMultiBlock<ChestBlockEntity, ChestMenu>
+public final class ChestBlock extends HorizontalInventoryBlock.AsMultiBlock<ChestBlockEntity, ChestMenu>
 {
     public ChestBlock(MultiBlockType multiBlockType, Properties properties)
     {

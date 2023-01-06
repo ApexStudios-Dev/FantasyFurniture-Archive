@@ -25,6 +25,14 @@ public interface Nordic
     RegistryObject<DummyHorizontalFacingBlock> CUSHION = dummyBlock("cushion", DummyHorizontalFacingBlock::new);
     RegistryObject<DummyHorizontalFacingBlock> STOOL = dummyBlock("stool", DummyHorizontalFacingBlock::new);
     RegistryObject<DummyHorizontalFacingBlock> CHEST = dummyBlock("chest", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> BOOKSHELF = dummyBlock("bookshelf", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> DESK_LEFT = dummyBlock("desk_left", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> DESK_RIGHT = dummyBlock("desk_right", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> DRAWER = dummyBlock("drawer", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> DRESSER = dummyBlock("dresser", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> LOCKBOX = dummyBlock("lockbox", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> WARDROBE_BOTTOM = dummyBlock("wardrobe_bottom", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalFacingBlock> WARDROBE_TOP = dummyBlock("wardrobe_top", DummyHorizontalFacingBlock::new);
 
     static void bootstrap() {}
 

@@ -25,6 +25,14 @@ public interface NordicSet
     BlockEntry<SimpleSeatBlock> CUSHION = FurnitureSets.cushion(NAME, () -> AllVoxelShapes.Nordic.CUSHION).register();
     BlockEntry<SimpleSeatBlock> STOOL = FurnitureSets.stool(NAME, () -> AllVoxelShapes.Nordic.STOOL).register();
     BlockEntry<ChestBlock> CHEST = FurnitureSets.chest(NAME, () -> AllVoxelShapes.Nordic.CHEST).register();
+    BlockEntry<BookshelfBlock> BOOKSHELF = FurnitureSets.bookshelf(NAME, () -> AllVoxelShapes.Nordic.BOOKSHELF).register();
+    BlockEntry<DeskBlock> DESK_LEFT = FurnitureSets.deskLeft(NAME, () -> AllVoxelShapes.Nordic.DESK_LEFT).register();
+    BlockEntry<DeskBlock> DESK_RIGHT = FurnitureSets.deskRight(NAME, () -> AllVoxelShapes.Nordic.DESK_RIGHT).register();
+    BlockEntry<DrawerBlock> DRAWER = FurnitureSets.drawer(NAME, () -> AllVoxelShapes.Nordic.DRAWER).register();
+    BlockEntry<DresserBlock> DRESSER = FurnitureSets.dresser(NAME, () -> AllVoxelShapes.Nordic.DRESSER).register();
+    BlockEntry<LockboxBlock> LOCKBOX = FurnitureSets.lockbox(NAME, () -> AllVoxelShapes.Nordic.LOCKBOX).register();
+    BlockEntry<WardrobeBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(NAME, () -> AllVoxelShapes.Nordic.WARDROBE_BOTTOM).register();
+    BlockEntry<SimpleMultiBlock.WithHorizontalFacing> WARDROBE_TOP = FurnitureSets.wardrobeTop(NAME, () -> AllVoxelShapes.Nordic.WARDROBE_TOP).register();
 
     static void bootstrap()
     {
@@ -44,6 +52,14 @@ public interface NordicSet
                     output.accept(CUSHION);
                     output.accept(STOOL);
                     output.accept(CHEST);
+                    output.accept(BOOKSHELF);
+                    output.accept(DESK_LEFT);
+                    output.accept(DESK_RIGHT);
+                    output.accept(DRAWER);
+                    output.accept(DRESSER);
+                    output.accept(LOCKBOX);
+                    output.accept(WARDROBE_BOTTOM);
+                    output.accept(WARDROBE_TOP);
                 })
         );
     }

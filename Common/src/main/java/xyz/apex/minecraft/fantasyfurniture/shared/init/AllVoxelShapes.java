@@ -6,9 +6,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.ChestBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.FloorLightBlock;
-import xyz.apex.minecraft.fantasyfurniture.shared.block.SimpleSeatBlock;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.*;
 
 public interface AllVoxelShapes
 {
@@ -150,6 +148,67 @@ public interface AllVoxelShapes
 
         VoxelShape CHEST = box(-15D, 0D, 2D, 15D, 14D, 16D);
 
+        VoxelShape BOOKSHELF = shape(
+                box(-15D, 0D, 1D, 15D, 30D, 15D),
+                box(-16D, 30D, 0D, 16D, 32D, 16D)
+        );
+
+        VoxelShape DESK_LEFT = shape(
+                box(13D, 0D, 0D, 15D, 9D, 2D),
+                box(13D, 7D, 1D, 15D, 13D, 3D),
+                box(13D, 7D, 13D, 15D, 13D, 15D),
+                box(-15D, 7D, 13D, -13D, 13D, 15D),
+                box(-15D, 0D, 0D, -13D, 9D, 2D),
+                box(-15D, 0D, 14D, -13D, 9D, 16D),
+                box(13D, 0D, 14D, 15D, 9D, 16D),
+                box(-16D, 13D, 0D, 16D, 16D, 16D),
+                box(-15D, 7D, 1D, -13D, 13D, 3D),
+                box(5D, 9D, 2D, 12D, 13D, 11D)
+        );
+
+        VoxelShape DESK_RIGHT = shape(
+                box(13D, 0D, 0D, 15D, 9D, 2D),
+                box(13D, 7D, 1D, 15D, 13D, 3D),
+                box(13D, 7D, 13D, 15D, 13D, 15D),
+                box(-15D, 7D, 13D, -13D, 13D, 15D),
+                box(-15D, 0D, 0D, -13D, 9D, 2D),
+                box(-15D, 0D, 14D, -13D, 9D, 16D),
+                box(13D, 0D, 14D, 15D, 9D, 16D),
+                box(-16D, 13D, 0D, 16D, 16D, 16D),
+                box(-15D, 7D, 1D, -13D, 13D, 3D),
+                box(-12D, 9D, 2D, -5D, 13D, 11D)
+        );
+
+        VoxelShape DRAWER = shape(
+                box(1D, 0D, 1D, 15D, 13D, 15D),
+                box(0D, 13D, 0D, 16D, 16D, 16D)
+        );
+
+        VoxelShape DRESSER = shape(
+                box(-15D, 0D, 1D, 15D, 16D, 15D),
+                box(-16D, 13D, 14D, 16D, 16D, 16D),
+                box(-16D, 13D, 0D, 16D, 16D, 2D)
+        );
+
+        VoxelShape LOCKBOX = shape(
+                box(2, 0, 3, 14, 9, 13),
+                box(2, 9, 5, 14, 10, 11)
+        );
+
+        VoxelShape WARDROBE_TOP = shape(
+                box(-15D, 3D, 0D, 15D, 14D, 16D),
+                box(-16D, 0D, 0D, 16D, 3D, 16D)
+        );
+
+        VoxelShape WARDROBE_BOTTOM = shape(
+                box(-14.75D, 0D, .25D, -12.25D, 31D, 2.75D),
+                box(-14.75D, 0D, 13.25D, -12.25D, 31D, 15.75D),
+                box(12.25D, 0D, 13.25D, 14.75D, 31D, 15.75D),
+                box(12.25D, 0D, .25D, 14.75D, 31D, 2.75D),
+                box(-14D, 2D, 1D, 14D, 31D, 15D),
+                box(-15D, 31D, 0D, 15D, 32D, 16D)
+        );
+
         private static void bootstrap() {}
     }
 
@@ -254,6 +313,94 @@ public interface AllVoxelShapes
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
         }
+
+        return shape;
+    }
+
+    static VoxelShape getBookshelfShape(VoxelShape current, BookshelfBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+        var index = block.getMultiBlockType().getIndex(blockState);
+
+        if(index == 2 || index == 3)
+        {
+            var offset = facing.getClockWise();
+            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        if(index == 1 || index == 3) shape = shape.move(0D, -1D, 0D);
+
+        return shape;
+    }
+
+    static VoxelShape getDeskShape(VoxelShape current, DeskBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
+    }
+
+    static VoxelShape getDrawerShape(VoxelShape current, DrawerBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    static VoxelShape getDresserShape(VoxelShape current, DresserBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
+    }
+
+    static VoxelShape getLockboxShape(VoxelShape current, LockboxBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    static VoxelShape getWardrobeTopShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
+    }
+
+    static VoxelShape getWardrobeBottomShape(VoxelShape current, WardrobeBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+        var index = block.getMultiBlockType().getIndex(blockState);
+
+        if(index == 2 || index == 3)
+        {
+            var offset = facing.getClockWise();
+            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        if(index == 1 || index == 3) shape = shape.move(0D, -1D, 0D);
 
         return shape;
     }

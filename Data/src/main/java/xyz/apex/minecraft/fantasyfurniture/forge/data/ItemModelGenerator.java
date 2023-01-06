@@ -40,6 +40,14 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(Nordic.CUSHION);
         blockItem(Nordic.STOOL);
         blockItem(Nordic.CHEST);
+        blockItem(Nordic.BOOKSHELF);
+        blockItem(Nordic.DESK_LEFT);
+        blockItem(Nordic.DESK_RIGHT);
+        blockItem(Nordic.DRAWER);
+        blockItem(Nordic.DRESSER);
+        blockItem(Nordic.LOCKBOX);
+        blockItem(Nordic.WARDROBE_BOTTOM);
+        blockItem(Nordic.WARDROBE_TOP);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

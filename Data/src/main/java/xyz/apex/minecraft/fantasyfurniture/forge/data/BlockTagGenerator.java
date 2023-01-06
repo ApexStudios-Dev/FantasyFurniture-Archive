@@ -38,7 +38,9 @@ public final class BlockTagGenerator extends BlockTagsProvider
         // multi-blocks have restricted movement
         tag(MOVEMENT_RESTRICTED,
                 Nordic.FLOOR_LIGHT, Nordic.TABLE_LARGE, Nordic.TABLE_WIDE,
-                Nordic.BENCH, Nordic.CHAIR, Nordic.CHEST
+                Nordic.BENCH, Nordic.CHAIR, Nordic.CHEST, Nordic.BOOKSHELF,
+                Nordic.DESK_LEFT, Nordic.DESK_RIGHT, Nordic.DRAWER, Nordic.DRESSER,
+                Nordic.WARDROBE_BOTTOM, Nordic.WARDROBE_TOP
         );
     }
 

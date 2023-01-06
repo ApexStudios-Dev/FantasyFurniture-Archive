@@ -124,6 +124,72 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/bookshelf"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, -135F, 0F)
+                        .translation(-2F, -3.5F, 0F)
+                        .scale(.35F, .35F, .35F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/desk_left"))
+                .renderType(cutout)
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/desk_right"))
+                .renderType(cutout)
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/drawer"));
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/dresser"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2.5F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/lockbox"));
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wardrobe_bottom"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2F, -3.5F, 0F)
+                        .scale(.35F, .35F, .35F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wardrobe_top"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(-2F, -3.5F, 0F)
+                        .scale(.35F, .35F, .35F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -144,6 +210,14 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(Nordic.CUSHION, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.STOOL, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

@@ -200,4 +200,83 @@ public interface FurnitureSets
                 .hitbox(baseShape, AllVoxelShapes::getChestShape)
         ;
     }
+
+    static BlockBuilder<BookshelfBlock, Registrar, Registrar> bookshelf(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/bookshelf".formatted(furnitureSet), AllMultiBlockTypes.MB_1x2x2_FACING, BookshelfBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getBookshelfShape)
+        ;
+    }
+
+    // region: Desk
+    private static BlockBuilder<DeskBlock, Registrar, Registrar> desk(String furnitureSet, String type, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/desk_%s".formatted(furnitureSet, type), AllMultiBlockTypes.MB_1x1x2_FACING, DeskBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getDeskShape)
+                .renderType(() -> RenderType::cutout)
+        ;
+    }
+
+    static BlockBuilder<DeskBlock, Registrar, Registrar> deskLeft(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return desk(furnitureSet, "left", baseShape);
+    }
+
+    static BlockBuilder<DeskBlock, Registrar, Registrar> deskRight(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return desk(furnitureSet, "right", baseShape);
+    }
+    // endregion
+
+    static BlockBuilder<DrawerBlock, Registrar, Registrar> drawer(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/drawer".formatted(furnitureSet), DrawerBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getDrawerShape)
+        ;
+    }
+
+    static BlockBuilder<DresserBlock, Registrar, Registrar> dresser(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/dresser".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, DresserBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getDresserShape)
+        ;
+    }
+
+    static BlockBuilder<LockboxBlock, Registrar, Registrar> lockbox(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/lockbox".formatted(furnitureSet), LockboxBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getLockboxShape)
+        ;
+    }
+
+    // region: Wardrobe
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> wardrobeTop(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/wardrobe_top".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, SimpleMultiBlock.WithHorizontalFacing::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getWardrobeTopShape)
+                .noOcclusion()
+        ;
+    }
+
+    static BlockBuilder<WardrobeBlock, Registrar, Registrar> wardrobeBottom(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/wardrobe_bottom".formatted(furnitureSet), AllMultiBlockTypes.MB_1x2x2_FACING, WardrobeBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getWardrobeBottomShape)
+        ;
+    }
+    // endregion
 }

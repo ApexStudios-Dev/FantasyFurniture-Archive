@@ -36,6 +36,14 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertGeneric(furnitureSet, "cushion");
         convertGeneric(furnitureSet, "stool");
         convertGeneric(furnitureSet, "chest");
+        convertGeneric(furnitureSet, "bookshelf");
+        convertDesk(furnitureSet, "left");
+        convertDesk(furnitureSet, "right");
+        convertGeneric(furnitureSet, "drawer");
+        convertGeneric(furnitureSet, "dresser");
+        convertGeneric(furnitureSet, "lockbox");
+        convertWardrobe(furnitureSet, "bottom");
+        convertWardrobe(furnitureSet, "top");
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)
@@ -43,7 +51,22 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         return convertGeneric(furnitureSet, "table_%s".formatted(type));
     }
 
+    private BlockModelBuilder convertDesk(String furnitureSet, String type)
+    {
+        return convertGeneric(furnitureSet, "desk_%s".formatted(type), "desk", "desk");
+    }
+
+    private BlockModelBuilder convertWardrobe(String furnitureSet, String type)
+    {
+        return convertGeneric(furnitureSet, "wardrobe_%s".formatted(type), "wardrobe", "wardrobe");
+    }
+
     private BlockModelBuilder convertGeneric(String furnitureSet, String blockType)
+    {
+        return convertGeneric(furnitureSet, blockType, blockType, blockType);
+    }
+
+    private BlockModelBuilder convertGeneric(String furnitureSet, String blockType, String textureKey, String texturePath)
     {
         return blockModelBuilder(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
                 // unchecked as template generation is done during block state generation
@@ -52,7 +75,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 // and system will throw errors, saying model could not be found
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/templates/%s".formatted(blockType))))
                 .texture("particle", new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/particle".formatted(furnitureSet)))
-                .texture(blockType, new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, blockType)))
+                .texture(textureKey, new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, texturePath)))
         ;
     }
 }
