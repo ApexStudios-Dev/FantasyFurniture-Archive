@@ -197,6 +197,8 @@ public final class BlockStateGenerator extends BlockStateProvider
     {
         registerTemplates();
 
+        facingBlock(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK, HorizontalDirectionalBlock.FACING);
+
         simpleBlock(Nordic.WOOL);
         carpet(Nordic.CARPET, Nordic.WOOL);
         wallLight(Nordic.WALL_LIGHT);

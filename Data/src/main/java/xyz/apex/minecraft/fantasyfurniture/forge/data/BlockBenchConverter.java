@@ -20,6 +20,8 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
     @Override
     protected void convertModels()
     {
+        convertBasic("furniture_station");
+
         convertFurnitureSet(Nordic.NAME);
     }
 
@@ -76,6 +78,15 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/templates/%s".formatted(blockType))))
                 .texture("particle", new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/particle".formatted(furnitureSet)))
                 .texture(textureKey, new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/%s".formatted(furnitureSet, texturePath)))
+        ;
+    }
+
+    private BlockModelBuilder convertBasic(String blockName)
+    {
+        return blockModelBuilder(new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s".formatted(blockName)))
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/block")))
+                .texture("particle", new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/particle".formatted(blockName)))
+                .texture(blockName, new ResourceLocation(FantasyFurnitureDataMod.ID, "block/%s/block".formatted(blockName)))
         ;
     }
 }

@@ -20,6 +20,8 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
     @Override
     protected void generate()
     {
+        dropSelf(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK.get());
+
         dropSelf(Nordic.WOOL.get());
         dropSelf(Nordic.CARPET.get());
         dropSelf(Nordic.WALL_LIGHT.get());

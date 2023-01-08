@@ -27,6 +27,8 @@ public final class ItemModelGenerator extends ItemModelProvider
     @Override
     protected void registerModels()
     {
+        blockItem(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK);
+
         blockItem(Nordic.WOOL);
         blockItem(Nordic.CARPET);
         blockItem(Nordic.WALL_LIGHT);

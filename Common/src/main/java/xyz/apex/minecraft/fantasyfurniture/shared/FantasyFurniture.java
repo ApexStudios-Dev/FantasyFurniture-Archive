@@ -10,11 +10,16 @@ import net.minecraft.world.entity.player.Player;
 
 import xyz.apex.minecraft.apexcore.shared.platform.ModPlatform;
 import xyz.apex.minecraft.apexcore.shared.registry.Registrar;
+import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.EntityEntry;
+import xyz.apex.minecraft.apexcore.shared.registry.entry.RecipeEntry;
+import xyz.apex.minecraft.apexcore.shared.util.Properties;
 import xyz.apex.minecraft.apexcore.shared.util.Tags;
+import xyz.apex.minecraft.fantasyfurniture.shared.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.shared.entity.Seat;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.*;
+import xyz.apex.minecraft.fantasyfurniture.shared.recipe.FurnitureStationRecipe;
 
 public interface FantasyFurniture extends ModPlatform
 {
@@ -29,6 +34,14 @@ public interface FantasyFurniture extends ModPlatform
                 .fireImmune()
                 .renderer(() -> () -> SeatRenderer::new)
             .register();
+
+    BlockEntry<FurnitureStationBlock> FURNITURE_STATION_BLOCK = REGISTRAR
+            .block("furniture_station", FurnitureStationBlock::new)
+                .noOcclusion()
+                .initialProperties(Properties.BLOCK_PLANKS)
+            .register();
+
+    RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = REGISTRAR.recipe("furniture_station", FurnitureStationRecipe.Serializer::new);
 
     TagKey<EntityType<?>> SEAT_BLACKLIST = Tags.EntityTypes.tag(ID, "seat_blacklist");
 

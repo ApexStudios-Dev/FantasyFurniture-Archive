@@ -7,6 +7,7 @@ import xyz.apex.minecraft.fantasyfurniture.shared.menu.*;
 
 public interface AllMenuTypes
 {
+    MenuEntry<FurnitureStationMenu> FURNITURE_STATION = FantasyFurniture.REGISTRAR.menu("furniture_station", FurnitureStationMenu::new, () -> FurnitureStationMenuScreen::new);
     MenuEntry<ChestMenu> CHEST = FantasyFurniture.REGISTRAR.menu("chest", ChestMenu::new, () -> ChestMenuScreen::new);
     MenuEntry<BookshelfMenu> BOOKSHELF = FantasyFurniture.REGISTRAR.menu("bookshelf", BookshelfMenu::new, () -> BookshelfMenuScreen::new);
     MenuEntry<DeskMenu> DESK = FantasyFurniture.REGISTRAR.menu("desk", DeskMenu::new, () -> DeskMenuScreen::new);

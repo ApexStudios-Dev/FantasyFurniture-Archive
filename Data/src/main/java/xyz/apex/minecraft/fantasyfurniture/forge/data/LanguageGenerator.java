@@ -16,6 +16,8 @@ public final class LanguageGenerator extends LanguageProvider
     @Override
     protected void addTranslations()
     {
+        addBlock(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK, "Furniture Station");
+
         addBlock(Nordic.WOOL, "Nordic Wool");
         addBlock(Nordic.CARPET, "Nordic Carpet");
         addBlock(Nordic.WALL_LIGHT, "Nordic Wall Light");

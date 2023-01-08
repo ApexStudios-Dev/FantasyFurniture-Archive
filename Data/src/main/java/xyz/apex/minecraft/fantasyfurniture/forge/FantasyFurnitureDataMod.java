@@ -5,6 +5,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -17,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import xyz.apex.minecraft.fantasyfurniture.forge.data.*;
 import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyEntity;
+import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyHorizontalFacingBlock;
 
 import java.util.function.Function;
 
@@ -28,8 +31,13 @@ public final class FantasyFurnitureDataMod
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ID);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ID);
 
     public static final RegistryObject<EntityType<?>> SEAT_ENTITY_TYPE = dummyEntityType("seat");
+    public static final RegistryObject<DummyHorizontalFacingBlock> FURNITURE_STATION_BLOCK = dummyBlock("furniture_station", DummyHorizontalFacingBlock::new);
+    public static final RegistryObject<RecipeSerializer<FurnitureStationRecipe>> FURNITURE_STATION_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("furniture_station", FurnitureStationRecipe.Serializer::new);
+    public static final RegistryObject<RecipeType<FurnitureStationRecipe>> FURNITURE_STATION_RECIPE_TYPE = RECIPE_TYPES.register("furniture_station", () -> new RecipeType<>() {});
 
     public FantasyFurnitureDataMod()
     {
@@ -40,6 +48,8 @@ public final class FantasyFurnitureDataMod
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
         ENTITY_TYPES.register(modBus);
+        RECIPE_SERIALIZERS.register(modBus);
+        RECIPE_TYPES.register(modBus);
 
         modBus.addListener(this::onGatherData);
     }
