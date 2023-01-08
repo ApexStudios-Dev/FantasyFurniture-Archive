@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
-public final class DummyHorizontalFacingBlock extends HorizontalDirectionalBlock
+public class DummyHorizontalFacingBlock extends HorizontalDirectionalBlock
 {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 

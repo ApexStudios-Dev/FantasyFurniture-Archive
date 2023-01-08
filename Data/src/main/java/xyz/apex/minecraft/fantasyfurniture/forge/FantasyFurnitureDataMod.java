@@ -21,6 +21,7 @@ import xyz.apex.minecraft.fantasyfurniture.forge.data.*;
 import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyEntity;
 import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyHorizontalFacingBlock;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Mod(FantasyFurnitureDataMod.ID)
@@ -75,21 +76,31 @@ public final class FantasyFurnitureDataMod
         generator.addProvider(server, (DataProvider.Factory<RecipeGenerator>) RecipeGenerator::new);
     }
 
-    static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory)
+    static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory, BiFunction<T, Item.Properties, Item> itemFactory)
     {
         var block = BLOCKS.register(blockName, () -> blockFactory.apply(BlockBehaviour.Properties.copy(Blocks.STONE)));
-        ITEMS.register(blockName, () -> new BlockItem(block.get(), new Item.Properties()));
+        dummyItem(blockName, properties -> itemFactory.apply(block.get(), properties));
         return block;
+    }
+
+    static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory)
+    {
+        return dummyBlock(blockName, blockFactory, BlockItem::new);
     }
 
     static RegistryObject<Block> dummyBlock(String blockName)
     {
-        return dummyBlock(blockName, Block::new);
+        return dummyBlock(blockName, Block::new, BlockItem::new);
+    }
+
+    static <T extends Item> RegistryObject<T> dummyItem(String itemName, Function<Item.Properties, T> itemFactory)
+    {
+        return ITEMS.register(itemName, () -> itemFactory.apply(new Item.Properties()));
     }
 
     static RegistryObject<Item> dummyItem(String itemName)
     {
-        return ITEMS.register(itemName, () -> new Item(new Item.Properties()));
+        return dummyItem(itemName, Item::new);
     }
 
     private static RegistryObject<EntityType<?>> dummyEntityType(String entityTypeName)

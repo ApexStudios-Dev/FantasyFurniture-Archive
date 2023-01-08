@@ -1,11 +1,15 @@
 package xyz.apex.minecraft.fantasyfurniture.forge;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.registries.RegistryObject;
 
 import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyHorizontalFacingBlock;
+import xyz.apex.minecraft.fantasyfurniture.forge.dummies.DummyHorizontalItemNameBlock;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public interface Nordic
@@ -14,7 +18,7 @@ public interface Nordic
 
     RegistryObject<Block> WOOL = dummyBlock("wool");
     RegistryObject<Block> CARPET = dummyBlock("carpet");
-    RegistryObject<DummyHorizontalFacingBlock> WALL_LIGHT = dummyBlock("wall_light", DummyHorizontalFacingBlock::new);
+    RegistryObject<DummyHorizontalItemNameBlock> WALL_LIGHT = dummyBlock("wall_light", DummyHorizontalItemNameBlock::new, ItemNameBlockItem::new);
     RegistryObject<Block> FLOOR_LIGHT = dummyBlock("floor_light", DummyHorizontalFacingBlock::new);
     RegistryObject<DummyHorizontalFacingBlock> TABLE_LARGE = dummyBlock("table_large", DummyHorizontalFacingBlock::new);
     RegistryObject<Block> TABLE_SMALL = dummyBlock("table_small");
@@ -39,6 +43,11 @@ public interface Nordic
     private static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory)
     {
         return FantasyFurnitureDataMod.dummyBlock("%s/%s".formatted(NAME, blockName), blockFactory);
+    }
+
+    private static <T extends Block> RegistryObject<T> dummyBlock(String blockName, Function<BlockBehaviour.Properties, T> blockFactory, BiFunction<T, Item.Properties, Item> itemFactory)
+    {
+        return FantasyFurnitureDataMod.dummyBlock("%s/%s".formatted(NAME, blockName), blockFactory, itemFactory);
     }
 
     private static RegistryObject<Block> dummyBlock(String blockName)
