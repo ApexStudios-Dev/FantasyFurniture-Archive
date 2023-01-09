@@ -18,7 +18,6 @@ import xyz.apex.minecraft.fantasyfurniture.shared.menu.FurnitureStationMenu;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-// TODO: Scrollbar
 public final class FurnitureStationMenuScreen extends AbstractContainerScreen<FurnitureStationMenu>
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(FantasyFurniture.ID, "textures/gui/container/furniture_station.png");
