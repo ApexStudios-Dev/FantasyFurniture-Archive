@@ -1,7 +1,18 @@
 package xyz.apex.minecraft.fantasyfurniture.shared;
 
+import dev.architectury.hooks.PackRepositoryHooks;
 import dev.architectury.hooks.level.entity.PlayerHooks;
+import dev.architectury.utils.Env;
+import dev.architectury.utils.GameInstance;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +31,8 @@ import xyz.apex.minecraft.fantasyfurniture.shared.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.shared.entity.Seat;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.*;
 import xyz.apex.minecraft.fantasyfurniture.shared.recipe.FurnitureStationRecipe;
+
+import java.util.function.Supplier;
 
 public interface FantasyFurniture extends ModPlatform
 {
@@ -60,6 +73,31 @@ public interface FantasyFurniture extends ModPlatform
         NecrolordSet.bootstrap();
         AllBlockEntityTypes.bootstrap();
         AllMenuTypes.bootstrap();
+    }
+
+    @Override
+    default void initializeSided(Env side)
+    {
+        if(side == Env.CLIENT) registerResourcePacks();
+    }
+
+    @Environment(EnvType.CLIENT)
+    private void registerResourcePacks()
+    {
+        registerResourcePack("ctm", "ctm_support", () -> Component.literal("CTM Mod Support"));
+    }
+
+    private void registerResourcePack(@Nullable String requiredMod, String packId, Supplier<Component> displayName)
+    {
+        if(requiredMod != null && !requiredMod.isEmpty() && isModLoaded(requiredMod)) return;
+
+        asMod().findResource("packs", packId).ifPresent(path -> {
+            var resources = new PathPackResources("%s:%s".formatted(ID, packId), path, true);
+            PackRepositoryHooks.addSource(GameInstance.getClient().getResourcePackRepository(), onLoad -> {
+                var pack = Pack.readMetaAndCreate("%s:builtin/%s".formatted(ID, packId), displayName.get(), false, builtInPackId -> resources, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
+                if(pack != null) onLoad.accept(pack);
+            });
+        });
     }
 
     static boolean isEntityValidForSeat(Entity entity)

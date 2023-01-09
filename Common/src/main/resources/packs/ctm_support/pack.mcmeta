@@ -1,0 +1,36 @@
+{
+    "pack": {
+        "description": {
+            "text": "C",
+            "color": "#51b4fe",
+            "extra": [
+                {
+                    "text": "T",
+                    "color": "#ec7e14",
+                    "bold": true
+                },
+                {
+                    "text": "M",
+                    "color": "#e7320f",
+                    "bold": true,
+                    "extra": [
+                        {
+                            "text": " ",
+                            "color": "gray",
+                            "bold": false,
+                            "extra": [
+                                {
+                                    "text": "Mod Support",
+                                    "italic": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "pack_format": 12,
+        "forge:resource_pack_format": 12,
+        "forge:data_pack_format": 10
+    }
+}
