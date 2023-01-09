@@ -57,7 +57,10 @@
     "entrypoints": {
         "main": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
         "client": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
-        "server": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ]
+        "server": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "rei_client": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.rei.ReiFantasyFurnitureFabricClientPlugin" ],
+        "rei_common": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.rei.ReiFantasyFurnitureFabricServerPlugin" ],
+        "emi": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.emi.EmiFantasyFurnitureFabricPlugin" ]
     },
     "mixins": [ "${MOD_ID}.mixins.json", "${MOD_ID}-common.mixins.json" ],
     "depends": {

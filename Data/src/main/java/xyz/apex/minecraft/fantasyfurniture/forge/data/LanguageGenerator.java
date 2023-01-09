@@ -17,6 +17,8 @@ public final class LanguageGenerator extends LanguageProvider
     protected void addTranslations()
     {
         addBlock(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK, "Furniture Station");
+        add(FantasyFurnitureDataMod.FURNITURE_STATION_RECIPE_TYPE.getId().toLanguageKey("category.rei"), "Furniture Station");
+        add(FantasyFurnitureDataMod.FURNITURE_STATION_RECIPE_TYPE.getId().toLanguageKey("emi.category"), "Furniture Station");
 
         addBlock(Nordic.WOOL, "Nordic Wool");
         addBlock(Nordic.CARPET, "Nordic Carpet");

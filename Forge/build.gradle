@@ -42,6 +42,7 @@ repositories {
 	maven { url 'https://dvs1.progwml6.com/files/maven/' }
 	maven { url 'https://modmaven.dev/' }
 	maven { url 'https://maven.covers1624.net/' }
+	maven { url 'https://maven.shedaniel.me' }
 
 	maven {
 		url 'https://www.cursemaven.com'
@@ -63,10 +64,26 @@ dependencies {
 	shadowCommon(project(path: ':Common', configuration: 'transformProductionForge')) { transitive false }
 	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 
+	def recipeLookupIncludeType = rootProject.hasProperty('RECIPE_LOOKUP_INCLUDE') ? rootProject.property('RECIPE_LOOKUP_INCLUDE') : ''
+
 	// JEI
 	if(rootProject.hasProperty('JEI_VERSION')) {
 		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}"
-		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}"
+
+		if(recipeLookupIncludeType == 'jei') {
+			modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}"
+		}
+	}
+
+	// REI
+	if(rootProject.hasProperty('REI_VERSION')) {
+		modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-forge:${REI_VERSION}"
+		modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_VERSION}"
+		modCompileOnly "me.shedaniel:RoughlyEnoughItems-forge:${REI_VERSION}" // This should be `modRuntimeOnly` but annotations only exist here and we need those at compile time
+
+		if(recipeLookupIncludeType == 'rei') {
+			modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${REI_VERSION}"
+		}
 	}
 
 	// Jade

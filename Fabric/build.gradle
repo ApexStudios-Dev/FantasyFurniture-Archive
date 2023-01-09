@@ -56,6 +56,8 @@ repositories {
 	maven { url 'https://dvs1.progwml6.com/files/maven/' }
 	maven { url 'https://modmaven.dev/' }
 	maven { url 'https://maven.covers1624.net/' }
+	maven { url 'https://maven.shedaniel.me' }
+	maven { url 'https://maven.terraformersmc.com/' }
 
 	maven {
 		url 'https://www.cursemaven.com'
@@ -93,11 +95,38 @@ dependencies {
 	shadersRuntimeOnly 'io.github.douira:glsl-transformer:2.0.0-pre8'
 	shadersRuntimeOnly 'org.anarres:jcpp:1.4.14'
 
+	def recipeLookupIncludeType = rootProject.hasProperty('RECIPE_LOOKUP_INCLUDE') ? rootProject.property('RECIPE_LOOKUP_INCLUDE') : ''
+
 	// JEI
 	if(rootProject.hasProperty('JEI_VERSION')) {
 		modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
-		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
-		modShadersRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+
+		if(recipeLookupIncludeType == 'jei') {
+			modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+			modShadersRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+		}
+	}
+
+	// REI
+	if(rootProject.hasProperty('REI_VERSION')) {
+		modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_VERSION}"
+		modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_VERSION}"
+
+		modShadersCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_VERSION}"
+		modShadersCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_VERSION}"
+
+		if(recipeLookupIncludeType == 'rei') {
+			modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${REI_VERSION}"
+			modShadersRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${REI_VERSION}"
+		}
+	}
+
+	if(rootProject.hasProperty('EMI_VERSION')) {
+		modCompileOnly "dev.emi:emi:${EMI_VERSION}+${MINECRAFT_VERSION}"
+
+		if(recipeLookupIncludeType == 'emi') {
+			modRuntimeOnly "dev.emi:emi:${EMI_VERSION}+${MINECRAFT_VERSION}"
+		}
 	}
 
 	// Jade
