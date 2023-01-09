@@ -39,20 +39,34 @@ final class ReiFurnitureStationRecipeDisplayCategory implements DisplayCategory<
     }
 
     @Override
+    public int getDisplayWidth(ReiFurnitureStationRecipeDisplay display)
+    {
+        return 119;
+    }
+
+    @Override
+    public int getDisplayHeight()
+    {
+        return 36;
+    }
+
+    @Override
     public List<Widget> setupDisplay(ReiFurnitureStationRecipeDisplay display, Rectangle bounds)
     {
-        var startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() - 13);
         List<Widget> widgets = Lists.newArrayList();
 
+        var x = bounds.getX() + 6;
+        var y = bounds.getY() + 6;
+
         widgets.add(Widgets.createRecipeBase(bounds));
-        widgets.add(Widgets.createArrow(new Point(startPoint.x + 27, startPoint.y + 4)));
-        widgets.add(Widgets.createResultSlotBackground(new Point(startPoint.x + 61, startPoint.y + 5)));
-        widgets.add(Widgets.createSlot(new Point(startPoint.x + 61, startPoint.y + 5)).entries(display.getOutputEntries().get(FurnitureStationMenu.SLOT_RESULT)).disableBackground().markOutput());
+        widgets.add(Widgets.createArrow(new Point(x + 56, y + 4)));
+        widgets.add(Widgets.createResultSlotBackground(new Point(x + 86, y + 4)));
+        widgets.add(Widgets.createSlot(new Point(x + 86, y + 4)).entries(display.getOutputEntries().get(FurnitureStationMenu.SLOT_RESULT)).disableBackground().markOutput());
 
         var inputEntries = display.getInputEntries();
-        widgets.add(Widgets.createSlot(new Point(startPoint.x, startPoint.y - 14)).entries(inputEntries.get(FurnitureStationMenu.SLOT_INGREDIENT_LEFT)).markInput());
-        widgets.add(Widgets.createSlot(new Point(startPoint.x, startPoint.y + 4)).entries(inputEntries.get(FurnitureStationMenu.SLOT_INGREDIENT_RIGHT)).markInput());
-        widgets.add(Widgets.createSlot(new Point(startPoint.x, startPoint.y + 22)).entries(inputEntries.get(FurnitureStationMenu.SLOT_BINDING_AGENT)).markInput());
+        widgets.add(Widgets.createSlot(new Point(x, y + 4)).entries(inputEntries.get(FurnitureStationMenu.SLOT_INGREDIENT_LEFT)).markInput());
+        widgets.add(Widgets.createSlot(new Point(x + 18, y + 4)).entries(inputEntries.get(FurnitureStationMenu.SLOT_INGREDIENT_RIGHT)).markInput());
+        widgets.add(Widgets.createSlot(new Point(x + 36, y + 4)).entries(inputEntries.get(FurnitureStationMenu.SLOT_BINDING_AGENT)).markInput());
 
         return widgets;
     }
