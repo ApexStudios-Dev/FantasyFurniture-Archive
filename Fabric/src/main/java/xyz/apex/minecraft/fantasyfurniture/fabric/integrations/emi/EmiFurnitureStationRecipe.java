@@ -37,7 +37,7 @@ final class EmiFurnitureStationRecipe implements EmiRecipe
     @Override
     public EmiRecipeCategory getCategory()
     {
-        return EmiFantasyFurnitureFabricPlugin.FURNITURE_STATION_CATEGORY;
+        return EmiFantasyFurnitureFabricPlugin.FURNITURE_STATION_CATEGORY.get();
     }
 
     @Override
