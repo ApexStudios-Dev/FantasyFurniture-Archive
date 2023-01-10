@@ -89,7 +89,7 @@ public interface FantasyFurniture extends ModPlatform
 
     private void registerResourcePack(@Nullable String requiredMod, String packId, Supplier<Component> displayName)
     {
-        if(requiredMod != null && !requiredMod.isEmpty() && isModLoaded(requiredMod)) return;
+        if(requiredMod != null && !requiredMod.isEmpty() && !isModLoaded(requiredMod)) return;
 
         asMod().findResource("packs", packId).ifPresent(path -> {
             var resources = new PathPackResources("%s:%s".formatted(ID, packId), path, true);
