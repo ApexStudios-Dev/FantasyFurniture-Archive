@@ -38,11 +38,30 @@ architectury {
 
 loom {
 	runs {
+		clientAuthed {
+			inherit(client)
+		}
+
 		shaders {
 			inherit(client)
 			source(sourceSets.shaders)
 		}
+
+		shadersAuthed {
+			inherit(shaders)
+		}
 	}
+
+	settingsPostEdit.add(new java.util.function.Consumer<net.fabricmc.loom.configuration.ide.RunConfig>() {
+		@Override
+		void accept(net.fabricmc.loom.configuration.ide.RunConfig runConfig) {
+			if(runConfig.configName.toLowerCase(Locale.ROOT).contains('authed')) {
+				runConfig.programArgs.add('--launch_target')
+				runConfig.programArgs.add(runConfig.mainClass)
+				runConfig.mainClass = 'net.covers1624.devlogin.DevLogin'
+			}
+		}
+	})
 
 	createRemapConfigurations(sourceSets.shaders)
 }
@@ -72,6 +91,7 @@ repositories {
 
 dependencies {
 	// Main
+	runtimeClasspath "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
 	modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
 	modApi "dev.architectury:architectury-fabric:${ARCHITECTURY_VERSION}"
