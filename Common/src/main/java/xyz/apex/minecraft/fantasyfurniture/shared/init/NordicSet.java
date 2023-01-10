@@ -35,6 +35,7 @@ public interface NordicSet
     BlockEntry<SimpleMultiBlock.WithHorizontalFacing> WARDROBE_TOP = FurnitureSets.wardrobeTop(NAME, () -> AllVoxelShapes.Nordic.WARDROBE_TOP).register();
     BlockEntry<SimpleHorizontalFacingBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(NAME, () -> AllVoxelShapes.Nordic.PAINTING_SMALL).register();
     BlockEntry<SimpleMultiBlock.WithHorizontalFacing> PAINTING_WIDE = FurnitureSets.paintingWide(NAME, () -> AllVoxelShapes.Nordic.PAINTING_WIDE).register();
+    BlockEntry<OvenBlock> OVEN = FurnitureSets.oven(NAME, () -> AllVoxelShapes.Nordic.OVEN).register();
 
     static void bootstrap()
     {
@@ -64,6 +65,7 @@ public interface NordicSet
                     output.accept(WARDROBE_TOP);
                     output.accept(PAINTING_WIDE);
                     output.accept(PAINTING_SMALL);
+                    output.accept(OVEN);
                 })
         );
     }

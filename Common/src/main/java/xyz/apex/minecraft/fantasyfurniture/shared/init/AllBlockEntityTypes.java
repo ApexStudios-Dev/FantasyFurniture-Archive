@@ -24,6 +24,7 @@ public interface AllBlockEntityTypes
     BlockEntityEntry<DresserBlockEntity> DRESSER = register("dresser", DresserBlockEntity::new, NordicSet.DRESSER);
     BlockEntityEntry<LockboxBlockEntity> LOCKBOX = register("lockbox", LockboxBlockEntity::new, NordicSet.LOCKBOX);
     BlockEntityEntry<WardrobeBlockEntity> WARDROBE = register("wardrobe", WardrobeBlockEntity::new, NordicSet.WARDROBE_BOTTOM);
+    BlockEntityEntry<OvenBlockEntity> OVEN = register("oven", OvenBlockEntity::new, NordicSet.OVEN);
 
     static void bootstrap()
     {

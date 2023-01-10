@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -295,6 +296,16 @@ public interface FurnitureSets
                 .multiBlock("%s/painting_wide".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, SimpleMultiBlock.WithHorizontalFacing::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getPaintingWideShape)
+        ;
+    }
+
+    static BlockBuilder<OvenBlock, Registrar, Registrar> oven(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/oven".formatted(furnitureSet), OvenBlock::new)
+                .copyFrom(() -> Blocks.SMOKER)
+                .hitbox(baseShape, AllVoxelShapes::getOvenShape)
+                .renderType(() -> RenderType::cutout)
         ;
     }
 }

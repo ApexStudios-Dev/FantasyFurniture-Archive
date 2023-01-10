@@ -216,6 +216,10 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/oven"))
+                .renderType(cutout)
+        ;
     }
 
     @Override
@@ -248,6 +252,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(Nordic.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.OVEN, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
