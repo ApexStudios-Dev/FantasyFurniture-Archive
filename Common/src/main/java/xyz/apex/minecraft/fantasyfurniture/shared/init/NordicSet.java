@@ -33,6 +33,8 @@ public interface NordicSet
     BlockEntry<LockboxBlock> LOCKBOX = FurnitureSets.lockbox(NAME, () -> AllVoxelShapes.Nordic.LOCKBOX).register();
     BlockEntry<WardrobeBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(NAME, () -> AllVoxelShapes.Nordic.WARDROBE_BOTTOM).register();
     BlockEntry<SimpleMultiBlock.WithHorizontalFacing> WARDROBE_TOP = FurnitureSets.wardrobeTop(NAME, () -> AllVoxelShapes.Nordic.WARDROBE_TOP).register();
+    BlockEntry<SimpleHorizontalFacingBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(NAME, () -> AllVoxelShapes.Nordic.PAINTING_SMALL).register();
+    BlockEntry<SimpleMultiBlock.WithHorizontalFacing> PAINTING_WIDE = FurnitureSets.paintingWide(NAME, () -> AllVoxelShapes.Nordic.PAINTING_WIDE).register();
 
     static void bootstrap()
     {
@@ -60,6 +62,8 @@ public interface NordicSet
                     output.accept(LOCKBOX);
                     output.accept(WARDROBE_BOTTOM);
                     output.accept(WARDROBE_TOP);
+                    output.accept(PAINTING_WIDE);
+                    output.accept(PAINTING_SMALL);
                 })
         );
     }

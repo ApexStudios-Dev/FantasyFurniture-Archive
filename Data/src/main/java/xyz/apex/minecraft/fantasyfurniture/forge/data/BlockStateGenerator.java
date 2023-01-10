@@ -190,6 +190,32 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/painting_wide"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -1.5F, 0F)
+                        .scale(.5F, .5F, .5F)
+                    .end()
+                    .transform(ItemTransforms.TransformType.FIXED)
+                        .translation(4F, 0F, -4F)
+                        .scale(.5F, .5F, .5F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/painting_small"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .scale(.625F, .625F, .625F)
+                    .end()
+                    .transform(ItemTransforms.TransformType.FIXED)
+                        .translation(0F ,0F, -8F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -220,6 +246,8 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(Nordic.LOCKBOX, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
         facingBlock(Nordic.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(Nordic.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

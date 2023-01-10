@@ -50,6 +50,8 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(Nordic.LOCKBOX);
         blockItem(Nordic.WARDROBE_BOTTOM);
         blockItem(Nordic.WARDROBE_TOP);
+        blockItem(Nordic.PAINTING_WIDE);
+        blockItem(Nordic.PAINTING_SMALL);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

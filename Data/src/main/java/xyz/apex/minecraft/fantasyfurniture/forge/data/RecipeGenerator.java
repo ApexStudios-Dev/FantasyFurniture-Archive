@@ -46,6 +46,8 @@ public final class RecipeGenerator extends RecipeProvider
         nordicStation(consumer, Nordic.LOCKBOX);
         nordicStation(consumer, Nordic.WARDROBE_BOTTOM);
         nordicStation(consumer, Nordic.WARDROBE_TOP);
+        nordicStation(consumer, Nordic.PAINTING_WIDE);
+        nordicStation(consumer, Nordic.PAINTING_SMALL);
     }
 
     private void nordicStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)

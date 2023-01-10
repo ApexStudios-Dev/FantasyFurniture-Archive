@@ -279,4 +279,22 @@ public interface FurnitureSets
         ;
     }
     // endregion
+
+    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> paintingSmall(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/painting_small".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getPaintingSmallShape)
+        ;
+    }
+
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> paintingWide(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/painting_wide".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, SimpleMultiBlock.WithHorizontalFacing::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, AllVoxelShapes::getPaintingWideShape)
+        ;
+    }
 }

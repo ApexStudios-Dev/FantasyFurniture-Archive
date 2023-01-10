@@ -209,6 +209,10 @@ public interface AllVoxelShapes
                 box(-15D, 31D, 0D, 15D, 32D, 16D)
         );
 
+        VoxelShape PAINTING_WIDE = box(-16D, 0D, 14D, 16D, 16D, 16D);
+
+        VoxelShape PAINTING_SMALL = box(0D, 0D, 14D, 16D, 16D, 16D);
+
         private static void bootstrap() {}
     }
 
@@ -401,6 +405,26 @@ public interface AllVoxelShapes
         }
 
         if(index == 1 || index == 3) shape = shape.move(0D, -1D, 0D);
+
+        return shape;
+    }
+
+    static VoxelShape getPaintingSmallShape(VoxelShape current, SimpleHorizontalFacingBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    static VoxelShape getPaintingWideShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(!block.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
 
         return shape;
     }
