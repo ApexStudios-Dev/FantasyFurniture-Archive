@@ -1,0 +1,8 @@
+{
+    "required": true,
+    "package": "${APEX_GROUP}.${MOD_ID}.quilt.mixin",
+    "mixins": [ ],
+    "client": [ ],
+    "server": [ ],
+    "minVersion": "${MIXIN_VERSION}"
+}

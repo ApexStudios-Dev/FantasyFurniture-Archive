@@ -13,7 +13,7 @@ sourceSets {
 }
 
 architectury {
-	common(['forge', 'fabric'])
+	common(['forge', 'fabric', 'quilt'])
 }
 
 repositories {

@@ -1,0 +1,66 @@
+{
+    "schema_version": 1,
+    "quilt_loader": {
+        "group": "${APEX_GROUP}.${MOD_ID}",
+        "id": "${MOD_ID}",
+        "version": "${MOD_VERSION}",
+        "metadata": {
+            "name": "${MOD_NAME}",
+            "description": "${MOD_DESCRIPTION}",
+            "contributors": {
+                "Apex": "Founder & Lead Programmer",
+                "FantasyGaming (Viscerus)": "Co-Founder & Artist",
+                "RudySPG": "Web Developer, Supporter & Beta Tester",
+                "TobiSPG": "Supporter & Beta Tester"
+            },
+            "contact": {
+                "homepage": "https://apexstudios.dev/",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            },
+            "icon": "banner.png"
+        },
+        "license": "GNU GENERAL PUBLIC LICENSE",
+        "intermediate_mappings": "net.fabricmc:intermediary",
+        "environment": "*",
+        "entrypoints": {
+            "init": [ "${APEX_GROUP}.${MOD_ID}.quilt.FantasyFurnitureQuilt::INSTANCE" ],
+            "client_init": [ "${APEX_GROUP}.${MOD_ID}.quilt.FantasyFurnitureQuilt::INSTANCE" ],
+            "server_init": [ "${APEX_GROUP}.${MOD_ID}.quilt.FantasyFurnitureQuilt::INSTANCE" ],
+            "rei_client": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.rei.ReiFantasyFurnitureQuiltClientPlugin" ],
+            "rei_common": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.rei.ReiFantasyFurnitureQuiltServerPlugin" ],
+            "emi": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.emi.EmiFantasyFurnitureQuiltPlugin" ]
+        },
+        "depends": [
+            {
+                "id": "minecraft",
+                "versions": "~${MINECRAFT_VERSION}"
+            },
+            {
+                "id": "java",
+                "versions": ">=${JAVA_VERSION}"
+            },
+            {
+                "id": "quilt_loader",
+                "versions": ">=${QUILT_LOADER_VERSION}"
+            },
+            {
+                "id": "quilted_fabric_api",
+                "versions": ">=${QUILT_FABRIC_VERSION}"
+            },
+            {
+                "id": "${ARCHITECTURY_ID}",
+                "versions": ">=${ARCHITECTURY_VERSION}"
+            },
+            {
+                "id": "${APEXCORE_ID}",
+                "versions": ">=${APEXCORE_VERSION}"
+            }
+        ]
+    },
+    "mixin": [ "${MOD_ID}.mixins.json", "${MOD_ID}-common.mixins.json" ],
+    "modmenu": {
+        "modmenu.discord": "https://discord.apexstudios.dev/",
+        "parent": "${APEXCORE_ID}"
+    }
+}
