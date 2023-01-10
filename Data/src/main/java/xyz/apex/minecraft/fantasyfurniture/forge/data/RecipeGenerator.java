@@ -1,14 +1,13 @@
 package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeBuilder;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
+import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
 import xyz.apex.minecraft.fantasyfurniture.forge.FurnitureStationRecipe;
 import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
 
@@ -25,6 +24,8 @@ public final class RecipeGenerator extends RecipeProvider
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer)
     {
+        furnitureStation(consumer);
+
         nordicStation(consumer, Nordic.WOOL);
         nordicStation(consumer, Nordic.CARPET);
         nordicStation(consumer, Nordic.WALL_LIGHT);
@@ -48,6 +49,15 @@ public final class RecipeGenerator extends RecipeProvider
         nordicStation(consumer, Nordic.WARDROBE_TOP);
         nordicStation(consumer, Nordic.PAINTING_WIDE);
         nordicStation(consumer, Nordic.PAINTING_SMALL);
+    }
+
+    private void furnitureStation(Consumer<FinishedRecipe> exporter)
+    {
+        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.CRAFTING_TABLE), Ingredient.of(Items.LEATHER), RecipeCategory.MISC, FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK.get().asItem())
+                            .unlocks("has_crafting_table", RecipeProvider.has(Items.CRAFTING_TABLE))
+                            .unlocks("has_leather", RecipeProvider.has(Items.LEATHER))
+                            .save(exporter, RecipeBuilder.getDefaultRecipeId(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK.get()))
+        ;
     }
 
     private void nordicStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
