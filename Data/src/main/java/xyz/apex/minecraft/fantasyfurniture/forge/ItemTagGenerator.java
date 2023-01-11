@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge.data;
+package xyz.apex.minecraft.fantasyfurniture.forge;
 
 import org.apache.logging.log4j.LogManager;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
+import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,7 +24,7 @@ public final class ItemTagGenerator extends ItemTagsProvider
 {
     public ItemTagGenerator(GatherDataEvent event, PackOutput packOutput, BlockTagGenerator blockTags)
     {
-        super(packOutput, event.getLookupProvider(), blockTags, FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), blockTags, FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     @Override

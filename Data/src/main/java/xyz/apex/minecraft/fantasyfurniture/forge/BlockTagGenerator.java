@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge.data;
+package xyz.apex.minecraft.fantasyfurniture.forge;
 
 import org.apache.logging.log4j.LogManager;
 import org.jetbrains.annotations.Nullable;
@@ -13,8 +13,9 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
-import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
+import xyz.apex.minecraft.apexcore.shared.util.Tags;
+import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -22,25 +23,23 @@ import java.util.function.Supplier;
 
 public final class BlockTagGenerator extends BlockTagsProvider
 {
-    private static final TagKey<Block> MOVEMENT_RESTRICTED = tag("c", "movement_restricted");
-
     public BlockTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, event.getLookupProvider(), FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
-        tag(BlockTags.WOOL, Nordic.WOOL);
-        tag(BlockTags.WOOL_CARPETS, Nordic.CARPET);
+        tag(BlockTags.WOOL, NordicSet.WOOL);
+        tag(BlockTags.WOOL_CARPETS, NordicSet.CARPET);
 
         // multi-blocks have restricted movement
-        tag(MOVEMENT_RESTRICTED,
-                Nordic.FLOOR_LIGHT, Nordic.TABLE_LARGE, Nordic.TABLE_WIDE,
-                Nordic.BENCH, Nordic.CHAIR, Nordic.CHEST, Nordic.BOOKSHELF,
-                Nordic.DESK_LEFT, Nordic.DESK_RIGHT, Nordic.DRAWER, Nordic.DRESSER,
-                Nordic.WARDROBE_BOTTOM, Nordic.WARDROBE_TOP, Nordic.PAINTING_WIDE
+        tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
+                NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
+                NordicSet.BENCH, NordicSet.CHAIR, NordicSet.CHEST, NordicSet.BOOKSHELF,
+                NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,
+                NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE
         );
     }
 

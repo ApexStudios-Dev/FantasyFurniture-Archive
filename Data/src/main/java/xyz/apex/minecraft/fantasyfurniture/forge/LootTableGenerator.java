@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge.data;
+package xyz.apex.minecraft.fantasyfurniture.forge;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge.data;
+package xyz.apex.minecraft.fantasyfurniture.forge;
 
 import org.apache.logging.log4j.LogManager;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
+import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -20,17 +20,15 @@ import java.util.function.Supplier;
 
 public final class EntityTypeTagGenerator extends EntityTypeTagsProvider
 {
-    private static final TagKey<EntityType<?>> SEAT_BLACKLIST = tag(FantasyFurnitureDataMod.ID, "seat_blacklist");
-
     public EntityTypeTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, event.getLookupProvider(), FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
+        super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider)
     {
-        tag(SEAT_BLACKLIST).add(EntityType.SHULKER);
+        tag(FantasyFurniture.SEAT_BLACKLIST).add(EntityType.SHULKER);
     }
 
     private void tag(TagKey<EntityType<?>> tag, @Nullable Object... values)

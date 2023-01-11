@@ -98,7 +98,6 @@ dependencies {
 	common(project(path: ':Common', configuration: 'namedElements')) { transitive false }
 	shadowCommon(project(path: ':Common', configuration: 'transformProductionFabric')) { transitive false }
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
-	modImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
 	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 
 	// Shaders
@@ -106,7 +105,6 @@ dependencies {
 	modShadersImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
 	shadersImplementation(project(path: ':Common', configuration: 'namedElements')) { transitive false }
 	shadersImplementation(project(path: ':Fabric', configuration: 'namedElements')) { transitive false }
-	modShadersImplementation "${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
 	modShadersImplementation("${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
 	shadersImplementation 'com.google.code.findbugs:jsr305:3.0.2'
 	// actual shaders mods inclusion

@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge.data;
+package xyz.apex.minecraft.fantasyfurniture.forge;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.Validate;
@@ -18,8 +18,8 @@ import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.fantasyfurniture.forge.FantasyFurnitureDataMod;
-import xyz.apex.minecraft.fantasyfurniture.forge.Nordic;
+import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -30,7 +30,7 @@ public final class BlockStateGenerator extends BlockStateProvider
 
     public BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
     {
-        super(packOutput, FantasyFurnitureDataMod.ID, event.getExistingFileHelper());
+        super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
     private void registerTemplates()
@@ -38,7 +38,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         var cutout = new ResourceLocation("minecraft", "cutout");
 
         // NOTE: All main line models created in BlockBench *MUST* parent these models in order for them to function correctly
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wall_light"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.FIXED)
@@ -48,7 +48,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/floor_light"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -58,7 +58,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_large"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_large"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -68,7 +68,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_small"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_small"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -77,7 +77,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/table_wide"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_wide"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -88,7 +88,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/bench"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/bench"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -98,7 +98,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chair"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/chair"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -109,13 +109,13 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chandelier"));
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/chandelier"));
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/cushion"));
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/cushion"));
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/stool"));
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/stool"));
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/chest"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/chest"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -125,7 +125,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/bookshelf"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/bookshelf"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, -135F, 0F)
@@ -135,7 +135,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/desk_left"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/desk_left"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -146,7 +146,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/desk_right"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/desk_right"))
                 .renderType(cutout)
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
@@ -157,9 +157,9 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/drawer"));
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/drawer"));
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/dresser"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/dresser"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -169,9 +169,9 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/lockbox"));
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/lockbox"));
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wardrobe_bottom"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/wardrobe_bottom"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -181,7 +181,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/wardrobe_top"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/wardrobe_top"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -191,7 +191,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/painting_wide"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/painting_wide"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -205,7 +205,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/painting_small"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/painting_small"))
                 .transforms()
                     .transform(ItemTransforms.TransformType.GUI)
                         .rotation(30F, 225F, 0F)
@@ -217,7 +217,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .end()
         ;
 
-        template(new ResourceLocation(FantasyFurnitureDataMod.ID, "templates/oven"))
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/oven"))
                 .renderType(cutout)
         ;
     }
@@ -227,32 +227,32 @@ public final class BlockStateGenerator extends BlockStateProvider
     {
         registerTemplates();
 
-        facingBlock(FantasyFurnitureDataMod.FURNITURE_STATION_BLOCK, HorizontalDirectionalBlock.FACING);
+        facingBlock(FantasyFurniture.FURNITURE_STATION_BLOCK, HorizontalDirectionalBlock.FACING);
 
-        simpleBlock(Nordic.WOOL);
-        carpet(Nordic.CARPET, Nordic.WOOL);
-        wallLight(Nordic.WALL_LIGHT);
-        templatedBlock(Nordic.FLOOR_LIGHT);
-        table(Nordic.TABLE_LARGE, true);
-        table(Nordic.TABLE_SMALL, false);
-        table(Nordic.TABLE_WIDE, true);
-        facingBlock(Nordic.BENCH, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.CHAIR, HorizontalDirectionalBlock.FACING);
-        templatedBlock(Nordic.CHANDELIER);
-        facingBlock(Nordic.CUSHION, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.STOOL, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.CHEST, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.BOOKSHELF, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.DESK_LEFT, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.DRAWER, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.DRESSER, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.LOCKBOX, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
-        facingBlock(Nordic.OVEN, HorizontalDirectionalBlock.FACING);
+        simpleBlock(NordicSet.WOOL);
+        carpet(NordicSet.CARPET, NordicSet.WOOL);
+        wallLight(NordicSet.WALL_LIGHT);
+        templatedBlock(NordicSet.FLOOR_LIGHT);
+        table(NordicSet.TABLE_LARGE, true);
+        table(NordicSet.TABLE_SMALL, false);
+        table(NordicSet.TABLE_WIDE, true);
+        facingBlock(NordicSet.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.CHAIR, HorizontalDirectionalBlock.FACING);
+        templatedBlock(NordicSet.CHANDELIER);
+        facingBlock(NordicSet.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.OVEN, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

@@ -9,10 +9,12 @@ plugins {
     id 'idea'
 
     id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
 
 evaluationDependsOn(':Common')
+evaluationDependsOn(':Forge')
 
 if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
     apply plugin: 'org.parchmentmc.librarian.forgegradle'
@@ -53,10 +55,16 @@ minecraft {
             mods {
                 "${MOD_ID}" {
                     source sourceSets.main
+                    source project(':Common').sourceSets.main
+                    source project(':Forge').sourceSets.main
                 }
             }
         }
     }
+}
+
+mixin {
+    extraMappings file('build/createMcpToSrg/output.tsrg')
 }
 
 repositories {
@@ -83,6 +91,10 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+    implementation fg.deobf("dev.architectury:architectury-forge:$ARCHITECTURY_VERSION")
+    implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+    implementation(project(path: ':Common', configuration: 'namedElements')) { transitive false }
+    implementation(project(path: ':Forge', configuration: 'namedElements')) { transitive false }
 }
 
 processResources {
