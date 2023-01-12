@@ -10,19 +10,6 @@ group = "${APEX_GROUP}.${MOD_ID}.fabric"
 version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
 archivesBaseName = "${MOD_ID}-fabric"
 
-sourceSets {
-	shaders {
-		java.srcDirs = [ ]
-		resources.srcDirs = [ ]
-
-		compileClasspath += sourceSets.main.output
-		runtimeClasspath += sourceSets.main.output
-
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.main.runtimeClasspath
-	}
-}
-
 configurations {
 	common
 	shadowCommon
@@ -41,15 +28,6 @@ loom {
 		clientAuthed {
 			inherit(client)
 		}
-
-		shaders {
-			inherit(client)
-			source(sourceSets.shaders)
-		}
-
-		shadersAuthed {
-			inherit(shaders)
-		}
 	}
 
 	settingsPostEdit.add(new java.util.function.Consumer<net.fabricmc.loom.configuration.ide.RunConfig>() {
@@ -62,8 +40,6 @@ loom {
 			}
 		}
 	})
-
-	createRemapConfigurations(sourceSets.shaders)
 }
 
 repositories {
@@ -99,19 +75,11 @@ dependencies {
 	shadowCommon(project(path: ':Common', configuration: 'transformProductionFabric')) { transitive false }
 	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 	modImplementation("${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
-
 	// Shaders
-	modShadersImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
-	modShadersImplementation "net.fabricmc.fabric-api:fabric-api:${FABRIC_VERSION}+${MINECRAFT_VERSION}"
-	shadersImplementation(project(path: ':Common', configuration: 'namedElements')) { transitive false }
-	shadersImplementation(project(path: ':Fabric', configuration: 'namedElements')) { transitive false }
-	modShadersImplementation("${APEX_GROUP}.${APEXCORE_ID}.fabric:${APEXCORE_ID}-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") { transitive false }
-	shadersImplementation 'com.google.code.findbugs:jsr305:3.0.2'
-	// actual shaders mods inclusion
-	modShadersRuntimeOnly 'maven.modrinth:sodium:mc1.19.3-0.4.8'
-	modShadersRuntimeOnly 'maven.modrinth:iris:1.5.1+1.19.3'
-	shadersRuntimeOnly 'io.github.douira:glsl-transformer:2.0.0-pre8'
-	shadersRuntimeOnly 'org.anarres:jcpp:1.4.14'
+	//modRuntimeOnly 'maven.modrinth:sodium:mc1.19.3-0.4.8'
+	//modRuntimeOnly 'maven.modrinth:iris:1.5.1+1.19.3'
+	//runtimeOnly 'io.github.douira:glsl-transformer:2.0.0-pre8'
+	//runtimeOnly 'org.anarres:jcpp:1.4.14'
 
 	def recipeLookupIncludeType = rootProject.hasProperty('RECIPE_LOOKUP_INCLUDE') ? rootProject.property('RECIPE_LOOKUP_INCLUDE') : ''
 
@@ -121,7 +89,6 @@ dependencies {
 
 		if(recipeLookupIncludeType == 'jei') {
 			modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
-			modShadersRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
 		}
 	}
 
@@ -130,12 +97,8 @@ dependencies {
 		modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_VERSION}"
 		modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_VERSION}"
 
-		modShadersCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_VERSION}"
-		modShadersCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_VERSION}"
-
 		if(recipeLookupIncludeType == 'rei') {
 			modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${REI_VERSION}"
-			modShadersRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${REI_VERSION}"
 		}
 	}
 
@@ -150,19 +113,16 @@ dependencies {
 	// Jade
 	if(rootProject.hasProperty('JADE_CF_ID') && rootProject.hasProperty('FABRIC_JADE_CF_FILE_ID')) {
 		modImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}"
-		modShadersImplementation "curse.maven:jade-${JADE_CF_ID}:${FABRIC_JADE_CF_FILE_ID}"
 	}
 
 	// Lazy DFU
 	if(rootProject.hasProperty('FABRIC_LAZY_DFU_VERSION')) {
 		modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
-		modShadersRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
 	}
 
 	// ModMenu
 	if(rootProject.hasProperty('FABRIC_MOD_MENU_VERSION')) {
 		modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
-		modShadersImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
 	}
 }
 
@@ -188,16 +148,6 @@ processResources {
 	}
 
 	from project(':Common').sourceSets.main.resources
-}
-
-processShadersResources {
-	project.properties.each { key, value ->
-		inputs.property "${key}", "${value}"
-	}
-
-	filesMatching([ '*.mixins.json', '**/*.mcmeta', 'fabric.mod.json', '**/models/**/*.json' ]) {
-		expand project.properties
-	}
 }
 
 jar {
