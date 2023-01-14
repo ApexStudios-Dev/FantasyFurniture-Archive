@@ -53,6 +53,10 @@
                 "versions": ">=${ARCHITECTURY_VERSION}"
             },
             {
+                "id": "${CLOTH_CONFIG_FABRIC_ID}",
+                "versions": ">=${CLOTH_CONFIG_VERSION_MOD}"
+            },
+            {
                 "id": "${APEXCORE_ID}",
                 "versions": ">=${APEXCORE_VERSION}"
             }

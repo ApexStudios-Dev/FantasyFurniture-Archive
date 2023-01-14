@@ -124,6 +124,13 @@ dependencies {
 	if(rootProject.hasProperty('FABRIC_MOD_MENU_VERSION')) {
 		modImplementation "com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}"
 	}
+
+	// ClothConfig
+	if(rootProject.hasProperty('CLOTH_CONFIG_VERSION')) {
+		modApi("me.shedaniel.cloth:cloth-config-fabric:${CLOTH_CONFIG_VERSION}") {
+			exclude(module: 'fabric-api')
+		}
+	}
 }
 
 shadowJar {

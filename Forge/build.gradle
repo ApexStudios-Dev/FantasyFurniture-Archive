@@ -108,6 +108,11 @@ dependencies {
 	if(rootProject.hasProperty('JADE_CF_ID') && rootProject.hasProperty('FORGE_JADE_CF_FILE_ID')) {
 		modImplementation "curse.maven:jade-${JADE_CF_ID}:${FORGE_JADE_CF_FILE_ID}"
 	}
+
+	// ClothConfig
+	if(rootProject.hasProperty('CLOTH_CONFIG_VERSION')) {
+		modApi "me.shedaniel.cloth:cloth-config-forge:${CLOTH_CONFIG_VERSION}"
+	}
 }
 
 shadowJar {

@@ -48,3 +48,12 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	[dependencies.${MOD_ID}.custom.mc-publish]
 		modrinth="${ARCHITECTURY_DEPENDENCY_ID}"
 		curseforge="${ARCHITECTURY_DEPENDENCY_ID}"
+[[dependencies.${MOD_ID}]]
+	modId="${CLOTH_CONFIG_FORGE_ID}"
+	mandatory=true
+	versionRange="${CLOTH_CONFIG_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+	[dependencies.${MOD_ID}.custom.mc-publish]
+		modrinth="${CLOTH_CONFIG_FABRIC_ID}"
+		curseforge="${CLOTH_CONFIG_FABRIC_ID}"

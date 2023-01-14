@@ -55,6 +55,10 @@ dependencies {
 		modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${REI_VERSION}"
 		modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${REI_VERSION}"
 	}
+
+	if(rootProject.hasProperty('CLOTH_CONFIG_VERSION')) {
+		modApi "me.shedaniel.cloth:cloth-config:${CLOTH_CONFIG_VERSION}"
+	}
 }
 
 processResources {
