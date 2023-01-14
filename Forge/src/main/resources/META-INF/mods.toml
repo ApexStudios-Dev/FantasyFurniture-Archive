@@ -32,7 +32,7 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 		ignore=true
 [[dependencies.${MOD_ID}]]
 	modId="${APEXCORE_ID}"
-	mandatory=false
+	mandatory=true
 	versionRange="${APEXCORE_VERSION_RANGE}"
 	ordering="AFTER"
 	side="BOTH"
