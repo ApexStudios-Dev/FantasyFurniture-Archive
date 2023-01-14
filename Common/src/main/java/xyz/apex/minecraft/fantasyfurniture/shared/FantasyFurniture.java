@@ -4,6 +4,9 @@ import dev.architectury.hooks.PackRepositoryHooks;
 import dev.architectury.hooks.level.entity.PlayerHooks;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.GameInstance;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigHolder;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +41,7 @@ public interface FantasyFurniture extends ModPlatform
 {
     String ID = "fantasyfurniture";
     Registrar REGISTRAR = Registrar.create(ID);
+    ConfigHolder<ModConfig> CONFIG = AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
 
     EntityEntry<Seat> SEAT_ENTITY = REGISTRAR
             .<Seat>entity("seat", Seat::new)
@@ -73,6 +77,9 @@ public interface FantasyFurniture extends ModPlatform
         NecrolordSet.bootstrap();
         AllBlockEntityTypes.bootstrap();
         AllMenuTypes.bootstrap();
+
+        CONFIG.load();
+        asMod().registerConfigurationScreen(parent -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
     }
 
     @Override

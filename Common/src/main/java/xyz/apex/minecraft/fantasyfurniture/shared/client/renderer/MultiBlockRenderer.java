@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.client.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -59,6 +60,8 @@ public final class MultiBlockRenderer
     private PlatformRenderer renderer = (modelRenderer, pose, consumer, blockState, model, rng, r, g, b, light, overlay) -> modelRenderer.renderModel(pose, consumer, blockState, model, r, g, b, light, overlay);
     private final BiFunction<ResourceLocation, Boolean, RenderType> entityTranslucentCustom;
     private final RenderType linesCustom;
+    private int customOverlayTint = -1;
+    private boolean useCustomTint = false;
 
     private MultiBlockRenderer()
     {
@@ -75,7 +78,7 @@ public final class MultiBlockRenderer
                         .setShaderState(RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
                         .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                         .setLightmapState(RenderStateShard.LIGHTMAP) // render with proper block lighting
-                        .setOverlayState(RenderStateShard.OVERLAY) // used for overlay color (red when invalid placement)
+                        .setOverlayState(new CustomOverlay()) // used for overlay color (red when invalid placement)
 
                         .setCullState(RenderStateShard.CULL)
                         // disable depth test (see through walls)
@@ -183,13 +186,17 @@ public final class MultiBlockRenderer
 
     private void renderBlockState(BlockColors blockColors, BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick)
     {
+        var cfg = FantasyFurniture.CONFIG.get();
+
         // results in entity cutout, which doesn't have transparency for ghosting / alpha
         // var renderType = ItemBlockRenderTypes.getRenderType(blockState, false);
         var renderType = getRenderType(TextureAtlas.LOCATION_BLOCKS, false);
-        // vertex consumer for ghosting effect
-        var consumer = new GhostVertexConsumer(buffer.getBuffer(renderType), alpha);
+        // determine which vertex consumer we should be using
+        var consumer = buffer.getBuffer(renderType);
+        // ghosting effect enabled? use ghosting vertex consumer
+        if(cfg.multiBlockRenderer.usesBreathingEffect) consumer = new GhostVertexConsumer(consumer, alpha);
         // use red overlay, when placement is invalid
-        var overlay = validPlacement ? OverlayTexture.NO_OVERLAY : OverlayTexture.RED_OVERLAY_V;
+        // var overlay = validPlacement ? OverlayTexture.NO_OVERLAY : OverlayTexture.RED_OVERLAY_V;
         // use lighting as if block was placed in world
         var light = LevelRenderer.getLightColor(level, blockState, pos);
         var model = blockRenderer.getBlockModel(blockState);
@@ -198,13 +205,17 @@ public final class MultiBlockRenderer
         var r = FastColor.ARGB32.red(blockColor) / 255F;
         var g = FastColor.ARGB32.green(blockColor) / 255F;
         var b = FastColor.ARGB32.blue(blockColor) / 255F;
+        setCustomOverlayTint(validPlacement ? cfg.multiBlockRenderer.validColorModel : cfg.multiBlockRenderer.invalidColorModel);
         // render the model, with above properties
-        renderer.renderBlockState(blockRenderer.getModelRenderer(), pose.last(), consumer, blockState, model, level.random, r, g, b, light, overlay);
+        renderer.renderBlockState(blockRenderer.getModelRenderer(), pose.last(), consumer, blockState, model, level.random, r, g, b, light, OverlayTexture.NO_OVERLAY);
         buffer.endBatch(renderType);
     }
 
     private void renderVoxelShape(PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick)
     {
+        var cfg = FantasyFurniture.CONFIG.get();
+        if(!cfg.multiBlockRenderer.renderModelOutline) return;
+
         var shape = blockState.getShape(level, pos);
         if(shape.isEmpty()) return;
 
@@ -218,10 +229,11 @@ public final class MultiBlockRenderer
         var y = 0;
         var z = 0;
 
-        var color = validPlacement ? 0x0 : 0xEB3223;
+        var color = validPlacement ? cfg.multiBlockRenderer.validColorOutline : cfg.multiBlockRenderer.invalidColorOutline;
         var r = FastColor.ARGB32.red(color) / 255F;
         var g = FastColor.ARGB32.green(color) / 255F;
         var b = FastColor.ARGB32.blue(color) / 255F;
+        var a = cfg.multiBlockRenderer.usesBreathingEffect ? alpha : 1F;
 
         shape.forAllEdges((minX, minY, minZ, maxX, maxY, maxZ) -> {
             var distX = (float) (maxX - minX);
@@ -229,8 +241,8 @@ public final class MultiBlockRenderer
             var distZ = (float) (maxZ - minZ);
             var t = Mth.sqrt(distX * distX + distY * distY + distZ * distZ);
 
-            consumer.vertex(matrix, (float) (minX + x), (float) (minY + y), (float) (minZ + z)).color(r, g, b, alpha).normal(normal, distX /= t, distY /= t, distZ /= t).endVertex();
-            consumer.vertex(matrix, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z)).color(r, g, b, alpha).normal(normal, distX, distY, distZ).endVertex();
+            consumer.vertex(matrix, (float) (minX + x), (float) (minY + y), (float) (minZ + z)).color(r, g, b, a).normal(normal, distX /= t, distY /= t, distZ /= t).endVertex();
+            consumer.vertex(matrix, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z)).color(r, g, b, a).normal(normal, distX, distY, distZ).endVertex();
         });
 
         buffer.endBatch(linesCustom);
@@ -338,9 +350,55 @@ public final class MultiBlockRenderer
         return entity.isAlive() && entity.isColliding(pos, blockState);
     }
 
+    private void setCustomOverlayTint(int customOverlayTint)
+    {
+        this.customOverlayTint = customOverlayTint;
+        useCustomTint = true;
+    }
+
     @FunctionalInterface
     public interface PlatformRenderer
     {
         void renderBlockState(ModelBlockRenderer renderer, PoseStack.Pose pose, VertexConsumer consumer, BlockState blockState, BakedModel model, RandomSource rng, float r, float g, float b, int light, int overlay);
+    }
+
+    private final class CustomOverlay extends RenderStateShard.OverlayStateShard
+    {
+        private boolean resetShaderColor = false;
+
+        private CustomOverlay()
+        {
+            super(true);
+        }
+
+        @Override
+        public void setupRenderState()
+        {
+            super.setupRenderState();
+
+            if(useCustomTint)
+            {
+                var r = FastColor.ARGB32.red(customOverlayTint) / 255F;
+                var g = FastColor.ARGB32.green(customOverlayTint) / 255F;
+                var b = FastColor.ARGB32.blue(customOverlayTint) / 255F;
+                RenderSystem.setShaderColor(r, g, b, 1F);
+
+                customOverlayTint = -1;
+                useCustomTint = false;
+                resetShaderColor = true;
+            }
+        }
+
+        @Override
+        public void clearRenderState()
+        {
+            super.clearRenderState();
+
+            if(resetShaderColor)
+            {
+                RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+                resetShaderColor = false;
+            }
+        }
     }
 }
