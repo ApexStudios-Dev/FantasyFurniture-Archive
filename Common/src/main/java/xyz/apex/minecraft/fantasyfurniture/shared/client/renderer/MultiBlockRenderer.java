@@ -2,6 +2,7 @@ package xyz.apex.minecraft.fantasyfurniture.shared.client.renderer;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.architectury.utils.GameInstance;
 import org.jetbrains.annotations.Nullable;
@@ -17,13 +18,16 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -51,7 +55,7 @@ public final class MultiBlockRenderer
 {
     public static final Supplier<MultiBlockRenderer> INSTANCE = Lazy.of(MultiBlockRenderer::new);
 
-    private PlatformRenderer renderer = this::renderBlockState;
+    private PlatformRenderer renderer = (modelRenderer, pose, consumer, blockState, model, rng, r, g, b, light, overlay) -> modelRenderer.renderModel(pose, consumer, blockState, model, r, g, b, light, overlay);
     private final BiFunction<ResourceLocation, Boolean, RenderType> entityTranslucentCustom;
 
     private MultiBlockRenderer()
@@ -139,7 +143,7 @@ public final class MultiBlockRenderer
             pose.translate(-camPos.x, -camPos.y, -camPos.z);
             pose.translate(pos.getX(), pos.getY(), pos.getZ());
 
-            renderer.renderBlockState(blockColors, blockRenderer, pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
+            renderBlockState(blockColors, blockRenderer, pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
 
             pose.popPose();
             return true;
@@ -170,7 +174,7 @@ public final class MultiBlockRenderer
         var g = FastColor.ARGB32.green(blockColor) / 255F;
         var b = FastColor.ARGB32.blue(blockColor) / 255F;
         // render the model, with above properties
-        blockRenderer.getModelRenderer().renderModel(pose.last(), consumer, blockState, model, r, g, b, light, overlay);
+        renderer.renderBlockState(blockRenderer.getModelRenderer(), pose.last(), consumer, blockState, model, level.random, r, g, b, light, overlay);
         buffer.endBatch(renderType);
     }
 
@@ -279,6 +283,6 @@ public final class MultiBlockRenderer
     @FunctionalInterface
     public interface PlatformRenderer
     {
-        void renderBlockState(BlockColors blockColors, BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick);
+        void renderBlockState(ModelBlockRenderer renderer, PoseStack.Pose pose, VertexConsumer consumer, BlockState blockState, BakedModel model, RandomSource rng, float r, float g, float b, int light, int overlay);
     }
 }
