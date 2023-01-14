@@ -1,7 +1,10 @@
 package xyz.apex.minecraft.fantasyfurniture.forge;
 
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.util.FastColor;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ForgeRenderTypes;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,14 +25,20 @@ public final class FantasyFurnitureForge extends ForgeModPlatform implements Fan
         super(ID, REGISTRAR);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            MultiBlockRenderer.INSTANCE.get().setRenderer((blockRenderer, pose, buffer, level, pos, blockState, validPlacement, alpha, partialTick) -> {
-                var baseRenderType = ForgeRenderTypes.TRANSLUCENT_ON_PARTICLES_TARGET.get();
+            MultiBlockRenderer.INSTANCE.get().setRenderer((blockColors, blockRenderer, pose, buffer, level, pos, blockState, validPlacement, alpha, partialTick) -> {
+                var baseRenderType = MultiBlockRenderer.INSTANCE.get().getRenderType(TextureAtlas.LOCATION_BLOCKS, false);
                 var consumer = new GhostVertexConsumer(buffer.getBuffer(baseRenderType), alpha);
+                var overlay = validPlacement ? OverlayTexture.NO_OVERLAY : OverlayTexture.RED_OVERLAY_V;
+                var light = LevelRenderer.getLightColor(level, blockState, pos);
                 var model = blockRenderer.getBlockModel(blockState);
+                var blockColor = blockColors.getColor(blockState, null, null, 0);
+                var r = FastColor.ARGB32.red(blockColor) / 255F;
+                var g = FastColor.ARGB32.green(blockColor) / 255F;
+                var b = FastColor.ARGB32.blue(blockColor) / 255F;
 
                 for(var renderType : model.getRenderTypes(blockState, level.random, ModelData.EMPTY))
                 {
-                    blockRenderer.renderBatched(blockState, pos, level, pose, consumer, false, level.random, ModelData.EMPTY, renderType);
+                    blockRenderer.getModelRenderer().renderModel(pose.last(), consumer, blockState, model, r, g, b, light, overlay, ModelData.EMPTY, renderType);
                 }
 
                 buffer.endBatch(baseRenderType);

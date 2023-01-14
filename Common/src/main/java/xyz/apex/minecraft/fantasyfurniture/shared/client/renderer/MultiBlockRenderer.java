@@ -1,17 +1,28 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.client.renderer;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.architectury.utils.GameInstance;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.opengl.GL11;
 
+import net.minecraft.Util;
 import net.minecraft.client.Camera;
+import net.minecraft.client.GraphicsStatus;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +42,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.util.function.Lazy;
+import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public final class MultiBlockRenderer
@@ -39,8 +52,38 @@ public final class MultiBlockRenderer
     public static final Supplier<MultiBlockRenderer> INSTANCE = Lazy.of(MultiBlockRenderer::new);
 
     private PlatformRenderer renderer = this::renderBlockState;
+    private final BiFunction<ResourceLocation, Boolean, RenderType> entityTranslucentCustom;
 
-    private MultiBlockRenderer() {}
+    private MultiBlockRenderer()
+    {
+        entityTranslucentCustom = Util.memoize((texture, outline) -> RenderType.create(
+                "%s:entity_translucent_no_depth".formatted(FantasyFurniture.ID),
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                256, false, true,
+                RenderType.CompositeState
+                        .builder()
+                        // block texture
+                        .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
+                        // translucency
+                        .setShaderState(RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
+                        .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                        .setLightmapState(RenderStateShard.LIGHTMAP) // render with proper block lighting
+                        .setOverlayState(RenderStateShard.OVERLAY) // used for overlay color (red when invalid placement)
+
+                        .setCullState(RenderStateShard.CULL)
+                        // disable depth test (see through walls)
+                        .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                        .setDepthTestState(new RenderStateShard.DepthTestStateShard("%s:not_equal".formatted(FantasyFurniture.ID), GL11.GL_NOTEQUAL))
+                        .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING) // fixes z-fighting?, when in same space as other blocks
+                        .createCompositeState(outline)
+        ));
+    }
+
+    public RenderType getRenderType(ResourceLocation texture, boolean outline)
+    {
+        return entityTranslucentCustom.apply(texture, outline);
+    }
 
     public void setRenderer(PlatformRenderer renderer)
     {
@@ -64,16 +107,17 @@ public final class MultiBlockRenderer
 
         var blockRenderer = client.getBlockRenderer();
         var buffer = client.renderBuffers().bufferSource();
+        var blockColors = client.getBlockColors();
 
         // try render for main hand
         // then try render offhand
         // - if we successfully render something, do not render for offhand
         // - if block was not multi block and could not be placed
-        if(tryAndRender(blockRenderer, buffer, pose, camera, client.level, renderPos, client.player, InteractionHand.MAIN_HAND, partialTick)) return;
-        tryAndRender(blockRenderer, buffer, pose, camera, client.level, renderPos, client.player, InteractionHand.OFF_HAND, partialTick);
+        if(tryAndRender(blockColors, blockRenderer, buffer, pose, camera, client.level, renderPos, client.player, InteractionHand.MAIN_HAND, partialTick)) return;
+        tryAndRender(blockColors, blockRenderer, buffer, pose, camera, client.level, renderPos, client.player, InteractionHand.OFF_HAND, partialTick);
     }
 
-    private boolean tryAndRender(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer, PoseStack pose, Camera camera, Level level, BlockPos pos, Player player, InteractionHand hand, float partialTick)
+    private boolean tryAndRender(BlockColors blockColors, BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer, PoseStack pose, Camera camera, Level level, BlockPos pos, Player player, InteractionHand hand, float partialTick)
     {
         var stack = player.getItemInHand(hand);
         if(stack.isEmpty()) return false; // nothing to render
@@ -95,7 +139,7 @@ public final class MultiBlockRenderer
             pose.translate(-camPos.x, -camPos.y, -camPos.z);
             pose.translate(pos.getX(), pos.getY(), pos.getZ());
 
-            renderer.renderBlockState(blockRenderer, pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
+            renderer.renderBlockState(blockColors, blockRenderer, pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
 
             pose.popPose();
             return true;
@@ -108,17 +152,32 @@ public final class MultiBlockRenderer
         return !valid || !isPlacementBlocked(level, pos, renderBlockState, player);
     }
 
-    private void renderBlockState(BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick)
+    private void renderBlockState(BlockColors blockColors, BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick)
     {
-        var renderType = RenderType.translucent();
+        // results in entity cutout, which doesn't have transparency for ghosting / alpha
+        // var renderType = ItemBlockRenderTypes.getRenderType(blockState, false);
+        var renderType = getRenderType(TextureAtlas.LOCATION_BLOCKS, false);
+        // vertex consumer for ghosting effect
         var consumer = new GhostVertexConsumer(buffer.getBuffer(renderType), alpha);
+        // use red overlay, when placement is invalid
+        var overlay = validPlacement ? OverlayTexture.NO_OVERLAY : OverlayTexture.RED_OVERLAY_V;
+        // use lighting as if block was placed in world
+        var light = LevelRenderer.getLightColor(level, blockState, pos);
         var model = blockRenderer.getBlockModel(blockState);
-        blockRenderer.renderBatched(blockState, pos, level, pose, consumer, false, level.getRandom());
+        // render using tint colors (royal furniture set can be dyed)
+        var blockColor = blockColors.getColor(blockState, null, null, 0);
+        var r = FastColor.ARGB32.red(blockColor) / 255F;
+        var g = FastColor.ARGB32.green(blockColor) / 255F;
+        var b = FastColor.ARGB32.blue(blockColor) / 255F;
+        // render the model, with above properties
+        blockRenderer.getModelRenderer().renderModel(pose.last(), consumer, blockState, model, r, g, b, light, overlay);
         buffer.endBatch(renderType);
     }
 
     private int getAlpha()
     {
+        if(GameInstance.getClient().options.graphicsMode().get() == GraphicsStatus.FAST) return 127;
+
         var period = 2500D;
         var timer = System.currentTimeMillis() % period;
         var offset = Mth.cos((float) ((2D / period) * Math.PI * timer));
@@ -220,6 +279,6 @@ public final class MultiBlockRenderer
     @FunctionalInterface
     public interface PlatformRenderer
     {
-        void renderBlockState(BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick);
+        void renderBlockState(BlockColors blockColors, BlockRenderDispatcher blockRenderer, PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick);
     }
 }
