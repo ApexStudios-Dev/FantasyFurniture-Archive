@@ -106,10 +106,10 @@ public interface FurnitureSets
         ;
     }
 
-    static BlockBuilder<Block, Registrar, Registrar> tableSmall(String furnitureSet)
+    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> tableSmall(String furnitureSet)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/table_small".formatted(furnitureSet))
+                .block("%s/table_small".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
                 .transform(FurnitureSets::applyTableProperties)
         ;
     }

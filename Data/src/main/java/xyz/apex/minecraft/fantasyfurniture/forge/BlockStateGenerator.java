@@ -233,9 +233,9 @@ public final class BlockStateGenerator extends BlockStateProvider
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
         templatedBlock(NordicSet.FLOOR_LIGHT);
-        table(NordicSet.TABLE_LARGE, true);
-        table(NordicSet.TABLE_SMALL, false);
-        table(NordicSet.TABLE_WIDE, true);
+        facingBlock(NordicSet.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.BENCH, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.CHAIR, HorizontalDirectionalBlock.FACING);
         templatedBlock(NordicSet.CHANDELIER);
@@ -280,12 +280,6 @@ public final class BlockStateGenerator extends BlockStateProvider
     private void templatedBlock(Supplier<? extends Block> entry)
     {
         simpleBlock(entry, existingModel(entry));
-    }
-
-    private void table(Supplier<? extends Block> entry, boolean withFacing)
-    {
-        if(withFacing) facingBlock(entry, HorizontalDirectionalBlock.FACING);
-        else getVariantBuilder(entry.get()).partialState().setModels(new ConfiguredModel(existingModel(entry)));
     }
 
     private void facingBlock(Supplier<? extends Block> entry, DirectionProperty facingProperty)
