@@ -48,6 +48,7 @@ import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.util.function.Lazy;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 
+import java.util.OptionalDouble;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -57,6 +58,7 @@ public final class MultiBlockRenderer
 
     private PlatformRenderer renderer = (modelRenderer, pose, consumer, blockState, model, rng, r, g, b, light, overlay) -> modelRenderer.renderModel(pose, consumer, blockState, model, r, g, b, light, overlay);
     private final BiFunction<ResourceLocation, Boolean, RenderType> entityTranslucentCustom;
+    private final RenderType linesCustom;
 
     private MultiBlockRenderer()
     {
@@ -82,6 +84,28 @@ public final class MultiBlockRenderer
                         .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING) // fixes z-fighting?, when in same space as other blocks
                         .createCompositeState(outline)
         ));
+
+        linesCustom = RenderType.create(
+                "%s:lines_no_depth".formatted(FantasyFurniture.ID),
+                DefaultVertexFormat.POSITION_COLOR_NORMAL,
+                VertexFormat.Mode.LINES,
+                256,
+                RenderType.CompositeState
+                        .builder()
+                        // translucency
+                        .setShaderState(RenderStateShard.RENDERTYPE_LINES_SHADER)
+                        .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                        // no line width, calculated based on window size
+                        .setLineState(new RenderStateShard.LineStateShard(OptionalDouble.empty()))
+                        .setLayeringState(RenderStateShard.VIEW_OFFSET_Z_LAYERING)
+                        .setOutputState(RenderType.ITEM_ENTITY_TARGET)
+
+                        .setCullState(RenderStateShard.NO_CULL)
+                        // disable depth test (see through walls)
+                        .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                        .setDepthTestState(new RenderStateShard.DepthTestStateShard("%s:not_equal".formatted(FantasyFurniture.ID), GL11.GL_NOTEQUAL))
+                        .createCompositeState(false)
+        );
     }
 
     public RenderType getRenderType(ResourceLocation texture, boolean outline)
@@ -144,6 +168,7 @@ public final class MultiBlockRenderer
             pose.translate(pos.getX(), pos.getY(), pos.getZ());
 
             renderBlockState(blockColors, blockRenderer, pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
+            renderVoxelShape(pose, buffer, level, pos, renderBlockState, valid, alpha, partialTick);
 
             pose.popPose();
             return true;
@@ -176,6 +201,39 @@ public final class MultiBlockRenderer
         // render the model, with above properties
         renderer.renderBlockState(blockRenderer.getModelRenderer(), pose.last(), consumer, blockState, model, level.random, r, g, b, light, overlay);
         buffer.endBatch(renderType);
+    }
+
+    private void renderVoxelShape(PoseStack pose, MultiBufferSource.BufferSource buffer, Level level, BlockPos pos, BlockState blockState, boolean validPlacement, int alpha, float partialTick)
+    {
+        var shape = blockState.getShape(level, pos);
+        if(shape.isEmpty()) return;
+
+        var last = pose.last();
+        var matrix = last.pose();
+        var normal = last.normal();
+
+        var consumer = buffer.getBuffer(linesCustom);
+
+        var x = 0;
+        var y = 0;
+        var z = 0;
+
+        var color = validPlacement ? 0x0 : 0xEB3223;
+        var r = FastColor.ARGB32.red(color) / 255F;
+        var g = FastColor.ARGB32.green(color) / 255F;
+        var b = FastColor.ARGB32.blue(color) / 255F;
+
+        shape.forAllEdges((minX, minY, minZ, maxX, maxY, maxZ) -> {
+            var distX = (float) (maxX - minX);
+            var distY = (float) (maxY - minY);
+            var distZ = (float) (maxZ - minZ);
+            var t = Mth.sqrt(distX * distX + distY * distY + distZ * distZ);
+
+            consumer.vertex(matrix, (float) (minX + x), (float) (minY + y), (float) (minZ + z)).color(r, g, b, alpha).normal(normal, distX /= t, distY /= t, distZ /= t).endVertex();
+            consumer.vertex(matrix, (float) (maxX + x), (float) (maxY + y), (float) (maxZ + z)).color(r, g, b, alpha).normal(normal, distX, distY, distZ).endVertex();
+        });
+
+        buffer.endBatch(linesCustom);
     }
 
     private int getAlpha()
