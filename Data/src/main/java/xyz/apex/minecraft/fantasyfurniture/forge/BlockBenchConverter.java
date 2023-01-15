@@ -49,6 +49,10 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertGeneric(furnitureSet, "painting_wide");
         convertGeneric(furnitureSet, "painting_small");
         convertGeneric(furnitureSet, "oven");
+        convertDoor(furnitureSet, "double", true);
+        convertDoor(furnitureSet, "double", false);
+        convertDoor(furnitureSet, "single", true);
+        convertDoor(furnitureSet, "single", false);
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)
@@ -81,6 +85,17 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/%s".formatted(blockType))))
                 .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet)))
                 .texture(textureKey, new ResourceLocation(FantasyFurniture.ID, "block/%s/%s".formatted(furnitureSet, texturePath)))
+        ;
+    }
+
+    private BlockModelBuilder convertDoor(String furnitureSet, String doorType, boolean isLeft)
+    {
+        var rootDoorName = "door_%s".formatted(doorType);
+        var furnitureDoorName = "%s/%s".formatted(furnitureSet, rootDoorName);
+        return blockModelBuilder(new ResourceLocation(FantasyFurniture.ID, "block/%s_%s".formatted(furnitureDoorName, isLeft ? "left" : "right"))) // fantasyfurniture:block/${furnitureSet}/door_${doorType}_${isLeft ? 'left' : 'right'}
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/%s".formatted(rootDoorName)))) // fantasyfurniture:block/templates/door_${doorType}
+                .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet))) // fantasyfurniture:block/${furnitureSet}/particle
+                .texture(rootDoorName, new ResourceLocation(FantasyFurniture.ID, "block/%s".formatted(furnitureDoorName))) // door_${doorType} | fantasyfurniture:block/${furnitureSet}/door_${doorType}
         ;
     }
 

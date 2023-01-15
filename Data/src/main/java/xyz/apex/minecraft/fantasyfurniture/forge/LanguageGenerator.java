@@ -48,6 +48,8 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.PAINTING_WIDE, "Nordic Painting Wide");
         addBlock(NordicSet.PAINTING_SMALL, "Nordic Painting Small");
         addBlock(NordicSet.OVEN, "Nordic Oven");
+        addBlock(NordicSet.DOOR_DOUBLE, "Nordic Door Double");
+        addBlock(NordicSet.DOOR_SINGLE, "Nordic Door Single");
         addCreativeModeTab(NordicSet.NAME, "Nordic");
     }
 

@@ -308,4 +308,25 @@ public interface FurnitureSets
                 .renderType(() -> RenderType::cutout)
         ;
     }
+
+    // region: Doors
+    private static BlockBuilder<DoorMultiBlock, Registrar, Registrar> door(String furnitureSet, String doorType, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/door_%s".formatted(furnitureSet, doorType), AllMultiBlockTypes.MB_1x2x1_FACING_DOOR, (multiBlockType, properties) -> new DoorMultiBlock(multiBlockType, doorSounds, properties))
+                .copyFrom(() -> Blocks.OAK_DOOR)
+                .hitbox(baseShape, AllVoxelShapes::getDoorShape)
+        ;
+    }
+
+    static BlockBuilder<DoorMultiBlock, Registrar, Registrar> doorSingle(String furnitureSet, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    {
+        return door(furnitureSet, "single", doorSounds, baseShape);
+    }
+
+    static BlockBuilder<DoorMultiBlock, Registrar, Registrar> doorDouble(String furnitureSet, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    {
+        return door(furnitureSet, "double", doorSounds, baseShape);
+    }
+    // endregion
 }

@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.init;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
@@ -11,6 +12,7 @@ import xyz.apex.minecraft.fantasyfurniture.shared.block.*;
 public interface NordicSet
 {
     String NAME = "nordic";
+    DoorMultiBlock.DoorSounds DOOR_SOUNDS = new DoorMultiBlock.DoorSounds(SoundEvents.WOODEN_DOOR_OPEN, SoundEvents.WOODEN_DOOR_CLOSE);
 
     BlockEntry<Block> WOOL = FurnitureSets.wool(NAME).register();
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(NAME).register();
@@ -36,6 +38,8 @@ public interface NordicSet
     BlockEntry<SimpleHorizontalFacingBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(NAME, () -> AllVoxelShapes.Nordic.PAINTING_SMALL).register();
     BlockEntry<SimpleMultiBlock.WithHorizontalFacing> PAINTING_WIDE = FurnitureSets.paintingWide(NAME, () -> AllVoxelShapes.Nordic.PAINTING_WIDE).register();
     BlockEntry<OvenBlock> OVEN = FurnitureSets.oven(NAME, () -> AllVoxelShapes.Nordic.OVEN).register();
+    BlockEntry<DoorMultiBlock> DOOR_DOUBLE = FurnitureSets.doorDouble(NAME, DOOR_SOUNDS, () -> AllVoxelShapes.Nordic.DOOR_DOUBLE).register();
+    BlockEntry<DoorMultiBlock> DOOR_SINGLE = FurnitureSets.doorSingle(NAME, DOOR_SOUNDS, () -> AllVoxelShapes.Nordic.DOOR_SINGLE).register();
 
     static void bootstrap()
     {
@@ -66,6 +70,8 @@ public interface NordicSet
                     output.accept(PAINTING_WIDE);
                     output.accept(PAINTING_SMALL);
                     output.accept(OVEN);
+                    output.accept(DOOR_DOUBLE);
+                    output.accept(DOOR_SINGLE);
                 })
         );
     }

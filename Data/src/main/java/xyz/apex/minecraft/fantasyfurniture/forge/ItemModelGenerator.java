@@ -53,6 +53,8 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NordicSet.PAINTING_WIDE);
         blockItem(NordicSet.PAINTING_SMALL);
         blockItem(NordicSet.OVEN);
+        doorBlockItem(NordicSet.DOOR_DOUBLE);
+        doorBlockItem(NordicSet.DOOR_SINGLE);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)
@@ -73,5 +75,12 @@ public final class ItemModelGenerator extends ItemModelProvider
         var registryName = ForgeRegistries.ITEMS.getKey(entry.get().asItem());
         Validate.notNull(registryName);
         return new ResourceLocation(registryName.getNamespace(), "%s/%s".formatted(prefix, registryName.getPath()));
+    }
+
+    private ItemModelBuilder doorBlockItem(Supplier<? extends ItemLike> item)
+    {
+        var blockModelPath = nameWithPrefix(item, ModelProvider.BLOCK_FOLDER).withPath(path -> path + "_left");
+        var blockModel = getExistingFile(blockModelPath);
+        return blockItem(item, blockModel);
     }
 }

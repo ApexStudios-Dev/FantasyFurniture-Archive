@@ -1,7 +1,9 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.init;
 
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
@@ -219,6 +221,27 @@ public interface AllVoxelShapes
                 Block.box(0D, 9D, 0D, 16D, 10D, 16D),
                 Block.box(1D, 10D, 3D, 15D, 14D, 16D),
                 Block.box(2D, 14D, 3D, 14D, 16D, 16D)
+        );
+
+        VoxelShape DOOR_DOUBLE = shape(
+                box(0D, 0D, 0D, 13D, 2D, 3D),
+                box(0D, 10D, 0D, 13D, 12D, 3D),
+                box(0D, 20D, 0D, 13D, 22D, 3D),
+                box(13D, 0D, 0D, 16D, 32D, 3D),
+                box(12D, 28D, 0D, 13D, 32D, 3D),
+                box(10D, 29D, 0D, 12D, 32D, 3D),
+                box(8D, 30D, 0D, 10D, 32D, 3D),
+                box(3D, 31D, 0D, 8D, 32D, 3D),
+                box(0D, 2D, .5D, 13D, 32D, 2.5D)
+        );
+
+        VoxelShape DOOR_SINGLE = shape(
+                box(0D, 0D, 0D, 13D, 2D, 3D),
+                box(0D, 10D, 0D, 13D, 12D, 3D),
+                box(0D, 20D, 0D, 13D, 22D, 3D),
+                box(0D, 30D, 0D, 13D, 32D, 3D),
+                box(13D, 0D, 0D, 16D, 32D, 3D),
+                box(0D, 2D, .5D, 13D, 30D, 2.5D)
         );
 
         private static void bootstrap() {}
@@ -441,6 +464,50 @@ public interface AllVoxelShapes
     {
         var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    static VoxelShape getDoorShape(VoxelShape current, DoorMultiBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING).getOpposite();
+        var open = blockState.getValue(DoorMultiBlock.OPEN);
+        var hinge = blockState.getValue(DoorMultiBlock.HINGE);
+
+        /*if(hinge == DoorHingeSide.RIGHT) facing = facing.getOpposite();
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(open)
+        {
+            facing = hinge == DoorHingeSide.RIGHT ? facing.getClockWise() : facing.getCounterClockWise();
+            shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+            //facing = hinge == DoorHingeSide.RIGHT ? facing.getCounterClockWise() : facing.getClockWise();
+            shape = shape.move(-facing.getStepX(), 0D, -facing.getStepZ());
+        }
+
+        shape = block.getMultiBlockType().isOrigin(blockState) ? shape : shape.move(0D, -1D, 0D);*/
+
+        Direction shapeFacing;
+
+        if(hinge == DoorHingeSide.LEFT) shapeFacing = open ? facing.getCounterClockWise() : facing;
+        else shapeFacing = open ? facing.getOpposite().getClockWise() : facing.getOpposite();
+
+        var shape = VoxelShapeHelper.rotateHorizontal(current, shapeFacing);
+
+        var x = 0D;
+        var y = 0D;
+        var z = 0D;
+
+        if(!block.getMultiBlockType().isOrigin(blockState)) y -= 1D;
+
+        x -= shapeFacing.getStepX() * .8125D;
+        z -= shapeFacing.getStepZ() * .8125D;
+
+        if((hinge == DoorHingeSide.LEFT && !open) || (hinge == DoorHingeSide.RIGHT && open))
+        {
+            x += shapeFacing.getStepX() * .8125D;
+            z += shapeFacing.getStepZ() * .8125D;
+        }
+
+        return shape.move(x, y, z);
     }
 
     private static VoxelShape shape(VoxelShape... shapes)

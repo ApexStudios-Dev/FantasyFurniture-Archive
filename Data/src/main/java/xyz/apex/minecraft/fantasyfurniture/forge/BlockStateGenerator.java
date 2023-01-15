@@ -6,18 +6,17 @@ import org.apache.commons.lang3.Validate;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
@@ -220,6 +219,26 @@ public final class BlockStateGenerator extends BlockStateProvider
         template(new ResourceLocation(FantasyFurniture.ID, "templates/oven"))
                 .renderType(cutout)
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/door_double"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/door_single"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 225F, 0F)
+                        .translation(0F, -2.25F, 0F)
+                        .scale(.45F, .45F, .45F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -253,6 +272,8 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(NordicSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.OVEN, HorizontalDirectionalBlock.FACING);
+        doorBlock(NordicSet.DOOR_DOUBLE);
+        doorBlock(NordicSet.DOOR_SINGLE);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -261,8 +282,13 @@ public final class BlockStateGenerator extends BlockStateProvider
         var block = entry.get();
         var properties = Lists.newArrayList();
 
-        // if(block instanceof MultiBlock multiBlock) properties.add(multiBlock.getMultiBlockType().getBlockProperty());
+        if(block instanceof MultiBlock multiBlock) properties.add(multiBlock.getMultiBlockType().getBlockProperty());
         if(block instanceof SimpleWaterloggedBlock) properties.add(BlockStateProperties.WATERLOGGED);
+        if(block instanceof DoorBlock)
+        {
+            properties.add(DoorBlock.POWERED);
+            properties.add(DoorBlock.HALF);
+        }
 
         return properties.toArray(Property<?>[]::new);
     }
@@ -290,6 +316,24 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .modelFile(model)
                 .build()
         );
+    }
+
+    private void doorBlock(Supplier<? extends Block> entry)
+    {
+        var leftModel = models().getExistingFile(blockFolder(entry).withPath(path -> path + "_left"));
+        var rightModel = models().getExistingFile(blockFolder(entry).withPath(path -> path + "_right"));
+
+        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> {
+            var open = blockState.getValue(DoorBlock.OPEN);
+            var right = blockState.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT;
+
+            int yRot = (int) blockState.getValue(DoorBlock.FACING).toYRot();
+            if(open) yRot = yRot + (right ? -90 : 90);
+            yRot %= 360;
+
+            var model = open ? (right ? leftModel : rightModel) : (right ? rightModel : leftModel);
+            return ConfiguredModel.builder().modelFile(model).rotationY(yRot).build();
+        }, gatherIgnoredProperties(entry));
     }
 
     private void complexBlock(Supplier<? extends Block> entry, BiFunction<BlockState, ModelFile.ExistingModelFile, ConfiguredModel[]> models)

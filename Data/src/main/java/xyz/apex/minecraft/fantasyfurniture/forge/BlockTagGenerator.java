@@ -34,12 +34,17 @@ public final class BlockTagGenerator extends BlockTagsProvider
         tag(BlockTags.WOOL, NordicSet.WOOL);
         tag(BlockTags.WOOL_CARPETS, NordicSet.CARPET);
 
+        tag(Tags.Blocks.Vanilla.WOODEN_DOORS,
+                NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE
+        );
+
         // multi-blocks have restricted movement
         tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
                 NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
                 NordicSet.BENCH, NordicSet.CHAIR, NordicSet.CHEST, NordicSet.BOOKSHELF,
                 NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,
-                NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE
+                NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE,
+                NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE
         );
     }
 

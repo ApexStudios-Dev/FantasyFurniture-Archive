@@ -50,6 +50,8 @@ public final class RecipeGenerator extends RecipeProvider
         nordicStation(consumer, NordicSet.PAINTING_WIDE);
         nordicStation(consumer, NordicSet.PAINTING_SMALL);
         nordicStation(consumer, NordicSet.OVEN);
+        nordicStation(consumer, NordicSet.DOOR_DOUBLE);
+        nordicStation(consumer, NordicSet.DOOR_SINGLE);
     }
 
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
