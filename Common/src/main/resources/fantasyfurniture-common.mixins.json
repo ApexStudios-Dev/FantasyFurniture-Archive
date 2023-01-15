@@ -1,7 +1,11 @@
 {
     "required": true,
     "package": "${APEX_GROUP}.${MOD_ID}.shared.mixin",
-    "mixins": [ ],
+    "mixins": [
+        "AccessorPoiTypes",
+        "InvokerPoiTypes",
+        "MixinPoiTypes"
+    ],
     "client": [ ],
     "server": [ ],
     "minVersion": "${MIXIN_VERSION}",

@@ -53,6 +53,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertDoor(furnitureSet, "double", false);
         convertDoor(furnitureSet, "single", true);
         convertDoor(furnitureSet, "single", false);
+        convertGeneric(furnitureSet, "bed_single");
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)

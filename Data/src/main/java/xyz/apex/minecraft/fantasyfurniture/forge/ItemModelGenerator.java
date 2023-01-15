@@ -55,6 +55,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NordicSet.OVEN);
         doorBlockItem(NordicSet.DOOR_DOUBLE);
         doorBlockItem(NordicSet.DOOR_SINGLE);
+        blockItem(NordicSet.BED_SINGLE);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

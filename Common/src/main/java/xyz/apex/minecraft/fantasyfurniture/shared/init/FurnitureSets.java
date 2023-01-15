@@ -3,6 +3,7 @@ package xyz.apex.minecraft.fantasyfurniture.shared.init;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -327,6 +328,18 @@ public interface FurnitureSets
     static BlockBuilder<DoorMultiBlock, Registrar, Registrar> doorDouble(String furnitureSet, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
     {
         return door(furnitureSet, "double", doorSounds, baseShape);
+    }
+    // endregion
+
+    // region: Beds
+    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/bed_single".formatted(furnitureSet), AllMultiBlockTypes.MB_2x1x1_FACING_BED, BedMultiBlock::new)
+                .copyFrom(() -> Blocks.WHITE_BED)
+                .hitbox(baseShape, AllVoxelShapes::getBedSingleShape)
+                .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, BedMultiBlock::registerCustomHomePoi)
+        ;
     }
     // endregion
 }

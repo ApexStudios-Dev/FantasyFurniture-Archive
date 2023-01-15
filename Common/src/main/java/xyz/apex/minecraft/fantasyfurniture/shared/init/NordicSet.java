@@ -40,11 +40,12 @@ public interface NordicSet
     BlockEntry<OvenBlock> OVEN = FurnitureSets.oven(NAME, () -> AllVoxelShapes.Nordic.OVEN).register();
     BlockEntry<DoorMultiBlock> DOOR_DOUBLE = FurnitureSets.doorDouble(NAME, DOOR_SOUNDS, () -> AllVoxelShapes.Nordic.DOOR_DOUBLE).register();
     BlockEntry<DoorMultiBlock> DOOR_SINGLE = FurnitureSets.doorSingle(NAME, DOOR_SOUNDS, () -> AllVoxelShapes.Nordic.DOOR_SINGLE).register();
+    BlockEntry<BedMultiBlock> BED_SINGLE = FurnitureSets.bedSingle(NAME, () -> AllVoxelShapes.Nordic.BED_SINGLE).register();
 
     static void bootstrap()
     {
         FurnitureSets.creativeModeTab(NAME, builder -> builder
-                .icon(WOOL::asStack)
+                .icon(BED_SINGLE::asStack)
                 .displayItems((featureFlagSet, output, b) -> {
                     output.accept(WOOL);
                     output.accept(CARPET);
@@ -72,6 +73,7 @@ public interface NordicSet
                     output.accept(OVEN);
                     output.accept(DOOR_DOUBLE);
                     output.accept(DOOR_SINGLE);
+                    output.accept(BED_SINGLE);
                 })
         );
     }

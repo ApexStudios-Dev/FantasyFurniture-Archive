@@ -33,6 +33,7 @@ public final class ItemTagGenerator extends ItemTagsProvider
         copy(BlockTags.WOOL, ItemTags.WOOL);
         copy(BlockTags.WOOL_CARPETS, ItemTags.WOOL_CARPETS);
         copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
+        copy(BlockTags.BEDS, ItemTags.BEDS);
     }
 
     private void tag(TagKey<Item> tag, @Nullable Object... values)

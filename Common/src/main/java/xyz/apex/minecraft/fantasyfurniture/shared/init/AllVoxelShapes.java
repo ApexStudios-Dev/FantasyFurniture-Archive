@@ -244,6 +244,13 @@ public interface AllVoxelShapes
                 box(0D, 2D, .5D, 13D, 30D, 2.5D)
         );
 
+        VoxelShape BED_SINGLE = shape(
+                box(0D, 0D, 0D, 16D, 14D, 2D),
+                box(0D, 0D, 30D, 16D, 14D, 32D),
+                box(0D, 3D, 2D, 16D, 5D, 30D),
+                box(1D, 5D, 2D, 15D, 8D, 30D)
+        );
+
         private static void bootstrap() {}
     }
 
@@ -508,6 +515,14 @@ public interface AllVoxelShapes
         }
 
         return shape.move(x, y, z);
+    }
+
+    static VoxelShape getBedSingleShape(VoxelShape current, BedMultiBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(BedMultiBlock.FACING);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+        if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+        return shape;
     }
 
     private static VoxelShape shape(VoxelShape... shapes)
