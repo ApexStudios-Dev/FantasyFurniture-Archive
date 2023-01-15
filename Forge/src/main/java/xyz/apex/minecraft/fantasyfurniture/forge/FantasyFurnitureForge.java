@@ -20,7 +20,10 @@ public final class FantasyFurnitureForge extends ForgeModPlatform implements Fan
         super(ID, REGISTRAR);
 
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            MultiBlockRenderer.INSTANCE.get().setRenderer((renderer, pose, consumer, blockState, model, rng, r, g, b, light, overlay) -> {
+            MultiBlockRenderer.INSTANCE.get().setRenderer((client, pose, consumer, ctx, blockState, model, r, g, b, light, overlay) -> {
+                var renderer = client.getBlockRenderer().getModelRenderer();
+                var rng = ctx.getLevel().random;
+
                 for(var renderType : model.getRenderTypes(blockState, rng, ModelData.EMPTY))
                 {
                     renderer.renderModel(pose, consumer, blockState, model, r, g, b, light, overlay, ModelData.EMPTY, renderType);
@@ -29,7 +32,7 @@ public final class FantasyFurnitureForge extends ForgeModPlatform implements Fan
 
             MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderLevelStageEvent.class, event -> {
                 if(event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
-                MultiBlockRenderer.INSTANCE.get().render(event.getLevelRenderer(), event.getPoseStack(), event.getPartialTick(), event.getCamera(), event.getFrustum());
+                MultiBlockRenderer.INSTANCE.get().render(event.getPoseStack(), event.getPartialTick(), event.getCamera());
             });
         });
     }

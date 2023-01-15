@@ -29,10 +29,11 @@ import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.util.function.Lazy;
+import xyz.apex.minecraft.fantasyfurniture.shared.client.renderer.MultiBlockRendererPlacementModifier;
 
 import java.util.function.Supplier;
 
-public class DoorMultiBlock extends DoorBlock implements MultiBlock
+public class DoorMultiBlock extends DoorBlock implements MultiBlock, MultiBlockRendererPlacementModifier
 {
     public static final DirectionProperty FACING = DoorBlock.FACING;
     public static final BooleanProperty OPEN = DoorBlock.OPEN;
@@ -80,8 +81,7 @@ public class DoorMultiBlock extends DoorBlock implements MultiBlock
 
         if(pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(ctx))
         {
-            var open = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
-            var blockState = defaultBlockState().setValue(FACING, ctx.getHorizontalDirection()).setValue(HINGE, getHinge(this, ctx)).setValue(POWERED, open).setValue(OPEN, open).setValue(HALF, DoubleBlockHalf.LOWER);
+            var blockState = getPlacementState(this, ctx);
             return multiBlockType.getStateForPlacement(this, blockState, ctx);
         }
 
@@ -191,6 +191,20 @@ public class DoorMultiBlock extends DoorBlock implements MultiBlock
     public final SoundEvent getCloseSound()
     {
         return doorSounds.getCloseSound();
+    }
+
+    @Override
+    public BlockState getBlockStateForRenderPlacement(BlockPlaceContext ctx)
+    {
+        return getPlacementState(this, ctx);
+    }
+
+    public static BlockState getPlacementState(DoorMultiBlock block, BlockPlaceContext ctx)
+    {
+        var level = ctx.getLevel();
+        var pos = ctx.getClickedPos();
+        var open = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
+        return block.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection()).setValue(HINGE, getHinge(block, ctx)).setValue(POWERED, open).setValue(OPEN, open).setValue(HALF, DoubleBlockHalf.LOWER);
     }
 
     public static DoorHingeSide getHinge(DoorBlock door, BlockPlaceContext ctx)

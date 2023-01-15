@@ -12,12 +12,10 @@ public final class FantasyFurnitureQuilt extends QuiltModPlatform implements Fan
 {
     public static final QuiltModPlatform INSTANCE = new FantasyFurnitureQuilt();
 
-    @SuppressWarnings("DataFlowIssue")
     private FantasyFurnitureQuilt()
     {
         super(ID, REGISTRAR);
 
-        // frustum is non-null during AFTER_ENTITIES
-        EnvExecutor.runInEnv(Env.CLIENT, () -> () -> WorldRenderEvents.AFTER_TRANSLUCENT.register(ctx -> MultiBlockRenderer.INSTANCE.get().render(ctx.worldRenderer(), ctx.matrixStack(), ctx.tickDelta(), ctx.camera(), ctx.frustum())));
+        EnvExecutor.runInEnv(Env.CLIENT, () -> () -> WorldRenderEvents.AFTER_TRANSLUCENT.register(ctx -> MultiBlockRenderer.INSTANCE.get().render(ctx.matrixStack(), ctx.tickDelta(), ctx.camera())));
     }
 }
