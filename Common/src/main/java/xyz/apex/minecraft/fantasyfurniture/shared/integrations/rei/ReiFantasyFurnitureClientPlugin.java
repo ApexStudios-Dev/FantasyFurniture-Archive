@@ -31,6 +31,7 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
         registry.addWorkstations(ReiFantasyFurnitureServerPlugin.FURNITURE_STATION_RECIPE_ID, EntryStacks.of(FantasyFurniture.FURNITURE_STATION_BLOCK));
 
         registry.addWorkstations(BuiltinClientPlugin.SMOKING, EntryIngredients.ofItems(List.of(NordicSet.OVEN)));
+        registry.addWorkstations(BuiltinClientPlugin.FUEL, EntryIngredients.ofItems(List.of(NordicSet.OVEN)));
     }
 
     @Override
