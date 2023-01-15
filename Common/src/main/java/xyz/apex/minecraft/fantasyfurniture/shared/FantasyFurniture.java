@@ -3,12 +3,11 @@ package xyz.apex.minecraft.fantasyfurniture.shared;
 import dev.architectury.hooks.PackRepositoryHooks;
 import dev.architectury.hooks.level.entity.PlayerHooks;
 import dev.architectury.utils.Env;
+import dev.architectury.utils.EnvExecutor;
 import dev.architectury.utils.GameInstance;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.network.chat.Component;
@@ -79,19 +78,11 @@ public interface FantasyFurniture extends ModPlatform
         AllMenuTypes.bootstrap();
 
         CONFIG.load();
-        asMod().registerConfigurationScreen(parent -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
-    }
 
-    @Override
-    default void initializeSided(Env side)
-    {
-        if(side == Env.CLIENT) registerResourcePacks();
-    }
-
-    @Environment(EnvType.CLIENT)
-    private void registerResourcePacks()
-    {
-        registerResourcePack("ctm", "ctm_support", () -> Component.literal("CTM Mod Support"));
+        EnvExecutor.runInEnv(Env.CLIENT, () -> () -> {
+            asMod().registerConfigurationScreen(parent -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
+            registerResourcePack("ctm", "ctm_support", () -> Component.literal("CTM Mod Support"));
+        });
     }
 
     private void registerResourcePack(@Nullable String requiredMod, String packId, Supplier<Component> displayName)
