@@ -39,7 +39,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         );
 
         tag(Tags.Blocks.Vanilla.BEDS,
-                NordicSet.BED_SINGLE
+                NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE
         );
 
         // multi-blocks have restricted movement
@@ -48,7 +48,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.BENCH, NordicSet.CHAIR, NordicSet.CHEST, NordicSet.BOOKSHELF,
                 NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,
                 NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE,
-                NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE
+                NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE
         );
     }
 

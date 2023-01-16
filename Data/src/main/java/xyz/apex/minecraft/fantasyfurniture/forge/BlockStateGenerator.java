@@ -249,6 +249,16 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/bed_double"))
+                .transforms()
+                    .transform(ItemTransforms.TransformType.GUI)
+                        .rotation(30F, 45F, 0F)
+                        .translation(0F, -.75F, 0F)
+                        .scale(.3F, .3F, .3F)
+                    .end()
+                .end()
+        ;
     }
 
     @Override
@@ -285,6 +295,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         doorBlock(NordicSet.DOOR_DOUBLE);
         doorBlock(NordicSet.DOOR_SINGLE);
         facingBlock(NordicSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NordicSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

@@ -332,13 +332,26 @@ public interface FurnitureSets
     // endregion
 
     // region: Beds
-    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
+    private static BlockBuilder<BedMultiBlock, Registrar, Registrar> bed(String furnitureSet, String bedType, MultiBlockType multiBlockType)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/bed_single".formatted(furnitureSet), AllMultiBlockTypes.MB_2x1x1_FACING_BED, BedMultiBlock::new)
+                .multiBlock("%s/bed_%s".formatted(furnitureSet, bedType), multiBlockType, BedMultiBlock::new)
                 .copyFrom(() -> Blocks.WHITE_BED)
-                .hitbox(baseShape, AllVoxelShapes::getBedSingleShape)
                 .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, BedMultiBlock::registerCustomHomePoi)
+        ;
+    }
+
+    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return bed(furnitureSet, "single", AllMultiBlockTypes.MB_2x1x1_FACING_BED)
+                .hitbox(baseShape, AllVoxelShapes::getBedSingleShape)
+        ;
+    }
+
+    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedDouble(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return bed(furnitureSet, "double", AllMultiBlockTypes.MB_2x1x2_FACING_BED)
+                .hitbox(baseShape, AllVoxelShapes::getBedDoubleShape)
         ;
     }
     // endregion
