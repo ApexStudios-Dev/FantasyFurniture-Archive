@@ -32,7 +32,6 @@ import xyz.apex.minecraft.fantasyfurniture.shared.menu.FurnitureStationMenu;
 
 import java.util.function.Consumer;
 
-// NOTE: Changes *MUST* be mirrored across into the Data project
 public final class FurnitureStationRecipe implements Recipe<Container>
 {
     private final ResourceLocation recipeId;
@@ -42,11 +41,13 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     private final Ingredient bindingAgent;
     private final ItemLike result;
     private final ItemStack cachedResult;
+    private final String furnitureSet;
 
-    private FurnitureStationRecipe(ResourceLocation recipeId, String group, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
+    private FurnitureStationRecipe(ResourceLocation recipeId, String group, String furnitureSet, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
     {
         this.recipeId = recipeId;
         this.group = group;
+        this.furnitureSet = furnitureSet;
         this.ingredientLeft = ingredientLeft;
         this.ingredientRight = ingredientRight;
         this.bindingAgent = bindingAgent;
@@ -133,14 +134,19 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         return FantasyFurniture.FURNITURE_STATION_BLOCK.asStack();
     }
 
-    public static Builder builder(RecipeCategory category, Ingredient left, Ingredient right, Ingredient bindingAgent, ItemLike result)
+    public String getFurnitureSet()
     {
-        return new Builder(category, left, right, bindingAgent, result);
+        return furnitureSet;
     }
 
-    public static Builder clayBound(RecipeCategory category, Ingredient left, Ingredient right, ItemLike result)
+    public static Builder builder(RecipeCategory category, String furnitureSet, Ingredient left, Ingredient right, Ingredient bindingAgent, ItemLike result)
     {
-        return builder(category, left, right, Ingredient.of(Items.CLAY_BALL), result);
+        return new Builder(category, furnitureSet, left, right, bindingAgent, result);
+    }
+
+    public static Builder clayBound(RecipeCategory category, String furnitureSet, Ingredient left, Ingredient right, ItemLike result)
+    {
+        return builder(category, furnitureSet, left, right, Ingredient.of(Items.CLAY_BALL), result);
     }
 
     public static final class Serializer implements RecipeSerializer<FurnitureStationRecipe>
@@ -153,7 +159,8 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             var ingredientRight = getIngredient(json, "right");
             var bindingAgent = getIngredient(json, "binding_agent");
             var result = BuiltInRegistries.ITEM.get(new ResourceLocation(GsonHelper.getAsString(json, "result")));
-            return new FurnitureStationRecipe(recipeId, group, ingredientLeft, ingredientRight, bindingAgent, result);
+            var furnitureSet = GsonHelper.getAsString(json, "furniture_set");
+            return new FurnitureStationRecipe(recipeId, group, furnitureSet, ingredientLeft, ingredientRight, bindingAgent, result);
         }
 
         @Override
@@ -164,7 +171,8 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             var ingredientRight = Ingredient.fromNetwork(data);
             var bindingAgent = Ingredient.fromNetwork(data);
             var result = BuiltInRegistries.ITEM.get(data.readResourceLocation());
-            return new FurnitureStationRecipe(recipeId, group, ingredientLeft, ingredientRight, bindingAgent, result);
+            var furnitureSet = data.readUtf();
+            return new FurnitureStationRecipe(recipeId, group, furnitureSet, ingredientLeft, ingredientRight, bindingAgent, result);
         }
 
         @Override
@@ -175,6 +183,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             recipe.ingredientRight.toNetwork(data);
             recipe.bindingAgent.toNetwork(data);
             data.writeResourceLocation(BuiltInRegistries.ITEM.getKey(recipe.result.asItem()));
+            data.writeUtf(recipe.furnitureSet);
         }
 
         private Ingredient getIngredient(JsonObject root, String key)
@@ -192,14 +201,16 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         private final ItemLike result;
         private final Advancement.Builder advancement = Advancement.Builder.advancement();
         @Nullable private String group;
+        private final String furnitureSet;
 
-        private Builder(RecipeCategory category, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
+        private Builder(RecipeCategory category, String furnitureSet, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
         {
             this.category = category;
             this.ingredientLeft = ingredientLeft;
             this.ingredientRight = ingredientRight;
             this.bindingAgent = bindingAgent;
             this.result = result;
+            this.furnitureSet = furnitureSet;
         }
 
         @Override
@@ -231,7 +242,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
                        .requirements(RequirementsStrategy.OR)
             ;
 
-            exporter.accept(new CompiledRecipe(category, recipeId, advancement, group, ingredientLeft, ingredientRight, bindingAgent, result));
+            exporter.accept(new CompiledRecipe(category, recipeId, advancement, furnitureSet, group, ingredientLeft, ingredientRight, bindingAgent, result));
         }
     }
 
@@ -245,8 +256,9 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         private final ItemLike result;
         private final Advancement.Builder advancement;
         @Nullable private final String group;
+        private final String furnitureSet;
 
-        private CompiledRecipe(RecipeCategory category, ResourceLocation recipeId, Advancement.Builder advancement, @Nullable String group, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
+        private CompiledRecipe(RecipeCategory category, ResourceLocation recipeId, Advancement.Builder advancement, String furnitureSet, @Nullable String group, Ingredient ingredientLeft, Ingredient ingredientRight, Ingredient bindingAgent, ItemLike result)
         {
             this.recipeId = recipeId;
             this.advancement = advancement;
@@ -255,6 +267,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             this.ingredientRight = ingredientRight;
             this.bindingAgent = bindingAgent;
             this.result = result;
+            this.furnitureSet = furnitureSet;
 
             advancementId = recipeId.withPrefix("recipes/%s/".formatted(category.getFolderName()));
         }
@@ -267,6 +280,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             json.add("right", ingredientRight.toJson());
             json.add("binding_agent", bindingAgent.toJson());
             json.addProperty("result", BuiltInRegistries.ITEM.getKey(result.asItem()).toString());
+            json.addProperty("furniture_set", furnitureSet);
         }
 
         @Override

@@ -2,8 +2,12 @@ package xyz.apex.minecraft.fantasyfurniture.shared.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,15 +16,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.menu.FurnitureStationMenu;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public final class FurnitureStationMenuScreen extends AbstractContainerScreen<FurnitureStationMenu>
+public final class FurnitureStationMenuScreen extends AbstractContainerScreen<FurnitureStationMenu> implements RecipeUpdateListener
 {
     private static final ResourceLocation TEXTURE = new ResourceLocation(FantasyFurniture.ID, "textures/gui/container/furniture_station.png");
+    private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("minecraft", "textures/gui/recipe_button.png");
     private static final int SLOT_SIZE = 18;
     private static final int SCROLL_BAR_WIDTH = 12;
     private static final int SCROLL_BAR_HEIGHT = 15;
@@ -38,6 +45,12 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
     private boolean scrollBarActive = false;
     private boolean scrolling = false;
     private int startIndex = 0;
+
+    private final RecipeBookComponent recipeBook = new RecipeBookComponent();
+    @Nullable private ImageButton recipeBookButton;
+    private boolean widthTooNarrow;
+    private boolean buttonClicked;
+    private boolean recipeBookInitialized;
 
     public FurnitureStationMenuScreen(FurnitureStationMenu menu, Inventory inventory, Component displayName)
     {
@@ -58,13 +71,37 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
         inventoryLabelY = imageHeight - 94;
 
         refreshScreenData();
+
+        widthTooNarrow = width < 379;
+        recipeBook.init(width, height, minecraft, widthTooNarrow, menu);
+        leftPos = recipeBook.updateScreenPosition(width, imageWidth);
+        recipeBookButton = addRenderableWidget(new ImageButton(leftPos + 140, topPos + 120, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, btn -> {
+            recipeBook.toggleVisibility();
+            refreshScreenData();
+            buttonClicked = true;
+        }));
+        addWidget(recipeBook);
+        setInitialFocus(recipeBook);
+        recipeBookInitialized = true;
     }
 
     @Override
     public void render(PoseStack pose, int mouseX, int mouseY, float partialTick)
     {
         renderBackground(pose);
-        super.render(pose, mouseX, mouseY, partialTick);
+
+        if(recipeBook.isVisible() && widthTooNarrow)
+        {
+            renderBg(pose, partialTick, mouseX, mouseY);
+            recipeBook.render(pose, mouseX, mouseY, partialTick);
+        }
+        else
+        {
+            recipeBook.render(pose, mouseX, mouseY, partialTick);
+            super.render(pose, mouseX, mouseY, partialTick);
+            recipeBook.renderGhostRecipe(pose, leftPos, topPos, false, partialTick);
+        }
+
         renderScrollBar(pose);
         renderResults(pose, mouseX, mouseY);
         renderTooltip(pose, mouseX, mouseY);
@@ -76,15 +113,34 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         RenderSystem.setShader(GameRenderer::getPositionShader);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        var i = (width - imageWidth) / 2;
-        var j = (height - imageHeight) / 2;
-        blit(pose, i, j, 0, 0, imageWidth, imageHeight);
+        blit(pose, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+    }
+
+    @Override
+    protected void renderTooltip(PoseStack pose, int mouseX, int mouseY)
+    {
+        super.renderTooltip(pose, mouseX, mouseY);
+        recipeBook.renderTooltip(pose, leftPos, topPos, mouseX, mouseY);
+    }
+
+    @Override
+    protected boolean isHovering(int x, int y, int width, int height, double mouseX, double mouseY)
+    {
+        return (!widthTooNarrow || !recipeBook.isVisible()) && super.isHovering(x, y, width, height, mouseX, mouseY);
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
     {
         scrolling = false;
+
+        if(recipeBook.mouseClicked(mouseX, mouseY, mouseButton))
+        {
+            setFocused(recipeBook);
+            return true;
+        }
+
+        if(widthTooNarrow && recipeBook.isVisible()) return false;
 
         if(mouseButton == GLFW_MOUSE_BUTTON_LEFT)
         {
@@ -93,6 +149,18 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
         }
 
         return super.mouseClicked(mouseX, mouseY, mouseButton);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int mouseButton)
+    {
+        if(buttonClicked)
+        {
+            buttonClicked = false;
+            return true;
+        }
+
+        return super.mouseReleased(mouseX, mouseY, mouseButton);
     }
 
     @Override
@@ -122,10 +190,43 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
         return super.mouseScrolled(mouseX, mouseY, delta);
     }
 
+    @Override
+    protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeft, int guiTop, int mouseButton)
+    {
+        var bl = mouseX < (double) guiLeft || mouseY < (double) guiTop || mouseX >= (double) (guiLeft + imageWidth) || mouseY >= (double) (guiTop + imageHeight);
+        return recipeBook.hasClickedOutside(mouseX, mouseY, leftPos, topPos, imageWidth, imageHeight, mouseButton) && bl;
+    }
+
+    @Override
+    protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type)
+    {
+        super.slotClicked(slot, slotId, mouseButton, type);
+        recipeBook.slotClicked(slot);
+    }
+
+    @Override
+    protected void containerTick()
+    {
+        recipeBook.tick();
+    }
+
+    @Override
+    public void recipesUpdated()
+    {
+        recipeBook.recipesUpdated();
+    }
+
+    @Override
+    public RecipeBookComponent getRecipeBookComponent()
+    {
+        return recipeBook;
+    }
+
     private void refreshScreenData()
     {
         // called too early
         if(minecraft == null) return;
+        if(recipeBookInitialized) leftPos = recipeBook.updateScreenPosition(width, imageWidth);
 
         resultX = leftPos + 17;
         resultY = topPos + 45;
@@ -145,6 +246,8 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
         scrollBarYOffset = 0F;
         scrolling = false;
         scrollBarActive = menu.getRecipes().size() > (horizontalSlots * verticalSlots);
+
+        if(recipeBookInitialized && recipeBookButton != null) recipeBookButton.setPosition(leftPos + 140, topPos + 120);
     }
 
     private void renderScrollBar(PoseStack pose)

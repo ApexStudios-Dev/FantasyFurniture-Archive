@@ -32,6 +32,7 @@ import xyz.apex.minecraft.fantasyfurniture.shared.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.shared.entity.Seat;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.*;
+import xyz.apex.minecraft.fantasyfurniture.shared.recipe.CustomRecipeBookTypes;
 import xyz.apex.minecraft.fantasyfurniture.shared.recipe.FurnitureStationRecipe;
 
 import java.util.function.Supplier;
@@ -83,6 +84,8 @@ public interface FantasyFurniture extends ModPlatform
             asMod().registerConfigurationScreen(parent -> AutoConfig.getConfigScreen(ModConfig.class, parent).get());
             registerResourcePack("ctm", "ctm_support", () -> Component.literal("CTM Mod Support"));
         });
+
+        CustomRecipeBookTypes.bootstrap();
     }
 
     private void registerResourcePack(@Nullable String requiredMod, String packId, Supplier<Component> displayName)
@@ -103,5 +106,11 @@ public interface FantasyFurniture extends ModPlatform
         if(entity instanceof Player player && PlayerHooks.isFake(player)) return false; // disallow FakePlayers
         if(entity.getType().is(SEAT_BLACKLIST)) return false;
         return entity instanceof LivingEntity;
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private static <T> T injected()
+    {
+        return null;
     }
 }

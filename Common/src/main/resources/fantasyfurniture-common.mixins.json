@@ -4,9 +4,16 @@
     "mixins": [
         "AccessorPoiTypes",
         "InvokerPoiTypes",
-        "MixinPoiTypes"
+        "InvokerRecipeBookType",
+        "MixinPoiTypes",
+        "MixinRecipeBookSettings",
+        "MixinRecipeBookType"
     ],
-    "client": [ ],
+    "client": [
+        "client.InvokerRecipeBookCategories",
+        "client.MixinClientRecipeBook",
+        "client.MixinRecipeBookCategories"
+    ],
     "server": [ ],
     "minVersion": "${MIXIN_VERSION}",
     "refmap": "${MOD_ID}-shared-Common-refmap.json"

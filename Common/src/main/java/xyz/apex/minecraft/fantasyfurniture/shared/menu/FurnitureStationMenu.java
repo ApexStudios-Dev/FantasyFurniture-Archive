@@ -5,21 +5,25 @@ import com.google.common.util.concurrent.Runnables;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.recipe.CustomRecipeBookTypes;
 import xyz.apex.minecraft.fantasyfurniture.shared.recipe.FurnitureStationRecipe;
 
 import java.util.Collections;
 import java.util.List;
 
-public final class FurnitureStationMenu extends AbstractContainerMenu
+public final class FurnitureStationMenu extends RecipeBookMenu<Container>
 {
     public static final int SLOT_INGREDIENT_LEFT = 0;
     public static final int SLOT_INGREDIENT_RIGHT = 1;
@@ -60,14 +64,14 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
 
         addDataSlot(selectedResultIndex);
 
+        // result
+        addSlot(new ResultSlot());
+
         // ingredients
         for(var i = 0; i < SLOT_INGREDIENT_COUNT; i++)
         {
             addSlot(new Slot(inputsContainer, i, SLOT_INGREDIENT_X + i * 18, SLOT_INGREDIENT_Y));
         }
-
-        // result
-        addSlot(new ResultSlot());
 
         // player inventory
         var playerInventory = player.getInventory();
@@ -136,12 +140,12 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
             var stack1 = slot.getItem();
             stack = stack1.copy();
 
-            var ingredientStart = 0;
-            var ingredientEnd = SLOT_INGREDIENT_COUNT - 1;
+            var resultSlot = SLOT_RESULT;
 
-            var resultSlot = ingredientEnd + 1;
+            var ingredientStart = resultSlot + 1;
+            var ingredientEnd = ingredientStart + (SLOT_INGREDIENT_COUNT - 1);
 
-            var playerStart = resultSlot + 1;
+            var playerStart = ingredientEnd + 1;
             var playerEnd = playerStart + (9 * 3) - 1;
 
             var hotStart = playerEnd + 1;
@@ -282,6 +286,85 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         left.shrink(1);
         right.shrink(1);
         bindingAgent.shrink(1);
+    }
+
+    @Override
+    public void fillCraftSlotsStackedContents(StackedContents itemHelper)
+    {
+        inputsContainer.fillStackedContents(itemHelper);
+    }
+
+    @Override
+    public void clearCraftingContent()
+    {
+        inputsContainer.clearContent();
+        resultContainer.clearContent();
+    }
+
+    @Override
+    public boolean recipeMatches(Recipe<? super Container> recipe)
+    {
+        return recipe.matches(inputsContainer, player.level);
+    }
+
+    @Override
+    public int getResultSlotIndex()
+    {
+        return 0;
+    }
+
+    @Override
+    public int getGridWidth()
+    {
+        return 4;
+    }
+
+    @Override
+    public int getGridHeight()
+    {
+        return 1;
+    }
+
+    @Override
+    public int getSize()
+    {
+        return 4;
+    }
+
+    @Override
+    public RecipeBookType getRecipeBookType()
+    {
+        return CustomRecipeBookTypes.FURNITURE_STATION;
+    }
+
+    @Override
+    public boolean shouldMoveToInventory(int slotIndex)
+    {
+        return slotIndex != getResultSlotIndex();
+    }
+
+    @Override
+    public void handlePlacement(boolean placeAll, Recipe<?> recipe, ServerPlayer player)
+    {
+        super.handlePlacement(placeAll, recipe, player);
+
+        if(recipe instanceof FurnitureStationRecipe fRecipe)
+        {
+            if(recipeMatches(fRecipe))
+            {
+                for(var i = 0; i < recipes.size(); i++)
+                {
+                    if(recipes.get(i).getId().equals(recipe.getId()))
+                    {
+                        resultContainer.setItem(SLOT_RESULT, recipe.getResultItem().copy());
+                        selectedResultIndex.set(i);
+                        broadcastChanges();
+                        screenListener.run();
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private final class ResultSlot extends Slot
