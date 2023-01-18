@@ -54,6 +54,7 @@ repositories {
 	maven { url 'https://maven.shedaniel.me' }
 	maven { url 'https://maven.terraformersmc.com/' }
 	maven { url "https://maven.quiltmc.org/repository/release/" }
+	maven { url 'https://maven.blamejared.com/' }
 
 	maven {
 		url 'https://www.cursemaven.com'
@@ -71,7 +72,7 @@ dependencies {
 	runtimeClasspath "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
 	modImplementation "org.quiltmc:quilt-loader:${QUILT_LOADER_VERSION}"
 	modImplementation "org.quiltmc:qsl:${QUILT_LIBRARY_VERSION}+${MINECRAFT_VERSION}"
-	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${QUILT_FABRIC_VERSION}-${MINECRAFT_VERSION}" // Try not to use fabric classes
+	modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${QUILT_FABRIC_VERSION}+${FABRIC_VERSION}-${MINECRAFT_VERSION}" // Try not to use fabric classes
 	modImplementation("dev.architectury:architectury-fabric:${ARCHITECTURY_VERSION}") {
 		exclude group: 'net.fabricmc'
 		exclude group: 'net.fabricmc.fabric-api'
