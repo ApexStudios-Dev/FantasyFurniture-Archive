@@ -148,6 +148,7 @@ repositories {
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
 	maven { url 'https://maven.apexstudios.dev/' }
+	maven { url 'https://maven.blamejared.com/' }
 
 	maven {
 		url 'https://cursemaven.com'
@@ -169,9 +170,9 @@ dependencies {
 	minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-//	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-//	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-//	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 //
 //	runtimeOnly fg.deobf("curse.maven:jade-${jade_id}:${jade_version}")
 
