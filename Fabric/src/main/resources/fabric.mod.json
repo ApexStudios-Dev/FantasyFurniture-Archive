@@ -60,7 +60,8 @@
         "server": [ "${APEX_GROUP}.${MOD_ID}.fabric.FantasyFurnitureFabric::INSTANCE" ],
         "rei_client": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.rei.ReiFantasyFurnitureFabricClientPlugin" ],
         "rei_common": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.rei.ReiFantasyFurnitureFabricServerPlugin" ],
-        "emi": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.emi.EmiFantasyFurnitureFabricPlugin" ]
+        "emi": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.emi.EmiFantasyFurnitureFabricPlugin" ],
+        "jei_mod_plugin": [ "${APEX_GROUP}.${MOD_ID}.fabric.integrations.jei.JeiFantasyFurnitureFabricPlugin" ]
     },
     "mixins": [ "${MOD_ID}.mixins.json", "${MOD_ID}-common.mixins.json" ],
     "depends": {

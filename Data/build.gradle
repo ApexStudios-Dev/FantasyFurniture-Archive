@@ -78,6 +78,7 @@ repositories {
     maven { url 'https://maven.covers1624.net/' }
     maven { url 'https://maven.architectury.dev/' }
     maven { url 'https://maven.shedaniel.me' }
+    maven { url 'https://maven.blamejared.com/' }
 
     maven {
         url 'https://www.cursemaven.com'
@@ -96,6 +97,11 @@ dependencies {
     implementation fg.deobf("${APEX_GROUP}.${APEXCORE_ID}.forge:${APEXCORE_ID}-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
     implementation(project(path: ':Common', configuration: 'namedElements')) { transitive false }
     implementation(project(path: ':Forge', configuration: 'namedElements')) { transitive false }
+
+    // JEI
+    if(rootProject.hasProperty('JEI_VERSION')) {
+        compileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+    }
 
     // ClothConfig
     if(rootProject.hasProperty('CLOTH_CONFIG_VERSION')) {

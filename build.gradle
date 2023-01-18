@@ -13,17 +13,6 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
 
-    repositories {
-        maven { url 'https://maven.parchmentmc.org' }
-    }
-
-    dependencies {
-        // JEI
-        if(rootProject.hasProperty('JEI_VERSION')) {
-            modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
-        }
-    }
-
     java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
@@ -70,6 +59,11 @@ subprojects {
             accessWidenerPath = project(':Common').file("src/main/resources/${MOD_ID}.accesswidener")
         }
 
+        repositories {
+            maven { url 'https://maven.parchmentmc.org' }
+            maven { url 'https://maven.blamejared.com/' }
+        }
+
         dependencies {
             minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
 
@@ -81,6 +75,11 @@ subprojects {
                     parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
                 }
             })
+
+            // JEI
+            if(rootProject.hasProperty('JEI_VERSION')) {
+                modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+            }
         }
     }
 }

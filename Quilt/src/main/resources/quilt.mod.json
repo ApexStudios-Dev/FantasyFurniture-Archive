@@ -29,7 +29,8 @@
             "server_init": [ "${APEX_GROUP}.${MOD_ID}.quilt.FantasyFurnitureQuilt::INSTANCE" ],
             "rei_client": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.rei.ReiFantasyFurnitureQuiltClientPlugin" ],
             "rei_common": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.rei.ReiFantasyFurnitureQuiltServerPlugin" ],
-            "emi": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.emi.EmiFantasyFurnitureQuiltPlugin" ]
+            "emi": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.emi.EmiFantasyFurnitureQuiltPlugin" ],
+            "jei_mod_plugin": [ "${APEX_GROUP}.${MOD_ID}.quilt.integrations.jei.JeiFantasyFurnitureQuiltPlugin" ]
         },
         "depends": [
             {

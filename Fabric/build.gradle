@@ -53,6 +53,7 @@ repositories {
 	maven { url 'https://maven.covers1624.net/' }
 	maven { url 'https://maven.shedaniel.me' }
 	maven { url 'https://maven.terraformersmc.com/' }
+	maven { url 'https://maven.blamejared.com/' }
 
 	maven {
 		url 'https://www.cursemaven.com'
