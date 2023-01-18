@@ -32,7 +32,6 @@ public interface DataGenerators
 	String TXT_JEI_INGREDIENTS_KEY = "text.%s.jei.ingredients".formatted(Mods.FANTASY_FURNITURE);
 	String TXT_JEI_RESULTS_KEY = "text.%s.jei.results".formatted(Mods.FANTASY_FURNITURE);
 	String TXT_ACCEPTS_ANY = "text.%s.recipe.accepts_any".formatted(Mods.FANTASY_FURNITURE);
-	String ITEM_GROUP_KEY = "itemGroup.%s".formatted(Mods.FANTASY_FURNITURE);
 
 	static void recipes(RegistrateRecipeProvider provider)
 	{
@@ -52,7 +51,6 @@ public interface DataGenerators
 
 		provider.add(TXT_JEI_INGREDIENTS_KEY, "Ingredients");
 		provider.add(TXT_JEI_RESULTS_KEY, "Results");
-		provider.add(ITEM_GROUP_KEY, "Fantasy's Furniture");
 
 		REGISTRATE.getAll(ForgeRegistries.Keys.BLOCKS)
 		          .stream()

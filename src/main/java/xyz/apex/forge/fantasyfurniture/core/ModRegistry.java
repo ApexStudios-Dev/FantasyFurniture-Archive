@@ -16,7 +16,7 @@ public final class ModRegistry
 	// public static final Lazy<CreativeModeTab> CREATIVE_MODE_TAB = Lazy.of(CreativeTab::new);
 
 	public static final BasicRegistrate REGISTRATE = BasicRegistrate.create(Mods.FANTASY_FURNITURE, registrate -> registrate
-			// .creativeModeTab(CREATIVE_MODE_TAB::get, "Fantasy's Furniture") // TODO: See ApexCore
+			.creativeModeTab("main", builder -> builder.icon(AllBlocks.NORDIC_BED_SINGLE::asStack), "Fantasy's Furniture")
 			.addDataGenerator(ITEM_TAGS, DataGenerators::itemTags)
 			.addDataGenerator(RECIPE, DataGenerators::recipes)
 			.addDataGenerator(LANG, DataGenerators::lang)
@@ -55,19 +55,4 @@ public final class ModRegistry
 		AllItemGroupCategories.ROYAL.addTranslationGenerator(REGISTRATE, "Royal");
 		AllItemGroupCategories.NECROLORD.addTranslationGenerator(REGISTRATE, "Necrolord");*/
 	}
-
-	// TODO: See ApexCore
-	/*private static final class CreativeTab extends CreativeModeTab
-	{
-		private CreativeTab()
-		{
-			super(Mods.FANTASY_FURNITURE);
-		}
-
-		@Override
-		public ItemStack makeIcon()
-		{
-			return AllItems.NORDIC_BED_SINGLE.asStack();
-		}
-	}*/
 }
