@@ -264,13 +264,12 @@ publishing {
 			artifact tasks.jarJar
 		}
 	}
-	repositories {
-		mavenLocal()
 
+	repositories {
 		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
 			maven {
-				name 'ApexMods-Maven'
-				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
+				name 'ApexStudios-Maven'
+				url 'https://maven.apexstudios.dev'
 
 				credentials {
 					username System.getenv('APEX_MODS_MAVEN_USERNAME')
