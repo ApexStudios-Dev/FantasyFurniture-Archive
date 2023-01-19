@@ -4,10 +4,14 @@ import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
+import me.shedaniel.rei.api.client.registry.entry.CollapsibleEntryRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.client.screen.FurnitureStationMenuScreen;
@@ -18,6 +22,16 @@ import java.util.List;
 
 public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
 {
+    @Override
+    default void registerCollapsibleEntries(CollapsibleEntryRegistry registry)
+    {
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, NordicSet.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, NordicSet.NAME)),
+                EntryIngredients.ofItemTag(NordicSet.ITEM_TAG)
+        );
+    }
+
     @Override
     default void registerDisplays(DisplayRegistry registry)
     {

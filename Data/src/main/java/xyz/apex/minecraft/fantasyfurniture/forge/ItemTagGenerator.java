@@ -15,6 +15,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,6 +35,7 @@ public final class ItemTagGenerator extends ItemTagsProvider
         copy(BlockTags.WOOL_CARPETS, ItemTags.WOOL_CARPETS);
         copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
         copy(BlockTags.BEDS, ItemTags.BEDS);
+        copy(NordicSet.BLOCK_TAG, NordicSet.ITEM_TAG);
     }
 
     private void tag(TagKey<Item> tag, @Nullable Object... values)

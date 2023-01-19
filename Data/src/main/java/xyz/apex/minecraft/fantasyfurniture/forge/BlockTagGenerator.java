@@ -50,6 +50,18 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE,
                 NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE
         );
+
+        tag(NordicSet.BLOCK_TAG,
+                NordicSet.WOOL, NordicSet.CARPET, NordicSet.WALL_LIGHT,
+                NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
+                NordicSet.TABLE_SMALL, NordicSet.BENCH, NordicSet.CHAIR,
+                NordicSet.CHANDELIER, NordicSet.CUSHION, NordicSet.STOOL,
+                NordicSet.CHEST, NordicSet.BOOKSHELF, NordicSet.DESK_LEFT,
+                NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,
+                NordicSet.LOCKBOX, NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP,
+                NordicSet.PAINTING_WIDE, NordicSet.PAINTING_SMALL, NordicSet.OVEN, NordicSet.DOOR_DOUBLE,
+                NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE
+        );
     }
 
     private void tag(TagKey<Block> tag, @Nullable Object... values)
