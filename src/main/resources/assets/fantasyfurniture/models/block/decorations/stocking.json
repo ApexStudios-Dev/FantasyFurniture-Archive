@@ -1,0 +1,93 @@
+{
+	"credit": "Made by Fantasy",
+	"texture_size": [32, 32],
+	"textures": {
+		"stocking": "fantasyfurniture:block/models/decorations/stocking",
+		"stocking_tint": "fantasyfurniture:block/models/decorations/stocking_tint",
+		"particle": "fantasyfurniture:block/particles/decorations/stocking"
+	},
+	"elements": [
+		{
+			"name": "fluff",
+			"from": [4, 12, 13],
+			"to": [12, 15, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 3], "texture": "#stocking"},
+				"east": {"uv": [8, 3, 11, 6], "texture": "#stocking"},
+				"south": {"uv": [0, 3, 8, 6], "texture": "#stocking"},
+				"west": {"uv": [8, 6, 11, 9], "texture": "#stocking"},
+				"up": {"uv": [8, 9, 0, 6], "texture": "#stocking"},
+				"down": {"uv": [16, 0, 8, 3], "texture": "#stocking"}
+			}
+		},
+		{
+			"name": "sock_1",
+			"from": [5, 1, 13.5],
+			"to": [11, 12, 15.5],
+			"faces": {
+				"north": {"uv": [0, 0, 3, 5.5], "texture": "#stocking_tint", "tintindex": 1},
+				"east": {"uv": [0, 5.5, 1, 11], "texture": "#stocking_tint", "tintindex": 1},
+				"south": {"uv": [3, 0, 6, 5.5], "texture": "#stocking_tint", "tintindex": 1},
+				"west": {"uv": [1, 5.5, 2, 11], "texture": "#stocking_tint", "tintindex": 1},
+				"up": {"uv": [8, 6.5, 5, 5.5], "texture": "#stocking_tint", "tintindex": 1},
+				"down": {"uv": [9, 0, 6, 1], "texture": "#stocking_tint", "tintindex": 1}
+			}
+		},
+		{
+			"name": "sock_2",
+			"from": [11, 1, 13.5],
+			"to": [14, 6, 15.5],
+			"faces": {
+				"north": {"uv": [2, 5.5, 3.5, 8], "texture": "#stocking_tint", "tintindex": 1},
+				"east": {"uv": [6, 1, 7, 3.5], "texture": "#stocking_tint", "tintindex": 1},
+				"south": {"uv": [3.5, 5.5, 5, 8], "texture": "#stocking_tint", "tintindex": 1},
+				"west": {"uv": [5, 6.5, 6, 9], "texture": "#stocking_tint", "tintindex": 1},
+				"up": {"uv": [7.5, 4.5, 6, 3.5], "texture": "#stocking_tint", "tintindex": 1},
+				"down": {"uv": [7.5, 4.5, 6, 5.5], "texture": "#stocking_tint", "tintindex": 1}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 0, -14.5]
+		},
+		"fixed": {
+			"translation": [0, 0, -3],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "stocking",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}

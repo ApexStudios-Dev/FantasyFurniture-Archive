@@ -16,6 +16,7 @@ public interface AllMenus
 	MenuEntry<OvenMenu> OVEN_MENU = REGISTRATE.menu("oven", OvenMenu::new, () -> OvenMenuScreen::new);
 	MenuEntry<CookieJarMenu> COOKIE_JAR_MENU = REGISTRATE.menu("cookie_jar", CookieJarMenu::new, () -> CookieJarMenuScreen::new);
 	MenuEntry<FurnitureStationMenu> FURNITURE_STATION = REGISTRATE.menu("furniture_station", FurnitureStationMenu::new, () -> FurnitureStationMenuScreen::new);
+	MenuEntry<StockingMenu> STOCKING_MENU = REGISTRATE.menu("stocking", StockingMenu::new, () -> StockingMenuScreen::new);
 
 	static void bootstrap()
 	{

@@ -242,6 +242,7 @@ public interface BlockTransformers
 				return new ResourceLocation(registryName.getNamespace(), "block/particles/decorations/spider_webs");
 			else if(name.startsWith("potion_bottles"))
 				return new ResourceLocation(registryName.getNamespace(), "block/particles/decorations/potion_bottles");
+			else if(name.startsWith("fairy_lights")) return new ResourceLocation(registryName.getNamespace(), "block/particles/decorations/fairy_lights_1");
 
 			return new ResourceLocation(registryName.getNamespace(), "block/particles/%s/%s".formatted(type, name));
 		}

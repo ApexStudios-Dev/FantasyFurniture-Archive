@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IJeiHelpers;
@@ -173,9 +173,9 @@ public final class FurnitureStationRecipes
 		pose.translate(centerX, y, 10D);
 		pose.scale(-32F, -32F, -32F);
 		pose.translate(-.5D, -.5D, 0D);
-		pose.mulPose(Vector3f.XP.rotationDegrees(-25F));
+		pose.mulPose(Axis.XP.rotationDegrees(-25F));
 		pose.translate(.5D, 0D, -.5D);
-		pose.mulPose(Vector3f.YP.rotationDegrees(blockRotation));
+		pose.mulPose(Axis.YP.rotationDegrees(blockRotation));
 		pose.translate(-.5D, 0D, .5D);
 
 		pose.pushPose();
