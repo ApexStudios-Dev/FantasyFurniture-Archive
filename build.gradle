@@ -4,10 +4,6 @@ plugins {
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1' apply false
 }
 
-architectury {
-    minecraft = "${MINECRAFT_VERSION}"
-}
-
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
@@ -46,13 +42,13 @@ subprojects {
         }
     }
 
-    idea.module {
-        excludeDirs << file('run')
-    }
-
     if(project.name != 'Data') {
         apply plugin: 'architectury-plugin'
         apply plugin: 'dev.architectury.loom'
+
+        architectury {
+            minecraft = "${MINECRAFT_VERSION}"
+        }
 
         loom {
             silentMojangMappingsLicense()
