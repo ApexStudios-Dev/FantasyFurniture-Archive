@@ -1,19 +1,8 @@
 {
     "required": true,
     "package": "${APEX_GROUP}.${MOD_ID}.shared.mixin",
-    "mixins": [
-        "AccessorPoiTypes",
-        "InvokerPoiTypes",
-        "InvokerRecipeBookType",
-        "MixinPoiTypes",
-        "MixinRecipeBookSettings",
-        "MixinRecipeBookType"
-    ],
-    "client": [
-        "client.InvokerRecipeBookCategories",
-        "client.MixinClientRecipeBook",
-        "client.MixinRecipeBookCategories"
-    ],
+    "mixins": [ ],
+    "client": [ ],
     "server": [ ],
     "minVersion": "${MIXIN_VERSION}",
     "refmap": "${MOD_ID}-shared-Common-refmap.json"

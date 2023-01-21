@@ -1,5 +1,7 @@
 package xyz.apex.minecraft.fantasyfurniture.shared.block;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -28,10 +30,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
-import xyz.apex.minecraft.apexcore.shared.platform.GamePlatform;
 import xyz.apex.minecraft.apexcore.shared.util.Tags;
-import xyz.apex.minecraft.fantasyfurniture.shared.mixin.AccessorPoiTypes;
-import xyz.apex.minecraft.fantasyfurniture.shared.mixin.InvokerPoiTypes;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -141,10 +140,6 @@ public class BedMultiBlock extends BedBlock implements MultiBlock
 
     public static void registerCustomHomePoi(Block... blocks)
     {
-        // do nothing during data gen
-        // crashes due to mixin refmap issues
-        // safe to ignore as it is only data gen, mixins not required
-        if(GamePlatform.INSTANCE.isRunningDataGeneration()) return;
         // collect all possible block states into set
         // block states must have the BdPart property
         // collect only block states that are for the `HEAD` part
@@ -157,11 +152,9 @@ public class BedMultiBlock extends BedBlock implements MultiBlock
                                 .filter(s -> s.getValue(PART) == BedPart.HEAD)
         .collect(Collectors.toSet());
 
-        var bedBlockStates = AccessorPoiTypes.FantasyFurniture$getBeds();
-        // *should* be safe to directly add here
-        // as we have a mixin to swap out the immutable set to a mutable one
-        bedBlockStates.addAll(blockStates);
+        if(PoiTypes.BEDS instanceof ImmutableSet) PoiTypes.BEDS = Sets.newHashSet(PoiTypes.BEDS);
+        PoiTypes.BEDS.addAll(blockStates);
         var holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolderOrThrow(PoiTypes.HOME);
-        InvokerPoiTypes.FantasyFurniture$registerBlockStates(holder, blockStates);
+        PoiTypes.registerBlockStates(holder, blockStates);
     }
 }

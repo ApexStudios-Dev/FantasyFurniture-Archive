@@ -74,7 +74,7 @@ public final class RecipeGenerator extends RecipeProvider
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)
     {
-        FurnitureStationRecipe.clayBound(RecipeCategory.MISC, furnitureSet, Ingredient.of(left.get()), Ingredient.of(right.get()), item.get())
+        FurnitureStationRecipe.clayBound(RecipeCategory.MISC, Ingredient.of(left.get()), Ingredient.of(right.get()), item.get())
                               .unlockedBy("has_left_ingredient", RecipeProvider.has(left.get()))
                               .unlockedBy("has_right_ingredient", RecipeProvider.has(right.get()))
                               .save(exporter, RecipeBuilder.getDefaultRecipeId(item.get()).withPath(path -> "furniture_station/%s".formatted(StringUtils.prependIfMissingIgnoreCase(path, furnitureSet))))
