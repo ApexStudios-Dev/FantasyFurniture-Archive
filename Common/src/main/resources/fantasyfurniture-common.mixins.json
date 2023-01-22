@@ -4,6 +4,5 @@
     "mixins": [ ],
     "client": [ ],
     "server": [ ],
-    "minVersion": "${MIXIN_VERSION}",
-    "refmap": "${MOD_ID}-shared-Common-refmap.json"
+    "minVersion": "${MIXIN_VERSION}"
 }
