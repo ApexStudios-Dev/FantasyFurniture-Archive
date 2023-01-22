@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.CarpetBlock;
 
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
+import xyz.apex.minecraft.apexcore.shared.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.*;
 
@@ -17,8 +17,8 @@ public interface NordicSet
 {
     String NAME = "nordic";
     DoorMultiBlock.DoorSounds DOOR_SOUNDS = new DoorMultiBlock.DoorSounds(SoundEvents.WOODEN_DOOR_OPEN, SoundEvents.WOODEN_DOOR_CLOSE);
-    TagKey<Item> ITEM_TAG = Tags.Items.tag(FantasyFurniture.ID, NAME);
-    TagKey<Block> BLOCK_TAG = Tags.Blocks.tag(FantasyFurniture.ID, NAME);
+    TagKey<Item> ITEM_TAG = ApexTags.Items.tag(FantasyFurniture.ID, NAME);
+    TagKey<Block> BLOCK_TAG = ApexTags.Blocks.tag(FantasyFurniture.ID, NAME);
 
     BlockEntry<Block> WOOL = FurnitureSets.wool(NAME).register();
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(NAME).register();

@@ -72,9 +72,8 @@ public abstract class HorizontalInventoryBlock<T extends InventoryBlockEntity, M
             return multiBlockType.getStateForPlacement(this, defaultBlockState, ctx);
         }
 
-        @SuppressWarnings("ConstantValue")
         @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+        public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
         {
             super.createBlockStateDefinition(builder);
             builder.add(FACING);

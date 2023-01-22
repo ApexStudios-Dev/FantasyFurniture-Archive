@@ -10,6 +10,7 @@ import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
@@ -26,8 +27,8 @@ import xyz.apex.minecraft.apexcore.shared.registry.Registrar;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.EntityEntry;
 import xyz.apex.minecraft.apexcore.shared.registry.entry.RecipeEntry;
+import xyz.apex.minecraft.apexcore.shared.util.ApexTags;
 import xyz.apex.minecraft.apexcore.shared.util.Properties;
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
 import xyz.apex.minecraft.fantasyfurniture.shared.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.shared.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.shared.entity.Seat;
@@ -59,13 +60,11 @@ public interface FantasyFurniture extends ModPlatform
 
     RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = REGISTRAR.recipe("furniture_station", FurnitureStationRecipe.Serializer::new);
 
-    TagKey<EntityType<?>> SEAT_BLACKLIST = Tags.EntityTypes.tag(ID, "seat_blacklist");
+    TagKey<EntityType<?>> SEAT_BLACKLIST = ApexTags.tag(Registries.ENTITY_TYPE, ID, "seat_blacklist");
 
     @Override
     default void initialize()
     {
-        ModPlatform.super.initialize();
-
         AllMultiBlockTypes.bootstrap();
         AllVoxelShapes.bootstrap();
         NordicSet.bootstrap();

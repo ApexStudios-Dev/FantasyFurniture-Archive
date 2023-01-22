@@ -13,7 +13,7 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
+import xyz.apex.minecraft.apexcore.shared.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.shared.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.shared.init.NordicSet;
 
@@ -34,16 +34,16 @@ public final class BlockTagGenerator extends BlockTagsProvider
         tag(BlockTags.WOOL, NordicSet.WOOL);
         tag(BlockTags.WOOL_CARPETS, NordicSet.CARPET);
 
-        tag(Tags.Blocks.Vanilla.WOODEN_DOORS,
+        tag(BlockTags.WOODEN_DOORS,
                 NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE
         );
 
-        tag(Tags.Blocks.Vanilla.BEDS,
+        tag(BlockTags.BEDS,
                 NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE
         );
 
         // multi-blocks have restricted movement
-        tag(Tags.Blocks.Fabric.MOVEMENT_RESTRICTED,
+        tag(ApexTags.Blocks.IMMOVABLE,
                 NordicSet.FLOOR_LIGHT, NordicSet.TABLE_LARGE, NordicSet.TABLE_WIDE,
                 NordicSet.BENCH, NordicSet.CHAIR, NordicSet.CHEST, NordicSet.BOOKSHELF,
                 NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,

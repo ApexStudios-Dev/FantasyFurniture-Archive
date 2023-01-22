@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
@@ -30,7 +31,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.shared.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.shared.multiblock.SimpleMultiBlock;
-import xyz.apex.minecraft.apexcore.shared.util.Tags;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -125,7 +125,7 @@ public class BedMultiBlock extends BedBlock implements MultiBlock
         // so we implement that logic here, must be kept upto date with future
         // versions, if mojang ever changes Block#playerWillDestroy
         spawnDestroyParticles(level, player, pos, blockState);
-        if(blockState.is(Tags.Blocks.Vanilla.GUARDED_BY_PIGLINS)) PiglinAi.angerNearbyPiglins(player, false);
+        if(blockState.is(BlockTags.GUARDED_BY_PIGLINS)) PiglinAi.angerNearbyPiglins(player, false);
         level.gameEvent(GameEvent.BLOCK_DESTROY, pos, GameEvent.Context.of(player, blockState));
     }
 
