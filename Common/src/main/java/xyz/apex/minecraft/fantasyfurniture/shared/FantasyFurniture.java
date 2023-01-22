@@ -2,6 +2,7 @@ package xyz.apex.minecraft.fantasyfurniture.shared;
 
 import dev.architectury.hooks.PackRepositoryHooks;
 import dev.architectury.hooks.level.entity.PlayerHooks;
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.utils.Env;
 import dev.architectury.utils.EnvExecutor;
 import dev.architectury.utils.GameInstance;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTabs;
 
 import xyz.apex.minecraft.apexcore.shared.platform.ModPlatform;
 import xyz.apex.minecraft.apexcore.shared.registry.Registrar;
@@ -75,6 +77,8 @@ public interface FantasyFurniture extends ModPlatform
         NecrolordSet.bootstrap();
         AllBlockEntityTypes.bootstrap();
         AllMenuTypes.bootstrap();
+
+        CreativeTabRegistry.append(CreativeModeTabs.FUNCTIONAL_BLOCKS, FURNITURE_STATION_BLOCK::get);
 
         CONFIG.load();
 
