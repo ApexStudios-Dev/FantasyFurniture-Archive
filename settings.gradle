@@ -27,7 +27,6 @@ pluginManagement {
 include 'Common'
 include 'Forge'
 include 'Fabric'
-include 'Quilt'
 include 'Data'
 
 rootProject.name = "FantasyFurniture-${MINECRAFT_VERSION}"
