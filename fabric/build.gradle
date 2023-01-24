@@ -1,0 +1,53 @@
+apply from: '../loader.gradle'
+
+dependencies {
+	modApi "xyz.apex.minecraft.apexcore.fabric:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+
+	// Shaders
+	//modRuntimeOnly 'maven.modrinth:sodium:mc1.19.3-0.4.8'
+	//modRuntimeOnly 'maven.modrinth:iris:1.5.1+1.19.3'
+	//runtimeOnly 'io.github.douira:glsl-transformer:2.0.0-pre8'
+	//runtimeOnly 'org.anarres:jcpp:1.4.14'
+
+	modRuntimeOnly "maven.modrinth:lazydfu:${LAZY_DFU_DEV_VERSION}"
+
+	modRuntimeOnly("com.terraformersmc:modmenu:${MOD_MENU_DEV_VERSION}") {
+		exclude group: 'net.fabricmc'
+		exclude group: 'net.fabricmc.fabric-api'
+	}
+
+	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_DEV_VERSION}"
+	modCompileOnlyApi "dev.emi:emi:${EMI_DEV_VERSION}+${MINECRAFT_VERSION}"
+
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+		exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
+		exclude group: 'net.fabricmc'
+		exclude group: 'net.fabricmc.fabric-api'
+	}
+
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+		exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
+		exclude group: 'net.fabricmc'
+		exclude group: 'net.fabricmc.fabric-api'
+	}
+
+	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
+
+	if(recipeLookupIncludeType == 'jei') {
+		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_DEV_VERSION}"
+	} else if(recipeLookupIncludeType == 'rei') {
+		modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:${REI_DEV_VERSION}") {
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
+			exclude group: 'net.fabricmc'
+			exclude group: 'net.fabricmc.fabric-api'
+		}
+	} else if(recipeLookupIncludeType == 'emi') {
+		modRuntimeOnly "dev.emi:emi:${EMI_VERSION}+${MINECRAFT_VERSION}"
+	}
+
+	// excluded from rei & re-added to be runtime only
+	modRuntimeOnly 'me.shedaniel.cloth:cloth-config:9.0.94'
+}

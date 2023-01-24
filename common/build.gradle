@@ -1,0 +1,39 @@
+architectury {
+	def platforms = rootProject
+			.subprojects
+			.findAll { it.hasProperty('loom.platform') }
+			.collect { it.property('loom.platform') as String }
+			.toSet()
+
+	println "Platforms: ${platforms.toListString()}"
+	common(platforms)
+}
+
+dependencies {
+	compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
+	modApi "dev.architectury:architectury:${ARCHITECTURY_DEV_VERSION}"
+	modApi "xyz.apex.minecraft.apexcore.common:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+
+	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_DEV_VERSION}"
+
+	// exclude cloth config to stop them being accessible at compile time
+	// each platform includes them as runtime only
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+	}
+
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+	}
+
+	// excluded with cloth config but needed for rei
+	implementation 'me.shedaniel.cloth:basic-math:0.6.1'
+}
+
+idea.module {
+	excludeDirs += [
+			file('.gradle'),
+			file('build'),
+			file('run')
+	]
+}

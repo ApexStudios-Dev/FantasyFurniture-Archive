@@ -1,0 +1,116 @@
+apply plugin: 'com.github.johnrengelman.shadow'
+
+evaluationDependsOn(':common')
+
+def loomPlatform = project.property('loom.platform')
+
+sourceSets.main.resources.srcDirs = [ 'src/main/resources', 'src/main/generated' ]
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    create("development${loomPlatform.capitalize()}") {
+        extendsFrom common
+    }
+}
+
+architectury {
+    platformSetupLoomIde()
+
+    if(loomPlatform == 'fabric') fabric()
+    else if(loomPlatform == 'forge') forge()
+    else if(loomPlatform == 'quilt') loader(loomPlatform)
+    else throw new GradleException("Unknown 'loom.platform' value: ${loomPlatform} for project: '${project.name}' ('${project.path}')")
+}
+
+loom {
+    if(loomPlatform == 'forge') {
+        forge {
+            if(accessWidenerFile.exists()) {
+                convertAccessWideners = true
+                extraAccessWideners.add accessWidenerFile.name
+            }
+
+            if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
+                mixinConfig "${MOD_ID}.mixins.json"
+            }
+
+            if(getRootProject().file("common/src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
+                mixinConfig "${MOD_ID}-common.mixins.json"
+            }
+
+            dataGen {
+                mod "${MOD_ID}"
+            }
+        }
+    }
+}
+
+dependencies {
+    if(loomPlatform == 'fabric') {
+        modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
+        modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
+
+        modApi("dev.architectury:architectury-fabric:${ARCHITECTURY_DEV_VERSION}") {
+            exclude group: 'net.fabricmc'
+            exclude group: 'net.fabricmc.fabric-api'
+        }
+    } else if(loomPlatform == 'forge') {
+        forge "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+        modApi "dev.architectury:architectury-forge:${ARCHITECTURY_DEV_VERSION}"
+    } else if(loomPlatform == 'quilt') {
+        modImplementation "org.quiltmc:quilt-loader:${QUILT_LOADER_VERSION}"
+        modApi "org.quiltmc:qsl:${QUILT_LIB_VERSION}+${MINECRAFT_VERSION}"
+        modApi "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${QUILT_FAPI_VERSION}+${FABRIC_API_VERSION}-${MINECRAFT_VERSION}"
+
+        modApi("dev.architectury:architectury-fabric:${ARCHITECTURY_DEV_VERSION}") {
+            exclude group: 'net.fabricmc'
+            exclude group: 'net.fabricmc.fabric-api'
+        }
+    }
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    shadowCommon(project(path: ':common', configuration: "transformProduction${loomPlatform.capitalize()}")) { transitive false }
+}
+
+shadowJar {
+    exclude 'architectury.common.json'
+    configurations = [ project.configurations.shadowCommon ]
+    classifier 'dev-shadow'
+}
+
+remapJar {
+    if(loomPlatform == 'fabric' || loomPlatform == 'quilt') {
+        injectAccessWidener = true
+    }
+
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+    classifier null
+}
+
+jar {
+    classifier 'dev'
+}
+
+sourcesJar {
+    def commonSources = project(':common').sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+idea.module {
+    excludeDirs += [
+            file('.gradle'),
+            file('build'),
+            file('run')
+    ]
+}

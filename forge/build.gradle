@@ -1,0 +1,62 @@
+apply from: '../loader.gradle'
+
+dependencies {
+	modApi "xyz.apex.minecraft.apexcore.forge:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+
+	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
+
+	api "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}"
+
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-forge:${REI_DEV_VERSION}") {
+		exclude group: 'blue.endless'
+		exclude group: 'com.google.code.gson'
+		exclude group: 'com.moandjiezana.toml'
+		exclude group: 'org.yaml'
+	}
+
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+		exclude group: 'blue.endless'
+		exclude group: 'com.google.code.gson'
+		exclude group: 'com.moandjiezana.toml'
+		exclude group: 'org.yaml'
+	}
+
+	// This should be `modRuntimeOnly` but annotations only exist here and we need those at compile time
+	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
+		exclude group: 'me.shedaniel.cloth'
+		exclude group: 'blue.endless'
+		exclude group: 'com.google.code.gson'
+		exclude group: 'com.moandjiezana.toml'
+		exclude group: 'org.yaml'
+	}
+
+	if(recipeLookupIncludeType == 'jei') {
+		modRuntimeOnly("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_DEV_VERSION}") {
+			exclude group: 'mezz.jei'
+		}
+	} else if(recipeLookupIncludeType == 'rei') {
+		modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
+			exclude group: 'me.shedaniel.cloth'
+			exclude group: 'blue.endless'
+			exclude group: 'com.google.code.gson'
+			exclude group: 'com.moandjiezana.toml'
+			exclude group: 'org.yaml'
+		}
+	}
+
+	// included with rei & jei these use the 'mod' configs
+	// which throws warnings when including ':could not find forge mod in modCompileOnlyApi but forcing: jankson-1.2.0.jar (blue.endless:jankson:1.2.0)'
+	// excluding & re-adding "fixes" this
+	runtimeOnly 'blue.endless:jankson:1.2.0'
+	runtimeOnly 'com.google.code.gson:gson:2.8.1'
+	runtimeOnly 'com.moandjiezana.toml:toml4j:0.7.2'
+	runtimeOnly 'org.yaml:snakeyaml:1.27'
+
+	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-common:${JEI_DEV_VERSION}"
+	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-core:${JEI_DEV_VERSION}"
+	// runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}" // included above
+	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_DEV_VERSION}"
+	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-lib:${JEI_DEV_VERSION}"
+	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-gui:${JEI_DEV_VERSION}"
+}
