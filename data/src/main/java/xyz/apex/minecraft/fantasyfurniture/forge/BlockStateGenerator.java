@@ -18,6 +18,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 
 import java.util.function.BiFunction;
@@ -259,6 +261,10 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .end()
                 .end()
         ;
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/shelf"))
+                .renderType(cutout)
+        ;
     }
 
     @Override
@@ -296,6 +302,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         doorBlock(NordicSet.DOOR_SINGLE);
         facingBlock(NordicSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(NordicSet.SHELF);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -362,6 +369,23 @@ public final class BlockStateGenerator extends BlockStateProvider
     {
         var modelFile = existingModel(entry);
         getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> models.apply(blockState, modelFile), gatherIgnoredProperties(entry));
+    }
+
+    private void shelfBlock(Supplier<? extends Block> entry)
+    {
+        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> {
+            var shelfType = blockState.getValue(ModBlockStateProperties.SHELF_TYPE);
+
+            var model = models().getExistingFile(blockFolder(entry)
+                    .withPath(path -> "%s_%s".formatted(path, shelfType.getSerializedName()))
+            );
+
+            return ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(ShelfBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(model)
+                    .build();
+        }, gatherIgnoredProperties(entry));
     }
 
     private BlockModelBuilder template(ResourceLocation modelPath)

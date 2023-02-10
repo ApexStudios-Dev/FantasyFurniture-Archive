@@ -9,6 +9,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
+
+import java.util.function.Function;
 
 public interface AllVoxelShapes
 {
@@ -269,6 +273,38 @@ public interface AllVoxelShapes
                 box(8D, 12D, 30D, 16D, 14D, 32D),
                 box(-10D, 12D, 30D, 10D, 16D, 32D)
         );
+
+        VoxelShape SHELF_SINGLE = shape(
+                box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+                box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+                box(0D, 14D, 0D, 16D, 16D, 16D),
+                box(13D, 6D, 13D, 16D, 14D, 16D),
+                box(0D, 6D, 13D, 3D, 14D, 16D)
+        );
+
+        VoxelShape SHELF_CENTER = box(0D, 14D, 0D, 16D, 16D, 16D);
+
+        VoxelShape SHELF_LEFT = shape(
+                box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+                box(0D, 14D, 0D, 16D, 16D, 16D),
+                box(13D, 6D, 13D, 16D, 14D, 16D)
+        );
+
+        VoxelShape SHELF_RIGHT = shape(
+                box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+                box(0D, 14D, 0D, 16D, 16D, 16D),
+                box(0D, 6D, 13D, 3D, 14D, 16D)
+        );
+
+        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
+                case LEFT -> Nordic.SHELF_LEFT;
+                case RIGHT -> Nordic.SHELF_RIGHT;
+                case SINGLE -> Nordic.SHELF_SINGLE;
+                case CENTER -> Nordic.SHELF_CENTER;
+            }, block, blockState);
+        }
 
         private static void bootstrap() {}
     }
@@ -559,6 +595,14 @@ public interface AllVoxelShapes
         }
 
         return shape;
+    }
+
+    private static VoxelShape getShelfShape(Function<ShelfType, VoxelShape> shapeGetter, ShelfBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(ShelfBlock.FACING);
+        var shelfType = blockState.getValue(ModBlockStateProperties.SHELF_TYPE);
+        var current = shapeGetter.apply(shelfType);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
     private static VoxelShape shape(VoxelShape... shapes)

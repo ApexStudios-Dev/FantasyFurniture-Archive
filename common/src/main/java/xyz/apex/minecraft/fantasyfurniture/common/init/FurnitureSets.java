@@ -8,6 +8,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockFactory;
@@ -19,6 +20,7 @@ import xyz.apex.minecraft.apexcore.common.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -355,4 +357,14 @@ public interface FurnitureSets
         ;
     }
     // endregion
+
+    static BlockBuilder<ShelfBlock, Registrar, Registrar> shelf(String furnitureSet, Supplier<VoxelShape> baseShape, BiFunction<ShelfBlock, BlockState, VoxelShape> shapeGetter)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/shelf".formatted(furnitureSet), ShelfBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, (shape, block, blockState) -> shapeGetter.apply(block, blockState))
+                .renderType(() -> RenderType::cutout)
+        ;
+    }
 }

@@ -8,7 +8,10 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelConverter;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+
+import java.util.Arrays;
 
 public final class BlockBenchConverter extends BlockBenchModelConverter
 {
@@ -55,6 +58,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertDoor(furnitureSet, "single", false);
         convertGeneric(furnitureSet, "bed_single");
         convertGeneric(furnitureSet, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(furnitureSet, shelfType));
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)
@@ -98,6 +102,15 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/%s".formatted(rootDoorName)))) // fantasyfurniture:block/templates/door_${doorType}
                 .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet))) // fantasyfurniture:block/${furnitureSet}/particle
                 .texture(rootDoorName, new ResourceLocation(FantasyFurniture.ID, "block/%s".formatted(furnitureDoorName))) // door_${doorType} | fantasyfurniture:block/${furnitureSet}/door_${doorType}
+        ;
+    }
+
+    private BlockModelBuilder convertShelf(String furnitureSet, ShelfType shelfType)
+    {
+        return blockModelBuilder(new ResourceLocation(FantasyFurniture.ID, "block/%s/shelf_%s".formatted(furnitureSet, shelfType.getSerializedName()))) // fantasyfurniture:block/${furnitureSet}/shelf_${shelfType}
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/shelf"))) // fantasyfurniture:block/templates/shelf
+                .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet))) // fantasyfurniture:block/${furnitureSet}/particle
+                .texture("shelf", new ResourceLocation(FantasyFurniture.ID, "block/%s/shelf".formatted(furnitureSet))) // shelf | fantasyfurniture:block/${furnitureSet}/shelf
         ;
     }
 

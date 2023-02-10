@@ -13,6 +13,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 
 import java.util.function.Supplier;
@@ -57,6 +58,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         doorBlockItem(NordicSet.DOOR_SINGLE);
         blockItem(NordicSet.BED_SINGLE);
         blockItem(NordicSet.BED_DOUBLE);
+        shelfBlockItem(NordicSet.SHELF);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)
@@ -82,6 +84,13 @@ public final class ItemModelGenerator extends ItemModelProvider
     private ItemModelBuilder doorBlockItem(Supplier<? extends ItemLike> item)
     {
         var blockModelPath = nameWithPrefix(item, ModelProvider.BLOCK_FOLDER).withPath(path -> path + "_left");
+        var blockModel = getExistingFile(blockModelPath);
+        return blockItem(item, blockModel);
+    }
+
+    private ItemModelBuilder shelfBlockItem(Supplier<? extends ItemLike> item)
+    {
+        var blockModelPath = nameWithPrefix(item, ModelProvider.BLOCK_FOLDER).withPath(path -> "%s_%s".formatted(path, ShelfType.SINGLE.getSerializedName()));
         var blockModel = getExistingFile(blockModelPath);
         return blockItem(item, blockModel);
     }
