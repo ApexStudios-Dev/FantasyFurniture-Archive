@@ -6,4 +6,5 @@ public interface ModBlockStateProperties
 {
     EnumProperty<ShelfType> SHELF_TYPE = EnumProperty.create("shelf_type", ShelfType.class);
     EnumProperty<SofaType> SOFA_TYPE = EnumProperty.create("sofa_type", SofaType.class);
+    EnumProperty<CounterType> COUNTER_TYPE = EnumProperty.create("counter_type", CounterType.class);
 }

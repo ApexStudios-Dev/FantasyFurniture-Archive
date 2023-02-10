@@ -49,7 +49,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT, NordicSet.DRAWER, NordicSet.DRESSER,
                 NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP, NordicSet.PAINTING_WIDE,
                 NordicSet.DOOR_DOUBLE, NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE,
-                NordicSet.SHELF, NordicSet.SOFA
+                NordicSet.SHELF, NordicSet.SOFA, NordicSet.COUNTER
         );
 
         tag(NordicSet.BLOCK_TAG,
@@ -62,7 +62,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.LOCKBOX, NordicSet.WARDROBE_BOTTOM, NordicSet.WARDROBE_TOP,
                 NordicSet.PAINTING_WIDE, NordicSet.PAINTING_SMALL, NordicSet.OVEN, NordicSet.DOOR_DOUBLE,
                 NordicSet.DOOR_SINGLE, NordicSet.BED_SINGLE, NordicSet.BED_DOUBLE,
-                NordicSet.SHELF, NordicSet.SOFA
+                NordicSet.SHELF, NordicSet.SOFA, NordicSet.COUNTER
         );
     }
 

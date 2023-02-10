@@ -9,6 +9,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
@@ -343,6 +344,18 @@ public interface AllVoxelShapes
                 box(13D, 6D, 0D, 16D, 16D, 13D)
         );
 
+        VoxelShape COUNTER_SINGLE = shape(
+                box(0D, 0D, 3D, 16D, 13D, 16D),
+                box(0D, 13D, 0D, 16D, 16D, 16D),
+                box(1D, 1D, 2D, 15D, 12D, 3D)
+        );
+
+        VoxelShape COUNTER_CORNER = shape(
+                box(0D, 0D, 0D, 13D, 13D, 4D),
+                box(0D, 0D, 3D, 16D, 13D, 16D),
+                box(0D, 13D, 0D, 16D, 16D, 16D)
+        );
+
         static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
         {
             return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
@@ -361,6 +374,14 @@ public interface AllVoxelShapes
                 case SINGLE -> Nordic.SOFA_SINGLE;
                 case CENTER -> Nordic.SOFA_CENTER;
                 case CORNER -> Nordic.SOFA_CORNER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
+                case SINGLE -> Nordic.COUNTER_SINGLE;
+                case CORNER -> Nordic.COUNTER_CORNER;
             }, block, blockState);
         }
 
@@ -668,6 +689,14 @@ public interface AllVoxelShapes
         var facing = blockState.getValue(ShelfBlock.FACING);
         var sofaType = blockState.getValue(ModBlockStateProperties.SOFA_TYPE);
         var current = shapeGetter.apply(sofaType);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    private static VoxelShape getCounterShape(Function<CounterType, VoxelShape> shapeGetter, CounterBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(ShelfBlock.FACING);
+        var counterType = blockState.getValue(ModBlockStateProperties.COUNTER_TYPE);
+        var current = shapeGetter.apply(counterType);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 

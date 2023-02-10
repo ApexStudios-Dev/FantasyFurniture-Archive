@@ -266,9 +266,9 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .renderType(cutout)
         ;
 
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/sofa"))
-                //.renderType(cutout)
-        ;
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/sofa"));
+
+        template(new ResourceLocation(FantasyFurniture.ID, "templates/counter"));
     }
 
     @Override
@@ -308,6 +308,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(NordicSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
         shelfBlock(NordicSet.SHELF);
         sofaBlock(NordicSet.SOFA);
+        counterBlock(NordicSet.COUNTER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")
@@ -400,6 +401,23 @@ public final class BlockStateGenerator extends BlockStateProvider
 
             var model = models().getExistingFile(blockFolder(entry)
                     .withPath(path -> "%s_%s".formatted(path, sofaType.getSerializedName()))
+            );
+
+            return ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(ShelfBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(model)
+                    .build();
+        }, gatherIgnoredProperties(entry));
+    }
+
+    private void counterBlock(Supplier<? extends Block> entry)
+    {
+        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> {
+            var counterType = blockState.getValue(ModBlockStateProperties.COUNTER_TYPE);
+
+            var model = models().getExistingFile(blockFolder(entry)
+                    .withPath(path -> "%s_%s".formatted(path, counterType.getSerializedName()))
             );
 
             return ConfiguredModel

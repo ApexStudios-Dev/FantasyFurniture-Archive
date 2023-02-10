@@ -8,6 +8,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelConverter;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
@@ -61,6 +62,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertGeneric(furnitureSet, "bed_double");
         Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(furnitureSet, shelfType));
         Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(furnitureSet, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(furnitureSet, counterType));
     }
 
     private BlockModelBuilder convertTable(String furnitureSet, String type)
@@ -122,6 +124,15 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/sofa"))) // fantasyfurniture:block/templates/shelf
                 .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet))) // fantasyfurniture:block/${furnitureSet}/particle
                 .texture("sofa", new ResourceLocation(FantasyFurniture.ID, "block/%s/sofa".formatted(furnitureSet))) // shelf | fantasyfurniture:block/${furnitureSet}/shelf
+        ;
+    }
+
+    private BlockModelBuilder convertCounter(String furnitureSet, CounterType counterType)
+    {
+        return blockModelBuilder(new ResourceLocation(FantasyFurniture.ID, "block/%s/counter_%s".formatted(furnitureSet, counterType.getSerializedName()))) // fantasyfurniture:block/${furnitureSet}/counter_${counterType}
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation(FantasyFurniture.ID, "block/templates/counter"))) // fantasyfurniture:block/templates/counter
+                .texture("particle", new ResourceLocation(FantasyFurniture.ID, "block/%s/particle".formatted(furnitureSet))) // fantasyfurniture:block/${furnitureSet}/particle
+                .texture("counter", new ResourceLocation(FantasyFurniture.ID, "block/%s/counter".formatted(furnitureSet))) // counter | fantasyfurniture:block/${furnitureSet}/counter
         ;
     }
 

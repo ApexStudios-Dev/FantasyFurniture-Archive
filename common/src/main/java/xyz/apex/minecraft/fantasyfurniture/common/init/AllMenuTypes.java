@@ -15,6 +15,7 @@ public interface AllMenuTypes
     MenuEntry<DresserMenu> DRESSER = FantasyFurniture.REGISTRAR.menu("dresser", DresserMenu::new, () -> DresserMenuScreen::new);
     MenuEntry<LockboxMenu> LOCKBOX = FantasyFurniture.REGISTRAR.menu("lockbox", LockboxMenu::new, () -> LockboxMenuScreen::new);
     MenuEntry<WardrobeMenu> WARDROBE = FantasyFurniture.REGISTRAR.menu("wardrobe", WardrobeMenu::new, () -> WardrobeMenuScreen::new);
+    MenuEntry<CounterMenu> COUNTER = FantasyFurniture.REGISTRAR.menu("counter", CounterMenu::new, () -> CounterMenuScreen::new);
 
     static void bootstrap()
     {

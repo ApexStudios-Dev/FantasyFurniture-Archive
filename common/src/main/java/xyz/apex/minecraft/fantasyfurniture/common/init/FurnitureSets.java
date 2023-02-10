@@ -374,7 +374,15 @@ public interface FurnitureSets
                 .block("%s/sofa".formatted(furnitureSet), SofaBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, (shape, block, blockState) -> shapeGetter.apply(block, blockState))
-                //.renderType(() -> RenderType::cutout)
+        ;
+    }
+
+    static BlockBuilder<CounterBlock, Registrar, Registrar> counter(String furnitureSet, Supplier<VoxelShape> baseShape, BiFunction<CounterBlock, BlockState, VoxelShape> shapeGetter)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/counter".formatted(furnitureSet), CounterBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, (shape, block, blockState) -> shapeGetter.apply(block, blockState))
         ;
     }
 }
