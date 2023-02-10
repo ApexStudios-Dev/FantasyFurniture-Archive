@@ -367,4 +367,14 @@ public interface FurnitureSets
                 .renderType(() -> RenderType::cutout)
         ;
     }
+
+    static BlockBuilder<SofaBlock, Registrar, Registrar> sofa(String furnitureSet, Supplier<VoxelShape> baseShape, BiFunction<SofaBlock, BlockState, VoxelShape> shapeGetter)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/sofa".formatted(furnitureSet), SofaBlock::new)
+                .initialProperties(Properties.BLOCK_PLANKS)
+                .hitbox(baseShape, (shape, block, blockState) -> shapeGetter.apply(block, blockState))
+                //.renderType(() -> RenderType::cutout)
+        ;
+    }
 }

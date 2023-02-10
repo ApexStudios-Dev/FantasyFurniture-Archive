@@ -52,6 +52,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(NordicSet.BED_SINGLE.get());
         dropSelf(NordicSet.BED_DOUBLE.get());
         dropSelf(NordicSet.SHELF.get());
+        dropSelf(NordicSet.SOFA.get());
     }
 
     @Override

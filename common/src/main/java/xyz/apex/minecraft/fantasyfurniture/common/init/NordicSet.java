@@ -49,6 +49,7 @@ public interface NordicSet
     BlockEntry<BedMultiBlock> BED_SINGLE = FurnitureSets.bedSingle(NAME, () -> AllVoxelShapes.Nordic.BED_SINGLE).register();
     BlockEntry<BedMultiBlock> BED_DOUBLE = FurnitureSets.bedDouble(NAME, () -> AllVoxelShapes.Nordic.BED_DOUBLE).register();
     BlockEntry<ShelfBlock> SHELF = FurnitureSets.shelf(NAME, () -> AllVoxelShapes.Nordic.SHELF_SINGLE, AllVoxelShapes.Nordic::getShelfShape).register();
+    BlockEntry<SofaBlock> SOFA = FurnitureSets.sofa(NAME, () -> AllVoxelShapes.Nordic.SOFA_SINGLE, AllVoxelShapes.Nordic::getSofaShape).register();
 
     static void bootstrap()
     {
@@ -84,6 +85,7 @@ public interface NordicSet
                     output.accept(BED_SINGLE);
                     output.accept(BED_DOUBLE);
                     output.accept(SHELF);
+                    output.accept(SOFA);
                 })
         );
     }

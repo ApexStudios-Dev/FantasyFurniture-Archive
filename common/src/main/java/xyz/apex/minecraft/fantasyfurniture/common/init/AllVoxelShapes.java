@@ -11,6 +11,7 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 
 import java.util.function.Function;
 
@@ -296,6 +297,52 @@ public interface AllVoxelShapes
                 box(0D, 6D, 13D, 3D, 14D, 16D)
         );
 
+        VoxelShape SOFA_SINGLE = shape(
+                box(1D, 0D, 1D, 3D, 3D, 3D),
+                box(1D, 0D, 13D, 3D, 3D, 15D),
+                box(13D, 0D, 13D, 15D, 3D, 15D),
+                box(13D, 0D, 1D, 15D, 3D, 3D),
+                box(0D, 3D, 0D, 16D, 6D, 16D),
+                box(0D, 6D, 13D, 16D, 16D, 16D),
+                box(14D, 10D, 0D, 16D, 12D, 14D),
+                box(0D, 10D, 0D, 2D, 12D, 14D),
+                box(0D, 6D, 0D, 2D, 10D, 2D),
+                box(14D, 6D, 0D, 16D, 10D, 2D)
+        );
+
+        VoxelShape SOFA_CENTER = shape(
+                box(0D, 3D, 0D, 16D, 6D, 16D),
+                box(0D, 6D, 13D, 16D, 16D, 16D)
+        );
+
+        VoxelShape SOFA_LEFT = shape(
+                box(0D, 3D, 0D, 16D, 6D, 16D),
+                box(0D, 6D, 13D, 16D, 16D, 16D),
+                box(14D, 10D, 0D, 16D, 12D, 13D),
+                box(14D, 6D, 0D, 16D, 10D, 2D),
+                box(13D, 0D, 1D, 15D, 3D, 3D),
+                box(13D, 0D, 13D, 15D, 3D, 15D)
+        );
+
+        VoxelShape SOFA_RIGHT = shape(
+                box(0D, 3D, 0D, 16D, 6D, 16D),
+                box(0D, 6D, 13D, 16D, 16D, 16D),
+                box(0D, 10D, 0D, 2D, 12D, 13D),
+                box(0D, 6D, 0D, 2D, 10D, 2D),
+                box(1D, 0D, 1D, 3D, 3D, 3D),
+                box(1D, 0D, 13D, 3D, 3D, 15D)
+        );
+
+        VoxelShape SOFA_CORNER = shape(
+                box(1D, 0D, 1D, 3D, 3D, 3D),
+                box(1D, 0D, 13D, 3D, 3D, 15D),
+                box(13D, 0D, 13D, 15D, 3D, 15D),
+                box(13D, 0D, 1D, 15D, 3D, 3D),
+                box(0D, 3D, 0D, 16D, 6D, 16D),
+                box(0D, 6D, 13D, 16D, 16D, 16D),
+                box(13D, 6D, 0D, 16D, 16D, 13D)
+        );
+
         static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
         {
             return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
@@ -303,6 +350,17 @@ public interface AllVoxelShapes
                 case RIGHT -> Nordic.SHELF_RIGHT;
                 case SINGLE -> Nordic.SHELF_SINGLE;
                 case CENTER -> Nordic.SHELF_CENTER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
+                case LEFT -> Nordic.SOFA_LEFT;
+                case RIGHT -> Nordic.SOFA_RIGHT;
+                case SINGLE -> Nordic.SOFA_SINGLE;
+                case CENTER -> Nordic.SOFA_CENTER;
+                case CORNER -> Nordic.SOFA_CORNER;
             }, block, blockState);
         }
 
@@ -602,6 +660,14 @@ public interface AllVoxelShapes
         var facing = blockState.getValue(ShelfBlock.FACING);
         var shelfType = blockState.getValue(ModBlockStateProperties.SHELF_TYPE);
         var current = shapeGetter.apply(shelfType);
+        return VoxelShapeHelper.rotateHorizontal(current, facing);
+    }
+
+    private static VoxelShape getSofaShape(Function<SofaType, VoxelShape> shapeGetter, SofaBlock block, BlockState blockState)
+    {
+        var facing = blockState.getValue(ShelfBlock.FACING);
+        var sofaType = blockState.getValue(ModBlockStateProperties.SOFA_TYPE);
+        var current = shapeGetter.apply(sofaType);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
