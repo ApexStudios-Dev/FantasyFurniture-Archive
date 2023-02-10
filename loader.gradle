@@ -4,8 +4,6 @@ evaluationDependsOn(':common')
 
 def loomPlatform = project.property('loom.platform')
 
-sourceSets.main.resources.srcDirs = [ 'src/main/resources', 'src/main/generated' ]
-
 configurations {
     common
     shadowCommon
