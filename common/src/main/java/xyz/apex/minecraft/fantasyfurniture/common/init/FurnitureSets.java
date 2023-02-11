@@ -271,6 +271,7 @@ public interface FurnitureSets
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getWardrobeTopShape)
                 .noOcclusion()
+                .renderType(() -> RenderType::cutout)
         ;
     }
 

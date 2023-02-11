@@ -190,6 +190,7 @@ public final class BlockStateGenerator extends BlockStateProvider
                         .scale(.35F, .35F, .35F)
                     .end()
                 .end()
+                .renderType(cutout)
         ;
 
         template(new ResourceLocation(FantasyFurniture.ID, "templates/painting_wide"))
