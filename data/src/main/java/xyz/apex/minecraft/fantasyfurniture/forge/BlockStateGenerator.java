@@ -3,7 +3,6 @@ package xyz.apex.minecraft.fantasyfurniture.forge;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.Validate;
 
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -12,7 +11,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -27,268 +29,26 @@ import java.util.function.Supplier;
 
 public final class BlockStateGenerator extends BlockStateProvider
 {
-    private final ModelFile blockBlock = new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/block"));
-
     public BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
     {
         super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }
 
-    private void registerTemplates()
-    {
-        var cutout = new ResourceLocation("minecraft", "cutout");
-
-        // NOTE: All main line models created in BlockBench *MUST* parent these models in order for them to function correctly
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/wall_light"))
-                .renderType(cutout)
-                .transforms()
-                    .transform(ItemTransforms.TransformType.FIXED)
-                        .translation(0F, 0F, -4F)
-                        .scale(.5F, .5F, .5F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/floor_light"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -2.75F, 0F)
-                        .scale(.5F, .5F, .5F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_large"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -3.5F, 0F)
-                        .scale(.35F, .35F, .35F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_small"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .scale(.625F, .625F, .625F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/table_wide"))
-                .renderType(cutout)
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/bench"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/chair"))
-                .renderType(cutout)
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -1.5F, 0F)
-                        .scale(.5F, .5F, .5F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/chandelier"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/cushion"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/stool"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/chest"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.25F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/bookshelf"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, -135F, 0F)
-                        .translation(-2F, -3.5F, 0F)
-                        .scale(.35F, .35F, .35F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/desk_left"))
-                .renderType(cutout)
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/desk_right"))
-                .renderType(cutout)
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/drawer"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/dresser"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2.5F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/lockbox"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/wardrobe_bottom"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2F, -3.5F, 0F)
-                        .scale(.35F, .35F, .35F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/wardrobe_top"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(-2F, -3.5F, 0F)
-                        .scale(.35F, .35F, .35F)
-                    .end()
-                .end()
-                .renderType(cutout)
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/painting_wide"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -1.5F, 0F)
-                        .scale(.5F, .5F, .5F)
-                    .end()
-                    .transform(ItemTransforms.TransformType.FIXED)
-                        .translation(4F, 0F, -4F)
-                        .scale(.5F, .5F, .5F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/painting_small"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .scale(.625F, .625F, .625F)
-                    .end()
-                    .transform(ItemTransforms.TransformType.FIXED)
-                        .translation(0F ,0F, -8F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/oven"))
-                .renderType(cutout)
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/door_double"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/door_single"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 225F, 0F)
-                        .translation(0F, -2.25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/bed_single"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 45F, 0F)
-                        .translation(-2.5F, .25F, 0F)
-                        .scale(.45F, .45F, .45F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/bed_double"))
-                .transforms()
-                    .transform(ItemTransforms.TransformType.GUI)
-                        .rotation(30F, 45F, 0F)
-                        .translation(0F, -.75F, 0F)
-                        .scale(.3F, .3F, .3F)
-                    .end()
-                .end()
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/shelf"))
-                .renderType(cutout)
-        ;
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/sofa"));
-
-        template(new ResourceLocation(FantasyFurniture.ID, "templates/counter"));
-    }
-
     @Override
     protected void registerStatesAndModels()
     {
-        registerTemplates();
-
         facingBlock(FantasyFurniture.FURNITURE_STATION_BLOCK, HorizontalDirectionalBlock.FACING);
 
         simpleBlock(NordicSet.WOOL);
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
-        templatedBlock(NordicSet.FLOOR_LIGHT);
+        simpleExistingBlock(NordicSet.FLOOR_LIGHT);
         facingBlock(NordicSet.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.BENCH, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.CHAIR, HorizontalDirectionalBlock.FACING);
-        templatedBlock(NordicSet.CHANDELIER);
+        simpleExistingBlock(NordicSet.CHANDELIER);
         facingBlock(NordicSet.CUSHION, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.STOOL, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.CHEST, HorizontalDirectionalBlock.FACING);
@@ -339,7 +99,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         );
     }
 
-    private void templatedBlock(Supplier<? extends Block> entry)
+    private void simpleExistingBlock(Supplier<? extends Block> entry)
     {
         simpleBlock(entry, existingModel(entry));
     }
@@ -427,14 +187,6 @@ public final class BlockStateGenerator extends BlockStateProvider
                     .modelFile(model)
                     .build();
         }, gatherIgnoredProperties(entry));
-    }
-
-    private BlockModelBuilder template(ResourceLocation modelPath)
-    {
-        return models()
-                .getBuilder(blockFolder(modelPath).toString())
-                .parent(blockBlock)
-        ;
     }
 
     private void simpleBlock(Supplier<? extends Block> entry)

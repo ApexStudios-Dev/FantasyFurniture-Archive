@@ -1,5 +1,10 @@
 {
+	"credit": "Made with Blockbench",
 	"texture_size": [128, 128],
+	"textures": {
+		"bed_single": "fantasyfurniture:models/nordic/bed_single",
+		"particle": "fantasyfurniture:particles/nordic"
+	},
 	"elements": [
 		{
 			"name": "post_1",
@@ -435,5 +440,44 @@
 				"down": {"uv": [5, 9.25, 4.75, 9.5], "rotation": 180, "texture": "#bed_single"}
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [1.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 45, 0],
+			"translation": [-2.5, 0.25, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"head": {
+			"translation": [0, 9, -4],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"fixed": {
+			"rotation": [-90, -180, 0],
+			"translation": [0, 4, -4],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
 }

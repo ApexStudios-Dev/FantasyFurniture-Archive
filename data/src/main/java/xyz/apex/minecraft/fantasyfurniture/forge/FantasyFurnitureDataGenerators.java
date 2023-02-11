@@ -1,6 +1,5 @@
 package xyz.apex.minecraft.fantasyfurniture.forge;
 
-import net.minecraft.data.DataProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,21 +14,22 @@ public final class FantasyFurnitureDataGenerators
     public static void onGatherData(GatherDataEvent event)
     {
         var generator = event.getGenerator();
+        var output = generator.getPackOutput();
 
         var client = event.includeClient();
         var server = event.includeServer();
 
-        generator.addProvider(client, (DataProvider.Factory<BlockBenchConverter>) output -> new BlockBenchConverter(event, output));
-        generator.addProvider(client, (DataProvider.Factory<BlockStateGenerator>) output -> new BlockStateGenerator(event, output));
-        generator.addProvider(client, (DataProvider.Factory<ItemModelGenerator>) output -> new ItemModelGenerator(event, output));
+        generator.addProvider(client, new BlockBenchConverter(event));
+        generator.addProvider(client, new BlockStateGenerator(event, output));
+        generator.addProvider(client, new ItemModelGenerator(event, output));
 
-        generator.addProvider(client, (DataProvider.Factory<LanguageGenerator>) LanguageGenerator::new);
+        generator.addProvider(client, new LanguageGenerator(output));
 
-        var blockTags = generator.addProvider(server, (DataProvider.Factory<BlockTagGenerator>) output -> new BlockTagGenerator(event, output));
-        generator.addProvider(server, (DataProvider.Factory<ItemTagGenerator>) output -> new ItemTagGenerator(event, output, blockTags));
-        generator.addProvider(server, (DataProvider.Factory<EntityTypeTagGenerator>) output -> new EntityTypeTagGenerator(event, output));
+        var blockTags = generator.addProvider(server, new BlockTagGenerator(event, output));
+        generator.addProvider(server, new ItemTagGenerator(event, output, blockTags));
+        generator.addProvider(server, new EntityTypeTagGenerator(event, output));
 
-        generator.addProvider(server, (DataProvider.Factory<LootTableGenerator>) LootTableGenerator::new);
-        generator.addProvider(server, (DataProvider.Factory<RecipeGenerator>) RecipeGenerator::new);
+        generator.addProvider(server, new LootTableGenerator(output));
+        generator.addProvider(server, new RecipeGenerator(output));
     }
 }

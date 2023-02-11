@@ -1,10 +1,16 @@
 {
+	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
+	"textures": {
+		"door_single": "fantasyfurniture:models/nordic/door_single",
+		"particle": "fantasyfurniture:particles/nordic"
+	},
 	"elements": [
 		{
 			"name": "top",
 			"from": [3, 30, 0],
 			"to": [16, 32, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.75, 4.5, 6.5, 5], "texture": "#door_single"},
 				"east": {"uv": [10.5, 0, 9.75, 0.5], "texture": "#door_single"},
@@ -18,6 +24,7 @@
 			"name": "bottom",
 			"from": [3, 0, 0],
 			"to": [16, 2, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.75, 5.5, 6.5, 6], "texture": "#door_single"},
 				"east": {"uv": [10.5, 1, 9.75, 1.5], "texture": "#door_single"},
@@ -31,6 +38,7 @@
 			"name": "middle_1",
 			"from": [3, 20, 0],
 			"to": [16, 22, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.5, 6.75, 6.25, 7.25], "texture": "#door_single"},
 				"east": {"uv": [10.5, 2, 9.75, 2.5], "texture": "#door_single"},
@@ -44,6 +52,7 @@
 			"name": "middle_2",
 			"from": [3, 10, 0],
 			"to": [16, 12, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.5, 7.25, 6.25, 7.75], "texture": "#door_single"},
 				"east": {"uv": [3.75, 9.75, 3, 10.25], "texture": "#door_single"},
@@ -57,6 +66,7 @@
 			"name": "side",
 			"from": [0, 0, 0],
 			"to": [3, 32, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [0.75, 6, 0, 14], "texture": "#door_single"},
 				"east": {"uv": [3, 6, 2.25, 14], "texture": "#door_single"},
@@ -70,6 +80,7 @@
 			"name": "panel_1",
 			"from": [3, 2, 0.5],
 			"to": [16, 10, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [3.25, 0, 0, 2], "texture": "#door_single"},
 				"east": {"uv": [7.25, 9.25, 6.75, 11.25], "texture": "#door_single"},
@@ -83,6 +94,7 @@
 			"name": "panel_2",
 			"from": [3, 22, 0.5],
 			"to": [16, 30, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [6.5, 0, 3.25, 2], "texture": "#door_single"},
 				"east": {"uv": [8.25, 9.25, 7.75, 11.25], "texture": "#door_single"},
@@ -96,6 +108,7 @@
 			"name": "panel_3",
 			"from": [3, 12, 0.5],
 			"to": [16, 20, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [3.25, 4, 0, 6], "texture": "#door_single"},
 				"east": {"uv": [9.25, 9.25, 8.75, 11.25], "texture": "#door_single"},
@@ -109,6 +122,7 @@
 			"name": "handle_1",
 			"from": [12, 13, -0.5],
 			"to": [14, 18, 0.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.75, 9.25, 9.25, 10.5], "texture": "#door_single"},
 				"east": {"uv": [4, 9.75, 3.75, 11], "texture": "#door_single"},
@@ -122,6 +136,7 @@
 			"name": "handle_2",
 			"from": [12, 13, 2.5],
 			"to": [14, 18, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 0, 0]},
 			"faces": {
 				"north": {"uv": [9.75, 9.25, 9.25, 10.5], "texture": "#door_single"},
 				"east": {"uv": [4, 9.75, 3.75, 11], "texture": "#door_single"},
@@ -131,5 +146,40 @@
 				"down": {"uv": [9.75, 4.25, 10.25, 4.5], "texture": "#door_single"}
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"translation": [3.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [3.5, 0, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [0, -2.25, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"fixed": {
+			"translation": [0, -4, 2.5],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
 }
