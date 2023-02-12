@@ -105,7 +105,7 @@
 			}
 		},
 		{
-			"name": "light",
+			"name": "light-forge-emissivity=10",
 			"from": [6.5, 10.75, 10.75],
 			"to": [9.5, 15.25, 13.75],
 			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 6.5, 12.25]},

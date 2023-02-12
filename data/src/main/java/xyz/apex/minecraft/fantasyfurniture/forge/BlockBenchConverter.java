@@ -62,6 +62,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertFurniture(furnitureSet, "painting_wide");
         convertFurniture(furnitureSet, "painting_small");
         convertFurniture(furnitureSet, "oven").renderType(renderTypeCutout);
+        convertFurnitureEx(furnitureSet, "oven_lit", "oven").renderType(renderTypeCutout);
         convertDoor(furnitureSet, "double", true);
         convertDoor(furnitureSet, "double", false);
         convertDoor(furnitureSet, "single", true);

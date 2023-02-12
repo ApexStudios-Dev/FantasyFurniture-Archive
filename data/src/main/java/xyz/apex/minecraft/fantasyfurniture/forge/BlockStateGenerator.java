@@ -20,6 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
@@ -62,7 +63,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         facingBlock(NordicSet.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
         facingBlock(NordicSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
-        facingBlock(NordicSet.OVEN, HorizontalDirectionalBlock.FACING);
+        ovenBlock(NordicSet.OVEN);
         doorBlock(NordicSet.DOOR_DOUBLE);
         doorBlock(NordicSet.DOOR_SINGLE);
         facingBlock(NordicSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
@@ -112,6 +113,21 @@ public final class BlockStateGenerator extends BlockStateProvider
                 .modelFile(model)
                 .build()
         );
+    }
+
+    private void ovenBlock(Supplier<? extends Block> entry)
+    {
+        getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> {
+            var isLit = blockState.getValue(OvenBlock.LIT);
+            var modelPath = blockFolder(entry);
+            if(isLit) modelPath = modelPath.withPath("%s_lit"::formatted);
+
+            return ConfiguredModel
+                    .builder()
+                    .rotationY((int) blockState.getValue(ShelfBlock.FACING).getOpposite().toYRot() % 360)
+                    .modelFile(models().getExistingFile(modelPath))
+                    .build();
+        }, gatherIgnoredProperties(entry));
     }
 
     private void doorBlock(Supplier<? extends Block> entry)
