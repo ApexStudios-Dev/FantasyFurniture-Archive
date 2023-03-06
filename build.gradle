@@ -11,7 +11,7 @@ plugins {
 }
 
 def repo = versionDetails()
-version = "${repo.lastTag}.${repo.commitDistance}"
+version = "${repo.lastTag.substring(1)}.${repo.commitDistance}"
 group = "${mod_base_package}"
 archivesBaseName = "${mod_id}-${minecraft_version}"
 
