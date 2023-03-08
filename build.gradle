@@ -146,7 +146,7 @@ repositories {
 	mavenLocal()
 	maven { url 'https://dvs1.progwml6.com/files/maven' }
 	maven { url 'https://maven.tterrag.com/' }
-	maven { url 'https://maven.apexstudios.dev/' }
+	maven { url 'https://maven.covers1624.net/' }
 
 	maven {
 		url 'https://cursemaven.com'
@@ -257,17 +257,16 @@ publishing {
 			artifact tasks.jarJar
 		}
 	}
-	repositories {
-		mavenLocal()
 
-		if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
+	repositories {
+		if(System.getenv('MAVEN_PASSWORD') != null) {
 			maven {
-				name 'ApexMods-Maven'
-				url 'https://apexmodder.jfrog.io/artifactory/mods-maven/'
+				name 'Covers1624-Maven'
+				url 'https://nexus.covers1624.net/repository/apex-releases/'
 
 				credentials {
-					username System.getenv('APEX_MODS_MAVEN_USERNAME')
-					password System.getenv('APEX_MODS_MAVEN_PASSWORD')
+					username 'apex'
+					password System.getenv('MAVEN_PASSWORD')
 				}
 			}
 		}
