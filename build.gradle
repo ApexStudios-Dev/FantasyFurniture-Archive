@@ -318,9 +318,15 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			mainArtifact(tasks.jarJar) {
 				changelog = file('CHANGELOG.md')
 				changelogType = 'markdown'
+				embeddedLibrary 'apexcore'
+				optionalDependency 'jei'
 			}
 
-			addArtifact jar
+			addArtifact(jar) {
+				requiredDependency 'apexcore'
+				optionalDependency 'jei'
+			}
+
 			addArtifact sourcesJar
 		}
 
@@ -344,7 +350,8 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		loaders = [ 'forge' ]
 		debugMode = true
 		dependencies {
-
+			embedded.project 'apexcore'
+			optional.project 'jei'
 		}
 	}
 }
