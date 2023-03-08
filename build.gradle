@@ -10,22 +10,15 @@ plugins {
 	id 'com.palantir.git-version' version '1.0.0'
 	id 'com.modrinth.minotaur' version '2.+'
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
-	id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.78.0'
+	id 'net.minecraftforge.gradleutils' version '2.+'
+}
+
+afterEvaluate {
+	tasks.setupTeamCityProject.enabled = false
+	tasks.findByName('configureTeamCity')??.enabled = false
 }
 
 def repo = versionDetails()
-
-def previousGitTag = { ->
-	def stdout = new ByteArrayOutputStream()
-
-	exec {
-		commandLine 'git', 'describe', '--tags', '--abbrev=0', '--exclude', "${repo.lastTag}"
-		standardOutput = stdout
-	}
-
-	return stdout.toString()
-}
-
 version = "${repo.lastTag.substring(1)}.${repo.commitDistance}"
 group = "${mod_base_package}"
 archivesBaseName = "${mod_id}-${minecraft_version}"
@@ -209,9 +202,12 @@ tasks.withType(JavaCompile) {
 	}
 }
 
+changelog {
+	fromTag "${repo.lastTag}"
+}
+
 tasks.withType(Jar) {
-	dependsOn gitChangelog
-	from file('CHANGELOG.md')
+	from tasks.createChangelog.outputFile
 	from file('LICENSE')
 
 	manifest {
@@ -291,21 +287,6 @@ publishing {
 	}
 }
 
-gitChangelog {
-	fromRef = "${previousGitTag}"
-	templateContent = """{{#tags}}
-## {{name}}
-{{#commits}}
-**{{{messageTitle}}}** ([{{authorName}}](https://github.com/{{ownerName}}/{{repoName}}/commit/{{hash}}))
-
-{{#messageBodyItems}}
-* {{.}}
-{{/messageBodyItems}}
-{{/commits}}
-
-{{/tags}}"""
-}
-
 if(System.getenv('CURSEFORGE_TOKEN') != null) {
 	curseforge {
 		apiKey = System.getenv('CURSEFORGE_TOKEN')
@@ -316,8 +297,7 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			addGameVersion "${minecraft_version}"
 
 			mainArtifact(tasks.jarJar) {
-				changelog = file('CHANGELOG.md')
-				changelogType = 'markdown'
+				changelog = tasks.createChangelog.outputFile
 				embeddedLibrary 'apexcore'
 				optionalDependency 'jei'
 			}
@@ -343,7 +323,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		versionNumber = "${version}"
 		versionType = "${mod_release_type}"
 		versionName = "${mod_name} - v${version} for Minecraft ${minecraft_version}"
-		changelog = file('CHANGELOG.md').text
+		changelog = tasks.createChangelog.outputFile.text
 		uploadFile = tasks.jarJar
 		additionalFiles = [ jar, sourcesJar ]
 		gameVersions = [ "${minecraft_version}" ]
