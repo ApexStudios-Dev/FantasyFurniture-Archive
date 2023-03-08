@@ -295,18 +295,15 @@ if(System.getenv('CURSEFORGE_TOKEN') != null) {
 			id = "${mod_curseforge_id}"
 			releaseType = "${mod_release_type}"
 			addGameVersion "${minecraft_version}"
+			changelog = new File(buildDir, 'changelog.txt')
 
-			mainArtifact(tasks.jarJar) {
-				changelog = tasks.createChangelog.outputFile
-				embeddedLibrary 'apexcore'
+			relations {
 				optionalDependency 'jei'
-			}
-
-			addArtifact(jar) {
 				requiredDependency 'apexcore'
-				optionalDependency 'jei'
 			}
 
+			mainArtifact tasks.jarJar
+			addArtifact jar
 			addArtifact sourcesJar
 		}
 
@@ -323,7 +320,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
 		versionNumber = "${version}"
 		versionType = "${mod_release_type}"
 		versionName = "${mod_name} - v${version} for Minecraft ${minecraft_version}"
-		changelog = tasks.createChangelog.outputFile.text
+		changelog = new File(buildDir, 'changelog.txt').text
 		uploadFile = tasks.jarJar
 		additionalFiles = [ jar, sourcesJar ]
 		gameVersions = [ "${minecraft_version}" ]
