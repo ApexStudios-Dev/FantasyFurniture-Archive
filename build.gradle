@@ -259,6 +259,63 @@ reobf {
 jar.finalizedBy('reobfJar')
 tasks.jarJar.finalizedBy('reobfJarJar')
 
+if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
+	task sendDiscordChangelog {
+		dependsOn tasks.createChangelog
+
+		doLast {
+			def body = [
+					username: "ApexStudios",
+					avatar_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png",
+					embeds: [
+							[
+									title: "**${mod_name}** updated to **_v${version}_**!",
+									description: "${tasks.createChangelog.outputFile.map { it.asFile.text }.get()}**Download**\n**_Modrinth_**: **_<https://modrinth.com/mod/${mod_modrinth_slug}>_**\n**_Curseforge_**: **_<https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug}>_**",
+									url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}",
+									color: "${Integer.decode(mod_color)}",
+									footer: [
+											text: "ApexStudios",
+											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png",
+									],
+									author: [
+											name: "${mod_name}",
+											url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}",
+											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/minecraft/${mod_id}_logo.png"
+									],
+									fields: [
+											[
+													name: "Minecraft",
+													value: "${minecraft_version}",
+													inline: true
+											],
+											[
+													name: "MinecraftForge",
+													value: "${forge_version}",
+													inline: true
+											]
+									]
+							]
+					]
+			]
+
+			def req = new URL(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL')).openConnection()
+			req.setRequestMethod('POST')
+			req.setRequestProperty('Content-Type', 'application/json; charset=UTF-8')
+			req.setDoOutput(true)
+			req.getOutputStream().write(groovy.json.JsonOutput.toJson(body).getBytes('UTF-8'))
+			// read the response, without this, webhook wont actually be sent
+			// we should maybe, perhaps, handle any errors that could occur, or at least log them
+			def t = req.getInputStream().getText()
+		}
+	}
+} else {
+	task sendDiscordChangelog {
+		doLast {
+			println '[Discord-Changelog] Missing required "DISCORD_CHANGELOG_WEBHOOK_URL" Environment Variable!!!'
+		}
+	}
+}
+
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
