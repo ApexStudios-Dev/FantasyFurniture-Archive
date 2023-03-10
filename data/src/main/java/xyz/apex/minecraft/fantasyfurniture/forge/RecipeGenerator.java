@@ -10,6 +10,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -33,6 +34,8 @@ public final class RecipeGenerator extends RecipeProvider
         nordic(consumer);
         venthyr(consumer);
         dunmer(consumer);
+        boneWither(consumer);
+        boneSkeleton(consumer);
     }
 
     private void nordic(Consumer<FinishedRecipe> consumer)
@@ -143,6 +146,76 @@ public final class RecipeGenerator extends RecipeProvider
         dunmerStation(consumer, DunmerSet.COUNTER);
     }
 
+    private void boneWither(Consumer<FinishedRecipe> consumer)
+    {
+        boneWitherStation(consumer, BoneSet.Wither.WOOL);
+        boneWitherStation(consumer, BoneSet.Wither.CARPET);
+        boneWitherStation(consumer, BoneSet.Wither.WALL_LIGHT);
+        boneWitherStation(consumer, BoneSet.Wither.FLOOR_LIGHT);
+        boneWitherStation(consumer, BoneSet.Wither.TABLE_LARGE);
+        boneWitherStation(consumer, BoneSet.Wither.TABLE_WIDE);
+        boneWitherStation(consumer, BoneSet.Wither.TABLE_SMALL);
+        boneWitherStation(consumer, BoneSet.Wither.BENCH);
+        boneWitherStation(consumer, BoneSet.Wither.CHAIR);
+        boneWitherStation(consumer, BoneSet.Wither.CHANDELIER);
+        boneWitherStation(consumer, BoneSet.Wither.CUSHION);
+        boneWitherStation(consumer, BoneSet.Wither.STOOL);
+        boneWitherStation(consumer, BoneSet.Wither.CHEST);
+        boneWitherStation(consumer, BoneSet.Wither.BOOKSHELF);
+        boneWitherStation(consumer, BoneSet.Wither.DESK_LEFT);
+        boneWitherStation(consumer, BoneSet.Wither.DESK_RIGHT);
+        boneWitherStation(consumer, BoneSet.Wither.DRAWER);
+        boneWitherStation(consumer, BoneSet.Wither.DRESSER);
+        boneWitherStation(consumer, BoneSet.Wither.LOCKBOX);
+        boneWitherStation(consumer, BoneSet.Wither.WARDROBE_BOTTOM);
+        boneWitherStation(consumer, BoneSet.Wither.WARDROBE_TOP);
+        boneWitherStation(consumer, BoneSet.Wither.PAINTING_WIDE);
+        boneWitherStation(consumer, BoneSet.Wither.PAINTING_SMALL);
+        boneWitherStation(consumer, BoneSet.Wither.OVEN);
+        boneWitherStation(consumer, BoneSet.Wither.DOOR_DOUBLE);
+        boneWitherStation(consumer, BoneSet.Wither.DOOR_SINGLE);
+        boneWitherStation(consumer, BoneSet.Wither.BED_SINGLE);
+        boneWitherStation(consumer, BoneSet.Wither.BED_DOUBLE);
+        boneWitherStation(consumer, BoneSet.Wither.SHELF);
+        boneWitherStation(consumer, BoneSet.Wither.SOFA);
+        boneWitherStation(consumer, BoneSet.Wither.COUNTER);
+    }
+
+    private void boneSkeleton(Consumer<FinishedRecipe> consumer)
+    {
+        boneSkeletonStation(consumer, BoneSet.Skeleton.WOOL);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CARPET);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.WALL_LIGHT);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.FLOOR_LIGHT);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.TABLE_LARGE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.TABLE_WIDE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.TABLE_SMALL);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.BENCH);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CHAIR);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CHANDELIER);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CUSHION);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.STOOL);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CHEST);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.BOOKSHELF);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DESK_LEFT);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DESK_RIGHT);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DRAWER);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DRESSER);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.LOCKBOX);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.WARDROBE_BOTTOM);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.WARDROBE_TOP);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.PAINTING_WIDE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.PAINTING_SMALL);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.OVEN);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DOOR_DOUBLE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.DOOR_SINGLE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.BED_SINGLE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.BED_DOUBLE);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.SHELF);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.SOFA);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.COUNTER);
+    }
+
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
     {
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.CRAFTING_TABLE), Ingredient.of(Items.LEATHER), RecipeCategory.MISC, FantasyFurniture.FURNITURE_STATION_BLOCK.get().asItem())
@@ -164,7 +237,17 @@ public final class RecipeGenerator extends RecipeProvider
 
     private void dunmerStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
     {
-        furnitureStationGeneric(exporter, DunmerSet.NAME, () -> Blocks.DARK_OAK_PLANKS, () -> Blocks.GREEN_WOOL, item);
+        furnitureStationGeneric(exporter, DunmerSet.NAME, () -> Blocks.SPRUCE_PLANKS, () -> Blocks.GREEN_WOOL, item);
+    }
+
+    private void boneWitherStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.BONE, () -> Blocks.BLACK_WOOL, item);
+    }
+
+    private void boneSkeletonStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.BONE, () -> Blocks.WHITE_WOOL, item);
     }
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)

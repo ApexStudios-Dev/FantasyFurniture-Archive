@@ -11,6 +11,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -40,6 +41,8 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         nordic();
         venthyr();
         dunmer();
+        boneWither();
+        boneSkeleton();
     }
 
     private void nordic()
@@ -151,6 +154,78 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(DunmerSet.NAME, shelfType));
         Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(DunmerSet.NAME, sofaType).renderType(renderTypeCutout));
         Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(DunmerSet.NAME, counterType).renderType(renderTypeCutout));
+    }
+
+    private void boneWither()
+    {
+        convertFurniture(BoneSet.Wither.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(BoneSet.Wither.NAME, "floor_light");
+        convertFurniture(BoneSet.Wither.NAME, "table_small");
+        convertFurniture(BoneSet.Wither.NAME, "table_large");
+        convertFurniture(BoneSet.Wither.NAME, "table_wide");
+        convertFurniture(BoneSet.Wither.NAME, "bench");
+        convertFurniture(BoneSet.Wither.NAME, "chair");
+        convertFurniture(BoneSet.Wither.NAME, "chandelier");
+        convertFurniture(BoneSet.Wither.NAME, "cushion");
+        convertFurniture(BoneSet.Wither.NAME, "stool");
+        convertFurniture(BoneSet.Wither.NAME, "chest");
+        convertFurniture(BoneSet.Wither.NAME, "bookshelf");
+        convertDesk(BoneSet.Wither.NAME, "left");
+        convertDesk(BoneSet.Wither.NAME, "right");
+        convertFurniture(BoneSet.Wither.NAME, "drawer");
+        convertFurniture(BoneSet.Wither.NAME, "dresser");
+        convertFurniture(BoneSet.Wither.NAME, "lockbox");
+        convertWardrobe(BoneSet.Wither.NAME, "bottom");
+        convertWardrobe(BoneSet.Wither.NAME, "top");
+        convertFurniture(BoneSet.Wither.NAME, "painting_wide");
+        convertFurniture(BoneSet.Wither.NAME, "painting_small");
+        convertFurniture(BoneSet.Wither.NAME, "oven");
+        convertFurnitureEx(BoneSet.Wither.NAME, "oven_lit", "oven");
+        convertDoor(BoneSet.Wither.NAME, "double", true);
+        convertDoor(BoneSet.Wither.NAME, "double", false);
+        convertDoor(BoneSet.Wither.NAME, "single", true);
+        convertDoor(BoneSet.Wither.NAME, "single", false);
+        convertFurniture(BoneSet.Wither.NAME, "bed_single");
+        convertFurniture(BoneSet.Wither.NAME, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(BoneSet.Wither.NAME, shelfType));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(BoneSet.Wither.NAME, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(BoneSet.Wither.NAME, counterType));
+    }
+
+    private void boneSkeleton()
+    {
+        convertFurniture(BoneSet.Skeleton.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(BoneSet.Skeleton.NAME, "floor_light");
+        convertFurniture(BoneSet.Skeleton.NAME, "table_small");
+        convertFurniture(BoneSet.Skeleton.NAME, "table_large");
+        convertFurniture(BoneSet.Skeleton.NAME, "table_wide");
+        convertFurniture(BoneSet.Skeleton.NAME, "bench");
+        convertFurniture(BoneSet.Skeleton.NAME, "chair");
+        convertFurniture(BoneSet.Skeleton.NAME, "chandelier");
+        convertFurniture(BoneSet.Skeleton.NAME, "cushion");
+        convertFurniture(BoneSet.Skeleton.NAME, "stool");
+        convertFurniture(BoneSet.Skeleton.NAME, "chest");
+        convertFurniture(BoneSet.Skeleton.NAME, "bookshelf");
+        convertDesk(BoneSet.Skeleton.NAME, "left");
+        convertDesk(BoneSet.Skeleton.NAME, "right");
+        convertFurniture(BoneSet.Skeleton.NAME, "drawer");
+        convertFurniture(BoneSet.Skeleton.NAME, "dresser");
+        convertFurniture(BoneSet.Skeleton.NAME, "lockbox");
+        convertWardrobe(BoneSet.Skeleton.NAME, "bottom");
+        convertWardrobe(BoneSet.Skeleton.NAME, "top");
+        convertFurniture(BoneSet.Skeleton.NAME, "painting_wide");
+        convertFurniture(BoneSet.Skeleton.NAME, "painting_small");
+        convertFurniture(BoneSet.Skeleton.NAME, "oven");
+        convertFurnitureEx(BoneSet.Skeleton.NAME, "oven_lit", "oven");
+        convertDoor(BoneSet.Skeleton.NAME, "double", true);
+        convertDoor(BoneSet.Skeleton.NAME, "double", false);
+        convertDoor(BoneSet.Skeleton.NAME, "single", true);
+        convertDoor(BoneSet.Skeleton.NAME, "single", false);
+        convertFurniture(BoneSet.Skeleton.NAME, "bed_single");
+        convertFurniture(BoneSet.Skeleton.NAME, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(BoneSet.Skeleton.NAME, shelfType));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(BoneSet.Skeleton.NAME, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(BoneSet.Skeleton.NAME, counterType));
     }
 
     private BlockModelBuilder convertDesk(String furnitureSet, String type)

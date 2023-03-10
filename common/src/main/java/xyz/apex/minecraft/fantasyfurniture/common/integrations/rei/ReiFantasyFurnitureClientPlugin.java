@@ -15,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
@@ -36,6 +38,30 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
                 new ResourceLocation(FantasyFurniture.ID, VenthyrSet.NAME),
                 Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, VenthyrSet.NAME)),
                 EntryIngredients.ofItemTag(VenthyrSet.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, DunmerSet.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, DunmerSet.NAME)),
+                EntryIngredients.ofItemTag(DunmerSet.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, BoneSet.BASE_NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, BoneSet.BASE_NAME)),
+                EntryIngredients.ofItemTag(BoneSet.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, BoneSet.Wither.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, BoneSet.Wither.NAME)),
+                EntryIngredients.ofItemTag(BoneSet.Wither.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, BoneSet.Skeleton.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, BoneSet.Skeleton.NAME)),
+                EntryIngredients.ofItemTag(BoneSet.Skeleton.ITEM_TAG)
         );
     }
 

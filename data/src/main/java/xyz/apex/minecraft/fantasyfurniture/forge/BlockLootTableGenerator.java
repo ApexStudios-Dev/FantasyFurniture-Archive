@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -28,6 +29,8 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         nordic();
         venthyr();
         dunmer();
+        boneWither();
+        boneSkeleton();
     }
 
     private void nordic()
@@ -136,6 +139,76 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(DunmerSet.SHELF.get());
         dropSelf(DunmerSet.SOFA.get());
         dropSelf(DunmerSet.COUNTER.get());
+    }
+
+    private void boneWither()
+    {
+        dropSelf(BoneSet.Wither.WOOL.get());
+        dropSelf(BoneSet.Wither.CARPET.get());
+        dropSelf(BoneSet.Wither.WALL_LIGHT.get());
+        dropSelf(BoneSet.Wither.FLOOR_LIGHT.get());
+        dropSelf(BoneSet.Wither.TABLE_LARGE.get());
+        dropSelf(BoneSet.Wither.TABLE_WIDE.get());
+        dropSelf(BoneSet.Wither.TABLE_SMALL.get());
+        dropSelf(BoneSet.Wither.BENCH.get());
+        dropSelf(BoneSet.Wither.CHAIR.get());
+        dropSelf(BoneSet.Wither.CHANDELIER.get());
+        dropSelf(BoneSet.Wither.CUSHION.get());
+        dropSelf(BoneSet.Wither.STOOL.get());
+        dropSelf(BoneSet.Wither.CHEST.get());
+        dropSelf(BoneSet.Wither.BOOKSHELF.get());
+        dropSelf(BoneSet.Wither.DESK_LEFT.get());
+        dropSelf(BoneSet.Wither.DESK_RIGHT.get());
+        dropSelf(BoneSet.Wither.DRAWER.get());
+        dropSelf(BoneSet.Wither.DRESSER.get());
+        dropSelf(BoneSet.Wither.LOCKBOX.get());
+        dropSelf(BoneSet.Wither.WARDROBE_BOTTOM.get());
+        dropSelf(BoneSet.Wither.WARDROBE_TOP.get());
+        dropSelf(BoneSet.Wither.PAINTING_WIDE.get());
+        dropSelf(BoneSet.Wither.PAINTING_SMALL.get());
+        dropSelf(BoneSet.Wither.OVEN.get());
+        dropSelf(BoneSet.Wither.DOOR_DOUBLE.get());
+        dropSelf(BoneSet.Wither.DOOR_SINGLE.get());
+        dropSelf(BoneSet.Wither.BED_SINGLE.get());
+        dropSelf(BoneSet.Wither.BED_DOUBLE.get());
+        dropSelf(BoneSet.Wither.SHELF.get());
+        dropSelf(BoneSet.Wither.SOFA.get());
+        dropSelf(BoneSet.Wither.COUNTER.get());
+    }
+
+    private void boneSkeleton()
+    {
+        dropSelf(BoneSet.Skeleton.WOOL.get());
+        dropSelf(BoneSet.Skeleton.CARPET.get());
+        dropSelf(BoneSet.Skeleton.WALL_LIGHT.get());
+        dropSelf(BoneSet.Skeleton.FLOOR_LIGHT.get());
+        dropSelf(BoneSet.Skeleton.TABLE_LARGE.get());
+        dropSelf(BoneSet.Skeleton.TABLE_WIDE.get());
+        dropSelf(BoneSet.Skeleton.TABLE_SMALL.get());
+        dropSelf(BoneSet.Skeleton.BENCH.get());
+        dropSelf(BoneSet.Skeleton.CHAIR.get());
+        dropSelf(BoneSet.Skeleton.CHANDELIER.get());
+        dropSelf(BoneSet.Skeleton.CUSHION.get());
+        dropSelf(BoneSet.Skeleton.STOOL.get());
+        dropSelf(BoneSet.Skeleton.CHEST.get());
+        dropSelf(BoneSet.Skeleton.BOOKSHELF.get());
+        dropSelf(BoneSet.Skeleton.DESK_LEFT.get());
+        dropSelf(BoneSet.Skeleton.DESK_RIGHT.get());
+        dropSelf(BoneSet.Skeleton.DRAWER.get());
+        dropSelf(BoneSet.Skeleton.DRESSER.get());
+        dropSelf(BoneSet.Skeleton.LOCKBOX.get());
+        dropSelf(BoneSet.Skeleton.WARDROBE_BOTTOM.get());
+        dropSelf(BoneSet.Skeleton.WARDROBE_TOP.get());
+        dropSelf(BoneSet.Skeleton.PAINTING_WIDE.get());
+        dropSelf(BoneSet.Skeleton.PAINTING_SMALL.get());
+        dropSelf(BoneSet.Skeleton.OVEN.get());
+        dropSelf(BoneSet.Skeleton.DOOR_DOUBLE.get());
+        dropSelf(BoneSet.Skeleton.DOOR_SINGLE.get());
+        dropSelf(BoneSet.Skeleton.BED_SINGLE.get());
+        dropSelf(BoneSet.Skeleton.BED_DOUBLE.get());
+        dropSelf(BoneSet.Skeleton.SHELF.get());
+        dropSelf(BoneSet.Skeleton.SOFA.get());
+        dropSelf(BoneSet.Skeleton.COUNTER.get());
     }
 
     @Override

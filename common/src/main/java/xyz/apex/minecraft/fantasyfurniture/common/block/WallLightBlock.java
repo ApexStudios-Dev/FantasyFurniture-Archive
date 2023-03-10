@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -82,6 +83,20 @@ public class WallLightBlock extends WallTorchBlock
                 level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
                 level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
             }
+        }
+        else if(BoneSet.Wither.WALL_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.WALL_LIGHT.hasBlockState(blockState))
+        {
+            y -= .2D;
+
+            var hStep = .12D;
+            var vStep = .24D;
+
+            x -= hStep * stepX;
+            y += .2D + vStep;
+            z -= hStep * stepZ;
+
+            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x, y, z, 0D, 0D, 0D);
         }
     }
 }

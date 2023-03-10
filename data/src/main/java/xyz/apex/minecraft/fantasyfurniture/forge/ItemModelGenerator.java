@@ -16,6 +16,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -37,6 +38,8 @@ public final class ItemModelGenerator extends ItemModelProvider
         nordic();
         venthyr();
         dunmer();
+        boneWither();
+        boneSkeleton();
     }
 
     private void nordic()
@@ -145,6 +148,76 @@ public final class ItemModelGenerator extends ItemModelProvider
         shelfBlockItem(DunmerSet.SHELF);
         sofaBlockItem(DunmerSet.SOFA);
         sofaBlockItem(DunmerSet.COUNTER);
+    }
+
+    private void boneWither()
+    {
+        blockItem(BoneSet.Wither.WOOL);
+        blockItem(BoneSet.Wither.CARPET);
+        blockItem(BoneSet.Wither.WALL_LIGHT);
+        blockItem(BoneSet.Wither.FLOOR_LIGHT);
+        blockItem(BoneSet.Wither.TABLE_LARGE);
+        blockItem(BoneSet.Wither.TABLE_SMALL);
+        blockItem(BoneSet.Wither.TABLE_WIDE);
+        blockItem(BoneSet.Wither.BENCH);
+        blockItem(BoneSet.Wither.CHAIR);
+        blockItem(BoneSet.Wither.CHANDELIER);
+        blockItem(BoneSet.Wither.CUSHION);
+        blockItem(BoneSet.Wither.STOOL);
+        blockItem(BoneSet.Wither.CHEST);
+        blockItem(BoneSet.Wither.BOOKSHELF);
+        blockItem(BoneSet.Wither.DESK_LEFT);
+        blockItem(BoneSet.Wither.DESK_RIGHT);
+        blockItem(BoneSet.Wither.DRAWER);
+        blockItem(BoneSet.Wither.DRESSER);
+        blockItem(BoneSet.Wither.LOCKBOX);
+        blockItem(BoneSet.Wither.WARDROBE_BOTTOM);
+        blockItem(BoneSet.Wither.WARDROBE_TOP);
+        blockItem(BoneSet.Wither.PAINTING_WIDE);
+        blockItem(BoneSet.Wither.PAINTING_SMALL);
+        blockItem(BoneSet.Wither.OVEN);
+        doorBlockItem(BoneSet.Wither.DOOR_DOUBLE);
+        doorBlockItem(BoneSet.Wither.DOOR_SINGLE);
+        blockItem(BoneSet.Wither.BED_SINGLE);
+        blockItem(BoneSet.Wither.BED_DOUBLE);
+        shelfBlockItem(BoneSet.Wither.SHELF);
+        sofaBlockItem(BoneSet.Wither.SOFA);
+        sofaBlockItem(BoneSet.Wither.COUNTER);
+    }
+
+    private void boneSkeleton()
+    {
+        blockItem(BoneSet.Skeleton.WOOL);
+        blockItem(BoneSet.Skeleton.CARPET);
+        blockItem(BoneSet.Skeleton.WALL_LIGHT);
+        blockItem(BoneSet.Skeleton.FLOOR_LIGHT);
+        blockItem(BoneSet.Skeleton.TABLE_LARGE);
+        blockItem(BoneSet.Skeleton.TABLE_SMALL);
+        blockItem(BoneSet.Skeleton.TABLE_WIDE);
+        blockItem(BoneSet.Skeleton.BENCH);
+        blockItem(BoneSet.Skeleton.CHAIR);
+        blockItem(BoneSet.Skeleton.CHANDELIER);
+        blockItem(BoneSet.Skeleton.CUSHION);
+        blockItem(BoneSet.Skeleton.STOOL);
+        blockItem(BoneSet.Skeleton.CHEST);
+        blockItem(BoneSet.Skeleton.BOOKSHELF);
+        blockItem(BoneSet.Skeleton.DESK_LEFT);
+        blockItem(BoneSet.Skeleton.DESK_RIGHT);
+        blockItem(BoneSet.Skeleton.DRAWER);
+        blockItem(BoneSet.Skeleton.DRESSER);
+        blockItem(BoneSet.Skeleton.LOCKBOX);
+        blockItem(BoneSet.Skeleton.WARDROBE_BOTTOM);
+        blockItem(BoneSet.Skeleton.WARDROBE_TOP);
+        blockItem(BoneSet.Skeleton.PAINTING_WIDE);
+        blockItem(BoneSet.Skeleton.PAINTING_SMALL);
+        blockItem(BoneSet.Skeleton.OVEN);
+        doorBlockItem(BoneSet.Skeleton.DOOR_DOUBLE);
+        doorBlockItem(BoneSet.Skeleton.DOOR_SINGLE);
+        blockItem(BoneSet.Skeleton.BED_SINGLE);
+        blockItem(BoneSet.Skeleton.BED_DOUBLE);
+        shelfBlockItem(BoneSet.Skeleton.SHELF);
+        sofaBlockItem(BoneSet.Skeleton.SOFA);
+        sofaBlockItem(BoneSet.Skeleton.COUNTER);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

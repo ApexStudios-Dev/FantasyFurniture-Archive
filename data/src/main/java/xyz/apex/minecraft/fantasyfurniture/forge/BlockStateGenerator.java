@@ -20,9 +20,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.HorizontalInventoryBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -45,6 +47,8 @@ public final class BlockStateGenerator extends BlockStateProvider
         nordic();
         venthyr();
         dunmer();
+        boneWither();
+        boneSkeleton();
     }
 
     private void nordic()
@@ -153,6 +157,76 @@ public final class BlockStateGenerator extends BlockStateProvider
         shelfBlock(DunmerSet.SHELF);
         sofaBlock(DunmerSet.SOFA);
         counterBlock(DunmerSet.COUNTER);
+    }
+
+    private void boneWither()
+    {
+        simpleBlock(BoneSet.Wither.WOOL);
+        carpet(BoneSet.Wither.CARPET, BoneSet.Wither.WOOL);
+        wallLight(BoneSet.Wither.WALL_LIGHT);
+        facingBlock(BoneSet.Wither.FLOOR_LIGHT, HorizontalInventoryBlock.FACING);
+        facingBlock(BoneSet.Wither.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.CHAIR, HorizontalDirectionalBlock.FACING);
+        simpleExistingBlock(BoneSet.Wither.CHANDELIER);
+        facingBlock(BoneSet.Wither.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        ovenBlock(BoneSet.Wither.OVEN);
+        doorBlock(BoneSet.Wither.DOOR_DOUBLE);
+        doorBlock(BoneSet.Wither.DOOR_SINGLE);
+        facingBlock(BoneSet.Wither.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Wither.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(BoneSet.Wither.SHELF);
+        sofaBlock(BoneSet.Wither.SOFA);
+        counterBlock(BoneSet.Wither.COUNTER);
+    }
+
+    private void boneSkeleton()
+    {
+        simpleBlock(BoneSet.Skeleton.WOOL);
+        carpet(BoneSet.Skeleton.CARPET, BoneSet.Skeleton.WOOL);
+        wallLight(BoneSet.Skeleton.WALL_LIGHT);
+        facingBlock(BoneSet.Skeleton.FLOOR_LIGHT, HorizontalInventoryBlock.FACING);
+        facingBlock(BoneSet.Skeleton.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.CHAIR, HorizontalDirectionalBlock.FACING);
+        simpleExistingBlock(BoneSet.Skeleton.CHANDELIER);
+        facingBlock(BoneSet.Skeleton.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        ovenBlock(BoneSet.Skeleton.OVEN);
+        doorBlock(BoneSet.Skeleton.DOOR_DOUBLE);
+        doorBlock(BoneSet.Skeleton.DOOR_SINGLE);
+        facingBlock(BoneSet.Skeleton.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(BoneSet.Skeleton.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(BoneSet.Skeleton.SHELF);
+        sofaBlock(BoneSet.Skeleton.SOFA);
+        counterBlock(BoneSet.Skeleton.COUNTER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

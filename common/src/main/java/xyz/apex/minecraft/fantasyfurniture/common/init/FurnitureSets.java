@@ -79,6 +79,20 @@ public interface FurnitureSets
     {
         return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
     }
+
+    static BlockBuilder<FloorLightBlock.WithHorizontalFacing, Registrar, Registrar> floorLightFacing(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/floor_light".formatted(furnitureSet), multiBlockType, (multiBlockType1, properties) -> new FloorLightBlock.WithHorizontalFacing(multiBlockType1, properties, flameParticle))
+                .initialProperties(Properties.BLOCK_TORCH)
+                .hitbox(baseShape, AllVoxelShapes::getFloorLightShape)
+        ;
+    }
+
+    static BlockBuilder<FloorLightBlock.WithHorizontalFacing, Registrar, Registrar> floorLightFacing(String furnitureSet, MultiBlockType multiBlockType, Supplier<VoxelShape> baseShape)
+    {
+        return floorLightFacing(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
+    }
     // endregion
 
     // region: Chandelier

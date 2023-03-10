@@ -9,6 +9,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.common.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -28,13 +29,16 @@ public final class BlockTagGenerator extends BlockTagsProvider
         var woodenDoors = tag(BlockTags.WOODEN_DOORS);
         var beds = tag(BlockTags.BEDS);
         var immovable = tag(ApexTags.Blocks.IMMOVABLE);
+        var isBoneSet = tag(BoneSet.BLOCK_TAG);
 
-        nordic(wool, carpets, woodenDoors, beds, immovable);
-        venthyr(wool, carpets, woodenDoors, beds, immovable);
-        dunmer(wool, carpets, woodenDoors, beds, immovable);
+        nordic(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        venthyr(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        dunmer(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        boneWither(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        boneSkeleton(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
     }
 
-    private void nordic(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable)
+    private void nordic(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
     {
         wool.add(NordicSet.WOOL.get());
         carpets.add(NordicSet.CARPET.get());
@@ -65,7 +69,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         );
     }
 
-    private void venthyr(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable)
+    private void venthyr(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
     {
         wool.add(VenthyrSet.WOOL.get());
         carpets.add(VenthyrSet.CARPET.get());
@@ -99,7 +103,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         );
     }
 
-    private void dunmer(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable)
+    private void dunmer(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
     {
         wool.add(DunmerSet.WOOL.get());
         carpets.add(DunmerSet.CARPET.get());
@@ -127,6 +131,70 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 DunmerSet.PAINTING_WIDE.get(), DunmerSet.PAINTING_SMALL.get(), DunmerSet.OVEN.get(), NordicSet.DOOR_DOUBLE.get(),
                 DunmerSet.DOOR_SINGLE.get(), DunmerSet.BED_SINGLE.get(), DunmerSet.BED_DOUBLE.get(),
                 DunmerSet.SHELF.get(), DunmerSet.SOFA.get(), DunmerSet.COUNTER.get()
+        );
+    }
+
+    private void boneWither(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
+    {
+        wool.add(BoneSet.Wither.WOOL.get());
+        carpets.add(BoneSet.Wither.CARPET.get());
+        woodenDoors.add(BoneSet.Wither.DOOR_DOUBLE.get(), BoneSet.Wither.DOOR_SINGLE.get());
+        beds.add(BoneSet.Wither.BED_SINGLE.get(), BoneSet.Wither.BED_DOUBLE.get());
+        isBoneSet.addTag(BoneSet.Wither.BLOCK_TAG);
+
+        immovable.add(
+                BoneSet.Wither.FLOOR_LIGHT.get(), BoneSet.Wither.TABLE_LARGE.get(), BoneSet.Wither.TABLE_WIDE.get(),
+                BoneSet.Wither.BENCH.get(), BoneSet.Wither.CHAIR.get(), BoneSet.Wither.CHEST.get(),
+                BoneSet.Wither.BOOKSHELF.get(), BoneSet.Wither.DESK_LEFT.get(), BoneSet.Wither.DESK_RIGHT.get(),
+                BoneSet.Wither.DRAWER.get(), BoneSet.Wither.DRESSER.get(), BoneSet.Wither.WARDROBE_BOTTOM.get(),
+                BoneSet.Wither.WARDROBE_TOP.get(), BoneSet.Wither.PAINTING_WIDE.get(), BoneSet.Wither.DOOR_DOUBLE.get(),
+                BoneSet.Wither.DOOR_SINGLE.get(), BoneSet.Wither.BED_SINGLE.get(), BoneSet.Wither.BED_DOUBLE.get(),
+                BoneSet.Wither.SHELF.get(), BoneSet.Wither.SOFA.get(), BoneSet.Wither.COUNTER.get()
+        );
+
+        tag(BoneSet.Wither.BLOCK_TAG).add(
+                BoneSet.Wither.WOOL.get(), BoneSet.Wither.CARPET.get(), BoneSet.Wither.WALL_LIGHT.get(),
+                BoneSet.Wither.FLOOR_LIGHT.get(), BoneSet.Wither.TABLE_LARGE.get(), BoneSet.Wither.TABLE_WIDE.get(),
+                BoneSet.Wither.TABLE_SMALL.get(), BoneSet.Wither.BENCH.get(), BoneSet.Wither.CHAIR.get(),
+                BoneSet.Wither.CHANDELIER.get(), BoneSet.Wither.CUSHION.get(), BoneSet.Wither.STOOL.get(),
+                BoneSet.Wither.CHEST.get(), BoneSet.Wither.BOOKSHELF.get(), BoneSet.Wither.DESK_LEFT.get(),
+                BoneSet.Wither.DESK_RIGHT.get(), BoneSet.Wither.DRAWER.get(), BoneSet.Wither.DRESSER.get(),
+                BoneSet.Wither.LOCKBOX.get(), BoneSet.Wither.WARDROBE_BOTTOM.get(), BoneSet.Wither.WARDROBE_TOP.get(),
+                BoneSet.Wither.PAINTING_WIDE.get(), BoneSet.Wither.PAINTING_SMALL.get(), BoneSet.Wither.OVEN.get(), BoneSet.Wither.DOOR_DOUBLE.get(),
+                BoneSet.Wither.DOOR_SINGLE.get(), BoneSet.Wither.BED_SINGLE.get(), BoneSet.Wither.BED_DOUBLE.get(),
+                BoneSet.Wither.SHELF.get(), BoneSet.Wither.SOFA.get(), BoneSet.Wither.COUNTER.get()
+        );
+    }
+
+    private void boneSkeleton(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
+    {
+        wool.add(BoneSet.Skeleton.WOOL.get());
+        carpets.add(BoneSet.Skeleton.CARPET.get());
+        woodenDoors.add(BoneSet.Skeleton.DOOR_DOUBLE.get(), BoneSet.Skeleton.DOOR_SINGLE.get());
+        beds.add(BoneSet.Skeleton.BED_SINGLE.get(), BoneSet.Skeleton.BED_DOUBLE.get());
+        isBoneSet.addTag(BoneSet.Skeleton.BLOCK_TAG);
+
+        immovable.add(
+                BoneSet.Skeleton.FLOOR_LIGHT.get(), BoneSet.Skeleton.TABLE_LARGE.get(), BoneSet.Skeleton.TABLE_WIDE.get(),
+                BoneSet.Skeleton.BENCH.get(), BoneSet.Skeleton.CHAIR.get(), BoneSet.Skeleton.CHEST.get(),
+                BoneSet.Skeleton.BOOKSHELF.get(), BoneSet.Skeleton.DESK_LEFT.get(), BoneSet.Skeleton.DESK_RIGHT.get(),
+                BoneSet.Skeleton.DRAWER.get(), BoneSet.Skeleton.DRESSER.get(), BoneSet.Skeleton.WARDROBE_BOTTOM.get(),
+                BoneSet.Skeleton.WARDROBE_TOP.get(), BoneSet.Skeleton.PAINTING_WIDE.get(), BoneSet.Skeleton.DOOR_DOUBLE.get(),
+                BoneSet.Skeleton.DOOR_SINGLE.get(), BoneSet.Skeleton.BED_SINGLE.get(), BoneSet.Skeleton.BED_DOUBLE.get(),
+                BoneSet.Skeleton.SHELF.get(), BoneSet.Skeleton.SOFA.get(), BoneSet.Skeleton.COUNTER.get()
+        );
+
+        tag(BoneSet.Skeleton.BLOCK_TAG).add(
+                BoneSet.Skeleton.WOOL.get(), BoneSet.Skeleton.CARPET.get(), BoneSet.Skeleton.WALL_LIGHT.get(),
+                BoneSet.Skeleton.FLOOR_LIGHT.get(), BoneSet.Skeleton.TABLE_LARGE.get(), BoneSet.Skeleton.TABLE_WIDE.get(),
+                BoneSet.Skeleton.TABLE_SMALL.get(), BoneSet.Skeleton.BENCH.get(), BoneSet.Skeleton.CHAIR.get(),
+                BoneSet.Skeleton.CHANDELIER.get(), BoneSet.Skeleton.CUSHION.get(), BoneSet.Skeleton.STOOL.get(),
+                BoneSet.Skeleton.CHEST.get(), BoneSet.Skeleton.BOOKSHELF.get(), BoneSet.Skeleton.DESK_LEFT.get(),
+                BoneSet.Skeleton.DESK_RIGHT.get(), BoneSet.Skeleton.DRAWER.get(), BoneSet.Skeleton.DRESSER.get(),
+                BoneSet.Skeleton.LOCKBOX.get(), BoneSet.Skeleton.WARDROBE_BOTTOM.get(), BoneSet.Skeleton.WARDROBE_TOP.get(),
+                BoneSet.Skeleton.PAINTING_WIDE.get(), BoneSet.Skeleton.PAINTING_SMALL.get(), BoneSet.Skeleton.OVEN.get(), BoneSet.Skeleton.DOOR_DOUBLE.get(),
+                BoneSet.Skeleton.DOOR_SINGLE.get(), BoneSet.Skeleton.BED_SINGLE.get(), BoneSet.Skeleton.BED_DOUBLE.get(),
+                BoneSet.Skeleton.SHELF.get(), BoneSet.Skeleton.SOFA.get(), BoneSet.Skeleton.COUNTER.get()
         );
     }
 }

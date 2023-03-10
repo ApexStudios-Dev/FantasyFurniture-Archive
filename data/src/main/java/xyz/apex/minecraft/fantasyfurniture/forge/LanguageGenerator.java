@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -26,9 +27,13 @@ public final class LanguageGenerator extends LanguageProvider
         add(FantasyFurniture.FURNITURE_STATION_RECIPE.getRegistryName().toLanguageKey("category.rei"), "Furniture Station");
         add(FantasyFurniture.FURNITURE_STATION_RECIPE.getRegistryName().toLanguageKey("emi.category"), "Furniture Station");
 
+        addCreativeModeTab(BoneSet.BASE_NAME, "Bone");
+
         nordic();
         venthyr();
         dunmer();
+        boneWither();
+        boneSkeleton();
     }
 
     private void nordic()
@@ -140,6 +145,78 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(DunmerSet.SOFA, "Dunmer Sofa");
         addBlock(DunmerSet.COUNTER, "Dunmer Counter");
         addCreativeModeTab(DunmerSet.NAME, "Dunmer");
+    }
+
+    private void boneWither()
+    {
+        addBlock(BoneSet.Wither.WOOL, "Bone Wither Wool");
+        addBlock(BoneSet.Wither.CARPET, "Bone Wither Carpet");
+        addBlock(BoneSet.Wither.WALL_LIGHT, "Bone Wither Wall Light");
+        addBlock(BoneSet.Wither.FLOOR_LIGHT, "Bone Wither Floor Light");
+        addBlock(BoneSet.Wither.TABLE_LARGE, "Bone Wither Table Large");
+        addBlock(BoneSet.Wither.TABLE_SMALL, "Bone Wither Table Small");
+        addBlock(BoneSet.Wither.TABLE_WIDE, "Bone Wither Table Wide");
+        addBlock(BoneSet.Wither.BENCH, "Bone Wither Bench");
+        addBlock(BoneSet.Wither.CHAIR, "Bone Wither Chair");
+        addBlock(BoneSet.Wither.CHANDELIER, "Bone Wither Chandelier");
+        addBlock(BoneSet.Wither.CUSHION, "Bone Wither Cushion");
+        addBlock(BoneSet.Wither.STOOL, "Bone Wither Stool");
+        addBlock(BoneSet.Wither.CHEST, "Bone Wither Chest");
+        addBlock(BoneSet.Wither.BOOKSHELF, "Bone Wither Bookshelf");
+        addBlock(BoneSet.Wither.DESK_LEFT, "Bone Wither Desk Left");
+        addBlock(BoneSet.Wither.DESK_RIGHT, "Bone Wither Desk Right");
+        addBlock(BoneSet.Wither.DRAWER, "Bone Wither Drawer");
+        addBlock(BoneSet.Wither.DRESSER, "Bone Wither Dresser");
+        addBlock(BoneSet.Wither.LOCKBOX, "Bone Wither Lockbox");
+        addBlock(BoneSet.Wither.WARDROBE_BOTTOM, "Bone Wither Wardrobe Bottom");
+        addBlock(BoneSet.Wither.WARDROBE_TOP, "Bone Wither Wardrobe Top");
+        addBlock(BoneSet.Wither.PAINTING_WIDE, "Bone Wither Painting Wide");
+        addBlock(BoneSet.Wither.PAINTING_SMALL, "Bone Wither Painting Small");
+        addBlock(BoneSet.Wither.OVEN, "Bone Wither Oven");
+        addBlock(BoneSet.Wither.DOOR_DOUBLE, "Bone Wither Door Double");
+        addBlock(BoneSet.Wither.DOOR_SINGLE, "Bone Wither Door Single");
+        addBlock(BoneSet.Wither.BED_SINGLE, "Bone Wither Bed Single");
+        addBlock(BoneSet.Wither.BED_DOUBLE, "Bone Wither Bed Double");
+        addBlock(BoneSet.Wither.SHELF, "Bone Wither Shelf");
+        addBlock(BoneSet.Wither.SOFA, "Bone Wither Sofa");
+        addBlock(BoneSet.Wither.COUNTER, "Bone Wither Counter");
+        addCreativeModeTab(BoneSet.Wither.NAME, "Bone Wither");
+    }
+
+    private void boneSkeleton()
+    {
+        addBlock(BoneSet.Skeleton.WOOL, "Bone Skeleton Wool");
+        addBlock(BoneSet.Skeleton.CARPET, "Bone Skeleton Carpet");
+        addBlock(BoneSet.Skeleton.WALL_LIGHT, "Bone Skeleton Wall Light");
+        addBlock(BoneSet.Skeleton.FLOOR_LIGHT, "Bone Skeleton Floor Light");
+        addBlock(BoneSet.Skeleton.TABLE_LARGE, "Bone Skeleton Table Large");
+        addBlock(BoneSet.Skeleton.TABLE_SMALL, "Bone Skeleton Table Small");
+        addBlock(BoneSet.Skeleton.TABLE_WIDE, "Bone Skeleton Table Wide");
+        addBlock(BoneSet.Skeleton.BENCH, "Bone Skeleton Bench");
+        addBlock(BoneSet.Skeleton.CHAIR, "Bone Skeleton Chair");
+        addBlock(BoneSet.Skeleton.CHANDELIER, "Bone Skeleton Chandelier");
+        addBlock(BoneSet.Skeleton.CUSHION, "Bone Skeleton Cushion");
+        addBlock(BoneSet.Skeleton.STOOL, "Bone Skeleton Stool");
+        addBlock(BoneSet.Skeleton.CHEST, "Bone Skeleton Chest");
+        addBlock(BoneSet.Skeleton.BOOKSHELF, "Bone Skeleton Bookshelf");
+        addBlock(BoneSet.Skeleton.DESK_LEFT, "Bone Skeleton Desk Left");
+        addBlock(BoneSet.Skeleton.DESK_RIGHT, "Bone Skeleton Desk Right");
+        addBlock(BoneSet.Skeleton.DRAWER, "Bone Skeleton Drawer");
+        addBlock(BoneSet.Skeleton.DRESSER, "Bone Skeleton Dresser");
+        addBlock(BoneSet.Skeleton.LOCKBOX, "Bone Skeleton Lockbox");
+        addBlock(BoneSet.Skeleton.WARDROBE_BOTTOM, "Bone Skeleton Wardrobe Bottom");
+        addBlock(BoneSet.Skeleton.WARDROBE_TOP, "Bone Skeleton Wardrobe Top");
+        addBlock(BoneSet.Skeleton.PAINTING_WIDE, "Bone Skeleton Painting Wide");
+        addBlock(BoneSet.Skeleton.PAINTING_SMALL, "Bone Skeleton Painting Small");
+        addBlock(BoneSet.Skeleton.OVEN, "Bone Skeleton Oven");
+        addBlock(BoneSet.Skeleton.DOOR_DOUBLE, "Bone Skeleton Door Double");
+        addBlock(BoneSet.Skeleton.DOOR_SINGLE, "Bone Skeleton Door Single");
+        addBlock(BoneSet.Skeleton.BED_SINGLE, "Bone Skeleton Bed Single");
+        addBlock(BoneSet.Skeleton.BED_DOUBLE, "Bone Skeleton Bed Double");
+        addBlock(BoneSet.Skeleton.SHELF, "Bone Skeleton Shelf");
+        addBlock(BoneSet.Skeleton.SOFA, "Bone Skeleton Sofa");
+        addBlock(BoneSet.Skeleton.COUNTER, "Bone Skeleton Counter");
+        addCreativeModeTab(BoneSet.Skeleton.NAME, "Bone Skeleton");
     }
 
     private void addCreativeModeTab(String key, String name)

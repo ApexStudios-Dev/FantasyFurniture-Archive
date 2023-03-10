@@ -9,9 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
 public interface JeiFantasyFurniturePlugin extends IModPlugin
@@ -57,6 +55,9 @@ public interface JeiFantasyFurniturePlugin extends IModPlugin
         registration.addRecipeCatalyst(FantasyFurniture.FURNITURE_STATION_BLOCK.asStack(), JeiFurnitureStationRecipeCategory.RECIPE_TYPE);
         registration.addRecipeCatalyst(NordicSet.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
         registration.addRecipeCatalyst(VenthyrSet.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
+        registration.addRecipeCatalyst(DunmerSet.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
+        registration.addRecipeCatalyst(BoneSet.Wither.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
+        registration.addRecipeCatalyst(BoneSet.Skeleton.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
     }
 
     @Override

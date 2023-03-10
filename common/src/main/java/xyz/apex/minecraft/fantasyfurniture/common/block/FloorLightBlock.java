@@ -3,6 +3,7 @@ package xyz.apex.minecraft.fantasyfurniture.common.block;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -10,14 +11,17 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.TorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
@@ -99,6 +103,23 @@ public class FloorLightBlock extends TorchBlock implements MultiBlock
             level.addParticle(ParticleTypes.SMOKE, x, y + .1D, z, 0D, 0D, 0D);
             level.addParticle(flameParticle, x, y + .1D, z, 0D, 0D, 0D);
         }
+        else if(BoneSet.Wither.FLOOR_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.FLOOR_LIGHT.hasBlockState(blockState))
+        {
+            var offsetH = .25D;
+
+            var facing = blockState.getOptionalValue(WithHorizontalFacing.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
+            var stepX = facing.getStepX();
+            var stepZ = facing.getStepZ();
+
+            level.addParticle(ParticleTypes.SMOKE, x, y + .1D, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x, y + .1D, z, 0D, 0D, 0D);
+
+            level.addParticle(ParticleTypes.SMOKE, x + (stepX * offsetH), y + .05D, z + (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(flameParticle, x + (stepX * offsetH), y + .05D, z + (stepZ * offsetH), 0D, 0D, 0D);
+
+            level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(flameParticle, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
+        }
     }
 
     @Override
@@ -151,5 +172,31 @@ public class FloorLightBlock extends TorchBlock implements MultiBlock
     public RenderShape getRenderShape(BlockState blockState)
     {
         return multiBlockType.isOrigin(blockState) ? RenderShape.MODEL : RenderShape.INVISIBLE;
+    }
+
+    public static class WithHorizontalFacing extends FloorLightBlock
+    {
+        public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
+        public WithHorizontalFacing(MultiBlockType multiBlockType, Properties properties, Supplier<ParticleOptions> flameParticleOptions)
+        {
+            super(multiBlockType, properties, flameParticleOptions);
+
+            registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH));
+        }
+
+        @Nullable
+        @Override
+        public BlockState getStateForPlacement(BlockPlaceContext ctx)
+        {
+            var defaultBlockState = defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+            return multiBlockType.getStateForPlacement(this, defaultBlockState, ctx);
+        }
+
+        @Override
+        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+        {
+            super.createBlockStateDefinition(builder.add(FACING));
+        }
     }
 }

@@ -25,10 +25,7 @@ import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public class OvenBlock extends AbstractFurnaceBlock
 {
@@ -126,6 +123,34 @@ public class OvenBlock extends AbstractFurnaceBlock
             if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+        }
+        else if(BoneSet.Wither.OVEN.hasBlockState(blockState) || BoneSet.Skeleton.OVEN.hasBlockState(blockState))
+        {
+            var x = (double) pos.getX() + .5D;
+            var y = (double) pos.getY() + .25D;
+            var z = (double) pos.getZ() + .5D;
+
+            if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
+
+            if(random.nextInt(5) == 0)
+            {
+                var xOff = random.triangle(.2D, .45D);
+                var yOff = random.triangle(.2D, .45D);
+                var zOff = random.triangle(.2D, .45D);
+
+                if(random.nextBoolean()) level.addParticle(ParticleTypes.SCULK_SOUL, x + xOff, y + yOff, z + zOff, 0D, 0D, 0D);
+                else level.addParticle(ParticleTypes.SCULK_SOUL, x - xOff, y + yOff, z - zOff, 0D, 0D, 0D);
+            }
+
+            for(var i = 0; i < random.nextInt(4) + 1; i++)
+            {
+                var xOff = random.triangle(.2D, .45D);
+                var yOff = random.triangle(.2D, .45D);
+                var zOff = random.triangle(.2D, .45D);
+
+                if(random.nextBoolean()) level.addParticle(ParticleTypes.MYCELIUM, x - xOff, y + yOff, z - zOff, 0D, 0D, 0D);
+                else level.addParticle(ParticleTypes.MYCELIUM, x + xOff, y + yOff, z + zOff, 0D, 0D, 0D);
+            }
         }
     }
 
