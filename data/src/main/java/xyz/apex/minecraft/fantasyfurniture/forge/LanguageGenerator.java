@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -27,6 +28,7 @@ public final class LanguageGenerator extends LanguageProvider
 
         nordic();
         venthyr();
+        dunmer();
     }
 
     private void nordic()
@@ -102,6 +104,42 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(VenthyrSet.SOFA, "Venthyr Sofa");
         addBlock(VenthyrSet.COUNTER, "Venthyr Counter");
         addCreativeModeTab(VenthyrSet.NAME, "Venthyr");
+    }
+
+    private void dunmer()
+    {
+        addBlock(DunmerSet.WOOL, "Dunmer Wool");
+        addBlock(DunmerSet.CARPET, "Dunmer Carpet");
+        addBlock(DunmerSet.WALL_LIGHT, "Dunmer Wall Light");
+        addBlock(DunmerSet.FLOOR_LIGHT, "Dunmer Floor Light");
+        addBlock(DunmerSet.TABLE_LARGE, "Dunmer Table Large");
+        addBlock(DunmerSet.TABLE_SMALL, "Dunmer Table Small");
+        addBlock(DunmerSet.TABLE_WIDE, "Dunmer Table Wide");
+        addBlock(DunmerSet.BENCH, "Dunmer Bench");
+        addBlock(DunmerSet.CHAIR, "Dunmer Chair");
+        addBlock(DunmerSet.CHANDELIER, "Dunmer Chandelier");
+        addBlock(DunmerSet.CUSHION, "Dunmer Cushion");
+        addBlock(DunmerSet.STOOL, "Dunmer Stool");
+        addBlock(DunmerSet.CHEST, "Dunmer Chest");
+        addBlock(DunmerSet.BOOKSHELF, "Dunmer Bookshelf");
+        addBlock(DunmerSet.DESK_LEFT, "Dunmer Desk Left");
+        addBlock(DunmerSet.DESK_RIGHT, "Dunmer Desk Right");
+        addBlock(DunmerSet.DRAWER, "Dunmer Drawer");
+        addBlock(DunmerSet.DRESSER, "Dunmer Dresser");
+        addBlock(DunmerSet.LOCKBOX, "Dunmer Lockbox");
+        addBlock(DunmerSet.WARDROBE_BOTTOM, "Dunmer Wardrobe Bottom");
+        addBlock(DunmerSet.WARDROBE_TOP, "Dunmer Wardrobe Top");
+        addBlock(DunmerSet.PAINTING_WIDE, "Dunmer Painting Wide");
+        addBlock(DunmerSet.PAINTING_SMALL, "Dunmer Painting Small");
+        addBlock(DunmerSet.OVEN, "Dunmer Oven");
+        addBlock(DunmerSet.DOOR_DOUBLE, "Dunmer Door Double");
+        addBlock(DunmerSet.DOOR_SINGLE, "Dunmer Door Single");
+        addBlock(DunmerSet.BED_SINGLE, "Dunmer Bed Single");
+        addBlock(DunmerSet.BED_DOUBLE, "Dunmer Bed Double");
+        addBlock(DunmerSet.SHELF, "Dunmer Shelf");
+        addBlock(DunmerSet.SOFA, "Dunmer Sofa");
+        addBlock(DunmerSet.COUNTER, "Dunmer Counter");
+        addCreativeModeTab(DunmerSet.NAME, "Dunmer");
     }
 
     private void addCreativeModeTab(String key, String name)

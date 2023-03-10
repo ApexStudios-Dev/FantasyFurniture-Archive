@@ -11,6 +11,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -36,59 +37,60 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
     {
         convertBasic("furniture_station");
 
-        convertFurnitureSet(NordicSet.NAME);
-        convertVenthyrSet();
+        nordic();
+        venthyr();
+        dunmer();
     }
 
-    private void convertFurnitureSet(String furnitureSet)
+    private void nordic()
     {
-        convertFurniture(furnitureSet, "wall_light").renderType(renderTypeCutout);
-        convertFurniture(furnitureSet, "floor_light");
-        convertFurniture(furnitureSet, "table_small");
-        convertFurniture(furnitureSet, "table_large");
-        convertFurniture(furnitureSet, "table_wide").renderType(renderTypeCutout);
-        convertFurniture(furnitureSet, "bench");
-        convertFurniture(furnitureSet, "chair").renderType(renderTypeCutout);
-        convertFurniture(furnitureSet, "chandelier");
-        convertFurniture(furnitureSet, "cushion");
-        convertFurniture(furnitureSet, "stool");
-        convertFurniture(furnitureSet, "chest");
-        convertFurniture(furnitureSet, "bookshelf");
-        convertDesk(furnitureSet, "left");
-        convertDesk(furnitureSet, "right");
-        convertFurniture(furnitureSet, "drawer");
-        convertFurniture(furnitureSet, "dresser");
-        convertFurniture(furnitureSet, "lockbox");
-        convertWardrobe(furnitureSet, "bottom");
-        convertWardrobe(furnitureSet, "top").renderType(renderTypeCutout);
-        convertFurniture(furnitureSet, "painting_wide");
-        convertFurniture(furnitureSet, "painting_small");
-        convertFurniture(furnitureSet, "oven").renderType(renderTypeCutout);
-        convertFurnitureEx(furnitureSet, "oven_lit", "oven").renderType(renderTypeCutout);
-        convertDoor(furnitureSet, "double", true);
-        convertDoor(furnitureSet, "double", false);
-        convertDoor(furnitureSet, "single", true);
-        convertDoor(furnitureSet, "single", false);
-        convertFurniture(furnitureSet, "bed_single");
-        convertFurniture(furnitureSet, "bed_double");
-        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(furnitureSet, shelfType));
-        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(furnitureSet, sofaType));
-        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(furnitureSet, counterType));
+        convertFurniture(NordicSet.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(NordicSet.NAME, "floor_light");
+        convertFurniture(NordicSet.NAME, "table_small");
+        convertFurniture(NordicSet.NAME, "table_large");
+        convertFurniture(NordicSet.NAME, "table_wide").renderType(renderTypeCutout);
+        convertFurniture(NordicSet.NAME, "bench");
+        convertFurniture(NordicSet.NAME, "chair").renderType(renderTypeCutout);
+        convertFurniture(NordicSet.NAME, "chandelier");
+        convertFurniture(NordicSet.NAME, "cushion");
+        convertFurniture(NordicSet.NAME, "stool");
+        convertFurniture(NordicSet.NAME, "chest");
+        convertFurniture(NordicSet.NAME, "bookshelf");
+        convertDesk(NordicSet.NAME, "left").renderType(renderTypeCutout);
+        convertDesk(NordicSet.NAME, "right").renderType(renderTypeCutout);
+        convertFurniture(NordicSet.NAME, "drawer");
+        convertFurniture(NordicSet.NAME, "dresser");
+        convertFurniture(NordicSet.NAME, "lockbox");
+        convertWardrobe(NordicSet.NAME, "bottom");
+        convertWardrobe(NordicSet.NAME, "top").renderType(renderTypeCutout);
+        convertFurniture(NordicSet.NAME, "painting_wide");
+        convertFurniture(NordicSet.NAME, "painting_small");
+        convertFurniture(NordicSet.NAME, "oven").renderType(renderTypeCutout);
+        convertFurnitureEx(NordicSet.NAME, "oven_lit", "oven").renderType(renderTypeCutout);
+        convertDoor(NordicSet.NAME, "double", true);
+        convertDoor(NordicSet.NAME, "double", false);
+        convertDoor(NordicSet.NAME, "single", true);
+        convertDoor(NordicSet.NAME, "single", false);
+        convertFurniture(NordicSet.NAME, "bed_single");
+        convertFurniture(NordicSet.NAME, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(NordicSet.NAME, shelfType).renderType(renderTypeCutout));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(NordicSet.NAME, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(NordicSet.NAME, counterType));
     }
 
-    private void convertVenthyrSet()
+    private void venthyr()
     {
-        convertFurniture(VenthyrSet.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "wall_light");
         convertFurniture(VenthyrSet.NAME, "floor_light");
         convertFurniture(VenthyrSet.NAME, "table_small");
-        convertFurniture(VenthyrSet.NAME, "table_small_fancy");
+        convertFurniture(VenthyrSet.NAME, "table_small_fancy").renderType(renderTypeCutout);
         convertFurniture(VenthyrSet.NAME, "table_large");
-        convertFurniture(VenthyrSet.NAME, "table_large_fancy");
-        convertFurniture(VenthyrSet.NAME, "table_wide").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "table_large_fancy").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "table_wide");
         convertFurniture(VenthyrSet.NAME, "table_wide_fancy").renderType(renderTypeCutout);
         convertFurniture(VenthyrSet.NAME, "bench");
         convertFurniture(VenthyrSet.NAME, "chair").renderType(renderTypeCutout);
-        convertFurniture(VenthyrSet.NAME, "chandelier");
+        convertFurniture(VenthyrSet.NAME, "chandelier").renderType(renderTypeCutout);
         convertFurniture(VenthyrSet.NAME, "cushion");
         convertFurniture(VenthyrSet.NAME, "stool");
         convertFurniture(VenthyrSet.NAME, "chest");
@@ -99,7 +101,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertFurniture(VenthyrSet.NAME, "dresser");
         convertFurniture(VenthyrSet.NAME, "lockbox");
         convertWardrobe(VenthyrSet.NAME, "bottom");
-        convertFurniture(VenthyrSet.NAME, "wardrobe_top").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "wardrobe_top");
         convertFurniture(VenthyrSet.NAME, "painting_wide");
         convertFurniture(VenthyrSet.NAME, "painting_small");
         convertFurniture(VenthyrSet.NAME, "oven").renderType(renderTypeCutout);
@@ -115,13 +117,49 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(VenthyrSet.NAME, counterType));
     }
 
+    private void dunmer()
+    {
+        convertFurniture(DunmerSet.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(DunmerSet.NAME, "floor_light").renderType(renderTypeCutout);
+        convertFurniture(DunmerSet.NAME, "table_small");
+        convertFurniture(DunmerSet.NAME, "table_large");
+        convertFurniture(DunmerSet.NAME, "table_wide");
+        convertFurniture(DunmerSet.NAME, "bench");
+        convertFurniture(DunmerSet.NAME, "chair");
+        convertFurniture(DunmerSet.NAME, "chandelier");
+        convertFurniture(DunmerSet.NAME, "cushion");
+        convertFurniture(DunmerSet.NAME, "stool");
+        convertFurniture(DunmerSet.NAME, "chest");
+        convertFurniture(DunmerSet.NAME, "bookshelf");
+        convertDesk(DunmerSet.NAME, "left");
+        convertDesk(DunmerSet.NAME, "right");
+        convertFurniture(DunmerSet.NAME, "drawer");
+        convertFurniture(DunmerSet.NAME, "dresser");
+        convertFurniture(DunmerSet.NAME, "lockbox").renderType(renderTypeCutout);
+        convertWardrobe(DunmerSet.NAME, "bottom").renderType(renderTypeCutout);
+        convertWardrobe(DunmerSet.NAME, "top");
+        convertFurniture(DunmerSet.NAME, "painting_wide");
+        convertFurniture(DunmerSet.NAME, "painting_small");
+        convertFurniture(DunmerSet.NAME, "oven");
+        convertFurnitureEx(DunmerSet.NAME, "oven_lit", "oven").renderType(renderTypeCutout).texture("oven_fire", "block/%s/oven_fire".formatted(DunmerSet.NAME));
+        convertDoor(DunmerSet.NAME, "double", true);
+        convertDoor(DunmerSet.NAME, "double", false);
+        convertDoor(DunmerSet.NAME, "single", true);
+        convertDoor(DunmerSet.NAME, "single", false);
+        convertFurniture(DunmerSet.NAME, "bed_single");
+        convertFurniture(DunmerSet.NAME, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(DunmerSet.NAME, shelfType));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(DunmerSet.NAME, sofaType).renderType(renderTypeCutout));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(DunmerSet.NAME, counterType).renderType(renderTypeCutout));
+    }
+
     private BlockModelBuilder convertDesk(String furnitureSet, String type)
     {
         return convertFurnitureEx(
                 furnitureSet,
                 "desk_%s".formatted(type),
                 "desk"
-        ).renderType(renderTypeCutout);
+        );
     }
 
     private BlockModelBuilder convertWardrobe(String furnitureSet, String type)
@@ -148,7 +186,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
                 furnitureSet,
                 "shelf_%s".formatted(shelfType.getSerializedName()),
                 "shelf"
-        ).renderType(renderTypeCutout);
+        );
     }
 
     private BlockModelBuilder convertSofa(String furnitureSet, SofaType sofaType)

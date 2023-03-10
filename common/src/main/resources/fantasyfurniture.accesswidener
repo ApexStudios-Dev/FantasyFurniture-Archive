@@ -4,3 +4,5 @@ extendable method net/minecraft/world/entity/Entity positionRider (Lnet/minecraf
 accessible field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
 mutable field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
+
+extendable method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity isLit ()Z

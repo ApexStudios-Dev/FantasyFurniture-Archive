@@ -1,6 +1,5 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -56,7 +55,6 @@ public interface FurnitureSets
         return FantasyFurniture.REGISTRAR
                 .block("%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(properties, flameParticle))
                 .initialProperties(Properties.BLOCK_TORCH)
-                .renderType(() -> RenderType::cutout)
                 .hitbox(baseShape, AllVoxelShapes::getWallLightShape)
         ;
     }
@@ -138,7 +136,6 @@ public interface FurnitureSets
     {
         return table(furnitureSet, "wide", AllMultiBlockTypes.MB_1x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
-                .renderType(() -> RenderType::cutout)
         ;
     }
 
@@ -146,8 +143,7 @@ public interface FurnitureSets
     {
         return table(furnitureSet, "wide_fancy", AllMultiBlockTypes.MB_1x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
-                .renderType(() -> RenderType::cutout)
-                ;
+        ;
     }
 
     static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
@@ -201,7 +197,6 @@ public interface FurnitureSets
     {
         return seat(furnitureSet, "chair", AllMultiBlockTypes.MB_1x2x1_FACING, SimpleSeatBlock.WithMultiBlock.AtOriginOnly::new)
                 .hitbox(baseShape, AllVoxelShapes::getChairShape)
-                .renderType(() -> RenderType::cutout)
         ;
     }
 
@@ -245,7 +240,6 @@ public interface FurnitureSets
                 .multiBlock("%s/desk_%s".formatted(furnitureSet, type), AllMultiBlockTypes.MB_1x1x2_FACING, DeskBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getDeskShape)
-                .renderType(() -> RenderType::cutout)
         ;
     }
 
@@ -295,7 +289,6 @@ public interface FurnitureSets
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getWardrobeTopShape)
                 .noOcclusion()
-                .renderType(() -> RenderType::cutout)
         ;
     }
 
@@ -327,15 +320,25 @@ public interface FurnitureSets
         ;
     }
 
+    // region: Oven
     static BlockBuilder<OvenBlock, Registrar, Registrar> oven(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
                 .block("%s/oven".formatted(furnitureSet), OvenBlock::new)
                 .copyFrom(() -> Blocks.SMOKER)
                 .hitbox(baseShape, AllVoxelShapes::getOvenShape)
-                .renderType(() -> RenderType::cutout)
         ;
     }
+
+    static BlockBuilder<OvenBlock.AsMultiBlock, Registrar, Registrar> ovenMultiBlock(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return FantasyFurniture.REGISTRAR
+                .multiBlock("%s/oven".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, OvenBlock.AsMultiBlock::new)
+                .copyFrom(() -> Blocks.SMOKER)
+                .hitbox(baseShape, AllVoxelShapes::getOvenShape)
+        ;
+    }
+    // endregion
 
     // region: Doors
     private static BlockBuilder<DoorMultiBlock, Registrar, Registrar> door(String furnitureSet, String doorType, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
@@ -389,7 +392,6 @@ public interface FurnitureSets
                 .block("%s/shelf".formatted(furnitureSet), ShelfBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, (shape, block, blockState) -> shapeGetter.apply(block, blockState))
-                .renderType(() -> RenderType::cutout)
         ;
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
@@ -31,6 +32,7 @@ public final class RecipeGenerator extends RecipeProvider
 
         nordic(consumer);
         venthyr(consumer);
+        dunmer(consumer);
     }
 
     private void nordic(Consumer<FinishedRecipe> consumer)
@@ -106,6 +108,41 @@ public final class RecipeGenerator extends RecipeProvider
         venthyrStation(consumer, VenthyrSet.COUNTER);
     }
 
+    private void dunmer(Consumer<FinishedRecipe> consumer)
+    {
+        dunmerStation(consumer, DunmerSet.WOOL);
+        dunmerStation(consumer, DunmerSet.CARPET);
+        dunmerStation(consumer, DunmerSet.WALL_LIGHT);
+        dunmerStation(consumer, DunmerSet.FLOOR_LIGHT);
+        dunmerStation(consumer, DunmerSet.TABLE_LARGE);
+        dunmerStation(consumer, DunmerSet.TABLE_WIDE);
+        dunmerStation(consumer, DunmerSet.TABLE_SMALL);
+        dunmerStation(consumer, DunmerSet.BENCH);
+        dunmerStation(consumer, DunmerSet.CHAIR);
+        dunmerStation(consumer, DunmerSet.CHANDELIER);
+        dunmerStation(consumer, DunmerSet.CUSHION);
+        dunmerStation(consumer, DunmerSet.STOOL);
+        dunmerStation(consumer, DunmerSet.CHEST);
+        dunmerStation(consumer, DunmerSet.BOOKSHELF);
+        dunmerStation(consumer, DunmerSet.DESK_LEFT);
+        dunmerStation(consumer, DunmerSet.DESK_RIGHT);
+        dunmerStation(consumer, DunmerSet.DRAWER);
+        dunmerStation(consumer, DunmerSet.DRESSER);
+        dunmerStation(consumer, DunmerSet.LOCKBOX);
+        dunmerStation(consumer, DunmerSet.WARDROBE_BOTTOM);
+        dunmerStation(consumer, DunmerSet.WARDROBE_TOP);
+        dunmerStation(consumer, DunmerSet.PAINTING_WIDE);
+        dunmerStation(consumer, DunmerSet.PAINTING_SMALL);
+        dunmerStation(consumer, DunmerSet.OVEN);
+        dunmerStation(consumer, DunmerSet.DOOR_DOUBLE);
+        dunmerStation(consumer, DunmerSet.DOOR_SINGLE);
+        dunmerStation(consumer, DunmerSet.BED_SINGLE);
+        dunmerStation(consumer, DunmerSet.BED_DOUBLE);
+        dunmerStation(consumer, DunmerSet.SHELF);
+        dunmerStation(consumer, DunmerSet.SOFA);
+        dunmerStation(consumer, DunmerSet.COUNTER);
+    }
+
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
     {
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.CRAFTING_TABLE), Ingredient.of(Items.LEATHER), RecipeCategory.MISC, FantasyFurniture.FURNITURE_STATION_BLOCK.get().asItem())
@@ -123,6 +160,11 @@ public final class RecipeGenerator extends RecipeProvider
     private void venthyrStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
     {
         furnitureStationGeneric(exporter, VenthyrSet.NAME, () -> Blocks.SPRUCE_PLANKS, () -> Blocks.RED_WOOL, item);
+    }
+
+    private void dunmerStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, DunmerSet.NAME, () -> Blocks.DARK_OAK_PLANKS, () -> Blocks.GREEN_WOOL, item);
     }
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)

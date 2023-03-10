@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
@@ -39,6 +40,353 @@ public interface AllVoxelShapes
 
     interface Dunmer
     {
+        VoxelShape WALL_LIGHT = shape(
+                box(4.5, 1, 7.5, 11.5, 2, 14.5),
+                box(4.5, 8, 7.5, 11.5, 9, 14.5),
+                box(5, 2, 8, 11, 8, 14),
+                box(6, 9, 9, 10, 10, 13),
+                box(7.5, 10, 10.5, 8.5, 13, 11.5),
+                box(7, 13, 9, 9, 15, 15),
+                box(6, 12, 15, 10, 16, 16)
+        );
+
+        VoxelShape FLOOR_LIGHT = shape(
+                box(6, 0, 6, 10, 2, 10),
+                box(7, 2, 7, 9, 22, 9),
+                box(6, 22, 6, 10, 27, 10),
+                box(7, 27, 7, 9, 28, 9)
+        );
+
+        VoxelShape TABLE_LARGE = shape(
+                box(12, 0, 2, 14, 14, 4),
+                box(-14, 0, 2, -12, 14, 4),
+                box(-14, 0, 28, -12, 14, 30),
+                box(12, 0, 28, 14, 14, 30),
+                box(-16, 14, 0, 16, 16, 32)
+        );
+
+        VoxelShape TABLE_SMALL = shape(
+                box(1, 0, 1, 3, 14, 3),
+                box(1, 0, 13, 3, 14, 15),
+                box(13, 0, 13, 15, 14, 15),
+                box(13, 0, 1, 15, 14, 3),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape TABLE_WIDE = shape(
+                box(12, 0, 2, 14, 14, 4),
+                box(-14, 0, 2, -12, 14, 4),
+                box(-14, 0, 12, -12, 14, 14),
+                box(12, 0, 12, 14, 14, 14),
+                box(-16, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape BENCH = shape(
+                box(12, 0, 2, 14, 5, 4),
+                box(-14, 0, 2, -12, 5, 4),
+                box(-14, 0, 12, -12, 5, 14),
+                box(12, 0, 12, 14, 5, 14),
+                box(-15, 5, 1, 15, 7, 15),
+                box(12.5, 2.5, 4, 13.5, 3.5, 12),
+                box(-13.5, 2.5, 4, -12.5, 3.5, 12)
+        );
+
+        VoxelShape CHAIR = shape(
+                box(2, 0, 2, 4, 4, 4),
+                box(2, 0, 12, 4, 4, 14),
+                box(12, 0, 12, 14, 4, 14),
+                box(12, 0, 2, 14, 4, 4),
+                box(11.5, 4, 2.5, 13.5, 7, 4.5),
+                box(2.5, 4, 2.5, 4.5, 7, 4.5),
+                box(2.5, 4, 11.5, 4.5, 7, 13.5),
+                box(11.5, 4, 11.5, 13.5, 7, 13.5),
+                box(2, 7, 1, 14, 9, 15),
+                box(2.5, 9, 11.5, 13.5, 31.5, 13.5)
+        );
+
+        VoxelShape CHANDELIER = box(1, 2, 1, 15, 16, 15);
+
+        VoxelShape CUSHION = shape(
+                box(3, 0, 3, 5, 4, 5),
+                box(3, 0, 11, 5, 4, 13),
+                box(11, 0, 11, 13, 4, 13),
+                box(11, 0, 3, 13, 4, 5),
+                box(2, 4, 2, 14, 5, 14),
+                box(2.5, 5, 2.5, 13.5, 7, 13.5)
+        );
+
+        VoxelShape STOOL = shape(
+                box(12, 0, 2, 14, 5, 4),
+                box(2, 0, 2, 4, 5, 4),
+                box(2, 0, 12, 4, 5, 14),
+                box(12, 0, 12, 14, 5, 14),
+                box(1, 5, 1, 15, 7, 15),
+                box(12.5, 2.5, 4, 13.5, 3.5, 12),
+                box(2.5, 2.5, 4, 3.5, 3.5, 12)
+        );
+
+        VoxelShape CHEST = shape(
+                box(12, 0, 2, 14, 14, 4),
+                box(-14, 0, 2, -12, 14, 4),
+                box(-14, 0, 12, -12, 14, 14),
+                box(12, 0, 12, 14, 14, 14),
+                box(-15, 4, 1, 15, 6, 15),
+                box(-15, 14, 1, 15, 16, 15),
+                box(-13, 6, 3, 13, 14, 13),
+                box(-2, 11, 2, 2, 14, 3)
+        );
+
+        VoxelShape BOOKSHELF = shape(
+                box(-14, 0, 2, -12, 30, 4),
+                box(-14, 0, 12, -12, 30, 14),
+                box(12, 0, 12, 14, 30, 14),
+                box(12, 0, 2, 14, 30, 4),
+                box(-12, 9, 4, 12, 32, 12),
+                box(-15, 9, 1, 15, 11, 15),
+                box(-15, 19, 1, 15, 21, 15),
+                box(-15, 30, 1, 15, 32, 15)
+        );
+
+        VoxelShape DESK_LEFT = shape(
+                box(12, 0, 2, 14, 14, 4),
+                box(-14, 0, 2, -12, 14, 4),
+                box(-14, 0, 12, -12, 14, 14),
+                box(12, 0, 12, 14, 14, 14),
+                box(-16, 14, 0, 16, 16, 16),
+                box(4, 10, 2, 11, 14, 11)
+        );
+
+        VoxelShape DESK_RIGHT = shape(
+                box(12, 0, 2, 14, 14, 4),
+                box(-14, 0, 2, -12, 14, 4),
+                box(-14, 0, 12, -12, 14, 14),
+                box(12, 0, 12, 14, 14, 14),
+                box(-16, 14, 0, 16, 16, 16),
+                box(-11, 10, 2, -4, 14, 11)
+        );
+
+        VoxelShape DRAWER = shape(
+                box(1, 0, 1, 3, 14, 3),
+                box(1, 0, 13, 3, 14, 15),
+                box(13, 0, 13, 15, 14, 15),
+                box(13, 0, 1, 15, 14, 3),
+                box(0, 14, 0, 16, 16, 16),
+                box(1, 6, 1, 15, 8, 15),
+                box(2, 6, 2, 14, 14, 14)
+        );
+
+        VoxelShape DRESSER = shape(
+                box(-15, 0, 1, -13, 14, 3),
+                box(-15, 0, 13, -13, 14, 15),
+                box(13, 0, 13, 15, 14, 15),
+                box(13, 0, 1, 15, 14, 3),
+                box(-16, 14, 0, 16, 16, 16),
+                box(-15, 6, 1, 15, 8, 15),
+                box(-14, 8, 2, 14, 14, 14)
+        );
+
+        VoxelShape LOCKBOX = box(2, 0, 3, 14, 14, 13);
+
+        VoxelShape WARDROBE_TOP = shape(
+                box(13, 0, 1, 15, 8, 3),
+                box(-15, 0, 1, -13, 8, 3),
+                box(-15, 0, 13, -13, 8, 15),
+                box(13, 0, 13, 15, 8, 15),
+                box(-16, 8, 0, 16, 10, 16),
+                box(-13, 0, 2, 13, 8, 14)
+        );
+
+        VoxelShape WARDROBE_BOTTOM = shape(
+                box(-15, 0, 1, -13, 30, 3),
+                box(-15, 0, 13, -13, 30, 15),
+                box(13, 0, 13, 15, 30, 15),
+                box(13, 0, 1, 15, 30, 3),
+                box(-16, 30, 0, 16, 32, 16),
+                box(-16, 20, 0, 16, 22, 16),
+                box(-16, 2, 0, 16, 4, 16),
+                box(-13, 4, 2, 13, 30, 14)
+        );
+
+        VoxelShape PAINTING_WIDE = shape(
+                box(-16, 0, 14, 16, 2, 16),
+                box(-16, 14, 14, 16, 16, 16),
+                box(-15, 2, 14, 15, 14, 16)
+        );
+
+        VoxelShape PAINTING_SMALL = shape(
+                box(0, 1, 14, 16, 3, 16),
+                box(0, 13, 14, 16, 15, 16),
+                box(1, 3, 14, 15, 13, 16)
+        );
+
+        VoxelShape OVEN = shape(
+                Block.box(12.5, 0, 6.5, 15.5, 3, 9.5),
+                Block.box(-15.5, 0, 6.5, -12.5, 3, 9.5),
+                Block.box(-15, 3, 7, -13, 16, 9),
+                Block.box(13, 3, 7, 15, 16, 9),
+                Block.box(-16, 12, 7, 16, 14, 9),
+                Block.box(-5, 10.5, 5.5, 5, 15.5, 10.5),
+                Block.box(-6, 0, 2, 6, 3, 14)
+        );
+
+        VoxelShape DOOR_DOUBLE = box(0, 0, 0, 16, 32, 2);
+
+        VoxelShape DOOR_SINGLE = shape(
+                box(0, 0, 0, 16, 21, 2),
+                box(0, 29, 0, 16, 32, 2),
+                box(13, 21, 0, 16, 29, 2),
+                box(0, 21, 0, 3, 29, 2),
+                box(4, 21, 0.5, 5, 30, 1.5),
+                box(6, 21, 0.5, 7, 30, 1.5),
+                box(9, 21, 0.5, 10, 30, 1.5),
+                box(11, 21, 0.5, 12, 30, 1.5),
+                box(3, 27, 0.5, 13, 28, 1.5),
+                box(3, 22, 0.5, 13, 23, 1.5)
+        );
+
+        VoxelShape BED_SINGLE = shape(
+                box(0D, 0D, 0D, 2D, 13D, 2D),
+                box(0D, 0D, 30D, 2D, 11D, 32D),
+                box(14D, 0D, 30D, 16D, 11D, 32D),
+                box(14D, 0D, 0D, 16D, 13D, 2D),
+                box(2D, 3D, 0D, 14D, 14.25D, 2D),
+                box(2D, 3D, 30D, 14D, 12.25D, 32D),
+                box(1D, 5D, 2D, 15D, 8D, 30D),
+                box(0D, 3D, 2D, 16D, 5D, 30D)
+        );
+
+        VoxelShape BED_DOUBLE = shape(
+                box(-16D, 0D, 0D, -14D, 13D, 2D),
+                box(-16D, 0D, 30D, -14D, 11D, 32D),
+                box(14D, 0D, 30D, 16D, 11D, 32D),
+                box(14D, 0D, 0D, 16D, 13D, 2D),
+                box(-14D, 3D, 0D, 14D, 14.25D, 2D),
+                box(-14D, 3D, 30D, 14D, 12.25D, 32D),
+                box(-15D, 5D, 2D, 15D, 8D, 30D),
+                box(-16D, 3D, 2D, 16D, 5D, 30D)
+        );
+
+        VoxelShape SHELF_SINGLE = shape(
+                box(13, 8, 14, 15, 14, 16),
+                box(1, 8, 14, 3, 14, 16),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape SHELF_CENTER = box(0, 14, 0, 16, 16, 16);
+
+        VoxelShape SHELF_LEFT = shape(
+                box(13, 8, 14, 15, 14, 16),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape SHELF_RIGHT = shape(
+                box(1, 8, 14, 3, 14, 16),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape SOFA_SINGLE = shape(
+                box(0, 4, 1, 16, 6, 15),
+                box(2, 0, 12, 4, 4, 14),
+                box(2, 0, 2, 4, 4, 4),
+                box(12, 0, 2, 14, 4, 4),
+                box(12, 0, 12, 14, 4, 14),
+                box(1, 6, 12, 15, 16, 14),
+                box(13, 10, 2, 15, 12, 12),
+                box(13, 6, 3, 15, 10, 5),
+                box(1, 6, 3, 3, 10, 5),
+                box(1, 10, 2, 3, 12, 12),
+                box(3, 6, 2, 13, 7, 13)
+        );
+
+        VoxelShape SOFA_CENTER = shape(
+                Block.box(0, 4, 1, 16, 6, 15),
+                Block.box(0, 6, 2, 16, 7, 12),
+                Block.box(0, 6, 12, 16, 16, 14)
+        );
+
+        VoxelShape SOFA_LEFT = shape(
+                Block.box(0, 4, 1, 16, 6, 15),
+                Block.box(0, 6, 2, 13, 7, 12),
+                Block.box(0, 6, 12, 15, 16, 14),
+                Block.box(13, 10, 2, 15, 12, 12),
+                Block.box(13, 6, 3, 15, 10, 12),
+                Block.box(12, 0, 12, 14, 4, 14),
+                Block.box(12, 0, 2, 14, 4, 4)
+        );
+
+        VoxelShape SOFA_RIGHT = shape(
+                Block.box(0, 4, 1, 16, 6, 15),
+                Block.box(3, 6, 2, 16, 7, 12),
+                Block.box(1, 6, 12, 16, 16, 14),
+                Block.box(1, 10, 2, 3, 12, 12),
+                Block.box(1, 6, 3, 3, 10, 12),
+                Block.box(2, 0, 12, 4, 4, 14),
+                Block.box(2, 0, 2, 4, 4, 4)
+        );
+
+        VoxelShape SOFA_CORNER = shape(
+                box(2, 0, 12, 4, 4, 14),
+                box(2, 0, 2, 4, 4, 4),
+                box(12, 0, 2, 14, 4, 4),
+                box(12, 0, 12, 14, 4, 14),
+                box(12, 6, 12, 14, 16, 14),
+                box(12, 6, 0, 14, 16, 12),
+                box(0, 6, 12, 12, 16, 14),
+                box(1, 4, 0, 15, 6, 15),
+                box(0, 4, 1, 1, 6, 15),
+                box(0, 6, 2, 13, 7, 13),
+                box(2, 6, 0, 13, 7, 2)
+        );
+
+        VoxelShape COUNTER_SINGLE = shape(
+                box(0, 0, 3, 2, 1, 5),
+                box(0, 0, 14, 2, 1, 16),
+                box(14, 0, 14, 16, 1, 16),
+                box(14, 0, 3, 16, 1, 5),
+                box(0, 1, 3, 16, 14, 16),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape COUNTER_CORNER = shape(
+                box(0, 0, 0, 2, 1, 2),
+                box(11, 0, 0, 13, 1, 5),
+                box(13, 0, 3, 16, 1, 5),
+                box(14, 0, 14, 16, 1, 16),
+                box(0, 0, 14, 2, 1, 16),
+                box(0, 1, 3, 16, 14, 16),
+                box(0, 1, 0, 13, 14, 3),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
+                case LEFT -> SHELF_LEFT;
+                case RIGHT -> SHELF_RIGHT;
+                case SINGLE -> SHELF_SINGLE;
+                case CENTER -> SHELF_CENTER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
+                case LEFT -> SOFA_LEFT;
+                case RIGHT -> SOFA_RIGHT;
+                case SINGLE -> SOFA_SINGLE;
+                case CENTER -> SOFA_CENTER;
+                case CORNER -> SOFA_CORNER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
+                case SINGLE -> COUNTER_SINGLE;
+                case CORNER -> COUNTER_CORNER;
+            }, block, blockState);
+        }
+
         private static void bootstrap() {}
     }
 
@@ -990,7 +1338,15 @@ public interface AllVoxelShapes
     static VoxelShape getOvenShape(VoxelShape current, OvenBlock block, BlockState blockState)
     {
         var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
+        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
+
+        if(block instanceof MultiBlock multiBlock && !multiBlock.getMultiBlockType().isOrigin(blockState))
+        {
+            var offset = facing.getClockWise();
+            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
+        }
+
+        return shape;
     }
 
     static VoxelShape getDoorShape(VoxelShape current, DoorMultiBlock block, BlockState blockState)

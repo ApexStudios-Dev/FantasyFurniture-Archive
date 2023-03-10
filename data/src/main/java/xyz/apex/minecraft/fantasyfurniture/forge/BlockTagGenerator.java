@@ -9,6 +9,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.common.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -30,6 +31,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
 
         nordic(wool, carpets, woodenDoors, beds, immovable);
         venthyr(wool, carpets, woodenDoors, beds, immovable);
+        dunmer(wool, carpets, woodenDoors, beds, immovable);
     }
 
     private void nordic(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable)
@@ -94,6 +96,37 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 VenthyrSet.DOOR_DOUBLE.get(), VenthyrSet.DOOR_SINGLE.get(), VenthyrSet.BED_SINGLE.get(),
                 VenthyrSet.BED_DOUBLE.get(), VenthyrSet.SHELF.get(), VenthyrSet.SOFA.get(),
                 VenthyrSet.COUNTER.get()
+        );
+    }
+
+    private void dunmer(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable)
+    {
+        wool.add(DunmerSet.WOOL.get());
+        carpets.add(DunmerSet.CARPET.get());
+        woodenDoors.add(DunmerSet.DOOR_DOUBLE.get(), DunmerSet.DOOR_SINGLE.get());
+        beds.add(DunmerSet.BED_SINGLE.get(), DunmerSet.BED_DOUBLE.get());
+
+        immovable.add(
+                DunmerSet.FLOOR_LIGHT.get(), DunmerSet.TABLE_LARGE.get(), DunmerSet.TABLE_WIDE.get(),
+                DunmerSet.BENCH.get(), DunmerSet.CHAIR.get(), DunmerSet.CHEST.get(),
+                DunmerSet.BOOKSHELF.get(), DunmerSet.DESK_LEFT.get(), DunmerSet.DESK_RIGHT.get(),
+                DunmerSet.DRAWER.get(), DunmerSet.DRESSER.get(), DunmerSet.WARDROBE_BOTTOM.get(),
+                DunmerSet.WARDROBE_TOP.get(), DunmerSet.PAINTING_WIDE.get(), DunmerSet.DOOR_DOUBLE.get(),
+                DunmerSet.DOOR_SINGLE.get(), DunmerSet.BED_SINGLE.get(), DunmerSet.BED_DOUBLE.get(),
+                DunmerSet.SHELF.get(), DunmerSet.SOFA.get(), DunmerSet.COUNTER.get()
+        );
+
+        tag(DunmerSet.BLOCK_TAG).add(
+                DunmerSet.WOOL.get(), DunmerSet.CARPET.get(), DunmerSet.WALL_LIGHT.get(),
+                DunmerSet.FLOOR_LIGHT.get(), DunmerSet.TABLE_LARGE.get(), DunmerSet.TABLE_WIDE.get(),
+                DunmerSet.TABLE_SMALL.get(), DunmerSet.BENCH.get(), DunmerSet.CHAIR.get(),
+                DunmerSet.CHANDELIER.get(), DunmerSet.CUSHION.get(), DunmerSet.STOOL.get(),
+                DunmerSet.CHEST.get(), DunmerSet.BOOKSHELF.get(), DunmerSet.DESK_LEFT.get(),
+                DunmerSet.DESK_RIGHT.get(), DunmerSet.DRAWER.get(), DunmerSet.DRESSER.get(),
+                DunmerSet.LOCKBOX.get(), DunmerSet.WARDROBE_BOTTOM.get(), DunmerSet.WARDROBE_TOP.get(),
+                DunmerSet.PAINTING_WIDE.get(), DunmerSet.PAINTING_SMALL.get(), DunmerSet.OVEN.get(), NordicSet.DOOR_DOUBLE.get(),
+                DunmerSet.DOOR_SINGLE.get(), DunmerSet.BED_SINGLE.get(), DunmerSet.BED_DOUBLE.get(),
+                DunmerSet.SHELF.get(), DunmerSet.SOFA.get(), DunmerSet.COUNTER.get()
         );
     }
 }

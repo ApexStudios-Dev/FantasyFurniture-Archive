@@ -23,6 +23,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -43,6 +44,7 @@ public final class BlockStateGenerator extends BlockStateProvider
 
         nordic();
         venthyr();
+        dunmer();
     }
 
     private void nordic()
@@ -116,6 +118,41 @@ public final class BlockStateGenerator extends BlockStateProvider
         shelfBlock(VenthyrSet.SHELF);
         sofaBlock(VenthyrSet.SOFA);
         counterBlock(VenthyrSet.COUNTER);
+    }
+
+    private void dunmer()
+    {
+        simpleBlock(DunmerSet.WOOL);
+        carpet(DunmerSet.CARPET, DunmerSet.WOOL);
+        wallLight(DunmerSet.WALL_LIGHT);
+        simpleExistingBlock(DunmerSet.FLOOR_LIGHT);
+        facingBlock(DunmerSet.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.CHAIR, HorizontalDirectionalBlock.FACING);
+        simpleExistingBlock(DunmerSet.CHANDELIER);
+        facingBlock(DunmerSet.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        ovenBlock(DunmerSet.OVEN);
+        doorBlock(DunmerSet.DOOR_DOUBLE);
+        doorBlock(DunmerSet.DOOR_SINGLE);
+        facingBlock(DunmerSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(DunmerSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(DunmerSet.SHELF);
+        sofaBlock(DunmerSet.SOFA);
+        counterBlock(DunmerSet.COUNTER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

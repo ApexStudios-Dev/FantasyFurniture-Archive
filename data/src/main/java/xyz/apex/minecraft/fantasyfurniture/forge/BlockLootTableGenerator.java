@@ -7,6 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -26,6 +27,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
 
         nordic();
         venthyr();
+        dunmer();
     }
 
     private void nordic()
@@ -99,6 +101,41 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(VenthyrSet.SHELF.get());
         dropSelf(VenthyrSet.SOFA.get());
         dropSelf(VenthyrSet.COUNTER.get());
+    }
+
+    private void dunmer()
+    {
+        dropSelf(DunmerSet.WOOL.get());
+        dropSelf(DunmerSet.CARPET.get());
+        dropSelf(DunmerSet.WALL_LIGHT.get());
+        dropSelf(DunmerSet.FLOOR_LIGHT.get());
+        dropSelf(DunmerSet.TABLE_LARGE.get());
+        dropSelf(DunmerSet.TABLE_WIDE.get());
+        dropSelf(DunmerSet.TABLE_SMALL.get());
+        dropSelf(DunmerSet.BENCH.get());
+        dropSelf(DunmerSet.CHAIR.get());
+        dropSelf(DunmerSet.CHANDELIER.get());
+        dropSelf(DunmerSet.CUSHION.get());
+        dropSelf(DunmerSet.STOOL.get());
+        dropSelf(DunmerSet.CHEST.get());
+        dropSelf(DunmerSet.BOOKSHELF.get());
+        dropSelf(DunmerSet.DESK_LEFT.get());
+        dropSelf(DunmerSet.DESK_RIGHT.get());
+        dropSelf(DunmerSet.DRAWER.get());
+        dropSelf(DunmerSet.DRESSER.get());
+        dropSelf(DunmerSet.LOCKBOX.get());
+        dropSelf(DunmerSet.WARDROBE_BOTTOM.get());
+        dropSelf(DunmerSet.WARDROBE_TOP.get());
+        dropSelf(DunmerSet.PAINTING_WIDE.get());
+        dropSelf(DunmerSet.PAINTING_SMALL.get());
+        dropSelf(DunmerSet.OVEN.get());
+        dropSelf(DunmerSet.DOOR_DOUBLE.get());
+        dropSelf(DunmerSet.DOOR_SINGLE.get());
+        dropSelf(DunmerSet.BED_SINGLE.get());
+        dropSelf(DunmerSet.BED_DOUBLE.get());
+        dropSelf(DunmerSet.SHELF.get());
+        dropSelf(DunmerSet.SOFA.get());
+        dropSelf(DunmerSet.COUNTER.get());
     }
 
     @Override

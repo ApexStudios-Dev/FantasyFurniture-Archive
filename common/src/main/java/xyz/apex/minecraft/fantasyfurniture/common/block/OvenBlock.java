@@ -9,13 +9,22 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 
+import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
+import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
+import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 
@@ -67,6 +76,108 @@ public class OvenBlock extends AbstractFurnaceBlock
             var zOff = axis == Direction.Axis.Z ? facing.getStepZ() * .52D : h;
 
             level.addParticle(ParticleTypes.SMOKE, x + xOff, y + yOff, z + zOff, 0D, 0D, 0D);
+        }
+    }
+
+    public static class AsMultiBlock extends OvenBlock implements MultiBlock
+    {
+        protected final MultiBlockType multiBlockType;
+
+        public AsMultiBlock(MultiBlockType multiBlockType, Properties properties)
+        {
+            super(properties);
+
+            this.multiBlockType = multiBlockType;
+            SimpleMultiBlock.replaceBlockStateContainer(this); // must be after we set the MultiBlockType field
+            registerDefaultState(multiBlockType.registerDefaultBlockState(defaultBlockState()
+                    // need to re-apply the initial default values
+                    // as replacing the state container wiped them out
+                    .setValue(FACING, Direction.NORTH).setValue(LIT, false)
+            ));
+        }
+
+        @Override
+        public final MultiBlockType getMultiBlockType()
+        {
+            return multiBlockType;
+        }
+
+        @Override
+        public boolean isSameBlockTypeForMultiBlock(BlockState blockState)
+        {
+            return blockState.is(this);
+        }
+
+        @Nullable
+        @Override
+        public BlockState getStateForPlacement(BlockPlaceContext ctx)
+        {
+            var stateForPlacement = super.getStateForPlacement(ctx);
+            if(stateForPlacement == null) return null;
+            return multiBlockType.getStateForPlacement(this, stateForPlacement, ctx);
+        }
+
+        @Override
+        public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos pos)
+        {
+            return multiBlockType.canSurvive(this, level, pos, blockState);
+        }
+
+        @Override
+        public void onPlace(BlockState blockState, Level level, BlockPos pos, BlockState oldBlockState, boolean isMoving)
+        {
+            multiBlockType.onPlace(this, blockState, level, pos, oldBlockState);
+        }
+
+        @Override
+        public void onRemove(BlockState blockState, Level level, BlockPos pos, BlockState newBlockstate, boolean isMoving)
+        {
+            multiBlockType.onRemove(this, blockState, level, pos, newBlockstate);
+            super.onRemove(blockState, level, pos, newBlockstate, isMoving);
+        }
+
+        @SuppressWarnings("ConstantValue")
+        @Override
+        public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
+        {
+            // null on first call, as it's set in constructor and this method is called from super
+            // none-null on second call, as that's fired in our constructor and replaces the vanilla state definition
+            if(multiBlockType != null) multiBlockType.registerBlockProperty(builder::add);
+            super.createBlockStateDefinition(builder);
+        }
+
+        @Override
+        public RenderShape getRenderShape(BlockState blockState)
+        {
+            return multiBlockType.isOrigin(blockState) ? RenderShape.MODEL : RenderShape.INVISIBLE;
+        }
+
+        @Override
+        protected void openContainer(Level level, BlockPos pos, Player player)
+        {
+            var blockState = level.getBlockState(pos);
+            if(!isSameBlockTypeForMultiBlock(blockState)) return;
+
+            if(!multiBlockType.isOrigin(blockState))
+            {
+                var originPos = multiBlockType.getOriginPos(this, blockState, pos);
+                openContainer(level, originPos, player);
+            }
+            else super.openContainer(level, pos, player);
+        }
+
+        @Nullable
+        @Override
+        public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState)
+        {
+            return multiBlockType.isOrigin(blockState) ? super.newBlockEntity(pos, blockState) : new OvenBlockEntity.Delegate(AllBlockEntityTypes.OVEN.get(), pos, blockState);
+        }
+
+        @Nullable
+        @Override
+        public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType)
+        {
+            return multiBlockType.isOrigin(blockState) ? super.getTicker(level, blockState, blockEntityType) : null;
         }
     }
 }

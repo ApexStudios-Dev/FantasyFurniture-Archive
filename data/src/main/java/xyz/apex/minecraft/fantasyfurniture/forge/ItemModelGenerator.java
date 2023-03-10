@@ -16,6 +16,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
@@ -35,6 +36,7 @@ public final class ItemModelGenerator extends ItemModelProvider
 
         nordic();
         venthyr();
+        dunmer();
     }
 
     private void nordic()
@@ -108,6 +110,41 @@ public final class ItemModelGenerator extends ItemModelProvider
         shelfBlockItem(VenthyrSet.SHELF);
         sofaBlockItem(VenthyrSet.SOFA);
         sofaBlockItem(VenthyrSet.COUNTER);
+    }
+
+    private void dunmer()
+    {
+        blockItem(DunmerSet.WOOL);
+        blockItem(DunmerSet.CARPET);
+        blockItem(DunmerSet.WALL_LIGHT);
+        blockItem(DunmerSet.FLOOR_LIGHT);
+        blockItem(DunmerSet.TABLE_LARGE);
+        blockItem(DunmerSet.TABLE_SMALL);
+        blockItem(DunmerSet.TABLE_WIDE);
+        blockItem(DunmerSet.BENCH);
+        blockItem(DunmerSet.CHAIR);
+        blockItem(DunmerSet.CHANDELIER);
+        blockItem(DunmerSet.CUSHION);
+        blockItem(DunmerSet.STOOL);
+        blockItem(DunmerSet.CHEST);
+        blockItem(DunmerSet.BOOKSHELF);
+        blockItem(DunmerSet.DESK_LEFT);
+        blockItem(DunmerSet.DESK_RIGHT);
+        blockItem(DunmerSet.DRAWER);
+        blockItem(DunmerSet.DRESSER);
+        blockItem(DunmerSet.LOCKBOX);
+        blockItem(DunmerSet.WARDROBE_BOTTOM);
+        blockItem(DunmerSet.WARDROBE_TOP);
+        blockItem(DunmerSet.PAINTING_WIDE);
+        blockItem(DunmerSet.PAINTING_SMALL);
+        blockItem(DunmerSet.OVEN);
+        doorBlockItem(DunmerSet.DOOR_DOUBLE);
+        doorBlockItem(DunmerSet.DOOR_SINGLE);
+        blockItem(DunmerSet.BED_SINGLE);
+        blockItem(DunmerSet.BED_DOUBLE);
+        shelfBlockItem(DunmerSet.SHELF);
+        sofaBlockItem(DunmerSet.SOFA);
+        sofaBlockItem(DunmerSet.COUNTER);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)
