@@ -24,6 +24,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -40,6 +41,12 @@ public final class BlockStateGenerator extends BlockStateProvider
     {
         facingBlock(FantasyFurniture.FURNITURE_STATION_BLOCK, HorizontalDirectionalBlock.FACING);
 
+        nordic();
+        venthyr();
+    }
+
+    private void nordic()
+    {
         simpleBlock(NordicSet.WOOL);
         carpet(NordicSet.CARPET, NordicSet.WOOL);
         wallLight(NordicSet.WALL_LIGHT);
@@ -71,6 +78,44 @@ public final class BlockStateGenerator extends BlockStateProvider
         shelfBlock(NordicSet.SHELF);
         sofaBlock(NordicSet.SOFA);
         counterBlock(NordicSet.COUNTER);
+    }
+
+    private void venthyr()
+    {
+        simpleBlock(VenthyrSet.WOOL);
+        carpet(VenthyrSet.CARPET, VenthyrSet.WOOL);
+        wallLight(VenthyrSet.WALL_LIGHT);
+        simpleExistingBlock(VenthyrSet.FLOOR_LIGHT);
+        facingBlock(VenthyrSet.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.TABLE_LARGE_FANCY, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.TABLE_SMALL_FANCY, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.TABLE_WIDE_FANCY, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.CHAIR, HorizontalDirectionalBlock.FACING);
+        simpleExistingBlock(VenthyrSet.CHANDELIER);
+        facingBlock(VenthyrSet.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        ovenBlock(VenthyrSet.OVEN);
+        doorBlock(VenthyrSet.DOOR_DOUBLE);
+        doorBlock(VenthyrSet.DOOR_SINGLE);
+        facingBlock(VenthyrSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(VenthyrSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(VenthyrSet.SHELF);
+        sofaBlock(VenthyrSet.SOFA);
+        counterBlock(VenthyrSet.COUNTER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

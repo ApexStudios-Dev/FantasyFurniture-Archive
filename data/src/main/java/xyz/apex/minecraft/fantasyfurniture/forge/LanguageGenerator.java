@@ -7,6 +7,7 @@ import net.minecraftforge.common.data.LanguageProvider;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 public final class LanguageGenerator extends LanguageProvider
 {
@@ -24,6 +25,12 @@ public final class LanguageGenerator extends LanguageProvider
         add(FantasyFurniture.FURNITURE_STATION_RECIPE.getRegistryName().toLanguageKey("category.rei"), "Furniture Station");
         add(FantasyFurniture.FURNITURE_STATION_RECIPE.getRegistryName().toLanguageKey("emi.category"), "Furniture Station");
 
+        nordic();
+        venthyr();
+    }
+
+    private void nordic()
+    {
         addBlock(NordicSet.WOOL, "Nordic Wool");
         addBlock(NordicSet.CARPET, "Nordic Carpet");
         addBlock(NordicSet.WALL_LIGHT, "Nordic Wall Light");
@@ -56,6 +63,45 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.SOFA, "Nordic Sofa");
         addBlock(NordicSet.COUNTER, "Nordic Counter");
         addCreativeModeTab(NordicSet.NAME, "Nordic");
+    }
+
+    private void venthyr()
+    {
+        addBlock(VenthyrSet.WOOL, "Venthyr Wool");
+        addBlock(VenthyrSet.CARPET, "Venthyr Carpet");
+        addBlock(VenthyrSet.WALL_LIGHT, "Venthyr Wall Light");
+        addBlock(VenthyrSet.FLOOR_LIGHT, "Venthyr Floor Light");
+        addBlock(VenthyrSet.TABLE_LARGE, "Venthyr Table Large");
+        addBlock(VenthyrSet.TABLE_LARGE_FANCY, "Venthyr Table Large Fancy");
+        addBlock(VenthyrSet.TABLE_SMALL, "Venthyr Table Small");
+        addBlock(VenthyrSet.TABLE_SMALL_FANCY, "Venthyr Table Small Fancy");
+        addBlock(VenthyrSet.TABLE_WIDE, "Venthyr Table Wide");
+        addBlock(VenthyrSet.TABLE_WIDE_FANCY, "Venthyr Table Wide Fancy");
+        addBlock(VenthyrSet.BENCH, "Venthyr Bench");
+        addBlock(VenthyrSet.CHAIR, "Venthyr Chair");
+        addBlock(VenthyrSet.CHANDELIER, "Venthyr Chandelier");
+        addBlock(VenthyrSet.CUSHION, "Venthyr Cushion");
+        addBlock(VenthyrSet.STOOL, "Venthyr Stool");
+        addBlock(VenthyrSet.CHEST, "Venthyr Chest");
+        addBlock(VenthyrSet.BOOKSHELF, "Venthyr Bookshelf");
+        addBlock(VenthyrSet.DESK_LEFT, "Venthyr Desk Left");
+        addBlock(VenthyrSet.DESK_RIGHT, "Venthyr Desk Right");
+        addBlock(VenthyrSet.DRAWER, "Venthyr Drawer");
+        addBlock(VenthyrSet.DRESSER, "Venthyr Dresser");
+        addBlock(VenthyrSet.LOCKBOX, "Venthyr Lockbox");
+        addBlock(VenthyrSet.WARDROBE_BOTTOM, "Venthyr Wardrobe Bottom");
+        addBlock(VenthyrSet.WARDROBE_TOP, "Venthyr Wardrobe Top");
+        addBlock(VenthyrSet.PAINTING_WIDE, "Venthyr Painting Wide");
+        addBlock(VenthyrSet.PAINTING_SMALL, "Venthyr Painting Small");
+        addBlock(VenthyrSet.OVEN, "Venthyr Oven");
+        addBlock(VenthyrSet.DOOR_DOUBLE, "Venthyr Door Double");
+        addBlock(VenthyrSet.DOOR_SINGLE, "Venthyr Door Single");
+        addBlock(VenthyrSet.BED_SINGLE, "Venthyr Bed Single");
+        addBlock(VenthyrSet.BED_DOUBLE, "Venthyr Bed Double");
+        addBlock(VenthyrSet.SHELF, "Venthyr Shelf");
+        addBlock(VenthyrSet.SOFA, "Venthyr Sofa");
+        addBlock(VenthyrSet.COUNTER, "Venthyr Counter");
+        addCreativeModeTab(VenthyrSet.NAME, "Venthyr");
     }
 
     private void addCreativeModeTab(String key, String name)

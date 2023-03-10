@@ -12,6 +12,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.Arrays;
 
@@ -36,6 +37,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         convertBasic("furniture_station");
 
         convertFurnitureSet(NordicSet.NAME);
+        convertVenthyrSet();
     }
 
     private void convertFurnitureSet(String furnitureSet)
@@ -72,6 +74,45 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(furnitureSet, shelfType));
         Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(furnitureSet, sofaType));
         Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(furnitureSet, counterType));
+    }
+
+    private void convertVenthyrSet()
+    {
+        convertFurniture(VenthyrSet.NAME, "wall_light").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "floor_light");
+        convertFurniture(VenthyrSet.NAME, "table_small");
+        convertFurniture(VenthyrSet.NAME, "table_small_fancy");
+        convertFurniture(VenthyrSet.NAME, "table_large");
+        convertFurniture(VenthyrSet.NAME, "table_large_fancy");
+        convertFurniture(VenthyrSet.NAME, "table_wide").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "table_wide_fancy").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "bench");
+        convertFurniture(VenthyrSet.NAME, "chair").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "chandelier");
+        convertFurniture(VenthyrSet.NAME, "cushion");
+        convertFurniture(VenthyrSet.NAME, "stool");
+        convertFurniture(VenthyrSet.NAME, "chest");
+        convertFurniture(VenthyrSet.NAME, "bookshelf");
+        convertDesk(VenthyrSet.NAME, "left");
+        convertDesk(VenthyrSet.NAME, "right");
+        convertFurniture(VenthyrSet.NAME, "drawer");
+        convertFurniture(VenthyrSet.NAME, "dresser");
+        convertFurniture(VenthyrSet.NAME, "lockbox");
+        convertWardrobe(VenthyrSet.NAME, "bottom");
+        convertFurniture(VenthyrSet.NAME, "wardrobe_top").renderType(renderTypeCutout);
+        convertFurniture(VenthyrSet.NAME, "painting_wide");
+        convertFurniture(VenthyrSet.NAME, "painting_small");
+        convertFurniture(VenthyrSet.NAME, "oven").renderType(renderTypeCutout);
+        convertFurnitureEx(VenthyrSet.NAME, "oven_lit", "oven").renderType(renderTypeCutout);
+        convertDoor(VenthyrSet.NAME, "double", true);
+        convertDoor(VenthyrSet.NAME, "double", false);
+        convertDoor(VenthyrSet.NAME, "single", true);
+        convertDoor(VenthyrSet.NAME, "single", false);
+        convertFurniture(VenthyrSet.NAME, "bed_single");
+        convertFurniture(VenthyrSet.NAME, "bed_double");
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(VenthyrSet.NAME, shelfType));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(VenthyrSet.NAME, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(VenthyrSet.NAME, counterType));
     }
 
     private BlockModelBuilder convertDesk(String furnitureSet, String type)

@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 import java.util.List;
@@ -29,6 +30,12 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
                 new ResourceLocation(FantasyFurniture.ID, NordicSet.NAME),
                 Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, NordicSet.NAME)),
                 EntryIngredients.ofItemTag(NordicSet.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, VenthyrSet.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, VenthyrSet.NAME)),
+                EntryIngredients.ofItemTag(VenthyrSet.ITEM_TAG)
         );
     }
 
@@ -44,8 +51,8 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
         registry.add(new ReiFurnitureStationRecipeDisplayCategory());
         registry.addWorkstations(ReiFantasyFurnitureServerPlugin.FURNITURE_STATION_RECIPE_ID, EntryStacks.of(FantasyFurniture.FURNITURE_STATION_BLOCK));
 
-        registry.addWorkstations(BuiltinClientPlugin.SMOKING, EntryIngredients.ofItems(List.of(NordicSet.OVEN)));
-        registry.addWorkstations(BuiltinClientPlugin.FUEL, EntryIngredients.ofItems(List.of(NordicSet.OVEN)));
+        registry.addWorkstations(BuiltinClientPlugin.SMOKING, EntryIngredients.ofItems(List.of(NordicSet.OVEN, VenthyrSet.OVEN)));
+        registry.addWorkstations(BuiltinClientPlugin.FUEL, EntryIngredients.ofItems(List.of(NordicSet.OVEN, VenthyrSet.OVEN)));
     }
 
     @Override

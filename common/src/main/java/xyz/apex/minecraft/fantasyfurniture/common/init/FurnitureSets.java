@@ -51,18 +51,19 @@ public interface FurnitureSets
 
     // region: Light
     // region: Wall
-    static BlockBuilder<WallLightBlock, Registrar, Registrar> wallLight(String furnitureSet, Supplier<ParticleOptions> flameParticle)
+    static BlockBuilder<WallLightBlock, Registrar, Registrar> wallLight(String furnitureSet, Supplier<VoxelShape> baseShape, Supplier<ParticleOptions> flameParticle)
     {
         return FantasyFurniture.REGISTRAR
                 .block("%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(properties, flameParticle))
                 .initialProperties(Properties.BLOCK_TORCH)
                 .renderType(() -> RenderType::cutout)
+                .hitbox(baseShape, AllVoxelShapes::getWallLightShape)
         ;
     }
 
-    static BlockBuilder<WallLightBlock, Registrar, Registrar> wallLight(String furnitureSet)
+    static BlockBuilder<WallLightBlock, Registrar, Registrar> wallLight(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return wallLight(furnitureSet, () -> ParticleTypes.FLAME);
+        return wallLight(furnitureSet, baseShape, () -> ParticleTypes.FLAME);
     }
     // endregion
 
@@ -117,6 +118,14 @@ public interface FurnitureSets
         ;
     }
 
+    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> tableSmallFancy(String furnitureSet)
+    {
+        return FantasyFurniture.REGISTRAR
+                .block("%s/table_small_fancy".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
+                .transform(FurnitureSets::applyTableProperties)
+                ;
+    }
+
     private static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> table(String furnitureSet, String type, MultiBlockType multiBlockType)
     {
         return FantasyFurniture.REGISTRAR
@@ -133,11 +142,26 @@ public interface FurnitureSets
         ;
     }
 
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableWideFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return table(furnitureSet, "wide_fancy", AllMultiBlockTypes.MB_1x1x2_FACING)
+                .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
+                .renderType(() -> RenderType::cutout)
+                ;
+    }
+
     static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return table(furnitureSet, "large", AllMultiBlockTypes.MB_2x1x2_FACING)
                 .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
         ;
+    }
+
+    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableLargeFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return table(furnitureSet, "large_fancy", AllMultiBlockTypes.MB_2x1x2_FACING)
+                .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
+                ;
     }
     // endregion
 

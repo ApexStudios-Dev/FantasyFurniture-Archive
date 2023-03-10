@@ -12,20 +12,51 @@ import java.util.function.Supplier;
 
 public interface AllBlockEntityTypes
 {
-    BlockEntityEntry<ChestBlockEntity> CHEST = register("chest", ChestBlockEntity::new, NordicSet.CHEST);
-    BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF = register("bookshelf", BookshelfBlockEntity::new, NordicSet.BOOKSHELF);
+    BlockEntityEntry<ChestBlockEntity> CHEST = register(
+            "chest", ChestBlockEntity::new,
+            NordicSet.CHEST, VenthyrSet.CHEST
+    );
+
+    BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF = register(
+            "bookshelf", BookshelfBlockEntity::new,
+            NordicSet.BOOKSHELF, VenthyrSet.BOOKSHELF
+    );
 
     BlockEntityEntry<DeskBlockEntity> DESK = register(
             "desk", DeskBlockEntity::new,
-            NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT
+            NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT,
+            VenthyrSet.DESK_LEFT, VenthyrSet.DESK_RIGHT
     );
 
-    BlockEntityEntry<DrawerBlockEntity> DRAWER = register("drawer", DrawerBlockEntity::new, NordicSet.DRAWER);
-    BlockEntityEntry<DresserBlockEntity> DRESSER = register("dresser", DresserBlockEntity::new, NordicSet.DRESSER);
-    BlockEntityEntry<LockboxBlockEntity> LOCKBOX = register("lockbox", LockboxBlockEntity::new, NordicSet.LOCKBOX);
-    BlockEntityEntry<WardrobeBlockEntity> WARDROBE = register("wardrobe", WardrobeBlockEntity::new, NordicSet.WARDROBE_BOTTOM);
-    BlockEntityEntry<OvenBlockEntity> OVEN = register("oven", OvenBlockEntity::new, NordicSet.OVEN);
-    BlockEntityEntry<CounterBlockEntity> COUNTER = register("counter", CounterBlockEntity::new, NordicSet.COUNTER);
+    BlockEntityEntry<DrawerBlockEntity> DRAWER = register(
+            "drawer", DrawerBlockEntity::new,
+            NordicSet.DRAWER, VenthyrSet.DRAWER
+    );
+
+    BlockEntityEntry<DresserBlockEntity> DRESSER = register(
+            "dresser", DresserBlockEntity::new,
+            NordicSet.DRESSER, VenthyrSet.DRESSER
+    );
+
+    BlockEntityEntry<LockboxBlockEntity> LOCKBOX = register(
+            "lockbox", LockboxBlockEntity::new,
+            NordicSet.LOCKBOX, VenthyrSet.LOCKBOX
+    );
+
+    BlockEntityEntry<WardrobeBlockEntity> WARDROBE = register(
+            "wardrobe", WardrobeBlockEntity::new,
+            NordicSet.WARDROBE_BOTTOM, VenthyrSet.WARDROBE_BOTTOM
+    );
+
+    BlockEntityEntry<OvenBlockEntity> OVEN = register(
+            "oven", OvenBlockEntity::new,
+            NordicSet.OVEN, VenthyrSet.OVEN
+    );
+
+    BlockEntityEntry<CounterBlockEntity> COUNTER = register(
+            "counter", CounterBlockEntity::new,
+            NordicSet.COUNTER, VenthyrSet.COUNTER
+    );
 
     static void bootstrap()
     {

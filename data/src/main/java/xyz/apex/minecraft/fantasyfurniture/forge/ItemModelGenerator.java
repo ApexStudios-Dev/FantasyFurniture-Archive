@@ -17,6 +17,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.function.Supplier;
 
@@ -32,6 +33,12 @@ public final class ItemModelGenerator extends ItemModelProvider
     {
         blockItem(FantasyFurniture.FURNITURE_STATION_BLOCK);
 
+        nordic();
+        venthyr();
+    }
+
+    private void nordic()
+    {
         blockItem(NordicSet.WOOL);
         blockItem(NordicSet.CARPET);
         blockItem(NordicSet.WALL_LIGHT);
@@ -63,6 +70,44 @@ public final class ItemModelGenerator extends ItemModelProvider
         shelfBlockItem(NordicSet.SHELF);
         sofaBlockItem(NordicSet.SOFA);
         sofaBlockItem(NordicSet.COUNTER);
+    }
+
+    private void venthyr()
+    {
+        blockItem(VenthyrSet.WOOL);
+        blockItem(VenthyrSet.CARPET);
+        blockItem(VenthyrSet.WALL_LIGHT);
+        blockItem(VenthyrSet.FLOOR_LIGHT);
+        blockItem(VenthyrSet.TABLE_LARGE);
+        blockItem(VenthyrSet.TABLE_LARGE_FANCY);
+        blockItem(VenthyrSet.TABLE_SMALL);
+        blockItem(VenthyrSet.TABLE_SMALL_FANCY);
+        blockItem(VenthyrSet.TABLE_WIDE);
+        blockItem(VenthyrSet.TABLE_WIDE_FANCY);
+        blockItem(VenthyrSet.BENCH);
+        blockItem(VenthyrSet.CHAIR);
+        blockItem(VenthyrSet.CHANDELIER);
+        blockItem(VenthyrSet.CUSHION);
+        blockItem(VenthyrSet.STOOL);
+        blockItem(VenthyrSet.CHEST);
+        blockItem(VenthyrSet.BOOKSHELF);
+        blockItem(VenthyrSet.DESK_LEFT);
+        blockItem(VenthyrSet.DESK_RIGHT);
+        blockItem(VenthyrSet.DRAWER);
+        blockItem(VenthyrSet.DRESSER);
+        blockItem(VenthyrSet.LOCKBOX);
+        blockItem(VenthyrSet.WARDROBE_BOTTOM);
+        blockItem(VenthyrSet.WARDROBE_TOP);
+        blockItem(VenthyrSet.PAINTING_WIDE);
+        blockItem(VenthyrSet.PAINTING_SMALL);
+        blockItem(VenthyrSet.OVEN);
+        doorBlockItem(VenthyrSet.DOOR_DOUBLE);
+        doorBlockItem(VenthyrSet.DOOR_SINGLE);
+        blockItem(VenthyrSet.BED_SINGLE);
+        blockItem(VenthyrSet.BED_DOUBLE);
+        shelfBlockItem(VenthyrSet.SHELF);
+        sofaBlockItem(VenthyrSet.SOFA);
+        sofaBlockItem(VenthyrSet.COUNTER);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

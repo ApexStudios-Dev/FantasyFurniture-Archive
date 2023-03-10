@@ -16,6 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import xyz.apex.minecraft.apexcore.common.util.function.Lazy;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.function.Supplier;
 
@@ -30,7 +31,7 @@ public final class EmiFantasyFurnitureFabricPlugin implements EmiPlugin
         registry.addWorkstation(FURNITURE_STATION_CATEGORY.get(), EmiIngredient.of(Ingredient.of(FantasyFurniture.FURNITURE_STATION_BLOCK)));
         registry.getRecipeManager().getAllRecipesFor(FantasyFurniture.FURNITURE_STATION_RECIPE.asRecipeType()).stream().map(EmiFurnitureStationRecipe::new).forEach(registry::addRecipe);
 
-        registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, EmiIngredient.of(Ingredient.of(NordicSet.OVEN)));
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, EmiIngredient.of(Ingredient.of(NordicSet.OVEN, VenthyrSet.OVEN)));
     }
 
     private static EmiRenderable texture(ResourceLocation texture)

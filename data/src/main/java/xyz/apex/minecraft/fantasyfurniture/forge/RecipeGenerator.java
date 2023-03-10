@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 import java.util.function.Consumer;
@@ -28,6 +29,12 @@ public final class RecipeGenerator extends RecipeProvider
     {
         furnitureStation(consumer);
 
+        nordic(consumer);
+        venthyr(consumer);
+    }
+
+    private void nordic(Consumer<FinishedRecipe> consumer)
+    {
         nordicStation(consumer, NordicSet.WOOL);
         nordicStation(consumer, NordicSet.CARPET);
         nordicStation(consumer, NordicSet.WALL_LIGHT);
@@ -61,6 +68,44 @@ public final class RecipeGenerator extends RecipeProvider
         nordicStation(consumer, NordicSet.COUNTER);
     }
 
+    private void venthyr(Consumer<FinishedRecipe> consumer)
+    {
+        venthyrStation(consumer, VenthyrSet.WOOL);
+        venthyrStation(consumer, VenthyrSet.CARPET);
+        venthyrStation(consumer, VenthyrSet.WALL_LIGHT);
+        venthyrStation(consumer, VenthyrSet.FLOOR_LIGHT);
+        venthyrStation(consumer, VenthyrSet.TABLE_LARGE);
+        venthyrStation(consumer, VenthyrSet.TABLE_LARGE_FANCY);
+        venthyrStation(consumer, VenthyrSet.TABLE_WIDE);
+        venthyrStation(consumer, VenthyrSet.TABLE_WIDE_FANCY);
+        venthyrStation(consumer, VenthyrSet.TABLE_SMALL);
+        venthyrStation(consumer, VenthyrSet.TABLE_SMALL_FANCY);
+        venthyrStation(consumer, VenthyrSet.BENCH);
+        venthyrStation(consumer, VenthyrSet.CHAIR);
+        venthyrStation(consumer, VenthyrSet.CHANDELIER);
+        venthyrStation(consumer, VenthyrSet.CUSHION);
+        venthyrStation(consumer, VenthyrSet.STOOL);
+        venthyrStation(consumer, VenthyrSet.CHEST);
+        venthyrStation(consumer, VenthyrSet.BOOKSHELF);
+        venthyrStation(consumer, VenthyrSet.DESK_LEFT);
+        venthyrStation(consumer, VenthyrSet.DESK_RIGHT);
+        venthyrStation(consumer, VenthyrSet.DRAWER);
+        venthyrStation(consumer, VenthyrSet.DRESSER);
+        venthyrStation(consumer, VenthyrSet.LOCKBOX);
+        venthyrStation(consumer, VenthyrSet.WARDROBE_BOTTOM);
+        venthyrStation(consumer, VenthyrSet.WARDROBE_TOP);
+        venthyrStation(consumer, VenthyrSet.PAINTING_WIDE);
+        venthyrStation(consumer, VenthyrSet.PAINTING_SMALL);
+        venthyrStation(consumer, VenthyrSet.OVEN);
+        venthyrStation(consumer, VenthyrSet.DOOR_DOUBLE);
+        venthyrStation(consumer, VenthyrSet.DOOR_SINGLE);
+        venthyrStation(consumer, VenthyrSet.BED_SINGLE);
+        venthyrStation(consumer, VenthyrSet.BED_DOUBLE);
+        venthyrStation(consumer, VenthyrSet.SHELF);
+        venthyrStation(consumer, VenthyrSet.SOFA);
+        venthyrStation(consumer, VenthyrSet.COUNTER);
+    }
+
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
     {
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.CRAFTING_TABLE), Ingredient.of(Items.LEATHER), RecipeCategory.MISC, FantasyFurniture.FURNITURE_STATION_BLOCK.get().asItem())
@@ -73,6 +118,11 @@ public final class RecipeGenerator extends RecipeProvider
     private void nordicStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
     {
         furnitureStationGeneric(exporter, NordicSet.NAME, () -> Blocks.OAK_PLANKS, () -> Blocks.BROWN_WOOL, item);
+    }
+
+    private void venthyrStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, VenthyrSet.NAME, () -> Blocks.SPRUCE_PLANKS, () -> Blocks.RED_WOOL, item);
     }
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)
