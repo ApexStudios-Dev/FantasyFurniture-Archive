@@ -18,6 +18,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.function.Supplier;
 
@@ -60,34 +63,42 @@ public class FloorLightBlock extends TorchBlock implements MultiBlock
         var z = (double) pos.getZ() + .5D;
 
         var flameParticle = getFlameParticle();
-        var offset = .25D;
 
-        for(var i = 0; i < 4; i++)
+        if(NordicSet.FLOOR_LIGHT.hasBlockState(blockState))
         {
-            // offset x for odds only, negate if index is 1
-            // offset z for events only, negate if index is 2
-            var xOff = (i % 2 == 1) ? (i == 1) ? -offset : offset : 0D;
-            var zOff = (i % 2 == 0) ? (i == 2) ? -offset : offset : 0D;
+            var offset = .25D;
 
-            level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
-            level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
+            for(var i = 0; i < 4; i++)
+            {
+                // offset x for odds only, negate if index is 1
+                // offset z for events only, negate if index is 2
+                var xOff = (i % 2 == 1) ? (i == 1) ? -offset : offset : 0D;
+                var zOff = (i % 2 == 0) ? (i == 2) ? -offset : offset : 0D;
+
+                level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
+            }
         }
+        else if(VenthyrSet.FLOOR_LIGHT.hasBlockState(blockState))
+        {
+            x -= .225D;
+            y += .1D;
+            z -= .225D;
 
-        /*// back
-        level.addParticle(ParticleTypes.SMOKE, x, y, z - .25D, 0D, 0D, 0D);
-        level.addParticle(flameParticle, x, y, z - .25D, 0D, 0D, 0D);
+            for(var i = 0; i < 4; i++)
+            {
+                var xOff = (i == 1 || i == 3) ? .4D : 0D;
+                var zOff = (i == 2 || i == 3) ? .4D : 0D;
 
-        // front
-        level.addParticle(ParticleTypes.SMOKE, x, y, z + .25D, 0D, 0D, 0D);
-        level.addParticle(flameParticle, x, y, z + .25D, 0D, 0D, 0D);
-
-        // left
-        level.addParticle(ParticleTypes.SMOKE, x - .25D, y, z, 0D, 0D, 0D);
-        level.addParticle(flameParticle, x - .25D, y, z, 0D, 0D, 0D);
-
-        // right
-        level.addParticle(ParticleTypes.SMOKE, x + .25D, y, z, 0D, 0D, 0D);
-        level.addParticle(flameParticle, x + .25D, y, z, 0D, 0D, 0D);*/
+                level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
+            }
+        }
+        else if(DunmerSet.FLOOR_LIGHT.hasBlockState(blockState))
+        {
+            level.addParticle(ParticleTypes.SMOKE, x, y + .1D, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x, y + .1D, z, 0D, 0D, 0D);
+        }
     }
 
     @Override

@@ -26,7 +26,9 @@ import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
+import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 public class OvenBlock extends AbstractFurnaceBlock
 {
@@ -59,6 +61,7 @@ public class OvenBlock extends AbstractFurnaceBlock
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random)
     {
         if(!blockState.getValue(LIT)) return;
+        if(this instanceof MultiBlock multiBlock && !multiBlock.getMultiBlockType().isOrigin(blockState)) return;
 
         if(NordicSet.OVEN.hasBlockState(blockState))
         {
@@ -76,6 +79,53 @@ public class OvenBlock extends AbstractFurnaceBlock
             var zOff = axis == Direction.Axis.Z ? facing.getStepZ() * .52D : h;
 
             level.addParticle(ParticleTypes.SMOKE, x + xOff, y + yOff, z + zOff, 0D, 0D, 0D);
+        }
+        else if(VenthyrSet.OVEN.hasBlockState(blockState))
+        {
+            var x = (double) pos.getX() + .5D;
+            var y = (double) pos.getY() + .4D;
+            var z = (double) pos.getZ() + .5D;
+
+            if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
+
+            if(random.nextInt(3) == 0)
+            {
+                for(var i = 0; i < random.nextInt(1) + 1; i++)
+                {
+                    level.addParticle(ParticleTypes.LAVA, x, y, z, random.nextFloat() / 16F, 5F, random.nextFloat() / 16F);
+                }
+            }
+        }
+        else if(DunmerSet.OVEN.hasBlockState(blockState))
+        {
+            var facing = blockState.getValue(FACING);
+
+            var x = (double) pos.getX();
+            var y = (double) pos.getY() + 1D;
+            var z = (double) pos.getZ();
+
+            if(facing == Direction.EAST)
+            {
+                x += .5D;
+            }
+            else if(facing == Direction.SOUTH)
+            {
+                x += 1D;
+                z += .5D;
+            }
+            else if(facing == Direction.NORTH)
+            {
+                z += .5D;
+            }
+            else
+            {
+                x += .5D;
+                z += 1D;
+            }
+
+            if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
+
+            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
         }
     }
 
