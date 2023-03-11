@@ -1614,29 +1614,29 @@ public interface AllVoxelShapes
         static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
         {
             return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> Nordic.SHELF_LEFT;
-                case RIGHT -> Nordic.SHELF_RIGHT;
-                case SINGLE -> Nordic.SHELF_SINGLE;
-                case CENTER -> Nordic.SHELF_CENTER;
+                case LEFT -> SHELF_LEFT;
+                case RIGHT -> SHELF_RIGHT;
+                case SINGLE -> SHELF_SINGLE;
+                case CENTER -> SHELF_CENTER;
             }, block, blockState);
         }
 
         static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
         {
             return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> Nordic.SOFA_LEFT;
-                case RIGHT -> Nordic.SOFA_RIGHT;
-                case SINGLE -> Nordic.SOFA_SINGLE;
-                case CENTER -> Nordic.SOFA_CENTER;
-                case CORNER -> Nordic.SOFA_CORNER;
+                case LEFT -> SOFA_LEFT;
+                case RIGHT -> SOFA_RIGHT;
+                case SINGLE -> SOFA_SINGLE;
+                case CENTER -> SOFA_CENTER;
+                case CORNER -> SOFA_CORNER;
             }, block, blockState);
         }
 
         static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
         {
             return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> Nordic.COUNTER_SINGLE;
-                case CORNER -> Nordic.COUNTER_CORNER;
+                case SINGLE -> COUNTER_SINGLE;
+                case CORNER -> COUNTER_CORNER;
             }, block, blockState);
         }
 

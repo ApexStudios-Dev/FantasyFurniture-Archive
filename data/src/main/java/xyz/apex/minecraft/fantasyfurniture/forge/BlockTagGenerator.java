@@ -61,9 +61,10 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.CHEST.get(), NordicSet.BOOKSHELF.get(), NordicSet.DESK_LEFT.get(),
                 NordicSet.DESK_RIGHT.get(), NordicSet.DRAWER.get(), NordicSet.DRESSER.get(),
                 NordicSet.LOCKBOX.get(), NordicSet.WARDROBE_BOTTOM.get(), NordicSet.WARDROBE_TOP.get(),
-                NordicSet.PAINTING_WIDE.get(), NordicSet.PAINTING_SMALL.get(), NordicSet.OVEN.get(), NordicSet.DOOR_DOUBLE.get(),
-                NordicSet.DOOR_SINGLE.get(), NordicSet.BED_SINGLE.get(), NordicSet.BED_DOUBLE.get(),
-                NordicSet.SHELF.get(), NordicSet.SOFA.get(), NordicSet.COUNTER.get()
+                NordicSet.PAINTING_WIDE.get(), NordicSet.PAINTING_SMALL.get(), NordicSet.OVEN.get(),
+                NordicSet.DOOR_DOUBLE.get(), NordicSet.DOOR_SINGLE.get(), NordicSet.BED_SINGLE.get(),
+                NordicSet.BED_DOUBLE.get(), NordicSet.SHELF.get(), NordicSet.SOFA.get(),
+                NordicSet.COUNTER.get()
         );
     }
 
@@ -126,9 +127,10 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 DunmerSet.CHEST.get(), DunmerSet.BOOKSHELF.get(), DunmerSet.DESK_LEFT.get(),
                 DunmerSet.DESK_RIGHT.get(), DunmerSet.DRAWER.get(), DunmerSet.DRESSER.get(),
                 DunmerSet.LOCKBOX.get(), DunmerSet.WARDROBE_BOTTOM.get(), DunmerSet.WARDROBE_TOP.get(),
-                DunmerSet.PAINTING_WIDE.get(), DunmerSet.PAINTING_SMALL.get(), DunmerSet.OVEN.get(), NordicSet.DOOR_DOUBLE.get(),
-                DunmerSet.DOOR_SINGLE.get(), DunmerSet.BED_SINGLE.get(), DunmerSet.BED_DOUBLE.get(),
-                DunmerSet.SHELF.get(), DunmerSet.SOFA.get(), DunmerSet.COUNTER.get()
+                DunmerSet.PAINTING_WIDE.get(), DunmerSet.PAINTING_SMALL.get(), DunmerSet.OVEN.get(),
+                DunmerSet.DOOR_DOUBLE.get(), DunmerSet.DOOR_SINGLE.get(), DunmerSet.BED_SINGLE.get(),
+                DunmerSet.BED_DOUBLE.get(), DunmerSet.SHELF.get(), DunmerSet.SOFA.get(),
+                DunmerSet.COUNTER.get()
         );
     }
 
@@ -158,9 +160,10 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 BoneSet.Wither.CHEST.get(), BoneSet.Wither.BOOKSHELF.get(), BoneSet.Wither.DESK_LEFT.get(),
                 BoneSet.Wither.DESK_RIGHT.get(), BoneSet.Wither.DRAWER.get(), BoneSet.Wither.DRESSER.get(),
                 BoneSet.Wither.LOCKBOX.get(), BoneSet.Wither.WARDROBE_BOTTOM.get(), BoneSet.Wither.WARDROBE_TOP.get(),
-                BoneSet.Wither.PAINTING_WIDE.get(), BoneSet.Wither.PAINTING_SMALL.get(), BoneSet.Wither.OVEN.get(), BoneSet.Wither.DOOR_DOUBLE.get(),
-                BoneSet.Wither.DOOR_SINGLE.get(), BoneSet.Wither.BED_SINGLE.get(), BoneSet.Wither.BED_DOUBLE.get(),
-                BoneSet.Wither.SHELF.get(), BoneSet.Wither.SOFA.get(), BoneSet.Wither.COUNTER.get()
+                BoneSet.Wither.PAINTING_WIDE.get(), BoneSet.Wither.PAINTING_SMALL.get(), BoneSet.Wither.OVEN.get(),
+                BoneSet.Wither.DOOR_DOUBLE.get(), BoneSet.Wither.DOOR_SINGLE.get(), BoneSet.Wither.BED_SINGLE.get(),
+                BoneSet.Wither.BED_DOUBLE.get(), BoneSet.Wither.SHELF.get(), BoneSet.Wither.SOFA.get(),
+                BoneSet.Wither.COUNTER.get()
         );
     }
 
@@ -190,9 +193,10 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 BoneSet.Skeleton.CHEST.get(), BoneSet.Skeleton.BOOKSHELF.get(), BoneSet.Skeleton.DESK_LEFT.get(),
                 BoneSet.Skeleton.DESK_RIGHT.get(), BoneSet.Skeleton.DRAWER.get(), BoneSet.Skeleton.DRESSER.get(),
                 BoneSet.Skeleton.LOCKBOX.get(), BoneSet.Skeleton.WARDROBE_BOTTOM.get(), BoneSet.Skeleton.WARDROBE_TOP.get(),
-                BoneSet.Skeleton.PAINTING_WIDE.get(), BoneSet.Skeleton.PAINTING_SMALL.get(), BoneSet.Skeleton.OVEN.get(), BoneSet.Skeleton.DOOR_DOUBLE.get(),
-                BoneSet.Skeleton.DOOR_SINGLE.get(), BoneSet.Skeleton.BED_SINGLE.get(), BoneSet.Skeleton.BED_DOUBLE.get(),
-                BoneSet.Skeleton.SHELF.get(), BoneSet.Skeleton.SOFA.get(), BoneSet.Skeleton.COUNTER.get()
+                BoneSet.Skeleton.PAINTING_WIDE.get(), BoneSet.Skeleton.PAINTING_SMALL.get(), BoneSet.Skeleton.OVEN.get(),
+                BoneSet.Skeleton.DOOR_DOUBLE.get(), BoneSet.Skeleton.DOOR_SINGLE.get(), BoneSet.Skeleton.BED_SINGLE.get(),
+                BoneSet.Skeleton.BED_DOUBLE.get(), BoneSet.Skeleton.SHELF.get(), BoneSet.Skeleton.SOFA.get(),
+                BoneSet.Skeleton.COUNTER.get()
         );
     }
 
