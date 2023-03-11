@@ -152,6 +152,22 @@ public class OvenBlock extends AbstractFurnaceBlock
                 else level.addParticle(ParticleTypes.MYCELIUM, x + xOff, y + yOff, z + zOff, 0D, 0D, 0D);
             }
         }
+        else if(NecrolordSet.OVEN.hasBlockState(blockState))
+        {
+            var x = (double) pos.getX() + .5D;
+            var y = (double) pos.getY() + .4D;
+            var z = (double) pos.getZ() + .5D;
+
+            if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
+
+            if(random.nextInt(3) == 0)
+            {
+                for(var i = 0; i < random.nextInt(1) + 1; i++)
+                {
+                    level.addParticle(ParticleTypes.LAVA, x, y, z, random.nextFloat() / 16F, 5F, random.nextFloat() / 16F);
+                }
+            }
+        }
     }
 
     public static class AsMultiBlock extends OvenBlock implements MultiBlock

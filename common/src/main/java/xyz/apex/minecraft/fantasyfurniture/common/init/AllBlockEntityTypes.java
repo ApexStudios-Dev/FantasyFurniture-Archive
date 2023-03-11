@@ -16,14 +16,14 @@ public interface AllBlockEntityTypes
             "chest", ChestBlockEntity::new,
             NordicSet.CHEST, VenthyrSet.CHEST,
             DunmerSet.CHEST, BoneSet.Skeleton.CHEST,
-            BoneSet.Wither.CHEST
+            BoneSet.Wither.CHEST, NecrolordSet.CHEST
     );
 
     BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF = register(
             "bookshelf", BookshelfBlockEntity::new,
             NordicSet.BOOKSHELF, VenthyrSet.BOOKSHELF,
             DunmerSet.BOOKSHELF, BoneSet.Wither.BOOKSHELF,
-            BoneSet.Skeleton.BOOKSHELF
+            BoneSet.Skeleton.BOOKSHELF, NecrolordSet.BOOKSHELF
     );
 
     BlockEntityEntry<DeskBlockEntity> DESK = register(
@@ -32,49 +32,50 @@ public interface AllBlockEntityTypes
             VenthyrSet.DESK_LEFT, VenthyrSet.DESK_RIGHT,
             DunmerSet.DESK_LEFT, DunmerSet.DESK_RIGHT,
             BoneSet.Wither.DESK_LEFT, BoneSet.Wither.DESK_RIGHT,
-            BoneSet.Skeleton.DESK_LEFT, BoneSet.Skeleton.DESK_RIGHT
+            BoneSet.Skeleton.DESK_LEFT, BoneSet.Skeleton.DESK_RIGHT,
+            NecrolordSet.DESK_LEFT, NecrolordSet.DESK_RIGHT
     );
 
     BlockEntityEntry<DrawerBlockEntity> DRAWER = register(
             "drawer", DrawerBlockEntity::new,
             NordicSet.DRAWER, VenthyrSet.DRAWER,
             DunmerSet.DRAWER, BoneSet.Wither.DRAWER,
-            BoneSet.Skeleton.DRAWER
+            BoneSet.Skeleton.DRAWER, NecrolordSet.DRAWER
     );
 
     BlockEntityEntry<DresserBlockEntity> DRESSER = register(
             "dresser", DresserBlockEntity::new,
             NordicSet.DRESSER, VenthyrSet.DRESSER,
             DunmerSet.DRESSER, BoneSet.Wither.DRESSER,
-            BoneSet.Skeleton.DRESSER
+            BoneSet.Skeleton.DRESSER, NecrolordSet.DRESSER
     );
 
     BlockEntityEntry<LockboxBlockEntity> LOCKBOX = register(
             "lockbox", LockboxBlockEntity::new,
             NordicSet.LOCKBOX, VenthyrSet.LOCKBOX,
             DunmerSet.LOCKBOX, BoneSet.Wither.LOCKBOX,
-            BoneSet.Skeleton.LOCKBOX
+            BoneSet.Skeleton.LOCKBOX, NecrolordSet.LOCKBOX
     );
 
     BlockEntityEntry<WardrobeBlockEntity> WARDROBE = register(
             "wardrobe", WardrobeBlockEntity::new,
             NordicSet.WARDROBE_BOTTOM, VenthyrSet.WARDROBE_BOTTOM,
             DunmerSet.WARDROBE_BOTTOM, BoneSet.Wither.WARDROBE_BOTTOM,
-            BoneSet.Skeleton.WARDROBE_BOTTOM
+            BoneSet.Skeleton.WARDROBE_BOTTOM, NecrolordSet.WARDROBE_BOTTOM
     );
 
     BlockEntityEntry<OvenBlockEntity> OVEN = register(
             "oven", OvenBlockEntity::new,
             NordicSet.OVEN, VenthyrSet.OVEN,
             DunmerSet.OVEN, BoneSet.Wither.OVEN,
-            BoneSet.Skeleton.OVEN
+            BoneSet.Skeleton.OVEN, NecrolordSet.OVEN
     );
 
     BlockEntityEntry<CounterBlockEntity> COUNTER = register(
             "counter", CounterBlockEntity::new,
             NordicSet.COUNTER, VenthyrSet.COUNTER,
             DunmerSet.COUNTER, BoneSet.Wither.COUNTER,
-            BoneSet.Skeleton.COUNTER
+            BoneSet.Skeleton.COUNTER, NecrolordSet.COUNTER
     );
 
     static void bootstrap()

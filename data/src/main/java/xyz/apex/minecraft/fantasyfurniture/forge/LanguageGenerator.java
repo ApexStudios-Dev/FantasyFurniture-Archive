@@ -6,10 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class LanguageGenerator extends LanguageProvider
 {
@@ -34,6 +31,7 @@ public final class LanguageGenerator extends LanguageProvider
         dunmer();
         boneWither();
         boneSkeleton();
+        necrolord();
     }
 
     private void nordic()
@@ -217,6 +215,42 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(BoneSet.Skeleton.SOFA, "Bone Skeleton Sofa");
         addBlock(BoneSet.Skeleton.COUNTER, "Bone Skeleton Counter");
         addCreativeModeTab(BoneSet.Skeleton.NAME, "Bone Skeleton");
+    }
+
+    private void necrolord()
+    {
+        addBlock(NecrolordSet.WOOL, "Necrolord Wool");
+        addBlock(NecrolordSet.CARPET, "Necrolord Carpet");
+        addBlock(NecrolordSet.WALL_LIGHT, "Necrolord Wall Light");
+        addBlock(NecrolordSet.FLOOR_LIGHT, "Necrolord Floor Light");
+        addBlock(NecrolordSet.TABLE_LARGE, "Necrolord Table Large");
+        addBlock(NecrolordSet.TABLE_SMALL, "Necrolord Table Small");
+        addBlock(NecrolordSet.TABLE_WIDE, "Necrolord Table Wide");
+        addBlock(NecrolordSet.BENCH, "Necrolord Bench");
+        addBlock(NecrolordSet.CHAIR, "Necrolord Chair");
+        addBlock(NecrolordSet.CHANDELIER, "Necrolord Chandelier");
+        addBlock(NecrolordSet.CUSHION, "Necrolord Cushion");
+        addBlock(NecrolordSet.STOOL, "Necrolord Stool");
+        addBlock(NecrolordSet.CHEST, "Necrolord Chest");
+        addBlock(NecrolordSet.BOOKSHELF, "Necrolord Bookshelf");
+        addBlock(NecrolordSet.DESK_LEFT, "Necrolord Desk Left");
+        addBlock(NecrolordSet.DESK_RIGHT, "Necrolord Desk Right");
+        addBlock(NecrolordSet.DRAWER, "Necrolord Drawer");
+        addBlock(NecrolordSet.DRESSER, "Necrolord Dresser");
+        addBlock(NecrolordSet.LOCKBOX, "Necrolord Lockbox");
+        addBlock(NecrolordSet.WARDROBE_BOTTOM, "Necrolord Wardrobe Bottom");
+        addBlock(NecrolordSet.WARDROBE_TOP, "Necrolord Wardrobe Top");
+        addBlock(NecrolordSet.PAINTING_WIDE, "Necrolord Painting Wide");
+        addBlock(NecrolordSet.PAINTING_SMALL, "Necrolord Painting Small");
+        addBlock(NecrolordSet.OVEN, "Necrolord Oven");
+        addBlock(NecrolordSet.DOOR_DOUBLE, "Necrolord Door Double");
+        addBlock(NecrolordSet.DOOR_SINGLE, "Necrolord Door Single");
+        addBlock(NecrolordSet.BED_SINGLE, "Necrolord Bed Single");
+        addBlock(NecrolordSet.BED_DOUBLE, "Necrolord Bed Double");
+        addBlock(NecrolordSet.SHELF, "Necrolord Shelf");
+        addBlock(NecrolordSet.SOFA, "Necrolord Sofa");
+        addBlock(NecrolordSet.COUNTER, "Necrolord Counter");
+        addCreativeModeTab(NecrolordSet.NAME, "Necrolord");
     }
 
     private void addCreativeModeTab(String key, String name)

@@ -15,10 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 import java.util.List;
@@ -62,6 +59,12 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
                 new ResourceLocation(FantasyFurniture.ID, BoneSet.Skeleton.NAME),
                 Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, BoneSet.Skeleton.NAME)),
                 EntryIngredients.ofItemTag(BoneSet.Skeleton.ITEM_TAG)
+        );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, NecrolordSet.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, NecrolordSet.NAME)),
+                EntryIngredients.ofItemTag(NecrolordSet.ITEM_TAG)
         );
     }
 

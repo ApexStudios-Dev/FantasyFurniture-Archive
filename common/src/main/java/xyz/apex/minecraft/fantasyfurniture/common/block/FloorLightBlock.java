@@ -21,10 +21,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
@@ -119,6 +116,23 @@ public class FloorLightBlock extends TorchBlock implements MultiBlock
 
             level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
             level.addParticle(flameParticle, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
+        }
+        else if(NecrolordSet.FLOOR_LIGHT.hasBlockState(blockState))
+        {
+            var offsetH = .3D;
+
+            var facing = blockState.getOptionalValue(WithHorizontalFacing.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
+            var stepX = facing.getStepX();
+            var stepZ = facing.getStepZ();
+
+            level.addParticle(ParticleTypes.SMOKE, x, y + .2D, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x, y + .2D, z, 0D, 0D, 0D);
+
+            level.addParticle(ParticleTypes.SMOKE, x + (stepX * offsetH), y + .1D, z + (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(flameParticle, x + (stepX * offsetH), y + .1D, z + (stepZ * offsetH), 0D, 0D, 0D);
+
+            level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(flameParticle, x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
         }
     }
 

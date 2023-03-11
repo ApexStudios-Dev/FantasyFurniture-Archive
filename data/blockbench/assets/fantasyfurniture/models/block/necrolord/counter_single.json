@@ -1,0 +1,114 @@
+{
+	"credit": "Made by Fantasy",
+	"texture_size": [128, 128],
+	"textures": {
+		"particle": "fantasyfurniture:particles/necrolord",
+		"counter": "fantasyfurniture:models/necrolord/counter"
+	},
+	"elements": [
+		{
+			"name": "base",
+			"from": [0, 0, 3],
+			"to": [16, 13, 16],
+			"faces": {
+				"north": {"uv": [0, 4, 2, 5.625], "texture": "#counter"},
+				"east": {"uv": [6, 0, 7.625, 1.625], "texture": "#counter"},
+				"south": {"uv": [4, 0, 6, 1.625], "texture": "#counter"},
+				"west": {"uv": [6, 1.625, 7.625, 3.25], "texture": "#counter"},
+				"up": {"uv": [6, 3.25, 4, 1.625], "texture": "#counter"},
+				"down": {"uv": [4, 4, 2, 5.625], "texture": "#counter"}
+			}
+		},
+		{
+			"name": "doors",
+			"from": [1, 1, 2],
+			"to": [15, 12, 3],
+			"faces": {
+				"north": {"uv": [0, 7.25, 1.75, 8.625], "texture": "#counter"},
+				"east": {"uv": [3.875, 7.25, 4, 8.625], "texture": "#counter"},
+				"south": {"uv": [1.75, 7.25, 3.5, 8.625], "texture": "#counter"},
+				"west": {"uv": [7.625, 4.5, 7.75, 5.875], "texture": "#counter"},
+				"up": {"uv": [9.375, 4.375, 7.625, 4.25], "texture": "#counter"},
+				"down": {"uv": [9.375, 4.375, 7.625, 4.5], "texture": "#counter"}
+			}
+		},
+		{
+			"name": "top",
+			"from": [0, 13, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [7.25, 6.5, 9.25, 6.875], "texture": "#counter"},
+				"east": {"uv": [7.25, 6.875, 9.25, 7.25], "texture": "#counter"},
+				"south": {"uv": [7.25, 7.25, 9.25, 7.625], "texture": "#counter"},
+				"west": {"uv": [7.625, 0, 9.625, 0.375], "texture": "#counter"},
+				"up": {"uv": [2, 2, 0, 0], "texture": "#counter"},
+				"down": {"uv": [2, 2, 0, 4], "texture": "#counter"}
+			}
+		},
+		{
+			"name": "handle_2",
+			"from": [5, 4.5, 1],
+			"to": [6, 8.5, 2],
+			"faces": {
+				"north": {"uv": [7.625, 5.875, 7.75, 6.375], "texture": "#counter"},
+				"east": {"uv": [7.25, 7.625, 7.375, 8.125], "texture": "#counter"},
+				"south": {"uv": [7.375, 7.625, 7.5, 8.125], "texture": "#counter"},
+				"west": {"uv": [7.5, 7.625, 7.625, 8.125], "texture": "#counter"},
+				"up": {"uv": [7.75, 6.5, 7.625, 6.375], "texture": "#counter"},
+				"down": {"uv": [7.875, 6, 7.75, 6.125], "texture": "#counter"}
+			}
+		},
+		{
+			"name": "handle_3",
+			"from": [10, 4.5, 1],
+			"to": [11, 8.5, 2],
+			"faces": {
+				"north": {"uv": [7.625, 7.625, 7.75, 8.125], "texture": "#counter"},
+				"east": {"uv": [7.75, 4.5, 7.875, 5], "texture": "#counter"},
+				"south": {"uv": [7.75, 5, 7.875, 5.5], "texture": "#counter"},
+				"west": {"uv": [7.75, 5.5, 7.875, 6], "texture": "#counter"},
+				"up": {"uv": [7.875, 6.25, 7.75, 6.125], "texture": "#counter"},
+				"down": {"uv": [7.875, 6.25, 7.75, 6.375], "texture": "#counter"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "counter_single",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		}
+	]
+}

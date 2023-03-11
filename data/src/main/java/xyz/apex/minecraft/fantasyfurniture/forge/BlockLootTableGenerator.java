@@ -7,10 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import xyz.apex.minecraft.apexcore.common.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Set;
 
@@ -31,6 +28,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dunmer();
         boneWither();
         boneSkeleton();
+        necrolord();
     }
 
     private void nordic()
@@ -209,6 +207,41 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(BoneSet.Skeleton.SHELF.get());
         dropSelf(BoneSet.Skeleton.SOFA.get());
         dropSelf(BoneSet.Skeleton.COUNTER.get());
+    }
+
+    private void necrolord()
+    {
+        dropSelf(NecrolordSet.WOOL.get());
+        dropSelf(NecrolordSet.CARPET.get());
+        dropSelf(NecrolordSet.WALL_LIGHT.get());
+        dropSelf(NecrolordSet.FLOOR_LIGHT.get());
+        dropSelf(NecrolordSet.TABLE_LARGE.get());
+        dropSelf(NecrolordSet.TABLE_WIDE.get());
+        dropSelf(NecrolordSet.TABLE_SMALL.get());
+        dropSelf(NecrolordSet.BENCH.get());
+        dropSelf(NecrolordSet.CHAIR.get());
+        dropSelf(NecrolordSet.CHANDELIER.get());
+        dropSelf(NecrolordSet.CUSHION.get());
+        dropSelf(NecrolordSet.STOOL.get());
+        dropSelf(NecrolordSet.CHEST.get());
+        dropSelf(NecrolordSet.BOOKSHELF.get());
+        dropSelf(NecrolordSet.DESK_LEFT.get());
+        dropSelf(NecrolordSet.DESK_RIGHT.get());
+        dropSelf(NecrolordSet.DRAWER.get());
+        dropSelf(NecrolordSet.DRESSER.get());
+        dropSelf(NecrolordSet.LOCKBOX.get());
+        dropSelf(NecrolordSet.WARDROBE_BOTTOM.get());
+        dropSelf(NecrolordSet.WARDROBE_TOP.get());
+        dropSelf(NecrolordSet.PAINTING_WIDE.get());
+        dropSelf(NecrolordSet.PAINTING_SMALL.get());
+        dropSelf(NecrolordSet.OVEN.get());
+        dropSelf(NecrolordSet.DOOR_DOUBLE.get());
+        dropSelf(NecrolordSet.DOOR_SINGLE.get());
+        dropSelf(NecrolordSet.BED_SINGLE.get());
+        dropSelf(NecrolordSet.BED_DOUBLE.get());
+        dropSelf(NecrolordSet.SHELF.get());
+        dropSelf(NecrolordSet.SOFA.get());
+        dropSelf(NecrolordSet.COUNTER.get());
     }
 
     @Override

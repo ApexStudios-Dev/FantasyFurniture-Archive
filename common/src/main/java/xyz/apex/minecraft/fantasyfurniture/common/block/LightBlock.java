@@ -9,10 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 import xyz.apex.minecraft.apexcore.common.util.function.Lazy;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
@@ -100,6 +97,13 @@ public class LightBlock extends Block
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z - .4D, 0D, 0D, 0D);
             level.addParticle(flameParticle, x, y, z - .4D, 0D, 0D, 0D);
+        }
+        else if(NecrolordSet.CHANDELIER.hasBlockState(blockState))
+        {
+            y += .05D;
+
+            level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle, x, y, z, 0D, 0D, 0D);
         }
     }
 }

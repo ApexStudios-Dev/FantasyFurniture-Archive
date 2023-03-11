@@ -8,10 +8,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class ItemTagGenerator extends ItemTagsProvider
 {
@@ -33,5 +30,6 @@ public final class ItemTagGenerator extends ItemTagsProvider
         copy(BoneSet.BLOCK_TAG, BoneSet.ITEM_TAG);
         copy(BoneSet.Wither.BLOCK_TAG, BoneSet.Wither.ITEM_TAG);
         copy(BoneSet.Skeleton.BLOCK_TAG, BoneSet.Skeleton.ITEM_TAG);
+        copy(NecrolordSet.BLOCK_TAG, NecrolordSet.ITEM_TAG);
     }
 }

@@ -11,10 +11,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Arrays;
 
@@ -43,6 +40,7 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         dunmer();
         boneWither();
         boneSkeleton();
+        necrolord();
     }
 
     private void nordic()
@@ -226,6 +224,42 @@ public final class BlockBenchConverter extends BlockBenchModelConverter
         Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(BoneSet.Skeleton.NAME, shelfType));
         Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(BoneSet.Skeleton.NAME, sofaType));
         Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(BoneSet.Skeleton.NAME, counterType));
+    }
+
+    private void necrolord()
+    {
+        convertFurniture(NecrolordSet.NAME, "wall_light");
+        convertFurniture(NecrolordSet.NAME, "floor_light");
+        convertFurniture(NecrolordSet.NAME, "table_small").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "table_large").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "table_wide").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "bench").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "chair");
+        convertFurniture(NecrolordSet.NAME, "chandelier").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "cushion");
+        convertFurniture(NecrolordSet.NAME, "stool");
+        convertFurniture(NecrolordSet.NAME, "chest");
+        convertFurniture(NecrolordSet.NAME, "bookshelf").renderType(renderTypeCutout);
+        convertDesk(NecrolordSet.NAME, "left");
+        convertDesk(NecrolordSet.NAME, "right");
+        convertFurniture(NecrolordSet.NAME, "drawer").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "dresser").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "lockbox");
+        convertWardrobe(NecrolordSet.NAME, "bottom").renderType(renderTypeCutout);
+        convertWardrobe(NecrolordSet.NAME, "top").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "painting_wide");
+        convertFurniture(NecrolordSet.NAME, "painting_small");
+        convertFurniture(NecrolordSet.NAME, "oven").renderType(renderTypeCutout);
+        convertFurnitureEx(NecrolordSet.NAME, "oven_lit", "oven").renderType(renderTypeCutout);
+        convertDoor(NecrolordSet.NAME, "double", true);
+        convertDoor(NecrolordSet.NAME, "double", false);
+        convertDoor(NecrolordSet.NAME, "single", true);
+        convertDoor(NecrolordSet.NAME, "single", false);
+        convertFurniture(NecrolordSet.NAME, "bed_single").renderType(renderTypeCutout);
+        convertFurniture(NecrolordSet.NAME, "bed_double").renderType(renderTypeCutout);
+        Arrays.stream(ShelfType.values()).forEach(shelfType -> convertShelf(NecrolordSet.NAME, shelfType));
+        Arrays.stream(SofaType.values()).forEach(sofaType -> convertSofa(NecrolordSet.NAME, sofaType));
+        Arrays.stream(CounterType.values()).forEach(counterType -> convertCounter(NecrolordSet.NAME, counterType));
     }
 
     private BlockModelBuilder convertDesk(String furnitureSet, String type)

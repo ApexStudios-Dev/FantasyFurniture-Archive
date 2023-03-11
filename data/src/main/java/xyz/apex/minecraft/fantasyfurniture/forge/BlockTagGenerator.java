@@ -9,10 +9,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 
 import xyz.apex.minecraft.apexcore.common.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class BlockTagGenerator extends BlockTagsProvider
 {
@@ -36,6 +33,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         dunmer(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
         boneWither(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
         boneSkeleton(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        necrolord(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
     }
 
     private void nordic(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
@@ -195,6 +193,38 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 BoneSet.Skeleton.PAINTING_WIDE.get(), BoneSet.Skeleton.PAINTING_SMALL.get(), BoneSet.Skeleton.OVEN.get(), BoneSet.Skeleton.DOOR_DOUBLE.get(),
                 BoneSet.Skeleton.DOOR_SINGLE.get(), BoneSet.Skeleton.BED_SINGLE.get(), BoneSet.Skeleton.BED_DOUBLE.get(),
                 BoneSet.Skeleton.SHELF.get(), BoneSet.Skeleton.SOFA.get(), BoneSet.Skeleton.COUNTER.get()
+        );
+    }
+
+    private void necrolord(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
+    {
+        wool.add(NecrolordSet.WOOL.get());
+        carpets.add(NecrolordSet.CARPET.get());
+        woodenDoors.add(NecrolordSet.DOOR_DOUBLE.get(), NecrolordSet.DOOR_SINGLE.get());
+        beds.add(NecrolordSet.BED_SINGLE.get(), NecrolordSet.BED_DOUBLE.get());
+
+        immovable.add(
+                NecrolordSet.FLOOR_LIGHT.get(), NecrolordSet.TABLE_LARGE.get(), NecrolordSet.TABLE_WIDE.get(),
+                NecrolordSet.BENCH.get(), NecrolordSet.CHAIR.get(), NecrolordSet.CHEST.get(),
+                NecrolordSet.BOOKSHELF.get(), NecrolordSet.DESK_LEFT.get(), NecrolordSet.DESK_RIGHT.get(),
+                NecrolordSet.DRAWER.get(), NecrolordSet.DRESSER.get(), NecrolordSet.WARDROBE_BOTTOM.get(),
+                NecrolordSet.WARDROBE_TOP.get(), NecrolordSet.PAINTING_WIDE.get(), NecrolordSet.DOOR_DOUBLE.get(),
+                NecrolordSet.DOOR_SINGLE.get(), NecrolordSet.BED_SINGLE.get(), NecrolordSet.BED_DOUBLE.get(),
+                NecrolordSet.SHELF.get(), NecrolordSet.SOFA.get(), NecrolordSet.COUNTER.get()
+        );
+
+        tag(NecrolordSet.BLOCK_TAG).add(
+                NecrolordSet.WOOL.get(), NecrolordSet.CARPET.get(), NecrolordSet.WALL_LIGHT.get(),
+                NecrolordSet.FLOOR_LIGHT.get(), NecrolordSet.TABLE_LARGE.get(), NecrolordSet.TABLE_WIDE.get(),
+                NecrolordSet.TABLE_SMALL.get(), NecrolordSet.BENCH.get(), NecrolordSet.CHAIR.get(),
+                NecrolordSet.CHANDELIER.get(), NecrolordSet.CUSHION.get(), NecrolordSet.STOOL.get(),
+                NecrolordSet.CHEST.get(), NecrolordSet.BOOKSHELF.get(), NecrolordSet.DESK_LEFT.get(),
+                NecrolordSet.DESK_RIGHT.get(), NecrolordSet.DRAWER.get(), NecrolordSet.DRESSER.get(),
+                NecrolordSet.LOCKBOX.get(), NecrolordSet.WARDROBE_BOTTOM.get(), NecrolordSet.WARDROBE_TOP.get(),
+                NecrolordSet.PAINTING_WIDE.get(), NecrolordSet.PAINTING_SMALL.get(), NecrolordSet.OVEN.get(),
+                NecrolordSet.DOOR_DOUBLE.get(), NecrolordSet.DOOR_SINGLE.get(), NecrolordSet.BED_SINGLE.get(),
+                NecrolordSet.BED_DOUBLE.get(), NecrolordSet.SHELF.get(), NecrolordSet.SOFA.get(),
+                NecrolordSet.COUNTER.get()
         );
     }
 }

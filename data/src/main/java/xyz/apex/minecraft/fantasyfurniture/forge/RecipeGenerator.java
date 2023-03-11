@@ -10,10 +10,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 import java.util.function.Consumer;
@@ -36,6 +33,7 @@ public final class RecipeGenerator extends RecipeProvider
         dunmer(consumer);
         boneWither(consumer);
         boneSkeleton(consumer);
+        necrolord(consumer);
     }
 
     private void nordic(Consumer<FinishedRecipe> consumer)
@@ -216,6 +214,41 @@ public final class RecipeGenerator extends RecipeProvider
         boneSkeletonStation(consumer, BoneSet.Skeleton.COUNTER);
     }
 
+    private void necrolord(Consumer<FinishedRecipe> consumer)
+    {
+        necrolordStation(consumer, NecrolordSet.WOOL);
+        necrolordStation(consumer, NecrolordSet.CARPET);
+        necrolordStation(consumer, NecrolordSet.WALL_LIGHT);
+        necrolordStation(consumer, NecrolordSet.FLOOR_LIGHT);
+        necrolordStation(consumer, NecrolordSet.TABLE_LARGE);
+        necrolordStation(consumer, NecrolordSet.TABLE_WIDE);
+        necrolordStation(consumer, NecrolordSet.TABLE_SMALL);
+        necrolordStation(consumer, NecrolordSet.BENCH);
+        necrolordStation(consumer, NecrolordSet.CHAIR);
+        necrolordStation(consumer, NecrolordSet.CHANDELIER);
+        necrolordStation(consumer, NecrolordSet.CUSHION);
+        necrolordStation(consumer, NecrolordSet.STOOL);
+        necrolordStation(consumer, NecrolordSet.CHEST);
+        necrolordStation(consumer, NecrolordSet.BOOKSHELF);
+        necrolordStation(consumer, NecrolordSet.DESK_LEFT);
+        necrolordStation(consumer, NecrolordSet.DESK_RIGHT);
+        necrolordStation(consumer, NecrolordSet.DRAWER);
+        necrolordStation(consumer, NecrolordSet.DRESSER);
+        necrolordStation(consumer, NecrolordSet.LOCKBOX);
+        necrolordStation(consumer, NecrolordSet.WARDROBE_BOTTOM);
+        necrolordStation(consumer, NecrolordSet.WARDROBE_TOP);
+        necrolordStation(consumer, NecrolordSet.PAINTING_WIDE);
+        necrolordStation(consumer, NecrolordSet.PAINTING_SMALL);
+        necrolordStation(consumer, NecrolordSet.OVEN);
+        necrolordStation(consumer, NecrolordSet.DOOR_DOUBLE);
+        necrolordStation(consumer, NecrolordSet.DOOR_SINGLE);
+        necrolordStation(consumer, NecrolordSet.BED_SINGLE);
+        necrolordStation(consumer, NecrolordSet.BED_DOUBLE);
+        necrolordStation(consumer, NecrolordSet.SHELF);
+        necrolordStation(consumer, NecrolordSet.SOFA);
+        necrolordStation(consumer, NecrolordSet.COUNTER);
+    }
+
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
     {
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.CRAFTING_TABLE), Ingredient.of(Items.LEATHER), RecipeCategory.MISC, FantasyFurniture.FURNITURE_STATION_BLOCK.get().asItem())
@@ -248,6 +281,11 @@ public final class RecipeGenerator extends RecipeProvider
     private void boneSkeletonStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
     {
         furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.BONE, () -> Blocks.WHITE_WOOL, item);
+    }
+
+    private void necrolordStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.DARK_OAK_PLANKS, () -> Blocks.PURPLE_WOOL, item);
     }
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)

@@ -16,10 +16,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
@@ -40,6 +37,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         dunmer();
         boneWither();
         boneSkeleton();
+        necrolord();
     }
 
     private void nordic()
@@ -218,6 +216,41 @@ public final class ItemModelGenerator extends ItemModelProvider
         shelfBlockItem(BoneSet.Skeleton.SHELF);
         sofaBlockItem(BoneSet.Skeleton.SOFA);
         sofaBlockItem(BoneSet.Skeleton.COUNTER);
+    }
+
+    private void necrolord()
+    {
+        blockItem(NecrolordSet.WOOL);
+        blockItem(NecrolordSet.CARPET);
+        blockItem(NecrolordSet.WALL_LIGHT);
+        blockItem(NecrolordSet.FLOOR_LIGHT);
+        blockItem(NecrolordSet.TABLE_LARGE);
+        blockItem(NecrolordSet.TABLE_SMALL);
+        blockItem(NecrolordSet.TABLE_WIDE);
+        blockItem(NecrolordSet.BENCH);
+        blockItem(NecrolordSet.CHAIR);
+        blockItem(NecrolordSet.CHANDELIER);
+        blockItem(NecrolordSet.CUSHION);
+        blockItem(NecrolordSet.STOOL);
+        blockItem(NecrolordSet.CHEST);
+        blockItem(NecrolordSet.BOOKSHELF);
+        blockItem(NecrolordSet.DESK_LEFT);
+        blockItem(NecrolordSet.DESK_RIGHT);
+        blockItem(NecrolordSet.DRAWER);
+        blockItem(NecrolordSet.DRESSER);
+        blockItem(NecrolordSet.LOCKBOX);
+        blockItem(NecrolordSet.WARDROBE_BOTTOM);
+        blockItem(NecrolordSet.WARDROBE_TOP);
+        blockItem(NecrolordSet.PAINTING_WIDE);
+        blockItem(NecrolordSet.PAINTING_SMALL);
+        blockItem(NecrolordSet.OVEN);
+        doorBlockItem(NecrolordSet.DOOR_DOUBLE);
+        doorBlockItem(NecrolordSet.DOOR_SINGLE);
+        blockItem(NecrolordSet.BED_SINGLE);
+        blockItem(NecrolordSet.BED_DOUBLE);
+        shelfBlockItem(NecrolordSet.SHELF);
+        sofaBlockItem(NecrolordSet.SOFA);
+        sofaBlockItem(NecrolordSet.COUNTER);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

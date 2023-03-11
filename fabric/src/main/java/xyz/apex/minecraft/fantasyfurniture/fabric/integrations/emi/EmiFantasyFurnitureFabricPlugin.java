@@ -15,10 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 import xyz.apex.minecraft.apexcore.common.util.function.Lazy;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
@@ -36,7 +33,7 @@ public final class EmiFantasyFurnitureFabricPlugin implements EmiPlugin
         registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, EmiIngredient.of(Ingredient.of(
                 NordicSet.OVEN, VenthyrSet.OVEN,
                 DunmerSet.OVEN, BoneSet.Wither.OVEN,
-                BoneSet.Skeleton.OVEN
+                BoneSet.Skeleton.OVEN, NecrolordSet.OVEN
         )));
     }
 

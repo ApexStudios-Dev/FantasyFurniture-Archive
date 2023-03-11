@@ -24,10 +24,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.HorizontalInventoryBlock
 import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.ShelfBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.DunmerSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -49,6 +46,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         dunmer();
         boneWither();
         boneSkeleton();
+        necrolord();
     }
 
     private void nordic()
@@ -227,6 +225,41 @@ public final class BlockStateGenerator extends BlockStateProvider
         shelfBlock(BoneSet.Skeleton.SHELF);
         sofaBlock(BoneSet.Skeleton.SOFA);
         counterBlock(BoneSet.Skeleton.COUNTER);
+    }
+
+    private void necrolord()
+    {
+        simpleBlock(NecrolordSet.WOOL);
+        carpet(NecrolordSet.CARPET, NecrolordSet.WOOL);
+        wallLight(NecrolordSet.WALL_LIGHT);
+        facingBlock(NecrolordSet.FLOOR_LIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.TABLE_LARGE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.TABLE_SMALL, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.TABLE_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.BENCH, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.CHAIR, HorizontalDirectionalBlock.FACING);
+        simpleExistingBlock(NecrolordSet.CHANDELIER);
+        facingBlock(NecrolordSet.CUSHION, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.STOOL, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.CHEST, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.BOOKSHELF, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.DESK_LEFT, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.DESK_RIGHT, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.DRAWER, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.DRESSER, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.LOCKBOX, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.WARDROBE_BOTTOM, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.WARDROBE_TOP, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.PAINTING_WIDE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.PAINTING_SMALL, HorizontalDirectionalBlock.FACING);
+        ovenBlock(NecrolordSet.OVEN);
+        doorBlock(NecrolordSet.DOOR_DOUBLE);
+        doorBlock(NecrolordSet.DOOR_SINGLE);
+        facingBlock(NecrolordSet.BED_SINGLE, HorizontalDirectionalBlock.FACING);
+        facingBlock(NecrolordSet.BED_DOUBLE, HorizontalDirectionalBlock.FACING);
+        shelfBlock(NecrolordSet.SHELF);
+        sofaBlock(NecrolordSet.SOFA);
+        counterBlock(NecrolordSet.COUNTER);
     }
 
     @SuppressWarnings("SuspiciousToArrayCall")

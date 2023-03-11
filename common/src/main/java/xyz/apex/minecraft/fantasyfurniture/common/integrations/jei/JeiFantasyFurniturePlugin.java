@@ -58,6 +58,7 @@ public interface JeiFantasyFurniturePlugin extends IModPlugin
         registration.addRecipeCatalyst(DunmerSet.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
         registration.addRecipeCatalyst(BoneSet.Wither.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
         registration.addRecipeCatalyst(BoneSet.Skeleton.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
+        registration.addRecipeCatalyst(NecrolordSet.OVEN.asStack(), RecipeTypes.SMOKING, RecipeTypes.FUELING);
     }
 
     @Override
