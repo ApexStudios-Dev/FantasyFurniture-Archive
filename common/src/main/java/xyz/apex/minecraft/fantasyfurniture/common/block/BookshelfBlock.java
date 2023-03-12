@@ -1,29 +1,23 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
-import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntityEntry;
-import xyz.apex.minecraft.apexcore.common.registry.entry.MenuEntry;
-import xyz.apex.minecraft.fantasyfurniture.common.block.entity.BookshelfBlockEntity;
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.BookshelfMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMultiBlockTypes;
 
-public final class BookshelfBlock extends HorizontalInventoryBlock.AsMultiBlock<BookshelfBlockEntity, BookshelfMenu>
+public final class BookshelfBlock extends SimpleComponentBlock
 {
-    public BookshelfBlock(MultiBlockType multiBlockType, Properties properties)
+    public BookshelfBlock(Properties properties)
     {
-        super(multiBlockType, properties);
+        super(properties);
     }
 
     @Override
-    public BlockEntityEntry<BookshelfBlockEntity> getInventoryBlockEntityType()
+    public void registerComponents()
     {
-        return AllBlockEntityTypes.BOOKSHELF;
-    }
-
-    @Override
-    public MenuEntry<BookshelfMenu> getInventoryMenuType()
-    {
-        return AllMenuTypes.BOOKSHELF;
+        registerComponent(ComponentTypes.INVENTORY);
+        registerComponent(ComponentTypes.BLOCK_ENTITY, AllBlockEntityTypes.BOOKSHELF);
+        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x2x2_FACING);
     }
 }

@@ -31,5 +31,6 @@ public final class ItemTagGenerator extends ItemTagsProvider
         copy(BoneSet.Wither.BLOCK_TAG, BoneSet.Wither.ITEM_TAG);
         copy(BoneSet.Skeleton.BLOCK_TAG, BoneSet.Skeleton.ITEM_TAG);
         copy(NecrolordSet.BLOCK_TAG, NecrolordSet.ITEM_TAG);
+        copy(RoyalSet.BLOCK_TAG, RoyalSet.ITEM_TAG);
     }
 }

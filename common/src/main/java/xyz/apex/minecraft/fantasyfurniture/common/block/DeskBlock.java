@@ -1,29 +1,23 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
-import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntityEntry;
-import xyz.apex.minecraft.apexcore.common.registry.entry.MenuEntry;
-import xyz.apex.minecraft.fantasyfurniture.common.block.entity.DeskBlockEntity;
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.DeskMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMultiBlockTypes;
 
-public final class DeskBlock extends HorizontalInventoryBlock.AsMultiBlock<DeskBlockEntity, DeskMenu>
+public final class DeskBlock extends SimpleComponentBlock
 {
-    public DeskBlock(MultiBlockType multiBlockType, Properties properties)
+    public DeskBlock(Properties properties)
     {
-        super(multiBlockType, properties);
+        super(properties);
     }
 
     @Override
-    public BlockEntityEntry<DeskBlockEntity> getInventoryBlockEntityType()
+    public void registerComponents()
     {
-        return AllBlockEntityTypes.DESK;
-    }
-
-    @Override
-    public MenuEntry<DeskMenu> getInventoryMenuType()
-    {
-        return AllMenuTypes.DESK;
+        registerComponent(ComponentTypes.INVENTORY);
+        registerComponent(ComponentTypes.BLOCK_ENTITY, AllBlockEntityTypes.DESK);
+        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x1x2_FACING);
     }
 }

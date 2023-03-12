@@ -1,29 +1,23 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
-import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntityEntry;
-import xyz.apex.minecraft.apexcore.common.registry.entry.MenuEntry;
-import xyz.apex.minecraft.fantasyfurniture.common.block.entity.ChestBlockEntity;
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.ChestMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMultiBlockTypes;
 
-public final class ChestBlock extends HorizontalInventoryBlock.AsMultiBlock<ChestBlockEntity, ChestMenu>
+public final class ChestBlock extends SimpleComponentBlock
 {
-    public ChestBlock(MultiBlockType multiBlockType, Properties properties)
+    public ChestBlock(Properties properties)
     {
-        super(multiBlockType, properties);
+        super(properties);
     }
 
     @Override
-    public BlockEntityEntry<ChestBlockEntity> getInventoryBlockEntityType()
+    public void registerComponents()
     {
-        return AllBlockEntityTypes.CHEST;
-    }
-
-    @Override
-    public MenuEntry<ChestMenu> getInventoryMenuType()
-    {
-        return AllMenuTypes.CHEST;
+        registerComponent(ComponentTypes.INVENTORY);
+        registerComponent(ComponentTypes.BLOCK_ENTITY, AllBlockEntityTypes.CHEST);
+        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x1x2_FACING);
     }
 }

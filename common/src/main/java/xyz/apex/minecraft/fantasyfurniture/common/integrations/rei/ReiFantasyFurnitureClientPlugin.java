@@ -66,6 +66,12 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
                 Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, NecrolordSet.NAME)),
                 EntryIngredients.ofItemTag(NecrolordSet.ITEM_TAG)
         );
+
+        registry.group(
+                new ResourceLocation(FantasyFurniture.ID, RoyalSet.NAME),
+                Component.translatable("itemGroup.%s.%s".formatted(FantasyFurniture.ID, RoyalSet.NAME)),
+                EntryIngredients.ofItemTag(RoyalSet.ITEM_TAG)
+        );
     }
 
     @Override

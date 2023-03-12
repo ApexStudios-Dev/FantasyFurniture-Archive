@@ -1,0 +1,14 @@
+{
+	"ctm": {
+		"ctm_version": 1,
+		"type": "CTM",
+		"layer": "CUTOUT",
+		"textures": [
+			"${MOD_ID}:block/royal/wool_ctm"
+		],
+		"extra": {
+			"connect_inside": true,
+			"ignore_states": true
+		}
+	}
+}

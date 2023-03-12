@@ -33,7 +33,8 @@ public final class EmiFantasyFurnitureFabricPlugin implements EmiPlugin
         registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, EmiIngredient.of(Ingredient.of(
                 NordicSet.OVEN, VenthyrSet.OVEN,
                 DunmerSet.OVEN, BoneSet.Wither.OVEN,
-                BoneSet.Skeleton.OVEN, NecrolordSet.OVEN
+                BoneSet.Skeleton.OVEN, NecrolordSet.OVEN,
+                RoyalSet.OVEN
         )));
     }
 

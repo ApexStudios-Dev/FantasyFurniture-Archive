@@ -6,8 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlock;
-import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.components.DoorComponent;
+import xyz.apex.minecraft.apexcore.common.component.components.HorizontalFacingComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
@@ -109,7 +110,7 @@ public interface AllVoxelShapes
                 box(2, 9, 12, 14, 26, 14)
         );
 
-        VoxelShape CHANDELIER = box(0, 0, 0, 16, 16, 16);
+        VoxelShape CEILING_LIGHT = box(0, 0, 0, 16, 16, 16);
 
         VoxelShape CUSHION = box(4, 0, 4, 12, 7, 12);
 
@@ -549,7 +550,7 @@ public interface AllVoxelShapes
                 box(2.5, 9, 11.5, 13.5, 31.5, 13.5)
         );
 
-        VoxelShape CHANDELIER = box(1, 2, 1, 15, 16, 15);
+        VoxelShape CEILING_LIGHT = box(1, 2, 1, 15, 16, 15);
 
         VoxelShape CUSHION = shape(
                 box(3, 0, 3, 5, 4, 5),
@@ -948,7 +949,7 @@ public interface AllVoxelShapes
                 Block.box(4, 27, 11.5, 6, 29, 14.5)
         );
 
-        VoxelShape CHANDELIER = Block.box(3, 0, 3, 13, 16, 13);
+        VoxelShape CEILING_LIGHT = Block.box(3, 0, 3, 13, 16, 13);
 
         VoxelShape CUSHION = shape(
                 Block.box(2, 0, 2, 5, 2, 5),
@@ -1378,7 +1379,7 @@ public interface AllVoxelShapes
                 box(12D, 4D, 2.5D, 14D, 7D, 4.5D)
         );
 
-        VoxelShape CHANDELIER = box(1D, 0D, 1D, 15, 16D, 15D);
+        VoxelShape CEILING_LIGHT = box(1D, 0D, 1D, 15, 16D, 15D);
 
         VoxelShape CUSHION = shape(
                 box(2D, 0D, 2D, 4D, 2D, 4D),
@@ -1645,6 +1646,434 @@ public interface AllVoxelShapes
 
     interface Royal
     {
+        VoxelShape WALL_LIGHT = box(4.75, 1, 11.75, 11.25, 13, 16);
+
+        VoxelShape FLOOR_LIGHT = shape(
+                box(6, 0, 6, 10, 2, 10),
+                box(7, 2, 7, 9, 30, 9),
+                box(3, 20, 7, 13, 22, 9),
+                box(11, 22, 7, 13, 29, 9),
+                box(3, 22, 7, 5, 29, 9),
+                box(2.5, 24, 6.5, 5.5, 25, 9.5),
+                box(6.5, 25, 6.5, 9.5, 26, 9.5),
+                box(10.5, 24, 6.5, 13.5, 25, 9.5)
+        );
+
+        VoxelShape TABLE_LARGE = shape(
+                box(-15, 0, 1, -11, 14, 5),
+                box(-15, 0, 27, -11, 14, 31),
+                box(11, 0, 27, 15, 14, 31),
+                box(11, 0, 1, 15, 14, 5),
+                box(-16, 14, 0, 16, 16, 32)
+        );
+
+        VoxelShape TABLE_SMALL = shape(
+                box(1, 0, 1, 5, 14, 5),
+                box(1, 0, 11, 5, 14, 15),
+                box(11, 0, 11, 15, 14, 15),
+                box(11, 0, 1, 15, 14, 5),
+                box(0, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape TABLE_WIDE = shape(
+                box(-15, 0, 1, -11, 14, 5),
+                box(-15, 0, 11, -11, 14, 15),
+                box(11, 0, 11, 15, 14, 15),
+                box(11, 0, 1, 15, 14, 5),
+                box(-16, 14, 0, 16, 16, 16)
+        );
+
+        VoxelShape BENCH = shape(
+                Block.box(-15, 0, 1, -11, 4, 5),
+                Block.box(-15, 0, 11, -11, 4, 15),
+                Block.box(11, 0, 11, 15, 4, 15),
+                Block.box(11, 0, 1, 15, 4, 5),
+                Block.box(-14.5, 4, 1.5, 14.5, 6, 14.5)
+        );
+
+        VoxelShape CHAIR = shape(
+                Block.box(1, 0, 1, 3, 3, 4),
+                Block.box(1, 0, 12, 3, 3, 15),
+                Block.box(13, 0, 12, 15, 3, 15),
+                Block.box(13, 0, 1, 15, 3, 4),
+                Block.box(13, 3, 2, 15, 5, 4),
+                Block.box(13, 3, 12, 15, 5, 14),
+                Block.box(1, 3, 12, 3, 5, 14),
+                Block.box(1, 3, 2, 3, 5, 4),
+                Block.box(1, 5, 1.5, 15, 7, 14.5),
+                Block.box(1, 7, 2, 15, 9, 14),
+                Block.box(13, 9, 2, 15, 12, 4),
+                Block.box(1, 9, 2, 3, 12, 4),
+                Block.box(1, 12, 1, 3, 15, 4),
+                Block.box(13, 12, 1, 15, 15, 4),
+                Block.box(13, 12, 4, 15, 14, 12),
+                Block.box(1, 12, 4, 3, 14, 12),
+                Block.box(1, 7, 12, 15, 14, 14),
+                Block.box(2, 14, 12, 14, 20, 14),
+                Block.box(1, 20, 12, 15, 25, 14),
+                Block.box(3, 25, 12, 13, 26, 14),
+                Block.box(5, 26, 12, 11, 27, 14)
+        );
+
+        VoxelShape CEILING_LIGHT = Block.box(0, 0, 0, 16, 16, 16);
+
+        VoxelShape CUSHION = shape(
+                Block.box(1, 0, 1, 5, 4, 5),
+                Block.box(1, 0, 11, 5, 4, 15),
+                Block.box(11, 0, 11, 15, 4, 15),
+                Block.box(11, 0, 1, 15, 4, 5),
+                Block.box(1.5, 4, 1.5, 14.5, 6, 14.5),
+                Block.box(2, 6, 2, 14, 9, 14)
+        );
+
+        VoxelShape STOOL = shape(
+                box(1, 0, 1, 5, 4, 5),
+                box(1, 0, 11, 5, 4, 15),
+                box(11, 0, 11, 15, 4, 15),
+                box(11, 0, 1, 15, 4, 5),
+                box(1.5, 4, 1.5, 14.5, 6, 14.5)
+        );
+
+        VoxelShape CHEST = shape(
+                Block.box(7.5, 0, 0.75, 11.25, 4, 4.5),
+                Block.box(-11.25, 0, 0.75, -7.5, 4, 4.5),
+                Block.box(-11.25, 0, 11.5, -7.5, 4, 15.25),
+                Block.box(7.5, 0, 11.5, 11.25, 4, 15.25),
+                Block.box(-12, 4, 1, 12, 6, 15),
+                Block.box(-11, 6, 2, 11, 16, 14)
+        );
+
+        VoxelShape BOOKSHELF = shape(
+                Block.box(12, 0, 0, 16, 4, 4),
+                Block.box(-16, 0, 0, -12, 4, 4),
+                Block.box(-16, 0, 12, -12, 4, 16),
+                Block.box(12, 0, 12, 16, 4, 16),
+                Block.box(-15, 4, 1, 15, 6, 15),
+                Block.box(-15, 30, 1, 15, 32, 15),
+                Block.box(12, 6, 2, 14, 30, 4),
+                Block.box(12, 6, 12, 14, 30, 14),
+                Block.box(-14, 6, 12, -12, 30, 14),
+                Block.box(-14, 6, 2, -12, 30, 4),
+                Block.box(-13, 6, 4, 13, 30, 13),
+                Block.box(-13, 17, 2, 13, 19, 4)
+        );
+
+        VoxelShape DESK_LEFT = shape(
+                Block.box(-16, 14, 0, 16, 16, 16),
+                Block.box(13, 11, 1, 15, 14, 4),
+                Block.box(13, 3, 2, 15, 11, 4),
+                Block.box(13, 0, 1, 15, 3, 4),
+                Block.box(-15, 0, 1, -13, 3, 4),
+                Block.box(-15, 11, 1, -13, 14, 4),
+                Block.box(-15, 3, 2, -13, 11, 4),
+                Block.box(-15, 0, 12, -13, 3, 15),
+                Block.box(-15, 11, 12, -13, 14, 15),
+                Block.box(-15, 3, 12, -13, 11, 14),
+                Block.box(13, 0, 12, 15, 3, 15),
+                Block.box(13, 11, 12, 15, 14, 15),
+                Block.box(13, 3, 12, 15, 11, 14),
+                Block.box(4, 10, 2, 12, 14, 14),
+                Block.box(6, 12, 1, 10, 13, 2)
+        );
+
+        VoxelShape DESK_RIGHT = shape(
+                Block.box(-16, 14, 0, 16, 16, 16),
+                Block.box(13, 11, 1, 15, 14, 4),
+                Block.box(13, 3, 2, 15, 11, 4),
+                Block.box(13, 0, 1, 15, 3, 4),
+                Block.box(-15, 0, 1, -13, 3, 4),
+                Block.box(-15, 11, 1, -13, 14, 4),
+                Block.box(-15, 3, 2, -13, 11, 4),
+                Block.box(-15, 0, 12, -13, 3, 15),
+                Block.box(-15, 11, 12, -13, 14, 15),
+                Block.box(-15, 3, 12, -13, 11, 14),
+                Block.box(13, 0, 12, 15, 3, 15),
+                Block.box(13, 11, 12, 15, 14, 15),
+                Block.box(13, 3, 12, 15, 11, 14),
+                Block.box(-12, 10, 2, -4, 14, 14),
+                Block.box(-10, 12, 1, -6, 13, 2)
+        );
+
+        VoxelShape DRAWER = shape(
+                Block.box(1, 0, 1, 3, 3, 4),
+                Block.box(1, 0, 12, 3, 3, 15),
+                Block.box(13, 0, 12, 15, 3, 15),
+                Block.box(13, 0, 1, 15, 3, 4),
+                Block.box(13, 3, 2, 15, 14, 4),
+                Block.box(1, 3, 2, 3, 14, 4),
+                Block.box(1, 3, 12, 3, 14, 14),
+                Block.box(13, 3, 12, 15, 14, 14),
+                Block.box(0.5, 5, 1.5, 15.5, 7, 14.5),
+                Block.box(0, 14, 0, 16, 16, 16),
+                Block.box(2, 7, 3, 14, 14, 13)
+        );
+
+        VoxelShape DRESSER = shape(
+                box(-15, 0, 1, -13, 3, 4),
+                box(-15, 0, 12, -13, 3, 15),
+                box(13, 0, 12, 15, 3, 15),
+                box(13, 0, 1, 15, 3, 4),
+                box(13, 3, 2, 15, 14, 4),
+                box(-15, 3, 2, -13, 14, 4),
+                box(-15, 3, 12, -13, 14, 14),
+                box(13, 3, 12, 15, 14, 14),
+                box(-15.5, 5, 1.5, 15.5, 7, 14.5),
+                box(-16, 14, 0, 16, 16, 16),
+                box(-14, 7, 3, 14, 14, 13)
+        );
+
+        VoxelShape LOCKBOX = box(2.5, 0, 3.5, 13.5, 9.25, 12.5);
+
+        VoxelShape WARDROBE_TOP = shape(
+                Block.box(12, 0, 2, 14, 14, 4),
+                Block.box(-14, 0, 2, -12, 14, 4),
+                Block.box(-14, 0, 12, -12, 14, 14),
+                Block.box(12, 0, 12, 14, 14, 14),
+                Block.box(-15, 14, 1, 15, 16, 15),
+                Block.box(-13, 0, 3, 13, 14, 13)
+        );
+
+        VoxelShape WARDROBE_BOTTOM = shape(
+                box(12, 0, 2, 14, 3, 5),
+                box(-14, 0, 2, -12, 3, 5),
+                box(-14, 0, 11, -12, 3, 14),
+                box(12, 0, 11, 14, 3, 14),
+                box(12, 3, 11, 14, 4, 13),
+                box(12, 3, 3, 14, 4, 5),
+                box(-14, 3, 3, -12, 4, 5),
+                box(-14, 3, 11, -12, 4, 13),
+                box(-15, 4, 1, 15, 6, 15),
+                box(12, 6, 2, 14, 30, 4),
+                box(-14, 6, 2, -12, 30, 4),
+                box(-14, 6, 12, -12, 30, 14),
+                box(12, 6, 12, 14, 30, 14),
+                box(-12, 6, 3, 12, 30, 13),
+                box(-15, 30, 1, 15, 32, 15)
+        );
+
+        VoxelShape PAINTING_WIDE = shape(
+                box(-16, 0, 14, -13, 3, 16),
+                box(-16, 13, 14, -13, 16, 16),
+                box(13, 13, 14, 16, 16, 16),
+                box(13, 0, 14, 16, 3, 16),
+                box(-13, 1, 14, 13, 3, 16),
+                box(-13, 13, 14, 13, 15, 16),
+                box(-15, 3, 14, 15, 13, 16)
+        );
+
+        VoxelShape PAINTING_SMALL = shape(
+                box(0, 0, 14, 3, 3, 16),
+                box(0, 13, 14, 3, 16, 16),
+                box(13, 13, 14, 16, 16, 16),
+                box(13, 0, 14, 16, 3, 16),
+                box(3, 1, 14, 13, 3, 16),
+                box(3, 13, 14, 13, 15, 16),
+                box(1, 3, 14, 15, 13, 16)
+        );
+
+        VoxelShape OVEN = shape(
+                Block.box(0, 0, 0, 3.5, 4, 3.5),
+                Block.box(0, 0, 12.5, 3.5, 4, 16),
+                Block.box(12.5, 0, 12.5, 16, 4, 16),
+                Block.box(12.5, 0, 0, 16, 4, 3.5),
+                Block.box(0, 4, 0, 16, 6, 16),
+                Block.box(0, 14, 0, 16, 16, 16),
+                Block.box(0.5, 6, 0.5, 15.5, 14, 15.5),
+                Block.box(2.5, 7, -0.5, 12.5, 13, 0.5)
+        );
+
+        VoxelShape DOOR_DOUBLE = shape(
+                Block.box(0, 0, 0.5, 14, 30, 2.5),
+                Block.box(14, 0, 0, 16, 32, 3),
+                Block.box(13, 25, 0, 14, 32, 3),
+                Block.box(12, 27, 0, 13, 32, 3),
+                Block.box(9, 28, 0, 12, 32, 3),
+                Block.box(5, 29, 0, 9, 32, 3),
+                Block.box(0, 30, 0, 5, 32, 3)
+        );
+
+        VoxelShape DOOR_SINGLE = shape(
+                Block.box(0, 0, 0, 2, 32, 3),
+                Block.box(2, 30, 0, 14, 32, 3),
+                Block.box(14, 0, 0, 16, 32, 3),
+                Block.box(2, 0, 0.5, 14, 30, 2.5)
+        );
+
+        VoxelShape BED_SINGLE = shape(
+                Block.box(0, 0, 0, 3, 3, 2),
+                Block.box(1, 3, 0, 3, 9, 2),
+                Block.box(0, 9, 0, 3, 12, 2),
+                Block.box(0, 9, 30, 3, 12, 32),
+                Block.box(0, 0, 30, 3, 3, 32),
+                Block.box(1, 3, 30, 3, 9, 32),
+                Block.box(13, 9, 30, 16, 12, 32),
+                Block.box(13, 0, 30, 16, 3, 32),
+                Block.box(13, 3, 30, 15, 9, 32),
+                Block.box(13, 9, 0, 16, 12, 2),
+                Block.box(13, 0, 0, 16, 3, 2),
+                Block.box(13, 3, 0, 15, 9, 2),
+                Block.box(1, 3, 2, 15, 5, 32),
+                Block.box(3, 2, 30, 4, 3, 32),
+                Block.box(12, 2, 30, 13, 3, 32),
+                Block.box(12, 2, 0, 13, 3, 2),
+                Block.box(3, 2, 0, 4, 3, 2),
+                Block.box(2, 3, 0, 14, 15, 2),
+                Block.box(2, 3, 30, 14, 15, 32),
+                Block.box(2, 3, 2, 14, 8, 30)
+        );
+
+        VoxelShape BED_DOUBLE = shape(
+                Block.box(-16, 0, 0, -13, 3, 2),
+                Block.box(-15, 3, 0, -13, 9, 2),
+                Block.box(-16, 9, 0, -13, 12, 2),
+                Block.box(-16, 9, 30, -13, 12, 32),
+                Block.box(-16, 0, 30, -13, 3, 32),
+                Block.box(-15, 3, 30, -13, 9, 32),
+                Block.box(13, 9, 30, 16, 12, 32),
+                Block.box(13, 0, 30, 16, 3, 32),
+                Block.box(13, 3, 30, 15, 9, 32),
+                Block.box(13, 9, 0, 16, 12, 2),
+                Block.box(13, 0, 0, 16, 3, 2),
+                Block.box(13, 3, 0, 15, 9, 2),
+                Block.box(-15, 3, 2, 15, 5, 32),
+                Block.box(-13, 2, 30, -12, 3, 32),
+                Block.box(12, 2, 30, 13, 3, 32),
+                Block.box(12, 2, 0, 13, 3, 2),
+                Block.box(-13, 2, 0, -12, 3, 2),
+                Block.box(-14, 3, 0, 14, 15, 2),
+                Block.box(-14, 3, 30, 14, 15, 32),
+                Block.box(-14, 3, 2, 14, 8, 30)
+        );
+
+        VoxelShape SHELF_SINGLE = shape(
+                box(0, 14, 0, 16, 16, 16),
+                box(13, 11, 3, 15, 14, 6),
+                box(13, 12, 6, 15, 14, 16),
+                box(13, 8, 14, 15, 12, 16),
+                box(13, 5, 13, 15, 8, 16),
+                box(1, 5, 13, 3, 8, 16),
+                box(1, 11, 3, 3, 14, 6),
+                box(1, 12, 6, 3, 14, 16),
+                box(1, 8, 14, 3, 12, 16)
+        );
+
+        VoxelShape SHELF_CENTER = box(0, 14, 0, 16, 16, 16);
+
+        VoxelShape SHELF_LEFT = shape(
+                box(0, 14, 0, 16, 16, 16),
+                box(13, 11, 3, 15, 14, 6),
+                box(13, 12, 6, 15, 14, 16),
+                box(13, 8, 14, 15, 12, 16),
+                box(13, 5, 13, 15, 8, 16)
+        );
+
+        VoxelShape SHELF_RIGHT = shape(
+                box(0, 14, 0, 16, 16, 16),
+                box(1, 11, 3, 3, 14, 6),
+                box(1, 12, 6, 3, 14, 16),
+                box(1, 8, 14, 3, 12, 16),
+                box(1, 5, 13, 3, 8, 16)
+        );
+
+        VoxelShape SOFA_SINGLE = shape(
+                box(13, 0, 12, 15, 3, 15),
+                box(13, 0, 1, 15, 3, 4),
+                box(1, 0, 1, 3, 3, 4),
+                box(1, 0, 12, 3, 3, 15),
+                box(1, 3, 12, 3, 4, 14),
+                box(13, 3, 12, 15, 4, 14),
+                box(13, 3, 2, 15, 4, 4),
+                box(1, 3, 2, 3, 4, 4),
+                box(1, 4, 1.5, 15, 6, 14.5),
+                box(13, 6, 2, 15, 9, 12),
+                box(1, 6, 2, 3, 9, 12),
+                box(1, 6, 12, 15, 13, 14),
+                box(2, 13, 12, 14, 15, 14),
+                box(4, 15, 12, 12, 16, 14)
+        );
+
+        VoxelShape SOFA_CENTER = shape(
+                Block.box(0, 4, 1.5, 16, 6, 14.5),
+                Block.box(0, 6, 12, 16, 16, 14)
+        );
+
+        VoxelShape SOFA_LEFT = shape(
+                Block.box(13, 0, 1, 15, 3, 4),
+                Block.box(13, 0, 12, 15, 3, 15),
+                Block.box(13, 3, 12, 15, 4, 14),
+                Block.box(13, 3, 2, 15, 4, 4),
+                Block.box(0, 4, 1.5, 15, 6, 14.5),
+                Block.box(0, 6, 12, 15, 13, 14),
+                Block.box(0, 13, 12, 14, 15, 14),
+                Block.box(0, 15, 12, 12, 16, 14),
+                Block.box(13, 6, 2, 15, 9, 12)
+        );
+
+        VoxelShape SOFA_RIGHT = shape(
+                Block.box(1, 0, 1, 3, 3, 4),
+                Block.box(1, 0, 12, 3, 3, 15),
+                Block.box(1, 3, 12, 3, 4, 14),
+                Block.box(1, 3, 2, 3, 4, 4),
+                Block.box(1, 4, 1.5, 16, 6, 14.5),
+                Block.box(1, 6, 12, 16, 13, 14),
+                Block.box(2, 13, 12, 16, 15, 14),
+                Block.box(4, 15, 12, 16, 16, 14),
+                Block.box(1, 6, 2, 3, 9, 12)
+        );
+
+        VoxelShape SOFA_CORNER = shape(
+                Block.box(0.5, 0, 0.5, 4.25, 4, 4.25),
+                Block.box(11.5, 0, 11.25, 15.25, 4, 15),
+                Block.box(12, 0, 1, 15, 3, 3),
+                Block.box(12, 3, 1, 14, 4, 3),
+                Block.box(1, 3, 12, 3, 4, 14),
+                Block.box(1, 0, 12, 3, 3, 15),
+                Block.box(0, 4, 1.5, 1.5, 6, 14.5),
+                Block.box(1.5, 4, 0, 14.5, 6, 14.5),
+                Block.box(12, 6, 0, 14, 16, 14),
+                Block.box(0, 6, 12, 12, 16, 14)
+        );
+
+        VoxelShape COUNTER_SINGLE = shape(
+                Block.box(0, 0, 3, 16, 13, 16),
+                Block.box(0, 13, 0, 16, 16, 16)
+        );
+
+        VoxelShape COUNTER_CORNER = shape(
+                Block.box(0, 0, 0, 13, 13, 3),
+                Block.box(0, 0, 3, 16, 13, 16),
+                Block.box(0, 13, 0, 16, 16, 16)
+        );
+
+        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
+                case LEFT -> SHELF_LEFT;
+                case RIGHT -> SHELF_RIGHT;
+                case SINGLE -> SHELF_SINGLE;
+                case CENTER -> SHELF_CENTER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
+                case LEFT -> SOFA_LEFT;
+                case RIGHT -> SOFA_RIGHT;
+                case SINGLE -> SOFA_SINGLE;
+                case CENTER -> SOFA_CENTER;
+                case CORNER -> SOFA_CORNER;
+            }, block, blockState);
+        }
+
+        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
+        {
+            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
+                case SINGLE -> COUNTER_SINGLE;
+                case CORNER -> COUNTER_CORNER;
+            }, block, blockState);
+        }
+
         private static void bootstrap() {}
     }
 
@@ -1725,7 +2154,7 @@ public interface AllVoxelShapes
                 box(1D, 9D, 12D, 15D, 31D, 15D)
         );
 
-        VoxelShape CHANDELIER = box(1D, 0D, 1D, 15, 16D, 15D);
+        VoxelShape CEILING_LIGHT = box(1D, 0D, 1D, 15, 16D, 15D);
 
         VoxelShape CUSHION = shape(
                 box(2D, 0D, 2D, 5D, 3D, 5D),
@@ -2040,7 +2469,7 @@ public interface AllVoxelShapes
 
     static VoxelShape getWallLightShape(VoxelShape current, WallLightBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(WallLightBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
@@ -2048,23 +2477,23 @@ public interface AllVoxelShapes
     {
         var shape = current;
 
-        if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
 
-        if(blockState.hasProperty(FloorLightBlock.WithHorizontalFacing.FACING))
+        if(blockState.hasProperty(HorizontalFacingComponent.FACING))
         {
-            var facing = blockState.getValue(FloorLightBlock.WithHorizontalFacing.FACING);
+            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
             return VoxelShapeHelper.rotateHorizontal(shape, facing);
         }
 
         return shape;
     }
 
-    static VoxelShape getTableWideShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    static VoxelShape getTableWideShape(VoxelShape current, TableWideBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2073,11 +2502,11 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getTableLargeShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    static VoxelShape getTableLargeShape(VoxelShape current, TableLargeBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getMultiBlockType().getIndex(blockState);
+        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
 
         if(index == 1 || index == 3)
         {
@@ -2090,12 +2519,12 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getBenchShape(VoxelShape current, SimpleSeatBlock.WithMultiBlock block, BlockState blockState)
+    static VoxelShape getBenchShape(VoxelShape current, BenchBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var other = facing.getClockWise();
             shape = shape.move(other.getStepX(), 0D, other.getStepZ());
@@ -2104,32 +2533,32 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getChairShape(VoxelShape current, SimpleSeatBlock.WithMultiBlock block, BlockState blockState)
+    static VoxelShape getChairShape(VoxelShape current, ChairBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
         return shape;
     }
 
-    static VoxelShape getCushionShape(VoxelShape current, SimpleSeatBlock block, BlockState blockState)
+    static VoxelShape getCushionShape(VoxelShape current, CushionBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
-    static VoxelShape getStoolShape(VoxelShape current, SimpleSeatBlock block, BlockState blockState)
+    static VoxelShape getStoolShape(VoxelShape current, StoolBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleSeatBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
     static VoxelShape getChestShape(VoxelShape current, ChestBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2140,9 +2569,9 @@ public interface AllVoxelShapes
 
     static VoxelShape getBookshelfShape(VoxelShape current, BookshelfBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getMultiBlockType().getIndex(blockState);
+        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
 
         if(index == 2 || index == 3)
         {
@@ -2157,10 +2586,10 @@ public interface AllVoxelShapes
 
     static VoxelShape getDeskShape(VoxelShape current, DeskBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2171,16 +2600,16 @@ public interface AllVoxelShapes
 
     static VoxelShape getDrawerShape(VoxelShape current, DrawerBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
     static VoxelShape getDresserShape(VoxelShape current, DresserBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2191,16 +2620,16 @@ public interface AllVoxelShapes
 
     static VoxelShape getLockboxShape(VoxelShape current, LockboxBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
-    static VoxelShape getWardrobeTopShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    static VoxelShape getWardrobeTopShape(VoxelShape current, WardrobeTopBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2209,11 +2638,11 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getWardrobeBottomShape(VoxelShape current, WardrobeBlock block, BlockState blockState)
+    static VoxelShape getWardrobeBottomShape(VoxelShape current, WardrobeBottomBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getMultiBlockType().getIndex(blockState);
+        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
 
         if(index == 2 || index == 3)
         {
@@ -2226,18 +2655,18 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getPaintingSmallShape(VoxelShape current, SimpleHorizontalFacingBlock block, BlockState blockState)
+    static VoxelShape getPaintingSmallShape(VoxelShape current, PaintingSmallBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
-    static VoxelShape getPaintingWideShape(VoxelShape current, SimpleMultiBlock.WithHorizontalFacing block, BlockState blockState)
+    static VoxelShape getPaintingWideShape(VoxelShape current, PaintingWideBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(!block.getMultiBlockType().isOrigin(blockState))
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2248,10 +2677,12 @@ public interface AllVoxelShapes
 
     static VoxelShape getOvenShape(VoxelShape current, OvenBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
 
-        if(block instanceof MultiBlock multiBlock && !multiBlock.getMultiBlockType().isOrigin(blockState))
+        var multiBlockComponent = block.getComponent(ComponentTypes.MULTI_BLOCK);
+
+        if(multiBlockComponent != null && !multiBlockComponent.getMultiBlockType().isOrigin(blockState))
         {
             var offset = facing.getClockWise();
             return shape.move(offset.getStepX(), 0D, offset.getStepZ());
@@ -2260,24 +2691,11 @@ public interface AllVoxelShapes
         return shape;
     }
 
-    static VoxelShape getDoorShape(VoxelShape current, DoorMultiBlock block, BlockState blockState)
+    static VoxelShape getDoorShape(VoxelShape current, DoorBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(SimpleMultiBlock.WithHorizontalFacing.FACING).getOpposite();
-        var open = blockState.getValue(DoorMultiBlock.OPEN);
-        var hinge = blockState.getValue(DoorMultiBlock.HINGE);
-
-        /*if(hinge == DoorHingeSide.RIGHT) facing = facing.getOpposite();
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(open)
-        {
-            facing = hinge == DoorHingeSide.RIGHT ? facing.getClockWise() : facing.getCounterClockWise();
-            shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-            //facing = hinge == DoorHingeSide.RIGHT ? facing.getCounterClockWise() : facing.getClockWise();
-            shape = shape.move(-facing.getStepX(), 0D, -facing.getStepZ());
-        }
-
-        shape = block.getMultiBlockType().isOrigin(blockState) ? shape : shape.move(0D, -1D, 0D);*/
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING).getOpposite();
+        var open = blockState.getValue(DoorComponent.OPEN);
+        var hinge = blockState.getValue(DoorComponent.HINGE);
 
         Direction shapeFacing;
 
@@ -2290,7 +2708,7 @@ public interface AllVoxelShapes
         var y = 0D;
         var z = 0D;
 
-        if(!block.getMultiBlockType().isOrigin(blockState)) y -= 1D;
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) y -= 1D;
 
         x -= shapeFacing.getStepX() * .8125D;
         z -= shapeFacing.getStepZ() * .8125D;
@@ -2304,19 +2722,19 @@ public interface AllVoxelShapes
         return shape.move(x, y, z);
     }
 
-    static VoxelShape getBedSingleShape(VoxelShape current, BedMultiBlock block, BlockState blockState)
+    static VoxelShape getBedSingleShape(VoxelShape current, BedSingleBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(BedMultiBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        if(!block.getMultiBlockType().isOrigin(blockState)) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
+        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
         return shape;
     }
 
-    static VoxelShape getBedDoubleShape(VoxelShape current, BedMultiBlock block, BlockState blockState)
+    static VoxelShape getBedDoubleShape(VoxelShape current, BedDoubleBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(BedMultiBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getMultiBlockType().getIndex(blockState);
+        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
 
         if(index == 2 || index == 3) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
 
@@ -2331,7 +2749,7 @@ public interface AllVoxelShapes
 
     private static VoxelShape getShelfShape(Function<ShelfType, VoxelShape> shapeGetter, ShelfBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(ShelfBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var shelfType = blockState.getValue(ModBlockStateProperties.SHELF_TYPE);
         var current = shapeGetter.apply(shelfType);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
@@ -2339,7 +2757,7 @@ public interface AllVoxelShapes
 
     private static VoxelShape getSofaShape(Function<SofaType, VoxelShape> shapeGetter, SofaBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(ShelfBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var sofaType = blockState.getValue(ModBlockStateProperties.SOFA_TYPE);
         var current = shapeGetter.apply(sofaType);
         return VoxelShapeHelper.rotateHorizontal(current, facing);
@@ -2347,7 +2765,7 @@ public interface AllVoxelShapes
 
     private static VoxelShape getCounterShape(Function<CounterType, VoxelShape> shapeGetter, CounterBlock block, BlockState blockState)
     {
-        var facing = blockState.getValue(ShelfBlock.FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         var counterType = blockState.getValue(ModBlockStateProperties.COUNTER_TYPE);
         var current = shapeGetter.apply(counterType);
         return VoxelShapeHelper.rotateHorizontal(current, facing);

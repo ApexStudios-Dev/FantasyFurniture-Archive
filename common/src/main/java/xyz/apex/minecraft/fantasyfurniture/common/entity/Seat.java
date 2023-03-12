@@ -20,8 +20,9 @@ import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
+import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.block.SeatBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
 
 public final class Seat extends Entity
 {
@@ -60,7 +61,8 @@ public final class Seat extends Entity
     public void tick()
     {
         if(level.isClientSide) return;
-        var blockPresent = level.getBlockState(blockPosition()).getBlock() instanceof SeatBlock;
+        var blockState = level.getBlockState(blockPosition());
+        var blockPresent = blockState.getBlock() instanceof ComponentBlock block && block.hasComponent(SeatComponent.COMPONENT_TYPE);
         if(isVehicle() && blockPresent) return;
         discard();
     }
@@ -68,7 +70,7 @@ public final class Seat extends Entity
     @Override
     protected boolean canRide(Entity entity)
     {
-        return FantasyFurniture.isEntityValidForSeat(entity);
+        return SeatComponent.isEntityValidForSeat(entity);
     }
 
     @Override

@@ -34,6 +34,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         boneWither(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
         boneSkeleton(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
         necrolord(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
+        royal(wool, carpets, woodenDoors, beds, immovable, isBoneSet);
     }
 
     private void nordic(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
@@ -57,7 +58,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NordicSet.WOOL.get(), NordicSet.CARPET.get(), NordicSet.WALL_LIGHT.get(),
                 NordicSet.FLOOR_LIGHT.get(), NordicSet.TABLE_LARGE.get(), NordicSet.TABLE_WIDE.get(),
                 NordicSet.TABLE_SMALL.get(), NordicSet.BENCH.get(), NordicSet.CHAIR.get(),
-                NordicSet.CHANDELIER.get(), NordicSet.CUSHION.get(), NordicSet.STOOL.get(),
+                NordicSet.CEILING_LIGHT.get(), NordicSet.CUSHION.get(), NordicSet.STOOL.get(),
                 NordicSet.CHEST.get(), NordicSet.BOOKSHELF.get(), NordicSet.DESK_LEFT.get(),
                 NordicSet.DESK_RIGHT.get(), NordicSet.DRAWER.get(), NordicSet.DRESSER.get(),
                 NordicSet.LOCKBOX.get(), NordicSet.WARDROBE_BOTTOM.get(), NordicSet.WARDROBE_TOP.get(),
@@ -91,7 +92,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 VenthyrSet.FLOOR_LIGHT.get(), VenthyrSet.TABLE_LARGE.get(), VenthyrSet.TABLE_LARGE_FANCY.get(),
                 VenthyrSet.TABLE_WIDE.get(), VenthyrSet.TABLE_WIDE_FANCY.get(), VenthyrSet.TABLE_SMALL.get(),
                 VenthyrSet.TABLE_SMALL_FANCY.get(), VenthyrSet.BENCH.get(), VenthyrSet.CHAIR.get(),
-                VenthyrSet.CHANDELIER.get(), VenthyrSet.CUSHION.get(), VenthyrSet.STOOL.get(),
+                VenthyrSet.CEILING_LIGHT.get(), VenthyrSet.CUSHION.get(), VenthyrSet.STOOL.get(),
                 VenthyrSet.CHEST.get(), VenthyrSet.BOOKSHELF.get(), VenthyrSet.DESK_LEFT.get(),
                 VenthyrSet.DESK_RIGHT.get(), VenthyrSet.DRAWER.get(), VenthyrSet.DRESSER.get(),
                 VenthyrSet.LOCKBOX.get(), VenthyrSet.WARDROBE_BOTTOM.get(), VenthyrSet.WARDROBE_TOP.get(),
@@ -123,7 +124,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 DunmerSet.WOOL.get(), DunmerSet.CARPET.get(), DunmerSet.WALL_LIGHT.get(),
                 DunmerSet.FLOOR_LIGHT.get(), DunmerSet.TABLE_LARGE.get(), DunmerSet.TABLE_WIDE.get(),
                 DunmerSet.TABLE_SMALL.get(), DunmerSet.BENCH.get(), DunmerSet.CHAIR.get(),
-                DunmerSet.CHANDELIER.get(), DunmerSet.CUSHION.get(), DunmerSet.STOOL.get(),
+                DunmerSet.CEILING_LIGHT.get(), DunmerSet.CUSHION.get(), DunmerSet.STOOL.get(),
                 DunmerSet.CHEST.get(), DunmerSet.BOOKSHELF.get(), DunmerSet.DESK_LEFT.get(),
                 DunmerSet.DESK_RIGHT.get(), DunmerSet.DRAWER.get(), DunmerSet.DRESSER.get(),
                 DunmerSet.LOCKBOX.get(), DunmerSet.WARDROBE_BOTTOM.get(), DunmerSet.WARDROBE_TOP.get(),
@@ -156,7 +157,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 BoneSet.Wither.WOOL.get(), BoneSet.Wither.CARPET.get(), BoneSet.Wither.WALL_LIGHT.get(),
                 BoneSet.Wither.FLOOR_LIGHT.get(), BoneSet.Wither.TABLE_LARGE.get(), BoneSet.Wither.TABLE_WIDE.get(),
                 BoneSet.Wither.TABLE_SMALL.get(), BoneSet.Wither.BENCH.get(), BoneSet.Wither.CHAIR.get(),
-                BoneSet.Wither.CHANDELIER.get(), BoneSet.Wither.CUSHION.get(), BoneSet.Wither.STOOL.get(),
+                BoneSet.Wither.CEILING_LIGHT.get(), BoneSet.Wither.CUSHION.get(), BoneSet.Wither.STOOL.get(),
                 BoneSet.Wither.CHEST.get(), BoneSet.Wither.BOOKSHELF.get(), BoneSet.Wither.DESK_LEFT.get(),
                 BoneSet.Wither.DESK_RIGHT.get(), BoneSet.Wither.DRAWER.get(), BoneSet.Wither.DRESSER.get(),
                 BoneSet.Wither.LOCKBOX.get(), BoneSet.Wither.WARDROBE_BOTTOM.get(), BoneSet.Wither.WARDROBE_TOP.get(),
@@ -189,7 +190,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 BoneSet.Skeleton.WOOL.get(), BoneSet.Skeleton.CARPET.get(), BoneSet.Skeleton.WALL_LIGHT.get(),
                 BoneSet.Skeleton.FLOOR_LIGHT.get(), BoneSet.Skeleton.TABLE_LARGE.get(), BoneSet.Skeleton.TABLE_WIDE.get(),
                 BoneSet.Skeleton.TABLE_SMALL.get(), BoneSet.Skeleton.BENCH.get(), BoneSet.Skeleton.CHAIR.get(),
-                BoneSet.Skeleton.CHANDELIER.get(), BoneSet.Skeleton.CUSHION.get(), BoneSet.Skeleton.STOOL.get(),
+                BoneSet.Skeleton.CEILING_LIGHT.get(), BoneSet.Skeleton.CUSHION.get(), BoneSet.Skeleton.STOOL.get(),
                 BoneSet.Skeleton.CHEST.get(), BoneSet.Skeleton.BOOKSHELF.get(), BoneSet.Skeleton.DESK_LEFT.get(),
                 BoneSet.Skeleton.DESK_RIGHT.get(), BoneSet.Skeleton.DRAWER.get(), BoneSet.Skeleton.DRESSER.get(),
                 BoneSet.Skeleton.LOCKBOX.get(), BoneSet.Skeleton.WARDROBE_BOTTOM.get(), BoneSet.Skeleton.WARDROBE_TOP.get(),
@@ -221,7 +222,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NecrolordSet.WOOL.get(), NecrolordSet.CARPET.get(), NecrolordSet.WALL_LIGHT.get(),
                 NecrolordSet.FLOOR_LIGHT.get(), NecrolordSet.TABLE_LARGE.get(), NecrolordSet.TABLE_WIDE.get(),
                 NecrolordSet.TABLE_SMALL.get(), NecrolordSet.BENCH.get(), NecrolordSet.CHAIR.get(),
-                NecrolordSet.CHANDELIER.get(), NecrolordSet.CUSHION.get(), NecrolordSet.STOOL.get(),
+                NecrolordSet.CEILING_LIGHT.get(), NecrolordSet.CUSHION.get(), NecrolordSet.STOOL.get(),
                 NecrolordSet.CHEST.get(), NecrolordSet.BOOKSHELF.get(), NecrolordSet.DESK_LEFT.get(),
                 NecrolordSet.DESK_RIGHT.get(), NecrolordSet.DRAWER.get(), NecrolordSet.DRESSER.get(),
                 NecrolordSet.LOCKBOX.get(), NecrolordSet.WARDROBE_BOTTOM.get(), NecrolordSet.WARDROBE_TOP.get(),
@@ -229,6 +230,38 @@ public final class BlockTagGenerator extends BlockTagsProvider
                 NecrolordSet.DOOR_DOUBLE.get(), NecrolordSet.DOOR_SINGLE.get(), NecrolordSet.BED_SINGLE.get(),
                 NecrolordSet.BED_DOUBLE.get(), NecrolordSet.SHELF.get(), NecrolordSet.SOFA.get(),
                 NecrolordSet.COUNTER.get()
+        );
+    }
+
+    private void royal(IntrinsicTagAppender<Block> wool, IntrinsicTagAppender<Block> carpets, IntrinsicTagAppender<Block> woodenDoors, IntrinsicTagAppender<Block> beds, IntrinsicTagAppender<Block> immovable, IntrinsicTagAppender<Block> isBoneSet)
+    {
+        wool.add(RoyalSet.WOOL.get());
+        carpets.add(RoyalSet.CARPET.get());
+        woodenDoors.add(RoyalSet.DOOR_DOUBLE.get(), RoyalSet.DOOR_SINGLE.get());
+        beds.add(RoyalSet.BED_SINGLE.get(), RoyalSet.BED_DOUBLE.get());
+
+        immovable.add(
+                RoyalSet.FLOOR_LIGHT.get(), RoyalSet.TABLE_LARGE.get(), RoyalSet.TABLE_WIDE.get(),
+                RoyalSet.BENCH.get(), RoyalSet.CHAIR.get(), RoyalSet.CHEST.get(),
+                RoyalSet.BOOKSHELF.get(), RoyalSet.DESK_LEFT.get(), RoyalSet.DESK_RIGHT.get(),
+                RoyalSet.DRAWER.get(), RoyalSet.DRESSER.get(), RoyalSet.WARDROBE_BOTTOM.get(),
+                RoyalSet.WARDROBE_TOP.get(), RoyalSet.PAINTING_WIDE.get(), RoyalSet.DOOR_DOUBLE.get(),
+                RoyalSet.DOOR_SINGLE.get(), RoyalSet.BED_SINGLE.get(), RoyalSet.BED_DOUBLE.get(),
+                RoyalSet.SHELF.get(), RoyalSet.SOFA.get(), RoyalSet.COUNTER.get()
+        );
+
+        tag(RoyalSet.BLOCK_TAG).add(
+                RoyalSet.WOOL.get(), RoyalSet.CARPET.get(), RoyalSet.WALL_LIGHT.get(),
+                RoyalSet.FLOOR_LIGHT.get(), RoyalSet.TABLE_LARGE.get(), RoyalSet.TABLE_WIDE.get(),
+                RoyalSet.TABLE_SMALL.get(), RoyalSet.BENCH.get(), RoyalSet.CHAIR.get(),
+                RoyalSet.CEILING_LIGHT.get(), RoyalSet.CUSHION.get(), RoyalSet.STOOL.get(),
+                RoyalSet.CHEST.get(), RoyalSet.BOOKSHELF.get(), RoyalSet.DESK_LEFT.get(),
+                RoyalSet.DESK_RIGHT.get(), RoyalSet.DRAWER.get(), RoyalSet.DRESSER.get(),
+                RoyalSet.LOCKBOX.get(), RoyalSet.WARDROBE_BOTTOM.get(), RoyalSet.WARDROBE_TOP.get(),
+                RoyalSet.PAINTING_WIDE.get(), RoyalSet.PAINTING_SMALL.get(), RoyalSet.OVEN.get(),
+                RoyalSet.DOOR_DOUBLE.get(), RoyalSet.DOOR_SINGLE.get(), RoyalSet.BED_SINGLE.get(),
+                RoyalSet.BED_DOUBLE.get(), RoyalSet.SHELF.get(), RoyalSet.SOFA.get(),
+                RoyalSet.COUNTER.get()
         );
     }
 }

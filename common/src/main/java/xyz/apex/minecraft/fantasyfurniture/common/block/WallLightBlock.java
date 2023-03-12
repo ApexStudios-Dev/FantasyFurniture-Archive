@@ -5,40 +5,40 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
+import xyz.apex.minecraft.apexcore.common.component.components.HorizontalFacingComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NecrolordSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
 import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
 
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
-// Modified version of vanilla class
-// to be more modder friendly
-//
-// Changed to take in lazily loaded ParticleOptions
-// as custom particles are loaded later than blocks are
-// and would be null by time this classes constructor is called
-//
-// Note: `flameParticle` from super type is null and now deprecated
-//  Using this field **WILL** result in NPE's you have been warned
-//  Make use of #getFlameParticle() instead
-public class WallLightBlock extends WallTorchBlock
+public final class WallLightBlock extends SimpleComponentBlock
 {
-    protected final Supplier<ParticleOptions> flameParticleOptions;
+    private final Supplier<ParticleOptions> flameParticle;
 
-    public WallLightBlock(Properties properties, Supplier<ParticleOptions> flameParticleOptions)
+    public WallLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
     {
-        super(properties, null);
+        super(properties);
 
-        this.flameParticleOptions = flameParticleOptions;
+        this.flameParticle = flameParticle;
     }
 
-    public ParticleOptions getFlameParticle()
+    @Override
+    public void registerComponents()
     {
-        return flameParticleOptions.get();
+        registerComponent(ComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(UnaryOperator.identity());
+        registerComponent(LightComponent.COMPONENT_TYPE)
+                .setPlaceOnWalls(true)
+                .setPlaceOnFloor(false)
+                .setPlaceOnCeilings(false)
+        ;
     }
 
     @Override
@@ -48,8 +48,7 @@ public class WallLightBlock extends WallTorchBlock
         var y = (double) pos.getY() + .7D;
         var z = (double) pos.getZ() + .5D;
 
-        var flameParticle = getFlameParticle();
-        var facing = blockState.getValue(FACING);
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
 
         var stepX = facing.getStepX();
         var stepZ = facing.getStepZ();
@@ -66,7 +65,7 @@ public class WallLightBlock extends WallTorchBlock
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle, x, y, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
         }
         else if(VenthyrSet.WALL_LIGHT.hasBlockState(blockState))
         {
@@ -82,7 +81,7 @@ public class WallLightBlock extends WallTorchBlock
                 var zOff = (i == 0 ? -.125D : .125D) * clockWise.getStepZ();
 
                 level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
-                level.addParticle(flameParticle, x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(flameParticle.get(), x + xOff, y, z + zOff, 0D, 0D, 0D);
             }
         }
         else if(BoneSet.Wither.WALL_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.WALL_LIGHT.hasBlockState(blockState))
@@ -97,7 +96,7 @@ public class WallLightBlock extends WallTorchBlock
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle, x, y, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
         }
         else if(NecrolordSet.WALL_LIGHT.hasBlockState(blockState))
         {
@@ -111,7 +110,7 @@ public class WallLightBlock extends WallTorchBlock
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle, x, y, z, 0D, 0D, 0D);
+            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
         }
     }
 }

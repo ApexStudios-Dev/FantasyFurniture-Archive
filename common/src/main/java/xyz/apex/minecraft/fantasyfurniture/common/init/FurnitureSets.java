@@ -1,27 +1,39 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
+
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockFactory;
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
-import xyz.apex.minecraft.apexcore.common.multiblock.SimpleMultiBlock;
+import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.registry.Registrar;
 import xyz.apex.minecraft.apexcore.common.registry.builder.BlockBuilder;
 import xyz.apex.minecraft.apexcore.common.util.Properties;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.ChestBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.DoorBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.OvenComponent;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public interface FurnitureSets
 {
@@ -53,7 +65,7 @@ public interface FurnitureSets
     static BlockBuilder<WallLightBlock, Registrar, Registrar> wallLight(String furnitureSet, Supplier<VoxelShape> baseShape, Supplier<ParticleOptions> flameParticle)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(properties, flameParticle))
+                .block("%s/wall_light".formatted(furnitureSet), properties -> new WallLightBlock(flameParticle, properties))
                 .initialProperties(Properties.BLOCK_TORCH)
                 .hitbox(baseShape, AllVoxelShapes::getWallLightShape)
         ;
@@ -66,173 +78,114 @@ public interface FurnitureSets
     // endregion
 
     // region: Floor
-    static BlockBuilder<FloorLightBlock, Registrar, Registrar> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<FloorLightBlock, Registrar, Registrar> floorLight(String furnitureSet, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/floor_light".formatted(furnitureSet), multiBlockType, (multiBlockType1, properties) -> new FloorLightBlock(multiBlockType1, properties, flameParticle))
+                .block("%s/floor_light".formatted(furnitureSet), properties -> new FloorLightBlock(flameParticle, properties))
                 .initialProperties(Properties.BLOCK_TORCH)
                 .hitbox(baseShape, AllVoxelShapes::getFloorLightShape)
         ;
     }
 
-    static BlockBuilder<FloorLightBlock, Registrar, Registrar> floorLight(String furnitureSet, MultiBlockType multiBlockType, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<FloorLightBlock, Registrar, Registrar> floorLight(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return floorLight(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
-    }
-
-    static BlockBuilder<FloorLightBlock.WithHorizontalFacing, Registrar, Registrar> floorLightFacing(String furnitureSet, MultiBlockType multiBlockType, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
-    {
-        return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/floor_light".formatted(furnitureSet), multiBlockType, (multiBlockType1, properties) -> new FloorLightBlock.WithHorizontalFacing(multiBlockType1, properties, flameParticle))
-                .initialProperties(Properties.BLOCK_TORCH)
-                .hitbox(baseShape, AllVoxelShapes::getFloorLightShape)
-        ;
-    }
-
-    static BlockBuilder<FloorLightBlock.WithHorizontalFacing, Registrar, Registrar> floorLightFacing(String furnitureSet, MultiBlockType multiBlockType, Supplier<VoxelShape> baseShape)
-    {
-        return floorLightFacing(furnitureSet, multiBlockType, () -> ParticleTypes.FLAME, baseShape);
+        return floorLight(furnitureSet, () -> ParticleTypes.FLAME, baseShape);
     }
     // endregion
 
-    // region: Chandelier
-    static BlockBuilder<LightBlock, Registrar, Registrar> chandelier(String furnitureSet, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
+    // region: Ceiling
+    static BlockBuilder<CeilingLightBlock, Registrar, Registrar> ceilingLight(String furnitureSet, Supplier<ParticleOptions> flameParticle, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/chandelier".formatted(furnitureSet), properties -> new LightBlock(flameParticle, properties))
+                .block("%s/ceiling_light".formatted(furnitureSet), properties -> new CeilingLightBlock(flameParticle, properties))
                 .initialProperties(Properties.BLOCK_TORCH)
                 .hitbox(baseShape)
         ;
     }
 
-    static BlockBuilder<LightBlock, Registrar, Registrar> chandelier(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<CeilingLightBlock, Registrar, Registrar> ceilingLight(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return chandelier(furnitureSet, () -> ParticleTypes.FLAME, baseShape);
+        return ceilingLight(furnitureSet, () -> ParticleTypes.FLAME, baseShape);
     }
     // endregion
     // endregion
 
     // region: Table
-    private static <T extends Block> BlockBuilder<T, Registrar, Registrar> applyTableProperties(BlockBuilder<T, Registrar, Registrar> builder)
+    private static <T extends SimpleComponentBlock> BlockBuilder<T, Registrar, Registrar> table(String furnitureSet, String tableType, BlockBuilder.Factory<T> blockFactory)
     {
-        return builder
+        return FantasyFurniture.REGISTRAR
+                .block("%s/table_%s".formatted(furnitureSet, tableType), blockFactory)
                 .flammability(5, 20)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .noOcclusion()
         ;
     }
 
-    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> tableSmall(String furnitureSet)
+    static BlockBuilder<TableSmallBlock, Registrar, Registrar> tableSmall(String furnitureSet)
     {
-        return FantasyFurniture.REGISTRAR
-                .block("%s/table_small".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
-                .transform(FurnitureSets::applyTableProperties)
-        ;
+        return table(furnitureSet, "small", TableSmallBlock::new);
     }
 
-    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> tableSmallFancy(String furnitureSet)
+    static BlockBuilder<TableSmallBlock, Registrar, Registrar> tableSmallFancy(String furnitureSet)
     {
-        return FantasyFurniture.REGISTRAR
-                .block("%s/table_small_fancy".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
-                .transform(FurnitureSets::applyTableProperties)
-                ;
+        return table(furnitureSet, "small_fancy", TableSmallBlock::new);
     }
 
-    private static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> table(String furnitureSet, String type, MultiBlockType multiBlockType)
+    static BlockBuilder<TableWideBlock, Registrar, Registrar> tableWide(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/table_%s".formatted(furnitureSet, type), multiBlockType, SimpleMultiBlock.WithHorizontalFacing::new)
-                .transform(FurnitureSets::applyTableProperties)
-        ;
+        return table(furnitureSet, "wide", TableWideBlock::new).hitbox(baseShape, AllVoxelShapes::getTableWideShape);
     }
 
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableWide(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<TableWideBlock, Registrar, Registrar> tableWideFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "wide", AllMultiBlockTypes.MB_1x1x2_FACING)
-                .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
-        ;
+        return table(furnitureSet, "wide_fancy", TableWideBlock::new).hitbox(baseShape, AllVoxelShapes::getTableWideShape);
     }
 
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableWideFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<TableLargeBlock, Registrar, Registrar> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "wide_fancy", AllMultiBlockTypes.MB_1x1x2_FACING)
-                .hitbox(baseShape, AllVoxelShapes::getTableWideShape)
-        ;
+        return table(furnitureSet, "large", TableLargeBlock::new).hitbox(baseShape, AllVoxelShapes::getTableLargeShape);
     }
 
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableLarge(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<TableLargeBlock, Registrar, Registrar> tableLargeFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return table(furnitureSet, "large", AllMultiBlockTypes.MB_2x1x2_FACING)
-                .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
-        ;
-    }
-
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> tableLargeFancy(String furnitureSet, Supplier<VoxelShape> baseShape)
-    {
-        return table(furnitureSet, "large_fancy", AllMultiBlockTypes.MB_2x1x2_FACING)
-                .hitbox(baseShape, AllVoxelShapes::getTableLargeShape)
-                ;
+        return table(furnitureSet, "large_fancy", TableLargeBlock::new).hitbox(baseShape, AllVoxelShapes::getTableLargeShape);
     }
     // endregion
 
     // region: Seat
-    private static <T extends Block & SeatBlock> BlockBuilder<T, Registrar, Registrar> applySeatProperties(BlockBuilder<T, Registrar, Registrar> blockBuilder)
-    {
-        return blockBuilder.initialProperties(Properties.BLOCK_PLANKS);
-    }
-
-    private static BlockBuilder<SimpleSeatBlock, Registrar, Registrar> seat(String furnitureSet, String seatType)
+    private static <T extends Block & ComponentBlock> BlockBuilder<T, Registrar, Registrar> seat(String furnitureSet, String seatType, BlockBuilder.Factory<T> factory)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/%s".formatted(furnitureSet, seatType), SimpleSeatBlock::new)
-                .transform(FurnitureSets::applySeatProperties)
+                .block("%s/%s".formatted(furnitureSet, seatType), factory)
+                .initialProperties(Properties.BLOCK_PLANKS)
         ;
     }
 
-    private static <T extends Block & SeatBlock.MultiBlock> BlockBuilder<T, Registrar, Registrar> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType, MultiBlockFactory<T> factory)
+    static BlockBuilder<BenchBlock, Registrar, Registrar> bench(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/%s".formatted(furnitureSet, seatType), multiBlockType, factory)
-                .transform(FurnitureSets::applySeatProperties)
-        ;
+        return seat(furnitureSet, "bench", BenchBlock::new).hitbox(baseShape, AllVoxelShapes::getBenchShape);
     }
 
-    private static BlockBuilder<SimpleSeatBlock.WithMultiBlock, Registrar, Registrar> seat(String furnitureSet, String seatType, MultiBlockType multiBlockType)
+    static BlockBuilder<ChairBlock, Registrar, Registrar> chair(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return seat(furnitureSet, seatType, multiBlockType, SimpleSeatBlock.WithMultiBlock::new);
+        return seat(furnitureSet, "chair", ChairBlock::new).hitbox(baseShape, AllVoxelShapes::getChairShape);
     }
 
-    static BlockBuilder<SimpleSeatBlock.WithMultiBlock, Registrar, Registrar> bench(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<CushionBlock, Registrar, Registrar> cushion(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return seat(furnitureSet, "bench", AllMultiBlockTypes.MB_1x1x2_FACING).hitbox(baseShape, AllVoxelShapes::getBenchShape);
+        return seat(furnitureSet, "cushion", CushionBlock::new).hitbox(baseShape, AllVoxelShapes::getCushionShape);
     }
 
-    static BlockBuilder<SimpleSeatBlock.WithMultiBlock.AtOriginOnly, Registrar, Registrar> chair(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<StoolBlock, Registrar, Registrar> stool(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return seat(furnitureSet, "chair", AllMultiBlockTypes.MB_1x2x1_FACING, SimpleSeatBlock.WithMultiBlock.AtOriginOnly::new)
-                .hitbox(baseShape, AllVoxelShapes::getChairShape)
-        ;
-    }
-
-    static BlockBuilder<SimpleSeatBlock, Registrar, Registrar> cushion(String furnitureSet, Supplier<VoxelShape> baseShape)
-    {
-        return seat(furnitureSet, "cushion")
-                .hitbox(baseShape, AllVoxelShapes::getCushionShape)
-        ;
-    }
-
-    static BlockBuilder<SimpleSeatBlock, Registrar, Registrar> stool(String furnitureSet, Supplier<VoxelShape> baseShape)
-    {
-        return seat(furnitureSet, "stool")
-                .hitbox(baseShape, AllVoxelShapes::getStoolShape)
-        ;
+        return seat(furnitureSet, "stool", StoolBlock::new).hitbox(baseShape, AllVoxelShapes::getStoolShape);
     }
     // endregion
 
     static BlockBuilder<ChestBlock, Registrar, Registrar> chest(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/chest".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, ChestBlock::new)
+                .block("%s/chest".formatted(furnitureSet), ChestBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getChestShape)
         ;
@@ -241,7 +194,7 @@ public interface FurnitureSets
     static BlockBuilder<BookshelfBlock, Registrar, Registrar> bookshelf(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/bookshelf".formatted(furnitureSet), AllMultiBlockTypes.MB_1x2x2_FACING, BookshelfBlock::new)
+                .block("%s/bookshelf".formatted(furnitureSet), BookshelfBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getBookshelfShape)
         ;
@@ -251,7 +204,7 @@ public interface FurnitureSets
     private static BlockBuilder<DeskBlock, Registrar, Registrar> desk(String furnitureSet, String type, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/desk_%s".formatted(furnitureSet, type), AllMultiBlockTypes.MB_1x1x2_FACING, DeskBlock::new)
+                .block("%s/desk_%s".formatted(furnitureSet, type), DeskBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getDeskShape)
         ;
@@ -280,7 +233,7 @@ public interface FurnitureSets
     static BlockBuilder<DresserBlock, Registrar, Registrar> dresser(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/dresser".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, DresserBlock::new)
+                .block("%s/dresser".formatted(furnitureSet), DresserBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getDresserShape)
         ;
@@ -296,107 +249,132 @@ public interface FurnitureSets
     }
 
     // region: Wardrobe
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> wardrobeTop(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<WardrobeTopBlock, Registrar, Registrar> wardrobeTop(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/wardrobe_top".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, SimpleMultiBlock.WithHorizontalFacing::new)
+                .block("%s/wardrobe_top".formatted(furnitureSet), WardrobeTopBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getWardrobeTopShape)
                 .noOcclusion()
         ;
     }
 
-    static BlockBuilder<WardrobeBlock, Registrar, Registrar> wardrobeBottom(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<WardrobeBottomBlock, Registrar, Registrar> wardrobeBottom(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/wardrobe_bottom".formatted(furnitureSet), AllMultiBlockTypes.MB_1x2x2_FACING, WardrobeBlock::new)
+                .block("%s/wardrobe_bottom".formatted(furnitureSet), WardrobeBottomBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getWardrobeBottomShape)
         ;
     }
     // endregion
 
-    static BlockBuilder<SimpleHorizontalFacingBlock, Registrar, Registrar> paintingSmall(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<PaintingSmallBlock, Registrar, Registrar> paintingSmall(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/painting_small".formatted(furnitureSet), SimpleHorizontalFacingBlock::new)
+                .block("%s/painting_small".formatted(furnitureSet), PaintingSmallBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getPaintingSmallShape)
         ;
     }
 
-    static BlockBuilder<SimpleMultiBlock.WithHorizontalFacing, Registrar, Registrar> paintingWide(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<PaintingWideBlock, Registrar, Registrar> paintingWide(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/painting_wide".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, SimpleMultiBlock.WithHorizontalFacing::new)
+                .block("%s/painting_wide".formatted(furnitureSet), PaintingWideBlock::new)
                 .initialProperties(Properties.BLOCK_PLANKS)
                 .hitbox(baseShape, AllVoxelShapes::getPaintingWideShape)
         ;
     }
 
     // region: Oven
-    static BlockBuilder<OvenBlock, Registrar, Registrar> oven(String furnitureSet, Supplier<VoxelShape> baseShape)
+    private static <T extends OvenBlock> BlockBuilder<T, Registrar, Registrar> oven(String furnitureSet, BlockBuilder.Factory<T> factory, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .block("%s/oven".formatted(furnitureSet), OvenBlock::new)
-                .copyFrom(() -> Blocks.SMOKER)
+                .block("%s/oven".formatted(furnitureSet), factory)
+                .initialProperties(Material.STONE)
+                .requiresCorrectToolForDrops()
+                .strength(3.5F)
+                .lightLevel(blockState -> blockState.getOptionalValue(OvenComponent.LIT).orElse(false) ? 13 : 0)
                 .hitbox(baseShape, AllVoxelShapes::getOvenShape)
         ;
     }
 
-    static BlockBuilder<OvenBlock.AsMultiBlock, Registrar, Registrar> ovenMultiBlock(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<OvenBlock, Registrar, Registrar> oven(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/oven".formatted(furnitureSet), AllMultiBlockTypes.MB_1x1x2_FACING, OvenBlock.AsMultiBlock::new)
-                .copyFrom(() -> Blocks.SMOKER)
-                .hitbox(baseShape, AllVoxelShapes::getOvenShape)
-        ;
+        return oven(furnitureSet, OvenBlock::new, baseShape);
+    }
+
+    static BlockBuilder<OvenBlock.WithMultiBlock, Registrar, Registrar> ovenMultiBlock(String furnitureSet, Supplier<VoxelShape> baseShape)
+    {
+        return oven(furnitureSet, OvenBlock.WithMultiBlock::new, baseShape);
     }
     // endregion
 
     // region: Doors
-    private static BlockBuilder<DoorMultiBlock, Registrar, Registrar> door(String furnitureSet, String doorType, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    private static BlockBuilder<DoorBlock, Registrar, Registrar> door(String furnitureSet, String doorType, Supplier<VoxelShape> baseShape)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/door_%s".formatted(furnitureSet, doorType), AllMultiBlockTypes.MB_1x2x1_FACING_DOOR, (multiBlockType, properties) -> new DoorMultiBlock(multiBlockType, doorSounds, properties))
+                .block("%s/door_%s".formatted(furnitureSet, doorType), DoorBlock::new)
                 .copyFrom(() -> Blocks.OAK_DOOR)
                 .hitbox(baseShape, AllVoxelShapes::getDoorShape)
         ;
     }
 
-    static BlockBuilder<DoorMultiBlock, Registrar, Registrar> doorSingle(String furnitureSet, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<DoorBlock, Registrar, Registrar> doorSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return door(furnitureSet, "single", doorSounds, baseShape);
+        return door(furnitureSet, "single", baseShape);
     }
 
-    static BlockBuilder<DoorMultiBlock, Registrar, Registrar> doorDouble(String furnitureSet, DoorMultiBlock.DoorSounds doorSounds, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<DoorBlock, Registrar, Registrar> doorDouble(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return door(furnitureSet, "double", doorSounds, baseShape);
+        return door(furnitureSet, "double", baseShape);
     }
     // endregion
 
     // region: Beds
-    private static BlockBuilder<BedMultiBlock, Registrar, Registrar> bed(String furnitureSet, String bedType, MultiBlockType multiBlockType)
+    private static <T extends Block & ComponentBlock> BlockBuilder<T, Registrar, Registrar> bed(String furnitureSet, String bedType, BlockBuilder.Factory<T> factory)
     {
         return FantasyFurniture.REGISTRAR
-                .multiBlock("%s/bed_%s".formatted(furnitureSet, bedType), multiBlockType, BedMultiBlock::new)
-                .copyFrom(() -> Blocks.WHITE_BED)
-                .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, BedMultiBlock::registerCustomHomePoi)
+                .block("%s/bed_%s".formatted(furnitureSet, bedType), factory)
+                // .copyFrom(() -> Blocks.WHITE_BED)
+                .initialProperties(Material.WOOL, MaterialColor.WOOL)
+                .sound(SoundType.WOOD)
+                .strength(.2F)
+                .noOcclusion()
+                .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, FurnitureSets::registerCustomHomePoi)
         ;
     }
 
-    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<BedSingleBlock, Registrar, Registrar> bedSingle(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return bed(furnitureSet, "single", AllMultiBlockTypes.MB_2x1x1_FACING_BED)
-                .hitbox(baseShape, AllVoxelShapes::getBedSingleShape)
-        ;
+        return bed(furnitureSet, "single", BedSingleBlock::new).hitbox(baseShape, AllVoxelShapes::getBedSingleShape);
     }
 
-    static BlockBuilder<BedMultiBlock, Registrar, Registrar> bedDouble(String furnitureSet, Supplier<VoxelShape> baseShape)
+    static BlockBuilder<BedDoubleBlock, Registrar, Registrar> bedDouble(String furnitureSet, Supplier<VoxelShape> baseShape)
     {
-        return bed(furnitureSet, "double", AllMultiBlockTypes.MB_2x1x2_FACING_BED)
-                .hitbox(baseShape, AllVoxelShapes::getBedDoubleShape)
-        ;
+        return bed(furnitureSet, "double", BedDoubleBlock::new).hitbox(baseShape, AllVoxelShapes::getBedDoubleShape);
+    }
+
+    private static void registerCustomHomePoi(Block... blocks)
+    {
+        // collect all possible block states into set
+        // block states must have the BedPart property
+        // collect only block states that are for the `HEAD` part
+        // same logic as vanilla `HOME` poi
+        var blockStates = Arrays
+                .stream(blocks)
+                .map(Block::getStateDefinition)
+                .map(StateDefinition::getPossibleStates)
+                .flatMap(Collection::stream)
+                .filter(s -> s.hasProperty(BedBlock.PART))
+                .filter(s -> s.getValue(BedBlock.PART) == BedPart.HEAD)
+                .collect(Collectors.toSet());
+
+        if(PoiTypes.BEDS instanceof ImmutableSet) PoiTypes.BEDS = Sets.newHashSet(PoiTypes.BEDS);
+        PoiTypes.BEDS.addAll(blockStates);
+        var holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolderOrThrow(PoiTypes.HOME);
+        PoiTypes.registerBlockStates(holder, blockStates);
     }
     // endregion
 

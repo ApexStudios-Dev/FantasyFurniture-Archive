@@ -1,8 +1,7 @@
 accessWidener   v2  named
 extendable method net/minecraft/world/entity/Entity positionRider (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$MoveFunction;)V
-
 accessible field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
 mutable field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
-
 extendable method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity isLit ()Z
+accessible method net/minecraft/world/level/block/AbstractFurnaceBlock createFurnaceTicker (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/world/level/block/entity/BlockEntityType;)Lnet/minecraft/world/level/block/entity/BlockEntityTicker;

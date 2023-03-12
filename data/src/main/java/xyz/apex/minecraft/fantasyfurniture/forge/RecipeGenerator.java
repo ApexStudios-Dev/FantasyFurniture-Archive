@@ -47,7 +47,7 @@ public final class RecipeGenerator extends RecipeProvider
         nordicStation(consumer, NordicSet.TABLE_SMALL);
         nordicStation(consumer, NordicSet.BENCH);
         nordicStation(consumer, NordicSet.CHAIR);
-        nordicStation(consumer, NordicSet.CHANDELIER);
+        nordicStation(consumer, NordicSet.CEILING_LIGHT);
         nordicStation(consumer, NordicSet.CUSHION);
         nordicStation(consumer, NordicSet.STOOL);
         nordicStation(consumer, NordicSet.CHEST);
@@ -85,7 +85,7 @@ public final class RecipeGenerator extends RecipeProvider
         venthyrStation(consumer, VenthyrSet.TABLE_SMALL_FANCY);
         venthyrStation(consumer, VenthyrSet.BENCH);
         venthyrStation(consumer, VenthyrSet.CHAIR);
-        venthyrStation(consumer, VenthyrSet.CHANDELIER);
+        venthyrStation(consumer, VenthyrSet.CEILING_LIGHT);
         venthyrStation(consumer, VenthyrSet.CUSHION);
         venthyrStation(consumer, VenthyrSet.STOOL);
         venthyrStation(consumer, VenthyrSet.CHEST);
@@ -120,7 +120,7 @@ public final class RecipeGenerator extends RecipeProvider
         dunmerStation(consumer, DunmerSet.TABLE_SMALL);
         dunmerStation(consumer, DunmerSet.BENCH);
         dunmerStation(consumer, DunmerSet.CHAIR);
-        dunmerStation(consumer, DunmerSet.CHANDELIER);
+        dunmerStation(consumer, DunmerSet.CEILING_LIGHT);
         dunmerStation(consumer, DunmerSet.CUSHION);
         dunmerStation(consumer, DunmerSet.STOOL);
         dunmerStation(consumer, DunmerSet.CHEST);
@@ -155,7 +155,7 @@ public final class RecipeGenerator extends RecipeProvider
         boneWitherStation(consumer, BoneSet.Wither.TABLE_SMALL);
         boneWitherStation(consumer, BoneSet.Wither.BENCH);
         boneWitherStation(consumer, BoneSet.Wither.CHAIR);
-        boneWitherStation(consumer, BoneSet.Wither.CHANDELIER);
+        boneWitherStation(consumer, BoneSet.Wither.CEILING_LIGHT);
         boneWitherStation(consumer, BoneSet.Wither.CUSHION);
         boneWitherStation(consumer, BoneSet.Wither.STOOL);
         boneWitherStation(consumer, BoneSet.Wither.CHEST);
@@ -190,7 +190,7 @@ public final class RecipeGenerator extends RecipeProvider
         boneSkeletonStation(consumer, BoneSet.Skeleton.TABLE_SMALL);
         boneSkeletonStation(consumer, BoneSet.Skeleton.BENCH);
         boneSkeletonStation(consumer, BoneSet.Skeleton.CHAIR);
-        boneSkeletonStation(consumer, BoneSet.Skeleton.CHANDELIER);
+        boneSkeletonStation(consumer, BoneSet.Skeleton.CEILING_LIGHT);
         boneSkeletonStation(consumer, BoneSet.Skeleton.CUSHION);
         boneSkeletonStation(consumer, BoneSet.Skeleton.STOOL);
         boneSkeletonStation(consumer, BoneSet.Skeleton.CHEST);
@@ -225,7 +225,7 @@ public final class RecipeGenerator extends RecipeProvider
         necrolordStation(consumer, NecrolordSet.TABLE_SMALL);
         necrolordStation(consumer, NecrolordSet.BENCH);
         necrolordStation(consumer, NecrolordSet.CHAIR);
-        necrolordStation(consumer, NecrolordSet.CHANDELIER);
+        necrolordStation(consumer, NecrolordSet.CEILING_LIGHT);
         necrolordStation(consumer, NecrolordSet.CUSHION);
         necrolordStation(consumer, NecrolordSet.STOOL);
         necrolordStation(consumer, NecrolordSet.CHEST);
@@ -247,6 +247,41 @@ public final class RecipeGenerator extends RecipeProvider
         necrolordStation(consumer, NecrolordSet.SHELF);
         necrolordStation(consumer, NecrolordSet.SOFA);
         necrolordStation(consumer, NecrolordSet.COUNTER);
+    }
+
+    private void royal(Consumer<FinishedRecipe> consumer)
+    {
+        royalStation(consumer, RoyalSet.WOOL);
+        royalStation(consumer, RoyalSet.CARPET);
+        royalStation(consumer, RoyalSet.WALL_LIGHT);
+        royalStation(consumer, RoyalSet.FLOOR_LIGHT);
+        royalStation(consumer, RoyalSet.TABLE_LARGE);
+        royalStation(consumer, RoyalSet.TABLE_WIDE);
+        royalStation(consumer, RoyalSet.TABLE_SMALL);
+        royalStation(consumer, RoyalSet.BENCH);
+        royalStation(consumer, RoyalSet.CHAIR);
+        royalStation(consumer, RoyalSet.CEILING_LIGHT);
+        royalStation(consumer, RoyalSet.CUSHION);
+        royalStation(consumer, RoyalSet.STOOL);
+        royalStation(consumer, RoyalSet.CHEST);
+        royalStation(consumer, RoyalSet.BOOKSHELF);
+        royalStation(consumer, RoyalSet.DESK_LEFT);
+        royalStation(consumer, RoyalSet.DESK_RIGHT);
+        royalStation(consumer, RoyalSet.DRAWER);
+        royalStation(consumer, RoyalSet.DRESSER);
+        royalStation(consumer, RoyalSet.LOCKBOX);
+        royalStation(consumer, RoyalSet.WARDROBE_BOTTOM);
+        royalStation(consumer, RoyalSet.WARDROBE_TOP);
+        royalStation(consumer, RoyalSet.PAINTING_WIDE);
+        royalStation(consumer, RoyalSet.PAINTING_SMALL);
+        royalStation(consumer, RoyalSet.OVEN);
+        royalStation(consumer, RoyalSet.DOOR_DOUBLE);
+        royalStation(consumer, RoyalSet.DOOR_SINGLE);
+        royalStation(consumer, RoyalSet.BED_SINGLE);
+        royalStation(consumer, RoyalSet.BED_DOUBLE);
+        royalStation(consumer, RoyalSet.SHELF);
+        royalStation(consumer, RoyalSet.SOFA);
+        royalStation(consumer, RoyalSet.COUNTER);
     }
 
     private void furnitureStation(Consumer<FinishedRecipe> exporter)
@@ -286,6 +321,11 @@ public final class RecipeGenerator extends RecipeProvider
     private void necrolordStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
     {
         furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.DARK_OAK_PLANKS, () -> Blocks.PURPLE_WOOL, item);
+    }
+
+    private void royalStation(Consumer<FinishedRecipe> exporter, Supplier<? extends ItemLike> item)
+    {
+        furnitureStationGeneric(exporter, NordicSet.NAME, () -> Items.GOLD_INGOT, () -> Blocks.WHITE_WOOL, item);
     }
 
     private void furnitureStationGeneric(Consumer<FinishedRecipe> exporter, String furnitureSet, Supplier<? extends ItemLike> left, Supplier<? extends ItemLike> right, Supplier<? extends ItemLike> item)

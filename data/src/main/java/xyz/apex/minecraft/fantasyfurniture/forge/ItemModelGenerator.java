@@ -38,6 +38,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         boneWither();
         boneSkeleton();
         necrolord();
+        royal();
     }
 
     private void nordic()
@@ -51,7 +52,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NordicSet.TABLE_WIDE);
         blockItem(NordicSet.BENCH);
         blockItem(NordicSet.CHAIR);
-        blockItem(NordicSet.CHANDELIER);
+        blockItem(NordicSet.CEILING_LIGHT);
         blockItem(NordicSet.CUSHION);
         blockItem(NordicSet.STOOL);
         blockItem(NordicSet.CHEST);
@@ -89,7 +90,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(VenthyrSet.TABLE_WIDE_FANCY);
         blockItem(VenthyrSet.BENCH);
         blockItem(VenthyrSet.CHAIR);
-        blockItem(VenthyrSet.CHANDELIER);
+        blockItem(VenthyrSet.CEILING_LIGHT);
         blockItem(VenthyrSet.CUSHION);
         blockItem(VenthyrSet.STOOL);
         blockItem(VenthyrSet.CHEST);
@@ -124,7 +125,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(DunmerSet.TABLE_WIDE);
         blockItem(DunmerSet.BENCH);
         blockItem(DunmerSet.CHAIR);
-        blockItem(DunmerSet.CHANDELIER);
+        blockItem(DunmerSet.CEILING_LIGHT);
         blockItem(DunmerSet.CUSHION);
         blockItem(DunmerSet.STOOL);
         blockItem(DunmerSet.CHEST);
@@ -159,7 +160,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(BoneSet.Wither.TABLE_WIDE);
         blockItem(BoneSet.Wither.BENCH);
         blockItem(BoneSet.Wither.CHAIR);
-        blockItem(BoneSet.Wither.CHANDELIER);
+        blockItem(BoneSet.Wither.CEILING_LIGHT);
         blockItem(BoneSet.Wither.CUSHION);
         blockItem(BoneSet.Wither.STOOL);
         blockItem(BoneSet.Wither.CHEST);
@@ -194,7 +195,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(BoneSet.Skeleton.TABLE_WIDE);
         blockItem(BoneSet.Skeleton.BENCH);
         blockItem(BoneSet.Skeleton.CHAIR);
-        blockItem(BoneSet.Skeleton.CHANDELIER);
+        blockItem(BoneSet.Skeleton.CEILING_LIGHT);
         blockItem(BoneSet.Skeleton.CUSHION);
         blockItem(BoneSet.Skeleton.STOOL);
         blockItem(BoneSet.Skeleton.CHEST);
@@ -229,7 +230,7 @@ public final class ItemModelGenerator extends ItemModelProvider
         blockItem(NecrolordSet.TABLE_WIDE);
         blockItem(NecrolordSet.BENCH);
         blockItem(NecrolordSet.CHAIR);
-        blockItem(NecrolordSet.CHANDELIER);
+        blockItem(NecrolordSet.CEILING_LIGHT);
         blockItem(NecrolordSet.CUSHION);
         blockItem(NecrolordSet.STOOL);
         blockItem(NecrolordSet.CHEST);
@@ -251,6 +252,41 @@ public final class ItemModelGenerator extends ItemModelProvider
         shelfBlockItem(NecrolordSet.SHELF);
         sofaBlockItem(NecrolordSet.SOFA);
         sofaBlockItem(NecrolordSet.COUNTER);
+    }
+
+    private void royal()
+    {
+        blockItem(RoyalSet.WOOL);
+        blockItem(RoyalSet.CARPET);
+        blockItem(RoyalSet.WALL_LIGHT);
+        blockItem(RoyalSet.FLOOR_LIGHT);
+        blockItem(RoyalSet.TABLE_LARGE);
+        blockItem(RoyalSet.TABLE_SMALL);
+        blockItem(RoyalSet.TABLE_WIDE);
+        blockItem(RoyalSet.BENCH);
+        blockItem(RoyalSet.CHAIR);
+        blockItem(RoyalSet.CEILING_LIGHT);
+        blockItem(RoyalSet.CUSHION);
+        blockItem(RoyalSet.STOOL);
+        blockItem(RoyalSet.CHEST);
+        blockItem(RoyalSet.BOOKSHELF);
+        blockItem(RoyalSet.DESK_LEFT);
+        blockItem(RoyalSet.DESK_RIGHT);
+        blockItem(RoyalSet.DRAWER);
+        blockItem(RoyalSet.DRESSER);
+        blockItem(RoyalSet.LOCKBOX);
+        blockItem(RoyalSet.WARDROBE_BOTTOM);
+        blockItem(RoyalSet.WARDROBE_TOP);
+        blockItem(RoyalSet.PAINTING_WIDE);
+        blockItem(RoyalSet.PAINTING_SMALL);
+        blockItem(RoyalSet.OVEN);
+        doorBlockItem(RoyalSet.DOOR_DOUBLE);
+        doorBlockItem(RoyalSet.DOOR_SINGLE);
+        blockItem(RoyalSet.BED_SINGLE);
+        blockItem(RoyalSet.BED_DOUBLE);
+        shelfBlockItem(RoyalSet.SHELF);
+        sofaBlockItem(RoyalSet.SOFA);
+        sofaBlockItem(RoyalSet.COUNTER);
     }
 
     private ItemModelBuilder blockItem(Supplier<? extends ItemLike> item, ModelFile blockModel)

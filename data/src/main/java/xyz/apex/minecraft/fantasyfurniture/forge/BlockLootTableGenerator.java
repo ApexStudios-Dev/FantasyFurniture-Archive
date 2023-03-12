@@ -29,6 +29,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         boneWither();
         boneSkeleton();
         necrolord();
+        royal();
     }
 
     private void nordic()
@@ -42,7 +43,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(NordicSet.TABLE_SMALL.get());
         dropSelf(NordicSet.BENCH.get());
         dropSelf(NordicSet.CHAIR.get());
-        dropSelf(NordicSet.CHANDELIER.get());
+        dropSelf(NordicSet.CEILING_LIGHT.get());
         dropSelf(NordicSet.CUSHION.get());
         dropSelf(NordicSet.STOOL.get());
         dropSelf(NordicSet.CHEST.get());
@@ -80,7 +81,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(VenthyrSet.TABLE_SMALL_FANCY.get());
         dropSelf(VenthyrSet.BENCH.get());
         dropSelf(VenthyrSet.CHAIR.get());
-        dropSelf(VenthyrSet.CHANDELIER.get());
+        dropSelf(VenthyrSet.CEILING_LIGHT.get());
         dropSelf(VenthyrSet.CUSHION.get());
         dropSelf(VenthyrSet.STOOL.get());
         dropSelf(VenthyrSet.CHEST.get());
@@ -115,7 +116,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(DunmerSet.TABLE_SMALL.get());
         dropSelf(DunmerSet.BENCH.get());
         dropSelf(DunmerSet.CHAIR.get());
-        dropSelf(DunmerSet.CHANDELIER.get());
+        dropSelf(DunmerSet.CEILING_LIGHT.get());
         dropSelf(DunmerSet.CUSHION.get());
         dropSelf(DunmerSet.STOOL.get());
         dropSelf(DunmerSet.CHEST.get());
@@ -150,7 +151,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(BoneSet.Wither.TABLE_SMALL.get());
         dropSelf(BoneSet.Wither.BENCH.get());
         dropSelf(BoneSet.Wither.CHAIR.get());
-        dropSelf(BoneSet.Wither.CHANDELIER.get());
+        dropSelf(BoneSet.Wither.CEILING_LIGHT.get());
         dropSelf(BoneSet.Wither.CUSHION.get());
         dropSelf(BoneSet.Wither.STOOL.get());
         dropSelf(BoneSet.Wither.CHEST.get());
@@ -185,7 +186,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(BoneSet.Skeleton.TABLE_SMALL.get());
         dropSelf(BoneSet.Skeleton.BENCH.get());
         dropSelf(BoneSet.Skeleton.CHAIR.get());
-        dropSelf(BoneSet.Skeleton.CHANDELIER.get());
+        dropSelf(BoneSet.Skeleton.CEILING_LIGHT.get());
         dropSelf(BoneSet.Skeleton.CUSHION.get());
         dropSelf(BoneSet.Skeleton.STOOL.get());
         dropSelf(BoneSet.Skeleton.CHEST.get());
@@ -220,7 +221,7 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(NecrolordSet.TABLE_SMALL.get());
         dropSelf(NecrolordSet.BENCH.get());
         dropSelf(NecrolordSet.CHAIR.get());
-        dropSelf(NecrolordSet.CHANDELIER.get());
+        dropSelf(NecrolordSet.CEILING_LIGHT.get());
         dropSelf(NecrolordSet.CUSHION.get());
         dropSelf(NecrolordSet.STOOL.get());
         dropSelf(NecrolordSet.CHEST.get());
@@ -242,6 +243,41 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
         dropSelf(NecrolordSet.SHELF.get());
         dropSelf(NecrolordSet.SOFA.get());
         dropSelf(NecrolordSet.COUNTER.get());
+    }
+
+    private void royal()
+    {
+        dropSelf(RoyalSet.WOOL.get());
+        dropSelf(RoyalSet.CARPET.get());
+        dropSelf(RoyalSet.WALL_LIGHT.get());
+        dropSelf(RoyalSet.FLOOR_LIGHT.get());
+        dropSelf(RoyalSet.TABLE_LARGE.get());
+        dropSelf(RoyalSet.TABLE_WIDE.get());
+        dropSelf(RoyalSet.TABLE_SMALL.get());
+        dropSelf(RoyalSet.BENCH.get());
+        dropSelf(RoyalSet.CHAIR.get());
+        dropSelf(RoyalSet.CEILING_LIGHT.get());
+        dropSelf(RoyalSet.CUSHION.get());
+        dropSelf(RoyalSet.STOOL.get());
+        dropSelf(RoyalSet.CHEST.get());
+        dropSelf(RoyalSet.BOOKSHELF.get());
+        dropSelf(RoyalSet.DESK_LEFT.get());
+        dropSelf(RoyalSet.DESK_RIGHT.get());
+        dropSelf(RoyalSet.DRAWER.get());
+        dropSelf(RoyalSet.DRESSER.get());
+        dropSelf(RoyalSet.LOCKBOX.get());
+        dropSelf(RoyalSet.WARDROBE_BOTTOM.get());
+        dropSelf(RoyalSet.WARDROBE_TOP.get());
+        dropSelf(RoyalSet.PAINTING_WIDE.get());
+        dropSelf(RoyalSet.PAINTING_SMALL.get());
+        dropSelf(RoyalSet.OVEN.get());
+        dropSelf(RoyalSet.DOOR_DOUBLE.get());
+        dropSelf(RoyalSet.DOOR_SINGLE.get());
+        dropSelf(RoyalSet.BED_SINGLE.get());
+        dropSelf(RoyalSet.BED_DOUBLE.get());
+        dropSelf(RoyalSet.SHELF.get());
+        dropSelf(RoyalSet.SOFA.get());
+        dropSelf(RoyalSet.COUNTER.get());
     }
 
     @Override

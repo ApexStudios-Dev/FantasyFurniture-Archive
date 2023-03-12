@@ -1,29 +1,23 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
-import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockType;
-import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntityEntry;
-import xyz.apex.minecraft.apexcore.common.registry.entry.MenuEntry;
-import xyz.apex.minecraft.fantasyfurniture.common.block.entity.DresserBlockEntity;
+import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.DresserMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMultiBlockTypes;
 
-public final class DresserBlock extends HorizontalInventoryBlock.AsMultiBlock<DresserBlockEntity, DresserMenu>
+public final class DresserBlock extends SimpleComponentBlock
 {
-    public DresserBlock(MultiBlockType multiBlockType, Properties properties)
+    public DresserBlock(Properties properties)
     {
-        super(multiBlockType, properties);
+        super(properties);
     }
 
     @Override
-    public BlockEntityEntry<DresserBlockEntity> getInventoryBlockEntityType()
+    public void registerComponents()
     {
-        return AllBlockEntityTypes.DRESSER;
-    }
-
-    @Override
-    public MenuEntry<DresserMenu> getInventoryMenuType()
-    {
-        return AllMenuTypes.DRESSER;
+        registerComponent(ComponentTypes.INVENTORY);
+        registerComponent(ComponentTypes.BLOCK_ENTITY, AllBlockEntityTypes.DRESSER);
+        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x1x2_FACING);
     }
 }

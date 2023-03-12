@@ -32,6 +32,7 @@ public final class LanguageGenerator extends LanguageProvider
         boneWither();
         boneSkeleton();
         necrolord();
+        royal();
     }
 
     private void nordic()
@@ -45,7 +46,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NordicSet.TABLE_WIDE, "Nordic Table Wide");
         addBlock(NordicSet.BENCH, "Nordic Bench");
         addBlock(NordicSet.CHAIR, "Nordic Chair");
-        addBlock(NordicSet.CHANDELIER, "Nordic Chandelier");
+        addBlock(NordicSet.CEILING_LIGHT, "Nordic Ceiling Light");
         addBlock(NordicSet.CUSHION, "Nordic Cushion");
         addBlock(NordicSet.STOOL, "Nordic Stool");
         addBlock(NordicSet.CHEST, "Nordic Chest");
@@ -84,7 +85,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(VenthyrSet.TABLE_WIDE_FANCY, "Venthyr Table Wide Fancy");
         addBlock(VenthyrSet.BENCH, "Venthyr Bench");
         addBlock(VenthyrSet.CHAIR, "Venthyr Chair");
-        addBlock(VenthyrSet.CHANDELIER, "Venthyr Chandelier");
+        addBlock(VenthyrSet.CEILING_LIGHT, "Venthyr Ceiling Light");
         addBlock(VenthyrSet.CUSHION, "Venthyr Cushion");
         addBlock(VenthyrSet.STOOL, "Venthyr Stool");
         addBlock(VenthyrSet.CHEST, "Venthyr Chest");
@@ -120,7 +121,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(DunmerSet.TABLE_WIDE, "Dunmer Table Wide");
         addBlock(DunmerSet.BENCH, "Dunmer Bench");
         addBlock(DunmerSet.CHAIR, "Dunmer Chair");
-        addBlock(DunmerSet.CHANDELIER, "Dunmer Chandelier");
+        addBlock(DunmerSet.CEILING_LIGHT, "Dunmer Ceiling Light");
         addBlock(DunmerSet.CUSHION, "Dunmer Cushion");
         addBlock(DunmerSet.STOOL, "Dunmer Stool");
         addBlock(DunmerSet.CHEST, "Dunmer Chest");
@@ -156,7 +157,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(BoneSet.Wither.TABLE_WIDE, "Bone Wither Table Wide");
         addBlock(BoneSet.Wither.BENCH, "Bone Wither Bench");
         addBlock(BoneSet.Wither.CHAIR, "Bone Wither Chair");
-        addBlock(BoneSet.Wither.CHANDELIER, "Bone Wither Chandelier");
+        addBlock(BoneSet.Wither.CEILING_LIGHT, "Bone Wither Ceiling Light");
         addBlock(BoneSet.Wither.CUSHION, "Bone Wither Cushion");
         addBlock(BoneSet.Wither.STOOL, "Bone Wither Stool");
         addBlock(BoneSet.Wither.CHEST, "Bone Wither Chest");
@@ -192,7 +193,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(BoneSet.Skeleton.TABLE_WIDE, "Bone Skeleton Table Wide");
         addBlock(BoneSet.Skeleton.BENCH, "Bone Skeleton Bench");
         addBlock(BoneSet.Skeleton.CHAIR, "Bone Skeleton Chair");
-        addBlock(BoneSet.Skeleton.CHANDELIER, "Bone Skeleton Chandelier");
+        addBlock(BoneSet.Skeleton.CEILING_LIGHT, "Bone Skeleton Ceiling Light");
         addBlock(BoneSet.Skeleton.CUSHION, "Bone Skeleton Cushion");
         addBlock(BoneSet.Skeleton.STOOL, "Bone Skeleton Stool");
         addBlock(BoneSet.Skeleton.CHEST, "Bone Skeleton Chest");
@@ -228,7 +229,7 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NecrolordSet.TABLE_WIDE, "Necrolord Table Wide");
         addBlock(NecrolordSet.BENCH, "Necrolord Bench");
         addBlock(NecrolordSet.CHAIR, "Necrolord Chair");
-        addBlock(NecrolordSet.CHANDELIER, "Necrolord Chandelier");
+        addBlock(NecrolordSet.CEILING_LIGHT, "Necrolord Ceiling Light");
         addBlock(NecrolordSet.CUSHION, "Necrolord Cushion");
         addBlock(NecrolordSet.STOOL, "Necrolord Stool");
         addBlock(NecrolordSet.CHEST, "Necrolord Chest");
@@ -251,6 +252,42 @@ public final class LanguageGenerator extends LanguageProvider
         addBlock(NecrolordSet.SOFA, "Necrolord Sofa");
         addBlock(NecrolordSet.COUNTER, "Necrolord Counter");
         addCreativeModeTab(NecrolordSet.NAME, "Necrolord");
+    }
+
+    private void royal()
+    {
+        addBlock(RoyalSet.WOOL, "Royal Wool");
+        addBlock(RoyalSet.CARPET, "Royal Carpet");
+        addBlock(RoyalSet.WALL_LIGHT, "Royal Wall Light");
+        addBlock(RoyalSet.FLOOR_LIGHT, "Royal Floor Light");
+        addBlock(RoyalSet.TABLE_LARGE, "Royal Table Large");
+        addBlock(RoyalSet.TABLE_SMALL, "Royal Table Small");
+        addBlock(RoyalSet.TABLE_WIDE, "Royal Table Wide");
+        addBlock(RoyalSet.BENCH, "Royal Bench");
+        addBlock(RoyalSet.CHAIR, "Royal Chair");
+        addBlock(RoyalSet.CEILING_LIGHT, "Royal Ceiling Light");
+        addBlock(RoyalSet.CUSHION, "Royal Cushion");
+        addBlock(RoyalSet.STOOL, "Royal Stool");
+        addBlock(RoyalSet.CHEST, "Royal Chest");
+        addBlock(RoyalSet.BOOKSHELF, "Royal Bookshelf");
+        addBlock(RoyalSet.DESK_LEFT, "Royal Desk Left");
+        addBlock(RoyalSet.DESK_RIGHT, "Royal Desk Right");
+        addBlock(RoyalSet.DRAWER, "Royal Drawer");
+        addBlock(RoyalSet.DRESSER, "Royal Dresser");
+        addBlock(RoyalSet.LOCKBOX, "Royal Lockbox");
+        addBlock(RoyalSet.WARDROBE_BOTTOM, "Royal Wardrobe Bottom");
+        addBlock(RoyalSet.WARDROBE_TOP, "Royal Wardrobe Top");
+        addBlock(RoyalSet.PAINTING_WIDE, "Royal Painting Wide");
+        addBlock(RoyalSet.PAINTING_SMALL, "Royal Painting Small");
+        addBlock(RoyalSet.OVEN, "Royal Oven");
+        addBlock(RoyalSet.DOOR_DOUBLE, "Royal Door Double");
+        addBlock(RoyalSet.DOOR_SINGLE, "Royal Door Single");
+        addBlock(RoyalSet.BED_SINGLE, "Royal Bed Single");
+        addBlock(RoyalSet.BED_DOUBLE, "Royal Bed Double");
+        addBlock(RoyalSet.SHELF, "Royal Shelf");
+        addBlock(RoyalSet.SOFA, "Royal Sofa");
+        addBlock(RoyalSet.COUNTER, "Royal Counter");
+        addCreativeModeTab(RoyalSet.NAME, "Royal");
     }
 
     private void addCreativeModeTab(String key, String name)
