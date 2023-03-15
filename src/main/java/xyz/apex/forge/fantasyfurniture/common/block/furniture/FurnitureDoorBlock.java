@@ -1,10 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.common.block.furniture;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,13 +15,14 @@ import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
 import xyz.apex.forge.fantasyfurniture.core.HitBoxes;
 
@@ -34,7 +32,7 @@ public class FurnitureDoorBlock extends DoorBlock
 {
 	public FurnitureDoorBlock(Properties properties)
 	{
-		super(properties, SoundEvents.WOODEN_DOOR_CLOSE, SoundEvents.WOODEN_DOOR_OPEN);
+		super(properties, BlockSetType.OAK);
 	}
 
 	@Override

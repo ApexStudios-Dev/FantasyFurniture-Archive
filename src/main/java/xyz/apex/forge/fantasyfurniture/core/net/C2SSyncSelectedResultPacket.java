@@ -2,7 +2,6 @@ package xyz.apex.forge.fantasyfurniture.core.net;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-
 import xyz.apex.forge.apexcore.lib.net.AbstractPacket;
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.fantasyfurniture.common.menu.FurnitureStationMenu;

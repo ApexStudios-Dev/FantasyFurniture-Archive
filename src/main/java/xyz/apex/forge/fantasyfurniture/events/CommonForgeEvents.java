@@ -9,7 +9,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.MissingMappingsEvent;
-
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
 import xyz.apex.forge.fantasyfurniture.AllItems;

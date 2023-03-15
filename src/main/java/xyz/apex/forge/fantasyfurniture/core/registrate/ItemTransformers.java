@@ -2,12 +2,10 @@ package xyz.apex.forge.fantasyfurniture.core.registrate;
 
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
-
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
 import xyz.apex.forge.commonality.Mods;

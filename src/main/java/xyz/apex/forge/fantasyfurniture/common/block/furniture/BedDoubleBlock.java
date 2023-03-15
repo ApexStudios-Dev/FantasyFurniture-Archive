@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.block.furniture;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -23,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
 import xyz.apex.forge.fantasyfurniture.AllPatterns;

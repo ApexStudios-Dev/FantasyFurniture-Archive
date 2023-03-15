@@ -1,12 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.core;
 
-import org.apache.commons.lang3.Validate;
-
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.ModLoadingContext;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.*;

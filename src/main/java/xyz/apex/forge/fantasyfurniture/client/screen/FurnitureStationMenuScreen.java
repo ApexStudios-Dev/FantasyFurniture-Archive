@@ -4,9 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
@@ -25,7 +22,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
 import xyz.apex.forge.apexcore.lib.util.RegistryHelper;
 import xyz.apex.forge.commonality.Mods;
@@ -115,7 +113,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				searchBox.active = false;
 				searchBox.setValue("");
 				focusSearchBoxNextTick =  false;
-				searchBox.setFocus(false);
+				searchBox.setFocused(false);
 				setFocused(null);
 			}
 			else
@@ -128,7 +126,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				if(!searchBox.isFocused())
 				{
 					setFocused(searchBox);
-					searchBox.setFocus(true);
+					searchBox.setFocused(true);
 				}
 
 				focusSearchBoxNextTick = false;
@@ -315,7 +313,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				if(keyCode == GLFW_KEY_ESCAPE)
 				{
 					focusSearchBoxNextTick = false;
-					searchBox.setFocus(false);
+					searchBox.setFocused(false);
 					return true;
 				}
 			}
@@ -437,7 +435,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 			stackFont = stackFont == null ? font : stackFont;
 
 			renderTranslucentItem(pose, stack, x, y);
-			itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y);
+			itemRenderer.renderGuiItemDecorations(pose, stackFont, stack, x, y);
 
 			// TODO: Maybe this should be a config?
 			//  Show tooltip theres more than 1 valid input item
@@ -565,8 +563,8 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 				var stackFont = IClientItemExtensions.of(resultItem).getFont(resultItem, IClientItemExtensions.FontContext.TOOLTIP);
 				stackFont = stackFont == null ? font : stackFont;
 
-				itemRenderer.renderGuiItem(resultItem, resultItemX, resultItemY);
-				itemRenderer.renderGuiItemDecorations(stackFont, resultItem, resultItemX, resultItemY);
+				itemRenderer.renderGuiItem(pose, resultItem, resultItemX, resultItemY);
+				itemRenderer.renderGuiItemDecorations(pose, stackFont, resultItem, resultItemX, resultItemY);
 
 				if(isHovered && hoveredStack.isEmpty())
 					hoveredStack = resultItem;
@@ -647,7 +645,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		var stackFont = IClientItemExtensions.of(stack).getFont(stack, IClientItemExtensions.FontContext.TOOLTIP);
 		stackFont = stackFont == null ? font : stackFont;
 
-		itemRenderer.renderAndDecorateFakeItem(stack, x, y);
+		itemRenderer.renderAndDecorateFakeItem(pose, stack, x, y);
 
 		RenderSystem.enableDepthTest();
 		RenderSystem.depthFunc(516);
@@ -655,7 +653,7 @@ public class FurnitureStationMenuScreen extends BaseMenuScreen<FurnitureStationM
 		RenderSystem.depthFunc(515);
 		RenderSystem.disableDepthTest();
 
-		itemRenderer.renderGuiItemDecorations(stackFont, stack, x, y, null);
+		itemRenderer.renderGuiItemDecorations(pose, stackFont, stack, x, y, null);
 
 		modelViewStack.popPose();
 	}

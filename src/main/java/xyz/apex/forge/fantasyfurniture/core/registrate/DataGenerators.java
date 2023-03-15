@@ -2,7 +2,6 @@ package xyz.apex.forge.fantasyfurniture.core.registrate;
 
 import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -13,7 +12,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-
 import xyz.apex.forge.apexcore.core.init.ACRegistry;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.ISeatBlock;

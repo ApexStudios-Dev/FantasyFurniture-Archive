@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasyfurniture;
 
 import net.minecraft.core.registries.Registries;
-
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntityEntry;
 import xyz.apex.forge.fantasyfurniture.client.renderer.SkullBlossomsBlockEntityRenderer;
 import xyz.apex.forge.fantasyfurniture.client.renderer.WidowBloomBlockEntityRenderer;

@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.block.furniture;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,7 +25,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.MaterialColor;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.commonality.Constants;
 import xyz.apex.forge.commonality.Mods;

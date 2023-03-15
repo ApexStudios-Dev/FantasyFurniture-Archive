@@ -6,7 +6,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.AllParticleTypes;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.SkullBlossomsModel;

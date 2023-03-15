@@ -2,14 +2,12 @@ package xyz.apex.forge.fantasyfurniture.core.registrate;
 
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullBiFunction;
-
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraftforge.client.model.generators.ModelFile;
-
 import xyz.apex.forge.apexcore.registrate.BasicRegistrate;
 import xyz.apex.forge.apexcore.registrate.builder.ItemBuilder;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
@@ -22,8 +20,8 @@ import xyz.apex.forge.fantasyfurniture.common.item.SkullBlossomsBlockItem;
 import xyz.apex.forge.fantasyfurniture.common.item.WidowBloomBlockItem;
 import xyz.apex.forge.fantasyfurniture.core.FurnitureStation;
 
-import static xyz.apex.forge.fantasyfurniture.core.ModRegistry.REGISTRATE;
 import static com.tterrag.registrate.providers.ProviderType.LANG;
+import static xyz.apex.forge.fantasyfurniture.core.ModRegistry.REGISTRATE;
 
 public interface ItemBuilders
 {
@@ -120,42 +118,42 @@ public interface ItemBuilders
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+							.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+							.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+							.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+							.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ItemTransforms.TransformType.HEAD)
+							.transform(ItemDisplayContext.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ItemTransforms.TransformType.GROUND)
+							.transform(ItemDisplayContext.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIXED)
+							.transform(ItemDisplayContext.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ItemTransforms.TransformType.GUI)
+							.transform(ItemDisplayContext.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 3F, 0F)
 								.scale(.5F, .5F, .5F)
@@ -178,42 +176,42 @@ public interface ItemBuilders
 						.getBuilder("%s:item/%s".formatted(ctx.getId().getNamespace(), ctx.getId().getPath()))
 						.parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
 						.transforms()
-							.transform(ItemTransforms.TransformType.THIRD_PERSON_RIGHT_HAND)
+							.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 								.end()
-							.transform(ItemTransforms.TransformType.THIRD_PERSON_LEFT_HAND)
+							.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
 								.rotation(75F, 45F, 0F)
 								.translation(0F, 3F, 4F)
 								.scale(.375F, .375F, .375F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIRST_PERSON_RIGHT_HAND)
+							.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIRST_PERSON_LEFT_HAND)
+							.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
 								.rotation(0F, 135F, 0F)
 								.translation(0F, 7F, 0F)
 								.scale(.4F, .4F, .4F)
 							.end()
-							.transform(ItemTransforms.TransformType.HEAD)
+							.transform(ItemDisplayContext.HEAD)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 30F, 0F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ItemTransforms.TransformType.GROUND)
+							.transform(ItemDisplayContext.GROUND)
 								.rotation(0F, 0F, 0F)
 								.translation(0F, 6F, 0F)
 								.scale(.25F, .25F, .25F)
 							.end()
-							.transform(ItemTransforms.TransformType.FIXED)
+							.transform(ItemDisplayContext.FIXED)
 								.rotation(-90F, 0F, 0F)
 								.translation(0F, 0F, -23F)
 								.scale(1F, 1F, 1F)
 							.end()
-							.transform(ItemTransforms.TransformType.GUI)
+							.transform(ItemDisplayContext.GUI)
 								.rotation(30F, -135F, 0F)
 								.translation(0F, 4F, 0F)
 								.scale(.5F, .5F, .5F)

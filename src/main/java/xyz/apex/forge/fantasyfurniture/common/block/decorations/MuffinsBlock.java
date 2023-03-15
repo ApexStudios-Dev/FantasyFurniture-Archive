@@ -8,7 +8,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 
 public final class MuffinsBlock extends StackedBlock

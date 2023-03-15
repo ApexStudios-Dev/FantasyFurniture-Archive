@@ -5,7 +5,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import xyz.apex.forge.apexcore.lib.event.client.BlockVisualizerEvent;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.common.block.furniture.IDyeable;

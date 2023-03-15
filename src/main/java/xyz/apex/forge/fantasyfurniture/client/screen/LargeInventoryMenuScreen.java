@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture.client.screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-
 import xyz.apex.forge.apexcore.lib.client.screen.BaseMenuScreen;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.SideOnly;

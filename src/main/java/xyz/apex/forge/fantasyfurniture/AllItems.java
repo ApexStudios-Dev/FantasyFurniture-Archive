@@ -3,7 +3,6 @@ package xyz.apex.forge.fantasyfurniture;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
-
 import xyz.apex.forge.apexcore.lib.item.WearableBlockItem;
 import xyz.apex.forge.apexcore.registrate.entry.ItemEntry;
 import xyz.apex.forge.commonality.tags.ItemTags;

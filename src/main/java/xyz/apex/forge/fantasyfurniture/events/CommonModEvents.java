@@ -12,7 +12,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.fantasyfurniture.AllParticleTypes;
 import xyz.apex.forge.fantasyfurniture.core.ModInitializer;

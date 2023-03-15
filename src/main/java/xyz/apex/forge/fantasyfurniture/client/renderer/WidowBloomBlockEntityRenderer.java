@@ -2,11 +2,9 @@ package xyz.apex.forge.fantasyfurniture.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.client.renderer.model.WidowBloomModel;

@@ -1,16 +1,14 @@
 package xyz.apex.forge.fantasyfurniture.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Lazy;
-
 import xyz.apex.forge.commonality.SideOnly;
 import xyz.apex.forge.fantasyfurniture.AllBlockEntities;
 import xyz.apex.forge.fantasyfurniture.AllBlocks;
@@ -51,7 +49,7 @@ public final class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithout
 	}
 
 	@Override
-	public void renderByItem(ItemStack stack, ItemTransforms.TransformType transformType, PoseStack pose, MultiBufferSource buffer, int light, int overlay)
+	public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack pose, MultiBufferSource buffer, int light, int overlay)
 	{
 		var partialTick = Minecraft.getInstance().getDeltaFrameTime();
 
@@ -71,7 +69,7 @@ public final class ModBlockEntityWithoutLevelRenderer extends BlockEntityWithout
 			skullBlossomsBlockEntityRenderer.render(blockEntity, partialTick, pose, buffer, light, overlay);
 		}
 		else
-			super.renderByItem(stack, transformType, pose, buffer, light, overlay);
+			super.renderByItem(stack, displayContext, pose, buffer, light, overlay);
 	}
 
 	public static BlockEntityWithoutLevelRenderer getInstance()

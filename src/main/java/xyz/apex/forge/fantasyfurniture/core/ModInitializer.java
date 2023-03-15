@@ -1,10 +1,8 @@
 package xyz.apex.forge.fantasyfurniture.core;
 
+import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import net.minecraftforge.fml.common.Mod;
-
 import xyz.apex.forge.apexcore.lib.net.NetworkManager;
 import xyz.apex.forge.commonality.Mods;
 import xyz.apex.forge.commonality.trust.TrustManager;

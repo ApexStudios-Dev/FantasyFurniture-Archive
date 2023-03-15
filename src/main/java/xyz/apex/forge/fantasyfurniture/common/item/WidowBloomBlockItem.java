@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-
 import xyz.apex.forge.apexcore.lib.item.WearableBlockItem;
 import xyz.apex.forge.fantasyfurniture.client.renderer.ModBlockEntityWithoutLevelRenderer;
 

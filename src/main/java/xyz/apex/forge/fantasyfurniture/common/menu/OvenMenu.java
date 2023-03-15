@@ -1,8 +1,5 @@
 package xyz.apex.forge.fantasyfurniture.common.menu;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +13,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasyfurniture.AllBlockEntities;
 import xyz.apex.forge.fantasyfurniture.common.block.entity.OvenBlockEntity;

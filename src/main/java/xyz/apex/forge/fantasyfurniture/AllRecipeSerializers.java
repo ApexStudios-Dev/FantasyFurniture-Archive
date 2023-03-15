@@ -1,10 +1,8 @@
 package xyz.apex.forge.fantasyfurniture;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
-
 import xyz.apex.forge.fantasyfurniture.common.item.crafting.DyeableRecipe;
 
 import static xyz.apex.forge.fantasyfurniture.core.ModRegistry.REGISTRATE;

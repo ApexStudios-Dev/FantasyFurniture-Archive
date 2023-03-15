@@ -1,7 +1,5 @@
 package xyz.apex.forge.fantasyfurniture.common.block.furniture;
 
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +23,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.MultiBlockPattern;
 import xyz.apex.forge.fantasyfurniture.AllBlockEntities;

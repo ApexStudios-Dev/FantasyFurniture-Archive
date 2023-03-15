@@ -1,14 +1,11 @@
 package xyz.apex.forge.fantasyfurniture.common.block.furniture;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.BaseMultiBlock;
 
@@ -128,7 +125,7 @@ public abstract class BedBlock extends BaseMultiBlock
 	protected InteractionResult onBadBedSetSpawn(Level level, BlockState blockState, BlockPos pos, Player player, InteractionHand hand)
 	{
 		level.removeBlock(pos, false);
-		level.explode(null, DamageSource.badRespawnPointExplosion(pos.getCenter()), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Level.ExplosionInteraction.BLOCK);
+		level.explode(null, level.damageSources().badRespawnPointExplosion(pos.getCenter()), null, pos.getX() + .5D, pos.getY() + .5D, pos.getZ() + .5D, 5F, true, Level.ExplosionInteraction.BLOCK);
 		return InteractionResult.SUCCESS;
 	}
 

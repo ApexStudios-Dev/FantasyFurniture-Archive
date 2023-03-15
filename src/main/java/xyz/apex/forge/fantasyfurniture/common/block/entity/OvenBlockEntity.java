@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.block.entity;
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.entity.InventoryBlockEntity;
 import xyz.apex.forge.fantasyfurniture.common.menu.OvenMenu;
@@ -197,7 +195,7 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 
 					if(smeltTime == totalSmeltTime)
 					{
-						var result = recipe.assemble(container);
+						var result = recipe.assemble(container, level.registryAccess());
 
 						if(output.isEmpty())
 						{
@@ -284,7 +282,7 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 	{
 		if(recipe != null)
 		{
-			var result = recipe.assemble(container);
+			var result = recipe.assemble(container, level.registryAccess());
 
 			if(result.isEmpty())
 				return false;

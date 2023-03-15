@@ -1,7 +1,6 @@
 package xyz.apex.forge.fantasyfurniture;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.registries.ForgeRegistries;
 

@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.item.crafting;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeColor;
@@ -8,7 +9,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-
 import xyz.apex.forge.fantasyfurniture.AllRecipeSerializers;
 import xyz.apex.forge.fantasyfurniture.common.block.furniture.IDyeable;
 
@@ -57,7 +57,7 @@ public final class DyeableRecipe extends CustomRecipe
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer container)
+	public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess)
 	{
 		DyeColor color = null;
 		var dyeable = ItemStack.EMPTY;

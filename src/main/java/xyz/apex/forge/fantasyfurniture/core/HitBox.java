@@ -1,12 +1,10 @@
 package xyz.apex.forge.fantasyfurniture.core;
 
-import org.apache.commons.lang3.Validate;
-
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Lazy;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.forge.apexcore.lib.block.BaseBlock;
 import xyz.apex.forge.apexcore.lib.block.VoxelShaper;
 

@@ -2,12 +2,12 @@ package xyz.apex.forge.fantasyfurniture;
 
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
-
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.ChainBlock;
@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
-
 import xyz.apex.forge.apexcore.lib.block.BlockHelper;
 import xyz.apex.forge.apexcore.registrate.entry.BlockEntry;
 import xyz.apex.forge.commonality.tags.BlockTags;
@@ -399,8 +398,8 @@ public interface AllBlocks
 							.build(),
 					BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 			)
-			.recipe((ctx, provider) -> UpgradeRecipeBuilder
-					.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), RecipeCategory.DECORATIONS, ctx.get().asItem())
+			.recipe((ctx, provider) -> SmithingTransformRecipeBuilder
+					.smithing(Ingredient.EMPTY, DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), RecipeCategory.DECORATIONS, ctx.get().asItem())
 					.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
 					.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
 					.save(provider, ctx.getId())

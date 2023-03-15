@@ -6,7 +6,6 @@ import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import xyz.apex.forge.apexcore.lib.block.entity.InventoryBlockEntity;
 import xyz.apex.forge.fantasyfurniture.common.block.decorations.CookieJarBlock;
 import xyz.apex.forge.fantasyfurniture.common.menu.CookieJarMenu;

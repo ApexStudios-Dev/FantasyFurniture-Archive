@@ -1,8 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.menu;
 
 import com.google.common.collect.Lists;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,7 +13,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.container.BaseMenu;
 import xyz.apex.forge.fantasyfurniture.core.FurnitureStation;
 
