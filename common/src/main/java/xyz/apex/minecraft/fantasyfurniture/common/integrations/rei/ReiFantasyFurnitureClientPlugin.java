@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.rei;
 
 import me.shedaniel.math.Rectangle;
@@ -96,3 +97,4 @@ public interface ReiFantasyFurnitureClientPlugin extends REIClientPlugin
         registry.registerContainerClickArea(new Rectangle(71, 16, 63, 16), FurnitureStationMenuScreen.class, ReiFantasyFurnitureServerPlugin.FURNITURE_STATION_RECIPE_ID);
     }
 }
+*/

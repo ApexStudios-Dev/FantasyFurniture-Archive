@@ -2,8 +2,8 @@ package xyz.apex.minecraft.fantasyfurniture.common.menu;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.Runnables;
-
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -12,7 +12,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
@@ -122,7 +121,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
     @Override
     public boolean clickMenuButton(Player player, int id)
     {
-        return setupResult(id);
+        return setupResult(player.level.registryAccess(), id);
     }
 
     @Override
@@ -202,7 +201,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
     public void slotsChanged(Container container)
     {
         super.slotsChanged(container);
-        updateRecipes();
+        updateRecipes(player.level.registryAccess());
     }
 
     @Override
@@ -226,14 +225,14 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         return slot.container != resultContainer && super.canTakeItemForPickAll(stack, slot);
     }
 
-    private void updateRecipes()
+    private void updateRecipes(RegistryAccess registryAccess)
     {
         recipes.clear();
         recipes.addAll(player.level.getRecipeManager().getRecipesFor(FantasyFurniture.FURNITURE_STATION_RECIPE.asRecipeType(), inputsContainer, player.level));
 
         var result = getResult();
 
-        if(recipes.stream().map(FurnitureStationRecipe::getResultItem).noneMatch(result::sameItem))
+        if(recipes.stream().map(recipe -> recipe.getResultItem(registryAccess)).noneMatch(result::sameItem))
         {
             resultContainer.setItem(SLOT_RESULT, ItemStack.EMPTY);
             selectedResultIndex.set(-1);
@@ -243,9 +242,9 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         screenListener.run();
     }
 
-    private boolean setupResult(int recipeIndex)
+    private boolean setupResult(RegistryAccess registryAccess, int recipeIndex)
     {
-        updateRecipes();
+        updateRecipes(registryAccess);
 
         if(!recipes.isEmpty() && recipeIndex < recipes.size() && recipeIndex >= 0)
         {
@@ -253,7 +252,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
 
             if(recipe.matches(inputsContainer, player.level))
             {
-                var stack = recipe.assemble(inputsContainer);
+                var stack = recipe.assemble(inputsContainer, registryAccess);
 
                 if(stack.isItemEnabled(player.level.enabledFeatures()))
                 {
@@ -304,7 +303,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         {
             stack.onCraftedBy(player.level, player, stack.getCount());
             decrementInputs();
-            setupResult(selectedResultIndex.get());
+            setupResult(player.level.registryAccess(), selectedResultIndex.get());
             resultContainer.awardUsedRecipes(player);
 
             var gameTime = player.level.getGameTime();

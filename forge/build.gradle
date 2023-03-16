@@ -3,39 +3,39 @@ apply from: '../loader.gradle'
 dependencies {
 	modApi "xyz.apex.minecraft.apexcore.forge:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
 
-	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
+//	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
 
-	api "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}"
+//	api "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}"
 
-	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-forge:${REI_DEV_VERSION}") {
-		exclude group: 'blue.endless'
-		exclude group: 'com.google.code.gson'
-		exclude group: 'com.moandjiezana.toml'
-		exclude group: 'org.yaml'
-	}
+//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-forge:${REI_DEV_VERSION}") {
+//		exclude group: 'blue.endless'
+//		exclude group: 'com.google.code.gson'
+//		exclude group: 'com.moandjiezana.toml'
+//		exclude group: 'org.yaml'
+//	}
 
-	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_DEV_VERSION}") {
-		exclude group: 'me.shedaniel.cloth'
-		exclude group: 'blue.endless'
-		exclude group: 'com.google.code.gson'
-		exclude group: 'com.moandjiezana.toml'
-		exclude group: 'org.yaml'
-	}
+//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_DEV_VERSION}") {
+//		exclude group: 'me.shedaniel.cloth'
+//		exclude group: 'blue.endless'
+//		exclude group: 'com.google.code.gson'
+//		exclude group: 'com.moandjiezana.toml'
+//		exclude group: 'org.yaml'
+//	}
 
 	// This should be `modRuntimeOnly` but annotations only exist here and we need those at compile time
-	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
-		exclude group: 'me.shedaniel.cloth'
-		exclude group: 'blue.endless'
-		exclude group: 'com.google.code.gson'
-		exclude group: 'com.moandjiezana.toml'
-		exclude group: 'org.yaml'
-	}
+//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
+//		exclude group: 'me.shedaniel.cloth'
+//		exclude group: 'blue.endless'
+//		exclude group: 'com.google.code.gson'
+//		exclude group: 'com.moandjiezana.toml'
+//		exclude group: 'org.yaml'
+//	}
 
-	if(recipeLookupIncludeType == 'jei') {
+//	if(recipeLookupIncludeType == 'jei') {
 //		modRuntimeOnly("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_DEV_VERSION}") {
 //			exclude group: 'mezz.jei'
 //		}
-	} else if(recipeLookupIncludeType == 'rei') {
+//	} else if(recipeLookupIncludeType == 'rei') {
 //		modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
 //			exclude group: 'me.shedaniel.cloth'
 //			exclude group: 'blue.endless'
@@ -43,7 +43,7 @@ dependencies {
 //			exclude group: 'com.moandjiezana.toml'
 //			exclude group: 'org.yaml'
 //		}
-	}
+//	}
 
 	// included with rei & jei these use the 'mod' configs
 	// which throws warnings when including ':could not find forge mod in modCompileOnlyApi but forcing: jankson-1.2.0.jar (blue.endless:jankson:1.2.0)'

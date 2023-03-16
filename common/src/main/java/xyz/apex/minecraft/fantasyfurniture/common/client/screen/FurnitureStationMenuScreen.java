@@ -2,7 +2,6 @@ package xyz.apex.minecraft.fantasyfurniture.common.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -12,7 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
@@ -179,7 +177,7 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
             var slotY = resultY + (yCounter * SLOT_SIZE);
             var slotV = 0;
 
-            var recipeResult = recipes.get(i).getResultItem();
+            var recipeResult = recipes.get(i).getResultItem(minecraft.level.registryAccess());
             var isSelected = result.sameItem(recipeResult);
 
             if(isSelected) slotV = SLOT_SIZE;
@@ -207,7 +205,7 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
                     256, 256
             );
 
-            itemRenderer.renderGuiItem(recipeResult, slotX + 1, slotY + 1);
+            itemRenderer.renderGuiItem(pose, recipeResult, slotX + 1, slotY + 1);
 
             if(xCounter + 1 < horizontalSlots)
             {
@@ -221,7 +219,7 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
             }
         }
 
-        if(hovered != -1) renderTooltip(pose, recipes.get(hovered).getResultItem(), mouseX, mouseY);
+        if(hovered != -1) renderTooltip(pose, recipes.get(hovered).getResultItem(minecraft.level.registryAccess()), mouseX, mouseY);
     }
 
     private boolean handleResultClick(double mouseX, double mouseY)
@@ -239,7 +237,7 @@ public final class FurnitureStationMenuScreen extends AbstractContainerScreen<Fu
             var slotX = resultX + (xCounter * SLOT_SIZE);
             var slotY = resultY + (yCounter * SLOT_SIZE);
 
-            var recipeResult = recipes.get(i).getResultItem();
+            var recipeResult = recipes.get(i).getResultItem(minecraft.level.registryAccess());
             var isSelected = result.sameItem(recipeResult);
 
             // no tooltips/hover states if carrying item under mouse

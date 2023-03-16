@@ -1,14 +1,13 @@
 package xyz.apex.minecraft.fantasyfurniture.common.recipe;
 
 import com.google.gson.JsonObject;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
@@ -26,7 +25,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
@@ -70,7 +69,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     }
 
     @Override
-    public ItemStack assemble(Container container)
+    public ItemStack assemble(Container container, RegistryAccess registryAccess)
     {
         if(container.getContainerSize() >= FurnitureStationMenu.SLOT_INGREDIENT_COUNT)
         {
@@ -91,7 +90,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     }
 
     @Override
-    public ItemStack getResultItem()
+    public ItemStack getResultItem(RegistryAccess registryAccess)
     {
         return cachedResult;
     }

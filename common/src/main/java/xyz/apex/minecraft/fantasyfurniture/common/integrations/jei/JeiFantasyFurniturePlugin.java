@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.jei;
 
 import dev.architectury.utils.GameInstance;
@@ -73,3 +74,4 @@ public interface JeiFantasyFurniturePlugin extends IModPlugin
         );
     }
 }
+*/

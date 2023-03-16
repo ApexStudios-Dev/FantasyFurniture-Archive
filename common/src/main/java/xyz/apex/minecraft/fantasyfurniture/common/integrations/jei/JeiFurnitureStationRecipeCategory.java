@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.jei;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -77,3 +78,4 @@ public final class JeiFurnitureStationRecipeCategory implements IRecipeCategory<
         ;
     }
 }
+*/

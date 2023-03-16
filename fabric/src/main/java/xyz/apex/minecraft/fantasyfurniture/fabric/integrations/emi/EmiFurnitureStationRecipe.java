@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.fabric.integrations.emi;
 
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -80,3 +81,4 @@ final class EmiFurnitureStationRecipe implements EmiRecipe
         widgets.addSlot(result, 86, 0).output(true).recipeContext(this);
     }
 }
+*/

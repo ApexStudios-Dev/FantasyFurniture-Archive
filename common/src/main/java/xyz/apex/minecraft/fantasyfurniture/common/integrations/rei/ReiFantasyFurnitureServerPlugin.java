@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.rei;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
@@ -19,3 +20,4 @@ public interface ReiFantasyFurnitureServerPlugin extends REIServerPlugin
         registry.register(FURNITURE_STATION_RECIPE_ID, FURNITURE_STATION_RECIPE_SERIALIZER);
     }
 }
+*/

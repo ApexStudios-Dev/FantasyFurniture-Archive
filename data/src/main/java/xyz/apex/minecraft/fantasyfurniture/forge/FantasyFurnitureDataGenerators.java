@@ -4,7 +4,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 @Mod.EventBusSubscriber(modid = FantasyFurniture.ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,7 +25,7 @@ public final class FantasyFurnitureDataGenerators
         generator.addProvider(client, new LanguageGenerator(output));
 
         var blockTags = generator.addProvider(server, new BlockTagGenerator(event, output));
-        generator.addProvider(server, new ItemTagGenerator(event, output, blockTags));
+        generator.addProvider(server, new ItemTagGenerator(event, output, blockTags.contentsGetter()));
         generator.addProvider(server, new EntityTypeTagGenerator(event, output));
 
         generator.addProvider(server, new LootTableGenerator(output));

@@ -5,7 +5,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
-
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
@@ -53,7 +52,7 @@ public interface RoyalSet
     {
         FurnitureSets.creativeModeTab(NAME, builder -> builder
                 .icon(BED_SINGLE::asStack)
-                .displayItems((featureFlagSet, output, b) -> {
+                .displayItems((params, output) -> {
                     output.accept(WOOL);
                     output.accept(CARPET);
                     output.accept(WALL_LIGHT);

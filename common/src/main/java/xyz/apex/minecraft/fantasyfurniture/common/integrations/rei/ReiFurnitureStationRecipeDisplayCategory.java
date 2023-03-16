@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.rei;
 
 import com.google.common.collect.Lists;
@@ -71,3 +72,4 @@ final class ReiFurnitureStationRecipeDisplayCategory implements DisplayCategory<
         return widgets;
     }
 }
+*/

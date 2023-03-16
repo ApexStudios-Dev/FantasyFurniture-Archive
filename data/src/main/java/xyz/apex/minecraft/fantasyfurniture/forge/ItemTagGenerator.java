@@ -3,16 +3,19 @@ package xyz.apex.minecraft.fantasyfurniture.forge;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.data.event.GatherDataEvent;
-
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
+import java.util.concurrent.CompletableFuture;
+
 public final class ItemTagGenerator extends ItemTagsProvider
 {
-    public ItemTagGenerator(GatherDataEvent event, PackOutput packOutput, BlockTagGenerator blockTags)
+    public ItemTagGenerator(GatherDataEvent event, PackOutput packOutput, CompletableFuture<TagsProvider.TagLookup<Block>> blockTags)
     {
         super(packOutput, event.getLookupProvider(), blockTags, FantasyFurniture.ID, event.getExistingFileHelper());
     }

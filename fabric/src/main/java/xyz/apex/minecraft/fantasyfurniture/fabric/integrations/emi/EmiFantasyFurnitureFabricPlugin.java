@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.fabric.integrations.emi;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -46,3 +47,4 @@ public final class EmiFantasyFurnitureFabricPlugin implements EmiPlugin
         };
     }
 }
+*/

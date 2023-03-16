@@ -2,12 +2,10 @@ package xyz.apex.minecraft.fantasyfurniture.common.init;
 
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
-
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.util.ApexTags;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
@@ -65,7 +63,7 @@ public interface BoneSet
             );
         }
 
-        private static void addTabItems(FeatureFlagSet enabledFeatures, CreativeModeTab.Output output, boolean showAdmin)
+        private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
         {
             output.accept(WOOL);
             output.accept(CARPET);
@@ -147,7 +145,7 @@ public interface BoneSet
             );
         }
 
-        private static void addTabItems(FeatureFlagSet enabledFeatures, CreativeModeTab.Output output, boolean showAdmin)
+        private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
         {
             output.accept(WOOL);
             output.accept(CARPET);
@@ -190,11 +188,11 @@ public interface BoneSet
 
         FurnitureSets.creativeModeTab(BASE_NAME, builder -> builder
                 .icon(BoneSet.Wither.BED_SINGLE::asStack)
-                .displayItems((enabledFeatures, output, showAdmin) -> {
-                    if(showAdmin)
+                .displayItems((params, output) -> {
+                    if(params.hasPermissions())
                     {
-                        BoneSet.Wither.addTabItems(enabledFeatures, output, showAdmin);
-                        BoneSet.Skeleton.addTabItems(enabledFeatures, output, showAdmin);
+                        BoneSet.Wither.addTabItems(params, output);
+                        BoneSet.Skeleton.addTabItems(params, output);
                     }
                 })
         );

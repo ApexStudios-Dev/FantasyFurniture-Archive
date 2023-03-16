@@ -1,3 +1,4 @@
+/*
 package xyz.apex.minecraft.fantasyfurniture.common.integrations.rei;
 
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
@@ -31,3 +32,4 @@ final class ReiFurnitureStationRecipeDisplay extends BasicDisplay
         return ReiFantasyFurnitureServerPlugin.FURNITURE_STATION_RECIPE_ID;
     }
 }
+*/
