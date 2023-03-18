@@ -1,53 +1,99 @@
-apply from: '../loader.gradle'
+plugins {
+    id 'fabric-loom' version '1.1-SNAPSHOT'
+}
+
+loom {
+    if(accessWidenerFile.exists()) {
+        accessWidenerPath = accessWidenerFile
+    }
+
+    enableTransitiveAccessWideners = true
+
+    runs {
+        client {
+            client()
+            ideConfigGenerated true
+        }
+
+        server {
+            server()
+            ideConfigGenerated true
+        }
+    }
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet sourceSets.main
+            sourceSet project(':common').sourceSets.main
+        }
+    }
+}
 
 dependencies {
-	modApi "xyz.apex.minecraft.apexcore.fabric:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
 
-	// Shaders
-	//modRuntimeOnly 'maven.modrinth:sodium:mc1.19.3-0.4.8'
-	//modRuntimeOnly 'maven.modrinth:iris:1.5.1+1.19.3'
-	//runtimeOnly 'io.github.douira:glsl-transformer:2.0.0-pre8'
-	//runtimeOnly 'org.anarres:jcpp:1.4.14'
+    mappings(loom.layered {
+        officialMojangMappings()
 
-//	modRuntimeOnly "maven.modrinth:lazydfu:${LAZY_DFU_DEV_VERSION}"
+        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+            def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
+            parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
+        }
+    })
 
-//	modRuntimeOnly("com.terraformersmc:modmenu:${MOD_MENU_DEV_VERSION}") {
-//		exclude group: 'net.fabricmc'
-//		exclude group: 'net.fabricmc.fabric-api'
-//	}
+    modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
 
-//	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_DEV_VERSION}"
-//	modCompileOnlyApi "dev.emi:emi:${EMI_DEV_VERSION}+${MINECRAFT_VERSION}"
+    implementation project(path: ':common', configuration: 'namedElements')
+    modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+}
 
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//		exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
-//		exclude group: 'net.fabricmc'
-//		exclude group: 'net.fabricmc.fabric-api'
-//	}
+processResources {
+    from project(':common').sourceSets.main.resources
+}
 
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//		exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
-//		exclude group: 'net.fabricmc'
-//		exclude group: 'net.fabricmc.fabric-api'
-//	}
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
 
-//	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            loom.disableDeprecatedPomGeneration(it)
 
-//	if(recipeLookupIncludeType == 'jei') {
-//		modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_DEV_VERSION}"
-//	} else if(recipeLookupIncludeType == 'rei') {
-//		modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:${REI_DEV_VERSION}") {
-//			exclude group: 'me.shedaniel.cloth'
-//			exclude group: 'me.shedaniel', module: 'error-notifier-fabric'
-//			exclude group: 'net.fabricmc'
-//			exclude group: 'net.fabricmc.fabric-api'
-//		}
-//	} else if(recipeLookupIncludeType == 'emi') {
-//		modRuntimeOnly "dev.emi:emi:${EMI_VERSION}+${MINECRAFT_VERSION}"
-//	}
+            artifact remapJar
 
-	// excluded from rei & re-added to be runtime only
-//	modRuntimeOnly 'me.shedaniel.cloth:cloth-config:9.0.94'
+            pom.withXml {
+                def depsNode = asNode().appendNode('dependencies')
+
+                // common
+                def depNode = depsNode.appendNode('dependency')
+                def prj = project(':common')
+                depNode.appendNode('groupId', prj.group)
+                depNode.appendNode('artifactId', prj.archivesBaseName)
+                depNode.appendNode('version', prj.version)
+                depNode.appendNode('scope', 'compile')
+
+                // apexcore
+                depNode = depsNode.appendNode('dependency')
+                depNode.appendNode('groupId', 'xyz.apex.minecraft.apexcore')
+                depNode.appendNode('artifactId', 'apexcore-fabric')
+                depNode.appendNode('version', "${APEXCORE_DEV_VERSION}")
+                depNode.appendNode('scope', 'compile')
+
+                // fabric
+                depNode = depsNode.appendNode('dependency')
+                depNode.appendNode('groupId', 'net.fabricmc')
+                depNode.appendNode('artifactId', 'fabric-loader')
+                depNode.appendNode('version', "${FABRIC_LOADER_VERSION}")
+                depNode.appendNode('scope', 'compile')
+
+                depNode = depsNode.appendNode('dependency')
+                depNode.appendNode('groupId', 'net.fabricmc.fabric-api')
+                depNode.appendNode('artifactId', 'fabric-api')
+                depNode.appendNode('version', "${FABRIC_API_VERSION}+${MINECRAFT_VERSION}")
+                depNode.appendNode('scope', 'compile')
+            }
+        }
+    }
 }

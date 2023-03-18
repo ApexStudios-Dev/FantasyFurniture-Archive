@@ -63,13 +63,23 @@
     "license": "${MOD_LICENSE}",
     "environment": "*",
     "entrypoints": {
-        "main": [ "${MOD_GROUP}.fabric.FantasyFurnitureFabric::INSTANCE" ]
+        "main": [ "${MOD_GROUP}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "client": [ "${MOD_GROUP}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "server": [ "${MOD_GROUP}.fabric.FantasyFurnitureFabric::INSTANCE" ],
+        "rei_client": [ "${MOD_GROUP}.fabric.integrations.rei.ReiFantasyFurnitureFabricClientPlugin" ],
+        "rei_common": [ "${MOD_GROUP}.fabric.integrations.rei.ReiFantasyFurnitureFabricServerPlugin" ],
+        "emi": [ "${MOD_GROUP}.fabric.integrations.emi.EmiFantasyFurnitureFabricPlugin" ],
+        "jei_mod_plugin": [ "${MOD_GROUP}.fabric.integrations.jei.JeiFantasyFurnitureFabricPlugin" ]
     },
-    "mixins": [ ],
+    "mixins": [
+        "${MOD_ID}.mixins.json",
+        "${MOD_ID}-common.mixins.json"
+    ],
     "depends": {
         "minecraft": "~${MINECRAFT_VERSION}",
         "java": ">=${JAVA_VERSION}",
         "fabric": "*",
+        "architectury": ">=${ARCHITECTURY_PROD_VERSION}",
         "apexcore": ">=${APEXCORE_PROD_VERSION}"
     },
     "custom": {

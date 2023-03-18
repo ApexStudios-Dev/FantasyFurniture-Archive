@@ -27,6 +27,12 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	ordering="AFTER"
 	side="BOTH"
 [[dependencies."${MOD_ID}"]]
+	modId="architectury"
+	mandatory=true
+	versionRange="${ARCHITECTURY_FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}"]]
 	modId="apexcore"
 	mandatory=true
 	versionRange="${APEXCORE_FORGE_VERSION_RANGE}"

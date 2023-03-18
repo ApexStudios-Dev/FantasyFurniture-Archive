@@ -1,34 +1,30 @@
 plugins {
-    id 'architectury-plugin' version '3.4-SNAPSHOT' apply false
-    id 'dev.architectury.loom' version '1.1-SNAPSHOT' apply false
-    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1' apply false
-    id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
 
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'idea'
-    apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
+    apply plugin: 'maven-publish'
 
-    group = "${MOD_GROUP}.${project.name}"
+    project.ext {
+        accessWidenerFile = rootProject.file("fabric/src/main/resources/${MOD_ID}.accesswidener")
+        accessTransformerFile = rootProject.file('forge/src/main/resources/META-INF/accesstransformer.cfg')
+    }
+
+    group = "${MOD_GROUP}"
     version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
     archivesBaseName = "${MOD_ID}-${project.name}"
 
-    sourceSets {
-        main.resources.srcDirs = [ 'src/main/resources', 'src/main/generated' ]
-
-        test {
-            java.srcDirs = [ ]
-            resources.srcDirs = [ ]
-        }
+    sourceSets.test {
+        java.srcDirs = [ ]
+        resources.srcDirs = [ ]
     }
 
     repositories {
         mavenLocal()
         maven { url 'https://maven.parchmentmc.org' }
-        maven { url 'https://maven.apexstudios.dev' }
-        maven { url 'https://maven.shedaniel.me' }
-        maven { url 'https://maven.blamejared.com/' }
+        maven { url 'https://maven.covers1624.net/' }
         maven { url 'https://maven.terraformersmc.com/releases/' }
 
         maven {
@@ -90,73 +86,44 @@ subprojects {
         }
     }
 
-    if(project.name != 'data') {
-        apply plugin: 'maven-publish'
-        apply plugin: 'architectury-plugin'
-        apply plugin: 'dev.architectury.loom'
+    artifacts {
+        archives jar
+        archives sourcesJar
+    }
 
-        project.ext {
-            accessWidenerFile = rootProject.file("common/src/main/resources/${MOD_ID}.accesswidener")
-        }
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = "${project.group}"
+                artifactId = "${project.archivesBaseName}"
+                version = "${project.version}"
 
-        architectury {
-            minecraft = "${MINECRAFT_VERSION}"
-        }
-
-        loom {
-            silentMojangMappingsLicense()
-            enableTransitiveAccessWideners = true
-
-            if(accessWidenerFile.exists()) {
-                accessWidenerPath = accessWidenerFile
+                artifact jar
+                artifact sourcesJar
             }
         }
 
-        dependencies {
-            minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+        repositories {
+            if(System.getenv('MAVEN_PASSWORD') != null) {
+                maven {
+                    name 'Covers1624-Maven'
+                    url 'https://nexus.covers1624.net/repository/apex-releases/'
 
-            mappings(loom.layered {
-                officialMojangMappings()
-
-                if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-                    def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
-                    parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
-                }
-            })
-        }
-
-        publishing {
-            publications {
-                mavenCommon(MavenPublication) {
-                    groupId = "${project.group}"
-                    artifactId = "${project.archivesBaseName}"
-                    version = "${project.version}"
-
-                    loom.disableDeprecatedPomGeneration(it)
-
-                    artifact remapJar
-                    artifact sourcesJar
-                }
-            }
-
-            repositories {
-                if(System.getenv('APEX_MODS_MAVEN_USERNAME') != null && System.getenv('APEX_MODS_MAVEN_PASSWORD') != null) {
-                    maven {
-                        name 'ApexStudios-Maven'
-                        url 'https://maven.apexstudios.dev'
-
-                        credentials {
-                            username System.getenv('APEX_MODS_MAVEN_USERNAME')
-                            password System.getenv('APEX_MODS_MAVEN_PASSWORD')
-                        }
+                    credentials {
+                        username 'apex'
+                        password System.getenv('MAVEN_PASSWORD')
                     }
                 }
             }
         }
     }
-}
 
-apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
+    idea.module {
+        excludeDirs += [
+                file('run')
+        ]
+    }
+}
 
 idea.module {
     excludeDirs += [

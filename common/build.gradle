@@ -1,39 +1,60 @@
-architectury {
-	def platforms = rootProject
-			.subprojects
-			.findAll { it.hasProperty('loom.platform') }
-			.collect { it.property('loom.platform') as String }
-			.toSet()
+plugins {
+    id 'fabric-loom' version '1.1-SNAPSHOT'
+}
 
-	println "Platforms: ${platforms.toListString()}"
-	common(platforms)
+loom {
+    if(accessWidenerFile.exists()) {
+        accessWidenerPath = accessWidenerFile
+    }
+
+    enableTransitiveAccessWideners = true
+}
+
+repositories {
+    maven { url 'https://repo.spongepowered.org/maven/' }
 }
 
 dependencies {
-	compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
-	modApi "dev.architectury:architectury:${ARCHITECTURY_DEV_VERSION}"
-	modApi "xyz.apex.minecraft.apexcore.common:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
 
-//	modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_DEV_VERSION}"
+    mappings(loom.layered {
+        officialMojangMappings()
 
-	// exclude cloth config to stop them being accessible at compile time
-	// each platform includes them as runtime only
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//	}
+        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+            def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
+            parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
+        }
+    })
 
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//	}
+    compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
 
-	// excluded with cloth config but needed for rei
-//	implementation 'me.shedaniel.cloth:basic-math:0.6.1'
+    modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
 }
 
-idea.module {
-	excludeDirs += [
-			file('.gradle'),
-			file('build'),
-			file('run')
-	]
+remapJar.enabled = false
+remapSourcesJar.enabled = false
+
+jar {
+    classifier ''
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            loom.disableDeprecatedPomGeneration(it)
+
+            artifact jar
+
+            pom.withXml {
+                def depsNode = asNode().appendNode('dependencies')
+
+                // apexcore
+                def depNode = depsNode.appendNode('dependency')
+                depNode.appendNode('groupId', 'xyz.apex.minecraft.apexcore')
+                depNode.appendNode('artifactId', 'apexcore-common')
+                depNode.appendNode('version', "${APEXCORE_DEV_VERSION}")
+                depNode.appendNode('scope', 'compile')
+            }
+        }
+    }
 }

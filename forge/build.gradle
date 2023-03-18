@@ -1,62 +1,145 @@
-apply from: '../loader.gradle'
+plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+jarJar.enable()
+
+minecraft {
+    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+        if(rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION')) {
+            mappings channel: 'parchment', version: "${PARCHMENT_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        } else {
+            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        }
+    } else {
+        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+    }
+
+    if(accessTransformerFile.exists()) {
+        accessTransformer = accessTransformerFile
+    }
+
+    runs {
+        client {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--width', 1920, '--height', 1080
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                    source project(':common').sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args 'nogui'
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                    source project(':common').sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--mod', MOD_ID, '--client', '--server', '--validate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            forceExit false
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                    source project(':common').sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+mixin {
+    if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
+        add sourceSets.main, "${MOD_ID}.refmap.json"
+        config "${MOD_ID}.mixins.json"
+    }
+
+    if(project(':common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
+        add project(':common').sourceSets.main, "${MOD_ID}-common.refmap.json"
+        config "${MOD_ID}-common.mixins.json"
+    }
+}
 
 dependencies {
-	modApi "xyz.apex.minecraft.apexcore.forge:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+    annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
 
-//	def recipeLookupIncludeType = rootProject.findProperty('RECIPE_LOOKUP_INCLUDE')
+    implementation project(':common')
+    implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+}
 
-//	api "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}"
+processResources {
+    from project(':common').sourceSets.main.resources
+}
 
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-api-forge:${REI_DEV_VERSION}") {
-//		exclude group: 'blue.endless'
-//		exclude group: 'com.google.code.gson'
-//		exclude group: 'com.moandjiezana.toml'
-//		exclude group: 'org.yaml'
-//	}
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
 
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//		exclude group: 'blue.endless'
-//		exclude group: 'com.google.code.gson'
-//		exclude group: 'com.moandjiezana.toml'
-//		exclude group: 'org.yaml'
-//	}
+tasks.jarJar.configure {
+    classifier ''
+}
 
-	// This should be `modRuntimeOnly` but annotations only exist here and we need those at compile time
-//	modCompileOnlyApi("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
-//		exclude group: 'me.shedaniel.cloth'
-//		exclude group: 'blue.endless'
-//		exclude group: 'com.google.code.gson'
-//		exclude group: 'com.moandjiezana.toml'
-//		exclude group: 'org.yaml'
-//	}
+jar {
+    classifier 'slim'
+}
 
-//	if(recipeLookupIncludeType == 'jei') {
-//		modRuntimeOnly("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_DEV_VERSION}") {
-//			exclude group: 'mezz.jei'
-//		}
-//	} else if(recipeLookupIncludeType == 'rei') {
-//		modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-forge:${REI_DEV_VERSION}") {
-//			exclude group: 'me.shedaniel.cloth'
-//			exclude group: 'blue.endless'
-//			exclude group: 'com.google.code.gson'
-//			exclude group: 'com.moandjiezana.toml'
-//			exclude group: 'org.yaml'
-//		}
-//	}
+artifacts {
+    archives tasks.jarJar
+}
 
-	// included with rei & jei these use the 'mod' configs
-	// which throws warnings when including ':could not find forge mod in modCompileOnlyApi but forcing: jankson-1.2.0.jar (blue.endless:jankson:1.2.0)'
-	// excluding & re-adding "fixes" this
-//	runtimeOnly 'blue.endless:jankson:1.2.0'
-//	runtimeOnly 'com.google.code.gson:gson:2.8.1'
-//	runtimeOnly 'com.moandjiezana.toml:toml4j:0.7.2'
-//	runtimeOnly 'org.yaml:snakeyaml:1.27'
+reobf {
+    jarJar { }
+}
 
-//	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-common:${JEI_DEV_VERSION}"
-//	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-core:${JEI_DEV_VERSION}"
-//	// runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_DEV_VERSION}" // included above
-//	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_DEV_VERSION}"
-//	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-lib:${JEI_DEV_VERSION}"
-//	runtimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-gui:${JEI_DEV_VERSION}"
+jar.finalizedBy('reobfJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact tasks.jarJar
+
+            pom.withXml {
+                def depsNode = asNode().appendNode('dependencies')
+
+                // common
+                def depNode = depsNode.appendNode('dependency')
+                def prj = project(':common')
+                depNode.appendNode('groupId', prj.group)
+                depNode.appendNode('artifactId', prj.archivesBaseName)
+                depNode.appendNode('version', prj.version)
+                depNode.appendNode('scope', 'compile')
+
+                // apexcore
+                depNode = depsNode.appendNode('dependency')
+                depNode.appendNode('groupId', 'xyz.apex.minecraft.apexcore')
+                depNode.appendNode('artifactId', 'apexcore-forge')
+                depNode.appendNode('version', "${APEXCORE_DEV_VERSION}")
+                depNode.appendNode('scope', 'compile')
+            }
+        }
+    }
 }
