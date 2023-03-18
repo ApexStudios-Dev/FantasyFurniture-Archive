@@ -65,7 +65,7 @@ public interface DataGenerators
 
 	static void blockTags(RegistrateTagsProvider<Block> provider)
 	{
-		var tag = provider.tag(ACRegistry.TAG_VISUALIZER);
+		var tag = provider.addTag(ACRegistry.TAG_VISUALIZER);
 
 		REGISTRATE
 				.getAll(Registries.BLOCK)
@@ -80,7 +80,7 @@ public interface DataGenerators
 
 	static void itemTags(RegistrateItemTagsProvider provider)
 	{
-		var tag = provider.tag(IDyeable.TAG);
+		var tag = provider.addTag(IDyeable.TAG);
 
 		REGISTRATE.getAll(ForgeRegistries.Keys.BLOCKS)
 		          .stream()
@@ -96,8 +96,8 @@ public interface DataGenerators
 		        .addTags(AllItemGroupCategories.BONE_SKELETON_TAG, AllItemGroupCategories.BONE_WITHER_TAG)
 		;*/
 
-		provider.tag(FurnitureStation.CRAFTABLE);
-		provider.tag(FurnitureStation.CLAY).add(Items.CLAY_BALL.builtInRegistryHolder().key());
+		provider.addTag(FurnitureStation.CRAFTABLE);
+		provider.addTag(FurnitureStation.CLAY).add(Items.CLAY_BALL.builtInRegistryHolder().key());
 	}
 
 	static void blockState(RegistrateBlockstateProvider provider)
