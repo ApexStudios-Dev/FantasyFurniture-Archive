@@ -28,14 +28,7 @@ dependencies {
 
     compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
 
-    modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-}
-
-remapJar.enabled = false
-remapSourcesJar.enabled = false
-
-jar {
-    classifier ''
+    modCompileOnly "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
 }
 
 publishing {
@@ -43,18 +36,7 @@ publishing {
         mavenJava(MavenPublication) {
             loom.disableDeprecatedPomGeneration(it)
 
-            artifact jar
-
-            pom.withXml {
-                def depsNode = asNode().appendNode('dependencies')
-
-                // apexcore
-                def depNode = depsNode.appendNode('dependency')
-                depNode.appendNode('groupId', 'xyz.apex.minecraft.apexcore')
-                depNode.appendNode('artifactId', 'apexcore-common')
-                depNode.appendNode('version', "${APEXCORE_DEV_VERSION}")
-                depNode.appendNode('scope', 'compile')
-            }
+            artifact remapJar
         }
     }
 }

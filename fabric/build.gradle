@@ -45,15 +45,8 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
 
     implementation project(path: ':common', configuration: 'namedElements')
+    modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
     modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-}
-
-processResources {
-    from project(':common').sourceSets.main.resources
-}
-
-compileJava {
-    source project(':common').sourceSets.main.allSource
 }
 
 publishing {
@@ -62,38 +55,6 @@ publishing {
             loom.disableDeprecatedPomGeneration(it)
 
             artifact remapJar
-
-            pom.withXml {
-                def depsNode = asNode().appendNode('dependencies')
-
-                // common
-                def depNode = depsNode.appendNode('dependency')
-                def prj = project(':common')
-                depNode.appendNode('groupId', prj.group)
-                depNode.appendNode('artifactId', prj.archivesBaseName)
-                depNode.appendNode('version', prj.version)
-                depNode.appendNode('scope', 'compile')
-
-                // apexcore
-                depNode = depsNode.appendNode('dependency')
-                depNode.appendNode('groupId', 'xyz.apex.minecraft.apexcore')
-                depNode.appendNode('artifactId', 'apexcore-fabric')
-                depNode.appendNode('version', "${APEXCORE_DEV_VERSION}")
-                depNode.appendNode('scope', 'compile')
-
-                // fabric
-                depNode = depsNode.appendNode('dependency')
-                depNode.appendNode('groupId', 'net.fabricmc')
-                depNode.appendNode('artifactId', 'fabric-loader')
-                depNode.appendNode('version', "${FABRIC_LOADER_VERSION}")
-                depNode.appendNode('scope', 'compile')
-
-                depNode = depsNode.appendNode('dependency')
-                depNode.appendNode('groupId', 'net.fabricmc.fabric-api')
-                depNode.appendNode('artifactId', 'fabric-api')
-                depNode.appendNode('version', "${FABRIC_API_VERSION}+${MINECRAFT_VERSION}")
-                depNode.appendNode('scope', 'compile')
-            }
         }
     }
 }

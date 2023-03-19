@@ -1,0 +1,23 @@
+accessWidener   v2  named
+
+accessible method net/minecraft/world/level/block/AbstractFurnaceBlock createFurnaceTicker (Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/world/level/block/entity/BlockEntityType;)Lnet/minecraft/world/level/block/entity/BlockEntityTicker;
+
+##################################
+# Copied from ApexCore
+##################################
+# made public for registry entries
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
+accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+
+# public for components
+accessible method net/minecraft/world/level/block/DoublePlantBlock preventCreativeDropFromBottomPart (Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/player/Player;)V
+accessible method net/minecraft/world/level/block/BedBlock getNeighbourDirection (Lnet/minecraft/world/level/block/state/properties/BedPart;Lnet/minecraft/core/Direction;)Lnet/minecraft/core/Direction;
+
+# custom block flammability
+accessible method net/minecraft/world/level/block/FireBlock setFlammable (Lnet/minecraft/world/level/block/Block;II)V
+
+# [FABRIC ONLY] register custom packs
+accessible field net/minecraft/server/packs/repository/PackRepository sources Ljava/util/Set;
+mutable field net/minecraft/server/packs/repository/PackRepository sources Ljava/util/Set;
