@@ -7,8 +7,6 @@ loom {
         accessWidenerPath = accessWidenerFile
     }
 
-    enableTransitiveAccessWideners = true
-
     runs {
         client {
             client()
@@ -18,13 +16,6 @@ loom {
         server {
             server()
             ideConfigGenerated true
-        }
-    }
-
-    mods {
-        "${MOD_ID}" {
-            sourceSet sourceSets.main
-            sourceSet project(':common').sourceSets.main
         }
     }
 }
@@ -44,9 +35,20 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
     modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
 
-    implementation project(path: ':common', configuration: 'namedElements')
-    modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    compileOnly project(':common')
     modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+}
+
+processResources {
+    from project(':common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':common').sourceSets.main.allJava
 }
 
 publishing {

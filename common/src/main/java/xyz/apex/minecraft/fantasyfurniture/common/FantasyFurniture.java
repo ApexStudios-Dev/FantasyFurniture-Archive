@@ -14,6 +14,7 @@ import xyz.apex.minecraft.apexcore.common.platform.ModExecutor;
 import xyz.apex.minecraft.apexcore.common.platform.ModLoader;
 import xyz.apex.minecraft.apexcore.common.platform.Side;
 import xyz.apex.minecraft.apexcore.common.platform.SideExecutor;
+import xyz.apex.minecraft.apexcore.common.registry.RegistryManager;
 import xyz.apex.minecraft.apexcore.common.registry.builder.BlockBuilder;
 import xyz.apex.minecraft.apexcore.common.registry.builder.EntityBuilder;
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
@@ -63,6 +64,7 @@ public interface FantasyFurniture
         // CreativeTabRegistry.append(CreativeModeTabs.FUNCTIONAL_BLOCKS, FURNITURE_STATION_BLOCK::get);
 
         registerResourcePack("ctm", "ctm_support", Component.literal("CTM Mod Support"));
+        RegistryManager.register(ID);
     }
 
     private void registerResourcePack(@Nullable String requiredMod, String packId, Component displayName)

@@ -32,7 +32,6 @@ minecraft {
             mods {
                 "${MOD_ID}" {
                     source sourceSets.main
-                    source project(':common').sourceSets.main
                 }
             }
         }
@@ -47,7 +46,6 @@ minecraft {
             mods {
                 "${MOD_ID}" {
                     source sourceSets.main
-                    source project(':common').sourceSets.main
                 }
             }
         }
@@ -63,7 +61,6 @@ minecraft {
             mods {
                 "${MOD_ID}" {
                     source sourceSets.main
-                    source project(':common').sourceSets.main
                 }
             }
         }
@@ -86,7 +83,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
     annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
 
-    implementation project(':common')
+    compileOnly project(':common')
     implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
 }
 
@@ -96,6 +93,10 @@ processResources {
 
 compileJava {
     source project(':common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':common').sourceSets.main.allJava
 }
 
 tasks.jarJar.configure {

@@ -6,8 +6,6 @@ loom {
     if(accessWidenerFile.exists()) {
         accessWidenerPath = accessWidenerFile
     }
-
-    enableTransitiveAccessWideners = true
 }
 
 repositories {
@@ -27,16 +25,18 @@ dependencies {
     })
 
     compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
-
-    modCompileOnly "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    implementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
 }
+
+remapJar.enabled = false
+remapSourcesJar.enabled = false
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             loom.disableDeprecatedPomGeneration(it)
 
-            artifact remapJar
+            artifact jar
         }
     }
 }
