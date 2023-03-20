@@ -1,4 +1,3 @@
-/*
 package xyz.apex.minecraft.fantasyfurniture.common.client.renderer;
 
 import com.google.common.base.Suppliers;
@@ -8,10 +7,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import dev.architectury.utils.GameInstance;
-import org.jetbrains.annotations.Nullable;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.GraphicsStatus;
@@ -41,11 +36,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-
+import org.jetbrains.annotations.Nullable;
+import org.lwjgl.opengl.GL11;
 import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockPattern;
-import xyz.apex.minecraft.apexcore.common.util.function.Lazy;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.ModConfig;
 
@@ -125,7 +120,7 @@ public final class MultiBlockRenderer
 
     public void render(PoseStack pose, float partialTick, Camera camera)
     {
-        var client = GameInstance.getClient();
+        var client = Minecraft.getInstance();
 
         // these are required to be non-null, which they should always be when rendering in level contexts
         // but better safe than sorry
@@ -170,7 +165,7 @@ public final class MultiBlockRenderer
         if(componentBlock.hasComponent(ComponentTypes.MULTI_BLOCK))
         {
             var camPos = camera.getPosition();
-            var alpha = getAlpha();
+            var alpha = getAlpha(client);
 
             pose.pushPose();
             pose.translate(-camPos.x, -camPos.y, -camPos.z);
@@ -256,9 +251,9 @@ public final class MultiBlockRenderer
         bufferSource.endBatch(linesCustom);
     }
 
-    private int getAlpha()
+    private int getAlpha(Minecraft client)
     {
-        if(GameInstance.getClient().options.graphicsMode().get() == GraphicsStatus.FAST) return 127;
+        if(client.options.graphicsMode().get() == GraphicsStatus.FAST) return 127;
 
         var period = 2500D;
         var timer = System.currentTimeMillis() % period;
@@ -432,4 +427,3 @@ public final class MultiBlockRenderer
         }
     }
 }
-*/
