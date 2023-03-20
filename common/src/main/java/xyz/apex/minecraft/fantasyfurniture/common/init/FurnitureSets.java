@@ -1,6 +1,8 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -10,6 +12,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
+import xyz.apex.minecraft.apexcore.common.hooks.CreativeModeTabHooks;
+import xyz.apex.minecraft.apexcore.common.hooks.PointOfInterestHooks;
+import xyz.apex.minecraft.apexcore.common.registry.RegistryManager;
 import xyz.apex.minecraft.apexcore.common.registry.builder.BlockBuilder;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
 
@@ -38,8 +43,7 @@ public interface FurnitureSets
 
     static void creativeModeTab(String ownerId, String furnitureSet, UnaryOperator<CreativeModeTab.Builder> builderFunc)
     {
-        // TODO
-        // FantasyFurniture.REGISTRAR.creativeModeTab(furnitureSet, builderFunc::apply);
+        CreativeModeTabHooks.getInstance().register(new ResourceLocation(ownerId, furnitureSet), builderFunc);
     }
 
     static BlockBuilder<WallLightBlock> wallLight(String ownerId, String furnitureSet, Supplier<ParticleOptions> flameParticle)
@@ -272,8 +276,7 @@ public interface FurnitureSets
                 .sound(SoundType.WOOD)
                 .strength(.2F)
                 .noOcclusion()
-                // TODO
-                // .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, FurnitureSets::registerCustomHomePoi)
+                .onRegister(block -> RegistryManager.get(ownerId).getRegistry(Registries.POINT_OF_INTEREST_TYPE).registerCallback(() -> PointOfInterestHooks.registerHomePoint(() -> block)))
         ;
     }
 
@@ -286,28 +289,6 @@ public interface FurnitureSets
     {
         return bed(ownerId, furnitureSet, "double", BedDoubleBlock::new);
     }
-
-    // TODO
-    /*private static void registerCustomHomePoi(Block... blocks)
-    {
-        // collect all possible block states into set
-        // block states must have the BedPart property
-        // collect only block states that are for the `HEAD` part
-        // same logic as vanilla `HOME` poi
-        var blockStates = Arrays
-                .stream(blocks)
-                .map(Block::getStateDefinition)
-                .map(StateDefinition::getPossibleStates)
-                .flatMap(Collection::stream)
-                .filter(s -> s.hasProperty(BedBlock.PART))
-                .filter(s -> s.getValue(BedBlock.PART) == BedPart.HEAD)
-                .collect(Collectors.toSet());
-
-        if(PoiTypes.BEDS instanceof ImmutableSet) PoiTypes.BEDS = Sets.newHashSet(PoiTypes.BEDS);
-        PoiTypes.BEDS.addAll(blockStates);
-        var holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolderOrThrow(PoiTypes.HOME);
-        PoiTypes.registerBlockStates(holder, blockStates);
-    }*/
 
     static BlockBuilder<ShelfBlock> shelf(String ownerId, String furnitureSet)
     {

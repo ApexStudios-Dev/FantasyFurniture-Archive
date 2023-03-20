@@ -42,7 +42,7 @@ public final class Seat extends Entity
         setBoundingBox(bb.move(diff));
     }
 
-    // @Override // TODO
+    @Override
     public void positionRider(Entity entity, MoveFunction moveFunction)
     {
         if(!hasPassenger(entity)) return;

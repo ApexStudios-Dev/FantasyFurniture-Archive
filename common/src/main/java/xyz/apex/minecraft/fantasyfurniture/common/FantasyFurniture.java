@@ -7,8 +7,10 @@ import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
+import xyz.apex.minecraft.apexcore.common.hooks.CreativeModeTabHooks;
 import xyz.apex.minecraft.apexcore.common.hooks.PackRepositoryHooks;
 import xyz.apex.minecraft.apexcore.common.platform.ModExecutor;
 import xyz.apex.minecraft.apexcore.common.platform.ModLoader;
@@ -21,6 +23,7 @@ import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.registry.entry.EntityEntry;
 import xyz.apex.minecraft.apexcore.common.registry.entry.RecipeEntry;
 import xyz.apex.minecraft.fantasyfurniture.common.block.FurnitureStationBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.common.entity.Seat;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
@@ -35,8 +38,7 @@ public interface FantasyFurniture
                 .clientTrackingRange(5)
                 .updateInterval(Integer.MAX_VALUE)
                 .fireImmune()
-                // TODO
-                //.renderer(() -> () -> SeatRenderer::new)
+                .renderer(() -> SeatRenderer::new)
             .register();
 
     BlockEntry<FurnitureStationBlock> FURNITURE_STATION_BLOCK = BlockBuilder
@@ -60,8 +62,7 @@ public interface FantasyFurniture
         AllBlockEntityTypes.bootstrap();
         AllMenuTypes.bootstrap();
 
-        // TODO
-        // CreativeTabRegistry.append(CreativeModeTabs.FUNCTIONAL_BLOCKS, FURNITURE_STATION_BLOCK::get);
+        CreativeModeTabHooks.getInstance().modify(CreativeModeTabs.FUNCTIONAL_BLOCKS, output -> output.accept(FURNITURE_STATION_BLOCK));
 
         registerResourcePack("ctm", "ctm_support", Component.literal("CTM Mod Support"));
         RegistryManager.register(ID);
@@ -69,11 +70,11 @@ public interface FantasyFurniture
 
     private void registerResourcePack(@Nullable String requiredMod, String packId, Component displayName)
     {
-        if(requiredMod != null && !requiredMod.isEmpty() && !ModLoader.INSTANCE.isModLoaded(requiredMod)) return;
+        if(requiredMod != null && !requiredMod.isEmpty() && !ModLoader.getInstance().isModLoaded(requiredMod)) return;
 
         SideExecutor.runWhenOn(Side.CLIENT, () -> () -> ModExecutor.runIfLoaded(ID, () -> mod -> mod.findResource("packs", packId).ifPresent(path -> {
             var resources = new PathPackResources("%s:%s".formatted(ID, packId), path, true);
-            PackRepositoryHooks.registerPackRepository(Minecraft.getInstance().getResourcePackRepository(), onLoad -> {
+            PackRepositoryHooks.getInstance().registerPackRepository(Minecraft.getInstance().getResourcePackRepository(), onLoad -> {
                 var pack = Pack.readMetaAndCreate("%s:builtin/%s".formatted(ID, packId), displayName, false, builtInPackId -> resources, PackType.CLIENT_RESOURCES, Pack.Position.BOTTOM, PackSource.BUILT_IN);
                 if(pack != null) onLoad.accept(pack);
             });

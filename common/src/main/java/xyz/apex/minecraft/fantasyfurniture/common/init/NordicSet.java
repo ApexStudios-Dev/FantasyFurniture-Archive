@@ -51,8 +51,7 @@ public interface NordicSet
 
     static void bootstrap()
     {
-        // TODO
-        /*FurnitureSets.creativeModeTab(NAME, builder -> builder
+        FurnitureSets.creativeModeTab(FantasyFurniture.ID, NAME, builder -> builder
                 .icon(BED_SINGLE::asStack)
                 .displayItems((params, output) -> {
                     output.accept(WOOL);
@@ -87,6 +86,6 @@ public interface NordicSet
                     output.accept(SOFA);
                     output.accept(COUNTER);
                 })
-        );*/
+        );
     }
 }

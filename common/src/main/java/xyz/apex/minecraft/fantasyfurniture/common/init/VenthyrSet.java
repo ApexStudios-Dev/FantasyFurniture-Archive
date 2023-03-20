@@ -54,8 +54,7 @@ public interface VenthyrSet
 
     static void bootstrap()
     {
-        // TODO
-        /*FurnitureSets.creativeModeTab(NAME, builder -> builder
+        FurnitureSets.creativeModeTab(FantasyFurniture.ID, NAME, builder -> builder
                 .icon(BED_SINGLE::asStack)
                 .displayItems((params, output) -> {
                     output.accept(WOOL);
@@ -93,6 +92,6 @@ public interface VenthyrSet
                     output.accept(SOFA);
                     output.accept(COUNTER);
                 })
-        );*/
+        );
     }
 }

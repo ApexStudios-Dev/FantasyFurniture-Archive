@@ -3,6 +3,7 @@ package xyz.apex.minecraft.fantasyfurniture.common.init;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
@@ -57,15 +58,13 @@ public interface BoneSet
 
         static void bootstrap()
         {
-            // TODO
-            /*FurnitureSets.creativeModeTab(NAME, builder -> builder
+            FurnitureSets.creativeModeTab(FantasyFurniture.ID, NAME, builder -> builder
                     .icon(BED_SINGLE::asStack)
                     .displayItems(Wither::addTabItems)
-            );*/
+            );
         }
 
-        // TODO
-        /*private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
+        private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
         {
             output.accept(WOOL);
             output.accept(CARPET);
@@ -98,7 +97,7 @@ public interface BoneSet
             output.accept(SHELF);
             output.accept(SOFA);
             output.accept(COUNTER);
-        }*/
+        }
     }
 
     interface Skeleton
@@ -141,15 +140,13 @@ public interface BoneSet
 
         static void bootstrap()
         {
-            // TODO
-            /*FurnitureSets.creativeModeTab(NAME, builder -> builder
+            FurnitureSets.creativeModeTab(FantasyFurniture.ID, NAME, builder -> builder
                     .icon(BED_SINGLE::asStack)
                     .displayItems(Skeleton::addTabItems)
-            );*/
+            );
         }
 
-        // TODO
-        /*private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
+        private static void addTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output)
         {
             output.accept(WOOL);
             output.accept(CARPET);
@@ -182,7 +179,7 @@ public interface BoneSet
             output.accept(SHELF);
             output.accept(SOFA);
             output.accept(COUNTER);
-        }*/
+        }
     }
 
     static void bootstrap()
@@ -190,8 +187,7 @@ public interface BoneSet
         Wither.bootstrap();
         Skeleton.bootstrap();
 
-        // TODO
-        /*FurnitureSets.creativeModeTab(BASE_NAME, builder -> builder
+        FurnitureSets.creativeModeTab(FantasyFurniture.ID, BASE_NAME, builder -> builder
                 .icon(Wither.BED_SINGLE::asStack)
                 .displayItems((params, output) -> {
                     if(params.hasPermissions())
@@ -200,6 +196,6 @@ public interface BoneSet
                         Skeleton.addTabItems(params, output);
                     }
                 })
-        );*/
+        );
     }
 }
