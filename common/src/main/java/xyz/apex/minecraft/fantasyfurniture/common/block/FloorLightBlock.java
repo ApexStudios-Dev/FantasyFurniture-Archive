@@ -6,11 +6,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -118,5 +122,29 @@ public class FloorLightBlock extends SimpleComponentBlock
             level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
             level.addParticle(flameParticle.get(), x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
         }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
+    {
+        VoxelShape shape;
+
+        if(NordicSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.FLOOR_LIGHT;
+        else if(VenthyrSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Venthyr.FLOOR_LIGHT;
+        else if(DunmerSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Dunmer.FLOOR_LIGHT;
+        else if(BoneSet.Wither.FLOOR_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.FLOOR_LIGHT;
+        else if(NecrolordSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.FLOOR_LIGHT;
+        else if(RoyalSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.FLOOR_LIGHT;
+        else return super.getShape(blockState, level, pos, context);
+
+        if(!getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
+
+        if(blockState.hasProperty(HorizontalFacingComponent.FACING))
+        {
+            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+            return VoxelShapeHelper.rotateHorizontal(shape, facing);
+        }
+
+        return shape;
     }
 }

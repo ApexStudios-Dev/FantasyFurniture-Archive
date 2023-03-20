@@ -8,15 +8,18 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+
+import java.util.function.Consumer;
 
 public final class LightComponent extends SimpleComponent
 {
@@ -24,6 +27,8 @@ public final class LightComponent extends SimpleComponent
             new ResourceLocation(FantasyFurniture.ID, "light"),
             LightComponent.class
     );
+
+    public static final DirectionProperty FACING = WallTorchBlock.FACING;
 
     private boolean placeOnWalls = false;
     private boolean placeOnFloor = true;
@@ -54,9 +59,17 @@ public final class LightComponent extends SimpleComponent
     }
 
     @Override
-    public void validate()
+    public BlockState registerDefaultBlockState(BlockState blockState)
     {
-        if(placeOnWalls && !hasComponent(ComponentTypes.HORIZONTAL_FACING)) throw new IllegalStateException("Missing required Component: '%s' due to wall placement being enabled!".formatted(ComponentTypes.HORIZONTAL_FACING));
+        if(placeOnWalls) return blockState.setValue(FACING, Direction.NORTH);
+        return blockState;
+    }
+
+    @Override
+    public void createBlockStateDefinition(Consumer<Property<?>> consumer)
+    {
+        if(placeOnWalls) consumer.accept(FACING);
+        super.createBlockStateDefinition(consumer);
     }
 
     @Nullable
@@ -72,9 +85,8 @@ public final class LightComponent extends SimpleComponent
             {
                 if(direction.getAxis().isHorizontal())
                 {
-                    var opposite = direction.getOpposite();
-                    var modified = blockState.setValue(HorizontalFacingComponent.FACING, opposite);
-                    if(modified.canSurvive(level, pos)) return modified;
+                    var modified = blockState.setValue(FACING, direction);
+                    if(modified.canSurvive(level, pos)) return modified.setValue(FACING, direction);
                 }
             }
 
@@ -89,10 +101,11 @@ public final class LightComponent extends SimpleComponent
     {
         if(placeOnWalls)
         {
-            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-            var wallPos = pos.relative(facing);
+            var facing = blockState.getValue(FACING);
+            var wallDirection = facing.getOpposite();
+            var wallPos = pos.relative(wallDirection);
             var wallBlockState = level.getBlockState(wallPos);
-            if(wallBlockState.isFaceSturdy(level, wallPos, facing)) return true;
+            if(wallBlockState.isFaceSturdy(level, wallPos, wallDirection)) return true;
         }
 
         if(placeOnCeilings && Block.canSupportCenter(level, pos.above(), Direction.DOWN)) return true;
@@ -102,7 +115,7 @@ public final class LightComponent extends SimpleComponent
     @Override
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos)
     {
-        if(placeOnWalls && direction.getOpposite() == blockState.getValue(HorizontalFacingComponent.FACING) && !blockState.canSurvive(level, currentPos)) return Blocks.AIR.defaultBlockState();
+        if(placeOnWalls && direction.getOpposite() == blockState.getValue(FACING) && !blockState.canSurvive(level, currentPos)) return Blocks.AIR.defaultBlockState();
         if(placeOnCeilings && direction == Direction.UP && !canSurvive(blockState, level, currentPos)) return Blocks.AIR.defaultBlockState();
         return blockState;
     }

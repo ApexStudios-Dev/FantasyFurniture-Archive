@@ -4,19 +4,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.init.BoneSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NecrolordSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.NordicSet;
-import xyz.apex.minecraft.fantasyfurniture.common.init.VenthyrSet;
+import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 public final class WallLightBlock extends SimpleComponentBlock
 {
@@ -32,7 +31,7 @@ public final class WallLightBlock extends SimpleComponentBlock
     @Override
     public void registerComponents()
     {
-        registerComponent(ComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(UnaryOperator.identity());
+       // registerComponent(ComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(facing -> Direction.NORTH);
         registerComponent(LightComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(true)
                 .setPlaceOnFloor(false)
@@ -111,5 +110,22 @@ public final class WallLightBlock extends SimpleComponentBlock
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
             level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
         }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
+    {
+        VoxelShape shape;
+
+        if(NordicSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.WALL_LIGHT;
+        else if(VenthyrSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Venthyr.WALL_LIGHT;
+        else if(DunmerSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Dunmer.WALL_LIGHT;
+        else if(BoneSet.Wither.WALL_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.WALL_LIGHT;
+        else if(NecrolordSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.WALL_LIGHT;
+        else if(RoyalSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.WALL_LIGHT;
+        else return super.getShape(blockState, level, pos, context);
+
+        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        return VoxelShapeHelper.rotateHorizontal(shape, facing);
     }
 }

@@ -4,8 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
@@ -108,5 +111,17 @@ public class CeilingLightBlock extends SimpleComponentBlock
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
             level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
         }
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
+    {
+        if(NordicSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Nordic.CEILING_LIGHT;
+        else if(VenthyrSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Venthyr.CEILING_LIGHT;
+        else if(DunmerSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Dunmer.CEILING_LIGHT;
+        else if(BoneSet.Wither.CEILING_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Bone.CEILING_LIGHT;
+        else if(NecrolordSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Necrolord.CEILING_LIGHT;
+        else if(RoyalSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Royal.CEILING_LIGHT;
+        else return super.getShape(blockState, level, pos, context);
     }
 }

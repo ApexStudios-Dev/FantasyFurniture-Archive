@@ -1,21 +1,8 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.types.DoorComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.common.block.*;
-import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
-import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
-import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
-import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
-
-import java.util.function.Function;
 
 public interface AllVoxelShapes
 {
@@ -525,35 +512,6 @@ public interface AllVoxelShapes
         );
         // endregion
 
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
-
         private static void bootstrap() {}
     }
 
@@ -950,35 +908,6 @@ public interface AllVoxelShapes
                 box(0, 14, 0, 16, 16, 16)
         );
         // endregion
-
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
 
         private static void bootstrap() {}
     }
@@ -1487,35 +1416,6 @@ public interface AllVoxelShapes
         );
         // endregion
 
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
-
         private static void bootstrap() {}
     }
 
@@ -1906,35 +1806,6 @@ public interface AllVoxelShapes
                 box(0D, 13D, 0D, 16D, 16D, 16D)
         );
         // endregion
-
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
 
         private static void bootstrap() {}
     }
@@ -2414,35 +2285,6 @@ public interface AllVoxelShapes
         );
         // endregion
 
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
-
         private static void bootstrap() {}
     }
 
@@ -2868,35 +2710,6 @@ public interface AllVoxelShapes
         );
         // endregion
 
-        static VoxelShape getShelfShape(ShelfBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getShelfShape(shelfType -> switch(shelfType) {
-                case LEFT -> SHELF_LEFT;
-                case RIGHT -> SHELF_RIGHT;
-                case SINGLE -> SHELF_SINGLE;
-                case CENTER -> SHELF_CENTER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getSofaShape(SofaBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getSofaShape(sofaShape -> switch(sofaShape) {
-                case LEFT -> SOFA_LEFT;
-                case RIGHT -> SOFA_RIGHT;
-                case SINGLE -> SOFA_SINGLE;
-                case CENTER -> SOFA_CENTER;
-                case CORNER -> SOFA_CORNER;
-            }, block, blockState);
-        }
-
-        static VoxelShape getCounterShape(CounterBlock block, BlockState blockState)
-        {
-            return AllVoxelShapes.getCounterShape(counterType -> switch(counterType) {
-                case SINGLE -> COUNTER_SINGLE;
-                case CORNER -> COUNTER_CORNER;
-            }, block, blockState);
-        }
-
         private static void bootstrap() {}
     }
 
@@ -2908,310 +2721,6 @@ public interface AllVoxelShapes
         Nordic.bootstrap();
         Royal.bootstrap();
         Venthyr.bootstrap();
-    }
-
-    static VoxelShape getWallLightShape(VoxelShape current, WallLightBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getFloorLightShape(VoxelShape current, FloorLightBlock block, BlockState blockState)
-    {
-        var shape = current;
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
-
-        if(blockState.hasProperty(HorizontalFacingComponent.FACING))
-        {
-            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-            return VoxelShapeHelper.rotateHorizontal(shape, facing);
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getTableWideShape(VoxelShape current, TableWideBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getTableLargeShape(VoxelShape current, TableLargeBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
-
-        if(index == 1 || index == 3)
-        {
-            var offset = facing.getClockWise();
-            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        if(index == 2 || index == 3) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
-
-        return shape;
-    }
-
-    static VoxelShape getBenchShape(VoxelShape current, BenchBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var other = facing.getClockWise();
-            shape = shape.move(other.getStepX(), 0D, other.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getChairShape(VoxelShape current, ChairBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
-        return shape;
-    }
-
-    static VoxelShape getCushionShape(VoxelShape current, CushionBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getStoolShape(VoxelShape current, StoolBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getChestShape(VoxelShape current, ChestBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getBookshelfShape(VoxelShape current, BookshelfBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
-
-        if(index == 2 || index == 3)
-        {
-            var offset = facing.getClockWise();
-            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        if(index == 1 || index == 3) shape = shape.move(0D, -1D, 0D);
-
-        return shape;
-    }
-
-    static VoxelShape getDeskShape(VoxelShape current, DeskBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getDrawerShape(VoxelShape current, DrawerBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getDresserShape(VoxelShape current, DresserBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getLockboxShape(VoxelShape current, LockboxBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getWardrobeTopShape(VoxelShape current, WardrobeTopBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getWardrobeBottomShape(VoxelShape current, WardrobeBottomBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
-
-        if(index == 2 || index == 3)
-        {
-            var offset = facing.getClockWise();
-            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        if(index == 1 || index == 3) shape = shape.move(0D, -1D, 0D);
-
-        return shape;
-    }
-
-    static VoxelShape getPaintingSmallShape(VoxelShape current, PaintingSmallBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    static VoxelShape getPaintingWideShape(VoxelShape current, PaintingWideBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getOvenShape(VoxelShape current, OvenBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-
-        var multiBlockComponent = block.getComponent(ComponentTypes.MULTI_BLOCK);
-
-        if(multiBlockComponent != null && !multiBlockComponent.getMultiBlockType().isOrigin(blockState))
-        {
-            var offset = facing.getClockWise();
-            return shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    static VoxelShape getDoorShape(VoxelShape current, DoorBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING).getOpposite();
-        var open = blockState.getValue(DoorComponent.OPEN);
-        var hinge = blockState.getValue(DoorComponent.HINGE);
-
-        Direction shapeFacing;
-
-        if(hinge == DoorHingeSide.LEFT) shapeFacing = open ? facing.getCounterClockWise() : facing;
-        else shapeFacing = open ? facing.getOpposite().getClockWise() : facing.getOpposite();
-
-        var shape = VoxelShapeHelper.rotateHorizontal(current, shapeFacing);
-
-        var x = 0D;
-        var y = 0D;
-        var z = 0D;
-
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) y -= 1D;
-
-        x -= shapeFacing.getStepX() * .8125D;
-        z -= shapeFacing.getStepZ() * .8125D;
-
-        if((hinge == DoorHingeSide.LEFT && !open) || (hinge == DoorHingeSide.RIGHT && open))
-        {
-            x += shapeFacing.getStepX() * .8125D;
-            z += shapeFacing.getStepZ() * .8125D;
-        }
-
-        return shape.move(x, y, z);
-    }
-
-    static VoxelShape getBedSingleShape(VoxelShape current, BedSingleBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        if(!block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
-        return shape;
-    }
-
-    static VoxelShape getBedDoubleShape(VoxelShape current, BedDoubleBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shape = VoxelShapeHelper.rotateHorizontal(current, facing);
-        var index = block.getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
-
-        if(index == 2 || index == 3) shape = shape.move(facing.getStepX(), 0D, facing.getStepZ());
-
-        if(index == 1 || index == 3)
-        {
-            var offset = facing.getClockWise();
-            shape = shape.move(offset.getStepX(), 0D, offset.getStepZ());
-        }
-
-        return shape;
-    }
-
-    private static VoxelShape getShelfShape(Function<ShelfType, VoxelShape> shapeGetter, ShelfBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var shelfType = blockState.getValue(ModBlockStateProperties.SHELF_TYPE);
-        var current = shapeGetter.apply(shelfType);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    private static VoxelShape getSofaShape(Function<SofaType, VoxelShape> shapeGetter, SofaBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var sofaType = blockState.getValue(ModBlockStateProperties.SOFA_TYPE);
-        var current = shapeGetter.apply(sofaType);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
-    }
-
-    private static VoxelShape getCounterShape(Function<CounterType, VoxelShape> shapeGetter, CounterBlock block, BlockState blockState)
-    {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
-        var counterType = blockState.getValue(ModBlockStateProperties.COUNTER_TYPE);
-        var current = shapeGetter.apply(counterType);
-        return VoxelShapeHelper.rotateHorizontal(current, facing);
     }
 
     private static VoxelShape shape(VoxelShape... shapes)
