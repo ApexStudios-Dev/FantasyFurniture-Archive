@@ -4,16 +4,20 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class ChairBlock extends SimpleComponentBlock
 {
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
+
     public ChairBlock(Properties properties)
     {
         super(properties);
@@ -30,6 +34,11 @@ public final class ChairBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.CHAIR.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.CHAIR;
@@ -38,7 +47,7 @@ public final class ChairBlock extends SimpleComponentBlock
         else if(BoneSet.Wither.CHAIR.hasBlockState(blockState) || BoneSet.Skeleton.CHAIR.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.CHAIR;
         else if(NecrolordSet.CHAIR.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.CHAIR;
         else if(RoyalSet.CHAIR.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.CHAIR;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         shape = VoxelShapeHelper.rotateHorizontal(shape, facing);

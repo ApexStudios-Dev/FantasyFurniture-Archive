@@ -10,10 +10,12 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
@@ -23,6 +25,7 @@ import java.util.function.Supplier;
 public class FloorLightBlock extends SimpleComponentBlock
 {
     private final Supplier<ParticleOptions> flameParticle;
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public FloorLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
     {
@@ -127,6 +130,11 @@ public class FloorLightBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.FLOOR_LIGHT;
@@ -135,7 +143,7 @@ public class FloorLightBlock extends SimpleComponentBlock
         else if(BoneSet.Wither.FLOOR_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.FLOOR_LIGHT;
         else if(NecrolordSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.FLOOR_LIGHT;
         else if(RoyalSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.FLOOR_LIGHT;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         if(!getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
 

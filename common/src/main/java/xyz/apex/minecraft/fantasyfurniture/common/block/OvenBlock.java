@@ -24,11 +24,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
@@ -38,6 +40,8 @@ import java.util.Optional;
 public class OvenBlock extends SimpleComponentBlock implements EntityBlock
 {
     public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
+
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public OvenBlock(Properties properties)
     {
@@ -258,6 +262,11 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.OVEN.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.OVEN;
@@ -266,7 +275,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
         else if(BoneSet.Wither.OVEN.hasBlockState(blockState) || BoneSet.Skeleton.OVEN.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.OVEN;
         else if(NecrolordSet.OVEN.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.OVEN;
         else if(RoyalSet.OVEN.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.OVEN;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         shape = VoxelShapeHelper.rotateHorizontal(shape, facing);

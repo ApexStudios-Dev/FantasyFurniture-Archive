@@ -4,15 +4,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class DrawerBlock extends SimpleComponentBlock
 {
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
+
     public DrawerBlock(Properties properties)
     {
         super(properties);
@@ -27,6 +31,11 @@ public final class DrawerBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.DRAWER.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.DRAWER;
@@ -35,7 +44,7 @@ public final class DrawerBlock extends SimpleComponentBlock
         else if(BoneSet.Wither.DRAWER.hasBlockState(blockState) || BoneSet.Skeleton.DRAWER.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.DRAWER;
         else if(NecrolordSet.DRAWER.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.DRAWER;
         else if(RoyalSet.DRAWER.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.DRAWER;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(shape, facing);

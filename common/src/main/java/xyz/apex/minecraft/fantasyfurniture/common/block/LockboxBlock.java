@@ -4,15 +4,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class LockboxBlock extends SimpleComponentBlock
 {
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
+
     public LockboxBlock(Properties properties)
     {
         super(properties);
@@ -27,6 +31,11 @@ public final class LockboxBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.LOCKBOX.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.LOCKBOX;
@@ -35,7 +44,7 @@ public final class LockboxBlock extends SimpleComponentBlock
         else if(BoneSet.Wither.LOCKBOX.hasBlockState(blockState) || BoneSet.Skeleton.LOCKBOX.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.LOCKBOX;
         else if(NecrolordSet.LOCKBOX.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.LOCKBOX;
         else if(RoyalSet.LOCKBOX.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.LOCKBOX;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(shape, facing);

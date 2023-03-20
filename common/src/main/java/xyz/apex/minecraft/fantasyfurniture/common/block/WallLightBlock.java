@@ -8,9 +8,11 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
@@ -20,6 +22,7 @@ import java.util.function.Supplier;
 public final class WallLightBlock extends SimpleComponentBlock
 {
     private final Supplier<ParticleOptions> flameParticle;
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public WallLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
     {
@@ -115,6 +118,11 @@ public final class WallLightBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.WALL_LIGHT;
@@ -123,7 +131,7 @@ public final class WallLightBlock extends SimpleComponentBlock
         else if(BoneSet.Wither.WALL_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Bone.WALL_LIGHT;
         else if(NecrolordSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.WALL_LIGHT;
         else if(RoyalSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.WALL_LIGHT;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(shape, facing);

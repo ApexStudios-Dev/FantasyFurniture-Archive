@@ -6,11 +6,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.types.DoorComponent;
 import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -18,6 +20,8 @@ import java.util.function.UnaryOperator;
 
 public final class DoorBlock extends SimpleComponentBlock
 {
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
+
     public DoorBlock(Properties properties)
     {
         super(properties);
@@ -34,6 +38,11 @@ public final class DoorBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         VoxelShape shape;
 
         if(NordicSet.DOOR_SINGLE.hasBlockState(blockState)) shape = AllVoxelShapes.Nordic.DOOR_SINGLE;
@@ -48,7 +57,7 @@ public final class DoorBlock extends SimpleComponentBlock
         else if(NecrolordSet.DOOR_DOUBLE.hasBlockState(blockState)) shape = AllVoxelShapes.Necrolord.DOOR_DOUBLE;
         else if(RoyalSet.DOOR_SINGLE.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.DOOR_SINGLE;
         else if(RoyalSet.DOOR_DOUBLE.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.DOOR_DOUBLE;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
 
         var facing = blockState.getValue(HorizontalFacingComponent.FACING).getOpposite();
         var open = blockState.getValue(DoorComponent.OPEN);

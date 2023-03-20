@@ -8,8 +8,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
+import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -18,6 +20,7 @@ import java.util.function.Supplier;
 public class CeilingLightBlock extends SimpleComponentBlock
 {
     private final Supplier<ParticleOptions> flameParticle;
+    private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public CeilingLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
     {
@@ -116,12 +119,17 @@ public class CeilingLightBlock extends SimpleComponentBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
+        return shapeCacher.getSafe(blockState);
+    }
+
+    private VoxelShape getShape(BlockState blockState)
+    {
         if(NordicSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Nordic.CEILING_LIGHT;
         else if(VenthyrSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Venthyr.CEILING_LIGHT;
         else if(DunmerSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Dunmer.CEILING_LIGHT;
         else if(BoneSet.Wither.CEILING_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Bone.CEILING_LIGHT;
         else if(NecrolordSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Necrolord.CEILING_LIGHT;
         else if(RoyalSet.CEILING_LIGHT.hasBlockState(blockState)) return AllVoxelShapes.Royal.CEILING_LIGHT;
-        else return super.getShape(blockState, level, pos, context);
+        else return Shapes.block();
     }
 }
