@@ -1,17 +1,16 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.data.event.GatherDataEvent;
-
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
 
-public final class EntityTypeTagGenerator extends EntityTypeTagsProvider
+final class EntityTypeTagGenerator extends EntityTypeTagsProvider
 {
-    public EntityTypeTagGenerator(GatherDataEvent event, PackOutput packOutput)
+    EntityTypeTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
         super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
     }

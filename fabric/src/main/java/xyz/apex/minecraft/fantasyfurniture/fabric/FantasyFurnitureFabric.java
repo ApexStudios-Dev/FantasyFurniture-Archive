@@ -12,6 +12,6 @@ public final class FantasyFurnitureFabric implements FantasyFurniture, ModInitia
     @Override
     public void onInitialize()
     {
-        init();
+        bootstrap();
     }
 }

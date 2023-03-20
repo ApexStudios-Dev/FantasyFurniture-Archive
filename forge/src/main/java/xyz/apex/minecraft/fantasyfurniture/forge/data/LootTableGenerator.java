@@ -1,8 +1,7 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -13,13 +12,12 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 import java.util.Map;
 
-public final class LootTableGenerator extends LootTableProvider
+final class LootTableGenerator extends LootTableProvider
 {
-    public LootTableGenerator(PackOutput packOutput)
+    LootTableGenerator(PackOutput packOutput)
     {
         super(packOutput, ImmutableSet.of(), ImmutableList.of(
-                new SubProviderEntry(BlockLootTableGenerator::new, LootContextParamSets.BLOCK),
-                new SubProviderEntry(EntityLootTableGenerator::new, LootContextParamSets.ENTITY)
+                new SubProviderEntry(BlockLootTableGenerator::new, LootContextParamSets.BLOCK)
         ));
     }
 

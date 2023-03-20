@@ -1,16 +1,14 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
-
-import org.jetbrains.annotations.Nullable;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class LanguageGenerator extends LanguageProvider
+final class LanguageGenerator extends LanguageProvider
 {
-    public LanguageGenerator(PackOutput packOutput)
+    LanguageGenerator(PackOutput packOutput)
     {
         super(packOutput, FantasyFurniture.ID, "en_us");
     }

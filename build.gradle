@@ -16,9 +16,13 @@ subprojects {
     version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
     archivesBaseName = "${MOD_ID}-${project.name}"
 
-    sourceSets.test {
-        java.srcDirs = [ ]
-        resources.srcDirs = [ ]
+    sourceSets {
+        main.resources.srcDirs += [ 'src/main/generated' ]
+
+        test {
+            java.srcDirs = [ ]
+            resources.srcDirs = [ ]
+        }
     }
 
     repositories {

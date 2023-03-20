@@ -49,7 +49,7 @@ public interface FantasyFurniture
 
     RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = RecipeEntry.register(ID, "furniture_station", FurnitureStationRecipe.Serializer::new);
 
-    default void init()
+    default void bootstrap()
     {
         AllMultiBlockTypes.bootstrap();
         AllVoxelShapes.bootstrap();

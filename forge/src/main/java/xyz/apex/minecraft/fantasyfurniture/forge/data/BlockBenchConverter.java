@@ -1,12 +1,11 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.data.event.GatherDataEvent;
-
-import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelConverter;
-import xyz.apex.minecraft.apexcore.forge.data.BlockBenchModelDeserializer;
+import xyz.apex.minecraft.apexcore.forge.data.providers.BlockBenchModelConverter;
+import xyz.apex.minecraft.apexcore.forge.data.providers.BlockBenchModelDeserializer;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
@@ -15,12 +14,12 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Arrays;
 
-public final class BlockBenchConverter extends BlockBenchModelConverter
+final class BlockBenchConverter extends BlockBenchModelConverter
 {
     private final ResourceLocation renderTypeCutout = new ResourceLocation("minecraft", "cutout");
     private final ModelFile modelBlockBlock = new ModelFile.ExistingModelFile(new ResourceLocation("minecraft", "block/block"), existingFileHelper);
 
-    public BlockBenchConverter(GatherDataEvent event)
+    BlockBenchConverter(GatherDataEvent event)
     {
         super(event, FantasyFurniture.ID);
 

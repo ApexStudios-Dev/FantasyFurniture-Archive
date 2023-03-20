@@ -1,6 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
-
-import org.apache.commons.lang3.Validate;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +9,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
@@ -20,9 +18,9 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
-public final class ItemModelGenerator extends ItemModelProvider
+final class ItemModelGenerator extends ItemModelProvider
 {
-    public ItemModelGenerator(GatherDataEvent event, PackOutput packOutput)
+    ItemModelGenerator(GatherDataEvent event, PackOutput packOutput)
     {
         super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }

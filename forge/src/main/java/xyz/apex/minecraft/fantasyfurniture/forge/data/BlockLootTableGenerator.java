@@ -1,15 +1,16 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import xyz.apex.minecraft.apexcore.common.registry.entry.RegistryEntry;
+import xyz.apex.minecraft.apexcore.common.registry.RegistryEntry;
+import xyz.apex.minecraft.apexcore.common.registry.RegistryManager;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class BlockLootTableGenerator extends BlockLootSubProvider
 {
@@ -283,6 +284,14 @@ public final class BlockLootTableGenerator extends BlockLootSubProvider
     @Override
     protected Iterable<Block> getKnownBlocks()
     {
-        return FantasyFurniture.REGISTRAR.stream(ForgeRegistries.Keys.BLOCKS).map(RegistryEntry::get).toList();
+        return RegistryManager
+                .get(FantasyFurniture.ID)
+                .getRegistry(ForgeRegistries.Keys.BLOCKS)
+                .entries()
+                .stream()
+                .filter(RegistryEntry::isPresent)
+                .map(RegistryEntry::get)
+                .collect(Collectors.toList())
+        ;
     }
 }

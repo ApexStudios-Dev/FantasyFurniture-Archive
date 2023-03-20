@@ -104,7 +104,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     @Override
     public RecipeSerializer<?> getSerializer()
     {
-        return FantasyFurniture.FURNITURE_STATION_RECIPE;
+        return FantasyFurniture.FURNITURE_STATION_RECIPE.get();
     }
 
     @Override
@@ -276,7 +276,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         @Override
         public RecipeSerializer<?> getType()
         {
-            return FantasyFurniture.FURNITURE_STATION_RECIPE;
+            return FantasyFurniture.FURNITURE_STATION_RECIPE.get();
         }
 
         @Override

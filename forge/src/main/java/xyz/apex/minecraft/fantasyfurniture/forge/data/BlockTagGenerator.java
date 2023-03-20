@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -6,14 +6,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
-
-import xyz.apex.minecraft.apexcore.common.util.ApexTags;
+import xyz.apex.minecraft.apexcore.common.ApexCore;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class BlockTagGenerator extends BlockTagsProvider
+final class BlockTagGenerator extends BlockTagsProvider
 {
-    public BlockTagGenerator(GatherDataEvent event, PackOutput packOutput)
+    BlockTagGenerator(GatherDataEvent event, PackOutput packOutput)
     {
         super(packOutput, event.getLookupProvider(), FantasyFurniture.ID, event.getExistingFileHelper());
     }
@@ -25,7 +24,7 @@ public final class BlockTagGenerator extends BlockTagsProvider
         var carpets = tag(BlockTags.WOOL_CARPETS);
         var woodenDoors = tag(BlockTags.WOODEN_DOORS);
         var beds = tag(BlockTags.BEDS);
-        var immovable = tag(ApexTags.Blocks.IMMOVABLE);
+        var immovable = tag(ApexCore.BlockTags.IMMOVABLE);
         var isBoneSet = tag(BoneSet.BLOCK_TAG);
 
         nordic(wool, carpets, woodenDoors, beds, immovable, isBoneSet);

@@ -1,8 +1,7 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
+import com.google.common.base.Suppliers;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.Validate;
-
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -15,17 +14,16 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-
+import org.apache.commons.lang3.Validate;
 import xyz.apex.minecraft.apexcore.common.component.Component;
 import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
 import xyz.apex.minecraft.apexcore.common.component.ComponentType;
 import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.components.DoorComponent;
-import xyz.apex.minecraft.apexcore.common.component.components.HorizontalFacingComponent;
-import xyz.apex.minecraft.apexcore.common.util.function.Lazy;
+import xyz.apex.minecraft.apexcore.common.component.types.DoorComponent;
+import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.DyeableComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.OvenComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -34,11 +32,11 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public final class BlockStateGenerator extends BlockStateProvider
+final class BlockStateGenerator extends BlockStateProvider
 {
     private final ResourceLocation renderTypeCutout = new ResourceLocation("minecraft", "cutout");
 
-    private final Supplier<BlockModelBuilder> tintedCube = Lazy.of(() -> models()
+    private final Supplier<BlockModelBuilder> tintedCube = Suppliers.memoize(() -> models()
             .getBuilder("%s:block/tinted_cube".formatted(FantasyFurniture.ID))
             .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/block")))
             .renderType(renderTypeCutout)
@@ -55,7 +53,7 @@ public final class BlockStateGenerator extends BlockStateProvider
             .end()
     );
 
-    private final Supplier<BlockModelBuilder> tintedCubeAll = Lazy.of(() -> {
+    private final Supplier<BlockModelBuilder> tintedCubeAll = Suppliers.memoize(() -> {
         var model = models().getBuilder("%s:block/tinted_cube_all".formatted(FantasyFurniture.ID)).parent(tintedCube.get()).texture("particle", "#all_tint");
 
         Direction.stream().map(Direction::getSerializedName).forEach(face -> model
@@ -66,7 +64,7 @@ public final class BlockStateGenerator extends BlockStateProvider
         return model;
     });
 
-    private final Supplier<BlockModelBuilder> tintedCarpet = Lazy.of(() -> models()
+    private final Supplier<BlockModelBuilder> tintedCarpet = Suppliers.memoize(() -> models()
             .getBuilder("%s:block/tinted_carpet".formatted(FantasyFurniture.ID))
             .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("minecraft", "block/thin_block")))
             .renderType(renderTypeCutout)
@@ -156,7 +154,7 @@ public final class BlockStateGenerator extends BlockStateProvider
             .end()
     );
 
-    public BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
+    BlockStateGenerator(GatherDataEvent event, PackOutput packOutput)
     {
         super(packOutput, FantasyFurniture.ID, event.getExistingFileHelper());
     }
@@ -478,7 +476,7 @@ public final class BlockStateGenerator extends BlockStateProvider
     private void ovenBlock(Supplier<? extends Block> entry)
     {
         getVariantBuilder(entry.get()).forAllStatesExcept(blockState -> {
-            var isLit = blockState.getValue(OvenComponent.LIT);
+            var isLit = blockState.getValue(OvenBlock.LIT);
             var modelPath = blockFolder(entry);
             if(isLit) modelPath = modelPath.withPath("%s_lit"::formatted);
 

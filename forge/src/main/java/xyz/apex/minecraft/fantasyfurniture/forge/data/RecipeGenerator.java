@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.forge;
+package xyz.apex.minecraft.fantasyfurniture.forge.data;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -14,9 +14,9 @@ import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public final class RecipeGenerator extends RecipeProvider
+final class RecipeGenerator extends RecipeProvider
 {
-    public RecipeGenerator(PackOutput packOutput)
+    RecipeGenerator(PackOutput packOutput)
     {
         super(packOutput);
     }
