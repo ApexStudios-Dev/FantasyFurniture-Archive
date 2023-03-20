@@ -66,6 +66,7 @@
         "main": [ "${MOD_GROUP}.fabric.FantasyFurnitureFabric::INSTANCE" ]
     },
     "mixins": [ ],
+    "accessWidener": "${MOD_ID}.accesswidener",
     "depends": {
         "minecraft": "~${MINECRAFT_VERSION}",
         "java": ">=${JAVA_VERSION}",
