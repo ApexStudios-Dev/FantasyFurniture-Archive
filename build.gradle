@@ -271,33 +271,49 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 		dependsOn tasks.createChangelog
 
 		doLast {
+			def emojis = [
+					// ApexStudios
+					'modrinth': '<:modrinth:1087664953235869696>',
+					'curseforge': '<:curseforge:1087664975121752085>',
+					'minecraft': '<:minecraft:1087669093974421544>',
+					'minecraftforge': '<:forge:1087669091487195205>',
+					'github': '<:github:1087671203642216521>'
+
+					// Test Server
+					/*'modrinth': '<:modrinth:1087665302067740722>',
+					'curseforge': '<:curseforge:1087665287186366504>',
+					'minecraft': '<:minecraft:1087667250565226536>',
+					'minecraftforge': '<:forge:1087667248371605524>',
+					'github': '<:github:1087671103360614400>'*/
+			]
+
 			def body = [
-					username: "ApexStudios",
-					avatar_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png",
+					username: 'ApexStudios',
+					avatar_url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png',
 					embeds: [
 							[
 									title: "**${mod_name}** updated to **_v${version}_**!",
-									description: "${tasks.createChangelog.outputFile.map { it.asFile.text }.get()}**Download**\n**_Modrinth_**: **_<https://modrinth.com/mod/${mod_modrinth_slug}>_**\n**_Curseforge_**: **_<https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug}>_**",
-									url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}",
+									description: "${tasks.createChangelog.outputFile.map { it.asFile.text.split('\n').drop(1).join('\n') }.get()}\n\n**Download**: [${emojis['modrinth']} **_Modrinth_**](https://modrinth.com/mod/${mod_modrinth_slug}) | [${emojis['curseforge']} **_Curseforge_**](https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug})",
+									url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}/master",
 									color: "${Integer.decode(mod_color)}",
 									footer: [
-											text: "ApexStudios",
-											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png",
+											text: 'ApexStudios',
+											icon_url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/apexstudios/Logo.png',
 									],
 									author: [
 											name: "${mod_name}",
-											url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}",
+											url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}/master",
 											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/minecraft/${mod_id}_logo.png"
 									],
 									fields: [
 											[
-													name: "Minecraft",
-													value: "${minecraft_version}",
+													name: "${emojis['minecraft']} Minecraft",
+													value: "[${minecraft_version}](https://minecraft.net/)",
 													inline: true
 											],
 											[
-													name: "MinecraftForge",
-													value: "${forge_version}",
+													name: "${emojis['minecraftforge']} MinecraftForge",
+													value: "[${forge_version}](https://files.minecraftforge.net/net/minecraftforge/forge/index_${minecraft_version}.html)",
 													inline: true
 											]
 									]
