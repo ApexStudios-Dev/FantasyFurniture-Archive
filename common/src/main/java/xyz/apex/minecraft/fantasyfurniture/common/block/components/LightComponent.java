@@ -14,18 +14,18 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 import java.util.function.Consumer;
 
-public final class LightComponent extends SimpleComponent
+public final class LightComponent extends BaseBlockComponent
 {
-    public static final ComponentType<LightComponent> COMPONENT_TYPE = ComponentType.register(
+    public static final BlockComponentType<LightComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "light"),
-            LightComponent.class
+            LightComponent::new
     );
 
     public static final DirectionProperty FACING = WallTorchBlock.FACING;
@@ -35,7 +35,7 @@ public final class LightComponent extends SimpleComponent
     private boolean placeOnCeilings = true;
 
     @ApiStatus.Internal // public cause reflection
-    public LightComponent(ComponentBlock block)
+    public LightComponent(BlockComponentHolder block)
     {
         super(block);
     }

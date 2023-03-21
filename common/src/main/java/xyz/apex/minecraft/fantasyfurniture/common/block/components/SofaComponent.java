@@ -9,30 +9,28 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 
 import java.util.function.Consumer;
 
-public final class SofaComponent extends SimpleComponent
+public final class SofaComponent extends BaseBlockComponent
 {
-    public static final ComponentType<SofaComponent> COMPONENT_TYPE = ComponentType
-            .builder(new ResourceLocation(FantasyFurniture.ID, "sofa"), SofaComponent.class)
-                .requires(ComponentTypes.HORIZONTAL_FACING)
-                .requires(SeatComponent.COMPONENT_TYPE)
-            .register();
+    public static final BlockComponentType<SofaComponent> COMPONENT_TYPE = BlockComponentType.register(
+            new ResourceLocation(FantasyFurniture.ID, "sofa"),
+            SofaComponent::new,
+            BlockComponentTypes.HORIZONTAL_FACING, SeatComponent.COMPONENT_TYPE
+    );
 
-    @ApiStatus.Internal // public cause reflection
-    public SofaComponent(ComponentBlock block)
+    private SofaComponent(BlockComponentHolder holder)
     {
-        super(block);
+        super(holder);
     }
 
     @Override
@@ -79,7 +77,7 @@ public final class SofaComponent extends SimpleComponent
 
     public static SofaType getSofaType(LevelAccessor level, BlockPos pos, BlockState blockState)
     {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
         var leftPos = pos.relative(facing.getCounterClockWise());
         var rightPos = pos.relative(facing.getClockWise());
@@ -105,16 +103,16 @@ public final class SofaComponent extends SimpleComponent
         var block = blockState.getBlock();
         if(!front.is(block)) return false;
 
-        var frontFacing = front.getValue(HorizontalFacingComponent.FACING);
+        var frontFacing = front.getValue(HorizontalFacingBlockComponent.FACING);
 
         if(left.is(block))
         {
-            var leftFacing = left.getValue(HorizontalFacingComponent.FACING);
+            var leftFacing = left.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, leftFacing, frontFacing);
         }
         else if(right.is(block))
         {
-            var rightFacing = right.getValue(HorizontalFacingComponent.FACING);
+            var rightFacing = right.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, rightFacing, frontFacing);
         }
 
@@ -130,7 +128,7 @@ public final class SofaComponent extends SimpleComponent
     public static boolean isSideConnection(BlockState blockState, BlockState neighbor)
     {
         if(!neighbor.is(blockState.getBlock())) return false;
-        if(neighbor.getValue(HorizontalFacingComponent.FACING) == blockState.getValue(HorizontalFacingComponent.FACING)) return true;
+        if(neighbor.getValue(HorizontalFacingBlockComponent.FACING) == blockState.getValue(HorizontalFacingBlockComponent.FACING)) return true;
 
         var neighborSofaType = neighbor.getValue(ModBlockStateProperties.SOFA_TYPE);
         return neighborSofaType == SofaType.CENTER || neighborSofaType == SofaType.CORNER;

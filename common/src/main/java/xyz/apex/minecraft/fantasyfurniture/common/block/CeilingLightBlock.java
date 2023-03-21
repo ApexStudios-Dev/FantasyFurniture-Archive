@@ -10,14 +10,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
-public class CeilingLightBlock extends SimpleComponentBlock
+public class CeilingLightBlock extends BaseBlockComponentHolder
 {
     private final Supplier<ParticleOptions> flameParticle;
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
@@ -30,9 +31,9 @@ public class CeilingLightBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(LightComponent.COMPONENT_TYPE)
+        registrar.register(LightComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(false)
                 .setPlaceOnFloor(false)
                 .setPlaceOnCeilings(true)

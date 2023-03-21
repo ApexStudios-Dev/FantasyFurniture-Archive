@@ -10,8 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
@@ -19,7 +20,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
-public final class WallLightBlock extends SimpleComponentBlock
+public final class WallLightBlock extends BaseBlockComponentHolder
 {
     private final Supplier<ParticleOptions> flameParticle;
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
@@ -32,10 +33,9 @@ public final class WallLightBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-       // registerComponent(ComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(facing -> Direction.NORTH);
-        registerComponent(LightComponent.COMPONENT_TYPE)
+       registrar.register(LightComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(true)
                 .setPlaceOnFloor(false)
                 .setPlaceOnCeilings(false)
@@ -49,7 +49,7 @@ public final class WallLightBlock extends SimpleComponentBlock
         var y = (double) pos.getY() + .7D;
         var z = (double) pos.getZ() + .5D;
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
         var stepX = facing.getStepX();
         var stepZ = facing.getStepZ();
@@ -133,7 +133,7 @@ public final class WallLightBlock extends SimpleComponentBlock
         else if(RoyalSet.WALL_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.WALL_LIGHT;
         else return Shapes.block();
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(shape, facing);
     }
 }

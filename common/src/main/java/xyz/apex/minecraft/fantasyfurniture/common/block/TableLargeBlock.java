@@ -6,14 +6,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class TableLargeBlock extends SimpleComponentBlock
+public final class TableLargeBlock extends BaseBlockComponentHolder
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
@@ -23,10 +24,10 @@ public final class TableLargeBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_2x1x2_FACING);
-        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_2x1x2_FACING);
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
 
     @Override
@@ -47,9 +48,9 @@ public final class TableLargeBlock extends SimpleComponentBlock
         else if(RoyalSet.TABLE_LARGE.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.TABLE_LARGE;
         else return Shapes.block();
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
         shape = VoxelShapeHelper.rotateHorizontal(shape, facing);
-        var index = getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
+        var index = getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType().getIndex(blockState);
 
         if(index == 1 || index == 3)
         {

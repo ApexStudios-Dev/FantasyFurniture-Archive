@@ -38,8 +38,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.multiblock.MultiBlockPattern;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.ModConfig;
@@ -145,7 +145,7 @@ public final class MultiBlockRenderer
         var stack = player.getItemInHand(hand);
         if(stack.isEmpty()) return false; // nothing to render
         var block = Block.byItem(stack.getItem());
-        if(!(block instanceof ComponentBlock componentBlock)) return false;
+        if(!(block instanceof BlockComponentHolder holder)) return false;
 
         var ctx = new BlockPlaceContext(player, hand, stack, hit);
         var renderPos = getRenderPos(ctx);
@@ -154,15 +154,15 @@ public final class MultiBlockRenderer
         // [looking at a air block, block placement, requires being placed against another block]
         if(renderPos == null) return false;
 
-        var renderBlockState = getRenderBlockState(componentBlock, ctx);
+        var renderBlockState = getRenderBlockState(holder, ctx);
         if(renderBlockState.getRenderShape() == RenderShape.INVISIBLE) return false; // block state set to have no render
-        var valid = canPlaceBlockAt(ctx, componentBlock, renderBlockState);
+        var valid = canPlaceBlockAt(ctx, holder, renderBlockState);
 
         // no matter if block can be placed or not
         // we always render if block is a multi block
         // as visualizer changes color based on
         // if placement would be successful or not
-        if(componentBlock.hasComponent(ComponentTypes.MULTI_BLOCK))
+        if(holder.hasComponent(BlockComponentTypes.MULTI_BLOCK))
         {
             var camPos = camera.getPosition();
             var alpha = getAlpha(client);
@@ -182,7 +182,7 @@ public final class MultiBlockRenderer
         // but not a multi block, this is to stop
         // rendering for other hand, if current hand can be placed
         // but only if current hand is not a multi block
-        return !valid || !isPlacementBlocked(ctx, renderPos, componentBlock, renderBlockState);
+        return !valid || !isPlacementBlocked(ctx, renderPos, holder, renderBlockState);
     }
 
     @SuppressWarnings("deprecation")
@@ -261,15 +261,15 @@ public final class MultiBlockRenderer
         return (int) ((.55D - .2D * offset) * 255D);
     }
 
-    private BlockState getRenderBlockState(ComponentBlock block, BlockPlaceContext ctx)
+    private BlockState getRenderBlockState(BlockComponentHolder holder, BlockPlaceContext ctx)
     {
-        var vanilla = block.toBlock();
-        var blockState = vanilla.getStateForPlacement(ctx);
+        var block = holder.toBlock();
+        var blockState = block.getStateForPlacement(ctx);
 
         // approximate placement state
         if(blockState == null)
         {
-            blockState = vanilla.defaultBlockState();
+            blockState = block.defaultBlockState();
             // make placement face towards player, for facing blocks
             if(blockState.hasProperty(HorizontalDirectionalBlock.FACING)) blockState = blockState.setValue(HorizontalDirectionalBlock.FACING, ctx.getHorizontalDirection().getOpposite());
         }
@@ -278,7 +278,7 @@ public final class MultiBlockRenderer
         if(block instanceof MultiBlockRendererPlacementModifier modifier) blockState = modifier.getBlockStateForRenderPlacement(ctx);
 
         // render from origin point only, for multi blocks
-        var multiBlockComponent = block.getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = holder.getComponent(BlockComponentTypes.MULTI_BLOCK);
 
         if(multiBlockComponent != null)
         {
@@ -304,14 +304,14 @@ public final class MultiBlockRenderer
         return renderPos;
     }
 
-    private boolean canPlaceBlockAt(BlockPlaceContext ctx, ComponentBlock block, BlockState blockState)
+    private boolean canPlaceBlockAt(BlockPlaceContext ctx, BlockComponentHolder holder, BlockState blockState)
     {
         var pos = ctx.getClickedPos();
 
-        if(isPlacementBlocked(ctx, pos, block, blockState)) return false;
+        if(isPlacementBlocked(ctx, pos, holder, blockState)) return false;
 
         // have multi blocks check every sub position
-        var multiBlockComponent = block.getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = holder.getComponent(BlockComponentTypes.MULTI_BLOCK);
 
         if(multiBlockComponent != null)
         {
@@ -325,9 +325,9 @@ public final class MultiBlockRenderer
                 if(i == ignoreIndex) continue; // already check in 'if' at start of method call
                 var worldPos = multiBlockType.getWorldSpaceFromLocalSpace(blockState, originPos, localPositions.get(i));
                 var worldBlockState = multiBlockType.setIndex(blockState, i);
-                var worldComponentBlock = worldBlockState.getBlock() instanceof ComponentBlock cb ? cb : block;
+                var worldComponentHolder = worldBlockState.getBlock() instanceof BlockComponentHolder cb ? cb : holder;
 
-                if(isPlacementBlocked(ctx, worldPos, worldComponentBlock, worldBlockState)) return false;
+                if(isPlacementBlocked(ctx, worldPos, worldComponentHolder, worldBlockState)) return false;
             }
         }
 
@@ -336,7 +336,7 @@ public final class MultiBlockRenderer
 
     // does not check all sub positions of multi-blocks
     // assumes is called for each multi-block sub position
-    private boolean isPlacementBlocked(BlockPlaceContext ctx, BlockPos pos, ComponentBlock block, BlockState blockState)
+    private boolean isPlacementBlocked(BlockPlaceContext ctx, BlockPos pos, BlockComponentHolder holder, BlockState blockState)
     {
         var player = ctx.getPlayer();
         var level = ctx.getLevel();
@@ -359,7 +359,7 @@ public final class MultiBlockRenderer
         if(!level.isUnobstructed(blockState, pos, collisionCtx)) return true;
 
         // check if multi block placement is allowed
-        var multiBlockComponent = block.getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = holder.getComponent(BlockComponentTypes.MULTI_BLOCK);
 
         if(multiBlockComponent != null)
         {

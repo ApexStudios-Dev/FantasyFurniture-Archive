@@ -8,17 +8,18 @@ import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.DoorComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.DoorBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.UnaryOperator;
 
-public final class DoorBlock extends SimpleComponentBlock
+public final class DoorBlock extends BaseBlockComponentHolder
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
@@ -28,11 +29,11 @@ public final class DoorBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(ComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(UnaryOperator.identity());
-        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x2x1_FACING_DOOR);
-        registerComponent(ComponentTypes.DOOR);
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING).setGetFacingDirectionFunc(UnaryOperator.identity());
+        registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x2x1_FACING_DOOR);
+        registrar.register(BlockComponentTypes.DOOR);
     }
 
     @Override
@@ -59,9 +60,9 @@ public final class DoorBlock extends SimpleComponentBlock
         else if(RoyalSet.DOOR_DOUBLE.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.DOOR_DOUBLE;
         else return Shapes.block();
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING).getOpposite();
-        var open = blockState.getValue(DoorComponent.OPEN);
-        var hinge = blockState.getValue(DoorComponent.HINGE);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite();
+        var open = blockState.getValue(DoorBlockComponent.OPEN);
+        var hinge = blockState.getValue(DoorBlockComponent.HINGE);
 
         Direction shapeFacing;
 
@@ -74,7 +75,7 @@ public final class DoorBlock extends SimpleComponentBlock
         var y = 0D;
         var z = 0D;
 
-        if(!getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) y -= 1D;
+        if(!getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) y -= 1D;
 
         x -= shapeFacing.getStepX() * .8125D;
         z -= shapeFacing.getStepZ() * .8125D;

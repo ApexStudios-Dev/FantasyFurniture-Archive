@@ -9,29 +9,28 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 
 import java.util.function.Consumer;
 
-public final class CounterComponent extends SimpleComponent
+public final class CounterComponent extends BaseBlockComponent
 {
-    public static final ComponentType<CounterComponent> COMPONENT_TYPE = ComponentType
-            .builder(new ResourceLocation(FantasyFurniture.ID, "counter"), CounterComponent.class)
-                .requires(ComponentTypes.HORIZONTAL_FACING)
-            .register();
+    public static final BlockComponentType<CounterComponent> COMPONENT_TYPE = BlockComponentType.register(
+            new ResourceLocation(FantasyFurniture.ID, "counter"),
+                    CounterComponent::new,
+                    BlockComponentTypes.HORIZONTAL_FACING
+    );
 
-    @ApiStatus.Internal // public cause reflection
-    public CounterComponent(ComponentBlock block)
+    private CounterComponent(BlockComponentHolder holder)
     {
-        super(block);
+        super(holder);
     }
 
     @Override
@@ -78,7 +77,7 @@ public final class CounterComponent extends SimpleComponent
 
     public static CounterType getCounterType(LevelAccessor level, BlockPos pos, BlockState blockState)
     {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
         var leftPos = pos.relative(facing.getCounterClockWise());
         var rightPos = pos.relative(facing.getClockWise());
@@ -97,16 +96,16 @@ public final class CounterComponent extends SimpleComponent
         var block = blockState.getBlock();
         if(!front.is(block)) return false;
 
-        var frontFacing = front.getValue(HorizontalFacingComponent.FACING);
+        var frontFacing = front.getValue(HorizontalFacingBlockComponent.FACING);
 
         if(left.is(block))
         {
-            var leftFacing = left.getValue(HorizontalFacingComponent.FACING);
+            var leftFacing = left.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, leftFacing, frontFacing);
         }
         else if(right.is(block))
         {
-            var rightFacing = right.getValue(HorizontalFacingComponent.FACING);
+            var rightFacing = right.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, rightFacing, frontFacing);
         }
 

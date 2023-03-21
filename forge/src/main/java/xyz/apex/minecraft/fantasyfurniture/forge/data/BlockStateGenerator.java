@@ -15,12 +15,12 @@ import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.Validate;
-import xyz.apex.minecraft.apexcore.common.component.Component;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.types.DoorComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.DoorBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.DyeableComponent;
@@ -425,8 +425,8 @@ final class BlockStateGenerator extends BlockStateProvider
     {
         var ignoredProperties = Lists.<Property<?>>newArrayList();
 
-        addIgnoredComponentProperty(ignoredProperties, entry, ComponentTypes.MULTI_BLOCK, component -> component.getMultiBlockType().getBlockProperty());
-        addIgnoredComponentProperty(ignoredProperties, entry, ComponentTypes.DOOR, component -> DoorComponent.POWERED, component -> DoorComponent.HALF);
+        addIgnoredComponentProperty(ignoredProperties, entry, BlockComponentTypes.MULTI_BLOCK, component -> component.getMultiBlockType().getBlockProperty());
+        addIgnoredComponentProperty(ignoredProperties, entry, BlockComponentTypes.DOOR, component -> DoorBlockComponent.POWERED, component -> DoorBlockComponent.HALF);
 
         // TODO
         // if(block instanceof SimpleWaterloggedBlock) ignoredProperties.add(BlockStateProperties.WATERLOGGED);
@@ -435,11 +435,11 @@ final class BlockStateGenerator extends BlockStateProvider
     }
 
     @SafeVarargs
-    private <T extends Component> void addIgnoredComponentProperty(List<Property<?>> ignoredProperties, Supplier<? extends Block> entry, ComponentType<T> componentType, Function<T, Property<?>>... propertyGetters)
+    private <T extends BlockComponent> void addIgnoredComponentProperty(List<Property<?>> ignoredProperties, Supplier<? extends Block> entry, BlockComponentType<T> componentType, Function<T, Property<?>>... propertyGetters)
     {
-        if(!(entry.get() instanceof ComponentBlock block)) return;
+        if(!(entry.get() instanceof BlockComponentHolder holder)) return;
 
-        block.getOptionalComponent(componentType).ifPresent(component -> {
+        holder.getOptionalComponent(componentType).ifPresent(component -> {
             for(var propertyGetter : propertyGetters)
             {
                 var property = propertyGetter.apply(component);
@@ -467,7 +467,7 @@ final class BlockStateGenerator extends BlockStateProvider
     {
         complexBlock(entry, (blockState, model) -> ConfiguredModel
                 .builder()
-                .rotationY((int) blockState.getValue(HorizontalFacingComponent.FACING).getOpposite().toYRot() % 360)
+                .rotationY((int) blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite().toYRot() % 360)
                 .modelFile(model)
                 .build()
         );
@@ -482,7 +482,7 @@ final class BlockStateGenerator extends BlockStateProvider
 
             return ConfiguredModel
                     .builder()
-                    .rotationY((int) blockState.getValue(HorizontalFacingComponent.FACING).getOpposite().toYRot() % 360)
+                    .rotationY((int) blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite().toYRot() % 360)
                     .modelFile(models().getExistingFile(modelPath))
                     .build();
         }, gatherIgnoredProperties(entry));
@@ -523,7 +523,7 @@ final class BlockStateGenerator extends BlockStateProvider
 
             return ConfiguredModel
                     .builder()
-                    .rotationY((int) blockState.getValue(HorizontalFacingComponent.FACING).getOpposite().toYRot() % 360)
+                    .rotationY((int) blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite().toYRot() % 360)
                     .modelFile(model)
                     .build();
         }, gatherIgnoredProperties(entry));
@@ -540,7 +540,7 @@ final class BlockStateGenerator extends BlockStateProvider
 
             return ConfiguredModel
                     .builder()
-                    .rotationY((int) blockState.getValue(HorizontalFacingComponent.FACING).getOpposite().toYRot() % 360)
+                    .rotationY((int) blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite().toYRot() % 360)
                     .modelFile(model)
                     .build();
         }, gatherIgnoredProperties(entry));
@@ -557,7 +557,7 @@ final class BlockStateGenerator extends BlockStateProvider
 
             return ConfiguredModel
                     .builder()
-                    .rotationY((int) blockState.getValue(HorizontalFacingComponent.FACING).getOpposite().toYRot() % 360)
+                    .rotationY((int) blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite().toYRot() % 360)
                     .modelFile(model)
                     .build();
         }, gatherIgnoredProperties(entry));

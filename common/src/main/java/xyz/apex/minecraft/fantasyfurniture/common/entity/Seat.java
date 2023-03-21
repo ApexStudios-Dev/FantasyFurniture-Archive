@@ -15,7 +15,7 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
 
@@ -57,7 +57,7 @@ public final class Seat extends Entity
     {
         if(level.isClientSide) return;
         var blockState = level.getBlockState(blockPosition());
-        var blockPresent = blockState.getBlock() instanceof ComponentBlock block && block.hasComponent(SeatComponent.COMPONENT_TYPE);
+        var blockPresent = blockState.getBlock() instanceof BlockComponentHolder holder && holder.hasComponent(SeatComponent.COMPONENT_TYPE);
         if(isVehicle() && blockPresent) return;
         discard();
     }

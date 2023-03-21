@@ -27,9 +27,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
@@ -37,7 +38,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Optional;
 
-public class OvenBlock extends SimpleComponentBlock implements EntityBlock
+public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
 {
     public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
 
@@ -52,7 +53,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
 
     private Optional<OvenBlockEntity> getBlockEntity(BlockGetter level, BlockPos pos, BlockState blockState)
     {
-        var multiBlockComponent = getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = getComponent(BlockComponentTypes.MULTI_BLOCK);
 
         if(multiBlockComponent != null)
         {
@@ -74,7 +75,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
     {
         if(!blockState.getValue(LIT)) return;
 
-        var multiBlockComponent = getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = getComponent(BlockComponentTypes.MULTI_BLOCK);
         if(multiBlockComponent != null && !multiBlockComponent.getMultiBlockType().isOrigin(blockState)) return;
 
         if(NordicSet.OVEN.hasBlockState(blockState))
@@ -85,7 +86,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
 
             if(random.nextDouble() < .1D) level.playLocalSound(x, y, z, SoundEvents.SMOKER_SMOKE, SoundSource.BLOCKS, 1F, 1F, false);
 
-            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+            var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
             var axis = facing.getAxis();
             var h = random.nextDouble() * .6D - .3D;
             var xOff = axis == Direction.Axis.X ? facing.getStepX() * .52D : h;
@@ -112,7 +113,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
         }
         else if(DunmerSet.OVEN.hasBlockState(blockState))
         {
-            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+            var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
             var x = (double) pos.getX();
             var y = (double) pos.getY() + 1D;
@@ -188,9 +189,9 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
 
     @Override
@@ -203,7 +204,7 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState blockState)
     {
-        var multiBlockComponent = getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = getComponent(BlockComponentTypes.MULTI_BLOCK);
         if(multiBlockComponent != null && !multiBlockComponent.getMultiBlockType().isOrigin(blockState)) return null;
         return AllBlockEntityTypes.OVEN.create(pos, blockState);
     }
@@ -277,10 +278,10 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
         else if(RoyalSet.OVEN.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.OVEN;
         else return Shapes.block();
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
         shape = VoxelShapeHelper.rotateHorizontal(shape, facing);
 
-        var multiBlockComponent = getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlockComponent = getComponent(BlockComponentTypes.MULTI_BLOCK);
 
         if(multiBlockComponent != null && !multiBlockComponent.getMultiBlockType().isOrigin(blockState))
         {
@@ -299,10 +300,10 @@ public class OvenBlock extends SimpleComponentBlock implements EntityBlock
         }
 
         @Override
-        public void registerComponents()
+        public void registerComponents(BlockComponentHolder.Registrar registrar)
         {
-            super.registerComponents();
-            registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x1x2_FACING);
+            super.registerComponents(registrar);
+            registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x1x2_FACING);
         }
     }
 }

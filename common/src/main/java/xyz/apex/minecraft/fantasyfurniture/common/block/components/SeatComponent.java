@@ -12,34 +12,31 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.util.TagHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.entity.Seat;
 
 import java.util.Optional;
 
-public final class SeatComponent extends SimpleComponent
+public final class SeatComponent extends BaseBlockComponent
 {
-    public static final ComponentType<SeatComponent> COMPONENT_TYPE = ComponentType
-            .builder(new ResourceLocation(FantasyFurniture.ID, "seat"), SeatComponent.class)
-                // throws weird saying this component is missing even though it is registered
-                // TODO: look into
-                // .requires(ComponentTypes.HORIZONTAL_FACING)
-            .register();
+    public static final BlockComponentType<SeatComponent> COMPONENT_TYPE = BlockComponentType.register(
+            new ResourceLocation(FantasyFurniture.ID, "seat"),
+            SeatComponent::new,
+            BlockComponentTypes.HORIZONTAL_FACING
+    );
 
     public static final TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(FantasyFurniture.ID, "seat_blacklist");
 
     private boolean sitAtOriginOnly = false;
 
-    @ApiStatus.Internal // public cause reflection
-    public SeatComponent(ComponentBlock block)
+    private SeatComponent(BlockComponentHolder holder)
     {
-        super(block);
+        super(holder);
     }
 
     public SeatComponent setSitAtOriginOnly(boolean sitAtOriginOnly)
@@ -60,9 +57,9 @@ public final class SeatComponent extends SimpleComponent
         if(entity instanceof Player || !isEntityValidForSeat(entity)) return;
         var pos = entity.blockPosition();
         var blockState = level.getBlockState(pos);
-        if(!blockState.is(block.toBlock())) return;
+        if(!blockState.is(toBlock())) return;
 
-        var multiBlock = getComponent(ComponentTypes.MULTI_BLOCK);
+        var multiBlock = getComponent(BlockComponentTypes.MULTI_BLOCK);
         if(multiBlock != null && !multiBlock.getMultiBlockType().isOrigin(blockState) && sitAtOriginOnly) return;
 
         sitDown(entity.level, pos, entity);
@@ -70,9 +67,9 @@ public final class SeatComponent extends SimpleComponent
 
     private InteractionResult useSeat(BlockState blockState, Level level, BlockPos pos, Player player)
     {
-        if(hasComponent(ComponentTypes.MULTI_BLOCK))
+        if(hasComponent(BlockComponentTypes.MULTI_BLOCK))
         {
-            var multiBlockType = getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType();
+            var multiBlockType = getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();
 
             if(sitAtOriginOnly && !multiBlockType.isOrigin(blockState))
             {

@@ -6,15 +6,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class StoolBlock extends SimpleComponentBlock
+public final class StoolBlock extends BaseBlockComponentHolder
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
@@ -24,10 +25,10 @@ public final class StoolBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(ComponentTypes.HORIZONTAL_FACING);
-        registerComponent(SeatComponent.COMPONENT_TYPE);
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
+        registrar.register(SeatComponent.COMPONENT_TYPE);
     }
 
     @Override
@@ -48,7 +49,7 @@ public final class StoolBlock extends SimpleComponentBlock
         else if(RoyalSet.STOOL.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.STOOL;
         else return Shapes.block();
 
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
         return VoxelShapeHelper.rotateHorizontal(shape, facing);
     }
 }

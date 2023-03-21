@@ -9,29 +9,28 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
-import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.ComponentType;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponent;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ShelfType;
 
 import java.util.function.Consumer;
 
-public final class ShelfComponent extends SimpleComponent
+public final class ShelfComponent extends BaseBlockComponent
 {
-    public static final ComponentType<ShelfComponent> COMPONENT_TYPE = ComponentType
-            .builder(new ResourceLocation(FantasyFurniture.ID, "shelf"), ShelfComponent.class)
-                .requires(ComponentTypes.HORIZONTAL_FACING)
-            .register();
+    public static final BlockComponentType<ShelfComponent> COMPONENT_TYPE = BlockComponentType.register(
+            new ResourceLocation(FantasyFurniture.ID, "shelf"),
+            ShelfComponent::new,
+            BlockComponentTypes.HORIZONTAL_FACING
+    );
 
-    @ApiStatus.Internal // public cause reflection
-    public ShelfComponent(ComponentBlock block)
+    private ShelfComponent(BlockComponentHolder holder)
     {
-        super(block);
+        super(holder);
     }
 
     @Override
@@ -78,7 +77,7 @@ public final class ShelfComponent extends SimpleComponent
 
     public static ShelfType getShelfType(LevelAccessor level, BlockPos pos, BlockState blockState)
     {
-        var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
         var leftPos = pos.relative(facing.getCounterClockWise());
         var rightPos = pos.relative(facing.getClockWise());
@@ -98,7 +97,7 @@ public final class ShelfComponent extends SimpleComponent
     public static boolean isSideConnection(BlockState blockState, BlockState neighbor)
     {
         if(!neighbor.is(blockState.getBlock())) return false;
-        if(neighbor.getValue(HorizontalFacingComponent.FACING) == blockState.getValue(HorizontalFacingComponent.FACING)) return true;
+        if(neighbor.getValue(HorizontalFacingBlockComponent.FACING) == blockState.getValue(HorizontalFacingBlockComponent.FACING)) return true;
 
         var neighborShelfType = neighbor.getValue(ModBlockStateProperties.SHELF_TYPE);
         return neighborShelfType == ShelfType.CENTER;

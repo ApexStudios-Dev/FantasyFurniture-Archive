@@ -12,9 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.ComponentTypes;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.types.HorizontalFacingComponent;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
+import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
@@ -22,7 +23,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
 
-public class FloorLightBlock extends SimpleComponentBlock
+public class FloorLightBlock extends BaseBlockComponentHolder
 {
     private final Supplier<ParticleOptions> flameParticle;
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
@@ -35,12 +36,12 @@ public class FloorLightBlock extends SimpleComponentBlock
     }
 
     @Override
-    public void registerComponents()
+    public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registerComponent(ComponentTypes.MULTI_BLOCK, AllMultiBlockTypes.MB_1x2x1);
-        registerComponent(ComponentTypes.HORIZONTAL_FACING);
+        registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x2x1);
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
 
-        registerComponent(LightComponent.COMPONENT_TYPE)
+        registrar.register(LightComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(false)
                 .setPlaceOnFloor(true)
                 .setPlaceOnCeilings(false)
@@ -50,7 +51,7 @@ public class FloorLightBlock extends SimpleComponentBlock
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource rng)
     {
-        if(getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) return;
+        if(getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) return;
 
         var x = (double) pos.getX() + .5D;
         var y = (double) pos.getY() + .85D;
@@ -95,7 +96,7 @@ public class FloorLightBlock extends SimpleComponentBlock
         {
             var offsetH = .25D;
 
-            var facing = blockState.getOptionalValue(HorizontalFacingComponent.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
+            var facing = blockState.getOptionalValue(HorizontalFacingBlockComponent.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
             var stepX = facing.getStepX();
             var stepZ = facing.getStepZ();
 
@@ -112,7 +113,7 @@ public class FloorLightBlock extends SimpleComponentBlock
         {
             var offsetH = .3D;
 
-            var facing = blockState.getOptionalValue(HorizontalFacingComponent.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
+            var facing = blockState.getOptionalValue(HorizontalFacingBlockComponent.FACING).map(Direction::getClockWise).orElse(Direction.NORTH);
             var stepX = facing.getStepX();
             var stepZ = facing.getStepZ();
 
@@ -145,11 +146,11 @@ public class FloorLightBlock extends SimpleComponentBlock
         else if(RoyalSet.FLOOR_LIGHT.hasBlockState(blockState)) shape = AllVoxelShapes.Royal.FLOOR_LIGHT;
         else return Shapes.block();
 
-        if(!getRequiredComponent(ComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
+        if(!getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType().isOrigin(blockState)) shape = shape.move(0D, -1D, 0D);
 
-        if(blockState.hasProperty(HorizontalFacingComponent.FACING))
+        if(blockState.hasProperty(HorizontalFacingBlockComponent.FACING))
         {
-            var facing = blockState.getValue(HorizontalFacingComponent.FACING);
+            var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
             return VoxelShapeHelper.rotateHorizontal(shape, facing);
         }
 

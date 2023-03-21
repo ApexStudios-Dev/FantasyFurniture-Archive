@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import xyz.apex.minecraft.apexcore.common.component.ComponentBlock;
-import xyz.apex.minecraft.apexcore.common.component.SimpleComponentBlock;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.hooks.CreativeModeTabHooks;
 import xyz.apex.minecraft.apexcore.common.hooks.PointOfInterestHooks;
 import xyz.apex.minecraft.apexcore.common.registry.RegistryManager;
@@ -70,7 +70,7 @@ public interface FurnitureSets
         ;
     }
 
-    private static <T extends SimpleComponentBlock> BlockBuilder<T> table(String ownerId, String furnitureSet, String tableType, BlockBuilder.BlockFactory<T> blockFactory)
+    private static <T extends BaseBlockComponentHolder> BlockBuilder<T> table(String ownerId, String furnitureSet, String tableType, BlockBuilder.BlockFactory<T> blockFactory)
     {
         return BlockBuilder
                 .builder(ownerId, "%s/table_%s".formatted(furnitureSet, tableType), blockFactory)
@@ -110,7 +110,7 @@ public interface FurnitureSets
         return table(ownerId, furnitureSet, "large_fancy", TableLargeBlock::new);
     }
 
-    private static <T extends Block & ComponentBlock> BlockBuilder<T> seat(String ownerId, String furnitureSet, String seatType, BlockBuilder.BlockFactory<T> factory)
+    private static <T extends Block & BlockComponentHolder> BlockBuilder<T> seat(String ownerId, String furnitureSet, String seatType, BlockBuilder.BlockFactory<T> factory)
     {
         return BlockBuilder
                 .builder(ownerId, "%s/%s".formatted(furnitureSet, seatType), factory)
@@ -268,7 +268,7 @@ public interface FurnitureSets
         return door(ownerId, furnitureSet, "double");
     }
 
-    private static <T extends Block & ComponentBlock> BlockBuilder<T> bed(String ownerId, String furnitureSet, String bedType, BlockBuilder.BlockFactory<T> factory)
+    private static <T extends Block & BlockComponentHolder> BlockBuilder<T> bed(String ownerId, String furnitureSet, String bedType, BlockBuilder.BlockFactory<T> factory)
     {
         return BlockBuilder
                 .builder(ownerId, "%s/bed_%s".formatted(furnitureSet, bedType), factory)
