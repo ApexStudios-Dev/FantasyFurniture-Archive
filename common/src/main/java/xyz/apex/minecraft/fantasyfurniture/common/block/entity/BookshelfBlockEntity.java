@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import xyz.apex.minecraft.apexcore.common.component.entity.BaseBlockEntityComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.entity.BlockEntityComponentTypes;
+import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.BookshelfMenu;
@@ -22,7 +23,10 @@ public final class BookshelfBlockEntity extends BaseBlockEntityComponentHolder
     @Override
     public void registerComponents(Registrar registrar)
     {
-        registrar.register(BlockEntityComponentTypes.CONTAINER).withSize(SLOT_COUNT);
+        registrar.register(BlockEntityComponentTypes.CONTAINER)
+                .withSize(SLOT_COUNT)
+                .withItemPlaceValidator((slotIndex, stack) -> stack.is(FantasyFurniture.ItemTags.BOOKSHELF_BOOKS));
+
         registrar.register(BlockEntityComponentTypes.LOCKABLE);
         registrar.register(BlockEntityComponentTypes.LOOTABLE);
         registrar.register(BlockEntityComponentTypes.NAMEABLE);

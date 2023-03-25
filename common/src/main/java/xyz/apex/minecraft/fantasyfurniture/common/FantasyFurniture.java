@@ -6,9 +6,12 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.hooks.CreativeModeTabHooks;
 import xyz.apex.minecraft.apexcore.common.hooks.PackRepositoryHooks;
@@ -22,6 +25,7 @@ import xyz.apex.minecraft.apexcore.common.registry.builder.EntityBuilder;
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.registry.entry.EntityEntry;
 import xyz.apex.minecraft.apexcore.common.registry.entry.RecipeEntry;
+import xyz.apex.minecraft.apexcore.common.util.TagHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.client.renderer.SeatRenderer;
 import xyz.apex.minecraft.fantasyfurniture.common.entity.Seat;
@@ -62,6 +66,8 @@ public interface FantasyFurniture
         AllBlockEntityTypes.bootstrap();
         AllMenuTypes.bootstrap();
 
+        ItemTags.bootstrap();
+
         CreativeModeTabHooks.getInstance().modify(CreativeModeTabs.FUNCTIONAL_BLOCKS, output -> output.accept(FURNITURE_STATION_BLOCK));
 
         registerResourcePack("ctm", "ctm_support", Component.literal("CTM Mod Support"));
@@ -79,5 +85,19 @@ public interface FantasyFurniture
                 if(pack != null) onLoad.accept(pack);
             });
         })));
+    }
+
+    interface ItemTags
+    {
+        // TODO: replace with vanilla tag in 1.20
+        //  'minecraft:bookshelf_books' is currently only included in the 1.20 feature packs
+        //  which means if player does not enable exprimental features when creating their world
+        //  our bookshelf block will not accept any inputs, as this tag is used to dictate
+        //  what items can be inserted into it
+        @Deprecated(forRemoval = true, since = "9.0.0")
+        @ApiStatus.ScheduledForRemoval(inVersion = "10.0.0")
+        TagKey<Item> BOOKSHELF_BOOKS = TagHelper.itemTag(ID, "bookshelf_books");
+
+        private static void bootstrap() {}
     }
 }
