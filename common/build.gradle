@@ -6,6 +6,8 @@ loom {
     if(accessWidenerFile.exists()) {
         accessWidenerPath = accessWidenerFile
     }
+
+    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
 }
 
 repositories {

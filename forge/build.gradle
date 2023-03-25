@@ -74,13 +74,13 @@ minecraft {
 }
 
 mixin {
+    add sourceSets.main, "${MOD_ID}.refmap.json"
+
     if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
-        add sourceSets.main, "${MOD_ID}.refmap.json"
         config "${MOD_ID}.mixins.json"
     }
 
     if(project(':common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
-        add project(':common').sourceSets.main, "${MOD_ID}-common.refmap.json"
         config "${MOD_ID}-common.mixins.json"
     }
 }
