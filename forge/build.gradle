@@ -91,6 +91,7 @@ dependencies {
 
     compileOnly project(':common')
     implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_FORGE_VERSION_RANGE}")
 }
 
 processResources {
