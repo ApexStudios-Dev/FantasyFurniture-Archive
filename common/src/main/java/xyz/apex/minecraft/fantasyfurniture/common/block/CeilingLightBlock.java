@@ -13,7 +13,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
@@ -33,7 +33,7 @@ public class CeilingLightBlock extends BaseBlockComponentHolder
     @Override
     public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
-        registrar.register(LightComponent.COMPONENT_TYPE)
+        registrar.register(LightBlockComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(false)
                 .setPlaceOnFloor(false)
                 .setPlaceOnCeilings(true)

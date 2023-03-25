@@ -12,7 +12,7 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.ShelfComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.ShelfBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -29,7 +29,7 @@ public final class ShelfBlock extends BaseBlockComponentHolder
     public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
-        registrar.register(ShelfComponent.COMPONENT_TYPE);
+        registrar.register(ShelfBlockComponent.COMPONENT_TYPE);
     }
 
     @Override

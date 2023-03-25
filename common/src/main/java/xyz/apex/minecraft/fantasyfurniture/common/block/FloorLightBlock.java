@@ -18,7 +18,7 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.function.Supplier;
@@ -41,7 +41,7 @@ public class FloorLightBlock extends BaseBlockComponentHolder
         registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x2x1);
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
 
-        registrar.register(LightComponent.COMPONENT_TYPE)
+        registrar.register(LightBlockComponent.COMPONENT_TYPE)
                 .setPlaceOnWalls(false)
                 .setPlaceOnFloor(true)
                 .setPlaceOnCeilings(false)

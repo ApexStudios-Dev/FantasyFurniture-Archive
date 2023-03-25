@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
+import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
 public final class FurnitureStationBlock extends HorizontalDirectionalBlock
 {
@@ -42,12 +43,12 @@ public final class FurnitureStationBlock extends HorizontalDirectionalBlock
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
     {
-        return AllMenuTypes.FURNITURE_STATION.open(player, getName(), extraData -> extraData.writeBlockPos(pos));
+        return AllMenuTypes.FURNITURE_STATION.open(player, getName(), (containerId, inventory, plr) -> FurnitureStationMenu.forServer(containerId, plr, pos), extraData -> extraData.writeBlockPos(pos));
     }
 
     @Override
     public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
     {
-        return AllMenuTypes.FURNITURE_STATION.asMenuProvider(getName(), extraData -> extraData.writeBlockPos(pos));
+        return AllMenuTypes.FURNITURE_STATION.asMenuProvider(getName(), (containerId, inventory, player) -> FurnitureStationMenu.forServer(containerId, player, pos), extraData -> extraData.writeBlockPos(pos));
     }
 }

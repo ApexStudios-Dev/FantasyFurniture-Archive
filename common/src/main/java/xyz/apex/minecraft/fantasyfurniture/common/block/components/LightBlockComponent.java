@@ -21,11 +21,11 @@ import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 import java.util.function.Consumer;
 
-public final class LightComponent extends BaseBlockComponent
+public final class LightBlockComponent extends BaseBlockComponent
 {
-    public static final BlockComponentType<LightComponent> COMPONENT_TYPE = BlockComponentType.register(
+    public static final BlockComponentType<LightBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "light"),
-            LightComponent::new
+            LightBlockComponent::new
     );
 
     public static final DirectionProperty FACING = WallTorchBlock.FACING;
@@ -35,24 +35,24 @@ public final class LightComponent extends BaseBlockComponent
     private boolean placeOnCeilings = true;
 
     @ApiStatus.Internal // public cause reflection
-    public LightComponent(BlockComponentHolder block)
+    public LightBlockComponent(BlockComponentHolder block)
     {
         super(block);
     }
 
-    public LightComponent setPlaceOnWalls(boolean placeOnWalls)
+    public LightBlockComponent setPlaceOnWalls(boolean placeOnWalls)
     {
         this.placeOnWalls = placeOnWalls;
         return this;
     }
 
-    public LightComponent setPlaceOnFloor(boolean placeOnFloor)
+    public LightBlockComponent setPlaceOnFloor(boolean placeOnFloor)
     {
         this.placeOnFloor = placeOnFloor;
         return this;
     }
 
-    public LightComponent setPlaceOnCeilings(boolean placeOnCeilings)
+    public LightBlockComponent setPlaceOnCeilings(boolean placeOnCeilings)
     {
         this.placeOnCeilings = placeOnCeilings;
         return this;

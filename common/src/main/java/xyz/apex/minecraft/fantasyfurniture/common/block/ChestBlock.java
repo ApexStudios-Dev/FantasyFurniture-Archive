@@ -2,25 +2,33 @@ package xyz.apex.minecraft.fantasyfurniture.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseEntityBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.ChestBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class ChestBlock extends BaseBlockComponentHolder
+public final class ChestBlock extends BaseEntityBlockComponentHolder<ChestBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public ChestBlock(Properties properties)
     {
         super(properties);
+    }
+
+    @Override
+    protected BlockEntityType<ChestBlockEntity> getBlockEntityType()
+    {
+        return AllBlockEntityTypes.CHEST.get();
     }
 
     @Override

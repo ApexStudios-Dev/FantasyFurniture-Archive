@@ -6,7 +6,7 @@ import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.data.event.GatherDataEvent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatBlockComponent;
 
 final class EntityTypeTagGenerator extends EntityTypeTagsProvider
 {
@@ -18,6 +18,6 @@ final class EntityTypeTagGenerator extends EntityTypeTagsProvider
     @Override
     protected void addTags(HolderLookup.Provider pProvider)
     {
-        tag(SeatComponent.SEAT_BLACKLIST).add(EntityType.SHULKER);
+        tag(SeatBlockComponent.SEAT_BLACKLIST).add(EntityType.SHULKER);
     }
 }

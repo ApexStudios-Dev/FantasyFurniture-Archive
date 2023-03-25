@@ -22,11 +22,11 @@ import xyz.apex.minecraft.fantasyfurniture.common.entity.Seat;
 
 import java.util.Optional;
 
-public final class SeatComponent extends BaseBlockComponent
+public final class SeatBlockComponent extends BaseBlockComponent
 {
-    public static final BlockComponentType<SeatComponent> COMPONENT_TYPE = BlockComponentType.register(
+    public static final BlockComponentType<SeatBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "seat"),
-            SeatComponent::new,
+            SeatBlockComponent::new,
             BlockComponentTypes.HORIZONTAL_FACING
     );
 
@@ -34,12 +34,12 @@ public final class SeatComponent extends BaseBlockComponent
 
     private boolean sitAtOriginOnly = false;
 
-    private SeatComponent(BlockComponentHolder holder)
+    private SeatBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
     }
 
-    public SeatComponent setSitAtOriginOnly(boolean sitAtOriginOnly)
+    public SeatBlockComponent setSitAtOriginOnly(boolean sitAtOriginOnly)
     {
         this.sitAtOriginOnly = sitAtOriginOnly;
         return this;

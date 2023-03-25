@@ -2,25 +2,33 @@ package xyz.apex.minecraft.fantasyfurniture.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseEntityBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LockboxBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class LockboxBlock extends BaseBlockComponentHolder
+public final class LockboxBlock extends BaseEntityBlockComponentHolder<LockboxBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public LockboxBlock(Properties properties)
     {
         super(properties);
+    }
+
+    @Override
+    protected BlockEntityType<LockboxBlockEntity> getBlockEntityType()
+    {
+        return AllBlockEntityTypes.LOCKBOX.get();
     }
 
     @Override

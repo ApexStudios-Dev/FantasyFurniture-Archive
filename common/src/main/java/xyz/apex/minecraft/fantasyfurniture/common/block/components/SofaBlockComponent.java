@@ -15,20 +15,20 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.block.properties.CounterType;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
+import xyz.apex.minecraft.fantasyfurniture.common.block.properties.SofaType;
 
 import java.util.function.Consumer;
 
-public final class CounterComponent extends BaseBlockComponent
+public final class SofaBlockComponent extends BaseBlockComponent
 {
-    public static final BlockComponentType<CounterComponent> COMPONENT_TYPE = BlockComponentType.register(
-            new ResourceLocation(FantasyFurniture.ID, "counter"),
-                    CounterComponent::new,
-                    BlockComponentTypes.HORIZONTAL_FACING
+    public static final BlockComponentType<SofaBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
+            new ResourceLocation(FantasyFurniture.ID, "sofa"),
+            SofaBlockComponent::new,
+            BlockComponentTypes.HORIZONTAL_FACING, SeatBlockComponent.COMPONENT_TYPE
     );
 
-    private CounterComponent(BlockComponentHolder holder)
+    private SofaBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
     }
@@ -36,13 +36,13 @@ public final class CounterComponent extends BaseBlockComponent
     @Override
     public BlockState registerDefaultBlockState(BlockState blockState)
     {
-        return blockState.setValue(ModBlockStateProperties.COUNTER_TYPE, CounterType.SINGLE);
+        return blockState.setValue(ModBlockStateProperties.SOFA_TYPE, SofaType.SINGLE);
     }
 
     @Override
     public void createBlockStateDefinition(Consumer<Property<?>> consumer)
     {
-        consumer.accept(ModBlockStateProperties.COUNTER_TYPE);
+        consumer.accept(ModBlockStateProperties.SOFA_TYPE);
     }
 
     @Override
@@ -71,11 +71,11 @@ public final class CounterComponent extends BaseBlockComponent
 
     public static BlockState getBlockState(LevelAccessor level, BlockPos pos, BlockState blockState)
     {
-        var shelfType = getCounterType(level, pos, blockState);
-        return blockState.setValue(ModBlockStateProperties.COUNTER_TYPE, shelfType);
+        var sofaType = getSofaType(level, pos, blockState);
+        return blockState.setValue(ModBlockStateProperties.SOFA_TYPE, sofaType);
     }
 
-    public static CounterType getCounterType(LevelAccessor level, BlockPos pos, BlockState blockState)
+    public static SofaType getSofaType(LevelAccessor level, BlockPos pos, BlockState blockState)
     {
         var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
@@ -87,8 +87,15 @@ public final class CounterComponent extends BaseBlockComponent
         var rightBlockState = level.getBlockState(rightPos);
         var frontBlockState = level.getBlockState(frontPos);
 
-        if(isCornerConnection(blockState, leftBlockState, rightBlockState, frontBlockState, facing)) return CounterType.CORNER;
-        else return CounterType.SINGLE;
+        if(isCornerConnection(blockState, leftBlockState, rightBlockState, frontBlockState, facing)) return SofaType.CORNER;
+
+        var isLeft = isSideConnection(blockState, leftBlockState);
+        var isRight = isSideConnection(blockState, rightBlockState);
+
+        if(isLeft && isRight) return SofaType.CENTER;
+        else if(isLeft) return SofaType.LEFT;
+        else if(isRight) return SofaType.RIGHT;
+        else return SofaType.SINGLE;
     }
 
     public static boolean isCornerConnection(BlockState blockState, BlockState left, BlockState right, BlockState front, Direction facing)
@@ -114,7 +121,16 @@ public final class CounterComponent extends BaseBlockComponent
 
     public static boolean isCornerFacing(Direction facing, Direction sideFacing, Direction frontFacing)
     {
-        if(facing == sideFacing) return frontFacing.getCounterClockWise() == facing || sideFacing == frontFacing.getClockWise();
+        if(facing == sideFacing) return sideFacing.getCounterClockWise() == frontFacing || sideFacing == frontFacing.getClockWise();
         else return sideFacing.getOpposite() == frontFacing || sideFacing == frontFacing.getOpposite();
+    }
+
+    public static boolean isSideConnection(BlockState blockState, BlockState neighbor)
+    {
+        if(!neighbor.is(blockState.getBlock())) return false;
+        if(neighbor.getValue(HorizontalFacingBlockComponent.FACING) == blockState.getValue(HorizontalFacingBlockComponent.FACING)) return true;
+
+        var neighborSofaType = neighbor.getValue(ModBlockStateProperties.SOFA_TYPE);
+        return neighborSofaType == SofaType.CENTER || neighborSofaType == SofaType.CORNER;
     }
 }

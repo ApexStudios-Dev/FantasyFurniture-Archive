@@ -2,25 +2,33 @@ package xyz.apex.minecraft.fantasyfurniture.common.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseEntityBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.WardrobeBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class WardrobeBottomBlock extends BaseBlockComponentHolder
+public final class WardrobeBottomBlock extends BaseEntityBlockComponentHolder<WardrobeBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
     public WardrobeBottomBlock(Properties properties)
     {
         super(properties);
+    }
+
+    @Override
+    protected BlockEntityType<WardrobeBlockEntity> getBlockEntityType()
+    {
+        return AllBlockEntityTypes.WARDROBE.get();
     }
 
     @Override

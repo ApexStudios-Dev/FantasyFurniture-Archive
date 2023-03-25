@@ -12,7 +12,7 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 public final class BenchBlock extends BaseBlockComponentHolder
@@ -29,7 +29,7 @@ public final class BenchBlock extends BaseBlockComponentHolder
     {
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
         registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x1x2_FACING);
-        registrar.register(SeatComponent.COMPONENT_TYPE);
+        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
     }
 
     @Override

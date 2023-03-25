@@ -1,27 +1,35 @@
-/*
 package xyz.apex.minecraft.fantasyfurniture.common.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
-
-import xyz.apex.minecraft.apexcore.common.inventory.Inventory;
-import xyz.apex.minecraft.apexcore.common.inventory.InventoryMenu;
+import xyz.apex.minecraft.apexcore.common.menu.SimpleContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.DrawerBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 
-public final class DrawerMenu extends InventoryMenu
+public final class DrawerMenu extends SimpleContainerMenu
 {
-    public DrawerMenu(MenuType<? extends DrawerMenu> menuType, int containerId, Player player, Inventory inventory)
+    private DrawerMenu(int containerId, Inventory playerInventory, Container container)
     {
-        super(menuType, containerId, player, inventory);
-
-        bindInventory(this, inventory, DrawerBlockEntity.ROWS, DrawerBlockEntity.COLS, 44, 18);
-        bindPlayerInventory(this, player, 8, 84);
+        super(AllMenuTypes.DRAWER.get(), containerId, playerInventory, container, DrawerBlockEntity.SLOT_COUNT);
     }
 
-    public static DrawerMenu forClient(MenuType<? extends DrawerMenu> menuType, int containerId, Player player, FriendlyByteBuf data)
+    @Override
+    protected void bindSlots(Inventory playerInventory)
     {
-        return new DrawerMenu(menuType, containerId, player, new Inventory(DrawerBlockEntity.SLOT_COUNT));
+        bindInventory(container, DrawerBlockEntity.ROWS, DrawerBlockEntity.COLS, 44, 18, this::addSlot);
+        bindPlayerInventory(playerInventory, 8, 84, this::addSlot);
+    }
+
+    public static DrawerMenu forServer(int containerId, Inventory playerInventory, Container container)
+    {
+        return new DrawerMenu(containerId, playerInventory, container);
+    }
+
+    public static DrawerMenu forClient(int containerId, Inventory playerInventory, Player player, FriendlyByteBuf extraData)
+    {
+        return new DrawerMenu(containerId, playerInventory, new SimpleContainer(DrawerBlockEntity.SLOT_COUNT));
     }
 }
-*/

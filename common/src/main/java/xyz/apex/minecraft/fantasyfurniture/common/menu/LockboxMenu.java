@@ -1,27 +1,35 @@
-/*
 package xyz.apex.minecraft.fantasyfurniture.common.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
-
-import xyz.apex.minecraft.apexcore.common.inventory.Inventory;
-import xyz.apex.minecraft.apexcore.common.inventory.InventoryMenu;
+import xyz.apex.minecraft.apexcore.common.menu.SimpleContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LockboxBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 
-public final class LockboxMenu extends InventoryMenu
+public final class LockboxMenu extends SimpleContainerMenu
 {
-    public LockboxMenu(MenuType<? extends LockboxMenu> menuType, int containerId, Player player, Inventory inventory)
+    private LockboxMenu(int containerId, Inventory playerInventory, Container container)
     {
-        super(menuType, containerId, player, inventory);
-
-        bindInventory(this, inventory, LockboxBlockEntity.ROWS, LockboxBlockEntity.COLS, 44, 18);
-        bindPlayerInventory(this, player, 8, 84);
+        super(AllMenuTypes.LOCKBOX.get(), containerId, playerInventory, container, LockboxBlockEntity.SLOT_COUNT);
     }
 
-    public static LockboxMenu forClient(MenuType<? extends LockboxMenu> menuType, int containerId, Player player, FriendlyByteBuf data)
+    @Override
+    protected void bindSlots(Inventory playerInventory)
     {
-        return new LockboxMenu(menuType, containerId, player, new Inventory(LockboxBlockEntity.SLOT_COUNT));
+        bindInventory(container, LockboxBlockEntity.ROWS, LockboxBlockEntity.COLS, 44, 18, this::addSlot);
+        bindPlayerInventory(playerInventory, 8, 84, this::addSlot);
+    }
+
+    public static LockboxMenu forServer(int containerId, Inventory playerInventory, Container container)
+    {
+        return new LockboxMenu(containerId, playerInventory, container);
+    }
+
+    public static LockboxMenu forClient(int containerId, Inventory playerInventory, Player player, FriendlyByteBuf extraData)
+    {
+        return new LockboxMenu(containerId, playerInventory, new SimpleContainer(LockboxBlockEntity.SLOT_COUNT));
     }
 }
-*/

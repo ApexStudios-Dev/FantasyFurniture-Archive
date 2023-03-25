@@ -8,7 +8,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -22,12 +26,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseEntityBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
@@ -38,6 +44,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Optional;
 
+// TODO: Update to make use of new block entity component system
 public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
 {
     public static final BooleanProperty LIT = AbstractFurnaceBlock.LIT;
@@ -51,23 +58,14 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
         registerDefaultState(defaultBlockState().setValue(LIT, false));
     }
 
-    private Optional<OvenBlockEntity> getBlockEntity(BlockGetter level, BlockPos pos, BlockState blockState)
+    public final Optional<OvenBlockEntity> getBlockEntity(BlockState blockState, BlockGetter level, BlockPos pos)
     {
-        var multiBlockComponent = getComponent(BlockComponentTypes.MULTI_BLOCK);
+        return BaseEntityBlockComponentHolder.getBlockEntity(AllBlockEntityTypes.OVEN.get(), blockState, level, pos);
+    }
 
-        if(multiBlockComponent != null)
-        {
-            var multiBlockType = multiBlockComponent.getMultiBlockType();
-
-            if(!multiBlockType.isOrigin(blockState))
-            {
-                var originPos = multiBlockType.getOriginPos(blockState, pos);
-                var originBlockState = level.getBlockState(originPos);
-                return getBlockEntity(level, originPos, originBlockState);
-            }
-        }
-
-        return level.getBlockEntity(pos, AllBlockEntityTypes.OVEN.get());
+    public final Optional<OvenBlockEntity> getBlockEntity(BlockGetter level, BlockPos pos)
+    {
+        return BaseEntityBlockComponentHolder.getBlockEntity(AllBlockEntityTypes.OVEN.get(), level, pos);
     }
 
     @Override
@@ -195,9 +193,30 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
     }
 
     @Override
+    public InteractionResult use(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
+    {
+        var blockEntity = getBlockEntity(blockState, level, pos).orElse(null);
+
+        if(blockEntity != null)
+        {
+            var result = AllMenuTypes.OVEN.open(player, blockEntity.getDisplayName(), blockEntity, extraData -> {});
+            if(result.consumesAction()) return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return super.use(blockState, level, pos, player, hand, hit);
+    }
+
+    @Override
     public boolean triggerEvent(BlockState blockState, Level level, BlockPos pos, int id, int param)
     {
-        return getBlockEntity(level, pos, blockState).map(blockEntity -> blockEntity.triggerEvent(id, param)).orElse(false);
+        return getBlockEntity(blockState, level, pos).map(blockEntity -> blockEntity.triggerEvent(id, param)).orElse(false);
+    }
+
+    @Nullable
+    @Override
+    public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos pos)
+    {
+        return getBlockEntity(blockState, level, pos).filter(MenuProvider.class::isInstance).map(MenuProvider.class::cast).orElse(null);
     }
 
     @Nullable
@@ -220,7 +239,7 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
     {
         super.setPlacedBy(level, pos, blockState, placer, stack);
         if(!stack.hasCustomHoverName()) return;
-        getBlockEntity(level, pos, blockState).ifPresent(blockEntity -> blockEntity.setCustomName(stack.getDisplayName()));
+        getBlockEntity(blockState, level, pos).ifPresent(blockEntity -> blockEntity.setCustomName(stack.getDisplayName()));
     }
 
     @Override
@@ -228,7 +247,7 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
     {
         if(!blockState.is(newBlockState.getBlock()))
         {
-            getBlockEntity(level, pos, blockState).ifPresent(blockEntity -> {
+            getBlockEntity(blockState, level, pos).ifPresent(blockEntity -> {
                 if(level instanceof ServerLevel serverLevel)
                 {
                     Containers.dropContents(serverLevel, pos, blockEntity);
@@ -251,7 +270,7 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos)
     {
-        return getBlockEntity(level, pos, blockState).map(AbstractContainerMenu::getRedstoneSignalFromContainer).orElse(0);
+        return getBlockEntity(blockState, level, pos).map(AbstractContainerMenu::getRedstoneSignalFromContainer).orElse(0);
     }
 
     @Override

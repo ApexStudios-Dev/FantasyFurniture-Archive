@@ -12,8 +12,8 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.SofaComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatBlockComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.SofaBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -30,8 +30,8 @@ public final class SofaBlock extends BaseBlockComponentHolder
     public void registerComponents(BlockComponentHolder.Registrar registrar)
     {
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
-        registrar.register(SofaComponent.COMPONENT_TYPE);
-        registrar.register(SeatComponent.COMPONENT_TYPE);
+        registrar.register(SofaBlockComponent.COMPONENT_TYPE);
+        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
     }
 
     @Override

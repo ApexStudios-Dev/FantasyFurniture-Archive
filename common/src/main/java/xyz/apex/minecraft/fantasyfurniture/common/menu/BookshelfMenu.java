@@ -1,27 +1,35 @@
-/*
 package xyz.apex.minecraft.fantasyfurniture.common.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.MenuType;
-
-import xyz.apex.minecraft.apexcore.common.inventory.Inventory;
-import xyz.apex.minecraft.apexcore.common.inventory.InventoryMenu;
+import xyz.apex.minecraft.apexcore.common.menu.SimpleContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.BookshelfBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 
-public final class BookshelfMenu extends InventoryMenu
+public final class BookshelfMenu extends SimpleContainerMenu
 {
-    public BookshelfMenu(MenuType<? extends BookshelfMenu> menuType, int containerId, Player player, Inventory inventory)
+    private BookshelfMenu(int containerId, Inventory playerInventory, Container container)
     {
-        super(menuType, containerId, player, inventory);
-
-        bindInventory(this, inventory, BookshelfBlockEntity.ROWS, BookshelfBlockEntity.COLS, 8, 18);
-        bindPlayerInventory(this, player, 8, 140);
+        super(AllMenuTypes.BOOKSHELF.get(), containerId, playerInventory, container, BookshelfBlockEntity.SLOT_COUNT);
     }
 
-    public static BookshelfMenu forClient(MenuType<? extends BookshelfMenu> menuType, int containerId, Player player, FriendlyByteBuf data)
+    @Override
+    protected void bindSlots(Inventory playerInventory)
     {
-        return new BookshelfMenu(menuType, containerId, player, new Inventory(BookshelfBlockEntity.SLOT_COUNT));
+        bindInventory(container, BookshelfBlockEntity.ROWS, BookshelfBlockEntity.COLS, 8, 18, this::addSlot);
+        bindPlayerInventory(playerInventory, 8, 140, this::addSlot);
+    }
+
+    public static BookshelfMenu forServer(int containerId, Inventory playerInventory, Container container)
+    {
+        return new BookshelfMenu(containerId, playerInventory, container);
+    }
+
+    public static BookshelfMenu forClient(int containerId, Inventory playerInventory, Player player, FriendlyByteBuf extraData)
+    {
+        return new BookshelfMenu(containerId, playerInventory, new SimpleContainer(BookshelfBlockEntity.SLOT_COUNT));
     }
 }
-*/
