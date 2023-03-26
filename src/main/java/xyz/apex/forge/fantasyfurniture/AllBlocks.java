@@ -3,11 +3,11 @@ package xyz.apex.forge.fantasyfurniture;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.recipes.LegacyUpgradeRecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.ChainBlock;
@@ -398,12 +398,22 @@ public interface AllBlocks
 							.build(),
 					BlockTransformers.getIgnoredProperties(ctx.get(), ctx.getId().getPath()))
 			)
-			.recipe((ctx, provider) -> SmithingTransformRecipeBuilder
-					.smithing(Ingredient.EMPTY, DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), RecipeCategory.DECORATIONS, ctx.get().asItem())
-					.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
-					.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
-					.save(provider, ctx.getId())
-			)
+			.recipe((ctx, provider) -> {
+				ShapelessRecipeBuilder
+						.shapeless(RecipeCategory.MISC, ctx.get())
+						.requires(Items.CRAFTING_TABLE)
+						.requires(ItemTags.Forge.LEATHER)
+						.unlockedBy("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
+						.unlockedBy("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
+						.save(provider, ctx.getId());
+
+				// TODO: Remove in 1.20
+				LegacyUpgradeRecipeBuilder
+						.smithing(DataIngredient.items(Items.CRAFTING_TABLE), DataIngredient.tag(ItemTags.Forge.LEATHER), RecipeCategory.DECORATIONS, ctx.get().asItem())
+						.unlocks("has_crafting_table", RegistrateRecipeProvider.has(Items.CRAFTING_TABLE))
+						.unlocks("has_leather", RegistrateRecipeProvider.has(ItemTags.Forge.LEATHER))
+						.save(provider, ctx.getId().withPrefix("legacy_upgrade/"));
+			})
 			.renderType(() -> RenderType::cutout)
 
 			.item()
