@@ -294,7 +294,7 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 							[
 									title: "**${mod_name}** updated to **_v${version}_**!",
 									description: "${tasks.createChangelog.outputFile.map { it.asFile.text.split('\n').drop(1).join('\n') }.get()}\n\n**Download**: [${emojis['modrinth']} **_Modrinth_**](https://modrinth.com/mod/${mod_modrinth_slug}) | [${emojis['curseforge']} **_Curseforge_**](https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug})",
-									url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}/master",
+									url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}/master",
 									color: "${Integer.decode(mod_color)}",
 									footer: [
 											text: 'ApexStudios',
@@ -302,7 +302,7 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 									],
 									author: [
 											name: "${mod_name}",
-											url: "https://github.com/ApexStudios-Dev/${mod_name}/tree/${minecraft_version}/master",
+											url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}/master",
 											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/minecraft/${mod_id}_logo.png"
 									],
 									fields: [
