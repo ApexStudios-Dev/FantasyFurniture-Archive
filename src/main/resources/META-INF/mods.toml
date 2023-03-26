@@ -48,14 +48,14 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	[dependencies.fantasyfurniture.custom.mc-publish]
 		modrinth="apexcore"
 		curseforge="apexcore"
-[[dependencies.fantasyfurniture]]
-	modId="jei"
-	mandatory=false
-	versionRange="[13.0.0.0,)"
-	ordering="AFTER"
-	side="BOTH"
-	[dependencies.fantasyfurniture.custom.mc-publish]
-		curseforge="jei"
+#[[dependencies.fantasyfurniture]]
+#	modId="jei"
+#	mandatory=false
+#	versionRange="[13.0.0.0,)"
+#	ordering="AFTER"
+#	side="BOTH"
+#	[dependencies.fantasyfurniture.custom.mc-publish]
+#		curseforge="jei"
 #[[dependencies.fantasyfurniture]]
 #	modId="ctm"
 #	mandatory=false
