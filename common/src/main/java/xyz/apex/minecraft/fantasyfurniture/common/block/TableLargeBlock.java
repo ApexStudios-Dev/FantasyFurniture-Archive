@@ -14,13 +14,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeCacher;
 import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-public final class TableLargeBlock extends BaseBlockComponentHolder
+import java.util.function.Consumer;
+
+public class TableLargeBlock extends BaseBlockComponentHolder
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public TableLargeBlock(Properties properties)
+    public TableLargeBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
     }
 
     @Override

@@ -23,7 +23,7 @@ import xyz.apex.minecraft.apexcore.common.component.block.types.DoorBlockCompone
 import xyz.apex.minecraft.apexcore.common.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.OvenBlock;
-import xyz.apex.minecraft.fantasyfurniture.common.block.components.DyeableBlockComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.DyeableBlockEntityComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
@@ -49,7 +49,7 @@ final class BlockStateGenerator extends BlockStateProvider
             .element()
                 .from(0F, 0F, 0F)
                 .to(16F, 16F, 16F)
-                .allFaces((face, builder) -> builder.texture("#%s_tint".formatted(face.getSerializedName())).cullface(face).tintindex(DyeableBlockComponent.TINT_INDEX))
+                .allFaces((face, builder) -> builder.texture("#%s_tint".formatted(face.getSerializedName())).cullface(face).tintindex(DyeableBlockEntityComponent.TINT_INDEX))
             .end()
     );
 
@@ -115,41 +115,41 @@ final class BlockStateGenerator extends BlockStateProvider
                     .uvs(0F, 0F, 16F, 16F)
                     .texture("#wool_tint")
                     .cullface(Direction.DOWN)
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
 
                 .face(Direction.UP)
                     .uvs(0F, 0F, 16F, 16F)
                     .texture("#wool_tint")
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
 
                 .face(Direction.NORTH)
                     .uvs(0F, 15F, 16F, 16F)
                     .texture("#wool_tint")
                     .cullface(Direction.NORTH)
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
 
                 .face(Direction.SOUTH)
                     .uvs(0F, 15F, 16F, 16F)
                     .texture("#wool_tint")
                     .cullface(Direction.SOUTH)
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
 
                 .face(Direction.WEST)
                     .uvs(0F, 15F, 16F, 16F)
                     .texture("#wool_tint")
                     .cullface(Direction.WEST)
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
 
                 .face(Direction.EAST)
                     .uvs(0F, 15F, 16F, 16F)
                     .texture("#wool_tint")
                     .cullface(Direction.EAST)
-                    .tintindex(DyeableBlockComponent.TINT_INDEX)
+                    .tintindex(DyeableBlockEntityComponent.TINT_INDEX)
                 .end()
             .end()
     );

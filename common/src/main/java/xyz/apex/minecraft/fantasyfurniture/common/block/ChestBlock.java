@@ -16,13 +16,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.ChestBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
+import java.util.function.Consumer;
+
 public final class ChestBlock extends BaseEntityBlockComponentHolder<ChestBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public ChestBlock(Properties properties)
+    public ChestBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
     }
 
     @Override

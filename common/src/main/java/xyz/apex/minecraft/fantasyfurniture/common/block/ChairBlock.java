@@ -15,13 +15,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.SeatBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
+import java.util.function.Consumer;
+
 public final class ChairBlock extends BaseBlockComponentHolder
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public ChairBlock(Properties properties)
+    public ChairBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
     }
 
     @Override

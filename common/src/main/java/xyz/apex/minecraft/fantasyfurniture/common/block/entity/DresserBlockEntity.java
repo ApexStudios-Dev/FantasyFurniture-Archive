@@ -8,15 +8,17 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.DresserMenu;
 
+import java.util.function.Consumer;
+
 public final class DresserBlockEntity extends BaseBlockEntityComponentHolder
 {
     public static final int ROWS = 3;
     public static final int COLS = 9;
     public static final int SLOT_COUNT = ROWS * COLS;
 
-    public DresserBlockEntity(BlockPos pos, BlockState blockState)
+    public DresserBlockEntity(Consumer<Registrar> registrarConsumer, BlockPos pos, BlockState blockState)
     {
-        super(AllBlockEntityTypes.DRESSER.get(), pos, blockState);
+        super(registrarConsumer, AllBlockEntityTypes.DRESSER.get(), pos, blockState);
     }
 
     @Override

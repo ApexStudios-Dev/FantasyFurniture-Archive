@@ -16,13 +16,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.BookshelfBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
+import java.util.function.Consumer;
+
 public final class BookshelfBlock extends BaseEntityBlockComponentHolder<BookshelfBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public BookshelfBlock(Properties properties)
+    public BookshelfBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
     }
 
     @Override

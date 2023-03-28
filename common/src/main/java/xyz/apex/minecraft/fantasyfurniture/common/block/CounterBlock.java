@@ -18,13 +18,15 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.entity.CounterBlockEntit
 import xyz.apex.minecraft.fantasyfurniture.common.block.properties.ModBlockStateProperties;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
+import java.util.function.Consumer;
+
 public final class CounterBlock extends BaseEntityBlockComponentHolder<CounterBlockEntity>
 {
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public CounterBlock(Properties properties)
+    public CounterBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
     }
 
     @Override

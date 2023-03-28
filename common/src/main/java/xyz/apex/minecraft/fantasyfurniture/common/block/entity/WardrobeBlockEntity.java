@@ -8,15 +8,17 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.WardrobeMenu;
 
+import java.util.function.Consumer;
+
 public final class WardrobeBlockEntity extends BaseBlockEntityComponentHolder
 {
     public static final int ROWS = 6;
     public static final int COLS = 9;
     public static final int SLOT_COUNT = ROWS * COLS;
 
-    public WardrobeBlockEntity(BlockPos pos, BlockState blockState)
+    public WardrobeBlockEntity(Consumer<Registrar> registrarConsumer, BlockPos pos, BlockState blockState)
     {
-        super(AllBlockEntityTypes.WARDROBE.get(), pos, blockState);
+        super(registrarConsumer, AllBlockEntityTypes.WARDROBE.get(), pos, blockState);
     }
 
     @Override

@@ -43,6 +43,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.entity.OvenBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 // TODO: Update to make use of new block entity component system
 public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
@@ -51,9 +52,9 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
 
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public OvenBlock(Properties properties)
+    public OvenBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
+        super(registrarConsumer, properties);
 
         registerDefaultState(defaultBlockState().setValue(LIT, false));
     }
@@ -309,20 +310,5 @@ public class OvenBlock extends BaseBlockComponentHolder implements EntityBlock
         }
 
         return shape;
-    }
-
-    public static final class WithMultiBlock extends OvenBlock
-    {
-        public WithMultiBlock(Properties properties)
-        {
-            super(properties);
-        }
-
-        @Override
-        public void registerComponents(BlockComponentHolder.Registrar registrar)
-        {
-            super.registerComponents(registrar);
-            registrar.register(BlockComponentTypes.MULTI_BLOCK).setMultiBlockType(AllMultiBlockTypes.MB_1x1x2_FACING);
-        }
     }
 }

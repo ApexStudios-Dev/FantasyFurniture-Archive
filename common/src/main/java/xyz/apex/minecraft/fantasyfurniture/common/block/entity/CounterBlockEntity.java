@@ -8,15 +8,17 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.CounterMenu;
 
+import java.util.function.Consumer;
+
 public final class CounterBlockEntity extends BaseBlockEntityComponentHolder
 {
     public static final int ROWS = 3;
     public static final int COLS = 9;
     public static final int SLOT_COUNT = ROWS * COLS;
 
-    public CounterBlockEntity(BlockPos pos, BlockState blockState)
+    public CounterBlockEntity(Consumer<Registrar> registrarConsumer, BlockPos pos, BlockState blockState)
     {
-        super(AllBlockEntityTypes.COUNTER.get(), pos, blockState);
+        super(registrarConsumer, AllBlockEntityTypes.COUNTER.get(), pos, blockState);
     }
 
     @Override

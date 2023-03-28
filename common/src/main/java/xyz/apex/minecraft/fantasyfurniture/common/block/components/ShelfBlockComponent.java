@@ -24,13 +24,18 @@ public final class ShelfBlockComponent extends BaseBlockComponent
 {
     public static final BlockComponentType<ShelfBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "shelf"),
-            ShelfBlockComponent::new,
-            BlockComponentTypes.HORIZONTAL_FACING
+            ShelfBlockComponent::new
     );
 
     private ShelfBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
+    }
+
+    @Override
+    public void onRegistered(BlockComponentHolder.Registrar registrar)
+    {
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
 
     @Override

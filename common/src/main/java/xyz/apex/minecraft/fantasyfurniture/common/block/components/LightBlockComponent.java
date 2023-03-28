@@ -2,6 +2,8 @@ package xyz.apex.minecraft.fantasyfurniture.common.block.components;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -20,6 +22,7 @@ import xyz.apex.minecraft.apexcore.common.component.block.BlockComponentType;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class LightBlockComponent extends BaseBlockComponent
 {
@@ -33,6 +36,8 @@ public final class LightBlockComponent extends BaseBlockComponent
     private boolean placeOnWalls = false;
     private boolean placeOnFloor = true;
     private boolean placeOnCeilings = true;
+
+    private Supplier<ParticleOptions> flameParticle = () -> ParticleTypes.FLAME;
 
     @ApiStatus.Internal // public cause reflection
     public LightBlockComponent(BlockComponentHolder block)
@@ -55,6 +60,12 @@ public final class LightBlockComponent extends BaseBlockComponent
     public LightBlockComponent setPlaceOnCeilings(boolean placeOnCeilings)
     {
         this.placeOnCeilings = placeOnCeilings;
+        return this;
+    }
+
+    public LightBlockComponent setFlameParticle(Supplier<ParticleOptions> flameParticle)
+    {
+        this.flameParticle = flameParticle;
         return this;
     }
 

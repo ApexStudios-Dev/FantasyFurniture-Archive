@@ -1,15 +1,15 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CarpetBlock;
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.util.TagHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.*;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.CarpetBlockComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.components.DyeableBlockComponent;
 
 public interface RoyalSet
 {
@@ -17,16 +17,16 @@ public interface RoyalSet
     TagKey<Item> ITEM_TAG = TagHelper.itemTag(FantasyFurniture.ID, NAME);
     TagKey<Block> BLOCK_TAG = TagHelper.blockTag(FantasyFurniture.ID, NAME);
 
-    BlockEntry<Block> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
-    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
-    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
-    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
+    BlockEntry<DyeableBlock> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME, DyeableBlock::new).registerComponent(DyeableBlockComponent.COMPONENT_TYPE).renderType(() -> RenderType::cutout).blockColor(FurnitureSets.blockColor()).item(builder -> builder.itemColor(FurnitureSets.itemColor())).register();
+    BlockEntry<DyeableBlock> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME, DyeableBlock::new).registerComponent(DyeableBlockComponent.COMPONENT_TYPE).registerComponent(CarpetBlockComponent.COMPONENT_TYPE).renderType(() -> RenderType::cutout).blockColor(FurnitureSets.blockColor()).item(builder -> builder.itemColor(FurnitureSets.itemColor())).register();
+    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME).register();
+    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME).register();
     BlockEntry<TableLargeBlock> TABLE_LARGE = FurnitureSets.tableLarge(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<TableSmallBlock> TABLE_SMALL = FurnitureSets.tableSmall(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<TableWideBlock> TABLE_WIDE = FurnitureSets.tableWide(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<BenchBlock> BENCH = FurnitureSets.bench(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<ChairBlock> CHAIR = FurnitureSets.chair(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
-    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
+    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME).register();
     BlockEntry<CushionBlock> CUSHION = FurnitureSets.cushion(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<StoolBlock> STOOL = FurnitureSets.stool(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<ChestBlock> CHEST = FurnitureSets.chest(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();

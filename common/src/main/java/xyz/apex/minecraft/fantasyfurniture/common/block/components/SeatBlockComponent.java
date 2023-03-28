@@ -26,8 +26,7 @@ public final class SeatBlockComponent extends BaseBlockComponent
 {
     public static final BlockComponentType<SeatBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "seat"),
-            SeatBlockComponent::new,
-            BlockComponentTypes.HORIZONTAL_FACING
+            SeatBlockComponent::new
     );
 
     public static final TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(FantasyFurniture.ID, "seat_blacklist");
@@ -37,6 +36,12 @@ public final class SeatBlockComponent extends BaseBlockComponent
     private SeatBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
+    }
+
+    @Override
+    public void onRegistered(BlockComponentHolder.Registrar registrar)
+    {
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
 
     public SeatBlockComponent setSitAtOriginOnly(boolean sitAtOriginOnly)

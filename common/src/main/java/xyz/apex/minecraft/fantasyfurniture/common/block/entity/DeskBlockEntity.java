@@ -8,15 +8,17 @@ import xyz.apex.minecraft.fantasyfurniture.common.init.AllBlockEntityTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.init.AllMenuTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.DeskMenu;
 
+import java.util.function.Consumer;
+
 public final class DeskBlockEntity extends BaseBlockEntityComponentHolder
 {
     public static final int ROWS = 3;
     public static final int COLS = 5;
     public static final int SLOT_COUNT = ROWS * COLS;
 
-    public DeskBlockEntity(BlockPos pos, BlockState blockState)
+    public DeskBlockEntity(Consumer<Registrar> registrarConsumer, BlockPos pos, BlockState blockState)
     {
-        super(AllBlockEntityTypes.DESK.get(), pos, blockState);
+        super(registrarConsumer, AllBlockEntityTypes.DESK.get(), pos, blockState);
     }
 
     @Override

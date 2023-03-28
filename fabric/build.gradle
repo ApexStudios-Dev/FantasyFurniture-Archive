@@ -13,11 +13,13 @@ loom {
         client {
             client()
             ideConfigGenerated true
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
         }
 
         server {
             server()
             ideConfigGenerated true
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
         }
     }
 }

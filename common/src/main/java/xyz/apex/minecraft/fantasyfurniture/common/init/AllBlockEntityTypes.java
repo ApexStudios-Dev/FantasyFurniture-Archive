@@ -8,7 +8,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.entity.*;
 public interface AllBlockEntityTypes
 {
     BlockEntityEntry<ChestBlockEntity> CHEST = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "chest", ChestBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "chest", registrar -> {}, ChestBlockEntity::new)
             .validBlocks(
                 NordicSet.CHEST, VenthyrSet.CHEST,
                 DunmerSet.CHEST, BoneSet.Skeleton.CHEST,
@@ -17,7 +17,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "bookshelf", BookshelfBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "bookshelf", registrar -> {}, BookshelfBlockEntity::new)
             .validBlocks(
                 NordicSet.BOOKSHELF, VenthyrSet.BOOKSHELF,
                 DunmerSet.BOOKSHELF, BoneSet.Wither.BOOKSHELF,
@@ -26,7 +26,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<DeskBlockEntity> DESK = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "desk", DeskBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "desk", registrar -> {}, DeskBlockEntity::new)
             .validBlocks(
                 NordicSet.DESK_LEFT, NordicSet.DESK_RIGHT,
                 VenthyrSet.DESK_LEFT, VenthyrSet.DESK_RIGHT,
@@ -38,7 +38,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<DrawerBlockEntity> DRAWER = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "drawer", DrawerBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "drawer", registrar -> {}, DrawerBlockEntity::new)
             .validBlocks(
                 NordicSet.DRAWER, VenthyrSet.DRAWER,
                 DunmerSet.DRAWER, BoneSet.Wither.DRAWER,
@@ -47,7 +47,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<DresserBlockEntity> DRESSER = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "dresser", DresserBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "dresser", registrar -> {}, DresserBlockEntity::new)
             .validBlocks(
                     NordicSet.DRESSER, VenthyrSet.DRESSER,
                 DunmerSet.DRESSER, BoneSet.Wither.DRESSER,
@@ -56,7 +56,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<LockboxBlockEntity> LOCKBOX = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "lockbox", LockboxBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "lockbox", registrar -> {}, LockboxBlockEntity::new)
             .validBlocks(
                     NordicSet.LOCKBOX, VenthyrSet.LOCKBOX,
                     DunmerSet.LOCKBOX, BoneSet.Wither.LOCKBOX,
@@ -65,7 +65,7 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<WardrobeBlockEntity> WARDROBE = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "wardrobe", WardrobeBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "wardrobe", registrar -> {}, WardrobeBlockEntity::new)
             .validBlocks(
                 NordicSet.WARDROBE_BOTTOM, VenthyrSet.WARDROBE_BOTTOM,
                 DunmerSet.WARDROBE_BOTTOM, BoneSet.Wither.WARDROBE_BOTTOM,
@@ -83,13 +83,20 @@ public interface AllBlockEntityTypes
             ).register();
 
     BlockEntityEntry<CounterBlockEntity> COUNTER = BlockEntityBuilder
-            .builder(FantasyFurniture.ID, "counter", CounterBlockEntity::new)
+            .builderWithComponents(FantasyFurniture.ID, "counter", registrar -> {}, CounterBlockEntity::new)
             .validBlocks(
                 NordicSet.COUNTER, VenthyrSet.COUNTER,
                 DunmerSet.COUNTER, BoneSet.Wither.COUNTER,
                 BoneSet.Skeleton.COUNTER, NecrolordSet.COUNTER,
                 RoyalSet.COUNTER
             ).register();
+
+    BlockEntityEntry<DyeableBlockEntity> DYEABLE = BlockEntityBuilder
+            .builderWithComponents(FantasyFurniture.ID, "dyeable", registrar -> {}, DyeableBlockEntity::new)
+            .validBlocks(
+                    RoyalSet.WOOL
+            )
+            .register();
 
     static void bootstrap() {}
 }

@@ -1,9 +1,7 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
-import com.google.common.base.Suppliers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -21,18 +19,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
 public class FloorLightBlock extends BaseBlockComponentHolder
 {
-    private final Supplier<ParticleOptions> flameParticle;
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public FloorLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
+    public FloorLightBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
-
-        this.flameParticle = Suppliers.memoize(flameParticle::get);
+        super(registrarConsumer, properties);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class FloorLightBlock extends BaseBlockComponentHolder
                 var zOff = (i % 2 == 0) ? (i == 2) ? -offset : offset : 0D;
 
                 level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
-                level.addParticle(flameParticle.get(), x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(ParticleTypes.FLAME, x + xOff, y, z + zOff, 0D, 0D, 0D);
             }
         }
         else if(VenthyrSet.FLOOR_LIGHT.hasBlockState(blockState))
@@ -84,13 +79,13 @@ public class FloorLightBlock extends BaseBlockComponentHolder
                 var zOff = (i == 2 || i == 3) ? .4D : 0D;
 
                 level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
-                level.addParticle(flameParticle.get(), x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(ParticleTypes.FLAME, x + xOff, y, z + zOff, 0D, 0D, 0D);
             }
         }
         else if(DunmerSet.FLOOR_LIGHT.hasBlockState(blockState))
         {
             level.addParticle(ParticleTypes.SMOKE, x, y + .1D, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y + .1D, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y + .1D, z, 0D, 0D, 0D);
         }
         else if(BoneSet.Wither.FLOOR_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.FLOOR_LIGHT.hasBlockState(blockState))
         {
@@ -101,13 +96,13 @@ public class FloorLightBlock extends BaseBlockComponentHolder
             var stepZ = facing.getStepZ();
 
             level.addParticle(ParticleTypes.SMOKE, x, y + .1D, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y + .1D, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y + .1D, z, 0D, 0D, 0D);
 
             level.addParticle(ParticleTypes.SMOKE, x + (stepX * offsetH), y + .05D, z + (stepZ * offsetH), 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x + (stepX * offsetH), y + .05D, z + (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x + (stepX * offsetH), y + .05D, z + (stepZ * offsetH), 0D, 0D, 0D);
 
             level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x - (stepX * offsetH), y + .05D, z - (stepZ * offsetH), 0D, 0D, 0D);
         }
         else if(NecrolordSet.FLOOR_LIGHT.hasBlockState(blockState))
         {
@@ -118,13 +113,13 @@ public class FloorLightBlock extends BaseBlockComponentHolder
             var stepZ = facing.getStepZ();
 
             level.addParticle(ParticleTypes.SMOKE, x, y + .2D, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y + .2D, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y + .2D, z, 0D, 0D, 0D);
 
             level.addParticle(ParticleTypes.SMOKE, x + (stepX * offsetH), y + .1D, z + (stepZ * offsetH), 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x + (stepX * offsetH), y + .1D, z + (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x + (stepX * offsetH), y + .1D, z + (stepZ * offsetH), 0D, 0D, 0D);
 
             level.addParticle(ParticleTypes.SMOKE, x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x - (stepX * offsetH), y + .1D, z - (stepZ * offsetH), 0D, 0D, 0D);
         }
     }
 

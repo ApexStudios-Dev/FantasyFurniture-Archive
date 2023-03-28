@@ -1,11 +1,10 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CarpetBlock;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.util.TagHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
@@ -17,16 +16,16 @@ public interface DunmerSet
     TagKey<Item> ITEM_TAG = TagHelper.itemTag(FantasyFurniture.ID, NAME);
     TagKey<Block> BLOCK_TAG = TagHelper.blockTag(FantasyFurniture.ID, NAME);
 
-    BlockEntry<Block> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME).register();
-    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME).register();
-    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).renderType(() -> RenderType::cutout).register();
-    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).renderType(() -> RenderType::cutout).register();
+    BlockEntry<BaseBlockComponentHolder> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME, BaseBlockComponentHolder::new).register();
+    BlockEntry<BaseBlockComponentHolder> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME, BaseBlockComponentHolder::new).register();
+    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
+    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<TableLargeBlock> TABLE_LARGE = FurnitureSets.tableLarge(FantasyFurniture.ID, NAME).register();
     BlockEntry<TableSmallBlock> TABLE_SMALL = FurnitureSets.tableSmall(FantasyFurniture.ID, NAME).register();
     BlockEntry<TableWideBlock> TABLE_WIDE = FurnitureSets.tableWide(FantasyFurniture.ID, NAME).register();
     BlockEntry<BenchBlock> BENCH = FurnitureSets.bench(FantasyFurniture.ID, NAME).register();
     BlockEntry<ChairBlock> CHAIR = FurnitureSets.chair(FantasyFurniture.ID, NAME).register();
-    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
+    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME).register();
     BlockEntry<CushionBlock> CUSHION = FurnitureSets.cushion(FantasyFurniture.ID, NAME).register();
     BlockEntry<StoolBlock> STOOL = FurnitureSets.stool(FantasyFurniture.ID, NAME).register();
     BlockEntry<ChestBlock> CHEST = FurnitureSets.chest(FantasyFurniture.ID, NAME).register();
@@ -40,7 +39,7 @@ public interface DunmerSet
     BlockEntry<WardrobeTopBlock> WARDROBE_TOP = FurnitureSets.wardrobeTop(FantasyFurniture.ID, NAME).register();
     BlockEntry<PaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(FantasyFurniture.ID, NAME).register();
     BlockEntry<PaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(FantasyFurniture.ID, NAME).register();
-    BlockEntry<OvenBlock.WithMultiBlock> OVEN = FurnitureSets.ovenMultiBlock(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
+    BlockEntry<OvenBlock> OVEN = FurnitureSets.ovenMultiBlock(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<DoorBlock> DOOR_DOUBLE = FurnitureSets.doorDouble(FantasyFurniture.ID, NAME).register();
     BlockEntry<DoorBlock> DOOR_SINGLE = FurnitureSets.doorSingle(FantasyFurniture.ID, NAME).register();
     BlockEntry<BedSingleBlock> BED_SINGLE = FurnitureSets.bedSingle(FantasyFurniture.ID, NAME).register();

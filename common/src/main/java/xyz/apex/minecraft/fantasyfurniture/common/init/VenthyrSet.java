@@ -1,11 +1,10 @@
 package xyz.apex.minecraft.fantasyfurniture.common.init;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CarpetBlock;
+import xyz.apex.minecraft.apexcore.common.component.block.BaseBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.util.TagHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
@@ -17,10 +16,10 @@ public interface VenthyrSet
     TagKey<Item> ITEM_TAG = TagHelper.itemTag(FantasyFurniture.ID, NAME);
     TagKey<Block> BLOCK_TAG = TagHelper.blockTag(FantasyFurniture.ID, NAME);
 
-    BlockEntry<Block> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME).register();
-    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME).register();
-    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
-    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).register();
+    BlockEntry<BaseBlockComponentHolder> WOOL = FurnitureSets.wool(FantasyFurniture.ID, NAME, BaseBlockComponentHolder::new).register();
+    BlockEntry<BaseBlockComponentHolder> CARPET = FurnitureSets.carpet(FantasyFurniture.ID, NAME, BaseBlockComponentHolder::new).register();
+    BlockEntry<WallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(FantasyFurniture.ID, NAME).register();
+    BlockEntry<FloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(FantasyFurniture.ID, NAME).register();
     BlockEntry<TableLargeBlock> TABLE_LARGE = FurnitureSets.tableLarge(FantasyFurniture.ID, NAME).register();
     BlockEntry<TableLargeBlock> TABLE_LARGE_FANCY = FurnitureSets.tableLargeFancy(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<TableSmallBlock> TABLE_SMALL = FurnitureSets.tableSmall(FantasyFurniture.ID, NAME).register();
@@ -29,7 +28,7 @@ public interface VenthyrSet
     BlockEntry<TableWideBlock> TABLE_WIDE_FANCY = FurnitureSets.tableWideFancy(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<BenchBlock> BENCH = FurnitureSets.bench(FantasyFurniture.ID, NAME).register();
     BlockEntry<ChairBlock> CHAIR = FurnitureSets.chair(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
-    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME, () -> ParticleTypes.FLAME).renderType(() -> RenderType::cutout).register();
+    BlockEntry<CeilingLightBlock> CEILING_LIGHT = FurnitureSets.ceilingLight(FantasyFurniture.ID, NAME).renderType(() -> RenderType::cutout).register();
     BlockEntry<CushionBlock> CUSHION = FurnitureSets.cushion(FantasyFurniture.ID, NAME).register();
     BlockEntry<StoolBlock> STOOL = FurnitureSets.stool(FantasyFurniture.ID, NAME).register();
     BlockEntry<ChestBlock> CHEST = FurnitureSets.chest(FantasyFurniture.ID, NAME).register();

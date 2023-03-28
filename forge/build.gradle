@@ -28,6 +28,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             ideaModule "${rootProject.name}.${project.name}.main"
             args '--width', 1920, '--height', 1080
+            jvmArg '-XX:+AllowEnhancedClassRedefinition'
 
             mods {
                 "${MOD_ID}" {
@@ -42,6 +43,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             ideaModule "${rootProject.name}.${project.name}.main"
             args 'nogui'
+            jvmArg '-XX:+AllowEnhancedClassRedefinition'
 
             mods {
                 "${MOD_ID}" {

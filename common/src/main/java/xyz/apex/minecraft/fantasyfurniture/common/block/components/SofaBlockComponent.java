@@ -24,13 +24,19 @@ public final class SofaBlockComponent extends BaseBlockComponent
 {
     public static final BlockComponentType<SofaBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "sofa"),
-            SofaBlockComponent::new,
-            BlockComponentTypes.HORIZONTAL_FACING, SeatBlockComponent.COMPONENT_TYPE
+            SofaBlockComponent::new
     );
 
     private SofaBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
+    }
+
+    @Override
+    public void onRegistered(BlockComponentHolder.Registrar registrar)
+    {
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
+        registrar.register(SeatBlockComponent.COMPONENT_TYPE);
     }
 
     @Override

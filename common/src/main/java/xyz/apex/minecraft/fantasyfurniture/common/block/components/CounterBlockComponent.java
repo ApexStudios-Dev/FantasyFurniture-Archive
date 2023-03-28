@@ -24,13 +24,18 @@ public final class CounterBlockComponent extends BaseBlockComponent
 {
     public static final BlockComponentType<CounterBlockComponent> COMPONENT_TYPE = BlockComponentType.register(
             new ResourceLocation(FantasyFurniture.ID, "counter"),
-                    CounterBlockComponent::new,
-                    BlockComponentTypes.HORIZONTAL_FACING
+                    CounterBlockComponent::new
     );
 
     private CounterBlockComponent(BlockComponentHolder holder)
     {
         super(holder);
+    }
+
+    @Override
+    public void onRegistered(BlockComponentHolder.Registrar registrar)
+    {
+        registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
 
     @Override

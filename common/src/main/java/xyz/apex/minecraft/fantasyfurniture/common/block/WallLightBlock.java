@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
@@ -18,18 +17,15 @@ import xyz.apex.minecraft.apexcore.common.util.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.components.LightBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.init.*;
 
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
 public final class WallLightBlock extends BaseBlockComponentHolder
 {
-    private final Supplier<ParticleOptions> flameParticle;
     private final VoxelShapeCacher shapeCacher = new VoxelShapeCacher(this::getShape);
 
-    public WallLightBlock(Supplier<ParticleOptions> flameParticle, Properties properties)
+    public WallLightBlock(Consumer<Registrar> registrarConsumer, Properties properties)
     {
-        super(properties);
-
-        this.flameParticle = flameParticle;
+        super(registrarConsumer, properties);
     }
 
     @Override
@@ -66,7 +62,7 @@ public final class WallLightBlock extends BaseBlockComponentHolder
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
         }
         else if(VenthyrSet.WALL_LIGHT.hasBlockState(blockState))
         {
@@ -82,7 +78,7 @@ public final class WallLightBlock extends BaseBlockComponentHolder
                 var zOff = (i == 0 ? -.125D : .125D) * clockWise.getStepZ();
 
                 level.addParticle(ParticleTypes.SMOKE, x + xOff, y, z + zOff, 0D, 0D, 0D);
-                level.addParticle(flameParticle.get(), x + xOff, y, z + zOff, 0D, 0D, 0D);
+                level.addParticle(ParticleTypes.FLAME, x + xOff, y, z + zOff, 0D, 0D, 0D);
             }
         }
         else if(BoneSet.Wither.WALL_LIGHT.hasBlockState(blockState) || BoneSet.Skeleton.WALL_LIGHT.hasBlockState(blockState))
@@ -97,7 +93,7 @@ public final class WallLightBlock extends BaseBlockComponentHolder
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
         }
         else if(NecrolordSet.WALL_LIGHT.hasBlockState(blockState))
         {
@@ -111,7 +107,7 @@ public final class WallLightBlock extends BaseBlockComponentHolder
             z -= hStep * stepZ;
 
             level.addParticle(ParticleTypes.SMOKE, x, y, z, 0D, 0D, 0D);
-            level.addParticle(flameParticle.get(), x, y, z, 0D, 0D, 0D);
+            level.addParticle(ParticleTypes.FLAME, x, y, z, 0D, 0D, 0D);
         }
     }
 
