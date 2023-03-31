@@ -26,3 +26,6 @@ forge*changelog.txt
 
 # Ignore generated data files
 /**/src/main/generated
+
+# compiles jar files
+jars/

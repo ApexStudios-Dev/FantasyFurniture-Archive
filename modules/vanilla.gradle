@@ -1,0 +1,47 @@
+apply plugin: 'fabric-loom'
+
+loom {
+    if(accessWidenerFile.exists()) {
+        accessWidenerPath = accessWidenerFile
+    }
+
+    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
+}
+
+repositories {
+    maven { url 'https://repo.spongepowered.org/maven/' }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+
+    mappings(loom.layered {
+        officialMojangMappings()
+
+        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+            def mcVersion = rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION') ? "${PARCHMENT_MINECRAFT_VERSION}" : "${MINECRAFT_VERSION}"
+            parchment("org.parchmentmc.data:parchment-${mcVersion}:${PARCHMENT_MAPPINGS}@zip")
+        }
+    })
+
+    compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
+    implementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+}
+
+remapJar.enabled = false
+remapSourcesJar.enabled = false
+
+jar {
+    classifier ''
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            loom.disableDeprecatedPomGeneration(it)
+
+            artifact jar
+            artifact sourcesJar
+        }
+    }
+}

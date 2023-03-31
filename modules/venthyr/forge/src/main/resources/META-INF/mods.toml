@@ -1,0 +1,40 @@
+modLoader="javafml"
+loaderVersion="[${FORGE_LOADER_VERSION},)"
+license="${MOD_LICENSE}"
+issueTrackerURL="https://discord.apexstudios.dev/"
+
+[[mods]]
+    modId="${MOD_ID}_venthyr"
+    version="${MOD_VERSION}"
+    displayName="${MOD_NAME} - Venthyr Furntiure Set"
+    updateJSONURL="https://api.modrinth.com/updates/apexcore/forge_updates.json"
+    displayURL="https://apexstudios.dev/fantasys-furniture"
+    logoFile="banner.png"
+    credits="Apex - [Founder, Lead Programmer], FantasyGaming (Viscerus) - [Co-Founder, Artist], RudySPG - [Supporter], TobiSPG - [Supporter, Beta Tester]"
+    authors="ApexStudios"
+    description="Module for ${MOD_NAME} - Venthyr Furniture Set"
+
+[[dependencies."${MOD_ID}_venthyr"]]
+	modId="forge"
+	mandatory=true
+	versionRange="${FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}_venthyr"]]
+	modId="minecraft"
+	mandatory=true
+	versionRange="${MINECRAFT_FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}_venthyr"]]
+	modId="apexcore"
+	mandatory=true
+	versionRange="${APEXCORE_FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}_venthyr"]]
+	modId="${MOD_ID}"
+	mandatory=true
+	versionRange="[${MOD_VERSION},)"
+	ordering="AFTER"
+	side="BOTH"

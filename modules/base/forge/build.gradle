@@ -1,0 +1,45 @@
+apply from: rootProject.file('modules/forge.gradle')
+
+minecraft {
+    runs {
+        data {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            forceExit false
+
+            args '--mod', MOD_ID, '--client', '--server', '--validate'
+            args '--input', project(':base-common').file('blockbench/')
+            args '--output', project(':base-common').file('src/main/generated/')
+            args '--existing', project(':base-common').file('src/main/resources')
+            args '--existing', file('src/main/resources')
+            args '--existing-mod', 'apexcore'
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                    source project(':base-common').sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':base-common', configuration: 'namedElements')
+
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_FORGE_VERSION_RANGE}")
+}
+
+processResources {
+    from project(':base-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':base-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':base-common').sourceSets.main.allJava
+}

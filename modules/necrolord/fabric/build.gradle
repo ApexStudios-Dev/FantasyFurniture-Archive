@@ -1,0 +1,21 @@
+apply from: rootProject.file('modules/fabric.gradle')
+
+dependencies {
+    compileOnly project(path: ':base-common', configuration: 'namedElements')
+    compileOnly project(path: ':base-fabric', configuration: 'namedElements')
+    include project(':base-fabric')
+
+    compileOnly project(path: ':necrolord-common', configuration: 'namedElements')
+}
+
+processResources {
+    from project(':necrolord-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':necrolord-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':necrolord-common').sourceSets.main.allJava
+}

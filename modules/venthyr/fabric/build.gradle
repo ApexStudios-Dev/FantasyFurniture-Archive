@@ -1,0 +1,21 @@
+apply from: rootProject.file('modules/fabric.gradle')
+
+dependencies {
+    compileOnly project(path: ':base-common', configuration: 'namedElements')
+    compileOnly project(path: ':base-fabric', configuration: 'namedElements')
+    include project(':base-fabric')
+
+    compileOnly project(path: ':venthyr-common', configuration: 'namedElements')
+}
+
+processResources {
+    from project(':venthyr-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':venthyr-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':venthyr-common').sourceSets.main.allJava
+}

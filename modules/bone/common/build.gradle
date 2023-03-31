@@ -1,0 +1,5 @@
+apply from: rootProject.file('modules/vanilla.gradle')
+
+dependencies {
+    implementation project(path: ':base-common', configuration: 'namedElements')
+}

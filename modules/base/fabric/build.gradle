@@ -1,0 +1,19 @@
+apply from: rootProject.file('modules/fabric.gradle')
+
+dependencies {
+    compileOnly project(path: ':base-common', configuration: 'namedElements')
+
+    include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+}
+
+processResources {
+    from project(':base-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':base-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':base-common').sourceSets.main.allJava
+}

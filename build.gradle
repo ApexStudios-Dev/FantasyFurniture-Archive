@@ -1,4 +1,9 @@
 plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+' apply false
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply false
+    id 'org.spongepowered.mixin' version '0.7.+' apply false
+    id 'fabric-loom' version '1.1-SNAPSHOT' apply false
+
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
 }
 
@@ -8,13 +13,15 @@ subprojects {
     apply plugin: 'maven-publish'
 
     project.ext {
-        accessWidenerFile = rootProject.file("fabric/src/main/resources/${MOD_ID}.accesswidener")
-        accessTransformerFile = rootProject.file('forge/src/main/resources/META-INF/accesstransformer.cfg')
+        accessWidenerFile = rootProject.file("modules/base/fabric/src/main/resources/${MOD_ID}.accesswidener")
+        accessTransformerFile = rootProject.file('modules/base/forge/src/main/resources/META-INF/accesstransformer.cfg')
     }
 
     group = "${MOD_GROUP}"
     version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
-    archivesBaseName = "${MOD_ID}-${project.name}"
+    archivesBaseName = project.name.startsWithIgnoreCase('workspace') ? "${MOD_ID}-${project.name.substring(project.name.indexOf('-') + 1)}" : "${MOD_ID}-${project.name}"
+
+    println("${project.path} -> '${project.group}:${project.archivesBaseName}:${project.version}'")
 
     sourceSets {
         main.resources.srcDirs += [ 'src/main/generated' ]
@@ -101,9 +108,6 @@ subprojects {
                 groupId = "${project.group}"
                 artifactId = "${project.archivesBaseName}"
                 version = "${project.version}"
-
-                artifact jar
-                artifact sourcesJar
             }
         }
 
@@ -124,9 +128,25 @@ subprojects {
 
     idea.module {
         excludeDirs += [
+                file('.gradle'),
+                file('build'),
                 file('run')
         ]
     }
+}
+
+tasks.register('collectJars', Copy) {
+    def deps = subprojects.collect {
+        if(it.name.containsIgnoreCase('common') || it.name.containsIgnoreCase('forge')) {
+            return it.tasks.withType(Jar)
+        } else {
+            return [ it.tasks.remapJar, it.tasks.sourcesJar ]
+        }
+    }
+
+    dependsOn deps
+    from deps
+    into 'jars'
 }
 
 idea.module {

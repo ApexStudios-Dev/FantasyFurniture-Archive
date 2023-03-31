@@ -1,0 +1,160 @@
+apply from: rootProject.file('modules/fabric.gradle')
+
+loom {
+    runs {
+        client {
+            client()
+            ideConfigGenerated true
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+        }
+
+        server {
+            server()
+            ideConfigGenerated true
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+        }
+    }
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet project(':base-common').sourceSets.main
+            sourceSet project(':base-fabric').sourceSets.main
+        }
+
+        if(findProject(':nordic-common') != null) {
+            "${MOD_ID}_nordic" {
+                sourceSet project(':nordic-common').sourceSets.main
+
+                if(findProject(':nordic-fabric') != null) {
+                    sourceSet project(':nordic-fabric').sourceSets.main
+                }
+            }
+        }
+
+        if(findProject(':dunmer-common') != null) {
+            "${MOD_ID}_dunmer" {
+                sourceSet project(':dunmer-common').sourceSets.main
+
+                if(findProject(':dunmer-fabric') != null) {
+                    sourceSet project(':dunmer-fabric').sourceSets.main
+                }
+            }
+        }
+
+        if(findProject(':venthyr-common') != null) {
+            "${MOD_ID}_venthyr" {
+                sourceSet project(':venthyr-common').sourceSets.main
+
+                if(findProject(':venthyr-fabric') != null) {
+                    sourceSet project(':venthyr-fabric').sourceSets.main
+                }
+            }
+        }
+
+        if(findProject(':bone-common') != null) {
+            "${MOD_ID}_bone" {
+                sourceSet project(':bone-common').sourceSets.main
+
+                if(findProject(':bone-fabric') != null) {
+                    sourceSet project(':bone-fabric').sourceSets.main
+                }
+            }
+        }
+
+        if(findProject(':royal-common') != null) {
+            "${MOD_ID}_royal" {
+                sourceSet project(':royal-common').sourceSets.main
+
+                if(findProject(':royal-fabric') != null) {
+                    sourceSet project(':royal-fabric').sourceSets.main
+                }
+            }
+        }
+
+        if(findProject(':necrolord-common') != null) {
+            "${MOD_ID}_necrolord" {
+                sourceSet project(':necrolord-common').sourceSets.main
+
+                if(findProject(':necrolord-fabric') != null) {
+                    sourceSet project(':necrolord-fabric').sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':base-common', configuration: 'namedElements')
+    implementation project(path: ':base-fabric', configuration: 'namedElements')
+    include project(':base-fabric')
+
+    if(findProject(':nordic-common') != null) {
+        implementation project(path: ':nordic-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':nordic-fabric') != null) {
+        implementation project(path: ':nordic-fabric', configuration: 'namedElements')
+        include project(':nordic-fabric')
+    }
+
+    if(findProject(':dunmer-common') != null) {
+        implementation project(path: ':dunmer-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':dunmer-fabric') != null) {
+        implementation project(path: ':dunmer-fabric', configuration: 'namedElements')
+        include project(':dunmer-fabric')
+    }
+
+    if(findProject(':venthyr-common') != null) {
+        implementation project(path: ':venthyr-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':venthyr-fabric') != null) {
+        implementation project(path: ':venthyr-fabric', configuration: 'namedElements')
+        include project(':venthyr-fabric')
+    }
+
+    if(findProject(':bone-common') != null) {
+        implementation project(path: ':bone-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':bone-fabric') != null) {
+        implementation project(path: ':bone-fabric', configuration: 'namedElements')
+        include project(':bone-fabric')
+    }
+
+    if(findProject(':royal-common') != null) {
+        implementation project(path: ':royal-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':royal-fabric') != null) {
+        implementation project(path: ':royal-fabric', configuration: 'namedElements')
+        include project(':royal-fabric')
+    }
+
+    if(findProject(':necrolord-common') != null) {
+        implementation project(path: ':necrolord-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':necrolord-fabric') != null) {
+        implementation project(path: ':necrolord-fabric', configuration: 'namedElements')
+        include project(':necrolord-fabric')
+    }
+
+    if(rootProject.hasProperty('FABRIC_LAZY_DFU_VERSION')) {
+        modRuntimeOnly "maven.modrinth:lazydfu:${FABRIC_LAZY_DFU_VERSION}"
+    }
+
+    if(rootProject.hasProperty('FABRIC_MOD_MENU_VERSION')) {
+        modRuntimeOnly("com.terraformersmc:modmenu:${FABRIC_MOD_MENU_VERSION}") {
+            exclude group: 'net.fabricmc'
+            exclude group: 'net.fabricmc.fabric-api'
+        }
+    }
+}
+
+// ugly workaround: disable all tasks that come with maven-publish plugin
+tasks.matching { it.group == 'publishing' }.each { it.enabled = false }
+
+sourcesJar.enabled = false

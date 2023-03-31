@@ -1,0 +1,61 @@
+apply from: rootProject.file('modules/forge.gradle')
+
+minecraft {
+    runs {
+        data {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            forceExit false
+
+            args '--mod', "${MOD_ID}_venthyr", '--client', '--server', '--validate'
+            args '--input', project(':venthyr-common').file('blockbench/')
+            args '--output', project(':venthyr-common').file('src/main/generated/')
+            args '--existing', project(':base-common').file('src/main/resources')
+            args '--existing', project(':base-forge').file('src/main/resources')
+            args '--existing', project(':venthyr-common').file('src/main/resources')
+            args '--existing', file('src/main/resources/')
+            args '--existing-mod', 'apexcore'
+            args '--existing-mod', MOD_ID
+
+            mods {
+                "${MOD_ID}" {
+                    source project(':base-common').sourceSets.main
+                    source project(':base-forge').sourceSets.main
+                }
+
+                "${MOD_ID}_venthyr" {
+                    source project(':venthyr-common').sourceSets.main
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':base-common', configuration: 'namedElements')
+    compileOnly project(':base-forge')
+
+    compileOnly project(path: ':venthyr-common', configuration: 'namedElements')
+
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_FORGE_VERSION_RANGE}")
+
+    jarJar(project(':base-forge')) {
+        transitive false
+        jarJar.ranged(it, "[${MOD_VERSION},)")
+    }
+}
+
+processResources {
+    from project(':venthyr-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':venthyr-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':venthyr-common').sourceSets.main.allJava
+}

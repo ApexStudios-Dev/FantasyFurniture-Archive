@@ -1,0 +1,82 @@
+{
+    "schemaVersion": 1,
+    "id": "${MOD_ID}_nordic",
+    "version": "${MOD_VERSION}",
+    "name": "${MOD_NAME} - Nordic Furniture Set",
+    "description": "Module for ${MOD_NAME} - Nordic Furniture Set",
+    "authors": [
+        {
+            "name": "ApexStudios",
+            "contact": {
+                "homepage": "https://apexstudios.dev",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        },
+        {
+            "name": "Apex - [Founder & Lead Programmer]",
+            "contact": {
+                "homepage": "https://apexmodder.xyz",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        },
+        {
+            "name": "FantasyGaming (Viscerus) - [Co-Founder & Artist]",
+            "contact": {
+                "homepage": "https://bio.link/Viscerus",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/Viscerus"
+            }
+        }
+    ],
+    "icon": "banner.png",
+    "contact": {
+        "homepage": "https://apexstudios.dev/",
+        "issues": "https://discord.apexstudios.dev",
+        "sources": "https://github.com/ApexStudios-Dev/"
+    },
+    "contributors": [
+        {
+            "name": "FantasyGaming (Viscerus) - [Co-Founder & Artist]",
+            "contact": {
+                "homepage": "https://bio.link/Viscerus",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/Viscerus"
+            }
+        },
+        {
+            "name": "RudySPG - [Web-Developer, Supporter, Beta Tester]",
+            "contact": {
+                "homepage": "https://github.com/RudySPG",
+                "sources": "https://github.com/RudySPG"
+            }
+        },
+        {
+            "name": "TobiSPG - [Supporter & Beta Tester]",
+            "contact": {
+                "homepage": "https://lexzandersaplan.com/",
+                "sources": "https://github.com/zanderlx"
+            }
+        }
+    ],
+    "license": "${MOD_LICENSE}",
+    "environment": "*",
+    "entrypoints": {
+        "main": [ "${MOD_GROUP}.nordic.fabric.NordicFurnitureSetFabric::INSTANCE" ]
+    },
+    "mixins": [ ],
+    "depends": {
+        "minecraft": "~${MINECRAFT_VERSION}",
+        "java": ">=${JAVA_VERSION}",
+        "fabric": "*",
+        "apexcore": ">=${APEXCORE_PROD_VERSION}",
+        "${MOD_ID}": ">=${MOD_VERSION}"
+    },
+    "custom": {
+        "modmenu": {
+            "modmenu.discord": "https://discord.apexstudios.dev/",
+            "parent": "${MOD_ID}"
+        }
+    }
+}

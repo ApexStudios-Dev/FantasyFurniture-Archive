@@ -1,0 +1,69 @@
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+
+jarJar.enable()
+
+minecraft {
+    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+        if(rootProject.hasProperty('PARCHMENT_MINECRAFT_VERSION')) {
+            mappings channel: 'parchment', version: "${PARCHMENT_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        } else {
+            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        }
+    } else {
+        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+    }
+
+    if(accessTransformerFile.exists()) {
+        accessTransformer = accessTransformerFile
+    }
+}
+
+mixin {
+    add sourceSets.main, "${MOD_ID}.refmap.json"
+
+    if(project(':base-forge').file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
+        config "${MOD_ID}.mixins.json"
+    }
+
+    if(project(':base-common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
+        config "${MOD_ID}-common.mixins.json"
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
+    annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
+
+    implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+}
+
+tasks.jarJar.configure {
+    classifier ''
+}
+
+jar {
+    classifier 'slim'
+}
+
+artifacts {
+    archives tasks.jarJar
+}
+
+reobf {
+    jarJar { }
+}
+
+jar.finalizedBy('reobfJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact tasks.jarJar
+        }
+    }
+}

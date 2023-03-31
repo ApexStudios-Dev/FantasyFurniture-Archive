@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[${FORGE_LOADER_VERSION},)"
+license="${MOD_LICENSE}"
+issueTrackerURL="https://discord.apexstudios.dev/"
+
+[[mods]]
+    modId="${MOD_ID}_complete"
+    version="${MOD_VERSION}"
+    displayName="${MOD_NAME} - Complete Collection"
+    updateJSONURL="https://api.modrinth.com/updates/apexcore/forge_updates.json"
+    displayURL="https://apexstudios.dev/fantasys-furniture"
+    logoFile="banner.png"
+    credits="Apex - [Founder, Lead Programmer], FantasyGaming (Viscerus) - [Co-Founder, Artist], RudySPG - [Supporter], TobiSPG - [Supporter, Beta Tester]"
+    authors="ApexStudios"
+    description="${MOD_NAME} - Complete Collection"
+
+[[dependencies."${MOD_ID}_complete"]]
+	modId="forge"
+	mandatory=true
+	versionRange="${FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}_complete"]]
+	modId="minecraft"
+	mandatory=true
+	versionRange="${MINECRAFT_FORGE_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"

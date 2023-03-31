@@ -17,8 +17,28 @@ pluginManagement {
 	}
 }
 
-include 'common'
-include 'forge'
-include 'fabric'
+loadModule('base')
+loadModule('workspace')
+
+loadModule('nordic')
+loadModule('dunmer')
+loadModule('venthyr')
+loadModule('bone')
+loadModule('royal')
+loadModule('necrolord')
+
+void loadModule(String module) {
+	loadModule(module, 'common')
+	loadModule(module, 'forge')
+	loadModule(module, 'fabric')
+}
+
+void loadModule(String module, String platform) {
+	if(file("modules/${module}/${platform}/build.gradle").exists()) {
+		include "${module}-${platform}"
+		def p = project(":${module}-${platform}")
+		p.projectDir = file("modules/${module}/${platform}")
+	}
+}
 
 rootProject.name = "FantasyFurniture-${MINECRAFT_VERSION}"

@@ -1,0 +1,254 @@
+apply from: rootProject.file('modules/forge.gradle')
+
+minecraft {
+    runs {
+        client {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args '--width', 1920, '--height', 1080
+            jvmArg '-XX:+AllowEnhancedClassRedefinition'
+
+            mods {
+                "${MOD_ID}" {
+                    source project(':base-common').sourceSets.main
+                    source project(':base-forge').sourceSets.main
+                }
+
+                if(findProject(':nordic-common') != null) {
+                    "${MOD_ID}_nordic" {
+                        source project(':nordic-common').sourceSets.main
+
+                        if(findProject(':nordic-forge') != null) {
+                            source project(':nordic-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':dunmer-common') != null) {
+                    "${MOD_ID}_dunmer" {
+                        source project(':dunmer-common').sourceSets.main
+
+                        if(findProject(':dunmer-forge') != null) {
+                            source project(':dunmer-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':venthyr-common') != null) {
+                    "${MOD_ID}_venthyr" {
+                        source project(':venthyr-common').sourceSets.main
+
+                        if(findProject(':venthyr-forge') != null) {
+                            source project(':venthyr-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':bone-common') != null) {
+                    "${MOD_ID}_bone" {
+                        source project(':bone-common').sourceSets.main
+
+                        if(findProject(':bone-forge') != null) {
+                            source project(':bone-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':royal-common') != null) {
+                    "${MOD_ID}_royal" {
+                        source project(':royal-common').sourceSets.main
+
+                        if(findProject(':royal-forge') != null) {
+                            source project(':royal-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':necrolord-common') != null) {
+                    "${MOD_ID}_necrolord" {
+                        source project(':necrolord-common').sourceSets.main
+
+                        if(findProject(':necrolord-forge') != null) {
+                            source project(':necrolord-forge').sourceSets.main
+                        }
+                    }
+                }
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            args 'nogui'
+            jvmArg '-XX:+AllowEnhancedClassRedefinition'
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+
+                    source project(':base-common').sourceSets.main
+                    source project(':base-forge').sourceSets.main
+                }
+
+                if(findProject(':nordic-common') != null) {
+                    "${MOD_ID}_nordic" {
+                        source project(':nordic-common').sourceSets.main
+
+                        if(findProject(':nordic-forge') != null) {
+                            source project(':nordic-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':dunmer-common') != null) {
+                    "${MOD_ID}_dunmer" {
+                        source project(':dunmer-common').sourceSets.main
+
+                        if(findProject(':dunmer-forge') != null) {
+                            source project(':dunmer-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':venthyr-common') != null) {
+                    "${MOD_ID}_venthyr" {
+                        source project(':venthyr-common').sourceSets.main
+
+                        if(findProject(':venthyr-forge') != null) {
+                            source project(':venthyr-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':bone-common') != null) {
+                    "${MOD_ID}_bone" {
+                        source project(':bone-common').sourceSets.main
+
+                        if(findProject(':bone-forge') != null) {
+                            source project(':bone-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':royal-common') != null) {
+                    "${MOD_ID}_royal" {
+                        source project(':royal-common').sourceSets.main
+
+                        if(findProject(':royal-forge') != null) {
+                            source project(':royal-forge').sourceSets.main
+                        }
+                    }
+                }
+
+                if(findProject(':necrolord-common') != null) {
+                    "${MOD_ID}_necrolord" {
+                        source project(':necrolord-common').sourceSets.main
+
+                        if(findProject(':necrolord-forge') != null) {
+                            source project(':necrolord-forge').sourceSets.main
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':base-common', configuration: 'namedElements')
+    implementation project(':base-forge')
+
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_FORGE_VERSION_RANGE}")
+
+    jarJar(project(':base-forge')) {
+        transitive false
+        jarJar.ranged(it, "[${MOD_VERSION},)")
+    }
+
+    if(findProject(':nordic-common') != null) {
+        implementation project(path: ':nordic-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':nordic-forge') != null) {
+        implementation project(':nordic-forge')
+
+        jarJar(project(':nordic-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+
+    if(findProject(':dunmer-common') != null) {
+        implementation project(path: ':dunmer-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':dunmer-forge') != null) {
+        implementation project(':dunmer-forge')
+
+        jarJar(project(':dunmer-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+
+    if(findProject(':venthyr-common') != null) {
+        implementation project(path: ':venthyr-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':venthyr-forge') != null) {
+        implementation project(':venthyr-forge')
+
+        jarJar(project(':venthyr-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+
+    if(findProject(':bone-common') != null) {
+        implementation project(path: ':bone-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':bone-forge') != null) {
+        implementation project(':bone-forge')
+
+        jarJar(project(':bone-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+
+    if(findProject(':royal-common') != null) {
+        implementation project(path: ':royal-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':royal-forge') != null) {
+        implementation project(':royal-forge')
+
+        jarJar(project(':royal-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+
+    if(findProject(':necrolord-common') != null) {
+        implementation project(path: ':necrolord-common', configuration: 'namedElements')
+    }
+
+    if(findProject(':necrolord-forge') != null) {
+        implementation project(':necrolord-forge')
+
+        jarJar(project(':necrolord-forge')) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+}
+
+// ugly workaround: disable all tasks that come with maven-publish plugin
+tasks.matching { it.group == 'publishing' }.each { it.enabled = false }
+
+sourcesJar.enabled = false
