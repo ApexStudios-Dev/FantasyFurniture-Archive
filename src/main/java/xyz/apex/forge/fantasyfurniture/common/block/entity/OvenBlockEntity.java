@@ -1,8 +1,7 @@
 package xyz.apex.forge.fantasyfurniture.common.block.entity;
 
+import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +14,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.forge.apexcore.lib.block.IMultiBlock;
 import xyz.apex.forge.apexcore.lib.block.entity.InventoryBlockEntity;
 import xyz.apex.forge.fantasyfurniture.common.menu.OvenMenu;
@@ -118,6 +118,9 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 
 	public void awardRecipesAndExperience(ServerLevel level, @Nullable ServerPlayer player, Vec3 pos)
 	{
+		if(recipesUsed.isEmpty()) return;
+		var recipes = Lists.<Recipe<?>>newArrayList();
+
 		for(var entry : recipesUsed.object2IntEntrySet())
 		{
 			level.getRecipeManager().byKey(entry.getKey()).filter(AbstractCookingRecipe.class::isInstance).map(AbstractCookingRecipe.class::cast).ifPresent(recipe -> {
@@ -133,6 +136,9 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 				ExperienceOrb.award(level, pos, i);
 			});
 		}
+
+		if(player != null) player.awardRecipes(recipes);
+		recipesUsed.clear();
 	}
 
 	public void serverTick(Level level, BlockPos pos, BlockState blockState)
