@@ -1,5 +1,6 @@
 package xyz.apex.forge.fantasyfurniture.common.block.entity;
 
+import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -116,6 +118,9 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 
 	public void awardRecipesAndExperience(ServerLevel level, @Nullable ServerPlayer player, Vec3 pos)
 	{
+		if(recipesUsed.isEmpty()) return;
+		var recipes = Lists.<Recipe<?>>newArrayList();
+
 		for(var entry : recipesUsed.object2IntEntrySet())
 		{
 			level.getRecipeManager().byKey(entry.getKey()).filter(AbstractCookingRecipe.class::isInstance).map(AbstractCookingRecipe.class::cast).ifPresent(recipe -> {
@@ -131,6 +136,9 @@ public final class OvenBlockEntity extends InventoryBlockEntity implements Conta
 				ExperienceOrb.award(level, pos, i);
 			});
 		}
+
+		if(player != null) player.awardRecipes(recipes);
+		recipesUsed.clear();
 	}
 
 	public void serverTick(Level level, BlockPos pos, BlockState blockState)
