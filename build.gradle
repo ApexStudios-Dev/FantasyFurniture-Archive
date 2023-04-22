@@ -266,11 +266,11 @@ reobf {
 jar.finalizedBy('reobfJar')
 tasks.jarJar.finalizedBy('reobfJarJar')
 
-if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
-	task sendDiscordChangelog {
-		dependsOn tasks.createChangelog
+task sendDiscordChangelog {
+	dependsOn tasks.createChangelog
 
-		doLast {
+	doLast {
+		if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 			def emojis = [
 					// ApexStudios
 					'modrinth': '<:modrinth:1087664953235869696>',
@@ -293,8 +293,8 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 					embeds: [
 							[
 									title: "**${mod_name}** updated to **_v${version}_**!",
-									description: "${tasks.createChangelog.outputFile.map { it.asFile.text.split('\n').drop(1).join('\n') }.get()}\n\n**Download**: [${emojis['modrinth']} **_Modrinth_**](https://modrinth.com/mod/${mod_modrinth_slug}) | [${emojis['curseforge']} **_Curseforge_**](https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug})",
-									url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}/master",
+									description: "[For full changelog see here](https://updates.apexstudios.dev/${mod_id}/${project.version})\n\n**Download**: [${emojis['modrinth']} **_Modrinth_**](https://modrinth.com/mod/${mod_modrinth_slug}) | [${emojis['curseforge']} **_Curseforge_**](https://www.curseforge.com/minecraft/mc-mods/${mod_curseforge_slug})",
+									url: "https://updates.apexstudios.dev/${mod_id}/${project.version}",
 									color: "${Integer.decode(mod_color)}",
 									footer: [
 											text: 'ApexStudios',
@@ -302,7 +302,7 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 									],
 									author: [
 											name: "${mod_name}",
-											url: "https://github.com/ApexStudios-Dev/FantasyFurniture/tree/${minecraft_version}/master",
+											url: "https://updates.apexstudios.dev/${mod_id}/${project.version}",
 											icon_url: "https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/assets/minecraft/${mod_id}_logo.png"
 									],
 									fields: [
@@ -329,12 +329,31 @@ if(System.getenv('DISCORD_CHANGELOG_WEBHOOK_URL') != null) {
 			// read the response, without this, webhook wont actually be sent
 			// we should maybe, perhaps, handle any errors that could occur, or at least log them
 			def t = req.getInputStream().getText()
+		} else {
+			println '[Discord-Changelog] Missing required "DISCORD_CHANGELOG_WEBHOOK_URL" Environment Variable!!!'
 		}
 	}
-} else {
-	task sendDiscordChangelog {
-		doLast {
-			println '[Discord-Changelog] Missing required "DISCORD_CHANGELOG_WEBHOOK_URL" Environment Variable!!!'
+}
+
+task publishChangelogFile {
+	dependsOn tasks.createChangelog
+
+	doLast {
+		if(System.getenv('APEXSTUDIOS_CHANGELOG_SERVER_KEY') != null) {
+			def changelogLines = tasks.createChangelog.outputFile.map { it.asFile.text.split('\n').drop(1).join('\n') }.get()
+			def url = "https://updates.apexstudios.dev/${mod_id}/${project.version}"
+			println "[Changelog-Server] Publishing changelog to: ${url}"
+
+			def req = new URL(url).openConnection()
+			req.setRequestMethod('PUT')
+			req.setRequestProperty('X-Api-Key', System.getenv('APEXSTUDIOS_CHANGELOG_SERVER_KEY'))
+			req.setDoOutput(true)
+			req.getOutputStream().write(changelogLines.getBytes('utf-8'))
+			// read the response, without this, webhook wont actually be sent
+			// we should maybe, perhaps, handle any errors that could occur, or at least log them
+			def t = req.getInputStream().getText()
+		} else {
+			println '[Changelog-Server] Missing required "APEXSTUDIOS_CHANGELOG_SERVER_KEY" Environment Variable!!!'
 		}
 	}
 }
