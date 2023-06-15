@@ -1,0 +1,143 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)' apply false
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+' apply false
+    id 'org.spongepowered.mixin' version '0.7.+' apply false
+    id 'fabric-loom' version '1.2-SNAPSHOT' apply false
+
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1'
+}
+
+allprojects {
+    tasks.register('collectJars', Copy) {
+        into rootProject.file('jars')
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+
+    group = "${MOD_GROUP}"
+    version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
+    archivesBaseName = "${MOD_ID}-${project.name}"
+
+    sourceSets {
+        main.resources.srcDirs += [ 'src/generated/resources' ]
+
+        test {
+            java.srcDirs = [ ]
+            resources.srcDirs = [ ]
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url 'https://maven.covers1624.net/' }
+
+        exclusiveContent {
+            forRepository { maven { url 'https://maven.parchmentmc.org' } }
+            filter { includeGroupByRegex 'org\\.parchmentmc.*' }
+        }
+
+        exclusiveContent {
+            forRepository { maven { url 'https://www.cursemaven.com' } }
+            filter { includeGroup 'curse.maven' }
+        }
+
+        exclusiveContent {
+            forRepository { maven { url 'https://api.modrinth.com/maven' } }
+            filter { includeGroup 'maven.modrinth' }
+        }
+    }
+
+    dependencies {
+
+    }
+
+    processResources {
+        project.properties.each {
+            inputs.property "${it.key}", "${it.value}"
+        }
+
+        filesMatching([ '*.mixins.json', 'pack.mcmeta', 'META-INF/mods.toml', 'fabric.mod.json' ]) {
+            expand project.properties
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+        }
+
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release.set(JavaLanguageVersion.of("${JAVA_VERSION}").asInt())
+
+        javaToolchains {
+            compilerFor {
+                languageVersion.set(JavaLanguageVersion.of("${JAVA_VERSION}"))
+            }
+        }
+    }
+
+    jar {
+        manifest {
+            attributes([
+                    'Specification-Title': "${MOD_ID}",
+                    'Specification-Vendor': 'ApexStudios',
+                    'Specification-Version': "${MINECRAFT_VERSION}",
+                    'Implementation-Title': "${project.name}",
+                    'Implementation-Version': "${project.version}",
+                    'Implementation-Vendor': 'ApexStudios',
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            ])
+        }
+    }
+
+    artifacts {
+        archives jar
+        archives sourcesJar
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = "${project.group}"
+                artifactId = "${project.archivesBaseName}"
+                version = "${project.version}"
+            }
+        }
+
+        repositories {
+            if(System.getenv('MAVEN_PASSWORD') != null) {
+                maven {
+                    name 'Covers1624-Maven'
+                    url 'https://nexus.covers1624.net/repository/apex-releases/'
+
+                    credentials {
+                        username 'apex'
+                        password System.getenv('MAVEN_PASSWORD')
+                    }
+                }
+            }
+        }
+    }
+
+    idea.module {
+        excludeDirs += [
+                file('run')
+        ]
+    }
+}
+
+idea.module {
+    excludeDirs += [
+            file('.idea'),
+            file('.gradle'),
+            file('gradle')
+    ]
+}

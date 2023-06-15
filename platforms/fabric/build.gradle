@@ -1,0 +1,92 @@
+apply plugin: 'fabric-loom'
+
+loom {
+    if(getRootProject().file("${AW_FILE}").exists()) {
+        accessWidenerPath = getRootProject().file("${AW_FILE}")
+    }
+
+    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
+
+    runs {
+        client {
+            client()
+            property "${MOD_ID}.test_elements.enabled", 'true'
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        server {
+            server()
+            property "${MOD_ID}.test_elements.enabled", 'true'
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                inherit runs.client
+                programArgs '--launch_target', 'net.fabricmc.loader.impl.launch.knot.KnotClient'
+                mainClass.set 'net.covers1624.devlogin.DevLogin'
+            }
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+
+    mappings(loom.layered {
+        officialMojangMappings()
+
+        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+            if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
+                parchment("org.parchmentmc.data:parchment-${PARCHMENT_DEV_MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+            } else {
+                parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+            }
+        }
+    })
+
+    modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
+
+    compileOnly project(path: ':common', configuration: 'namedElements')
+
+    modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+
+    if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+        localRuntime "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
+    }
+
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
+}
+
+processResources {
+    from project(':common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':common').sourceSets.main.allJava
+}
+
+collectJars {
+    def tasks = [ remapJar, remapSourcesJar ]
+    dependsOn tasks
+    from tasks
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            loom.disableDeprecatedPomGeneration(it)
+
+            artifact remapJar
+            artifact sourcesJar
+        }
+    }
+}
