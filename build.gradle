@@ -20,7 +20,7 @@ subprojects {
 
     group = "${MOD_GROUP}"
     version = "${MOD_VERSION}+${MINECRAFT_VERSION}"
-    archivesBaseName = "${MOD_ID}-${project.name}"
+    archivesBaseName = "${MOD_ID}-${project.name.replace('workspace', 'complete')}"
 
     sourceSets {
         main.resources.srcDirs += [ 'src/generated/resources' ]

@@ -26,8 +26,18 @@ minecraft {
 }
 
 dependencies {
+    // required as forge jarJar is including the 'slim'
+    // jar, and i dont see any way to redirect it to
+    // include the full fat jarJar
+    //
+    // this should be included via the FF jar
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
+        transitive false
+        jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+    }
+
     compileOnly project(path: ':nordic-common', configuration: 'namedElements')
-    compileOnly project(':forge')
+    implementation project(':forge')
 
     jarJar(project(':forge')) {
         transitive false

@@ -1,0 +1,79 @@
+apply from: rootProject.file('gradle/scripts/fabric.gradle')
+
+def FF_modules = [ ]
+
+rootProject.childProjects.values().forEach { prj ->
+    if(!prj.path.startsWithIgnoreCase(':workspace') && (prj.path.endsWithIgnoreCase('-common') || prj.path.endsWithIgnoreCase('-fabric'))) {
+        def moduleName = prj.path.substring(1, prj.path.indexOf('-'))
+
+        if(!FF_modules.contains(moduleName)) {
+            FF_modules.add(moduleName)
+        }
+    }
+}
+
+loom {
+    runs {
+        client {
+            client()
+            property "${MOD_ID}.test_elements.enabled", 'true'
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        server {
+            server()
+            property "${MOD_ID}.test_elements.enabled", 'true'
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                inherit runs.client
+                programArgs '--launch_target', 'net.fabricmc.loader.impl.launch.knot.KnotClient'
+                mainClass.set 'net.covers1624.devlogin.DevLogin'
+            }
+        }
+    }
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet project(':common').sourceSets.main
+            sourceSet sourceSets.main
+        }
+
+        FF_modules.forEach { module ->
+            "${MOD_ID}_${it}" {
+                sourceSet project(":${module}-common").sourceSets.main
+                sourceSet project(":${module}-fabric").sourceSets.main
+            }
+        }
+    }
+}
+
+dependencies {
+    // included via FF jar (which is included via module jars)
+    // include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+
+    compileOnly project(path: ':workspace-common', configuration: 'namedElements')
+    implementation project(path: ':fabric', configuration: 'namedElements')
+    // include project(':fabric') // include via module jars
+
+    FF_modules.forEach { module ->
+        implementation project(path: ":${module}-fabric", configuration: 'namedElements')
+        include project(":${module}-fabric")
+    }
+}
+
+processResources {
+    from project(':workspace-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':workspace-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':workspace-common').sourceSets.main.allJava
+}

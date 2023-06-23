@@ -1,0 +1,79 @@
+{
+    "schemaVersion": 1,
+    "id": "${MOD_ID}_complete",
+    "version": "${MOD_VERSION}",
+    "name": "${MOD_NAME}",
+    "description": "${MOD_DESCRIPTION}",
+    "authors": [
+        {
+            "name": "ApexStudios",
+            "contact": {
+                "homepage": "https://apexstudios.dev",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        },
+        {
+            "name": "Apex - [Founder & Lead Programmer]",
+            "contact": {
+                "homepage": "https://apexmodder.xyz",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/ApexStudios-Dev/"
+            }
+        }
+    ],
+    "icon": "logo.png",
+    "contact": {
+        "homepage": "https://apexstudios.dev/fantasy-furniture",
+        "issues": "https://discord.apexstudios.dev",
+        "sources": "https://github.com/ApexStudios-Dev/FantasyFurniture"
+    },
+    "contributors": [
+        {
+            "name": "FantasyGaming (Viscerus) - [Co-Founder & Artist]",
+            "contact": {
+                "homepage": "https://bio.link/Viscerus",
+                "issues": "https://discord.apexstudios.dev",
+                "sources": "https://github.com/Viscerus"
+            }
+        },
+        {
+            "name": "RudySPG - [Web-Developer, Supporter, Beta Tester]",
+            "contact": {
+                "homepage": "https://github.com/RudySPG",
+                "sources": "https://github.com/RudySPG"
+            }
+        },
+        {
+            "name": "TobiSPG - [Supporter & Beta Tester]",
+            "contact": {
+                "homepage": "https://lexzandersaplan.com/",
+                "sources": "https://github.com/zanderlx"
+            }
+        }
+    ],
+    "license": "${MOD_LICENSE}",
+    "environment": "*",
+    "mixins": [ ],
+    "entrypoints": {
+        "main": [
+            "xyz.apex.minecraft.fantasyfurniture.fabric.complete.FFCompleteImpl"
+        ]
+    },
+    "depends": {
+        "minecraft": "~${MINECRAFT_VERSION}",
+        "java": ">=${JAVA_VERSION}",
+        "fabric": "*",
+        "${APEXCORE_ID}": ">=${APEXCORE_VERSION}",
+        "${MOD_ID}": ">=${MOD_VERSION}"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.apexstudios.dev/"
+            },
+            "update_checker": true,
+            "parent": "${MOD_ID}"
+        }
+    }
+}

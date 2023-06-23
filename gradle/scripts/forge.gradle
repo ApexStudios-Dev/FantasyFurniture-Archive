@@ -49,10 +49,6 @@ dependencies {
         implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
     }
 
-    jarJar("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
-        jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
-    }
-
     if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
         runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
     }

@@ -49,6 +49,9 @@ platforms.forEach { platform ->
     println "Setting up Platform: '${platform}'"
     include(platform)
     project(":${platform}").projectDir = file("platforms/${platform}")
+
+    include(":workspace-${platform}")
+    project(":workspace-${platform}").projectDir = file("workspace/${platform}")
 }
 
 modules.forEach { module ->
