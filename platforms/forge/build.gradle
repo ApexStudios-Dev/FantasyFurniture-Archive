@@ -106,7 +106,11 @@ dependencies {
 
     compileOnly project(path: ':common', configuration: 'namedElements')
 
-    implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
+        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+    } else {
+        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+    }
 
     if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
         runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
