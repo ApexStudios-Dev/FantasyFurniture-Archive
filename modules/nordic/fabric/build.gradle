@@ -1,0 +1,19 @@
+apply from: rootProject.file('gradle/scripts/fabric.gradle')
+
+dependencies {
+    compileOnly project(path: ':nordic-common', configuration: 'namedElements')
+    compileOnly project(':fabric')
+    include project(':fabric')
+}
+
+processResources {
+    from project(':nordic-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':nordic-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':nordic-common').sourceSets.main.allJava
+}

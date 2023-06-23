@@ -1,0 +1,8 @@
+{
+    "pack": {
+        "description": "${MOD_NAME}-nordic resources",
+        "pack_format": 13,
+        "forge:resource_pack_format": 13,
+        "forge:server_data_pack_format": 10
+    }
+}

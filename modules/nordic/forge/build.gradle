@@ -1,0 +1,48 @@
+apply from: rootProject.file('gradle/scripts/forge.gradle')
+
+minecraft {
+    runs {
+        data {
+            workingDirectory file('run/client')
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            folderName 'forge'
+
+            args '--mod', "${MOD_ID}-nordic", '--client', '--server', '--validate'
+            args '--output', file('src/generated/resources')
+            args '--existing', project(':common').file('src/main/resources/')
+            args '--existing', project(':nordic-common').file('src/main/resources/')
+            args '--existing', project(':forge').file('src/main/resources/')
+            args '--existing', file('src/main/resources/')
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':nordic-common', configuration: 'namedElements')
+    compileOnly project(':forge')
+
+    jarJar(project(':forge')) {
+        transitive false
+        jarJar.ranged(it, "[${MOD_VERSION},)")
+    }
+}
+
+processResources {
+    from project(':nordic-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':nordic-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':nordic-common').sourceSets.main.allJava
+}

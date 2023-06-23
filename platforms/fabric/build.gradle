@@ -1,12 +1,18 @@
-apply plugin: 'fabric-loom'
+apply from: rootProject.file('gradle/scripts/fabric.gradle')
+
+def FF_modules = [ ]
+
+rootProject.childProjects.values().forEach { prj ->
+    if(prj.path.endsWithIgnoreCase('-common') || prj.path.endsWithIgnoreCase('-fabric')) {
+        def moduleName = prj.path.substring(1, prj.path.indexOf('-'))
+
+        if(!FF_modules.contains(moduleName)) {
+            FF_modules.add(moduleName)
+        }
+    }
+}
 
 loom {
-    if(getRootProject().file("${AW_FILE}").exists()) {
-        accessWidenerPath = getRootProject().file("${AW_FILE}")
-    }
-
-    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
-
     runs {
         client {
             client()
@@ -30,40 +36,38 @@ loom {
             }
         }
     }
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet project(':common').sourceSets.main
+            sourceSet sourceSets.main
+        }
+
+        FF_modules.forEach { module ->
+            "${MOD_ID}_${it}" {
+                sourceSet project(":${module}-common").sourceSets.main
+                sourceSet project(":${module}-fabric").sourceSets.main
+            }
+        }
+    }
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+    include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
 
-    mappings(loom.layered {
-        officialMojangMappings()
+    FF_modules.forEach { module ->
+        runtimeOnly project(path: ":${module}-fabric", configuration: 'namedElements')
+    }
+}
 
-        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-            if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
-                parchment("org.parchmentmc.data:parchment-${PARCHMENT_DEV_MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
-            } else {
-                parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+afterEvaluate {
+    [ 'compileJava', 'processResources', 'classes' ].forEach { taskName ->
+        tasks.getByName(taskName) { task ->
+            FF_modules.forEach { module ->
+                finalizedBy(":${module}-fabric:${taskName}")
             }
         }
-    })
-
-    modImplementation "net.fabricmc:fabric-loader:${FABRIC_LOADER_VERSION}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${FABRIC_API_VERSION}+${MINECRAFT_VERSION}"
-
-    compileOnly project(path: ':common', configuration: 'namedElements')
-
-    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-    } else {
-        modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
     }
-
-    if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
-        localRuntime "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
-    }
-
-    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
-    compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
 }
 
 processResources {
@@ -76,21 +80,4 @@ compileJava {
 
 sourcesJar {
     from project(':common').sourceSets.main.allJava
-}
-
-collectJars {
-    def tasks = [ remapJar, remapSourcesJar ]
-    dependsOn tasks
-    from tasks
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            loom.disableDeprecatedPomGeneration(it)
-
-            artifact remapJar
-            artifact sourcesJar
-        }
-    }
 }

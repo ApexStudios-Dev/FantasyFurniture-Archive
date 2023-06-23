@@ -35,13 +35,32 @@ pluginManagement {
     }
 }
 
-[
-        "common",
-        "forge",
-        "fabric",
-].forEach { platform ->
+def platforms = [
+        'common',
+        'forge',
+        'fabric'
+]
+
+def modules = [
+        'nordic'
+]
+
+platforms.forEach { platform ->
+    println "Setting up Platform: '${platform}'"
     include(platform)
     project(":${platform}").projectDir = file("platforms/${platform}")
+}
+
+modules.forEach { module ->
+    platforms.forEach { platform ->
+        def dir = file("modules/${module}/${platform}")
+
+        if(new File(dir, 'build.gradle').exists()) {
+            println "Setting up Module: '${module}-${platform}'"
+            include("${module}-${platform}")
+            project(":${module}-${platform}").projectDir = dir
+        }
+    }
 }
 
 rootProject.name = "${MOD_NAME}-${MINECRAFT_VERSION}"

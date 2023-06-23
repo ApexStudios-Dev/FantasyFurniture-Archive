@@ -1,24 +1,18 @@
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
-apply plugin: 'org.spongepowered.mixin'
+apply from: rootProject.file('gradle/scripts/forge.gradle')
 
-jarJar.enable()
+def FF_modules = [ ]
+
+rootProject.childProjects.values().forEach { prj ->
+    if(prj.path.endsWithIgnoreCase('-common') || prj.path.endsWithIgnoreCase('-forge')) {
+        def moduleName = prj.path.substring(1, prj.path.indexOf('-'))
+
+        if(!FF_modules.contains(moduleName)) {
+            FF_modules.add(moduleName)
+        }
+    }
+}
 
 minecraft {
-    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
-        if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
-            mappings channel: 'parchment', version: "${PARCHMENT_DEV_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-        } else {
-            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
-        }
-    } else {
-        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
-    }
-
-    if(rootProject.file("${AT_FILE}").exists()) {
-        accessTransformer = rootProject.file("${AT_FILE}")
-    }
-
     runs {
         client {
             workingDirectory file('run/client')
@@ -31,7 +25,15 @@ minecraft {
 
             mods {
                 "${MOD_ID}" {
+                    source project(':common').sourceSets.main
                     source sourceSets.main
+                }
+
+                FF_modules.forEach { module ->
+                    "${MOD_ID}_${it}" {
+                        source project(":${module}-common").sourceSets.main
+                        source project(":${module}-forge").sourceSets.main
+                    }
                 }
             }
         }
@@ -57,7 +59,15 @@ minecraft {
 
             mods {
                 "${MOD_ID}" {
+                    source project(':common').sourceSets.main
                     source sourceSets.main
+                }
+
+                FF_modules.forEach { module ->
+                    "${MOD_ID}_${it}" {
+                        source project(":${module}-common").sourceSets.main
+                        source project(":${module}-forge").sourceSets.main
+                    }
                 }
             }
         }
@@ -76,6 +86,7 @@ minecraft {
 
             mods {
                 "${MOD_ID}" {
+                    source project(':common').sourceSets.main
                     source sourceSets.main
                 }
             }
@@ -83,37 +94,19 @@ minecraft {
     }
 }
 
-mixin {
-    add sourceSets.main, "${MOD_ID}.refmap.json"
-
-    if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
-        config "${MOD_ID}.mixins.json"
-    }
-
-    if(project(':common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
-        config "${MOD_ID}-common.mixins.json"
-    }
+dependencies {
+    /*FF_modules.forEach { module ->
+        runtimeOnly project(path: ":${module}-forge", configuration: 'namedElements')
+    }*/
 }
 
-dependencies {
-    if(rootProject.hasProperty('FORGE_DEV_VERSION')) {
-        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_DEV_VERSION}"
-    } else {
-        minecraft "net.minecraftforge:forge:${MINECRAFT_VERSION}-${FORGE_VERSION}"
-    }
-
-    annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
-
-    compileOnly project(path: ':common', configuration: 'namedElements')
-
-    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
-    } else {
-        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-forge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
-    }
-
-    if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
-        runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
+afterEvaluate {
+    [ 'compileJava', 'processResources', 'classes' ].forEach { taskName ->
+        tasks.getByName(taskName) { task ->
+            FF_modules.forEach { module ->
+                finalizedBy(":${module}-forge:${taskName}")
+            }
+        }
     }
 }
 
@@ -127,39 +120,4 @@ compileJava {
 
 sourcesJar {
     from project(':common').sourceSets.main.allJava
-}
-
-tasks.jarJar.configure {
-    archiveClassifier.set('')
-}
-
-jar {
-    archiveClassifier.set('slim')
-}
-
-artifacts {
-    archives tasks.jarJar
-}
-
-reobf {
-    jarJar { }
-}
-
-jar.finalizedBy('reobfJar')
-tasks.jarJar.finalizedBy('reobfJarJar')
-
-collectJars {
-    def tasks = [ jar, sourcesJar, tasks.jarJar ]
-    dependsOn tasks
-    from tasks
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-            artifact tasks.jarJar
-        }
-    }
 }

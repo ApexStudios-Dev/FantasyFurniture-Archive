@@ -1,0 +1,5 @@
+apply from: rootProject.file('gradle/scripts/common.gradle')
+
+dependencies {
+    compileOnly project(path: ':common', configuration: 'namedElements')
+}

@@ -1,0 +1,67 @@
+apply plugin: 'fabric-loom'
+
+loom {
+    if(getRootProject().file("${AW_FILE}").exists()) {
+        accessWidenerPath = getRootProject().file("${AW_FILE}")
+    }
+
+    mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
+}
+
+repositories {
+    exclusiveContent {
+        forRepository { maven { url 'https://repo.spongepowered.org/repository/maven-public' } }
+        filter { includeGroupByRegex 'org\\.spongepowered.*' }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${MINECRAFT_VERSION}"
+
+    mappings(loom.layered {
+        officialMojangMappings()
+
+        if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+            if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
+                parchment("org.parchmentmc.data:parchment-${PARCHMENT_DEV_MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+            } else {
+                parchment("org.parchmentmc.data:parchment-${MINECRAFT_VERSION}:${PARCHMENT_MAPPINGS}@zip")
+            }
+        }
+    })
+
+    compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
+
+    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+    } else {
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+    }
+
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
+}
+
+remapJar.enabled = false
+remapSourcesJar.enabled = false;
+
+jar {
+    archiveClassifier = ''
+}
+
+collectJars {
+    def tasks = [ jar, sourcesJar ]
+    dependsOn tasks
+    from tasks
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            loom.disableDeprecatedPomGeneration(it)
+
+            artifact jar
+            artifact sourcesJar
+        }
+    }
+}
