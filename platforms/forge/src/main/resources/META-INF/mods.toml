@@ -15,6 +15,9 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	description="${MOD_DESCRIPTION}"
 	displayTest="MATCH_VERSION"
 
+[features."${MOD_ID}"]
+	javaVersion="${JAVA_VERSION}"
+
 [[dependencies."${MOD_ID}"]]
 	modId="forge"
 	mandatory=true
