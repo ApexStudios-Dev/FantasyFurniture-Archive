@@ -2,12 +2,16 @@ apply from: rootProject.file('gradle/scripts/forge.gradle')
 
 minecraft {
     runs {
+        configureEach {
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
         data {
             workingDirectory file('run/client')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'debug'
-            ideaModule "${rootProject.name}.${project.name}.main"
-            folderName 'forge'
 
             args '--mod', "${MOD_ID}-nordic", '--client', '--server', '--validate'
             args '--output', file('src/generated/resources')
@@ -15,12 +19,8 @@ minecraft {
             args '--existing', project(':nordic-common').file('src/main/resources/')
             args '--existing', project(':forge').file('src/main/resources/')
             args '--existing', file('src/main/resources/')
-
-            mods {
-                "${MOD_ID}" {
-                    source sourceSets.main
-                }
-            }
+            args '--existing-mod', "${APEXCORE_ID}"
+            args '--existing-mod', "${MOD_ID}"
         }
     }
 }

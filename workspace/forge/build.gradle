@@ -14,15 +14,7 @@ rootProject.childProjects.values().forEach { prj ->
 
 minecraft {
     runs {
-        client {
-            workingDirectory file('run/client')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'debug'
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            ideaModule "${rootProject.name}.${project.name}.main"
-            jvmArg '-XX:+AllowEnhancedClassRedefinition' // requires JBR
-            folderName 'forge'
-
+        configureEach {
             mods {
                 "${MOD_ID}" {
                     source project(':common').sourceSets.main
@@ -41,6 +33,10 @@ minecraft {
                     }
                 }
             }
+        }
+
+        client {
+            workingDirectory file('run/client')
         }
 
         if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
@@ -54,32 +50,7 @@ minecraft {
 
         server {
             workingDirectory file('run/server')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'debug'
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            ideaModule "${rootProject.name}.${project.name}.main"
             args 'nogui'
-            jvmArg '-XX:+AllowEnhancedClassRedefinition' // requires JBR
-            folderName 'forge'
-
-            mods {
-                "${MOD_ID}" {
-                    source project(':common').sourceSets.main
-                    source project(':forge').sourceSets.main
-                }
-
-                "${MOD_ID}_workspace" {
-                    source project(':workspace-common').sourceSets.main
-                    source sourceSets.main
-                }
-
-                FF_modules.forEach { module ->
-                    "${MOD_ID}_${it}" {
-                        source project(":${module}-common").sourceSets.main
-                        source project(":${module}-forge").sourceSets.main
-                    }
-                }
-            }
         }
     }
 }

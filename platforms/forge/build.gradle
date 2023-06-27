@@ -2,24 +2,23 @@ apply from: rootProject.file('gradle/scripts/forge.gradle')
 
 minecraft {
     runs {
-        data {
-            workingDirectory file('run/client')
-            property 'forge.logging.markers', ''
-            property 'forge.logging.console.level', 'debug'
-            ideaModule "${rootProject.name}.${project.name}.main"
-            folderName 'forge'
-
-            args '--mod', MOD_ID, '--client', '--server', '--validate'
-            args '--output', file('src/generated/resources')
-            args '--existing', project(':common').file('src/main/resources/')
-            args '--existing', file('src/main/resources/')
-
+        configureEach {
             mods {
                 "${MOD_ID}" {
                     source project(':common').sourceSets.main
                     source sourceSets.main
                 }
             }
+        }
+
+        data {
+            workingDirectory file('run/client')
+
+            args '--mod', MOD_ID, '--client', '--server', '--validate'
+            args '--output', file('src/generated/resources')
+            args '--existing', project(':common').file('src/main/resources/')
+            args '--existing', file('src/main/resources/')
+            args '--existing-mod', "${APEXCORE_ID}"
         }
     }
 }

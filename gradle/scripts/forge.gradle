@@ -18,6 +18,20 @@ minecraft {
     if(rootProject.file("${AT_FILE}").exists()) {
         accessTransformer = rootProject.file("${AT_FILE}")
     }
+
+    enableIdeaPrepareRuns = false
+    copyIdeResources = true
+    generateRunFolders = true
+
+    runs {
+        configureEach {
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            jvmArg '-XX:+AllowEnhancedClassRedefinition' // requires JBR
+            folderName 'forge'
+        }
+    }
 }
 
 mixin {
