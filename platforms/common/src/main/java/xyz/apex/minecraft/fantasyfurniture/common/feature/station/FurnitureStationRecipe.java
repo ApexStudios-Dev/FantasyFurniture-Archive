@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common.recipe;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
@@ -18,7 +18,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Math;
-import xyz.apex.minecraft.fantasyfurniture.common.FurnitureStation;
 
 public final class FurnitureStationRecipe implements Recipe<Container>
 {
@@ -232,7 +231,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
             buffer.writeResourceLocation(BuiltInRegistries.ITEM.getKey(recipe.result.asItem()));
         }
 
-        public static Serializer getInstance()
+        static Serializer getInstance()
         {
             return INSTANCE;
         }

@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common.menu;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import com.google.common.collect.Lists;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.lib.menu.EnhancedSlot;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenu;
-import xyz.apex.minecraft.fantasyfurniture.common.FurnitureStation;
-import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +28,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
     private final ContainerLevelAccess levelAccess;
     private long lastSoundTime = 0L;
 
-    public FurnitureStationMenu(int windowId, Inventory playerInventory, ContainerLevelAccess levelAccess)
+    FurnitureStationMenu(int windowId, Inventory playerInventory, ContainerLevelAccess levelAccess)
     {
         super(FurnitureStation.MENU.get(), windowId);
 
@@ -224,13 +222,13 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         return slot.container != resultContainer && super.canTakeItemForPickAll(stack, slot);
     }
 
-    public static FurnitureStationMenu forServer(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
+    static FurnitureStationMenu forServer(int windowId, Inventory playerInventory, FriendlyByteBuf extraData)
     {
         var pos = extraData.readBlockPos();
         return new FurnitureStationMenu(windowId, playerInventory, ContainerLevelAccess.create(playerInventory.player.level(), pos));
     }
 
-    public static FurnitureStationMenu forClient(int windowId, Inventory playerInventory)
+    static FurnitureStationMenu forClient(int windowId, Inventory playerInventory)
     {
         return new FurnitureStationMenu(windowId, playerInventory, ContainerLevelAccess.NULL);
     }

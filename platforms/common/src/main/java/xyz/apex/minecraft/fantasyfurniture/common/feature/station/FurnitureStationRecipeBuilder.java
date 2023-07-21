@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common.recipe;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;

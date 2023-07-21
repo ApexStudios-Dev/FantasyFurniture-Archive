@@ -9,8 +9,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.ApiStatus;
+import xyz.apex.minecraft.fantasyfurniture.common.feature.station.FurnitureStationRecipeBuilder;
 import xyz.apex.minecraft.fantasyfurniture.common.nordic.NordicBlocks;
-import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipeBuilder;
 
 import java.util.function.Consumer;
 

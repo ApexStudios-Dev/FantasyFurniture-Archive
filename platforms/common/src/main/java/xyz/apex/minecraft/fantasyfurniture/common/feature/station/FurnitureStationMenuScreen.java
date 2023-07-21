@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common.client.screen;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,7 +16,6 @@ import xyz.apex.minecraft.apexcore.common.lib.PhysicalSide;
 import xyz.apex.minecraft.apexcore.common.lib.SideOnly;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenuScreen;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
 @SideOnly(PhysicalSide.CLIENT)
 public final class FurnitureStationMenuScreen extends SimpleContainerMenuScreen<FurnitureStationMenu> implements ContainerListener
@@ -40,7 +39,7 @@ public final class FurnitureStationMenuScreen extends SimpleContainerMenuScreen<
     private boolean scrolling = false;
     private int startIndex = 0;
 
-    public FurnitureStationMenuScreen(FurnitureStationMenu menu, Inventory playerInventory, Component displayName)
+    FurnitureStationMenuScreen(FurnitureStationMenu menu, Inventory playerInventory, Component displayName)
     {
         super(menu, playerInventory, displayName, BACKGROUND);
 

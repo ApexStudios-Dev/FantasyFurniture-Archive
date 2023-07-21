@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.lib.registry.RegistryEntry;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.FurnitureStation;
+import xyz.apex.minecraft.fantasyfurniture.common.feature.station.FurnitureStation;
 
 import java.util.Set;
 

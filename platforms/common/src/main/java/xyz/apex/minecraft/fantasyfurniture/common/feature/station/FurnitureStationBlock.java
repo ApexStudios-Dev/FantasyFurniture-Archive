@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common.block;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,12 +14,10 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponent
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.types.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.lib.hook.MenuHooks;
-import xyz.apex.minecraft.fantasyfurniture.common.FurnitureStation;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
 
 public final class FurnitureStationBlock extends BaseBlockComponentHolder
 {
-    public FurnitureStationBlock(Properties properties)
+    FurnitureStationBlock(Properties properties)
     {
         super(properties);
     }

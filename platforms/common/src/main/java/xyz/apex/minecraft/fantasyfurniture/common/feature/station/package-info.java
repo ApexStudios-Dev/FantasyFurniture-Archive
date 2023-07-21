@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
 @ParametersAreNonnullByDefault
-package xyz.apex.minecraft.fantasyfurniture.common.recipe;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

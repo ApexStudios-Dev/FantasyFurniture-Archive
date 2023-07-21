@@ -11,7 +11,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.FurnitureStation;
+import xyz.apex.minecraft.fantasyfurniture.common.feature.station.FurnitureStation;
 
 import java.util.function.Function;
 

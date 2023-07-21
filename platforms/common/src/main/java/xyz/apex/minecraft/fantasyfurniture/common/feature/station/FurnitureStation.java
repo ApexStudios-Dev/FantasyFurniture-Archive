@@ -1,4 +1,4 @@
-package xyz.apex.minecraft.fantasyfurniture.common;
+package xyz.apex.minecraft.fantasyfurniture.common.feature.station;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -7,10 +7,7 @@ import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entries.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entries.MenuEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entries.RecipeEntry;
-import xyz.apex.minecraft.fantasyfurniture.common.block.FurnitureStationBlock;
-import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
-import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
+import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 @ApiStatus.NonExtendable
 public interface FurnitureStation
