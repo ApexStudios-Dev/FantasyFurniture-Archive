@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import xyz.apex.minecraft.apexcore.common.lib.event.types.TickEvents;
 import xyz.apex.minecraft.apexcore.common.lib.helper.EntityHelper;
 import xyz.apex.minecraft.apexcore.common.lib.helper.TagHelper;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entries.EntityEntry;
@@ -51,6 +52,8 @@ public interface Seat
     static void bootstrap()
     {
         SitEvents.bootstrap();
+
+        TickEvents.START_LIVING_ENTITY.addListener(Seat::onEntityTick);
     }
 
     // TODO: These should be moved to actual Events in ApexCore
@@ -94,8 +97,7 @@ public interface Seat
         return InteractionResult.PASS;
     }
 
-    @ApiStatus.Internal
-    static void onEntityTick(LivingEntity entity)
+    private static void onEntityTick(LivingEntity entity)
     {
         if(entity.isPassenger())
             return;

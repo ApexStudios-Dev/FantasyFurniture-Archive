@@ -54,9 +54,7 @@
     ],
     "license": "${MOD_LICENSE}",
     "environment": "*",
-    "mixins": [
-        "fantasyfurniture.mixins.json"
-    ],
+    "mixins": [ ],
     "accessWidener": "fantasyfurniture.accesswidener",
     "entrypoints": {
         "main": [

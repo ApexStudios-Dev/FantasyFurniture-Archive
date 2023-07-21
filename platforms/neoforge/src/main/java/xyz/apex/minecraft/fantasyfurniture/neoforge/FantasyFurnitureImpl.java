@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.neoforge;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.ApiStatus;
@@ -26,7 +25,6 @@ public final class FantasyFurnitureImpl extends FantasyFurniture
 
         MinecraftForge.EVENT_BUS.addListener(this::onPlayerRightClickBlock);
         MinecraftForge.EVENT_BUS.addListener(this::onPlayerRightClickEntity);
-        MinecraftForge.EVENT_BUS.addListener(this::onLivingEntityTick);
     }
 
     private void onPlayerRightClickBlock(PlayerInteractEvent.RightClickBlock event)
@@ -49,10 +47,5 @@ public final class FantasyFurnitureImpl extends FantasyFurniture
             event.setCanceled(true);
             event.setCancellationResult(result);
         }
-    }
-
-    private void onLivingEntityTick(LivingEvent.LivingTickEvent event)
-    {
-        Seat.onEntityTick(event.getEntity());
     }
 }
