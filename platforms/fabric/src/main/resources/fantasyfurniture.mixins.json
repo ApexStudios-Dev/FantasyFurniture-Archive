@@ -1,0 +1,11 @@
+{
+    "required": true,
+    "package": "xyz.apex.minecraft.fantasyfurniture.fabric.mixin",
+    "mixins": [
+        "MixinLivingEntity"
+    ],
+    "client": [],
+    "server": [],
+    "minVersion": "0.8.4",
+    "refmap": "fantasyfurniture.refmap.json"
+}

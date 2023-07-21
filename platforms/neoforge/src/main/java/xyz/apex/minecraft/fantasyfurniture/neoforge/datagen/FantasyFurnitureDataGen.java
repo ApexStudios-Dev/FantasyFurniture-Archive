@@ -34,5 +34,6 @@ public interface FantasyFurnitureDataGen
         generator.addProvider(includeServer, new RecipeGenerator(output));
         var blockTags = generator.addProvider(includeServer, new BlockTagGenerator(output, lookupProvider, existingFileHelper));
         generator.addProvider(includeServer, new ItemTagGenerator(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+        generator.addProvider(includeServer, new EntityTypeTagGenerator(output, lookupProvider, existingFileHelper));
     }
 }

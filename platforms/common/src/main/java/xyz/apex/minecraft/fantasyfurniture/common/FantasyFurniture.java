@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.lib.hook.CreativeModeTabHooks;
 import xyz.apex.minecraft.apexcore.common.lib.registry.RegistrarManager;
 import xyz.apex.minecraft.apexcore.common.lib.registry.builders.BuilderManager;
+import xyz.apex.minecraft.fantasyfurniture.common.feature.seat.Seat;
 import xyz.apex.minecraft.fantasyfurniture.common.feature.station.FurnitureStation;
 
 import java.util.Objects;
@@ -35,6 +36,7 @@ public abstract class FantasyFurniture
     protected void bootstrap()
     {
         FurnitureStation.bootstrap();
+        Seat.bootstrap();
         REGISTRAR_MANAGER.register();
         CreativeModeTabHooks.get().modify(CreativeModeTabs.FUNCTIONAL_BLOCKS, output -> output.accept(FurnitureStation.BLOCK));
     }
