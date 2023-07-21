@@ -20,7 +20,7 @@ minecraft {
             workingDirectory file('run/client')
 
             args '--mod', "${MOD_ID}_nordic", '--client', '--server', '--validate'
-            args '--output', file('src/generated/resources')
+            args '--output', project(':nordic-common').file('src/generated/resources')
             args '--existing', project(':common').file('src/main/resources/')
             args '--existing', project(':nordic-common').file('src/main/resources/')
             args '--existing', project(':neoforge').file('src/main/resources/')

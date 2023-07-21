@@ -15,7 +15,7 @@ minecraft {
             workingDirectory file('run/client')
 
             args '--mod', MOD_ID, '--client', '--server', '--validate'
-            args '--output', file('src/generated/resources')
+            args '--output', project(':common').file('src/generated/resources')
             args '--existing', project(':common').file('src/main/resources/')
             args '--existing', file('src/main/resources/')
             args '--existing-mod', "${APEXCORE_ID}"
