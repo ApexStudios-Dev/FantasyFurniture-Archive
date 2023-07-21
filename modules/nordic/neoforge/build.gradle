@@ -4,8 +4,14 @@ minecraft {
     runs {
         configureEach {
             mods {
-                "${MOD_ID}" {
+                "${MOD_ID}_nordic" {
+                    source project(':nordic-common').sourceSets.main
                     source sourceSets.main
+                }
+
+                "${MOD_ID}" {
+                    source project(':common').sourceSets.main
+                    source project(':neoforge').sourceSets.main
                 }
             }
         }
@@ -13,7 +19,7 @@ minecraft {
         data {
             workingDirectory file('run/client')
 
-            args '--mod', "${MOD_ID}-nordic", '--client', '--server', '--validate'
+            args '--mod', "${MOD_ID}_nordic", '--client', '--server', '--validate'
             args '--output', file('src/generated/resources')
             args '--existing', project(':common').file('src/main/resources/')
             args '--existing', project(':nordic-common').file('src/main/resources/')
