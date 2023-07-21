@@ -1,0 +1,28 @@
+accessWidener v2 named
+
+#################################################################
+# Copied from ApexCore                                          #
+#################################################################
+# Creative Mode Tab registration & modification
+# While these are AW'd by fabric, we need to AW them in common
+transitive-accessible class net/minecraft/world/item/CreativeModeTab$ItemDisplayBuilder
+transitive-accessible class net/minecraft/world/item/CreativeModeTab$Output
+transitive-accessible class net/minecraft/world/item/CreativeModeTab$TabVisibility
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs BUILDING_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs COLORED_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs NATURAL_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs FUNCTIONAL_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs REDSTONE_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs HOTBAR Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs SEARCH Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs TOOLS_AND_UTILITIES Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs COMBAT Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs FOOD_AND_DRINKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs INGREDIENTS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs SPAWN_EGGS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs OP_BLOCKS Lnet/minecraft/resources/ResourceKey;
+transitive-accessible field net/minecraft/world/item/CreativeModeTabs INVENTORY Lnet/minecraft/resources/ResourceKey;
+
+# Made public for menu type registration
+transitive-accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+transitive-accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor

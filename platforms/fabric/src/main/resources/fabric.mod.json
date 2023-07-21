@@ -55,6 +55,7 @@
     "license": "${MOD_LICENSE}",
     "environment": "*",
     "mixins": [ ],
+    "accessWidener": "fantasyfurniture.accesswidener",
     "entrypoints": {
         "main": [
             "xyz.apex.minecraft.fantasyfurniture.fabric.FantasyFurnitureImpl"
