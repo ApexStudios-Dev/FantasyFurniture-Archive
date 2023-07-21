@@ -1,0 +1,43 @@
+apply from: rootProject.file('gradle/scripts/neoforge.gradle')
+
+minecraft {
+    runs {
+        configureEach {
+            mods {
+                "${MOD_ID}" {
+                    source project(':common').sourceSets.main
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory file('run/client')
+
+            args '--mod', MOD_ID, '--client', '--server', '--validate'
+            args '--output', file('src/generated/resources')
+            args '--existing', project(':common').file('src/main/resources/')
+            args '--existing', file('src/main/resources/')
+            args '--existing-mod', "${APEXCORE_ID}"
+        }
+    }
+}
+
+dependencies {
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
+        transitive false
+        jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+    }
+}
+
+processResources {
+    from project(':common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':common').sourceSets.main.allJava
+}

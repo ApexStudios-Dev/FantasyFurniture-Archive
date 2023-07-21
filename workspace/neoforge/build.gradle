@@ -1,0 +1,100 @@
+apply from: rootProject.file('gradle/scripts/neoforge.gradle')
+
+def FF_modules = [ ]
+
+rootProject.childProjects.values().forEach { prj ->
+    if(!prj.path.startsWithIgnoreCase(':workspace-') && (prj.path.endsWithIgnoreCase('-common') || prj.path.endsWithIgnoreCase('-neoforge'))) {
+        def moduleName = prj.path.substring(1, prj.path.indexOf('-'))
+
+        if(!FF_modules.contains(moduleName)) {
+            FF_modules.add(moduleName)
+        }
+    }
+}
+
+minecraft {
+    runs {
+        configureEach {
+            mods {
+                "${MOD_ID}" {
+                    source project(':common').sourceSets.main
+                    source project(':neoforge').sourceSets.main
+                }
+
+                "${MOD_ID}_workspace" {
+                    source project(':workspace-common').sourceSets.main
+                    source sourceSets.main
+                }
+
+                FF_modules.forEach { module ->
+                    "${MOD_ID}_${it}" {
+                        source project(":${module}-common").sourceSets.main
+                        source project(":${module}-neoforge").sourceSets.main
+                    }
+                }
+            }
+        }
+
+        client {
+            workingDirectory file('run/client')
+        }
+
+        if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                parent runs.client
+                main 'net.covers1624.devlogin.DevLogin'
+                args '--launch_target', '{LAUNCH_TARGET}'
+                lazyToken("LAUNCH_TARGET", { runs.client.main })
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            args 'nogui'
+        }
+    }
+}
+
+dependencies {
+    // required, see below comment about jarJar including 'slim' jars
+    //
+    // this should be included via the FF jar
+    jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
+        transitive false
+        jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+    }
+
+    compileOnly project(path: ':workspace-common', configuration: 'namedElements')
+    implementation project(':neoforge')
+
+    // required as forge jarJar is including the 'slim'
+    // jar, and i dont see any way to redirect it to
+    // include the full fat jarJar
+    //
+    // this should be included via the module jars
+    jarJar(project(':neoforge')) {
+        transitive false
+        jarJar.ranged(it, "[${MOD_VERSION},)")
+    }
+
+    FF_modules.forEach { module ->
+        implementation project(":${module}-neoforge")
+
+        jarJar(project(":${module}-neoforge")) {
+            transitive false
+            jarJar.ranged(it, "[${MOD_VERSION},)")
+        }
+    }
+}
+
+processResources {
+    from project(':workspace-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':workspace-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':workspace-common').sourceSets.main.allJava
+}

@@ -1,7 +1,9 @@
 pluginManagement {
     repositories {
         exclusiveContent {
-            forRepository { maven { url 'https://maven.minecraftforge.net' } }
+            forRepository { maven { url 'https://maven.neoforged.net' } }
+            filter { includeGroupByRegex 'net\\.neoforged.*' }
+            // TODO: Why is this still needed? we are running NeoForge not MinecraftForge
             filter { includeGroupByRegex 'net\\.minecraftforge.*' }
         }
 
@@ -37,7 +39,7 @@ pluginManagement {
 
 def platforms = [
         'common',
-        'forge',
+        'neoforge',
         'fabric'
 ]
 
@@ -45,24 +47,17 @@ def modules = [
         'nordic'
 ]
 
-platforms.forEach { platform ->
-    println "Setting up Platform: '${platform}'"
-    include(platform)
-    project(":${platform}").projectDir = file("platforms/${platform}")
-
-    include(":workspace-${platform}")
-    project(":workspace-${platform}").projectDir = file("workspace/${platform}")
+def includeExt = { name, dir ->
+    include name
+    project(":${name}").projectDir = file(dir)
 }
 
-modules.forEach { module ->
-    platforms.forEach { platform ->
-        def dir = file("modules/${module}/${platform}")
+platforms.forEach { platform ->
+    includeExt platform, "platforms/${platform}"
+    includeExt "workspace-${platform}", "workspace/${platform}"
 
-        if(new File(dir, 'build.gradle').exists()) {
-            println "Setting up Module: '${module}-${platform}'"
-            include("${module}-${platform}")
-            project(":${module}-${platform}").projectDir = dir
-        }
+    modules.forEach { module ->
+        includeExt "${module}-${platform}", "modules/${module}/${platform}"
     }
 }
 
