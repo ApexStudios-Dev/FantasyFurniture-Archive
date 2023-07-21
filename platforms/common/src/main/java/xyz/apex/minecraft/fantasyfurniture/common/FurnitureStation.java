@@ -21,6 +21,8 @@ public interface FurnitureStation
     int INPUT_SLOTS = 3;
     int OUTPUT_SLOT = 0;
 
+    boolean GLOBAL_BINDING_AGENTS = true;
+
     BlockEntry<FurnitureStationBlock> BLOCK = FantasyFurniture.BUILDERS
             .block("furniture_station", FurnitureStationBlock::new)
             .copyInitialPropertiesFrom(() -> Blocks.CRAFTING_TABLE)
@@ -42,7 +44,24 @@ public interface FurnitureStation
 
     static boolean isValidBindingAgent(FurnitureStationRecipe recipe, ItemStack stack)
     {
+        if(stack.isEmpty())
+            return false;
+
         var recipeBindingAgent = recipe.getBindingAgent();
-        return !stack.isEmpty() && isGenericBindingAgent(stack) || (!recipeBindingAgent.isEmpty() && recipeBindingAgent.test(stack));
+
+        // is either global binding agent or recipe specified
+        if(GLOBAL_BINDING_AGENTS)
+            return isGenericBindingAgent(stack) || (!recipeBindingAgent.isEmpty() && recipeBindingAgent.test(stack));
+        else
+        {
+            // global binding agents are "disabled"
+            // recipe specified agents, should override the global agent
+            if(!recipeBindingAgent.isEmpty())
+                return recipeBindingAgent.test(stack);
+
+            // recipe did not specify binding agent
+            // check if is global agent
+            return isGenericBindingAgent(stack);
+        }
     }
 }
