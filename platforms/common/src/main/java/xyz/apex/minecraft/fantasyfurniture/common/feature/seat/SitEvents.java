@@ -21,11 +21,11 @@ public interface SitEvents
     /**
      * Return true if to determine if entity can be seated at the given position.
      */
-    EventType<CanSitAt> CAN_SIT_AT = EventType.create(listeners -> (level, sitter, pos, blockState) -> listeners.stream().anyMatch(listener -> listener.handle(level, sitter, pos, blockState)));
+    EventType<CanSitAt> CAN_SIT_AT = EventType.create(listeners -> (level, sitter, pos, blockState) -> listeners.isEmpty() || listeners.stream().anyMatch(listener -> listener.handle(level, sitter, pos, blockState)));
     /**
      * Return true if entity can steal seat from currently seated entity.
      */
-    EventType<CanStealSeat> CAN_STEAL_SEAT = EventType.create(listeners -> (level, sitter, stealer, pos, blockState, seat) -> listeners.stream().anyMatch(listener -> listener.handle(level, sitter, stealer, pos, blockState, seat)));
+    EventType<CanStealSeat> CAN_STEAL_SEAT = EventType.create(listeners -> (level, sitter, stealer, pos, blockState, seat) -> listeners.isEmpty() || listeners.stream().anyMatch(listener -> listener.handle(level, sitter, stealer, pos, blockState, seat)));
     /**
      * Called when entity is sat down in given seat.
      */
