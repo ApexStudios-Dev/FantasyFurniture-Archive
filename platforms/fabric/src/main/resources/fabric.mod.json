@@ -58,10 +58,7 @@
     "accessWidener": "fantasyfurniture.accesswidener",
     "entrypoints": {
         "main": [
-            "xyz.apex.minecraft.fantasyfurniture.fabric.FantasyFurnitureImpl"
-        ],
-        "client": [
-            "xyz.apex.minecraft.fantasyfurniture.fabric.FantasyFurnitureClientImpl"
+            "xyz.apex.minecraft.fantasyfurniture.fabric.FantasyFurnitureModInitializer"
         ]
     },
     "depends": {

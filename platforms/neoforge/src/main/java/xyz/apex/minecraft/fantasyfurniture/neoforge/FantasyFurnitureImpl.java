@@ -2,24 +2,20 @@ package xyz.apex.minecraft.fantasyfurniture.neoforge;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.ApiStatus;
-import xyz.apex.minecraft.apexcore.common.lib.PhysicalSide;
 import xyz.apex.minecraft.apexcore.neoforge.lib.EventBuses;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.feature.seat.Seat;
 import xyz.apex.minecraft.fantasyfurniture.neoforge.datagen.FantasyFurnitureDataGen;
 
 @ApiStatus.Internal
-@Mod(FantasyFurniture.ID)
-public final class FantasyFurnitureImpl extends FantasyFurniture
+public final class FantasyFurnitureImpl implements FantasyFurniture
 {
-    public FantasyFurnitureImpl()
+    @Override
+    public void bootstrap()
     {
-        super();
+        FantasyFurniture.super.bootstrap();
 
-        bootstrap();
-        PhysicalSide.CLIENT.runWhenOn(() -> FantasyFurnitureClientImpl::new);
         FantasyFurnitureDataGen.bootstrap();
         EventBuses.registerForJavaFML();
 

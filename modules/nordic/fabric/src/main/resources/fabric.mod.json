@@ -57,7 +57,7 @@
     "mixins": [ ],
     "entrypoints": {
         "main": [
-            "xyz.apex.minecraft.fantasyfurniture.fabric.nordic.NordicFurnitureSetImpl"
+            "xyz.apex.minecraft.fantasyfurniture.fabric.nordic.NordicFurnitureSetModInitializer"
         ]
     },
     "depends": {
