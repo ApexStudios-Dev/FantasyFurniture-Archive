@@ -2,13 +2,11 @@ package xyz.apex.minecraft.fantasyfurniture.common.feature.seat;
 
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.Panda;
-import net.minecraft.world.entity.animal.camel.Camel;
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -17,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
-import xyz.apex.minecraft.apexcore.common.lib.event.types.TickEvents;
+import xyz.apex.minecraft.apexcore.common.lib.event.types.EntityEvents;
 import xyz.apex.minecraft.apexcore.common.lib.helper.EntityHelper;
 import xyz.apex.minecraft.apexcore.common.lib.helper.TagHelper;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entries.EntityEntry;
@@ -53,7 +51,7 @@ public interface Seat
     {
         SitEvents.bootstrap();
 
-        TickEvents.START_LIVING_ENTITY.addListener(Seat::onEntityTick);
+        EntityEvents.AFTER_ENTITY_FALL_ON.addListener(Seat::onEntityFallOn);
     }
 
     // TODO: These should be moved to actual Events in ApexCore
@@ -63,7 +61,15 @@ public interface Seat
     {
         if(hand != InteractionHand.MAIN_HAND)
             return InteractionResult.PASS;
-        if(trySeat(player, hitVec.getBlockPos()))
+        if(player.isSecondaryUseActive())
+            return InteractionResult.PASS;
+
+        var pos = hitVec.getBlockPos();
+        var blockState = level.getBlockState(pos);
+
+        if(tryStealSeat(player, level, pos, blockState))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if(trySeat(null, player, level, pos, blockState))
             return InteractionResult.sidedSuccess(level.isClientSide);
         return InteractionResult.PASS;
     }
@@ -71,169 +77,75 @@ public interface Seat
     @ApiStatus.Internal
     static InteractionResult onRightClickEntity(Player player, Level level, InteractionHand hand, Entity entity)
     {
-        // some entities hitboxes are huge
-        // making it hard to interact with the block
-        // they are sat on
-        // this redirects entity interaction, to do the same
-        // as what would have been done if right-clicked the block
-
-        // only for main hand
         if(hand != InteractionHand.MAIN_HAND)
             return InteractionResult.PASS;
-        // ignore spectators and removed entities
-        if(entity.isRemoved() || entity.isSpectator())
+        if(player.isSecondaryUseActive())
             return InteractionResult.PASS;
-        // living entities only
-        if(!(entity instanceof LivingEntity living))
-            return InteractionResult.PASS;
-        // ignore players and fake players
-        if(living instanceof Player || EntityHelper.isFakePlayer(living))
-            return InteractionResult.PASS;
-        // only if is currently seated
-        if(!(living.getVehicle() instanceof SeatEntity))
-            return InteractionResult.PASS;
-        if(trySeat(player, living.blockPosition()))
+
+        var pos = entity.blockPosition();
+        var blockState = level.getBlockState(pos);
+
+        if(tryStealSeat(player, level, pos, blockState))
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        if(trySeat(entity, player, level, pos, blockState))
             return InteractionResult.sidedSuccess(level.isClientSide);
         return InteractionResult.PASS;
     }
 
-    private static void onEntityTick(LivingEntity entity)
+    private static void onEntityFallOn(Entity entity, Level level, BlockPos pos, BlockState blockState)
     {
-        if(entity.isPassenger())
-            return;
-        if(!SeatHelper.canSit(entity))
-            return;
         if(entity instanceof Player || EntityHelper.isFakePlayer(entity))
             return;
 
-        var level = entity.level();
-        var pos = entity.getOnPos();
-        var blockState = entity.getBlockStateOn();
-
-        if(canSitAt(level, entity, pos, blockState))
-            trySeat(entity, pos);
+        trySeat(entity, null, level, pos, blockState);
     }
 
-    private static boolean trySeat(LivingEntity interacting, BlockPos pos)
+    private static boolean trySeat(@Nullable Entity seating, @Nullable Entity seater, Level level, BlockPos pos, BlockState blockState)
     {
-        var level = interacting.level();
-        var blockState = level.getBlockState(pos);
-        // determine entity to sit down
-        var sitter = determineSitter(interacting);
-
-        // only if loaded and within world borders
-        if(!level.isLoaded(pos))
-            return false;
-        if(level.isOutsideBuildHeight(pos))
-            return false;
-        if(!level.getWorldBorder().isWithinBounds(pos))
-            return false;
-
-        // only if you can sit here
-        if(!canSitAt(level, sitter, pos, blockState))
-            return false;
-
-        // steal existing seat or spawn new one
-        var seat = findExistingSeat(level, sitter, pos, blockState);
-
-        if(seat == null)
-        {
-            if(!(interacting instanceof Player player) || !player.isSecondaryUseActive())
-                seat = spawnSeat(level, pos);
-        }
-
-        // failed to steal seat or spawn new one
-        if(seat == null)
-            return false;
-
-        // sit down
-        if(!level.isClientSide)
-            onEntitySitDown(level, sitter, pos, blockState, seat);
-        return true;
-    }
-
-    private static void onEntitySitDown(Level level, LivingEntity sitter, BlockPos pos, BlockState blockState, SeatEntity seat)
-    {
-        seat.unRide();
-        sitter.unRide();
-
-        // dont sit if player sneaking
-        if(sitter instanceof Player player && player.isSecondaryUseActive())
-        {
-            seat.discard();
-            return;
-        }
-
-        // mark entity as sat down
-        if(sitter instanceof Mob mob)
-            mob.getNavigation().stop();
-
-        sitter.resetFallDistance();
-        sitter.moveTo(pos.getCenter().add(0D, 1D, 0D));
-        setEntitySittingState(sitter, true);
-        sitter.startRiding(seat, true);
-        SitEvents.SIT_DOWN.post().handle(level, sitter, pos, blockState, seat);
-
-        if(blockState.getBlock() instanceof SeatBlock seatBlock)
-            seatBlock.onEntitySitDown(level, sitter, pos, blockState, seat);
-    }
-
-    @ApiStatus.Internal
-    static void onEntityStandUp(Level level, LivingEntity sitter, BlockPos pos, BlockState blockState, SeatEntity seat)
-    {
-        sitter.unRide();
-        setEntitySittingState(sitter, false);
-        SitEvents.STAND_UP.post().handle(level, sitter, pos, blockState, seat);
-
-        if(blockState.getBlock() instanceof SeatBlock seatBlock)
-            seatBlock.onEntityStandUp(level, sitter, pos, blockState, seat);
-    }
-
-    private static void setEntitySittingState(LivingEntity entity, boolean sitting)
-    {
-        // put entities into their "sitting" states
-        if(entity instanceof Camel camel)
-        {
-            if(sitting)
-            {
-                // if was already sitting, force standing up
-                // to replay the animation
-                if(camel.isCamelSitting())
-                    camel.standUpInstantly();
-
-                camel.sitDown();
-            }
-            else
-                camel.standUp();
-        }
-        else if(entity instanceof AbstractHorse horse)
-        {
-            if(sitting)
-            {
-                // horse was on 2 hind legs
-                // "sit" them down
-                if(horse.isStanding())
-                    horse.setStanding(false);
-            }
-        }
-        else if(entity instanceof Panda panda)
-            panda.sit(sitting);
-        else if(entity instanceof TamableAnimal tamable)
-            tamable.setInSittingPose(sitting);
-    }
-
-    @ApiStatus.Internal
-    static boolean canSitAt(Level level, LivingEntity sitter, BlockPos pos, BlockState blockState)
-    {
-        if(!SeatHelper.canSit(sitter))
-            return false;
         if(!SeatHelper.isSittable(blockState))
             return false;
-        if(!SitEvents.CAN_SIT_AT.post().handle(level, sitter, pos, blockState))
+
+        var toBeSeated = determineSitter(level, seating, seater, pos, blockState);
+
+        if(toBeSeated == null)
             return false;
-        if(blockState.getBlock() instanceof SeatBlock seatBlock)
-            return seatBlock.canSitAt(level, sitter, pos, blockState);
-        return true;
+
+        var seats = level.getEntities(ENTITY, new AABB(pos), seat -> true);
+
+        if(!seats.isEmpty())
+            return false;
+        if(!(level instanceof ServerLevel sLevel))
+            return false;
+
+        var seat = ENTITY.get().spawn(sLevel, pos, MobSpawnType.TRIGGERED);
+
+        if(seat == null)
+            return false;
+
+        return toBeSeated.startRiding(seat);
+    }
+
+    @Nullable
+    private static LivingEntity determineSitter(Level level, @Nullable Entity seating, @Nullable Entity seater, BlockPos pos, BlockState blockState)
+    {
+        if(seating instanceof LivingEntity living && SeatEntity.canSitAt(level, living, pos, blockState))
+            return living;
+
+        if(seater instanceof LivingEntity living)
+        {
+            var leashed = getLeashed(living);
+
+            if(leashed != null)
+            {
+                if(SeatEntity.canSitAt(level, leashed, pos, blockState))
+                    return leashed;
+            }
+
+            if(SeatEntity.canSitAt(level, living, pos, blockState))
+                return living;
+        }
+
+        return null;
     }
 
     @Nullable
@@ -253,58 +165,26 @@ public interface Seat
         return null;
     }
 
-    private static LivingEntity determineSitter(LivingEntity interacting)
+    private static boolean tryStealSeat(Player player, Level level, BlockPos pos, BlockState blockState)
     {
-        var leashed = getLeashed(interacting);
-
-        if(leashed != null)
-            return leashed;
-
-        return interacting;
-    }
-
-    @Nullable
-    private static SeatEntity spawnSeat(Level level, BlockPos pos)
-    {
-        var seat = ENTITY.get().create(level);
-
-        if(seat != null)
-        {
-            seat.moveTo(pos, 0F, 0F);
-            level.addFreshEntity(seat);
-        }
-
-        return seat;
-    }
-
-    @Nullable
-    private static SeatEntity findExistingSeat(Level level, LivingEntity sitter, BlockPos pos, BlockState blockState)
-    {
-        var seats = level.getEntities(ENTITY, new AABB(pos), EntitySelector.NO_SPECTATORS);
-
-        for(var seat : seats)
-        {
-            for(var passenger : seat.getPassengers())
-            {
-                if(passenger == null)
-                    return seat;
-                if(passenger instanceof LivingEntity living && canStealSeatFrom(level, living, sitter, pos, blockState, seat))
-                    return seat;
-            }
-        }
-
-        return null;
-    }
-
-    private static boolean canStealSeatFrom(Level level, LivingEntity sitter, LivingEntity stealer, BlockPos pos, BlockState blockState, SeatEntity seat)
-    {
-        if(sitter instanceof Player)
+        if(!SeatHelper.isSittable(blockState))
             return false;
-        if(SitEvents.CAN_STEAL_SEAT.post().handle(level, sitter, stealer, pos, blockState, seat))
-            return true;
-        if(blockState.getBlock() instanceof SeatBlock seatBlock)
-            return seatBlock.canStealSeat(level, sitter, stealer, pos, blockState, seat);
+        if(!SeatEntity.canSitAt(level, player, pos, blockState))
+            return false;
 
+        var seats = level.getEntities(ENTITY, new AABB(pos), seat -> true);
+
+        if(seats.isEmpty())
+            return false;
+
+        var seat = seats.get(0);
+
+        if(!(seat.getFirstPassenger() instanceof LivingEntity sitter))
+            return false;
+        if(!SeatEntity.canStealSeat(level, sitter, player, pos, blockState, seat))
+            return false;
+
+        seat.discard();
         return true;
     }
 }
