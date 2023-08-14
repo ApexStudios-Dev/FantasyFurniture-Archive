@@ -24,9 +24,13 @@ pipeline {
             steps {
                 echo 'Generating Resources (Fabric)'
                 sh './gradlew fabric:runData'
+                sh './gradlew nordic-fabric:runData'
+                sh './gradlew complete-fabric:runData'
 
                 // echo 'Generating Resources (NeoForge)'
                 // sh './gradlew neoforge:runData'
+                // sh './gradlew nordic-neoforge:runData'
+                // sh './gradlew complete-neoforge:runData'
 
                 echo 'Generating changelog files'
                 sh './gradlew generateChangelogs'
