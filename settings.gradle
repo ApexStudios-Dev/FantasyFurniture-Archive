@@ -1,18 +1,59 @@
 pluginManagement {
 	repositories {
+		maven {
+			url 'https://maven.neoforged.net'
+			content {
+				includeGroupByRegex 'net\\.neoforged.*'
+				// TODO: Why is this still needed? we are running NeoForge not MinecraftForge
+				includeGroupByRegex 'net\\.minecraftforge.*'
+			}
+		}
+
+		maven {
+			url 'https://maven.fabricmc.net'
+			content {
+				includeGroup 'net.fabricmc'
+				includeGroup 'fabric-loom'
+			}
+		}
+
+		maven {
+			url 'https://maven.parchmentmc.org'
+			content {
+				includeGroupByRegex 'org\\.parchmentmc.*'
+			}
+		}
+
+		maven {
+			url 'https://repo.spongepowered.org/repository/maven-public'
+			content {
+				includeGroupByRegex 'org\\.spongepowered.*'
+			}
+		}
+
 		gradlePluginPortal()
-		maven { url 'https://maven.minecraftforge.net' }
-		maven { url 'https://repo.spongepowered.org/repository/maven-public' }
-		maven { url 'https://maven.parchmentmc.org' }
 	}
 
 	resolutionStrategy {
 		eachPlugin {
-			if(requested.id.id == 'org.spongepowered.mixin') {
+			if(requested.id.id == "org.spongepowered.mixin") {
 				useModule("org.spongepowered:mixingradle:${requested.version}")
 			}
 		}
 	}
 }
 
-rootProject.name = "${mod_name}-${minecraft_version}"
+plugins {
+	id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
+
+def includePlatform = { platform ->
+	include platform
+	project(":${platform}").projectDir = file("platforms/${platform}")
+}
+
+includePlatform 'common'
+// includePlatform 'neoforge'
+includePlatform 'fabric'
+
+rootProject.name = "${MOD_NAME}"

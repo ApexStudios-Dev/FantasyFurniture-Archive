@@ -1,0 +1,199 @@
+apply plugin: 'net.neoforged.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'me.modmuss50.mod-publish-plugin'
+
+jarJar.enable()
+
+minecraft {
+    if(rootProject.hasProperty('PARCHMENT_MAPPINGS')) {
+        if(rootProject.hasProperty('PARCHMENT_DEV_MINECRAFT_VERSION')) {
+            mappings channel: 'parchment', version: "${PARCHMENT_DEV_MINECRAFT_VERSION}-${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        } else {
+            mappings channel: 'parchment', version: "${PARCHMENT_MAPPINGS}-${MINECRAFT_VERSION}"
+        }
+    } else {
+        mappings channel: 'official', version: "${MINECRAFT_VERSION}"
+    }
+
+    if(rootProject.file("${AT_FILE}").exists()) {
+        accessTransformer = rootProject.file("${AT_FILE}")
+    }
+
+    enableIdeaPrepareRuns = false
+    copyIdeResources = true
+    generateRunFolders = true
+
+    runs {
+        configureEach {
+            property 'forge.logging.markers', ''
+            property 'forge.logging.console.level', 'debug'
+            ideaModule "${rootProject.name}.${project.name}.main"
+            jvmArg '-XX:+AllowEnhancedClassRedefinition' // requires JBR
+            folderName 'neoforge'
+
+            mods {
+                "${MOD_ID}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            workingDirectory file('run/client')
+        }
+
+        if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                parent runs.client
+                main 'net.covers1624.devlogin.DevLogin'
+                args '--launch_target', '{LAUNCH_TARGET}'
+                lazyToken("LAUNCH_TARGET", { runs.client.main })
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            args 'nogui'
+        }
+
+        data {
+            workingDirectory file('run/client')
+
+            args '--mod', MOD_ID, '--client', '--server', '--validate'
+            args '--output', project(':common').file('src/generated/resources')
+            args '--existing', project(':common').file('src/main/resources/')
+            args '--existing', file('src/main/resources/')
+            args '--existing-mod', APEXCORE_ID
+
+            property "${MOD_ID}.test_elements.enabled", 'true'
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, "${MOD_ID}.refmap.json"
+
+    if(file("src/main/resources/${MOD_ID}.mixins.json").exists()) {
+        config "${MOD_ID}.mixins.json"
+    }
+
+    if(project(':common').file("src/main/resources/${MOD_ID}-common.mixins.json").exists()) {
+        config "${MOD_ID}-common.mixins.json"
+    }
+}
+
+dependencies {
+    if(rootProject.hasProperty('NEOFORGE_DEV_VERSION')) {
+        minecraft "net.neoforged:forge:${MINECRAFT_VERSION}-${NEOFORGE_DEV_VERSION}"
+    } else {
+        minecraft "net.neoforged:forge:${MINECRAFT_VERSION}-${NEOFORGE_VERSION}"
+    }
+
+    annotationProcessor "org.spongepowered:mixin:${MIXIN_VERSION}:processor"
+
+    compileOnly project(path: ':common', configuration: 'namedElements')
+
+    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
+        if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
+            implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}")
+
+            jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}") {
+                jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+            }
+        } else {
+            implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}")
+
+            jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}") {
+                jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+            }
+        }
+    } else {
+        implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
+
+        jarJar("xyz.apex.minecraft.apexcore:apexcore-neoforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}") {
+            jarJar.ranged(it, "${APEXCORE_VERSION_RANGE}")
+        }
+    }
+
+    if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+        runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
+    }
+}
+
+processResources {
+    from project(':common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':common').sourceSets.main.allJava
+}
+
+tasks.jarJar.configure {
+    archiveClassifier.set('')
+}
+
+jar {
+    archiveClassifier.set('slim')
+}
+
+artifacts {
+    archives tasks.jarJar
+}
+
+reobf {
+    jarJar { }
+}
+
+jar.finalizedBy('reobfJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+collectJars {
+    def tasks = [ jar, sourcesJar, tasks.jarJar ]
+    dependsOn tasks
+    from tasks
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact tasks.jarJar
+        }
+
+        snapshot(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact tasks.jarJar
+        }
+    }
+}
+
+publishMods {
+    file = remapJar.archiveFile
+    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
+    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
+    maxRetries = 5
+    version = "${MOD_FULL_VERSION}"
+    displayName = "[NeoForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+    modLoaders.add('neoforge')
+    additionalFiles.from(remapSourcesJar.archiveFile)
+    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
+
+    curseforge {
+        projectId = "${MOD_CURSEFORGE_ID}"
+        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
+        minecraftVersions.add("${MINECRAFT_VERSION}")
+    }
+
+    modrinth {
+        projectId = "${MOD_MODRINTH_ID}"
+        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
+        minecraftVersions.add("${MINECRAFT_VERSION}")
+    }
+}
