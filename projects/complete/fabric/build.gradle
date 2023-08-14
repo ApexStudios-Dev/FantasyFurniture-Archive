@@ -1,0 +1,81 @@
+apply from: rootProject.file('scripts/fabric.gradle')
+
+def children = [ ]
+
+rootProject.childProjects.values().forEach { child ->
+    if(!child.path.startsWithIgnoreCase(':complete') && (child.path.endsWithIgnoreCase('-common') || child.path.endsWithIgnoreCase('-fabric'))) {
+        def moduleName = child.path.substring(1, child.path.indexOf('-'))
+
+        if(!children.contains(moduleName)) {
+            children.add(moduleName)
+        }
+    }
+}
+
+loom {
+    runs {
+        client {
+            client()
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        server {
+            server()
+            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
+            ideConfigGenerated true
+        }
+
+        if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                inherit runs.client
+                programArgs '--launch_target', 'net.fabricmc.loader.impl.launch.knot.KnotClient'
+                mainClass.set 'net.covers1624.devlogin.DevLogin'
+            }
+        }
+
+        data {
+            server()
+            ideConfigGenerated true
+            vmArg '-Dfabric-api.datagen'
+            vmArg "-Dfabric-api.datagen.output-dir=${project(':complete-common').file('src/generated/resources')}"
+            vmArg "-Dfabric-api.datagen.modid=${MOD_ID}_complete"
+        }
+    }
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet project(':common').sourceSets.main
+            sourceSet sourceSets.main
+        }
+
+        children.forEach { child ->
+            "${MOD_ID}_${child}" {
+                sourceSet project(":${child}-common").sourceSets.main
+                sourceSet project(":${child}-fabric").sourceSets.main
+            }
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':complete-common', configuration: 'namedElements')
+    implementation project(path: ':fabric', configuration: 'namedElements')
+
+    children.forEach { child ->
+        implementation project(path: ":${child}-common", configuration: 'namedElements')
+        include project(":${child}-common")
+    }
+}
+
+processResources {
+    from project(':complete-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':complete-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':complete-common').sourceSets.main.allJava
+}

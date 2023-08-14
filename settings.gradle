@@ -47,9 +47,16 @@ plugins {
 	id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 
+def includeExt = { name, dir ->
+	include name
+	project(":${name}").projectDir = file "projects/${dir}"
+}
+
 def includePlatform = { platform ->
-	include platform
-	project(":${platform}").projectDir = file("platforms/${platform}")
+	includeExt platform, "platforms/${platform}"
+	includeExt "complete-${platform}", "complete/${platform}"
+
+	includeExt "nordic-${platform}", "modules/nordic/${platform}"
 }
 
 includePlatform 'common'

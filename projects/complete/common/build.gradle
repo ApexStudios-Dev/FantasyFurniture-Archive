@@ -1,0 +1,21 @@
+apply from: rootProject.file('scripts/common.gradle')
+
+def children = [ ]
+
+rootProject.childProjects.values().forEach { child ->
+    if(!child.path.startsWithIgnoreCase(':complete') && child.path.endsWithIgnoreCase('-common')) {
+        def moduleName = child.path.substring(1, child.path.indexOf('-'))
+
+        if(!children.contains(moduleName)) {
+            children.add(moduleName)
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':common', configuration: 'namedElements')
+
+    children.forEach { child ->
+        compileOnly project(path: ":${child}-common", configuration: 'namedElements')
+    }
+}

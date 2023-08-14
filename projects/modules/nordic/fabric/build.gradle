@@ -1,0 +1,31 @@
+apply from: rootProject.file('scripts/fabric.gradle')
+
+loom {
+    runs {
+        data {
+            server()
+            ideConfigGenerated true
+            vmArg '-Dfabric-api.datagen'
+            vmArg "-Dfabric-api.datagen.output-dir=${project(':nordic-common').file('src/generated/resources')}"
+            vmArg "-Dfabric-api.datagen.modid=${MOD_ID}_nordic"
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':nordic-common', configuration: 'namedElements')
+    implementation project(path: ':fabric', configuration: 'namedElements')
+    include project(':fabric')
+}
+
+processResources {
+    from project(':nordic-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':nordic-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':nordic-common').sourceSets.main.allJava
+}

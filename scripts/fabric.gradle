@@ -7,38 +7,6 @@ loom {
     }
 
     mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
-
-    runs {
-        client {
-            client()
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
-            ideConfigGenerated true
-        }
-
-        server {
-            server()
-            property "${MOD_ID}.test_elements.enabled", 'true'
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
-            ideConfigGenerated true
-        }
-
-        if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
-            clientLogin {
-                inherit runs.client
-                programArgs '--launch_target', 'net.fabricmc.loader.impl.launch.knot.KnotClient'
-                mainClass.set 'net.covers1624.devlogin.DevLogin'
-            }
-        }
-
-        data {
-            server()
-            ideConfigGenerated true
-            vmArg '-Dfabric-api.datagen'
-            vmArg "-Dfabric-api.datagen.output-dir=${project(':common').file('src/generated/resources')}"
-            vmArg "-Dfabric-api.datagen.modid=${MOD_ID}"
-        }
-    }
 }
 
 dependencies {
@@ -73,30 +41,21 @@ dependencies {
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
         if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
             modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}"
-            include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}"
+            // TODO:
+            // include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}"
         } else {
             modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-            include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+            // TODO:
+            // include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
         }
     } else {
         modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
-        include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+        // TODO:
+        // include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
     }
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
-}
-
-processResources {
-    from project(':common').sourceSets.main.resources
-}
-
-compileJava {
-    source project(':common').sourceSets.main.allSource
-}
-
-sourcesJar {
-    from project(':common').sourceSets.main.allJava
 }
 
 collectJars {
@@ -126,7 +85,7 @@ publishing {
 publishMods {
     file = remapJar.archiveFile
     changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
-    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
+    // type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}") // TODO: Figure out why this cant be referenced
     maxRetries = 5
     version = "${MOD_FULL_VERSION}"
     displayName = "[Fabric] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"

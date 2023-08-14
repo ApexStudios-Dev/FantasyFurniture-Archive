@@ -1,0 +1,77 @@
+apply from: rootProject.file('scripts/neoforge.gradle')
+
+def children = [ ]
+
+rootProject.childProjects.values().forEach { child ->
+    if(!child.path.startsWithIgnoreCase(':complete') && (child.path.endsWithIgnoreCase('-common') || child.path.endsWithIgnoreCase('-neoforge'))) {
+        def moduleName = child.path.substring(1, child.path.indexOf('-'))
+
+        if(!children.contains(moduleName)) {
+            children.add(moduleName)
+        }
+    }
+}
+
+minecraft {
+    runs {
+        configureEach {
+            mods {
+                "${MOD_ID}" {
+                    source project(':common').sourceSets.main
+                    source project(':neoforge').sourceSets.main
+                }
+
+                "${MOD_ID}_complete" {
+                    source project(':complete-common').sourceSets.main
+                    source sourceSets.main
+                }
+
+                children.forEach { child ->
+                    "${MOD_ID}_${child}" {
+                        source project(":${child}-common").sourceSets.main
+                        source project(":${child}-neoforge").sourceSets.main
+                    }
+                }
+            }
+        }
+
+        client {
+            workingDirectory file('run/client')
+        }
+
+        if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                parent runs.client
+                main 'net.covers1624.devlogin.DevLogin'
+                args '--launch_target', '{LAUNCH_TARGET}'
+                lazyToken("LAUNCH_TARGET", { runs.client.main })
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            args 'nogui'
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':complete-common', configuration: 'namedElements')
+    implementation project(':neoforge')
+
+    children.forEach { child ->
+        implementation project(":${child}-neoforge")
+    }
+}
+
+processResources {
+    from project(':complete-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':complete-common').sourceSets.main.allSources
+}
+
+sourcesJar {
+    from project(':complete-common').sourceSets.main.allJava
+}

@@ -1,0 +1,18 @@
+apply from: rootProject.file('scripts/neoforge.gradle')
+
+dependencies {
+    compileOnly project(path: ':nordic-common', configuration: 'namedElements')
+    implementation project(':neoforge')
+}
+
+processResources {
+    from project(':nordic-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':nordic-common').sourceSets.main.allSources
+}
+
+sourcesJar {
+    from project(':nordic-common').sourceSets.main.allJava
+}
