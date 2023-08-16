@@ -12,6 +12,18 @@ loom {
     }
 }
 
+dependencies {
+    if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
+        if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
+            include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}"
+        } else {
+            include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
+        }
+    } else {
+        include "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+    }
+}
+
 processResources {
     from project(':common').sourceSets.main.resources
 }
