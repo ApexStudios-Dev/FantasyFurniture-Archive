@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -26,10 +27,7 @@ import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.lib.Services;
 import xyz.apex.minecraft.apexcore.common.lib.helper.TagHelper;
 import xyz.apex.minecraft.apexcore.common.lib.registry.Registrar;
-import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntry;
-import xyz.apex.minecraft.apexcore.common.lib.registry.entry.EntityEntry;
-import xyz.apex.minecraft.apexcore.common.lib.registry.entry.MenuEntry;
-import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RecipeEntry;
+import xyz.apex.minecraft.apexcore.common.lib.registry.entry.*;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
@@ -57,6 +55,8 @@ public interface FantasyFurniture
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
     TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(ID, "seat_blacklist");
     TagKey<Block> SITTABLE = TagHelper.blockTag(ID, "sittable");
+
+    RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Fantasy's Furniture");
 
     default void bootstrap()
     {
