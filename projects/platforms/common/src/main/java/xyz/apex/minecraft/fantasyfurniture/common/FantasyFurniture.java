@@ -129,6 +129,7 @@ public interface FantasyFurniture
                 .tag(EntityTypeTags.NON_CONTROLLING_RIDER)
                 .sized(.25F, .35F)
                 .noSummon()
+                .clearLootTable()
         .register();
     }
 }
