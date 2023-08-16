@@ -3,10 +3,13 @@ package xyz.apex.minecraft.fantasyfurniture.common;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.lib.registry.AbstractRegistrar;
@@ -32,6 +35,24 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.WHITE_WOOL)
                 .tag(FantasyFurniture.SITTABLE, BlockTags.WOOL)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends CarpetBlock> BlockBuilder<R, B, R> carpet(R registrar, BlockFactory<B> blockFactory, BlockEntry<? extends Block> wool)
+    {
+        return registrar
+                .object("carpet")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.WHITE_CARPET)
+                .tag(FantasyFurniture.SITTABLE, BlockTags.WOOL_CARPETS)
+                .defaultBlockState((models, lookup, entry) -> models
+                        .withParent(
+                                ModelLocationUtils.getModelLocation(entry.value()),
+                                models.existingModel(new ResourceLocation("block/carpet"))
+                        )
+                        .texture("wool", TextureMapping.getBlockTexture(wool.value()))
+                )
                 .defaultItem()
         ;
     }

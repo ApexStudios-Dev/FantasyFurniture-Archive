@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CarpetBlock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -29,6 +30,7 @@ public interface NordicFurnitureSet
     Registrar REGISTRAR = Registrar.create(ID);
 
     BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).register();
+    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).register();
     BlockEntry<NordicSofa> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofa::new).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
