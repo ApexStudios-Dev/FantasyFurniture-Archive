@@ -58,6 +58,7 @@ public interface FantasyFurniture
 
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
     TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(ID, "seat_blacklist");
+    TagKey<Block> SITTABLE = TagHelper.blockTag(ID, "sittable");
 
     default void bootstrap()
     {
@@ -67,12 +68,12 @@ public interface FantasyFurniture
 
     default InteractionResult onBlockInteract(Level level, Player player, InteractionHand hand, BlockHitResult result)
     {
-        return SeatEntity.onBlockInteract(level, player, hand, result.getBlockPos());
+        return SeatEntity.trySitDown(level, result.getBlockPos(), player);
     }
 
     default InteractionResult onEntityInteract(Level level, Player player, InteractionHand hand, Entity entity)
     {
-        return SeatEntity.onEntityInteract(level, player, hand, entity);
+        return SeatEntity.tryStandUp(level, entity);
     }
 
     private void registerGenerators()

@@ -2,10 +2,8 @@ package xyz.apex.minecraft.fantasyfurniture.common.entity;
 
 import com.google.common.base.Predicates;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Panda;
@@ -13,12 +11,10 @@ import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.lib.helper.EntityHelper;
-import xyz.apex.minecraft.apexcore.common.lib.helper.InteractionResultHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
 import java.util.Optional;
@@ -99,20 +95,11 @@ public final class SeatEntity extends Entity
     }
 
     @Nullable
-    public static SeatEntity create(Level level, BlockPos pos, Entity entity)
+    private static SeatEntity create(Level level, BlockPos pos, Entity entity)
     {
         var seater = determineSeater(entity);
 
         if(!(level instanceof ServerLevel sLevel))
-            return null;
-        if(!canSit(seater))
-            return null;
-        if(!level.noBlockCollision(seater, seater.getDimensions(seater.getPose()).makeBoundingBox(seater.position())))
-            return null;
-
-        var blockState = level.getBlockState(pos);
-
-        if(!blockState.isFaceSturdy(level, pos, Direction.UP, SupportType.RIGID))
             return null;
 
         var seat = FantasyFurniture.SEAT_ENTITY.spawn(sLevel, pos, MobSpawnType.TRIGGERED);
@@ -120,12 +107,10 @@ public final class SeatEntity extends Entity
         if(seat == null)
             return null;
 
-        var center = pos.getCenter();
         seat.pos = pos;
-        seat.moveTo(center.x, center.y + .25D, center.z, 0F, 0F);
-
         seater.unRide();
-        seater.startRiding(seat);
+        seater.startRiding(seat, true);
+
         return seat;
     }
 
@@ -146,55 +131,53 @@ public final class SeatEntity extends Entity
 
     public static boolean isSittable(BlockState blockState)
     {
-        return !blockState.isAir();
+        return blockState.is(FantasyFurniture.SITTABLE);
     }
 
-    public static InteractionResult onBlockInteract(Level level, Entity seater, InteractionHand hand, BlockPos pos)
+    public static InteractionResult tryStandUp(Level level, Entity entity)
     {
-        if(hand == InteractionHand.OFF_HAND)
-            return InteractionResultHelper.BlockUse.noActionTaken();
-        if(!canSit(seater))
-            return InteractionResultHelper.BlockUse.noActionTaken();
-        if(seater instanceof Player player && player.isSecondaryUseActive())
-            return InteractionResultHelper.BlockUse.noActionTaken();
-        if(seater instanceof LivingEntity living && (!living.getItemInHand(InteractionHand.MAIN_HAND).isEmpty() || !living.getItemInHand(InteractionHand.OFF_HAND).isEmpty()))
-            return InteractionResultHelper.BlockUse.noActionTaken();
-        if(!isSittable(level.getBlockState(pos)))
-            return InteractionResultHelper.BlockUse.noActionTaken();
-        if(findAssociatedSeat(level, seater) != null)
-            return InteractionResultHelper.BlockUse.noActionTaken();
+        if(entity instanceof Player)
+            return InteractionResult.PASS;
 
-        var seat = create(level, pos, seater);
-
-        if(seat == null)
-            return InteractionResultHelper.BlockUse.noActionTaken();
-
-        return InteractionResultHelper.BlockUse.succeedAndSwingArmBothSides(level.isClientSide);
-    }
-
-    public static InteractionResult onEntityInteract(Level level, Player player, InteractionHand hand, Entity entity)
-    {
         var seat = findAssociatedSeat(level, entity);
 
         if(seat != null)
         {
             entity.unRide();
-            return InteractionResultHelper.EntityInteract.succeedAndSwingArmBothSides(level.isClientSide);
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        return InteractionResultHelper.EntityInteract.noActionTaken();
+        return InteractionResult.PASS;
+    }
+
+    public static InteractionResult trySitDown(Level level, BlockPos pos, Entity entity)
+    {
+        if(entity instanceof Player player && player.isSecondaryUseActive())
+            return InteractionResult.PASS;
+
+        var seater = determineSeater(entity);
+
+        if(!canSit(seater) || !isSittable(level.getBlockState(pos)))
+            return InteractionResult.PASS;
+        if(findAssociatedSeat(level, seater) != null)
+            return InteractionResult.PASS;
+        if(!level.noBlockCollision(seater, seater.getDimensions(seater.getPose()).makeBoundingBox(pos.getCenter())))
+            return InteractionResult.PASS;
+
+        var seat = create(level, pos, seater);
+        return seat != null ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
     }
 
     @Nullable
     private static SeatEntity findAssociatedSeat(Level level, Entity entity)
     {
-        var seats = level.getEntities(FantasyFurniture.SEAT_ENTITY, entity.getBoundingBox().inflate(2D), Predicates.alwaysTrue());
+        var seats = level.getEntities(FantasyFurniture.SEAT_ENTITY, entity.getBoundingBox().inflate(1D), Predicates.alwaysTrue());
         return seats.isEmpty() ? null : seats.get(0);
     }
 
     private static Entity determineSeater(Entity seater)
     {
-        return getLeashedEntity(seater).orElse(seater);
+        return getLeashedEntity(seater).filter(SeatEntity::canSit).orElse(seater);
     }
 
     private static Optional<Entity> getLeashedEntity(Entity seater)
