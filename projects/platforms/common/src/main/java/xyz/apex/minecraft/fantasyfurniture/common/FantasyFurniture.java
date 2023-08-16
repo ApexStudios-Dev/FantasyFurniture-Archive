@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common;
 
 import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.core.Direction;
 import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -18,8 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,7 +32,6 @@ import xyz.apex.minecraft.apexcore.common.lib.registry.entry.MenuEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RecipeEntry;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
-import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
 import xyz.apex.minecraft.fantasyfurniture.common.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
@@ -107,22 +105,7 @@ public interface FantasyFurniture
                 .copyInitialPropertiesFrom(() -> Blocks.CRAFTING_TABLE)
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(entry.value(), Variant.variant().model(lookup.lookup(ProviderTypes.MODELS).existingModel(ModelLocationUtils.getModelLocation(entry.value()))))
-                        .with(PropertyDispatch
-                                .property(BlockStateProperties.HORIZONTAL_FACING)
-                                .select(Direction.EAST, Variant
-                                        .variant()
-                                        .yRot(Variant.Rotation.R90)
-                                )
-                                .select(Direction.SOUTH, Variant
-                                        .variant()
-                                        .yRot(Variant.Rotation.R180)
-                                )
-                                .select(Direction.WEST, Variant
-                                        .variant()
-                                        .yRot(Variant.Rotation.R270)
-                                )
-                                .select(Direction.NORTH, Variant.variant())
-                        )
+                        .with(FurnitureSets.facingProperties())
                 )
                 .recipe((provider, lookup, entry) -> ShapelessRecipeBuilder
                         .shapeless(RecipeCategory.MISC, entry)
