@@ -23,9 +23,7 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.RecipeProvider;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.FurnitureSets;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
-import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicCushionBlock;
-import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicSofaBlock;
-import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicStoolBlock;
+import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.*;
 
 @ApiStatus.NonExtendable
 public interface NordicFurnitureSet
@@ -41,6 +39,8 @@ public interface NordicFurnitureSet
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, NordicStoolBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, NordicCushionBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(REGISTRAR, NordicPaintingWideBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");

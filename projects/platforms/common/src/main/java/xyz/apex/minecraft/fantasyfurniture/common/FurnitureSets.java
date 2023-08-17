@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.ApiStatus;
+import xyz.apex.minecraft.apexcore.common.core.ApexTags;
+import xyz.apex.minecraft.apexcore.common.lib.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.lib.registry.AbstractRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.registry.builder.BlockBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntry;
@@ -27,13 +29,15 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 @ApiStatus.NonExtendable
 public interface FurnitureSets
 {
+    MultiBlockType MB_2x1x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").build();
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wool(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
                 .object("wool")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.WHITE_WOOL)
-                .tag(FantasyFurniture.SITTABLE, BlockTags.WOOL)
+                .tag(BlockTags.WOOL)
                 .defaultItem()
         ;
     }
@@ -44,7 +48,7 @@ public interface FurnitureSets
                 .object("carpet")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.WHITE_CARPET)
-                .tag(FantasyFurniture.SITTABLE, BlockTags.WOOL_CARPETS)
+                .tag(BlockTags.WOOL_CARPETS)
                 .defaultBlockState((models, lookup, entry) -> models
                         .withParent(
                                 ModelLocationUtils.getModelLocation(entry.value()),
@@ -62,11 +66,12 @@ public interface FurnitureSets
                 .object("stool")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(
-                        entry.value(),
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
                                 Variant.variant()
                                        .model(ModelLocationUtils.getModelLocation(entry.value()))
-                                )
+                        )
                         .with(facingProperties())
                 )
                 .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
@@ -80,14 +85,53 @@ public interface FurnitureSets
                 .object("cushion")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(
-                        entry.value(),
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
                                 Variant.variant()
                                        .model(ModelLocationUtils.getModelLocation(entry.value()))
-                                )
+                        )
                         .with(facingProperties())
                 )
                 .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> paintingSmall(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("painting_small")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> paintingWide(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("painting_wide")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
     }
