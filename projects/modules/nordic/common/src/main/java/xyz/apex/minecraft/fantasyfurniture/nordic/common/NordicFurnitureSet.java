@@ -1,8 +1,11 @@
 package xyz.apex.minecraft.fantasyfurniture.nordic.common;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarpetBlock;
 import org.apache.logging.log4j.LogManager;
@@ -14,10 +17,15 @@ import xyz.apex.minecraft.apexcore.common.lib.registry.Registrar;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.ItemEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RegistryEntry;
+import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderLookup;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
+import xyz.apex.minecraft.apexcore.common.lib.resgen.RecipeProvider;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.FurnitureSets;
-import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicSofa;
+import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
+import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicCushionBlock;
+import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicSofaBlock;
+import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.NordicStoolBlock;
 
 @ApiStatus.NonExtendable
 public interface NordicFurnitureSet
@@ -29,9 +37,11 @@ public interface NordicFurnitureSet
 
     Registrar REGISTRAR = Registrar.create(ID);
 
-    BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).register();
-    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).register();
-    BlockEntry<NordicSofa> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofa::new).register();
+    BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, NordicStoolBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, NordicCushionBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
 
@@ -45,7 +55,6 @@ public interface NordicFurnitureSet
                 .forEach(output::accept)
         );
 
-        HitBoxes.bootstrap();
         REGISTRAR.register();
         registerGenerators();
     }
@@ -61,5 +70,14 @@ public interface NordicFurnitureSet
         );
 
         ProviderTypes.registerDefaultMcMetaGenerator(ID, Component.translatable(descriptionKey));
+    }
+
+    private static <B extends Block> void nordicFurnitureStationRecipe(RecipeProvider provider, ProviderLookup lookup, BlockEntry<B> entry)
+    {
+        FurnitureStationRecipe.builder(RecipeCategory.MISC, Ingredient.of(Items.OAK_PLANKS), Ingredient.of(Items.BROWN_WOOL), entry)
+                .unlockedBy("has_oak_planks", provider.has(Items.OAK_PLANKS))
+                .unlockedBy("has_brown_wool", provider.has(Items.BROWN_WOOL))
+                .group("furniture_set/nordic")
+                .save(provider::add, entry.getRegistryName());
     }
 }

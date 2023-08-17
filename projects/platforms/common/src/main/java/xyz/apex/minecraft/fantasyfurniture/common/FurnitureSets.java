@@ -21,7 +21,6 @@ import xyz.apex.minecraft.apexcore.common.lib.registry.factory.BlockFactory;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
-import xyz.apex.minecraft.fantasyfurniture.common.block.SofaBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 
@@ -57,7 +56,43 @@ public interface FurnitureSets
         ;
     }
 
-    static <R extends AbstractRegistrar<R>, B extends SofaBlock> BlockBuilder<R, B, R> sofa(R registrar, BlockFactory<B> blockFactory)
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> stool(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("stool")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(
+                        entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                )
+                        .with(facingProperties())
+                )
+                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> cushion(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("cushion")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(
+                        entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                )
+                        .with(facingProperties())
+                )
+                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> sofa(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
                 .object("sofa")
