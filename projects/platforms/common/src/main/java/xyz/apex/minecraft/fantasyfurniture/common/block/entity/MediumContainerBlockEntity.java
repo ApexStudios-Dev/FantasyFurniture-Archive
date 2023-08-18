@@ -1,6 +1,7 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,5 +30,11 @@ public final class MediumContainerBlockEntity extends BaseBlockEntityComponentHo
     protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory)
     {
         return new MediumContainerMenu(FantasyFurniture.MEDIUM_MENU.value(), syncId, playerInventory, getRequiredComponent(BlockEntityComponentTypes.INVENTORY));
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side)
+    {
+        return MediumContainerMenu.SLOTS;
     }
 }

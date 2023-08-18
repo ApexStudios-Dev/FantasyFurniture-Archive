@@ -7,11 +7,14 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenu;
 
+import java.util.stream.IntStream;
+
 public class SmallContainerMenu extends SimpleContainerMenu
 {
     public static final int ROWS = 3;
     public static final int COLS = 5;
     public static final int SLOT_COUNT = ROWS * COLS;
+    public static final int[] SLOTS = IntStream.range(0, SLOT_COUNT).toArray();
 
     public SmallContainerMenu(MenuType<? extends SmallContainerMenu> menuType, int syncId, Inventory playerInventory, Container container)
     {

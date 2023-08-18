@@ -31,6 +31,8 @@ public final class NordicDrawerBlock extends NordicSmallContainerBlock
     @Override
     protected void registerComponents(BlockComponentRegistrar registrar)
     {
+        super.registerComponents(registrar);
+
         registrar.register(BlockComponentTypes.WATERLOGGED);
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
     }
