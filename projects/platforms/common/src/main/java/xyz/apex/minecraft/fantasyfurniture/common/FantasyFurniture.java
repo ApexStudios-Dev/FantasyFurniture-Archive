@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common;
 
 import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.network.chat.Component;
@@ -104,7 +103,7 @@ public interface FantasyFurniture
                 .block(FurnitureStationBlock::new)
                 .copyInitialPropertiesFrom(() -> Blocks.CRAFTING_TABLE)
                 .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(entry.value(), Variant.variant().model(lookup.lookup(ProviderTypes.MODELS).existingModel(ModelLocationUtils.getModelLocation(entry.value()))))
+                        .builder(entry.value(), Variant.variant().model(lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())))
                         .with(FurnitureSets.facingProperties())
                 )
                 .recipe((provider, lookup, entry) -> ShapelessRecipeBuilder

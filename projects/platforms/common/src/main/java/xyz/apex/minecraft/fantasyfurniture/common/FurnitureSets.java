@@ -3,8 +3,6 @@ package xyz.apex.minecraft.fantasyfurniture.common;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
-import net.minecraft.data.models.model.TextureMapping;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
@@ -49,13 +47,7 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.WHITE_CARPET)
                 .tag(BlockTags.WOOL_CARPETS)
-                .defaultBlockState((models, lookup, entry) -> models
-                        .withParent(
-                                ModelLocationUtils.getModelLocation(entry.value()),
-                                models.existingModel(new ResourceLocation("block/carpet"))
-                        )
-                        .texture("wool", TextureMapping.getBlockTexture(wool.value()))
-                )
+                .defaultBlockState((models, lookup, entry) -> models.carpet(entry.value(), models.getTexturePath(wool.value())))
                 .defaultItem()
         ;
     }
