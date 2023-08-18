@@ -24,8 +24,8 @@ public class MediumContainerMenu extends SimpleContainerMenu
     @Override
     protected void bindSlots(Inventory playerInventory)
     {
-        bindContainer(container, ROWS, COLS, 44, 18, this::addSlot);
-        bindPlayerInventory(playerInventory, 8, 84, this::addSlot);
+        bindContainer(container, ROWS, COLS, 8, 18, this::addSlot);
+        bindPlayerInventory(playerInventory, 8, 87, this::addSlot);
     }
 
     public static MediumContainerMenu forNetwork(MenuType<? extends MediumContainerMenu> menuType, int syncId, Inventory inventory, FriendlyByteBuf buffer)
