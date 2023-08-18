@@ -171,6 +171,25 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> lockbox(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("lockbox")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
     @SafeVarargs
     static <R extends AbstractRegistrar<R>> BlockEntityBuilder<R, SmallContainerBlockEntity, R> smallContainer(R registrar, BlockEntry<? extends Block>... blocks)
     {
