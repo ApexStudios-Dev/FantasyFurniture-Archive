@@ -132,6 +132,25 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> drawer(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("drawer")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
+        ;
+    }
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> sofa(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
