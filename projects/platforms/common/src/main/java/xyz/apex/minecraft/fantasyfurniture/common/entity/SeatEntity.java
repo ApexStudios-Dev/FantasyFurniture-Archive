@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.camel.Camel;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -207,6 +208,8 @@ public final class SeatEntity extends Entity
             horse.setStanding(false);
         else if(entity instanceof Panda panda)
             panda.sit(true);
+        else if(entity instanceof Fox fox)
+            fox.setSitting(true);
         else if(entity instanceof TamableAnimal tamable)
             tamable.setInSittingPose(true);
     }
@@ -219,6 +222,8 @@ public final class SeatEntity extends Entity
             horse.setStanding(true);
         else if(entity instanceof Panda panda)
             panda.sit(false);
+        else if(entity instanceof Fox fox)
+            fox.setSitting(false);
         else if(entity instanceof TamableAnimal tamable)
             tamable.setInSittingPose(false);
     }
