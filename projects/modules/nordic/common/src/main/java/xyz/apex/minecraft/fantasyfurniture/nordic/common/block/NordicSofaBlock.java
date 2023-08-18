@@ -132,7 +132,14 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
                 case WEST -> SHAPE_CENTER_WEST;
             };
 
-            case CORNER -> switch(facing) {
+            case INNER_RIGHT -> switch(facing.getClockWise()) {
+                default -> SHAPE_CORNER_NORTH;
+                case EAST -> SHAPE_CORNER_EAST;
+                case SOUTH -> SHAPE_CORNER_SOUTH;
+                case WEST -> SHAPE_CORNER_WEST;
+            };
+
+            case INNER_LEFT -> switch(facing) {
                 default -> SHAPE_CORNER_NORTH;
                 case EAST -> SHAPE_CORNER_EAST;
                 case SOUTH -> SHAPE_CORNER_SOUTH;

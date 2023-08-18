@@ -21,8 +21,9 @@ import java.util.EnumSet;
 
 public final class ConnectionBlockComponent extends BaseBlockComponent
 {
-    public static final BlockComponentType<ConnectionBlockComponent> SOFA_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/sofa", ConnectionType.SINGLE, ConnectionType.LEFT, ConnectionType.RIGHT, ConnectionType.CENTER, ConnectionType.CORNER);
+    public static final BlockComponentType<ConnectionBlockComponent> SOFA_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/sofa", ConnectionType.SINGLE, ConnectionType.INNER_LEFT, ConnectionType.INNER_RIGHT, ConnectionType.LEFT, ConnectionType.RIGHT, ConnectionType.CENTER);
     public static final BlockComponentType<ConnectionBlockComponent> SHELF_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/shelf", ConnectionType.SINGLE, ConnectionType.LEFT, ConnectionType.RIGHT, ConnectionType.CENTER);
+    public static final BlockComponentType<ConnectionBlockComponent> COUNTER_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/counter", ConnectionType.SINGLE, ConnectionType.INNER_LEFT, ConnectionType.INNER_RIGHT, ConnectionType.LEFT, ConnectionType.RIGHT);
 
     private final EnumProperty<ConnectionType> property;
 
@@ -58,6 +59,7 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
     @Override
     public BlockState getStateForPlacement(BlockState placementBlockState, BlockPlaceContext context)
     {
+        placementBlockState = placementBlockState.setValue(HorizontalFacingBlockComponent.FACING, context.getHorizontalDirection().getOpposite());
         return getBlockState(this, context.getLevel(), context.getClickedPos(), placementBlockState);
     }
 
@@ -93,73 +95,58 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
 
     public static ConnectionType getConnectionType(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState)
     {
-        if(!isConnectable(component, blockState))
-            return ConnectionType.SINGLE;
-
         var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
-        var leftPos = pos.relative(facing.getCounterClockWise());
-        var rightPos = pos.relative(facing.getClockWise());
-        var frontPos = pos.relative(facing);
+        if(component.isValidConnection(ConnectionType.INNER_LEFT) || component.isValidConnection(ConnectionType.INNER_RIGHT))
+        {
+            Direction dir1;
+            var blockState1 = level.getBlockState(pos.relative(facing));
 
-        var leftBlockState = level.getBlockState(leftPos);
-        var rightBlockState = level.getBlockState(rightPos);
-        var frontBlockState = level.getBlockState(frontPos);
+            if(isConnectable(component, blockState1) && (dir1 = blockState1.getValue(HorizontalFacingBlockComponent.FACING)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir1.getOpposite()))
+            {
+                if(component.isValidConnection(ConnectionType.INNER_LEFT) && dir1 == facing.getCounterClockWise())
+                    return ConnectionType.INNER_LEFT;
+                else if(component.isValidConnection(ConnectionType.INNER_RIGHT))
+                    return ConnectionType.INNER_RIGHT;
+            }
+        }
 
-        if(component.isValidConnection(ConnectionType.CORNER) && isCornerConnection(component, leftBlockState, rightBlockState, frontBlockState, facing))
-            return ConnectionType.CORNER;
+        if(component.isValidConnection(ConnectionType.OUTER_LEFT) || component.isValidConnection(ConnectionType.OUTER_RIGHT))
+        {
+            Direction dir2;
+            var blockState2 = level.getBlockState(pos.relative(facing.getOpposite()));
 
-        var isLeft = isSideConnection(component, leftBlockState, facing);
-        var isRight = isSideConnection(component, rightBlockState, facing);
+            if(isConnectable(component, blockState2) && (dir2 = blockState2.getValue(HorizontalFacingBlockComponent.FACING)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir2))
+            {
+                if(component.isValidConnection(ConnectionType.OUTER_LEFT) && dir2 == facing.getCounterClockWise())
+                    return ConnectionType.OUTER_LEFT;
+                else if(component.isValidConnection(ConnectionType.OUTER_RIGHT))
+                    return ConnectionType.OUTER_RIGHT;
+            }
+        }
 
-        if(component.isValidConnection(ConnectionType.CENTER) && isLeft && isRight)
+        var left = canConnect(component, level, pos, facing.getCounterClockWise());
+        var right = canConnect(component, level, pos, facing.getClockWise());
+
+        if(component.isValidConnection(ConnectionType.CENTER) && left && right)
             return ConnectionType.CENTER;
-        else if(component.isValidConnection(ConnectionType.LEFT) && isLeft)
+        else if(component.isValidConnection(ConnectionType.LEFT) && left)
             return ConnectionType.LEFT;
-        else if(component.isValidConnection(ConnectionType.RIGHT) && isRight)
+        else if(component.isValidConnection(ConnectionType.RIGHT) && right)
             return ConnectionType.RIGHT;
 
         return ConnectionType.SINGLE;
     }
 
-    public static boolean isCornerConnection(ConnectionBlockComponent component, BlockState left, BlockState right, BlockState front, Direction facing)
+    public static boolean canConnect(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, Direction dir)
     {
-        if(!isConnectable(component, front))
-            return false;
-
-        var frontFacing = front.getValue(HorizontalFacingBlockComponent.FACING);
-
-        if(isConnectable(component, left))
-        {
-            var leftFacing = left.getValue(HorizontalFacingBlockComponent.FACING);
-            return isCornerFacing(facing, leftFacing, frontFacing);
-        }
-        else if(isConnectable(component, right))
-        {
-            var rightFacing = right.getValue(HorizontalFacingBlockComponent.FACING);
-            return isCornerFacing(facing, rightFacing, frontFacing);
-        }
-
-        return false;
+        return isConnectable(component, level.getBlockState(pos.relative(dir)));
     }
 
-    public static boolean isCornerFacing(Direction facing, Direction sideFacing, Direction frontFacing)
+    public static boolean isDifferentOrientation(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState, Direction dir)
     {
-        if(facing == sideFacing)
-            return sideFacing.getCounterClockWise() == frontFacing || sideFacing == frontFacing.getClockWise();
-
-        return sideFacing.getOpposite() == frontFacing || sideFacing == frontFacing.getOpposite();
-    }
-
-    public static boolean isSideConnection(ConnectionBlockComponent component, BlockState side, Direction facing)
-    {
-        if(!isConnectable(component, side))
-            return false;
-        if(side.getValue(HorizontalFacingBlockComponent.FACING) == facing)
-            return true;
-
-        var sideConnection = side.getValue(component.property);
-        return sideConnection == ConnectionType.CORNER || sideConnection == ConnectionType.CENTER;
+        var otherBlockState = level.getBlockState(pos.relative(dir));
+        return !isConnectable(component, otherBlockState) || otherBlockState.getValue(HorizontalFacingBlockComponent.FACING) != blockState.getValue(HorizontalFacingBlockComponent.FACING);
     }
 
     public static boolean isConnectable(ConnectionBlockComponent component, BlockState blockState)

@@ -4,7 +4,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.lib.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.lib.registry.AbstractRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.registry.builder.BlockBuilder;
@@ -30,6 +33,8 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlo
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
+
+import java.util.function.Function;
 
 @ApiStatus.NonExtendable
 public interface FurnitureSets
@@ -161,10 +166,7 @@ public interface FurnitureSets
                 .object("shelf")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
-                        .with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE))
-                        .with(facingProperties())
-                )
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant()).with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE)))
                 .tag(BlockTags.MINEABLE_WITH_AXE)
                 .renderType(() -> RenderType::cutout)
                 .item()
@@ -183,8 +185,10 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
-                        .with(connectionProperties(entry, ConnectionBlockComponent.SOFA_COMPONENT_TYPE))
-                        .with(facingProperties())
+                        .with(connectionProperties(entry, ConnectionBlockComponent.SOFA_COMPONENT_TYPE, connectionType -> switch(connectionType) {
+                            case INNER_LEFT, INNER_RIGHT -> ModelLocationUtils.getModelLocation(entry.value(), "_corner");
+                            default -> ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName()));
+                        }))
                 )
                 .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
                 .item()
@@ -193,6 +197,46 @@ public interface FurnitureSets
                             .parent(ModelLocationUtils.getModelLocation(entry.value().getBlock(), "_single"))
                     )
                 .build()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> deskLeft(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("desk_left")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .renderType(() -> RenderType::cutout)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> deskRight(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("desk_right")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .renderType(() -> RenderType::cutout)
+                .defaultItem()
         ;
     }
 
@@ -331,43 +375,25 @@ public interface FurnitureSets
         ;
     }
 
-    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> deskLeft(R registrar, BlockFactory<B> blockFactory)
+    static <R extends AbstractRegistrar<R>, B extends BaseBlockComponentHolder> BlockBuilder<R, B, R> counter(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
-                .object("desk_left")
+                .object("counter")
                 .block(blockFactory)
-                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
-                .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(
-                                entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
-                        )
-                        .with(facingProperties())
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
+                        .with(connectionProperties(entry, ConnectionBlockComponent.COUNTER_COMPONENT_TYPE, connectionType -> switch(connectionType) {
+                            case INNER_LEFT, INNER_RIGHT, OUTER_LEFT, OUTER_RIGHT -> ModelLocationUtils.getModelLocation(entry.value(), "_corner");
+                            default -> ModelLocationUtils.getModelLocation(entry.value(), "_single");
+                        }))
                 )
-                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
-                .renderType(() -> RenderType::cutout)
-                .defaultItem()
-        ;
-    }
-
-    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> deskRight(R registrar, BlockFactory<B> blockFactory)
-    {
-        return registrar
-                .object("desk_right")
-                .block(blockFactory)
-                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
-                .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(
-                                entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
-                        )
-                        .with(facingProperties())
-                )
-                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
-                .renderType(() -> RenderType::cutout)
-                .defaultItem()
+                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .item()
+                    .model((provider, lookup, entry) -> provider
+                            .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))
+                            .parent(ModelLocationUtils.getModelLocation(entry.value().getBlock(), "_single"))
+                    )
+                .build()
         ;
     }
 
@@ -405,17 +431,50 @@ public interface FurnitureSets
         .register();
     }
 
-    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C1<ConnectionType>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType)
+    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType, Function<ConnectionType, ResourceLocation> modelProvider)
     {
         var property = entry.value().getRequiredComponent(componentType).getProperty();
-        var dispatch = PropertyDispatch.property(property);
+        var dispatch = PropertyDispatch.property(property, HorizontalFacingBlockComponent.FACING);
 
-        for(var connectionType : property.getPossibleValues())
+        for(var facing : HorizontalFacingBlockComponent.FACING.getPossibleValues())
         {
-            dispatch = dispatch.select(connectionType, Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName()))));
+            var rotation = switch(facing) {
+                default -> 0F;
+                case EAST -> 90F;
+                case SOUTH -> 180F;
+                case WEST -> 270;
+            };
+
+            for(var connectionType : property.getPossibleValues())
+            {
+                dispatch = dispatch.select(connectionType, facing, Variant
+                        .variant()
+                        .model(modelProvider.apply(connectionType))
+                        .yRot(switch(connectionType) {
+                            default -> rotation(rotation);
+                            case INNER_RIGHT -> rotation(rotation + 90F);
+                            case OUTER_RIGHT -> rotation(rotation - 90F);
+                        })
+                );
+            }
         }
 
         return dispatch;
+    }
+
+    private static Variant.Rotation rotation(float rotation)
+    {
+        return switch(Mth.floor(rotation % 360)) {
+            default -> Variant.Rotation.R0;
+            case 90 -> Variant.Rotation.R90;
+            case 180 -> Variant.Rotation.R180;
+            case 270 -> Variant.Rotation.R270;
+        };
+    }
+
+    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType)
+    {
+        return connectionProperties(entry, componentType, connectionType -> ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName())));
     }
 
     static PropertyDispatch<PropertyDispatch.C1<Direction>> facingProperties()
