@@ -13,19 +13,14 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFa
 import xyz.apex.minecraft.apexcore.common.lib.helper.VoxelShapeHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
 
-public final class NordicSofaBlock extends BaseBlockComponentHolder
+public final class NordicShelfBlock extends BaseBlockComponentHolder
 {
     public static final VoxelShape SHAPE_SINGLE = VoxelShapeHelper.combine(
-            box(1D, 0D, 1D, 3D, 3D, 3D),
-            box(1D, 0D, 13D, 3D, 3D, 15D),
-            box(13D, 0D, 13D, 15D, 3D, 15D),
-            box(13D, 0D, 1D, 15D, 3D, 3D),
-            box(0D, 3D, 0D, 16D, 6D, 16D),
-            box(0D, 6D, 13D, 16D, 16D, 16D),
-            box(14D, 10D, 0D, 16D, 12D, 14D),
-            box(0D, 10D, 0D, 2D, 12D, 14D),
-            box(0D, 6D, 0D, 2D, 10D, 2D),
-            box(14D, 6D, 0D, 16D, 10D, 2D)
+            box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+            box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+            box(0D, 14D, 0D, 16D, 16D, 16D),
+            box(13D, 6D, 13D, 16D, 14D, 16D),
+            box(0D, 6D, 13D, 3D, 14D, 16D)
     );
 
     public static final VoxelShape SHAPE_SINGLE_NORTH = VoxelShapeHelper.rotateHorizontal(SHAPE_SINGLE, Direction.NORTH);
@@ -33,10 +28,7 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     public static final VoxelShape SHAPE_SINGLE_SOUTH = VoxelShapeHelper.rotateHorizontal(SHAPE_SINGLE, Direction.SOUTH);
     public static final VoxelShape SHAPE_SINGLE_WEST = VoxelShapeHelper.rotateHorizontal(SHAPE_SINGLE, Direction.WEST);
 
-    public static final VoxelShape SHAPE_CENTER = VoxelShapeHelper.combine(
-            box(0D, 3D, 0D, 16D, 6D, 16D),
-            box(0D, 6D, 13D, 16D, 16D, 16D)
-    );
+    public static final VoxelShape SHAPE_CENTER = box(0D, 14D, 0D, 16D, 16D, 16D);
 
     public static final VoxelShape SHAPE_CENTER_NORTH = VoxelShapeHelper.rotateHorizontal(SHAPE_CENTER, Direction.NORTH);
     public static final VoxelShape SHAPE_CENTER_EAST = VoxelShapeHelper.rotateHorizontal(SHAPE_CENTER, Direction.EAST);
@@ -44,12 +36,9 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     public static final VoxelShape SHAPE_CENTER_WEST = VoxelShapeHelper.rotateHorizontal(SHAPE_CENTER, Direction.WEST);
 
     public static final VoxelShape SHAPE_LEFT = VoxelShapeHelper.combine(
-            box(0D, 3D, 0D, 16D, 6D, 16D),
-            box(0D, 6D, 13D, 16D, 16D, 16D),
-            box(14D, 10D, 0D, 16D, 12D, 13D),
-            box(14D, 6D, 0D, 16D, 10D, 2D),
-            box(13D, 0D, 1D, 15D, 3D, 3D),
-            box(13D, 0D, 13D, 15D, 3D, 15D)
+            box(13.5D, 9D, 2D, 15.5D, 14D, 13D),
+            box(0D, 14D, 0D, 16D, 16D, 16D),
+            box(13D, 6D, 13D, 16D, 14D, 16D)
     );
 
     public static final VoxelShape SHAPE_LEFT_NORTH = VoxelShapeHelper.rotateHorizontal(SHAPE_LEFT, Direction.NORTH);
@@ -58,12 +47,9 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     public static final VoxelShape SHAPE_LEFT_WEST = VoxelShapeHelper.rotateHorizontal(SHAPE_LEFT, Direction.WEST);
 
     public static final VoxelShape SHAPE_RIGHT = VoxelShapeHelper.combine(
-            box(0D, 3D, 0D, 16D, 6D, 16D),
-            box(0D, 6D, 13D, 16D, 16D, 16D),
-            box(0D, 10D, 0D, 2D, 12D, 13D),
-            box(0D, 6D, 0D, 2D, 10D, 2D),
-            box(1D, 0D, 1D, 3D, 3D, 3D),
-            box(1D, 0D, 13D, 3D, 3D, 15D)
+            box(.5D, 9D, 2D, 2.5D, 14D, 13D),
+            box(0D, 14D, 0D, 16D, 16D, 16D),
+            box(0D, 6D, 13D, 3D, 14D, 16D)
     );
 
     public static final VoxelShape SHAPE_RIGHT_NORTH = VoxelShapeHelper.rotateHorizontal(SHAPE_RIGHT, Direction.NORTH);
@@ -71,22 +57,7 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     public static final VoxelShape SHAPE_RIGHT_SOUTH = VoxelShapeHelper.rotateHorizontal(SHAPE_RIGHT, Direction.SOUTH);
     public static final VoxelShape SHAPE_RIGHT_WEST = VoxelShapeHelper.rotateHorizontal(SHAPE_RIGHT, Direction.WEST);
 
-    public static final VoxelShape SHAPE_CORNER = VoxelShapeHelper.combine(
-            box(1D, 0D, 1D, 3D, 3D, 3D),
-            box(1D, 0D, 13D, 3D, 3D, 15D),
-            box(13D, 0D, 13D, 15D, 3D, 15D),
-            box(13D, 0D, 1D, 15D, 3D, 3D),
-            box(0D, 3D, 0D, 16D, 6D, 16D),
-            box(0D, 6D, 13D, 16D, 16D, 16D),
-            box(13D, 6D, 0D, 16D, 16D, 13D)
-    );
-
-    public static final VoxelShape SHAPE_CORNER_NORTH = VoxelShapeHelper.rotateHorizontal(SHAPE_CORNER, Direction.NORTH);
-    public static final VoxelShape SHAPE_CORNER_EAST = VoxelShapeHelper.rotateHorizontal(SHAPE_CORNER, Direction.EAST);
-    public static final VoxelShape SHAPE_CORNER_SOUTH = VoxelShapeHelper.rotateHorizontal(SHAPE_CORNER, Direction.SOUTH);
-    public static final VoxelShape SHAPE_CORNER_WEST = VoxelShapeHelper.rotateHorizontal(SHAPE_CORNER, Direction.WEST);
-
-    public NordicSofaBlock(Properties properties)
+    public NordicShelfBlock(Properties properties)
     {
         super(properties);
     }
@@ -96,7 +67,7 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     {
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
         registrar.register(BlockComponentTypes.WATERLOGGED);
-        registrar.register(ConnectionBlockComponent.SOFA_COMPONENT_TYPE);
+        registrar.register(ConnectionBlockComponent.SHELF_COMPONENT_TYPE);
     }
 
     @Override
@@ -104,7 +75,7 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
     {
         var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
 
-        return switch(blockState.getValue(getRequiredComponent(ConnectionBlockComponent.SOFA_COMPONENT_TYPE).getProperty())) {
+        return switch(blockState.getValue(getRequiredComponent(ConnectionBlockComponent.SHELF_COMPONENT_TYPE).getProperty())) {
             default -> switch(facing) {
                 default -> SHAPE_SINGLE_NORTH;
                 case EAST -> SHAPE_SINGLE_EAST;
@@ -130,13 +101,6 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder
                 case EAST -> SHAPE_CENTER_EAST;
                 case SOUTH -> SHAPE_CENTER_SOUTH;
                 case WEST -> SHAPE_CENTER_WEST;
-            };
-
-            case CORNER -> switch(facing) {
-                default -> SHAPE_CORNER_NORTH;
-                case EAST -> SHAPE_CORNER_EAST;
-                case SOUTH -> SHAPE_CORNER_SOUTH;
-                case WEST -> SHAPE_CORNER_WEST;
             };
         };
     }

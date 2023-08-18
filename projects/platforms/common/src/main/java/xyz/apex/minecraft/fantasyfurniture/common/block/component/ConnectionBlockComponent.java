@@ -17,39 +17,55 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFa
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 
+import java.util.EnumSet;
+
 public final class ConnectionBlockComponent extends BaseBlockComponent
 {
-    public static final BlockComponentType<ConnectionBlockComponent> COMPONENT_TYPE = BlockComponentType.register(FantasyFurniture.ID, "connection_type", ConnectionBlockComponent::new);
-    public static final EnumProperty<ConnectionType> PROPERTY = EnumProperty.create("connection_type", ConnectionType.class);
+    public static final BlockComponentType<ConnectionBlockComponent> SOFA_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/sofa", ConnectionType.SINGLE, ConnectionType.LEFT, ConnectionType.RIGHT, ConnectionType.CENTER, ConnectionType.CORNER);
+    public static final BlockComponentType<ConnectionBlockComponent> SHELF_COMPONENT_TYPE = register(FantasyFurniture.ID, "connection_type/shelf", ConnectionType.SINGLE, ConnectionType.LEFT, ConnectionType.RIGHT, ConnectionType.CENTER);
 
-    private ConnectionBlockComponent(BlockComponentHolder componentHolder)
+    private final EnumProperty<ConnectionType> property;
+
+    private ConnectionBlockComponent(BlockComponentHolder componentHolder, ConnectionType... connectionTypes)
     {
         super(componentHolder);
+
+        property = EnumProperty.create("connection_type", ConnectionType.class, EnumSet.of(ConnectionType.SINGLE, connectionTypes));
+    }
+
+    public EnumProperty<ConnectionType> getProperty()
+    {
+        return property;
+    }
+
+    public boolean isValidConnection(ConnectionType connectionType)
+    {
+        return property.getPossibleValues().contains(connectionType);
     }
 
     @Override
     public BlockState registerDefaultBlockState(BlockState defaultBlockState)
     {
-        return defaultBlockState.setValue(PROPERTY, ConnectionType.SINGLE);
+        return defaultBlockState.setValue(property, ConnectionType.SINGLE);
     }
 
     @Override
     public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
-        builder.add(PROPERTY);
+        builder.add(property);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockState placementBlockState, BlockPlaceContext context)
     {
-        return getBlockState(context.getLevel(), context.getClickedPos(), placementBlockState);
+        return getBlockState(this, context.getLevel(), context.getClickedPos(), placementBlockState);
     }
 
     @Override
     public BlockState updateShape(BlockState blockState, Direction direction, BlockState neighborBlockState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos)
     {
         if(direction.getAxis().isHorizontal())
-            return getBlockState(level, currentPos, blockState);
+            return getBlockState(this, level, currentPos, blockState);
 
         return blockState;
     }
@@ -65,18 +81,22 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
             level.setBlock(pos, newBlockState, Block.UPDATE_ALL);*/
     }
 
-    public static BlockState getBlockState(BlockGetter level, BlockPos pos, BlockState blockState)
+    public static BlockComponentType<ConnectionBlockComponent> register(String ownerId, String componentName, ConnectionType... connectionTypes)
     {
-        return blockState.setValue(PROPERTY, getConnectionType(level, pos, blockState));
+        return BlockComponentType.register(ownerId, componentName, componentHolder -> new ConnectionBlockComponent(componentHolder, connectionTypes));
     }
 
-    public static ConnectionType getConnectionType(BlockGetter level, BlockPos pos, BlockState blockState)
+    public static BlockState getBlockState(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState)
     {
-        if(!isConnectable(blockState))
+        return blockState.setValue(component.property, getConnectionType(component, level, pos, blockState));
+    }
+
+    public static ConnectionType getConnectionType(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState)
+    {
+        if(!isConnectable(component, blockState))
             return ConnectionType.SINGLE;
 
         var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
-        var connection = blockState.getValue(PROPERTY);
 
         var leftPos = pos.relative(facing.getCounterClockWise());
         var rightPos = pos.relative(facing.getClockWise());
@@ -86,35 +106,35 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
         var rightBlockState = level.getBlockState(rightPos);
         var frontBlockState = level.getBlockState(frontPos);
 
-        if(isCornerConnection(leftBlockState, rightBlockState, frontBlockState, facing))
+        if(component.isValidConnection(ConnectionType.CORNER) && isCornerConnection(component, leftBlockState, rightBlockState, frontBlockState, facing))
             return ConnectionType.CORNER;
 
-        var isLeft = isSideConnection(leftBlockState, facing, connection);
-        var isRight = isSideConnection(rightBlockState, facing, connection);
+        var isLeft = isSideConnection(component, leftBlockState, facing);
+        var isRight = isSideConnection(component, rightBlockState, facing);
 
-        if(isLeft && isRight)
+        if(component.isValidConnection(ConnectionType.CENTER) && isLeft && isRight)
             return ConnectionType.CENTER;
-        else if(isLeft)
+        else if(component.isValidConnection(ConnectionType.LEFT) && isLeft)
             return ConnectionType.LEFT;
-        else if(isRight)
+        else if(component.isValidConnection(ConnectionType.RIGHT) && isRight)
             return ConnectionType.RIGHT;
 
         return ConnectionType.SINGLE;
     }
 
-    public static boolean isCornerConnection(BlockState left, BlockState right, BlockState front, Direction facing)
+    public static boolean isCornerConnection(ConnectionBlockComponent component, BlockState left, BlockState right, BlockState front, Direction facing)
     {
-        if(!isConnectable(front))
+        if(!isConnectable(component, front))
             return false;
 
         var frontFacing = front.getValue(HorizontalFacingBlockComponent.FACING);
 
-        if(isConnectable(left))
+        if(isConnectable(component, left))
         {
             var leftFacing = left.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, leftFacing, frontFacing);
         }
-        else if(isConnectable(right))
+        else if(isConnectable(component, right))
         {
             var rightFacing = right.getValue(HorizontalFacingBlockComponent.FACING);
             return isCornerFacing(facing, rightFacing, frontFacing);
@@ -131,35 +151,19 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
         return sideFacing.getOpposite() == frontFacing || sideFacing == frontFacing.getOpposite();
     }
 
-    public static boolean isSideConnection(BlockState side, Direction facing, ConnectionType connectionType)
+    public static boolean isSideConnection(ConnectionBlockComponent component, BlockState side, Direction facing)
     {
-        if(!isConnectable(side))
+        if(!isConnectable(component, side))
             return false;
         if(side.getValue(HorizontalFacingBlockComponent.FACING) == facing)
             return true;
 
-        var sideConnection = side.getValue(PROPERTY);
+        var sideConnection = side.getValue(component.property);
         return sideConnection == ConnectionType.CORNER || sideConnection == ConnectionType.CENTER;
     }
 
-    public static boolean isConnectable(BlockState blockState, BlockState other)
+    public static boolean isConnectable(ConnectionBlockComponent component, BlockState blockState)
     {
-        if(!isConnectable(other))
-            return false;
-
-        var otherType = other.getValue(PROPERTY);
-
-        return switch(blockState.getValue(PROPERTY)) {
-            case SINGLE -> true;
-            case LEFT -> otherType != ConnectionType.LEFT;
-            case RIGHT -> otherType != ConnectionType.RIGHT;
-            case CENTER -> true;
-            case CORNER -> true;
-        };
-    }
-
-    public static boolean isConnectable(BlockState blockState)
-    {
-        return blockState.getBlock() instanceof BlockComponentHolder holder && holder.hasComponent(COMPONENT_TYPE);
+        return blockState.hasProperty(component.getProperty());
     }
 }

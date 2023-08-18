@@ -46,6 +46,7 @@ public interface NordicFurnitureSet
     BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(REGISTRAR, NordicPaintingWideBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicDrawerBlock> DRAWER = FurnitureSets.drawer(REGISTRAR, NordicDrawerBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicShelfBlock> SHELF = FurnitureSets.shelf(REGISTRAR, NordicShelfBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicDeskLeftBlock> DESK_LEFT = FurnitureSets.deskLeft(REGISTRAR, NordicDeskLeftBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicDeskRightBlock> DESK_RIGHT = FurnitureSets.deskRight(REGISTRAR, NordicDeskRightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();

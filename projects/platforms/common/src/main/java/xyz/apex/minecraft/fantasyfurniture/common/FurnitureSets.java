@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
+import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponentHolder;
+import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentType;
 import xyz.apex.minecraft.apexcore.common.lib.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.lib.registry.AbstractRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.registry.builder.BlockBuilder;
@@ -151,14 +153,34 @@ public interface FurnitureSets
         ;
     }
 
-    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> sofa(R registrar, BlockFactory<B> blockFactory)
+    static <R extends AbstractRegistrar<R>, B extends BaseBlockComponentHolder> BlockBuilder<R, B, R> shelf(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("shelf")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
+                        .with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE))
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
+                .item()
+                    .model((provider, lookup, entry) -> provider
+                            .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))
+                            .parent(ModelLocationUtils.getModelLocation(entry.value().getBlock(), "_single"))
+                    )
+                .build()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends BaseBlockComponentHolder> BlockBuilder<R, B, R> sofa(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
                 .object("sofa")
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
-                        .with(connectionProperties(entry))
+                        .with(connectionProperties(entry, ConnectionBlockComponent.SOFA_COMPONENT_TYPE))
                         .with(facingProperties())
                 )
                 .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
@@ -281,11 +303,12 @@ public interface FurnitureSets
         .register();
     }
 
-    static <B extends Block> PropertyDispatch<PropertyDispatch.C1<ConnectionType>> connectionProperties(BlockEntry<B> entry)
+    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C1<ConnectionType>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType)
     {
-        var dispatch = PropertyDispatch.property(ConnectionBlockComponent.PROPERTY);
+        var property = entry.value().getRequiredComponent(componentType).getProperty();
+        var dispatch = PropertyDispatch.property(property);
 
-        for(var connectionType : ConnectionBlockComponent.PROPERTY.getPossibleValues())
+        for(var connectionType : property.getPossibleValues())
         {
             dispatch = dispatch.select(connectionType, Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName()))));
         }
