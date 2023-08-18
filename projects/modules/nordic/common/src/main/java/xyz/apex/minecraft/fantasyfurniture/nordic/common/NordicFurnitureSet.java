@@ -55,11 +55,13 @@ public interface NordicFurnitureSet
     BlockEntry<NordicBookshelfBlock> BOOKSHELF = FurnitureSets.bookshelf(REGISTRAR, NordicBookshelfBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicChestBlock> CHEST = FurnitureSets.chest(REGISTRAR, NordicChestBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicDresserBlock> DRESSER = FurnitureSets.dresser(REGISTRAR, NordicDresserBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWardrobeBottomBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(REGISTRAR, NordicWardrobeBottomBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWardrobeTopBlock> WARDROBE_TOP = FurnitureSets.wardrobeTop(REGISTRAR, NordicWardrobeTopBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicLockboxBlock> LOCKBOX = FurnitureSets.lockbox(REGISTRAR, NordicLockboxBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
     BlockEntityEntry<SmallContainerBlockEntity> SMALL_CONTAINER_BLOCK_ENTITY = FurnitureSets.smallContainer(REGISTRAR, DRAWER, LOCKBOX, DESK_LEFT, DESK_RIGHT).register();
     BlockEntityEntry<MediumContainerBlockEntity> MEDIUM_CONTAINER_BLOCK_ENTITY = FurnitureSets.mediumContainer(REGISTRAR, DRESSER).register();
-    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR, CHEST).register();
+    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR, CHEST, WARDROBE_BOTTOM).register();
     BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRAR.object("bookshelf").blockEntity(BookshelfBlockEntity::new).validBlock(BOOKSHELF).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");

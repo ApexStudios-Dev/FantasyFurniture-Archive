@@ -272,6 +272,46 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wardrobeBottom(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("wardrobe_bottom")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wardrobeTop(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("wardrobe_top")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .renderType(() -> RenderType::cutout)
+                .noOcclusion()
+                .defaultItem()
+        ;
+    }
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> lockbox(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
