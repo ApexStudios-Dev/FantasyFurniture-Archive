@@ -3,6 +3,8 @@ package xyz.apex.minecraft.fantasyfurniture.common.entity;
 import com.google.common.base.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
@@ -22,6 +24,8 @@ import java.util.Optional;
 
 public final class SeatEntity extends Entity
 {
+    private static final String NBT_POS = "Pos";
+
     @Nullable private BlockPos pos = null;
 
     public SeatEntity(EntityType<?> entityType, Level level)
@@ -38,7 +42,7 @@ public final class SeatEntity extends Entity
 
         if(getPassengers().isEmpty())
             discard();
-        if(pos != null && level().getBlockState(pos).isAir())
+        if(pos == null || !isSittable(level().getBlockState(pos)))
             discard();
 
         for(var passenger : getPassengers())
@@ -56,11 +60,15 @@ public final class SeatEntity extends Entity
     @Override
     protected void readAdditionalSaveData(CompoundTag compound)
     {
+        if(compound.contains(NBT_POS, Tag.TAG_COMPOUND))
+            pos = NbtUtils.readBlockPos(compound.getCompound(NBT_POS));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound)
     {
+        if(pos != null)
+            compound.put(NBT_POS, NbtUtils.writeBlockPos(pos));
     }
 
     @Override
