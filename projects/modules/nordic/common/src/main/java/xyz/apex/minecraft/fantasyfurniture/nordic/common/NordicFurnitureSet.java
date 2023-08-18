@@ -53,11 +53,12 @@ public interface NordicFurnitureSet
     BlockEntry<NordicDeskRightBlock> DESK_RIGHT = FurnitureSets.deskRight(REGISTRAR, NordicDeskRightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicBenchBlock> BENCH = FurnitureSets.bench(REGISTRAR, NordicBenchBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicBookshelfBlock> BOOKSHELF = FurnitureSets.bookshelf(REGISTRAR, NordicBookshelfBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicChestBlock> CHEST = FurnitureSets.chest(REGISTRAR, NordicChestBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicLockboxBlock> LOCKBOX = FurnitureSets.lockbox(REGISTRAR, NordicLockboxBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
     BlockEntityEntry<SmallContainerBlockEntity> SMALL_CONTAINER_BLOCK_ENTITY = FurnitureSets.smallContainer(REGISTRAR, DRAWER, LOCKBOX, DESK_LEFT, DESK_RIGHT).register();
     BlockEntityEntry<MediumContainerBlockEntity> MEDIUM_CONTAINER_BLOCK_ENTITY = FurnitureSets.mediumContainer(REGISTRAR).register();
-    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR).register();
+    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR, CHEST).register();
     BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRAR.object("bookshelf").blockEntity(BookshelfBlockEntity::new).validBlock(BOOKSHELF).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
