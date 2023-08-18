@@ -14,4 +14,19 @@ public final class LargeContainerMenuScreen extends SimpleContainerMenuScreen<La
     {
         super(menu, playerInventory, title);
     }
+
+    @Override
+    protected void init()
+    {
+        super.init();
+
+        imageWidth = 176;
+        imageHeight = 222;
+
+        leftPos = (width - imageWidth) / 2;
+        topPos = (height - imageHeight) / 2;
+
+        titleLabelX = (imageWidth - font.width(title)) / 2;
+        inventoryLabelY = imageHeight - 94;
+    }
 }

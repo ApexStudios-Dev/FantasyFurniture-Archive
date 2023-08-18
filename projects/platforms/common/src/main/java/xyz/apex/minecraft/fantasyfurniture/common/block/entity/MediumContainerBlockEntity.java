@@ -12,7 +12,7 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.types.Block
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.MediumContainerMenu;
 
-public final class MediumContainerBlockEntity extends BaseBlockEntityComponentHolder
+public class MediumContainerBlockEntity extends BaseBlockEntityComponentHolder
 {
     public MediumContainerBlockEntity(BlockEntityType<? extends MediumContainerBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
     {

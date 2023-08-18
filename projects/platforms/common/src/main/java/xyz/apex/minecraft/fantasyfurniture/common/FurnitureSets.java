@@ -35,6 +35,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 public interface FurnitureSets
 {
     MultiBlockType MB_2x1x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").build();
+    MultiBlockType MB_2x2x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").with("XX").build();
 
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wool(R registrar, BlockFactory<B> blockFactory)
     {
@@ -210,6 +211,25 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> bookshelf(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("bookshelf")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.CHEST)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
     }
