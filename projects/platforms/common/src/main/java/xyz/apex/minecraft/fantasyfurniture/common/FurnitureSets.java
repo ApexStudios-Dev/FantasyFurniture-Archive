@@ -1,5 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
@@ -164,6 +165,7 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE)
+                .renderType(() -> RenderType::cutout)
                 .item()
                     .model((provider, lookup, entry) -> provider
                             .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))
@@ -207,7 +209,7 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
     }
@@ -246,6 +248,7 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .renderType(() -> RenderType::cutout)
                 .defaultItem()
         ;
     }
@@ -265,6 +268,7 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .renderType(() -> RenderType::cutout)
                 .defaultItem()
         ;
     }
