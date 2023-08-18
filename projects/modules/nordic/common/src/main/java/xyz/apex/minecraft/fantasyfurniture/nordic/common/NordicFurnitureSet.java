@@ -14,6 +14,7 @@ import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.lib.Services;
 import xyz.apex.minecraft.apexcore.common.lib.hook.CreativeModeTabHooks;
 import xyz.apex.minecraft.apexcore.common.lib.registry.Registrar;
+import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntityEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.ItemEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RegistryEntry;
@@ -22,6 +23,9 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.RecipeProvider;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.FurnitureSets;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.*;
 
@@ -42,6 +46,10 @@ public interface NordicFurnitureSet
     BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(REGISTRAR, NordicPaintingWideBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+
+    BlockEntityEntry<SmallContainerBlockEntity> SMALL_CONTAINER_BLOCK_ENTITY = FurnitureSets.smallContainer(REGISTRAR).register();
+    BlockEntityEntry<MediumContainerBlockEntity> MEDIUM_CONTAINER_BLOCK_ENTITY = FurnitureSets.mediumContainer(REGISTRAR).register();
+    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR).register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
 

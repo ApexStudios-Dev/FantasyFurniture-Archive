@@ -32,8 +32,14 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
 import xyz.apex.minecraft.fantasyfurniture.common.block.FurnitureStationBlock;
 import xyz.apex.minecraft.fantasyfurniture.common.client.screen.FurnitureStationMenuScreen;
+import xyz.apex.minecraft.fantasyfurniture.common.client.screen.LargeContainerMenuScreen;
+import xyz.apex.minecraft.fantasyfurniture.common.client.screen.MediumContainerMenuScreen;
+import xyz.apex.minecraft.fantasyfurniture.common.client.screen.SmallContainerMenuScreen;
 import xyz.apex.minecraft.fantasyfurniture.common.entity.SeatEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.menu.LargeContainerMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.menu.MediumContainerMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.menu.SmallContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 
 @ApiStatus.NonExtendable
@@ -45,6 +51,10 @@ public interface FantasyFurniture
     FantasyFurniture INSTANCE = Services.singleton(FantasyFurniture.class);
 
     Registrar REGISTRAR = Registrar.create(ID);
+
+    MenuEntry<SmallContainerMenu> SMALL_MENU = REGISTRAR.object("small_container").menu(SmallContainerMenu::forNetwork, () -> () -> SmallContainerMenuScreen::new);
+    MenuEntry<MediumContainerMenu> MEDIUM_MENU = REGISTRAR.object("medium_container").menu(MediumContainerMenu::forNetwork, () -> () -> MediumContainerMenuScreen::new);
+    MenuEntry<LargeContainerMenu> LARGE_MENU = REGISTRAR.object("large_container").menu(LargeContainerMenu::forNetwork, () -> () -> LargeContainerMenuScreen::new);
 
     BlockEntry<FurnitureStationBlock> FURNITURE_STATION_BLOCK = furnitureStation();
     MenuEntry<FurnitureStationMenu> FURNITURE_STATION_MENU = REGISTRAR.menu(FurnitureStationMenu::forNetwork, () -> () -> FurnitureStationMenuScreen::new);

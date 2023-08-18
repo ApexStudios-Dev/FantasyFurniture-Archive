@@ -14,6 +14,7 @@ import xyz.apex.minecraft.apexcore.common.core.ApexTags;
 import xyz.apex.minecraft.apexcore.common.lib.multiblock.MultiBlockType;
 import xyz.apex.minecraft.apexcore.common.lib.registry.AbstractRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.registry.builder.BlockBuilder;
+import xyz.apex.minecraft.apexcore.common.lib.registry.builder.BlockEntityBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.BlockEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.ItemEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RegistryEntry;
@@ -22,6 +23,9 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 
 @ApiStatus.NonExtendable
@@ -146,6 +150,24 @@ public interface FurnitureSets
                     )
                 .build()
         ;
+    }
+
+    @SafeVarargs
+    static <R extends AbstractRegistrar<R>> BlockEntityBuilder<R, SmallContainerBlockEntity, R> smallContainer(R registrar, BlockEntry<? extends Block>... blocks)
+    {
+        return registrar.object("small_container").blockEntity(SmallContainerBlockEntity::new).validBlocks(blocks);
+    }
+
+    @SafeVarargs
+    static <R extends AbstractRegistrar<R>> BlockEntityBuilder<R, MediumContainerBlockEntity, R> mediumContainer(R registrar, BlockEntry<? extends Block>... blocks)
+    {
+        return registrar.object("medium_container").blockEntity(MediumContainerBlockEntity::new).validBlocks(blocks);
+    }
+
+    @SafeVarargs
+    static <R extends AbstractRegistrar<R>> BlockEntityBuilder<R, LargeContainerBlockEntity, R> largeContainer(R registrar, BlockEntry<? extends Block>... blocks)
+    {
+        return registrar.object("large_container").blockEntity(LargeContainerBlockEntity::new).validBlocks(blocks);
     }
 
     static RegistryEntry<CreativeModeTab> creativeModeTab(AbstractRegistrar<?> registrar, String title)
