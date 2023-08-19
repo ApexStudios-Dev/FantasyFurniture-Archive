@@ -25,7 +25,7 @@ public class SmallContainerMenu extends SimpleContainerMenu
     protected void bindSlots(Inventory playerInventory)
     {
         bindContainer(container, ROWS, COLS, 44, 18, this::addSlot);
-        bindPlayerInventory(playerInventory, 8, 84, this::addSlot);
+        bindPlayerInventory(playerInventory, this::addSlot);
     }
 
     public static SmallContainerMenu forNetwork(MenuType<? extends SmallContainerMenu> menuType, int syncId, Inventory inventory, FriendlyByteBuf buffer)

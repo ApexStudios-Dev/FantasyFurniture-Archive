@@ -24,8 +24,8 @@ public class LargeContainerMenu extends SimpleContainerMenu
     @Override
     protected void bindSlots(Inventory playerInventory)
     {
-        bindContainer(container, ROWS, COLS, 8, 18, this::addSlot);
-        bindPlayerInventory(playerInventory, 8, 140, this::addSlot);
+        bindContainer(container, ROWS, COLS, SLOT_BORDER_OFFSET, SLOT_SIZE, this::addSlot);
+        bindPlayerInventory(playerInventory, SLOT_BORDER_OFFSET, 140, this::addSlot);
     }
 
     public static LargeContainerMenu forNetwork(MenuType<? extends LargeContainerMenu> menuType, int syncId, Inventory inventory, FriendlyByteBuf buffer)

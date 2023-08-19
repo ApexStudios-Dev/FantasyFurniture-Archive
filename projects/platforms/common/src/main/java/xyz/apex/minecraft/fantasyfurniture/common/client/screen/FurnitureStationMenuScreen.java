@@ -1,23 +1,17 @@
 package xyz.apex.minecraft.fantasyfurniture.common.client.screen;
 
-import com.google.common.collect.Lists;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
 import xyz.apex.minecraft.apexcore.common.lib.PhysicalSide;
 import xyz.apex.minecraft.apexcore.common.lib.SideOnly;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenuScreen;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnitureStationMenu;
-import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
-
-import java.util.List;
 
 @SideOnly(PhysicalSide.CLIENT)
 public final class FurnitureStationMenuScreen extends SimpleContainerMenuScreen<FurnitureStationMenu>
@@ -53,14 +47,6 @@ public final class FurnitureStationMenuScreen extends SimpleContainerMenuScreen<
     private int scrollBarBackgroundHeight;
     private int scrollBarFullHeight;
 
-    private final List<FurnitureStationRecipe> furnitureRecipes = Lists.newArrayList();
-    private final List<ItemStack> bindingAgents = Lists.newArrayList();
-    private int recipeCounter;
-    private int ingredientACounter;
-    private int ingredientBCounter;
-    private int bindingAgentCounter;
-    private int ticks;
-
     public FurnitureStationMenuScreen(FurnitureStationMenu menu, Inventory inventory, Component title)
     {
         super(menu, inventory, title);
@@ -72,24 +58,6 @@ public final class FurnitureStationMenuScreen extends SimpleContainerMenuScreen<
     protected void init()
     {
         super.init();
-
-        recipeCounter = 0;
-        ingredientACounter = 0;
-        ingredientBCounter = 0;
-        bindingAgentCounter = 0;
-        ticks = 0;
-        furnitureRecipes.clear();
-        furnitureRecipes.addAll(minecraft.level.getRecipeManager().getAllRecipesFor(FantasyFurniture.FURNITURE_STATION_RECIPE));
-        bindingAgents.clear();
-        BuiltInRegistries.ITEM.getTag(FantasyFurniture.FURNITURE_STATION_BINDING_AGENT).ifPresent(tag -> tag.forEach(item -> bindingAgents.add(item.value().getDefaultInstance())));
-
-        imageWidth = 176;
-        imageHeight = 222;
-
-        leftPos = (width - imageWidth) / 2;
-        topPos = (height - imageHeight) / 2;
-
-        inventoryLabelY = 128;
 
         updatePositions();
     }
