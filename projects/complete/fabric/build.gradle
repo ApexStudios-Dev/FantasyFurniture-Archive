@@ -16,14 +16,30 @@ loom {
     runs {
         client {
             client()
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
             ideConfigGenerated true
+
+            // Requires JBR
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }
         }
 
         server {
             server()
-            vmArg '-XX:+AllowEnhancedClassRedefinition' // Requires JBR
             ideConfigGenerated true
+
+            // Requires JBR
+            vmArg '-XX:+AllowEnhancedClassRedefinition'
+            vmArg '-XX:+IgnoreUnrecognizedVMOptions'
+            vmArg '-XX:+AllowRedefinitionToAddDeleteMethods'
+
+            afterEvaluate {
+                vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+            }
         }
 
         if(getRootProject().hasProperty('DEVLOGIN_VERSION')) {
@@ -31,6 +47,10 @@ loom {
                 inherit runs.client
                 programArgs '--launch_target', 'net.fabricmc.loader.impl.launch.knot.KnotClient'
                 mainClass.set 'net.covers1624.devlogin.DevLogin'
+
+                afterEvaluate {
+                    vmArg "-javaagent:${ configurations.compileClasspath.find { it.name.contains("sponge-mixin") } }"
+                }
             }
         }
 

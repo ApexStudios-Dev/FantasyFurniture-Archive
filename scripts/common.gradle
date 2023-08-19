@@ -51,7 +51,7 @@ dependencies {
 }
 
 remapJar.enabled = false
-remapSourcesJar.enabled = false;
+remapSourcesJar.enabled = false
 
 jar {
     archiveClassifier = ''

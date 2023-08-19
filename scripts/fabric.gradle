@@ -38,6 +38,9 @@ dependencies {
         localRuntime "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
     }
 
+    // to stop fabric complaining about missing jetbrains anno classes
+    runtimeOnly 'org.jetbrains:annotations:24.0.1'
+
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
         if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
             modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_DEV_VERSION}"
