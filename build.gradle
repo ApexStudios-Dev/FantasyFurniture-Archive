@@ -138,35 +138,17 @@ subprojects {
 				artifactId = "${project.archivesBaseName}"
 				version = "${project.version}"
 			}
-
-			snapshot(MavenPublication) {
-				groupId = "${project.group}"
-				artifactId = "${project.archivesBaseName}"
-				version = "${MOD_VERSION}-SNAPSHOT"
-			}
 		}
 
 		repositories {
 			if(providers.environmentVariable('MAVEN_PASSWORD').isPresent()) {
 				maven {
-					name 'snapshots'
-					url 'https://nexus.covers1624.net/repository/apex-snapshots/'
+					name 'releases'
+					url 'https://nexus.covers1624.net/repository/apex-releases/'
 
 					credentials {
 						username 'apex'
 						password providers.environmentVariable('MAVEN_PASSWORD').get()
-					}
-				}
-
-				if(MOD_RELEASE_TYPE.equalsIgnoreCase('RELEASE')) {
-					maven {
-						name 'releases'
-						url 'https://nexus.covers1624.net/repository/apex-releases/'
-
-						credentials {
-							username 'apex'
-							password providers.environmentVariable('MAVEN_PASSWORD').get()
-						}
 					}
 				}
 			}
@@ -325,4 +307,10 @@ idea.module {
 			file('.gradle'),
 			file('gradle')
 	]
+
+	[ 'fabric', 'neoforge' ].forEach {
+		if(findProject(":${it}") == null) {
+			excludeDirs += [ file("projects/complete/${it}"), file("projects/modules/nordic/${it}"), file("projects/platforms/${it}") ]
+		}
+	}
 }

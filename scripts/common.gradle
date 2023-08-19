@@ -71,12 +71,5 @@ publishing {
             artifact jar
             artifact sourcesJar
         }
-
-        snapshot(MavenPublication) {
-            loom.disableDeprecatedPomGeneration(it)
-
-            artifact jar
-            artifact sourcesJar
-        }
     }
 }

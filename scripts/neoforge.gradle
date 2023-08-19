@@ -120,12 +120,6 @@ publishing {
             artifact sourcesJar
             artifact tasks.jarJar
         }
-
-        snapshot(MavenPublication) {
-            artifact jar
-            artifact sourcesJar
-            artifact tasks.jarJar
-        }
     }
 }
 

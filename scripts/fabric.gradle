@@ -75,13 +75,6 @@ publishing {
             artifact remapJar
             artifact sourcesJar
         }
-
-        snapshot(MavenPublication) {
-            loom.disableDeprecatedPomGeneration(it)
-
-            artifact remapJar
-            artifact sourcesJar
-        }
     }
 }
 
