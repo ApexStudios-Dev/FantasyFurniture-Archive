@@ -24,13 +24,9 @@ pipeline {
             steps {
                 echo 'Generating Resources (Fabric)'
                 sh './gradlew fabric:runData'
-                sh './gradlew nordic-fabric:runData'
-                sh './gradlew complete-fabric:runData'
 
                 // echo 'Generating Resources (NeoForge)'
                 // sh './gradlew neoforge:runData'
-                // sh './gradlew nordic-neoforge:runData'
-                // sh './gradlew complete-neoforge:runData'
 
                 echo 'Generating changelog files'
                 sh './gradlew generateChangelogs'
@@ -58,16 +54,11 @@ pipeline {
                 }
 
                 withCredentials([
-                    string(credentialsId: 'curseforge_token', variable: 'CURSEFORGE_TOKEN'),
-                    string(credentialsId: 'modrinth_token', variable: 'MODRINTH_TOKEN')
+                        string(credentialsId: 'curseforge_token', variable: 'CURSEFORGE_TOKEN'),
+                        string(credentialsId: 'modrinth_token', variable: 'MODRINTH_TOKEN')
                 ]) {
                     echo 'Publishing to CurseForge & Modrinth'
                     sh './gradlew publishMods'
-                }
-
-                withCredentials([string(credentialsId: 'covers1624_maven_password', variable: 'MAVEN_PASSWORD')]) {
-                    echo 'Publishing to Maven'
-                    sh './gradlew publishReleasePublicationToReleasesRepository'
                 }
 
                 // withCredentials([string(credentialsId: 'discord_changelog_webhook_test', variable: 'DISCORD_CHANGELOG_WEBHOOK_URL')]) {
@@ -81,7 +72,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'covers1624_maven_password', variable: 'MAVEN_PASSWORD')]) {
                     echo 'Publishing to Maven'
-                    sh './gradlew publishSnapshotPublicationToSnapshotsRepository'
+                    sh './gradlew publishReleasePublicationToReleasesRepository'
                 }
 
                 echo 'Archiving Jars'
