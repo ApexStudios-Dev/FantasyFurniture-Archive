@@ -41,6 +41,7 @@ public interface FurnitureSets
 {
     MultiBlockType MB_2x1x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").build();
     MultiBlockType MB_2x2x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").with("XX").build();
+    MultiBlockType MB_1x2x1 = MultiBlockType.builder().renderAtOriginOnly().with("X").with("X").build();
 
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wool(R registrar, BlockFactory<B> blockFactory)
     {
@@ -61,6 +62,39 @@ public interface FurnitureSets
                 .copyInitialPropertiesFrom(() -> Blocks.WHITE_CARPET)
                 .tag(BlockTags.WOOL_CARPETS)
                 .defaultBlockState((models, lookup, entry) -> models.carpet(entry.value(), models.getTexturePath(wool.value())))
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> wallLight(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("wall_light")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.WALL_TORCH)
+                .lightLevel(14)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .renderType(() -> RenderType::cutout)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> floorLight(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("floor_light")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.TORCH)
+                .lightLevel(14)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))))
+                .tag(ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
     }
@@ -352,6 +386,18 @@ public interface FurnitureSets
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .renderType(() -> RenderType::cutout)
                 .noOcclusion()
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> chandelier(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("chandelier")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .lightLevel(14)
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))))
                 .defaultItem()
         ;
     }

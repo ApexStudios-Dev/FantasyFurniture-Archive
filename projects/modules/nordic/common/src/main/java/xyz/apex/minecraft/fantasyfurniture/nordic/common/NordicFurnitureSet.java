@@ -42,6 +42,8 @@ public interface NordicFurnitureSet
 
     BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(REGISTRAR, NordicWallLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicFloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(REGISTRAR, NordicFloorLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, NordicStoolBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, NordicCushionBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
@@ -57,6 +59,7 @@ public interface NordicFurnitureSet
     BlockEntry<NordicDresserBlock> DRESSER = FurnitureSets.dresser(REGISTRAR, NordicDresserBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicWardrobeBottomBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(REGISTRAR, NordicWardrobeBottomBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicWardrobeTopBlock> WARDROBE_TOP = FurnitureSets.wardrobeTop(REGISTRAR, NordicWardrobeTopBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicChandelierLightBlock> CHANDELIER = FurnitureSets.chandelier(REGISTRAR, NordicChandelierLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicLockboxBlock> LOCKBOX = FurnitureSets.lockbox(REGISTRAR, NordicLockboxBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicCounterBlock> COUNTER = FurnitureSets.counter(REGISTRAR, NordicCounterBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
