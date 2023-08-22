@@ -149,10 +149,7 @@ public final class SeatEntity extends Entity
 
     public static boolean isSittable(BlockState blockState)
     {
-        if(!(blockState.getBlock() instanceof BlockComponentHolder componentHolder))
-            return false;
-
-        return componentHolder.hasComponent(SeatComponent.COMPONENT_TYPE);
+        return blockState.getBlock() instanceof BlockComponentHolder componentHolder && componentHolder.hasComponent(SeatComponent.COMPONENT_TYPE);
     }
 
     public static InteractionResult tryStandUp(Level level, Entity entity)

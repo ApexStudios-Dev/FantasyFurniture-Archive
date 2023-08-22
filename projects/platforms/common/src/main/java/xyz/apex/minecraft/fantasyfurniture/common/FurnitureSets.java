@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
@@ -27,10 +28,12 @@ import xyz.apex.minecraft.apexcore.common.lib.registry.entry.ItemEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.entry.RegistryEntry;
 import xyz.apex.minecraft.apexcore.common.lib.registry.factory.BlockFactory;
 import xyz.apex.minecraft.apexcore.common.lib.registry.generic.WoodTypeBuilder;
+import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.DoorComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
@@ -441,6 +444,62 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> doorSingle(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("door_single")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_DOOR)
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(entry.value(), Variant.variant())
+                        .with(doorProperties(
+                                PropertyDispatch.property(HorizontalFacingBlockComponent.FACING, DoorComponent.HINGE, DoorComponent.OPEN),
+                                lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())
+                        ))
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS)
+                .defaultItem()
+                .with(builder -> {
+                    // TODO: because implementation for builder provider callbacks is whack
+                    //  each call to setProvider replaces the last
+                    //  meaning this 2nd call to `.tag` replaces the first
+                    if(woodType.setType().canOpenByHand())
+                        builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
+                    else
+                        builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
+                })
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> doorDouble(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("door_double")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_DOOR)
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(entry.value(), Variant.variant())
+                        .with(doorProperties(
+                                PropertyDispatch.property(HorizontalFacingBlockComponent.FACING, DoorComponent.HINGE, DoorComponent.OPEN),
+                                lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())
+                        ))
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS)
+                .defaultItem()
+                .with(builder -> {
+                    // TODO: because implementation for builder provider callbacks is whack
+                    //  each call to setProvider replaces the last
+                    //  meaning this 2nd call to `.tag` replaces the first
+                    if(woodType.setType().canOpenByHand())
+                        builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
+                    else
+                        builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
+                })
+        ;
+    }
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> chandelier(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
     {
         return registrar
@@ -529,6 +588,38 @@ public interface FurnitureSets
                 )
                 .lang("en_us", title)
         .register();
+    }
+
+    static PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> doorProperties(PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> dispatch, ResourceLocation model)
+    {
+        for(var facing : HorizontalFacingBlockComponent.FACING.getPossibleValues())
+        {
+            for(var hinge : DoorComponent.HINGE.getPossibleValues())
+            {
+                dispatch = doorProperty(doorProperty(dispatch, facing, hinge, true, model), facing, hinge, false, model);
+            }
+        }
+
+        return dispatch;
+    }
+
+    static PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> doorProperty(PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> dispatch, Direction facing, DoorHingeSide hinge, boolean open, ResourceLocation model)
+    {
+        var rotation = facing.getOpposite().toYRot();
+
+        if(open)
+            rotation += 90F;
+        if(hinge == DoorHingeSide.RIGHT && open)
+            rotation += 180F;
+
+        return dispatch.select(facing, hinge, open, Variant
+                .variant()
+                .model(switch(hinge) {
+                    case LEFT -> open ? model.withSuffix("_flipped") : model;
+                    case RIGHT -> open ? model : model.withSuffix("_flipped");
+                })
+                .yRot(rotation(rotation))
+        );
     }
 
     static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType, Function<ConnectionType, ResourceLocation> modelProvider)

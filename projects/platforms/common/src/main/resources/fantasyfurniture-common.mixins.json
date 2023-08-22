@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "package": "xyz.apex.minecraft.fantasyfurniture.common.mixin",
+    "mixins": [
+        "MixinDoorBlock",
+        "MixinDoorInteractGoal",
+        "MixinInteractWithDoor",
+        "MixinPiglinAi",
+        "MixinVillager",
+        "MixinWalkNodeEvaluator"
+    ],
+    "client": [],
+    "server": [],
+    "minVersion": "${MIXIN_VERSION}",
+    "refmap": "${MOD_ID}.refmap.json"
+}
