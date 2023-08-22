@@ -3,9 +3,9 @@ package xyz.apex.minecraft.fantasyfurniture.common.entity;
 import com.google.common.base.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Fox;
@@ -17,22 +17,44 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
+import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.lib.helper.EntityHelper;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.SeatComponent;
 
 import java.util.Optional;
 
 public final class SeatEntity extends Entity
 {
-    private static final String NBT_POS = "Pos";
-
-    @Nullable private BlockPos pos = null;
+    private static final EntityDataAccessor<Optional<BlockPos>> DATA_POS = SynchedEntityData.defineId(SeatEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
 
     public SeatEntity(EntityType<?> entityType, Level level)
     {
         super(entityType, level);
 
         blocksBuilding = false;
+        noPhysics = true;
+    }
+
+    public void setSittingPos(@Nullable BlockPos pos)
+    {
+        entityData.set(DATA_POS, Optional.ofNullable(pos));
+    }
+
+    public Optional<BlockPos> getSittingPos()
+    {
+        return entityData.get(DATA_POS).or(() -> Optional.of(blockPosition()));
+    }
+
+    public Optional<BlockState> getSittingBlockState()
+    {
+        return getSittingPos().map(level()::getBlockState);
+    }
+
+    public Optional<SeatComponent> getSittingBlockComponent()
+    {
+        return getSittingBlockState().map(BlockState::getBlock).map(BlockComponentHolder.class::cast).map(componentHolder -> componentHolder.getRequiredComponent(SeatComponent.COMPONENT_TYPE));
     }
 
     @Override
@@ -42,33 +64,32 @@ public final class SeatEntity extends Entity
 
         if(getPassengers().isEmpty())
             discard();
-        if(pos == null || !isSittable(level().getBlockState(pos)))
+        if(!getSittingBlockState().map(SeatEntity::isSittable).orElse(false))
             discard();
 
-        for(var passenger : getPassengers())
-        {
-            if(!canSit(passenger))
-                passenger.unRide();
-        }
-    }
-
-    @Override
-    protected void defineSynchedData()
-    {
+        getSittingPos().ifPresent(pos -> {
+            for(var passenger : getPassengers())
+            {
+                if(!canSit(passenger))
+                    passenger.unRide();
+            }
+        });
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag compound)
     {
-        if(compound.contains(NBT_POS, Tag.TAG_COMPOUND))
-            pos = NbtUtils.readBlockPos(compound.getCompound(NBT_POS));
     }
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound)
     {
-        if(pos != null)
-            compound.put(NBT_POS, NbtUtils.writeBlockPos(pos));
+    }
+
+    @Override
+    protected void defineSynchedData()
+    {
+        entityData.define(DATA_POS, Optional.empty());
     }
 
     @Override
@@ -103,24 +124,12 @@ public final class SeatEntity extends Entity
         return false;
     }
 
-    @Nullable
-    private static SeatEntity create(Level level, BlockPos pos, Entity entity)
+    @Override
+    protected Vector3f getPassengerAttachmentPoint(Entity entity, EntityDimensions entityDimensions, float f)
     {
-        var seater = determineSeater(entity);
-
-        if(!(level instanceof ServerLevel sLevel))
-            return null;
-
-        var seat = FantasyFurniture.SEAT_ENTITY.spawn(sLevel, pos, MobSpawnType.TRIGGERED);
-
-        if(seat == null)
-            return null;
-
-        seat.pos = pos;
-        seater.unRide();
-        seater.startRiding(seat, true);
-
-        return seat;
+        var defaultOffset = entityDimensions.height + (entity instanceof LivingEntity living && living.isBaby() ? -.19F : -.15625F) * f;
+        var actualOffset = getSittingBlockComponent().map(component -> component.getSittingOffset(entity, entityDimensions, f, defaultOffset)).orElse(defaultOffset);
+        return new Vector3f(0F, actualOffset, 0F);
     }
 
     public static boolean canSit(EntityType<?> entityType)
@@ -140,7 +149,10 @@ public final class SeatEntity extends Entity
 
     public static boolean isSittable(BlockState blockState)
     {
-        return blockState.is(FantasyFurniture.SITTABLE);
+        if(!(blockState.getBlock() instanceof BlockComponentHolder componentHolder))
+            return false;
+
+        return componentHolder.hasComponent(SeatComponent.COMPONENT_TYPE);
     }
 
     public static InteractionResult tryStandUp(Level level, Entity entity)
@@ -159,50 +171,11 @@ public final class SeatEntity extends Entity
         return InteractionResult.PASS;
     }
 
-    public static InteractionResult trySitDown(Level level, BlockPos pos, Entity entity)
-    {
-        if(entity instanceof Player player && player.isSecondaryUseActive())
-            return InteractionResult.PASS;
-
-        var seater = determineSeater(entity);
-
-        if(!canSit(seater) || !isSittable(level.getBlockState(pos)))
-            return InteractionResult.PASS;
-        if(findAssociatedSeat(level, seater) != null)
-            return InteractionResult.PASS;
-        if(!level.noBlockCollision(seater, seater.getDimensions(seater.getPose()).makeBoundingBox(pos.getCenter())))
-            return InteractionResult.PASS;
-
-        var seat = create(level, pos, seater);
-        return seat != null ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
-    }
-
     @Nullable
-    private static SeatEntity findAssociatedSeat(Level level, Entity entity)
+    public static SeatEntity findAssociatedSeat(Level level, Entity entity)
     {
         var seats = level.getEntities(FantasyFurniture.SEAT_ENTITY, entity.getBoundingBox().inflate(1D), Predicates.alwaysTrue());
         return seats.isEmpty() ? null : seats.get(0);
-    }
-
-    private static Entity determineSeater(Entity seater)
-    {
-        return getLeashedEntity(seater).filter(SeatEntity::canSit).orElse(seater);
-    }
-
-    private static Optional<Entity> getLeashedEntity(Entity seater)
-    {
-        for(var entity : seater.level().getEntities(null, seater.getBoundingBox().inflate(10D)))
-        {
-            if(entity instanceof Mob mob)
-            {
-                var leashHolder = mob.getLeashHolder();
-
-                if(leashHolder != null && leashHolder.is(seater))
-                    return Optional.of(mob);
-            }
-        }
-
-        return Optional.empty();
     }
 
     private static void onStartSitting(Entity entity)

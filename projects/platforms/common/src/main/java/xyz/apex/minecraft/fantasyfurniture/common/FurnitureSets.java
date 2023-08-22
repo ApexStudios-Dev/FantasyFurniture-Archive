@@ -113,7 +113,7 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .tag(BlockTags.MINEABLE_WITH_AXE)
                 .defaultItem()
         ;
     }
@@ -132,7 +132,7 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .tag(BlockTags.MINEABLE_WITH_AXE)
                 .defaultItem()
         ;
     }
@@ -224,7 +224,7 @@ public interface FurnitureSets
                             default -> ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName()));
                         }))
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .tag(BlockTags.MINEABLE_WITH_AXE)
                 .item()
                     .model((provider, lookup, entry) -> provider
                             .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))
@@ -274,6 +274,26 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> chair(R registrar, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("chair")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant()
+                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .renderType(() -> RenderType::cutout)
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .defaultItem()
+        ;
+    }
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> bench(R registrar, BlockFactory<B> blockFactory)
     {
         return registrar
@@ -288,7 +308,7 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
     }
@@ -433,7 +453,7 @@ public interface FurnitureSets
                             default -> ModelLocationUtils.getModelLocation(entry.value(), "_single");
                         }))
                 )
-                .tag(FantasyFurniture.SITTABLE, BlockTags.MINEABLE_WITH_AXE)
+                .tag(BlockTags.MINEABLE_WITH_AXE)
                 .item()
                     .model((provider, lookup, entry) -> provider
                             .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))

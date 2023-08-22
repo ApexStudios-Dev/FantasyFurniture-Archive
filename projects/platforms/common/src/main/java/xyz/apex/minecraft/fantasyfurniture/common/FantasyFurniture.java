@@ -17,9 +17,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -63,7 +61,6 @@ public interface FantasyFurniture
 
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
     TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(ID, "seat_blacklist");
-    TagKey<Block> SITTABLE = TagHelper.blockTag(ID, "sittable");
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Fantasy's Furniture");
 
@@ -71,11 +68,6 @@ public interface FantasyFurniture
     {
         REGISTRAR.register();
         registerGenerators();
-    }
-
-    default InteractionResult onBlockInteract(Level level, Player player, InteractionHand hand, BlockHitResult result)
-    {
-        return SeatEntity.trySitDown(level, result.getBlockPos(), player);
     }
 
     default InteractionResult onEntityInteract(Level level, Player player, InteractionHand hand, Entity entity)

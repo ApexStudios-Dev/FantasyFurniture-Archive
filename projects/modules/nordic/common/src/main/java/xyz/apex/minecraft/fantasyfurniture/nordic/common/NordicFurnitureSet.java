@@ -40,33 +40,34 @@ public interface NordicFurnitureSet
 
     Registrar REGISTRAR = Registrar.create(ID);
 
-    BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicWallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(REGISTRAR, NordicWallLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicFloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(REGISTRAR, NordicFloorLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, NordicStoolBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, NordicCushionBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(REGISTRAR, NordicPaintingWideBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicDrawerBlock> DRAWER = FurnitureSets.drawer(REGISTRAR, NordicDrawerBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicShelfBlock> SHELF = FurnitureSets.shelf(REGISTRAR, NordicShelfBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicDeskLeftBlock> DESK_LEFT = FurnitureSets.deskLeft(REGISTRAR, NordicDeskLeftBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicDeskRightBlock> DESK_RIGHT = FurnitureSets.deskRight(REGISTRAR, NordicDeskRightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicBenchBlock> BENCH = FurnitureSets.bench(REGISTRAR, NordicBenchBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicBookshelfBlock> BOOKSHELF = FurnitureSets.bookshelf(REGISTRAR, NordicBookshelfBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicChestBlock> CHEST = FurnitureSets.chest(REGISTRAR, NordicChestBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicDresserBlock> DRESSER = FurnitureSets.dresser(REGISTRAR, NordicDresserBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicWardrobeBottomBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(REGISTRAR, NordicWardrobeBottomBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicWardrobeTopBlock> WARDROBE_TOP = FurnitureSets.wardrobeTop(REGISTRAR, NordicWardrobeTopBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicChandelierLightBlock> CHANDELIER = FurnitureSets.chandelier(REGISTRAR, NordicChandelierLightBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicLockboxBlock> LOCKBOX = FurnitureSets.lockbox(REGISTRAR, NordicLockboxBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
-    BlockEntry<NordicCounterBlock> COUNTER = FurnitureSets.counter(REGISTRAR, NordicCounterBlock::new).recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<Block> WOOL = FurnitureSets.wool(REGISTRAR, Block::new).lang("en_us", "Nordic Wool").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).lang("en_us", "Nordic Carpet").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(REGISTRAR, NordicWallLightBlock::new).lang("en_us", "Nordic Wall Light").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicFloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(REGISTRAR, NordicFloorLightBlock::new).lang("en_us", "Nordic Floor Light").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, NordicStoolBlock::new).lang("en_us", "Nordic Stool").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, NordicCushionBlock::new).lang("en_us", "Nordic Cushion").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, NordicPaintingSmallBlock::new).lang("en_us", "Nordic Painting Small").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicPaintingWideBlock> PAINTING_WIDE = FurnitureSets.paintingWide(REGISTRAR, NordicPaintingWideBlock::new).lang("en_us", "Nordic Painting Wide").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicDrawerBlock> DRAWER = FurnitureSets.drawer(REGISTRAR, NordicDrawerBlock::new).lang("en_us", "Nordic Drawer").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicShelfBlock> SHELF = FurnitureSets.shelf(REGISTRAR, NordicShelfBlock::new).lang("en_us", "Nordic Shelf").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicSofaBlock> SOFA = FurnitureSets.sofa(REGISTRAR, NordicSofaBlock::new).lang("en_us", "Nordic Sofa").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicDeskLeftBlock> DESK_LEFT = FurnitureSets.deskLeft(REGISTRAR, NordicDeskLeftBlock::new).lang("en_us", "Nordic Desk Left").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicDeskRightBlock> DESK_RIGHT = FurnitureSets.deskRight(REGISTRAR, NordicDeskRightBlock::new).lang("en_us", "Nordic Desk Right").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicChairBlock> CHAIR = FurnitureSets.chair(REGISTRAR, NordicChairBlock::new).lang("en_us", "Nordic Chair").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicBenchBlock> BENCH = FurnitureSets.bench(REGISTRAR, NordicBenchBlock::new).lang("en_us", "Nordic Bench").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicBookshelfBlock> BOOKSHELF = FurnitureSets.bookshelf(REGISTRAR, NordicBookshelfBlock::new).lang("en_us", "Nordic Bookshelf").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicChestBlock> CHEST = FurnitureSets.chest(REGISTRAR, NordicChestBlock::new).lang("en_us", "Nordic Chest").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicDresserBlock> DRESSER = FurnitureSets.dresser(REGISTRAR, NordicDresserBlock::new).lang("en_us", "Nordic Dresser").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWardrobeBottomBlock> WARDROBE_BOTTOM = FurnitureSets.wardrobeBottom(REGISTRAR, NordicWardrobeBottomBlock::new).lang("en_us", "Nordic Wardrobe Bottom").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicWardrobeTopBlock> WARDROBE_TOP = FurnitureSets.wardrobeTop(REGISTRAR, NordicWardrobeTopBlock::new).lang("en_us", "Nordic Wardrobe Top").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicChandelierLightBlock> CHANDELIER = FurnitureSets.chandelier(REGISTRAR, NordicChandelierLightBlock::new).lang("en_us", "Nordic Chandelier").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicLockboxBlock> LOCKBOX = FurnitureSets.lockbox(REGISTRAR, NordicLockboxBlock::new).lang("en_us", "Nordic Lockbox").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicCounterBlock> COUNTER = FurnitureSets.counter(REGISTRAR, NordicCounterBlock::new).lang("en_us", "Nordic Counter").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
 
-    BlockEntityEntry<SmallContainerBlockEntity> SMALL_CONTAINER_BLOCK_ENTITY = FurnitureSets.smallContainer(REGISTRAR, DRAWER, LOCKBOX, DESK_LEFT, DESK_RIGHT).register();
-    BlockEntityEntry<MediumContainerBlockEntity> MEDIUM_CONTAINER_BLOCK_ENTITY = FurnitureSets.mediumContainer(REGISTRAR, DRESSER, COUNTER).register();
-    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR, CHEST, WARDROBE_BOTTOM).register();
-    BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRAR.object("bookshelf").blockEntity(BookshelfBlockEntity::new).validBlock(BOOKSHELF).register();
+    BlockEntityEntry<SmallContainerBlockEntity> SMALL_CONTAINER_BLOCK_ENTITY = FurnitureSets.smallContainer(REGISTRAR, DRAWER, LOCKBOX, DESK_LEFT, DESK_RIGHT).lang("en_us", "Nordic Small Container").register();
+    BlockEntityEntry<MediumContainerBlockEntity> MEDIUM_CONTAINER_BLOCK_ENTITY = FurnitureSets.mediumContainer(REGISTRAR, DRESSER, COUNTER).lang("en_us", "Nordic Medium Container").register();
+    BlockEntityEntry<LargeContainerBlockEntity> LARGE_CONTAINER_BLOCK_ENTITY = FurnitureSets.largeContainer(REGISTRAR, CHEST, WARDROBE_BOTTOM).lang("en_us", "Nordic Large Container").register();
+    BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRAR.object("bookshelf").blockEntity(BookshelfBlockEntity::new).validBlock(BOOKSHELF).lang("en_us", "Nordic Bookshelf").register();
 
     RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
 

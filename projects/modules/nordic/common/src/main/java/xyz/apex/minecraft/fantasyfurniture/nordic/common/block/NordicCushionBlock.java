@@ -11,8 +11,10 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentRegi
 import xyz.apex.minecraft.apexcore.common.lib.component.block.types.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.apexcore.common.lib.helper.VoxelShapeHelper;
+import xyz.apex.minecraft.fantasyfurniture.common.block.SeatBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.SeatComponent;
 
-public final class NordicCushionBlock extends BaseBlockComponentHolder
+public final class NordicCushionBlock extends BaseBlockComponentHolder implements SeatBlock
 {
     public static final VoxelShape SHAPE = VoxelShapeHelper.combine(
             box(2D, 0D, 2D, 4D, 2D, 4D),
@@ -44,6 +46,7 @@ public final class NordicCushionBlock extends BaseBlockComponentHolder
     {
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
         registrar.register(BlockComponentTypes.WATERLOGGED);
+        registrar.register(SeatComponent.COMPONENT_TYPE);
     }
 
     @Override

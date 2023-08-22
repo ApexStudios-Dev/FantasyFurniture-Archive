@@ -13,8 +13,10 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFa
 import xyz.apex.minecraft.apexcore.common.lib.helper.VoxelShapeHelper;
 import xyz.apex.minecraft.apexcore.common.lib.multiblock.MultiBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FurnitureSets;
+import xyz.apex.minecraft.fantasyfurniture.common.block.SeatBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.SeatComponent;
 
-public final class NordicBenchBlock extends BaseBlockComponentHolder
+public final class NordicBenchBlock extends BaseBlockComponentHolder implements SeatBlock
 {
     public static final VoxelShape SHAPE = VoxelShapeHelper.combine(
             box(12D, 0D, 2D, 14D, 3D, 4D),
@@ -46,6 +48,7 @@ public final class NordicBenchBlock extends BaseBlockComponentHolder
         registrar.register(BlockComponentTypes.HORIZONTAL_FACING);
         registrar.register(BlockComponentTypes.WATERLOGGED);
         registrar.register(BlockComponentTypes.MULTI_BLOCK, component -> component.setMultiBlockType(FurnitureSets.MB_2x1x1));
+        registrar.register(SeatComponent.COMPONENT_TYPE);
     }
 
     @Override
