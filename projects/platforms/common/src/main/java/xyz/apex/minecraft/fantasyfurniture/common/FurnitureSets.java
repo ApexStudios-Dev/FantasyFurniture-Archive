@@ -34,6 +34,7 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.DoorComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.TableComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
@@ -113,6 +114,22 @@ public interface FurnitureSets
                 .lightLevel(14)
                 .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))))
                 .tag(ApexTags.Blocks.PLACEMENT_VISUALIZER)
+                .defaultItem()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> table(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("table")
+                .block(blockFactory)
+                .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(entry.value(), Variant.variant())
+                        .with(tableProperties(lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())))
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
                 .defaultItem()
         ;
     }
@@ -620,6 +637,49 @@ public interface FurnitureSets
                 })
                 .yRot(rotation(rotation))
         );
+    }
+
+    static PropertyDispatch.C5<Boolean, Boolean, Boolean, Boolean, Boolean> tableProperties(ResourceLocation model)
+    {
+        return PropertyDispatch
+                .property(TableComponent.ROTATED, TableComponent.NORTH, TableComponent.EAST, TableComponent.SOUTH, TableComponent.WEST)
+                .generate((rotated, north, east, south, west) -> tableProperty(rotated, north, east, south, west, model));
+    }
+
+    static Variant tableProperty(boolean rotated, boolean north, boolean east, boolean south, boolean west, ResourceLocation model)
+    {
+        var suffix = "";
+        var hasAll = north && east && south && west;
+
+        if(north)
+            suffix += rotated && !hasAll ? 'e' : 'n';
+        if(east)
+            suffix += rotated && !hasAll ? 's' : 'e';
+        if(south)
+            suffix += rotated && !hasAll ? 'w' : 's';
+        if(west)
+            suffix += rotated && !hasAll ? 'n' : 'w';
+
+        if(!suffix.isEmpty())
+        {
+            suffix = switch(suffix) {
+                default -> suffix;
+
+                case "esn" -> "nes";
+                case "swn" -> "nsw";
+                case "ewn" -> "new";
+                case "sn" -> "ns";
+                case "en" -> "ne";
+                case "wn" -> "nw";
+            };
+
+            model = model.withSuffix("_%s".formatted(suffix));
+        }
+
+        return Variant
+                .variant()
+                .model(model)
+                .yRot(rotated ? Variant.Rotation.R270 : Variant.Rotation.R0);
     }
 
     static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType, Function<ConnectionType, ResourceLocation> modelProvider)

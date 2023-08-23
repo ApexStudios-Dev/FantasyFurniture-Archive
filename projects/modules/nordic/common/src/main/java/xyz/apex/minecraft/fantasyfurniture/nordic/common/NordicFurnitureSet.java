@@ -47,6 +47,7 @@ public interface NordicFurnitureSet
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).lang("en_us", "Nordic Carpet").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicWallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(REGISTRAR, WOOD_TYPE, NordicWallLightBlock::new).lang("en_us", "Nordic Wall Light").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicFloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(REGISTRAR, WOOD_TYPE, NordicFloorLightBlock::new).lang("en_us", "Nordic Floor Light").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
+    BlockEntry<NordicTableBlock> TABLE = FurnitureSets.table(REGISTRAR, WOOD_TYPE, NordicTableBlock::new).lang("en_us", "Nordic Table").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, WOOD_TYPE, NordicStoolBlock::new).lang("en_us", "Nordic Stool").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, WOOD_TYPE, NordicCushionBlock::new).lang("en_us", "Nordic Cushion").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
     BlockEntry<NordicPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, WOOD_TYPE, NordicPaintingSmallBlock::new).lang("en_us", "Nordic Painting Small").recipe(NordicFurnitureSet::nordicFurnitureStationRecipe).register();
