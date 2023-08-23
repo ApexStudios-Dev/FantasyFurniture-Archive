@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -94,8 +93,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -126,7 +124,7 @@ public interface FurnitureSets
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .sound(woodType.soundType())
                 .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(entry.value(), Variant.variant())
+                        .builder(entry.value())
                         .with(tableProperties(lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())))
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE)
@@ -144,8 +142,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -164,8 +161,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -184,8 +180,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -204,8 +199,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -224,8 +218,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -241,7 +234,7 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .sound(woodType.soundType())
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant()).with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE)))
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value()).with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE)))
                 .tag(BlockTags.MINEABLE_WITH_AXE)
                 .renderType(() -> RenderType::cutout)
                 .item()
@@ -260,7 +253,7 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .sound(woodType.soundType())
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value())
                         .with(connectionProperties(entry, ConnectionBlockComponent.SOFA_COMPONENT_TYPE, connectionType -> switch(connectionType) {
                             case INNER_LEFT, INNER_RIGHT -> ModelLocationUtils.getModelLocation(entry.value(), "_corner");
                             default -> ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName()));
@@ -286,8 +279,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -307,8 +299,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -328,8 +319,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -349,8 +339,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -369,8 +358,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -389,8 +377,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -409,8 +396,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -429,8 +415,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -449,8 +434,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -469,11 +453,8 @@ public interface FurnitureSets
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_DOOR)
                 .sound(woodType.soundType())
                 .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(entry.value(), Variant.variant())
-                        .with(doorProperties(
-                                PropertyDispatch.property(HorizontalFacingBlockComponent.FACING, DoorComponent.HINGE, DoorComponent.OPEN),
-                                lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())
-                        ))
+                        .builder(entry.value())
+                        .with(doorProperties(lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())))
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS)
                 .defaultItem()
@@ -498,11 +479,8 @@ public interface FurnitureSets
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_DOOR)
                 .sound(woodType.soundType())
                 .blockState((lookup, entry) -> MultiVariantBuilder
-                        .builder(entry.value(), Variant.variant())
-                        .with(doorProperties(
-                                PropertyDispatch.property(HorizontalFacingBlockComponent.FACING, DoorComponent.HINGE, DoorComponent.OPEN),
-                                lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())
-                        ))
+                        .builder(entry.value())
+                        .with(doorProperties(lookup.lookup(ProviderTypes.MODELS).getModelPath(entry.value())))
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS)
                 .defaultItem()
@@ -542,8 +520,7 @@ public interface FurnitureSets
                 .blockState((lookup, entry) -> MultiVariantBuilder
                         .builder(
                                 entry.value(),
-                                Variant.variant()
-                                       .model(ModelLocationUtils.getModelLocation(entry.value()))
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
                         )
                         .with(facingProperties())
                 )
@@ -559,7 +536,7 @@ public interface FurnitureSets
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .sound(woodType.soundType())
-                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value(), Variant.variant())
+                .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value())
                         .with(connectionProperties(entry, ConnectionBlockComponent.COUNTER_COMPONENT_TYPE, connectionType -> switch(connectionType) {
                             case INNER_LEFT, INNER_RIGHT, OUTER_LEFT, OUTER_RIGHT -> ModelLocationUtils.getModelLocation(entry.value(), "_corner");
                             default -> ModelLocationUtils.getModelLocation(entry.value(), "_single");
@@ -609,36 +586,29 @@ public interface FurnitureSets
         .register();
     }
 
-    static PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> doorProperties(PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> dispatch, ResourceLocation model)
+    static PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> doorProperties(ResourceLocation model)
     {
-        for(var facing : HorizontalFacingBlockComponent.FACING.getPossibleValues())
-        {
-            for(var hinge : DoorComponent.HINGE.getPossibleValues())
-            {
-                dispatch = doorProperty(doorProperty(dispatch, facing, hinge, true, model), facing, hinge, false, model);
-            }
-        }
-
-        return dispatch;
+        return PropertyDispatch
+                .property(HorizontalFacingBlockComponent.FACING, DoorComponent.HINGE, DoorComponent.OPEN)
+                .generate((facing, hinge, open) -> doorProperty(facing, hinge, open, model));
     }
 
-    static PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> doorProperty(PropertyDispatch.C3<Direction, DoorHingeSide, Boolean> dispatch, Direction facing, DoorHingeSide hinge, boolean open, ResourceLocation model)
+    static Variant doorProperty(Direction facing, DoorHingeSide hinge, boolean open, ResourceLocation model)
     {
-        var rotation = facing.getOpposite().toYRot();
+        var rotation = (int) facing.getOpposite().toYRot();
 
         if(open)
-            rotation += 90F;
+            rotation += 90;
         if(hinge == DoorHingeSide.RIGHT && open)
-            rotation += 180F;
+            rotation += 180;
 
-        return dispatch.select(facing, hinge, open, Variant
+        return Variant
                 .variant()
                 .model(switch(hinge) {
                     case LEFT -> open ? model.withSuffix("_flipped") : model;
                     case RIGHT -> open ? model : model.withSuffix("_flipped");
                 })
-                .yRot(rotation(rotation))
-        );
+                .yRot(rotation);
     }
 
     static PropertyDispatch.C5<Boolean, Boolean, Boolean, Boolean, Boolean> tableProperties(ResourceLocation model)
@@ -684,48 +654,30 @@ public interface FurnitureSets
                 .yRot(rotated ? Variant.Rotation.R270 : Variant.Rotation.R0);
     }
 
-    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType, Function<ConnectionType, ResourceLocation> modelProvider)
+    static <B extends BaseBlockComponentHolder> PropertyDispatch.C2<ConnectionType, Direction> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType, Function<ConnectionType, ResourceLocation> modelProvider)
     {
-        var property = entry.value().getRequiredComponent(componentType).getProperty();
-        var dispatch = PropertyDispatch.property(property, HorizontalFacingBlockComponent.FACING);
+        return PropertyDispatch
+                .property(entry.value().getRequiredComponent(componentType).getProperty(), HorizontalFacingBlockComponent.FACING)
+                .generate((connectionType, facing) -> {
+                    var rotation = switch(facing) {
+                        default -> 0;
+                        case EAST -> 90;
+                        case SOUTH -> 180;
+                        case WEST -> 270;
+                    };
 
-        for(var facing : HorizontalFacingBlockComponent.FACING.getPossibleValues())
-        {
-            var rotation = switch(facing) {
-                default -> 0F;
-                case EAST -> 90F;
-                case SOUTH -> 180F;
-                case WEST -> 270;
-            };
-
-            for(var connectionType : property.getPossibleValues())
-            {
-                dispatch = dispatch.select(connectionType, facing, Variant
-                        .variant()
-                        .model(modelProvider.apply(connectionType))
-                        .yRot(switch(connectionType) {
-                            default -> rotation(rotation);
-                            case INNER_RIGHT -> rotation(rotation + 90F);
-                            case OUTER_RIGHT -> rotation(rotation - 90F);
-                        })
-                );
-            }
-        }
-
-        return dispatch;
+                    return Variant
+                            .variant()
+                            .model(modelProvider.apply(connectionType))
+                            .yRot(switch(connectionType) {
+                                default -> rotation;
+                                case INNER_RIGHT -> rotation + 90;
+                                case OUTER_RIGHT -> rotation - 90;
+                            });
+                });
     }
 
-    private static Variant.Rotation rotation(float rotation)
-    {
-        return switch(Mth.floor(rotation % 360)) {
-            default -> Variant.Rotation.R0;
-            case 90 -> Variant.Rotation.R90;
-            case 180 -> Variant.Rotation.R180;
-            case 270 -> Variant.Rotation.R270;
-        };
-    }
-
-    static <B extends BaseBlockComponentHolder> PropertyDispatch<PropertyDispatch.C2<ConnectionType, Direction>> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType)
+    static <B extends BaseBlockComponentHolder> PropertyDispatch.C2<ConnectionType, Direction> connectionProperties(BlockEntry<B> entry, BlockComponentType<ConnectionBlockComponent> componentType)
     {
         return connectionProperties(entry, componentType, connectionType -> ModelLocationUtils.getModelLocation(entry.value(), "_%s".formatted(connectionType.getSerializedName())));
     }
