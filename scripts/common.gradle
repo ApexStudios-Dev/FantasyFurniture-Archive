@@ -34,6 +34,9 @@ dependencies {
     })
 
     compileOnly "org.spongepowered:mixin:${MIXIN_VERSION}"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
+    compileOnly "io.github.llamalad7:mixinextras-common:${MIXIN_EXTRAS_VERSION}"
+
     compileOnly 'org.ow2.asm:asm-commons:9.5'
 
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {

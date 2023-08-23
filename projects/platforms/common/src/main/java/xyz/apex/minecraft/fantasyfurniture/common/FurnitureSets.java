@@ -486,6 +486,7 @@ public interface FurnitureSets
                     else
                         builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
                 })
+                .onRegister(block -> FantasyFurniture.INSTANCE.registerPathNodeType(block, DoorComponent::getPathNodeType))
         ;
     }
 
@@ -514,6 +515,7 @@ public interface FurnitureSets
                     else
                         builder.tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.DOORS, BlockTags.WOODEN_DOORS);
                 })
+                .onRegister(block -> FantasyFurniture.INSTANCE.registerPathNodeType(block, DoorComponent::getPathNodeType))
         ;
     }
 

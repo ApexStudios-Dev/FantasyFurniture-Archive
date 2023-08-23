@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import org.apache.commons.lang3.Validate;
@@ -243,5 +244,16 @@ public final class DoorComponent extends BaseBlockComponent
                 level.setBlock(worldPosition, modifier.apply(newBlockState), flags);
             }
         }
+    }
+
+    @Nullable
+    public static BlockPathTypes getPathNodeType(BlockState blockState, boolean neighbor)
+    {
+        return BlockComponentHolder.mapAsComponent(blockState, COMPONENT_TYPE, component -> {
+            if(blockState.getValue(DoorComponent.OPEN))
+                return BlockPathTypes.DOOR_OPEN;
+            else
+                return component.getBlockSetType().canOpenByHand() ? BlockPathTypes.DOOR_WOOD_CLOSED : BlockPathTypes.DOOR_IRON_CLOSED;
+        }).orElse(null);
     }
 }

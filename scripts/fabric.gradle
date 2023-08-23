@@ -38,6 +38,9 @@ dependencies {
         localRuntime "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
     }
 
+    annotationProcessor "io.github.llamalad7:mixinextras-fabric:${MIXIN_EXTRAS_VERSION}"
+    implementation "io.github.llamalad7:mixinextras-fabric:${MIXIN_EXTRAS_VERSION}"
+
     // to stop fabric complaining about missing jetbrains anno classes
     runtimeOnly 'org.jetbrains:annotations:24.0.1'
 

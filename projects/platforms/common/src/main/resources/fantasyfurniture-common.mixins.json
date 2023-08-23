@@ -6,8 +6,7 @@
         "MixinDoorInteractGoal",
         "MixinInteractWithDoor",
         "MixinPiglinAi",
-        "MixinVillager",
-        "MixinWalkNodeEvaluator"
+        "MixinVillager"
     ],
     "client": [],
     "server": [],

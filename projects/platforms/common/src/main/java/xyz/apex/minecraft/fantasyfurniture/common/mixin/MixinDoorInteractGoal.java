@@ -1,15 +1,13 @@
 package xyz.apex.minecraft.fantasyfurniture.common.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.DoorInteractGoal;
-import net.minecraft.world.level.block.DoorBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentHolder;
@@ -41,32 +39,14 @@ public abstract class MixinDoorInteractGoal
         });
     }
 
-    @Inject(
+    @ModifyReturnValue(
             method = "isOpen",
-            at = @At("HEAD"),
-            cancellable = true
+            at = @At("RETURN")
     )
-    private void FantasyFurniture$isOpen(CallbackInfoReturnable<Boolean> cir)
+    private boolean FantasyFurniture$isOpen(boolean original)
     {
         final var blockState = mob.level().getBlockState(doorPos);
-        BlockComponentHolder.runAsComponent(blockState, DoorComponent.COMPONENT_TYPE, component -> cir.setReturnValue(blockState.getValue(DoorComponent.OPEN)));
-    }
-
-    // IntelliJ (MCDev Plugin) complain about a lot of stuff here,
-    // but you can safely ignore it, known issue with ModifyConstant and instanceof redirections
-    // code still compiles and runs as expected
-    @ModifyConstant(
-            method = "isOpen",
-            constant = @Constant(classValue = DoorBlock.class)
-    )
-    private boolean FantasyFurniture$isOpen(Object obj, Class objClas)
-    {
-        if(obj instanceof DoorBlock)
-            return true;
-        else if(obj instanceof BlockComponentHolder componentHolder)
-            return componentHolder.hasComponent(DoorComponent.COMPONENT_TYPE);
-        else
-            return false;
+        return BlockComponentHolder.mapAsComponent(blockState, DoorComponent.COMPONENT_TYPE, component -> blockState.getValue(DoorComponent.OPEN)).orElse(original);
     }
 
     @Inject(

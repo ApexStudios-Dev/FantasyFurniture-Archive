@@ -17,10 +17,14 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.lib.Services;
 import xyz.apex.minecraft.apexcore.common.lib.helper.TagHelper;
 import xyz.apex.minecraft.apexcore.common.lib.registry.Registrar;
@@ -39,6 +43,8 @@ import xyz.apex.minecraft.fantasyfurniture.common.menu.LargeContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.MediumContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.SmallContainerMenu;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
+
+import java.util.function.BiFunction;
 
 @ApiStatus.NonExtendable
 public interface FantasyFurniture
@@ -74,6 +80,8 @@ public interface FantasyFurniture
     {
         return SeatEntity.tryStandUp(level, entity);
     }
+
+    void registerPathNodeType(Block block, BiFunction<BlockState, Boolean, @Nullable BlockPathTypes> getPathNodeType);
 
     private void registerGenerators()
     {
