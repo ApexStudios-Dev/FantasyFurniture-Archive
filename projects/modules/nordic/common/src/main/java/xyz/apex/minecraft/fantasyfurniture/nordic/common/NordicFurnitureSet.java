@@ -24,12 +24,12 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.RecipeProvider;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.FurnitureSets;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.BookshelfBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.recipe.FurnitureStationRecipe;
 import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.*;
-import xyz.apex.minecraft.fantasyfurniture.nordic.common.block.entity.BookshelfBlockEntity;
 
 @ApiStatus.NonExtendable
 public interface NordicFurnitureSet

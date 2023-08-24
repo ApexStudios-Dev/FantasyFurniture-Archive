@@ -9,12 +9,12 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.BaseBlockEn
 import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.BlockEntityComponentRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.types.BlockEntityComponentTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
-import xyz.apex.minecraft.fantasyfurniture.common.block.entity.component.InventoryBlockEntityComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.menu.MediumContainerMenu;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.component.BookshelfInventoryBlockEntityComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.menu.LargeContainerMenu;
 
-public class MediumContainerBlockEntity extends BaseBlockEntityComponentHolder
+public class BookshelfBlockEntity extends BaseBlockEntityComponentHolder
 {
-    public MediumContainerBlockEntity(BlockEntityType<? extends MediumContainerBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
+    public BookshelfBlockEntity(BlockEntityType<? extends BookshelfBlockEntity> blockEntityType, BlockPos pos, BlockState blockState)
     {
         super(blockEntityType, pos, blockState);
     }
@@ -22,7 +22,7 @@ public class MediumContainerBlockEntity extends BaseBlockEntityComponentHolder
     @Override
     protected void registerComponents(BlockEntityComponentRegistrar registrar)
     {
-        registrar.register(InventoryBlockEntityComponent.COMPONENT_TYPE, component -> component.withSlotCount(MediumContainerMenu.SLOT_COUNT));
+        registrar.register(BookshelfInventoryBlockEntityComponent.COMPONENT_TYPE, component -> component.withSlotCount(LargeContainerMenu.SLOT_COUNT));
         registrar.register(BlockEntityComponentTypes.NAMEABLE);
         registrar.register(BlockEntityComponentTypes.LOCK_CODE);
         registrar.register(BlockEntityComponentTypes.LOOT_TABLE);
@@ -31,6 +31,6 @@ public class MediumContainerBlockEntity extends BaseBlockEntityComponentHolder
     @Override
     protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory)
     {
-        return new MediumContainerMenu(FantasyFurniture.MEDIUM_MENU.value(), syncId, playerInventory, this);
+        return new LargeContainerMenu(FantasyFurniture.LARGE_MENU.value(), syncId, playerInventory, this);
     }
 }

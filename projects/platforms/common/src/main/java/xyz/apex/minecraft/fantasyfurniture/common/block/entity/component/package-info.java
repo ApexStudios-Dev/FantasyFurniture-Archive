@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
 @ParametersAreNonnullByDefault
-package xyz.apex.minecraft.fantasyfurniture.nordic.common.block.entity;
+package xyz.apex.minecraft.fantasyfurniture.common.block.entity.component;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

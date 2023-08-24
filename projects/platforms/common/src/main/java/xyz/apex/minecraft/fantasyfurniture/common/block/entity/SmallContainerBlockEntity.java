@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -10,6 +9,7 @@ import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.BaseBlockEn
 import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.BlockEntityComponentRegistrar;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.entity.types.BlockEntityComponentTypes;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
+import xyz.apex.minecraft.fantasyfurniture.common.block.entity.component.InventoryBlockEntityComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.menu.SmallContainerMenu;
 
 public class SmallContainerBlockEntity extends BaseBlockEntityComponentHolder
@@ -22,19 +22,15 @@ public class SmallContainerBlockEntity extends BaseBlockEntityComponentHolder
     @Override
     protected void registerComponents(BlockEntityComponentRegistrar registrar)
     {
-        registrar.register(BlockEntityComponentTypes.INVENTORY, component -> component.setSlotCount(SmallContainerMenu.SLOT_COUNT));
+        registrar.register(InventoryBlockEntityComponent.COMPONENT_TYPE, component -> component.withSlotCount(SmallContainerMenu.SLOT_COUNT));
         registrar.register(BlockEntityComponentTypes.NAMEABLE);
+        registrar.register(BlockEntityComponentTypes.LOCK_CODE);
+        registrar.register(BlockEntityComponentTypes.LOOT_TABLE);
     }
 
     @Override
     protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory)
     {
-        return new SmallContainerMenu(FantasyFurniture.SMALL_MENU.value(), syncId, playerInventory, getRequiredComponent(BlockEntityComponentTypes.INVENTORY));
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side)
-    {
-        return SmallContainerMenu.SLOTS;
+        return new SmallContainerMenu(FantasyFurniture.SMALL_MENU.value(), syncId, playerInventory, this);
     }
 }
