@@ -105,7 +105,7 @@ public final class NordicSofaBlock extends BaseBlockComponentHolder implements S
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
 
         return switch(blockState.getValue(getRequiredComponent(ConnectionBlockComponent.SOFA_COMPONENT_TYPE).getProperty())) {
             default -> switch(facing) {

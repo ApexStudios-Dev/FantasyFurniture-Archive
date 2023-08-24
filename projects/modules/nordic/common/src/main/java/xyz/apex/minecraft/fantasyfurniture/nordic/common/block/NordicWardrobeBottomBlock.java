@@ -47,7 +47,7 @@ public final class NordicWardrobeBottomBlock extends NordicLargeContainerBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
 
         var shape = switch(facing) {
             default -> SHAPE_NORTH;

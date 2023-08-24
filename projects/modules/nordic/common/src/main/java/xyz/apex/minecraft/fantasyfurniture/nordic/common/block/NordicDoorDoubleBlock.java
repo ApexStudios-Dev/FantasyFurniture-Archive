@@ -71,7 +71,7 @@ public final class NordicDoorDoubleBlock extends BaseBlockComponentHolder
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
         var open = blockState.getValue(DoorComponent.OPEN);
         var hinge = blockState.getValue(DoorComponent.HINGE);
         var multiBlockType = getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();

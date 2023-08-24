@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponent;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentType;
+import xyz.apex.minecraft.apexcore.common.lib.component.block.types.BlockComponentTypes;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.types.HorizontalFacingBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
@@ -59,7 +60,7 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
     @Override
     public BlockState getStateForPlacement(BlockState placementBlockState, BlockPlaceContext context)
     {
-        placementBlockState = placementBlockState.setValue(HorizontalFacingBlockComponent.FACING, context.getHorizontalDirection().getOpposite());
+        placementBlockState = placementBlockState.setValue(HorizontalFacingBlockComponent.FACING, getRequiredComponent(BlockComponentTypes.HORIZONTAL_FACING).getFacing(context));
         return getBlockState(this, context.getLevel(), context.getClickedPos(), placementBlockState);
     }
 
@@ -95,14 +96,14 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
 
     public static ConnectionType getConnectionType(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
 
         if(component.isValidConnection(ConnectionType.INNER_LEFT) || component.isValidConnection(ConnectionType.INNER_RIGHT))
         {
             Direction dir1;
             var blockState1 = level.getBlockState(pos.relative(facing));
 
-            if(isConnectable(component, blockState1) && (dir1 = blockState1.getValue(HorizontalFacingBlockComponent.FACING)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir1.getOpposite()))
+            if(isConnectable(component, blockState1) && (dir1 = HorizontalFacingBlockComponent.getFacing(blockState1)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir1.getOpposite()))
             {
                 if(component.isValidConnection(ConnectionType.INNER_LEFT) && dir1 == facing.getCounterClockWise())
                     return ConnectionType.INNER_LEFT;
@@ -116,7 +117,7 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
             Direction dir2;
             var blockState2 = level.getBlockState(pos.relative(facing.getOpposite()));
 
-            if(isConnectable(component, blockState2) && (dir2 = blockState2.getValue(HorizontalFacingBlockComponent.FACING)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir2))
+            if(isConnectable(component, blockState2) && (dir2 = HorizontalFacingBlockComponent.getFacing(blockState2)).getAxis() != facing.getAxis() && isDifferentOrientation(component, level, pos, blockState, dir2))
             {
                 if(component.isValidConnection(ConnectionType.OUTER_LEFT) && dir2 == facing.getCounterClockWise())
                     return ConnectionType.OUTER_LEFT;
@@ -146,7 +147,7 @@ public final class ConnectionBlockComponent extends BaseBlockComponent
     public static boolean isDifferentOrientation(ConnectionBlockComponent component, BlockGetter level, BlockPos pos, BlockState blockState, Direction dir)
     {
         var otherBlockState = level.getBlockState(pos.relative(dir));
-        return !isConnectable(component, otherBlockState) || otherBlockState.getValue(HorizontalFacingBlockComponent.FACING) != blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        return !isConnectable(component, otherBlockState) || HorizontalFacingBlockComponent.getFacing(otherBlockState) != HorizontalFacingBlockComponent.getFacing(blockState);
     }
 
     public static boolean isConnectable(ConnectionBlockComponent component, BlockState blockState)

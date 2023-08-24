@@ -42,14 +42,15 @@ public final class NordicWardrobeTopBlock extends BaseBlockComponentHolder
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var shape = switch(blockState.getValue(HorizontalFacingBlockComponent.FACING)) {
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
+
+        var shape = switch(facing) {
             default -> SHAPE_NORTH;
             case EAST -> SHAPE_EAST;
             case SOUTH -> SHAPE_SOUTH;
             case WEST -> SHAPE_WEST;
         };
 
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
         var multiBlockType = getRequiredComponent(BlockComponentTypes.MULTI_BLOCK).getMultiBlockType();
 
         if(MultiBlockComponent.getIndex(multiBlockType, blockState) != 0)

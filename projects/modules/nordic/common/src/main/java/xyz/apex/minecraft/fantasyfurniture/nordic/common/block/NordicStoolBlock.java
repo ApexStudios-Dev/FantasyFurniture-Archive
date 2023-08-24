@@ -51,7 +51,7 @@ public final class NordicStoolBlock extends BaseBlockComponentHolder implements 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        return switch(blockState.getValue(HorizontalFacingBlockComponent.FACING)) {
+        return switch(HorizontalFacingBlockComponent.getFacing(blockState)) {
             default -> SHAPE_NORTH;
             case EAST -> SHAPE_EAST;
             case SOUTH -> SHAPE_SOUTH;

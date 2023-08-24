@@ -49,7 +49,7 @@ public final class FurnitureStationBlock extends BaseBlockComponentHolder
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        return switch(blockState.getValue(HorizontalFacingBlockComponent.FACING)) {
+        return switch(HorizontalFacingBlockComponent.getFacing(blockState)) {
             default -> SHAPE_NORTH;
             case SOUTH -> SHAPE_SOUTH;
             case EAST -> SHAPE_EAST;

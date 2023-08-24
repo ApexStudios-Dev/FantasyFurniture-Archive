@@ -73,7 +73,7 @@ public final class NordicShelfBlock extends BaseBlockComponentHolder
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
 
         return switch(blockState.getValue(getRequiredComponent(ConnectionBlockComponent.SHELF_COMPONENT_TYPE).getProperty())) {
             default -> switch(facing) {

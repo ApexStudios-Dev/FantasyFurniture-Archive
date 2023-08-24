@@ -71,7 +71,7 @@ public final class NordicChairBlock extends BaseBlockComponentHolder implements 
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var shape = switch(blockState.getValue(HorizontalFacingBlockComponent.FACING)) {
+        var shape = switch(HorizontalFacingBlockComponent.getFacing(blockState)) {
             default -> SHAPE_NORTH;
             case EAST -> SHAPE_EAST;
             case SOUTH -> SHAPE_SOUTH;

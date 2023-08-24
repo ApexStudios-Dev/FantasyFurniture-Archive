@@ -54,7 +54,7 @@ public final class NordicCounterBlock extends NordicMediumContainerBlock
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING);
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState);
 
         return switch(blockState.getValue(getRequiredComponent(ConnectionBlockComponent.COUNTER_COMPONENT_TYPE).getProperty())) {
             default -> switch(facing) {

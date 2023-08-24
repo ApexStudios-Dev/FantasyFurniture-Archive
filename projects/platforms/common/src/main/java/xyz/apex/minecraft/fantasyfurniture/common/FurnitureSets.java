@@ -1,18 +1,24 @@
 package xyz.apex.minecraft.fantasyfurniture.common;
 
+import com.google.common.collect.Sets;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.models.model.ModelLocationUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponentHolder;
@@ -31,6 +37,7 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.BedComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.DoorComponent;
 import xyz.apex.minecraft.fantasyfurniture.common.block.component.TableComponent;
@@ -40,7 +47,9 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlo
 import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 @ApiStatus.NonExtendable
 public interface FurnitureSets
@@ -48,6 +57,8 @@ public interface FurnitureSets
     MultiBlockType MB_2x1x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").build();
     MultiBlockType MB_2x2x1 = MultiBlockType.builder().renderAtOriginOnly().with("XX").with("XX").build();
     MultiBlockType MB_1x2x1 = MultiBlockType.builder().renderAtOriginOnly().with("X").with("X").build();
+    MultiBlockType MB_1x1x2 = MultiBlockType.builder().renderAtOriginOnly().with("X", "X").build();
+    MultiBlockType MB_2x1x2 = MultiBlockType.builder().renderAtOriginOnly().with("XX", "XX").build();
 
     static WoodType woodType(AbstractRegistrar<?> registrar, UnaryOperator<WoodTypeBuilder> builder)
     {
@@ -445,6 +456,64 @@ public interface FurnitureSets
         ;
     }
 
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> bedSingle(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("bed_single")
+                .block(blockFactory)
+                // bed blocks have .mapColor() check the BedBlock.PART property which our blocks do not have
+                // .copyInitialPropertiesFrom(() -> Blocks.RED_BED)
+                // bed properties without .mapColor()
+                .initialProperties(() -> BlockBehaviour.Properties
+                        .of()
+                        .strength(.2F)
+                        .noOcclusion()
+                        .ignitedByLava()
+                        .pushReaction(PushReaction.DESTROY)
+                )
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.BEDS)
+                .defaultItem()
+                .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, block -> registerHomePoiBlock(block, BedComponent::isBedHead))
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> bedDouble(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("bed_double")
+                .block(blockFactory)
+                // bed blocks have .mapColor() check the BedBlock.PART property which our blocks do not have
+                // .copyInitialPropertiesFrom(() -> Blocks.RED_BED)
+                // bed properties without .mapColor()
+                .initialProperties(() -> BlockBehaviour.Properties
+                        .of()
+                        .strength(.2F)
+                        .noOcclusion()
+                        .ignitedByLava()
+                        .pushReaction(PushReaction.DESTROY)
+                )
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER, BlockTags.BEDS)
+                .defaultItem()
+                .onRegisterAfter(Registries.POINT_OF_INTEREST_TYPE, block -> registerHomePoiBlock(block, BedComponent::isBedHead))
+        ;
+    }
+
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> doorSingle(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
     {
         return registrar
@@ -691,5 +760,19 @@ public interface FurnitureSets
                 .select(Direction.SOUTH, Variant.variant().yRot(Variant.Rotation.R180))
                 .select(Direction.WEST, Variant.variant().yRot(Variant.Rotation.R270))
         ;
+    }
+
+    static void registerHomePoiBlock(Block block, Predicate<BlockState> validBlockState)
+    {
+        var blockStates = block.getStateDefinition().getPossibleStates().stream().filter(validBlockState).collect(Collectors.toSet());
+        var holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolder(PoiTypes.HOME).orElseThrow();
+        var poiType = holder.value();
+
+        poiType.matchingStates = Sets.newHashSet(poiType.matchingStates);
+        PoiTypes.BEDS = Sets.newHashSet(PoiTypes.BEDS);
+        PoiTypes.registerBlockStates(holder, blockStates);
+
+        PoiTypes.BEDS.addAll(blockStates);
+        poiType.matchingStates.addAll(blockStates);
     }
 }

@@ -44,7 +44,7 @@ public final class NordicWallLightBlock extends BaseBlockComponentHolder
     @Override
     public void animateTick(BlockState blockState, Level level, BlockPos pos, RandomSource random)
     {
-        var facing = blockState.getValue(HorizontalFacingBlockComponent.FACING).getOpposite();
+        var facing = HorizontalFacingBlockComponent.getFacing(blockState).getOpposite();
 
         var x = pos.getX() + .5D + (.12D * facing.getStepX());
         var y = pos.getY() + .94D;
@@ -57,7 +57,7 @@ public final class NordicWallLightBlock extends BaseBlockComponentHolder
     @Override
     public VoxelShape getShape(BlockState blockState, BlockGetter level, BlockPos pos, CollisionContext context)
     {
-        return switch(blockState.getValue(HorizontalFacingBlockComponent.FACING)) {
+        return switch(HorizontalFacingBlockComponent.getFacing(blockState)) {
             default -> SHAPE_NORTH;
             case EAST -> SHAPE_EAST;
             case SOUTH -> SHAPE_SOUTH;

@@ -2,6 +2,11 @@ accessWidener v2 named
 
 accessible method net/minecraft/world/entity/ai/behavior/InteractWithDoor rememberDoorToClose (Lnet/minecraft/world/entity/ai/behavior/declarative/MemoryAccessor;Ljava/util/Optional;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Ljava/util/Optional;
 accessible method net/minecraft/world/entity/ai/behavior/InteractWithDoor areOtherMobsComingThroughDoor (Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/BlockPos;Ljava/util/Optional;)Z
+accessible field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
+mutable field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util/Set;
+accessible field net/minecraft/world/entity/ai/village/poi/PoiType matchingStates Ljava/util/Set;
+mutable field net/minecraft/world/entity/ai/village/poi/PoiType matchingStates Ljava/util/Set;
+accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
 
 ########################
 # Copied from ApexCore #

@@ -106,7 +106,7 @@ public final class FaceAttachingComponent extends BaseBlockComponent
             @Override
             public Direction getConnectedDirection(BlockState blockState)
             {
-                return blockState.getValue(HorizontalFacingBlockComponent.FACING);
+                return HorizontalFacingBlockComponent.getFacing(blockState);
             }
         },
         FLOOR {

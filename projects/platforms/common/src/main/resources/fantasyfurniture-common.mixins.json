@@ -2,11 +2,13 @@
     "required": true,
     "package": "xyz.apex.minecraft.fantasyfurniture.common.mixin",
     "mixins": [
+        "MixinBedBlock",
         "MixinDoorBlock",
         "MixinDoorInteractGoal",
         "MixinInteractWithDoor",
         "MixinPiglinAi",
-        "MixinVillager"
+        "MixinVillager",
+        "MixinZombieVillager"
     ],
     "client": [],
     "server": [],
