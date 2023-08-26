@@ -63,7 +63,7 @@ public interface FantasyFurniture
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
     TagKey<EntityType<?>> SEAT_BLACKLIST = TagHelper.entityTag(ID, "seat_blacklist");
 
-    RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Fantasy's Furniture");
+    RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Fantasy's Furniture", () -> FURNITURE_STATION_BLOCK::asStack);
 
     default void bootstrap()
     {

@@ -81,7 +81,7 @@ public interface NordicFurnitureSet
     BlockEntityEntry<BookshelfBlockEntity> BOOKSHELF_BLOCK_ENTITY = REGISTRAR.object("bookshelf").blockEntity(BookshelfBlockEntity::new).validBlock(BOOKSHELF).lang("en_us", "Nordic Bookshelf").register();
     BlockEntityEntry<OvenBlockEntity> OVEN_BLOCK_ENTITY = REGISTRAR.object("furnace").blockEntity(OvenBlockEntity::new).validBlock(OVEN).lang("en_us", "Nordic Oven").register();
 
-    RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set");
+    RegistryEntry<CreativeModeTab> CREATIVE_MODE_TAB = FurnitureSets.creativeModeTab(REGISTRAR, "Nordic Furniture-Set", () -> BED_SINGLE::asStack);
 
     default void bootstrap()
     {

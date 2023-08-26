@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.village.poi.PoiTypes;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CarpetBlock;
@@ -47,6 +48,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.property.ConnectionType;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -663,11 +665,12 @@ public interface FurnitureSets
         return registrar.object("large_container").blockEntity(LargeContainerBlockEntity::new).validBlocks(blocks);
     }
 
-    static RegistryEntry<CreativeModeTab> creativeModeTab(AbstractRegistrar<?> registrar, String title)
+    static RegistryEntry<CreativeModeTab> creativeModeTab(AbstractRegistrar<?> registrar, String title, Supplier<Supplier<ItemStack>> icon)
     {
         return registrar
                 .object("items")
                 .creativeModeTab()
+                .icon(() -> icon.get().get())
                 .displayItems((parameters, output) -> registrar
                         .getAll(Registries.ITEM)
                         .stream()
