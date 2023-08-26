@@ -5,6 +5,7 @@
         "MixinBedBlock",
         "MixinDoorBlock",
         "MixinDoorInteractGoal",
+        "MixinFurnaceResultSlot",
         "MixinInteractWithDoor",
         "MixinPiglinAi",
         "MixinVillager",

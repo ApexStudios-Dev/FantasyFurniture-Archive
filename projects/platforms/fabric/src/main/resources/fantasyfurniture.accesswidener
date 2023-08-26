@@ -7,6 +7,16 @@ mutable field net/minecraft/world/entity/ai/village/poi/PoiTypes BEDS Ljava/util
 accessible field net/minecraft/world/entity/ai/village/poi/PoiType matchingStates Ljava/util/Set;
 mutable field net/minecraft/world/entity/ai/village/poi/PoiType matchingStates Ljava/util/Set;
 accessible method net/minecraft/world/entity/ai/village/poi/PoiTypes registerBlockStates (Lnet/minecraft/core/Holder;Ljava/util/Set;)V
+accessible method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity isNeverAFurnaceFuel (Lnet/minecraft/world/item/Item;)Z
+accessible method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity canBurn (Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/core/NonNullList;I)Z
+accessible method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity burn (Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/crafting/Recipe;Lnet/minecraft/core/NonNullList;I)Z
+accessible method net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity createExperience (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;IF)V
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOT_INPUT I
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOT_FUEL I
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOT_RESULT I
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_UP [I
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_DOWN [I
+accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_SIDES [I
 
 ########################
 # Copied from ApexCore #

@@ -1,7 +1,6 @@
 package xyz.apex.minecraft.fantasyfurniture.common;
 
 import com.google.common.collect.Sets;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +16,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
@@ -37,10 +38,8 @@ import xyz.apex.minecraft.apexcore.common.lib.resgen.ProviderTypes;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.MultiVariantBuilder;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.PropertyDispatch;
 import xyz.apex.minecraft.apexcore.common.lib.resgen.state.Variant;
-import xyz.apex.minecraft.fantasyfurniture.common.block.component.BedComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.block.component.ConnectionBlockComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.block.component.DoorComponent;
-import xyz.apex.minecraft.fantasyfurniture.common.block.component.TableComponent;
+import xyz.apex.minecraft.fantasyfurniture.common.block.FurnaceBlock;
+import xyz.apex.minecraft.fantasyfurniture.common.block.component.*;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.LargeContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.MediumContainerBlockEntity;
 import xyz.apex.minecraft.fantasyfurniture.common.block.entity.SmallContainerBlockEntity;
@@ -108,7 +107,6 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .renderType(() -> RenderType::cutout)
                 .defaultItem()
         ;
     }
@@ -247,7 +245,6 @@ public interface FurnitureSets
                 .sound(woodType.soundType())
                 .blockState((lookup, entry) -> MultiVariantBuilder.builder(entry.value()).with(connectionProperties(entry, ConnectionBlockComponent.SHELF_COMPONENT_TYPE)))
                 .tag(BlockTags.MINEABLE_WITH_AXE)
-                .renderType(() -> RenderType::cutout)
                 .item()
                     .model((provider, lookup, entry) -> provider
                             .getBuilder(ModelLocationUtils.getModelLocation(entry.value()))
@@ -295,7 +292,6 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
-                .renderType(() -> RenderType::cutout)
                 .defaultItem()
         ;
     }
@@ -315,7 +311,6 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
-                .renderType(() -> RenderType::cutout)
                 .defaultItem()
         ;
     }
@@ -334,7 +329,6 @@ public interface FurnitureSets
                         )
                         .with(facingProperties())
                 )
-                .renderType(() -> RenderType::cutout)
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
                 .defaultItem()
         ;
@@ -450,7 +444,6 @@ public interface FurnitureSets
                         .with(facingProperties())
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE, ApexTags.Blocks.PLACEMENT_VISUALIZER)
-                .renderType(() -> RenderType::cutout)
                 .noOcclusion()
                 .defaultItem()
         ;
@@ -618,6 +611,37 @@ public interface FurnitureSets
                             .parent(ModelLocationUtils.getModelLocation(entry.value().getBlock(), "_single"))
                     )
                 .build()
+        ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends FurnaceBlock> BlockBuilder<R, B, R> oven(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return registrar
+                .object("oven")
+                .block(blockFactory)
+                // references LIT property before it is registered
+                // .copyInitialPropertiesFrom(() -> Blocks.SMOKER)
+                .initialProperties(() -> BlockBehaviour.Properties
+                        .of()
+                        .mapColor(MapColor.STONE)
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .requiresCorrectToolForDrops()
+                        .strength(3.5F)
+                        // vanilla uses .getValue() but this is called before our components are registered
+                        // meaning LIT property is not registered yet
+                        // use optional so it defaults to false when property is missing
+                        .lightLevel(blockState -> blockState.getOptionalValue(FurnaceBlockComponent.LIT).orElse(false) ? 13 : 0)
+                )
+                .sound(woodType.soundType())
+                .blockState((lookup, entry) -> MultiVariantBuilder
+                        .builder(
+                                entry.value(),
+                                Variant.variant().model(ModelLocationUtils.getModelLocation(entry.value()))
+                        )
+                        .with(facingProperties())
+                )
+                .tag(BlockTags.MINEABLE_WITH_AXE)
+                .defaultItem()
         ;
     }
 
