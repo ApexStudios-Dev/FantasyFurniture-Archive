@@ -16,12 +16,12 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.RecipeBookType;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -45,7 +45,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.function.ToIntBiFunction;
 
-public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityComponent<FurnaceBlockEntityComponent> implements RecipeHolder, StackedContentsCompatible
+public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityComponent<FurnaceBlockEntityComponent> implements RecipeCraftingHolder, StackedContentsCompatible
 {
     public static final BlockEntityComponentType<FurnaceBlockEntityComponent> COMPONENT_TYPE = BlockEntityComponentType.register(FantasyFurniture.ID, "furnace/smelting", FurnaceBlockEntityComponent::new);
 
@@ -185,15 +185,18 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
         return burnDurationModifier.applyAsInt(fuel, burnDuration);
     }
 
-    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel level, Vec3 popVec)
+    public List<RecipeHolder<?>> getRecipesToAwardAndPopExperience(ServerLevel level, Vec3 popVec)
     {
-        var recipes = Lists.<Recipe<?>>newArrayList();
+        var recipes = Lists.<RecipeHolder<?>>newArrayList();
 
         for(var entry : recipesUsed.object2IntEntrySet())
         {
-            level.getRecipeManager().byKey(entry.getKey()).filter(AbstractCookingRecipe.class::isInstance).map(AbstractCookingRecipe.class::cast).ifPresent(recipe -> {
-                recipes.add(recipe);
-                AbstractFurnaceBlockEntity.createExperience(level, popVec, entry.getIntValue(), recipe.getExperience());
+            level.getRecipeManager().byKey(entry.getKey()).ifPresent(recipe -> {
+                if(recipe.value() instanceof AbstractCookingRecipe cookingRecipe)
+                {
+                    recipes.add(recipe);
+                    AbstractFurnaceBlockEntity.createExperience(level, popVec, entry.getIntValue(), cookingRecipe.getExperience());
+                }
             });
         }
 
@@ -228,16 +231,16 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
 
     @Nullable
     @Override
-    public Recipe<?> getRecipeUsed()
+    public RecipeHolder<?> getRecipeUsed()
     {
         return null;
     }
 
     @Override
-    public void setRecipeUsed(@Nullable Recipe<?> recipe)
+    public void setRecipeUsed(@Nullable RecipeHolder<?> recipe)
     {
-        if(recipe instanceof AbstractCookingRecipe)
-            recipesUsed.addTo(recipe.getId(), 1);
+        if(recipe != null && recipe.value() instanceof AbstractCookingRecipe)
+            recipesUsed.addTo(recipe.id(), 1);
     }
 
     @Override
@@ -432,6 +435,6 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
 
     private static int getTotalCookTime(Level level, FurnaceBlockEntityComponent component)
     {
-        return component.getQuickCheck().getRecipeFor(component, level).map(AbstractCookingRecipe::getCookingTime).orElse(BURN_TIME_STANDARD);
+        return component.getQuickCheck().getRecipeFor(component, level).map(RecipeHolder::value).map(AbstractCookingRecipe::getCookingTime).orElse(BURN_TIME_STANDARD);
     }
 }

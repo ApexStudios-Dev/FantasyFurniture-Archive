@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import xyz.apex.minecraft.apexcore.common.lib.menu.EnhancedSlot;
 import xyz.apex.minecraft.apexcore.common.lib.menu.SimpleContainerMenu;
@@ -29,7 +30,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
     private final DataSlot selectedRecipeIndex = DataSlot.standalone();
     private final ContainerLevelAccess levelAccess;
     private final Level level;
-    private final List<FurnitureStationRecipe> recipes = Lists.newArrayList();
+    private final List<RecipeHolder<FurnitureStationRecipe>> recipes = Lists.newArrayList();
     private ItemStack inputA = ItemStack.EMPTY;
     private ItemStack inputB = ItemStack.EMPTY;
     private ItemStack bindingAgent = ItemStack.EMPTY;
@@ -69,7 +70,7 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
         return selectedRecipeIndex.get();
     }
 
-    public List<FurnitureStationRecipe> getRecipes()
+    public List<RecipeHolder<FurnitureStationRecipe>> getRecipes()
     {
         return recipes;
     }
@@ -111,12 +112,13 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
 
         if(isValidRecipeIndex(index))
         {
-            var recipe = recipes.get(index);
+            var recipeHolder = recipes.get(index);
+            var recipe = recipeHolder.value();
             var result = recipe.assemble(inputContainer, level.registryAccess());
 
             if(result.isItemEnabled(level.enabledFeatures()))
             {
-                resultContainer.setRecipeUsed(recipe);
+                resultContainer.setRecipeUsed(recipeHolder);
                 recipeSlot.set(result);
             }
         }
@@ -137,12 +139,13 @@ public final class FurnitureStationMenu extends AbstractContainerMenu
 
         if(!recipes.isEmpty())
         {
-            var recipe = recipes.get(index);
+            var recipeHolder = recipes.get(index);
+            var recipe = recipeHolder.value();
             var result = recipe.assemble(inputContainer, level.registryAccess());
 
             if(result.isItemEnabled(level.enabledFeatures()))
             {
-                resultContainer.setRecipeUsed(recipe);
+                resultContainer.setRecipeUsed(recipeHolder);
                 recipeSlot.set(result);
             }
         }

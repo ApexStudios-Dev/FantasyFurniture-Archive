@@ -1,13 +1,14 @@
 package xyz.apex.minecraft.fantasyfurniture.common.recipe;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -31,16 +32,24 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     private static final String JSON_ITEM = "item";
     private static final String JSON_COUNT = "count";
 
-    private final ResourceLocation recipeId;
+    public static final Codec<FurnitureStationRecipe> CODEC = RecordCodecBuilder.create(instance -> instance
+            .group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, JSON_GROUP, "").forGetter(FurnitureStationRecipe::getGroup),
+                    Ingredient.CODEC_NONEMPTY.fieldOf(JSON_INGREDIENT_A).forGetter(recipe -> recipe.ingredientA),
+                    Ingredient.CODEC_NONEMPTY.fieldOf(JSON_INGREDIENT_B).forGetter(recipe -> recipe.ingredientB),
+                    BuiltInRegistries.ITEM.byNameCodec().fieldOf(JSON_RESULT).forGetter(recipe -> recipe.result.asItem()),
+                    Codec.INT.fieldOf(JSON_COUNT).forGetter(recipe -> recipe.count)
+            ).apply(instance, FurnitureStationRecipe::new)
+    );
+
     @Nullable private final String group;
     private final Ingredient ingredientA;
     private final Ingredient ingredientB;
     private final ItemLike result;
     private final int count;
 
-    FurnitureStationRecipe(ResourceLocation recipeId, @Nullable String group, Ingredient ingredientA, Ingredient ingredientB, ItemLike result, int count)
+    FurnitureStationRecipe(@Nullable String group, Ingredient ingredientA, Ingredient ingredientB, ItemLike result, int count)
     {
-        this.recipeId = recipeId;
         this.group = group;
         this.ingredientA = ingredientA;
         this.ingredientB = ingredientB;
@@ -111,12 +120,6 @@ public final class FurnitureStationRecipe implements Recipe<Container>
     }
 
     @Override
-    public ResourceLocation getId()
-    {
-        return recipeId;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer()
     {
         return FantasyFurniture.FURNITURE_STATION_RECIPE.value();
@@ -138,51 +141,19 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         return builder(category, ingredientA, ingredientB, result, 1);
     }
 
-    public static FurnitureStationRecipe fromJson(ResourceLocation recipeId, JsonObject json)
-    {
-        var group = GsonHelper.isStringValue(json, JSON_GROUP) ? GsonHelper.getAsString(json, JSON_GROUP) : null;
-        var ingredientA = ingredientFromJson(json, JSON_INGREDIENT_A);
-        var ingredientB = ingredientFromJson(json, JSON_INGREDIENT_B);
-
-        ResourceLocation itemName;
-        int itemCount = 1;
-
-        if(GsonHelper.isStringValue(json, JSON_RESULT))
-            itemName = new ResourceLocation(GsonHelper.getAsString(json, JSON_RESULT));
-        else
-        {
-            var resultJson = GsonHelper.getAsJsonObject(json, JSON_RESULT);
-            itemName = new ResourceLocation(GsonHelper.getAsString(resultJson, JSON_ITEM));
-            itemCount = GsonHelper.getAsInt(resultJson, JSON_COUNT, 1);
-        }
-
-        var result = BuiltInRegistries.ITEM.get(itemName);
-
-        return new FurnitureStationRecipe(recipeId, group, ingredientA, ingredientB, result, itemCount);
-    }
-
     public static void toJson(JsonObject json, FurnitureStationRecipe recipe)
     {
-        if(recipe.group != null)
-            json.addProperty(JSON_GROUP, recipe.group);
+        // why do we now use codecs but FinishedRecipe still wants this legacy method?
+        if(recipe.group != null && !recipe.group.isEmpty())
+            json.addProperty("group", recipe.group);
 
-        json.add(JSON_INGREDIENT_A, recipe.ingredientA.toJson());
-        json.add(JSON_INGREDIENT_B, recipe.ingredientB.toJson());
-
-        var itemName = BuiltInRegistries.ITEM.getKey(recipe.result.asItem()).toString();
-
-        if(recipe.count > 1)
-        {
-            var resultJson = new JsonObject();
-            json.addProperty(JSON_ITEM, itemName);
-            json.addProperty(JSON_COUNT, recipe.count);
-            json.add(JSON_RESULT, resultJson);
-        }
-        else
-            json.addProperty(JSON_RESULT, itemName);
+        json.add("ingredient_a", recipe.ingredientA.toJson(true));
+        json.add("ingredient_b", recipe.ingredientB.toJson(true));
+        json.addProperty("result", BuiltInRegistries.ITEM.getKey(recipe.result.asItem()).toString());
+        json.addProperty("count", recipe.count);
     }
 
-    public static FurnitureStationRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
+    public static FurnitureStationRecipe fromNetwork(FriendlyByteBuf buffer)
     {
         var group = buffer.readBoolean() ? buffer.readUtf() : null;
         var ingredientA = Ingredient.fromNetwork(buffer);
@@ -190,7 +161,7 @@ public final class FurnitureStationRecipe implements Recipe<Container>
         var result = BuiltInRegistries.ITEM.get(buffer.readResourceLocation());
         var count = buffer.readBoolean() ? buffer.readVarInt() : 1;
 
-        return new FurnitureStationRecipe(recipeId, group, ingredientA, ingredientB, result, count);
+        return new FurnitureStationRecipe(group, ingredientA, ingredientB, result, count);
     }
 
     public static void toNetwork(FriendlyByteBuf buffer, FurnitureStationRecipe recipe)
@@ -208,11 +179,5 @@ public final class FurnitureStationRecipe implements Recipe<Container>
 
         if(recipe.count > 1)
             buffer.writeVarInt(recipe.count);
-    }
-
-    private static Ingredient ingredientFromJson(JsonObject json, String key)
-    {
-        var ingredientJson = GsonHelper.isArrayNode(json, key) ? GsonHelper.getAsJsonArray(json, key) : GsonHelper.getAsJsonObject(json, key);
-        return Ingredient.fromJson(ingredientJson, false);
     }
 }

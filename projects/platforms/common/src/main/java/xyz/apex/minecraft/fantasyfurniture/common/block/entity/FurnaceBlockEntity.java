@@ -6,10 +6,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,7 +23,7 @@ import xyz.apex.minecraft.fantasyfurniture.common.menu.FurnaceMenu;
 
 import java.util.List;
 
-public class FurnaceBlockEntity extends BaseBlockEntityComponentHolder implements RecipeHolder, StackedContentsCompatible
+public class FurnaceBlockEntity extends BaseBlockEntityComponentHolder implements RecipeCraftingHolder, StackedContentsCompatible
 {
     public FurnaceBlockEntity(BlockEntityType<? extends BaseBlockEntityComponentHolder> blockEntityType, BlockPos pos, BlockState blockState)
     {
@@ -47,14 +47,14 @@ public class FurnaceBlockEntity extends BaseBlockEntityComponentHolder implement
 
     // TODO: Move these into BaseBlockEntityComponentHolder?
     @Override
-    public void setRecipeUsed(@Nullable Recipe<?> recipe)
+    public void setRecipeUsed(@Nullable RecipeHolder<?> recipe)
     {
         getRequiredComponent(FurnaceBlockEntityComponent.COMPONENT_TYPE).setRecipeUsed(recipe);
     }
 
     @Nullable
     @Override
-    public Recipe<?> getRecipeUsed()
+    public RecipeHolder<?> getRecipeUsed()
     {
         return getRequiredComponent(FurnaceBlockEntityComponent.COMPONENT_TYPE).getRecipeUsed();
     }
@@ -66,7 +66,7 @@ public class FurnaceBlockEntity extends BaseBlockEntityComponentHolder implement
     }
 
     @Override
-    public boolean setRecipeUsed(Level level, ServerPlayer player, Recipe<?> recipe)
+    public boolean setRecipeUsed(Level level, ServerPlayer player, RecipeHolder<?> recipe)
     {
         return getRequiredComponent(FurnaceBlockEntityComponent.COMPONENT_TYPE).setRecipeUsed(level, player, recipe);
     }

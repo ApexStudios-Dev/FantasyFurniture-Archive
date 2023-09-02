@@ -1,14 +1,16 @@
 package xyz.apex.minecraft.fantasyfurniture.common.recipe;
 
+import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.RequirementsStrategy;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -17,7 +19,7 @@ import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.fantasyfurniture.common.FantasyFurniture;
 
-import java.util.function.Consumer;
+import java.util.Map;
 
 public final class FurnitureStationRecipeBuilder implements RecipeBuilder
 {
@@ -27,7 +29,7 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder
     private final Ingredient ingredientB;
     private final ItemLike result;
     private final int count;
-    private final Advancement.Builder advancement = Advancement.Builder.advancement();
+    private final Map<String, Criterion<?>> criteriaMap = Maps.newLinkedHashMap();
 
     FurnitureStationRecipeBuilder(RecipeCategory category, Ingredient ingredientA, Ingredient ingredientB, ItemLike result, int count)
     {
@@ -39,9 +41,9 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder
     }
 
     @Override
-    public FurnitureStationRecipeBuilder unlockedBy(String criterionName, CriterionTriggerInstance criterionTrigger)
+    public FurnitureStationRecipeBuilder unlockedBy(String criterionName, Criterion<?> criterionTrigger)
     {
-        advancement.addCriterion(criterionName, criterionTrigger);
+        criteriaMap.put(criterionName, criterionTrigger);
         return this;
     }
 
@@ -59,19 +61,24 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> writer, ResourceLocation recipeId)
+    public void save(RecipeOutput writer, ResourceLocation recipeId)
     {
-        advancement.parent(ROOT_RECIPE_ADVANCEMENT)
-                   .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId))
-                   .rewards(AdvancementRewards.Builder.recipe(recipeId))
-                   .requirements(RequirementsStrategy.OR);
+        var advancement = writer
+                .advancement()
+                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId))
+                .rewards(AdvancementRewards.Builder.recipe(recipeId))
+                .requirements(AdvancementRequirements.Strategy.OR);
 
-        var advancementId = recipeId.withPrefix("recipes/%s/".formatted(category.getFolderName()));
-        var recipe = new FurnitureStationRecipe(recipeId, group, ingredientA, ingredientB, result, count);
-        writer.accept(new FinishedRecipeImpl(recipe, advancementId, advancement));
+        criteriaMap.forEach(advancement::addCriterion);
+
+        writer.accept(new FinishedRecipeImpl(
+                recipeId,
+                new FurnitureStationRecipe(group, ingredientA, ingredientB, result, count),
+                advancement.build(recipeId.withPrefix("recipes/%s/".formatted(category.getFolderName())))
+        ));
     }
 
-    private record FinishedRecipeImpl(FurnitureStationRecipe recipe, ResourceLocation advancementId, Advancement.Builder advancement) implements FinishedRecipe
+    private record FinishedRecipeImpl(ResourceLocation recipeId, FurnitureStationRecipe recipe, AdvancementHolder advancement) implements FinishedRecipe
     {
         @Override
         public void serializeRecipeData(JsonObject json)
@@ -80,27 +87,15 @@ public final class FurnitureStationRecipeBuilder implements RecipeBuilder
         }
 
         @Override
-        public ResourceLocation getId()
+        public ResourceLocation id()
         {
-            return recipe.getId();
+            return recipeId;
         }
 
         @Override
-        public RecipeSerializer<?> getType()
+        public RecipeSerializer<?> type()
         {
             return FantasyFurniture.FURNITURE_STATION_RECIPE.value();
-        }
-
-        @Override
-        public JsonObject serializeAdvancement()
-        {
-            return advancement.serializeToJson();
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId()
-        {
-            return advancementId;
         }
     }
 }

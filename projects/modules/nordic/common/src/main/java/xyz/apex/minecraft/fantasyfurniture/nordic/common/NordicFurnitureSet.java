@@ -116,6 +116,6 @@ public interface NordicFurnitureSet
                 .unlockedBy("has_oak_planks", provider.has(Items.OAK_PLANKS))
                 .unlockedBy("has_brown_wool", provider.has(Items.BROWN_WOOL))
                 .group("furniture_set/nordic")
-                .save(provider::add, entry.getRegistryName());
+                .save(provider, entry.getRegistryName());
     }
 }

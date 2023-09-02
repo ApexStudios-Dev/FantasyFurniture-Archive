@@ -57,7 +57,7 @@ public interface FantasyFurniture
 
     BlockEntry<FurnitureStationBlock> FURNITURE_STATION_BLOCK = furnitureStation();
     MenuEntry<FurnitureStationMenu> FURNITURE_STATION_MENU = REGISTRAR.menu(FurnitureStationMenu::forNetwork, () -> () -> FurnitureStationMenuScreen::new);
-    RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = REGISTRAR.recipe(FurnitureStationRecipe::fromJson, FurnitureStationRecipe::fromNetwork, FurnitureStationRecipe::toNetwork);
+    RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = REGISTRAR.recipe(FurnitureStationRecipe.CODEC, FurnitureStationRecipe::fromNetwork, FurnitureStationRecipe::toNetwork);
     TagKey<Item> FURNITURE_STATION_BINDING_AGENT = TagHelper.itemTag(ID, "binding_agent");
 
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
@@ -117,7 +117,7 @@ public interface FantasyFurniture
                         .requires(Items.LEATHER)
                         .unlockedBy("has_crafting_table", provider.has(Items.CRAFTING_TABLE))
                         .unlockedBy("has_leather", provider.has(Items.LEATHER))
-                        .save(provider::add)
+                        .save(provider)
                 )
                 .tag(BlockTags.MINEABLE_WITH_AXE)
                 .defaultItem()
