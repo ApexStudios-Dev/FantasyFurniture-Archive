@@ -4,9 +4,15 @@ import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import org.jetbrains.annotations.ApiStatus;
@@ -96,5 +102,17 @@ public final class FantasyFurnitureImpl implements FantasyFurniture
     public void registerPathNodeType(Block block, BiFunction<BlockState, Boolean, @Nullable BlockPathTypes> getPathNodeType)
     {
         LandPathNodeTypesRegistry.register(block, getPathNodeType::apply);
+    }
+
+    @Override
+    public boolean canBurn(WorldlyContainer container, RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> items, int amount)
+    {
+        return AbstractFurnaceBlockEntity.canBurn(registryAccess, recipe, items, amount);
+    }
+
+    @Override
+    public boolean burn(WorldlyContainer container, RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipe, NonNullList<ItemStack> items, int amount)
+    {
+        return AbstractFurnaceBlockEntity.burn(registryAccess, recipe, items, amount);
     }
 }

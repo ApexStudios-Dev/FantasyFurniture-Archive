@@ -1,0 +1,80 @@
+apply from: rootProject.file('scripts/mcforge.gradle')
+
+def children = [ ]
+
+rootProject.childProjects.values().forEach { child ->
+    if(!child.path.startsWithIgnoreCase(':complete') && (child.path.endsWithIgnoreCase('-common') || child.path.endsWithIgnoreCase('-mcforge'))) {
+        def moduleName = child.path.substring(1, child.path.indexOf('-'))
+
+        if(!children.contains(moduleName)) {
+            children.add(moduleName)
+        }
+    }
+}
+
+minecraft {
+    runs {
+        configureEach {
+            mods {
+                "${MOD_ID}_complete" {
+                    source sourceSets.main
+                }
+
+                children.forEach { child ->
+                    "${MOD_ID}_${child}" {
+                        source project(":${child}-mcforge").sourceSets.main
+                    }
+                }
+            }
+        }
+
+        client {
+            workingDirectory file('run/client')
+        }
+
+        if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
+            clientLogin {
+                parent runs.client
+                main 'net.covers1624.devlogin.DevLogin'
+                args '--launch_target', '{LAUNCH_TARGET}'
+                lazyToken("LAUNCH_TARGET", { runs.client.main })
+            }
+        }
+
+        server {
+            workingDirectory file('run/server')
+            args 'nogui'
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(path: ':complete-common', configuration: 'namedElements')
+    implementation project(':mcforge')
+
+    children.forEach { child ->
+        implementation project(":${child}-mcforge")
+    }
+}
+
+processResources {
+    from project(':complete-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':complete-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':complete-common').sourceSets.main.allJava
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact tasks.jarJar
+        }
+    }
+}

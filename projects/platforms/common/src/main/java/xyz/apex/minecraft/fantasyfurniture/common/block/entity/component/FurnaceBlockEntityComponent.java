@@ -378,7 +378,7 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
             var recipe = hasInput ? furnace.getQuickCheck().getRecipeFor(furnace, level).orElse(null) : null;
             var maxStackSize = furnace.getMaxStackSize();
 
-            if(!furnace.isLit() && AbstractFurnaceBlockEntity.canBurn(level.registryAccess(), recipe, items, maxStackSize))
+            if(!furnace.isLit() && FantasyFurniture.INSTANCE.canBurn(furnace, level.registryAccess(), recipe, items, maxStackSize))
             {
                 furnace.litTime = furnace.getBurnDuration(fuel);
                 furnace.litDuration = furnace.litTime;
@@ -401,7 +401,7 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
                 }
             }
 
-            if(furnace.isLit() && AbstractFurnaceBlockEntity.canBurn(level.registryAccess(), recipe, items, maxStackSize))
+            if(furnace.isLit() && FantasyFurniture.INSTANCE.canBurn(furnace, level.registryAccess(), recipe, items, maxStackSize))
             {
                 furnace.cookingProgress++;
 
@@ -410,7 +410,7 @@ public final class FurnaceBlockEntityComponent extends BaseContainerBlockEntityC
                     furnace.cookingProgress = 0;
                     furnace.cookingTotalTime = getTotalCookTime(level, furnace);
 
-                    if(AbstractFurnaceBlockEntity.burn(level.registryAccess(), recipe, items, maxStackSize))
+                    if(FantasyFurniture.INSTANCE.burn(furnace, level.registryAccess(), recipe, items, maxStackSize))
                         furnace.setRecipeUsed(recipe);
 
                     changed = true;

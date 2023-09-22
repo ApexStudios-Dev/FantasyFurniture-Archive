@@ -795,11 +795,11 @@ public interface FurnitureSets
         var holder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolder(PoiTypes.HOME).orElseThrow();
         var poiType = holder.value();
 
-        poiType.matchingStates = Sets.newHashSet(poiType.matchingStates);
+        // poiType.matchingStates = Sets.newHashSet(poiType.matchingStates);
         PoiTypes.BEDS = Sets.newHashSet(PoiTypes.BEDS);
         PoiTypes.registerBlockStates(holder, blockStates);
 
         PoiTypes.BEDS.addAll(blockStates);
-        poiType.matchingStates.addAll(blockStates);
+        // poiType.matchingStates.addAll(blockStates);
     }
 }

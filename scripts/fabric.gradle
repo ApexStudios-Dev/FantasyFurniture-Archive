@@ -2,10 +2,7 @@ apply plugin: 'fabric-loom'
 apply plugin: 'me.modmuss50.mod-publish-plugin'
 
 loom {
-    if(getRootProject().file("${AW_FILE}").exists()) {
-        accessWidenerPath = getRootProject().file("${AW_FILE}")
-    }
-
+    accessWidenerPath = getRootProject().file("projects/platforms/fabric/src/main/resources/${MOD_ID}.accesswidener")
     mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
 }
 

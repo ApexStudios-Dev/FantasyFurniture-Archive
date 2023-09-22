@@ -4,7 +4,12 @@ pluginManagement {
 			url 'https://maven.neoforged.net'
 			content {
 				includeGroupByRegex 'net\\.neoforged.*'
-				// TODO: Why is this still needed? we are running NeoForge not MinecraftForge
+			}
+		}
+
+		maven {
+			url 'https://maven.minecraftforge.net'
+			content {
 				includeGroupByRegex 'net\\.minecraftforge.*'
 			}
 		}
@@ -61,6 +66,7 @@ def includePlatform = { platform ->
 
 includePlatform 'common'
 // includePlatform 'neoforge'
+includePlatform 'mcforge'
 includePlatform 'fabric'
 
 rootProject.name = "${MOD_NAME}"

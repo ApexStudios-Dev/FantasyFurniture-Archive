@@ -1,10 +1,7 @@
 apply plugin: 'fabric-loom'
 
 loom {
-    if(getRootProject().file("${AW_FILE}").exists()) {
-        accessWidenerPath = getRootProject().file("${AW_FILE}")
-    }
-
+    accessWidenerPath = getRootProject().file("projects/platforms/fabric/src/main/resources/${MOD_ID}.accesswidener")
     enableTransitiveAccessWideners = true
     mixin.defaultRefmapName = "${MOD_ID}.refmap.json"
 }
