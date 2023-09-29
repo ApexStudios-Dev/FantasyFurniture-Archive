@@ -1,4 +1,5 @@
 apply from: rootProject.file('scripts/mcforge.gradle')
+apply plugin: 'me.modmuss50.mod-publish-plugin'
 
 def children = [ ]
 
@@ -75,6 +76,38 @@ publishing {
             artifact jar
             artifact sourcesJar
             artifact tasks.jarJar
+        }
+    }
+}
+
+publishMods {
+    file = tasks.jarJar.archiveFile
+    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
+    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
+    maxRetries = 5
+    version = "${MOD_FULL_VERSION}"
+    displayName = "[MinecraftForge] ${MOD_NAME} - Complete - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+    modLoaders.add('forge')
+    additionalFiles.from(jar.archiveFile, sourcesJar.archiveFile)
+    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
+
+    curseforge('curseforgeMinecraftForgeComplete') {
+        projectId = "${MOD_CURSEFORGE_ID}"
+        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
+        minecraftVersions.add("${MINECRAFT_VERSION}")
+
+        embeds {
+            slug = "${APEXCORE_CURSEFORGE_SLUG}"
+        }
+    }
+
+    modrinth('modrinthMinecraftForgeComplete') {
+        projectId = "${MOD_MODRINTH_ID}"
+        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
+        minecraftVersions.add("${MINECRAFT_VERSION}")
+
+        embeds {
+            slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }
 }
