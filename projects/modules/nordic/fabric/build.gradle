@@ -1,5 +1,4 @@
 apply from: rootProject.file('scripts/fabric.gradle')
-apply plugin: 'me.modmuss50.mod-publish-plugin'
 
 loom {
     runs {
@@ -29,44 +28,4 @@ compileJava {
 
 sourcesJar {
     from project(':nordic-common').sourceSets.main.allJava
-}
-
-publishMods {
-    file = remapJar.archiveFile
-    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
-    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
-    maxRetries = 5
-    version = "${MOD_FULL_VERSION}"
-    displayName = "[Fabric] ${MOD_NAME} - Nordic - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
-    modLoaders.add('fabric')
-    additionalFiles.from(remapSourcesJar.archiveFile)
-    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
-
-    curseforge('curseforgeFabricNordic') {
-        projectId = "${MOD_CURSEFORGE_ID}"
-        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${FABRIC_CURSEFORGE_SLUG}"
-        }
-
-        embeds {
-            slug = "${APEXCORE_CURSEFORGE_SLUG}"
-        }
-    }
-
-    modrinth('modrinthFabricNordic') {
-        projectId = "${MOD_MODRINTH_ID}"
-        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${FABRIC_CURSEFORGE_SLUG}"
-        }
-
-        embeds {
-            slug = "${APEXCORE_CURSEFORGE_SLUG}"
-        }
-    }
 }

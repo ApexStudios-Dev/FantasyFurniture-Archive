@@ -81,17 +81,34 @@ publishing {
 }
 
 publishMods {
+    evaluationDependsOn(':mcforge')
+
+    def jarFiles = [
+            project(':mcforge').tasks.jar.archiveFile, project(':mcforge').tasks.sourcesJar.archiveFile,
+            jar.archiveFile, tasks.sourcesJar.archiveFile
+    ]
+
+    children.forEach { child ->
+        evaluationDependsOn(":${child}-mcforge")
+
+        jarFiles += [
+                project(":${child}-mcforge").tasks.jar.archiveFile,
+                project(":${child}-mcforge").tasks.jarJar.archiveFile,
+                project(":${child}-mcforge").tasks.sourcesJar.archiveFile
+        ]
+    }
+
     file = tasks.jarJar.archiveFile
     changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
     type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
     maxRetries = 5
     version = "${MOD_FULL_VERSION}"
-    displayName = "[MinecraftForge] ${MOD_NAME} - Complete - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+    displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
     modLoaders.add('forge')
-    additionalFiles.from(jar.archiveFile, sourcesJar.archiveFile)
+    additionalFiles.from(jarFiles)
     dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
 
-    curseforge('curseforgeMinecraftForgeComplete') {
+    curseforge {
         projectId = "${MOD_CURSEFORGE_ID}"
         accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
@@ -101,7 +118,7 @@ publishMods {
         }
     }
 
-    modrinth('modrinthMinecraftForgeComplete') {
+    modrinth {
         projectId = "${MOD_MODRINTH_ID}"
         accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
