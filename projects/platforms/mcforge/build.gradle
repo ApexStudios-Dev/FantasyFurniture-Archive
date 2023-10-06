@@ -1,5 +1,4 @@
 apply from: rootProject.file('scripts/mcforge.gradle')
-apply plugin: 'me.modmuss50.mod-publish-plugin'
 
 processResources {
     from project(':common').sourceSets.main.resources
@@ -20,29 +19,5 @@ publishing {
             artifact sourcesJar
             artifact tasks.jarJar
         }
-    }
-}
-
-publishMods {
-    file = tasks.jarJar.archiveFile
-    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
-    type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
-    maxRetries = 5
-    version = "${MOD_FULL_VERSION}"
-    displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
-    modLoaders.add('forge')
-    additionalFiles.from(jar.archiveFile, sourcesJar.archiveFile)
-    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
-
-    curseforge {
-        projectId = "${MOD_CURSEFORGE_ID}"
-        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-    }
-
-    modrinth {
-        projectId = "${MOD_MODRINTH_ID}"
-        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
     }
 }
