@@ -52,9 +52,17 @@ minecraft {
 dependencies {
     compileOnly project(path: ':complete-common', configuration: 'namedElements')
     implementation project(':mcforge')
+    jarJar(project(':mcforge')) {
+        transitive = false
+        jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
+    }
 
     children.forEach { child ->
         implementation project(":${child}-mcforge")
+        jarJar(project(":${child}-mcforge")) {
+            transitive = false
+            jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
+        }
     }
 }
 
@@ -113,7 +121,7 @@ publishMods {
         accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
 
-        embeds {
+        requires {
             slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }
@@ -123,7 +131,7 @@ publishMods {
         accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
         minecraftVersions.add("${MINECRAFT_VERSION}")
 
-        embeds {
+        requires {
             slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }

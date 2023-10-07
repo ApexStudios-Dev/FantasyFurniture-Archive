@@ -137,7 +137,7 @@ publishMods {
             slug = "${FABRIC_CURSEFORGE_SLUG}"
         }
 
-        embeds {
+        requires {
             slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }
@@ -151,7 +151,7 @@ publishMods {
             slug = "${FABRIC_CURSEFORGE_SLUG}"
         }
 
-        embeds {
+        requires {
             slug = "${APEXCORE_CURSEFORGE_SLUG}"
         }
     }

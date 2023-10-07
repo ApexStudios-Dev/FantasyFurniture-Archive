@@ -3,6 +3,10 @@ apply from: rootProject.file('scripts/mcforge.gradle')
 dependencies {
     compileOnly project(path: ':nordic-common', configuration: 'namedElements')
     implementation project(':mcforge')
+    jarJar(project(':mcforge')) {
+        transitive = false
+        jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
+    }
 }
 
 processResources {
