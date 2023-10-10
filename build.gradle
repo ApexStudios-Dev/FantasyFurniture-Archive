@@ -196,7 +196,8 @@ tasks.register('sendDiscordChangelog') {
 					'mcforge': '<:forge:1087669091487195205>',
 					'neoforge': '<:neoforge:1138457156757241918>',
 					'fabric': '<:fabric:1107901914923925585>',
-					'github': '<:github:1087671203642216521>'
+					'github': '<:github:1087671203642216521>',
+					'apexcore': '<:apexcore:963684084448653332>',
 
 					// Test Server
 					/*'modrinth': '<:modrinth:1087665302067740722>',
@@ -205,7 +206,8 @@ tasks.register('sendDiscordChangelog') {
                     'mcforge': '<:forge:1087667248371605524>',
                     'neoforge': '<:neoforge:1138456184618242189>',
                     'fabric': '<:fabric:1138459723314769950>',
-                    'github': '<:github:1087671103360614400>'*/
+                    'github': '<:github:1087671103360614400>',
+                    'apexcore': '<:apexcore:1161106353381720095>',*/
 			]
 
 			def fields = [
@@ -239,6 +241,12 @@ tasks.register('sendDiscordChangelog') {
 						inline: true
 				])
 			}
+
+			fields.add([
+					name: "${emojis['apexcore']} ApexCore",
+					value: "[${APEXCORE_VERSION}](https://modrinth.com/mod/apexcore)",
+					inline: true
+			])
 
 			def body = [
 					username: 'ApexStudios',
