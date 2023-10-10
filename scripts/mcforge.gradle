@@ -93,6 +93,7 @@ afterEvaluate {
     if(tasks.jarJar.enabled) {
         tasks.jarJar.configure {
             archiveClassifier.set('')
+            finalizedBy 'reobfJarJar'
         }
 
         jar {
@@ -106,8 +107,6 @@ afterEvaluate {
         reobf {
             jarJar { }
         }
-
-        tasks.jarJar.finalizedBy('reobfJarJar')
     }
 
     collectJars {
