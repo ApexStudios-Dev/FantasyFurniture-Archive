@@ -94,6 +94,7 @@ afterEvaluate {
         tasks.jarJar.configure {
             archiveClassifier.set('')
             finalizedBy 'reobfJarJar'
+            mustRunAfter 'reobfJar'
         }
 
         jar {
