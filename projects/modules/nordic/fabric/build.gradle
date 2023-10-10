@@ -15,7 +15,7 @@ loom {
 dependencies {
     compileOnly project(path: ':nordic-common', configuration: 'namedElements')
     implementation project(path: ':fabric', configuration: 'namedElements')
-    include project(':fabric')
+    include project(path: ':fabric', configuration: 'namedElements')
 }
 
 processResources {

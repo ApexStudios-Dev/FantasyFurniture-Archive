@@ -85,7 +85,7 @@ dependencies {
 
     children.forEach { child ->
         implementation project(path: ":${child}-fabric", configuration: 'namedElements')
-        include project(":${child}-fabric")
+        include project(path: ":${child}-fabric", configuration: 'namedElements')
     }
 }
 
