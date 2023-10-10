@@ -17,6 +17,7 @@ accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEnti
 accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_UP [I
 accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_DOWN [I
 accessible field net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity SLOTS_FOR_SIDES [I
+accessible field net/minecraft/world/entity/ai/goal/DoorInteractGoal hasDoor Z
 
 ########################
 # Copied from ApexCore #

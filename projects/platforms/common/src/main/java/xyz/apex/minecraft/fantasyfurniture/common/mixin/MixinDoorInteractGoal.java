@@ -16,7 +16,6 @@ import xyz.apex.minecraft.fantasyfurniture.common.block.component.DoorComponent;
 @Mixin(DoorInteractGoal.class)
 public abstract class MixinDoorInteractGoal
 {
-    @Shadow protected boolean hasDoor;
     @Shadow protected Mob mob;
     @Shadow protected BlockPos doorPos;
 
@@ -27,7 +26,9 @@ public abstract class MixinDoorInteractGoal
     )
     private void FantasyFurniture$setOpen(boolean open, CallbackInfo ci)
     {
-        if(!hasDoor)
+        var self = (DoorInteractGoal) (Object) this;
+
+        if(!self.hasDoor)
             return;
 
         final var level = mob.level();
@@ -61,11 +62,12 @@ public abstract class MixinDoorInteractGoal
     private void FantasyFurniture$canUse(CallbackInfoReturnable<Boolean> cir)
     {
         final var blockState = mob.level().getBlockState(doorPos);
+        final var self = (DoorInteractGoal) (Object) this;
 
         BlockComponentHolder.runAsComponent(blockState, DoorComponent.COMPONENT_TYPE, component -> {
-            hasDoor = component.hasComponent(DoorComponent.COMPONENT_TYPE);
+            self.hasDoor = component.hasComponent(DoorComponent.COMPONENT_TYPE);
 
-            if(hasDoor)
+            if(self.hasDoor)
                 cir.setReturnValue(true);
         });
     }
