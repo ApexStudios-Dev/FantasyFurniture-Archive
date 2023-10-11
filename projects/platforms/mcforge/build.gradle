@@ -12,6 +12,12 @@ sourcesJar {
     from project(':common').sourceSets.main.allJava
 }
 
+collectJars {
+    def tasks = [ jar, sourcesJar ]
+    dependsOn tasks
+    from tasks
+}
+
 publishing {
     publications {
         release(MavenPublication) {

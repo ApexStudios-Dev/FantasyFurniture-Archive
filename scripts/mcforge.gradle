@@ -88,31 +88,3 @@ dependencies {
 }
 
 jar.finalizedBy('reobfJar')
-
-afterEvaluate {
-    if(tasks.jarJar.enabled) {
-        tasks.jarJar.configure {
-            archiveClassifier.set('')
-            finalizedBy 'reobfJarJar'
-            mustRunAfter 'reobfJar'
-        }
-
-        jar {
-            archiveClassifier.set('slim')
-        }
-
-        artifacts {
-            archives tasks.jarJar
-        }
-
-        reobf {
-            jarJar { }
-        }
-    }
-
-    collectJars {
-        def tasks = tasks.jarJar.enabled ? [ jar, sourcesJar, tasks.jarJar ] : [ jar, sourcesJar ]
-        dependsOn tasks
-        from tasks
-    }
-}

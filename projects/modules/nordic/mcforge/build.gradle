@@ -21,6 +21,30 @@ sourcesJar {
     from project(':nordic-common').sourceSets.main.allJava
 }
 
+tasks.jarJar.configure {
+    archiveClassifier.set('')
+}
+
+jar {
+    archiveClassifier.set('slim')
+}
+
+artifacts {
+    archives tasks.jarJar
+}
+
+reobf {
+    jarJar { }
+}
+
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+collectJars {
+    def tasks = [ jar, sourcesJar, tasks.jarJar ]
+    dependsOn tasks
+    from tasks
+}
+
 publishing {
     publications {
         release(MavenPublication) {

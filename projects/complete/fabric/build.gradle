@@ -1,17 +1,4 @@
 apply from: rootProject.file('scripts/fabric.gradle')
-apply plugin: 'me.modmuss50.mod-publish-plugin'
-
-def children = [ ]
-
-rootProject.childProjects.values().forEach { child ->
-    if(!child.path.startsWithIgnoreCase(':complete') && (child.path.endsWithIgnoreCase('-common') || child.path.endsWithIgnoreCase('-fabric'))) {
-        def moduleName = child.path.substring(1, child.path.indexOf('-'))
-
-        if(!children.contains(moduleName)) {
-            children.add(moduleName)
-        }
-    }
-}
 
 loom {
     runs {
@@ -70,10 +57,10 @@ loom {
             sourceSet sourceSets.main
         }
 
-        children.forEach { child ->
-            "${MOD_ID}_${child}" {
-                sourceSet project(":${child}-common").sourceSets.main
-                sourceSet project(":${child}-fabric").sourceSets.main
+        if(findProject(':nordic-fabric') != null) {
+            "${MOD_ID}_nordic" {
+                sourceSet project(':nordic-common').sourceSets.main
+                sourceSet project(':nordic-fabric').sourceSets.main
             }
         }
     }
@@ -83,9 +70,9 @@ dependencies {
     compileOnly project(path: ':complete-common', configuration: 'namedElements')
     implementation project(path: ':fabric', configuration: 'namedElements')
 
-    children.forEach { child ->
-        implementation project(path: ":${child}-fabric", configuration: 'namedElements')
-        include project(path: ":${child}-fabric", configuration: 'namedElements')
+    if(findProject(':nordic-fabric') != null) {
+        implementation project(path: ':nordic-fabric', configuration: 'namedElements')
+        include project(path: ':nordic-fabric', configuration: 'namedElements')
     }
 }
 
@@ -99,60 +86,4 @@ compileJava {
 
 sourcesJar {
     from project(':complete-common').sourceSets.main.allJava
-}
-
-publishMods {
-    evaluationDependsOn(':fabric')
-
-    def jarFiles = [
-            project(':fabric').tasks.remapJar.archiveFile, project(':fabric').tasks.remapSourcesJar.archiveFile,
-            tasks.remapSourcesJar.archiveFile
-    ]
-
-    children.forEach { child ->
-        evaluationDependsOn(":${child}-fabric")
-
-        jarFiles += [
-                project(":${child}-fabric").tasks.remapJar.archiveFile,
-                project(":${child}-fabric").tasks.remapSourcesJar.archiveFile
-        ]
-    }
-
-    file = remapJar.archiveFile
-    changelog = rootProject.file('changelogs/changelog.md').exists() ? rootProject.file('changelogs/changelog.md').getText('UTF-8') : ''
-    type = me.modmuss50.mpp.ReleaseType.of("${rootProject.MOD_RELEASE_TYPE}")
-    maxRetries = 5
-    version = "${MOD_FULL_VERSION}"
-    displayName = "[Fabric] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
-    modLoaders.add('fabric')
-    additionalFiles.from(jarFiles)
-    dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
-
-    curseforge {
-        projectId = "${MOD_CURSEFORGE_ID}"
-        accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${FABRIC_CURSEFORGE_SLUG}"
-        }
-
-        requires {
-            slug = "${APEXCORE_CURSEFORGE_SLUG}"
-        }
-    }
-
-    modrinth {
-        projectId = "${MOD_MODRINTH_ID}"
-        accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
-        minecraftVersions.add("${MINECRAFT_VERSION}")
-
-        requires {
-            slug = "${FABRIC_CURSEFORGE_SLUG}"
-        }
-
-        requires {
-            slug = "${APEXCORE_CURSEFORGE_SLUG}"
-        }
-    }
 }

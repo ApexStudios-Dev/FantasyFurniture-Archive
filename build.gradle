@@ -164,6 +164,7 @@ subprojects {
 }
 
 apply plugin: 'net.neoforged.gradleutils'
+apply plugin: 'me.modmuss50.mod-publish-plugin'
 
 afterEvaluate {
 	tasks.setupTeamCityProject.enabled = false
@@ -305,6 +306,116 @@ tasks.register('publishChangelogFile') {
 			println "[Changelog-Server] Received response: ${req.responseMessage} (${req.responseCode})"
 		} else {
 			println '[Changelog-Server] Missing required "APEXSTUDIOS_CHANGELOG_SERVER_KEY" Environment Variable!!!'
+		}
+	}
+}
+
+publishMods {
+	evaluationDependsOn(':complete-fabric')
+	evaluationDependsOn(':complete-mcforge')
+	evaluationDependsOn(':fabric')
+	evaluationDependsOn(':mcforge')
+
+	def fabricJar = project(':complete-fabric').tasks.remapJar.archiveFile
+	def fabricJars = [
+			project(':fabric').tasks.remapSourcesJar.archiveFile,
+			project(':complete-fabric').tasks.remapSourcesJar.archiveFile
+	]
+
+	def mcforgeJar = project(':complete-mcforge').tasks.jarJar.archiveFile
+	def mcforgeJars = [
+			project(':mcforge').tasks.jar.archiveFile,
+			project(':mcforge').tasks.sourcesJar.archiveFile,
+			project(':complete-mcforge').tasks.jar.archiveFile,
+			project(':complete-mcforge').tasks.sourcesJar.archiveFile
+	]
+
+	if(findProject(':nordic-fabric') != null) {
+		evaluationDependsOn(':nordic-fabric')
+		fabricJars += [
+				project(':nordic-fabric').tasks.remapJar.archiveFile,
+				project(':nordic-fabric').tasks.remapSourcesJar.archiveFile
+		]
+	}
+
+	if(findProject(':nordic-mcforge') != null) {
+		evaluationDependsOn(':nordic-mcforge')
+		mcforgeJars += [
+				project(':nordic-mcforge').tasks.jar.archiveFile,
+				project(':nordic-mcforge').tasks.jarJar.archiveFile,
+				project(':nordic-mcforge').tasks.sourcesJar.archiveFile
+		]
+	}
+
+	changelog = file('changelogs/changelog.md').exists() ? file('changelogs/changelog.md').getText('UTF-8') : ''
+	type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
+	maxRetries = 5
+	version = "${MOD_FULL_VERSION}"
+	dryRun = !providers.environmentVariable('MODRINTH_TOKEN').isPresent() || !providers.environmentVariable('CURSEFORGE_TOKEN').isPresent()
+
+	// fabric
+	curseforge('curseforgeFabric') {
+		minecraftVersions.add("${MINECRAFT_VERSION}")
+		projectId = "${MOD_CURSEFORGE_ID}"
+		accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
+		file = fabricJar
+		displayName = "[Fabric] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+		modLoaders.add('fabric')
+		additionalFiles.from(fabricJars)
+
+		requires {
+			slug = "${APEXCORE_CURSEFORGE_SLUG}"
+		}
+
+		requires {
+			slug = "${FABRIC_CURSEFORGE_SLUG}"
+		}
+	}
+
+	modrinth('modrinthFabric') {
+		minecraftVersions.add("${MINECRAFT_VERSION}")
+		projectId = "${MOD_MODRINTH_ID}"
+		accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
+		file = fabricJar
+		displayName = "[Fabric] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+		modLoaders.add('fabric')
+		additionalFiles.from(fabricJars)
+
+		requires {
+			slug = "${APEXCORE_CURSEFORGE_SLUG}"
+		}
+
+		requires {
+			slug = "${FABRIC_CURSEFORGE_SLUG}"
+		}
+	}
+
+	// forge
+	curseforge('curseforgeMCForge') {
+		minecraftVersions.add("${MINECRAFT_VERSION}")
+		projectId = "${MOD_CURSEFORGE_ID}"
+		accessToken = providers.environmentVariable('CURSEFORGE_TOKEN').getOrNull()
+		file = mcforgeJar
+		displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+		modLoaders.add('forge')
+		additionalFiles.from(mcforgeJars)
+
+		requires {
+			slug = "${APEXCORE_CURSEFORGE_SLUG}"
+		}
+	}
+
+	modrinth('modrinthMCForge') {
+		minecraftVersions.add("${MINECRAFT_VERSION}")
+		projectId = "${MOD_MODRINTH_ID}"
+		accessToken = providers.environmentVariable('MODRINTH_TOKEN').getOrNull()
+		file = mcforgeJar
+		displayName = "[MinecraftForge] ${MOD_NAME} - ${MOD_FULL_VERSION}+${MINECRAFT_VERSION}"
+		modLoaders.add('forge')
+		additionalFiles.from(mcforgeJars)
+
+		requires {
+			slug = "${APEXCORE_CURSEFORGE_SLUG}"
 		}
 	}
 }
