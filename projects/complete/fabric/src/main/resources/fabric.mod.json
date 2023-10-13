@@ -73,6 +73,10 @@
         "${APEXCORE_ID}": ">=${APEXCORE_VERSION}",
         "${MOD_ID}": "${MOD_VERSION}"
     },
+    "suggests": {
+        "${JEI_ID}": ">=${JEI_VERSION}",
+        "${REI_ID}": ">=${REI_VERSION}"
+    },
     "custom": {
         "modmenu": {
             "links": {

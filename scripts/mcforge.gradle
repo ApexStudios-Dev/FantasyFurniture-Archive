@@ -82,6 +82,29 @@ dependencies {
         implementation fg.deobf("xyz.apex.minecraft.apexcore:apexcore-mcforge:${APEXCORE_VERSION}+${MINECRAFT_VERSION}")
     }
 
+    if(rootProject.hasProperty('JEI_VERSION')) {
+        compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}")
+        compileOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge-api:${JEI_VERSION}")
+
+        if(rootProject.hasProperty('RECIPE_PROV_TYPE') && rootProject.property('RECIPE_PROV_TYPE').equalsIgnoreCase('jei')) {
+            runtimeOnly fg.deobf("mezz.jei:jei-${MINECRAFT_VERSION}-forge:${JEI_VERSION}")
+        }
+    }
+
+    if(rootProject.hasProperty('REI_VERSION')) {
+        compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${REI_VERSION}")
+        compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:${REI_VERSION}")
+        // match fabric
+        compileOnly fg.deobf('me.shedaniel.cloth:basic-math:0.6.1')
+        implementation fg.deobf('dev.architectury:architectury-forge:10.0.8')
+
+        if(rootProject.hasProperty('RECIPE_PROV_TYPE') && rootProject.property('RECIPE_PROV_TYPE').equalsIgnoreCase('rei')) {
+            runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${REI_VERSION}")
+            // match fabric
+            // runtimeOnly fg.deobf('me.shedaniel.cloth:cloth-config-forge:12.0.109')
+        }
+    }
+
     if(rootProject.hasProperty('DEVLOGIN_VERSION')) {
         runtimeOnly "net.covers1624:DevLogin:${DEVLOGIN_VERSION}"
     }

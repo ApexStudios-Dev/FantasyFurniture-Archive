@@ -42,3 +42,15 @@ issueTrackerURL="https://discord.apexstudios.dev/"
 	versionRange="${MOD_VERSION}"
 	ordering="AFTER"
 	side="BOTH"
+[[dependencies."${MOD_ID}_nordic"]]
+	modId="${JEI_ID}"
+	mandatory=false
+	versionRange="${JEI_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"
+[[dependencies."${MOD_ID}_nordic"]]
+	modId="${REI_ID}"
+	mandatory=false
+	versionRange="${REI_VERSION_RANGE}"
+	ordering="AFTER"
+	side="BOTH"

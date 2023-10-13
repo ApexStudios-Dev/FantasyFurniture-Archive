@@ -64,6 +64,9 @@
         ],
         "fabric-datagen": [
             "xyz.apex.minecraft.fantasyfurniture.nordic.fabric.entrypoint.NordicFurnitureSetDataGeneratorEntrypoint"
+        ],
+        "rei_client": [
+            "xyz.apex.minecraft.fantasyfurniture.nordic.common.integrations.rei.NordicFurnitureSetReiClientPlugin"
         ]
     },
     "depends": {
@@ -72,6 +75,10 @@
         "fabric": "*",
         "${APEXCORE_ID}": ">=${APEXCORE_VERSION}",
         "${MOD_ID}": "${MOD_VERSION}"
+    },
+    "suggests": {
+        "${JEI_ID}": ">=${JEI_VERSION}",
+        "${REI_ID}": ">=${REI_VERSION}"
     },
     "custom": {
         "modmenu": {

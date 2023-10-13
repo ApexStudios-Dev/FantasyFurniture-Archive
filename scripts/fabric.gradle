@@ -46,6 +46,34 @@ dependencies {
         modImplementation "xyz.apex.minecraft.apexcore:apexcore-fabric:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
     }
 
+    if(rootProject.hasProperty('JEI_VERSION')) {
+        modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+        modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-fabric-api:${JEI_VERSION}"
+
+        if(rootProject.hasProperty('RECIPE_PROV_TYPE') && rootProject.property('RECIPE_PROV_TYPE').equalsIgnoreCase('jei')) {
+            modRuntimeOnly "mezz.jei:jei-${MINECRAFT_VERSION}-fabric:${JEI_VERSION}"
+        }
+    }
+
+    if(rootProject.hasProperty('REI_VERSION')) {
+        modCompileOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${REI_VERSION}") {
+            exclude group: 'net.fabricmc.fabric-api'
+            exclude group: 'net.fabricmc'
+        }
+
+        modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:${REI_VERSION}") {
+            exclude group: 'net.fabricmc.fabric-api'
+            exclude group: 'net.fabricmc'
+        }
+
+        if(rootProject.hasProperty('RECIPE_PROV_TYPE') && rootProject.property('RECIPE_PROV_TYPE').equalsIgnoreCase('rei')) {
+            modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-fabric:${REI_VERSION}") {
+                exclude group: 'net.fabricmc.fabric-api'
+                exclude group: 'net.fabricmc'
+            }
+        }
+    }
+
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
     compileOnly 'com.google.errorprone:error_prone_annotations:2.11.0'
 }

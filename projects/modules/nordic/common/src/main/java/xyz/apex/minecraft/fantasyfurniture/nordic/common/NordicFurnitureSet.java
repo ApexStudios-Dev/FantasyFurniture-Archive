@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -42,6 +43,7 @@ public interface NordicFurnitureSet
     NordicFurnitureSet INSTANCE = Services.singleton(NordicFurnitureSet.class);
 
     Registrar REGISTRAR = Registrar.create(ID);
+    Component JEI_NAME = Component.translatable("gui.jei.category.furniture_set.nordic");
 
     WoodType WOOD_TYPE = FurnitureSets.woodType(REGISTRAR, builder -> builder.copyFrom(WoodType.OAK));
 
@@ -104,6 +106,7 @@ public interface NordicFurnitureSet
         ProviderTypes.LANGUAGES.addListener(ID, (provider, lookup) -> provider
                 .enUS()
                     .add(descriptionKey, "Fantasy's Furniture - Nordic")
+                    .add(((TranslatableContents) JEI_NAME.getContents()).getKey(), "Nordic Furniture Set")
                 .end()
         );
 

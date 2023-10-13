@@ -67,6 +67,15 @@
         ],
         "fabric-datagen": [
             "xyz.apex.minecraft.fantasyfurniture.fabric.entrypoint.FantasyFurnitureDataGeneratorEntrypoint"
+        ],
+        "jei_mod_plugin": [
+            "xyz.apex.minecraft.fantasyfurniture.common.integrations.jei.FurnitureStationJeiPlugin"
+        ],
+        "rei_client": [
+            "xyz.apex.minecraft.fantasyfurniture.common.integrations.rei.FurnitureStationReiClientPlugin"
+        ],
+        "rei_server": [
+            "xyz.apex.minecraft.fantasyfurniture.common.integrations.rei.FurnitureStationReiServerPlugin"
         ]
     },
     "depends": {
@@ -74,6 +83,10 @@
         "java": ">=${JAVA_VERSION}",
         "fabric": "*",
         "${APEXCORE_ID}": ">=${APEXCORE_VERSION}"
+    },
+    "suggests": {
+        "${JEI_ID}": ">=${JEI_VERSION}",
+        "${REI_ID}": ">=${REI_VERSION}"
     },
     "custom": {
         "modmenu": {

@@ -37,13 +37,18 @@ dependencies {
     compileOnly 'org.ow2.asm:asm-commons:9.5'
 
     if(rootProject.hasProperty('APEXCORE_DEV_VERSION')) {
-        if(APEXCORE_DEV_VERSION.endsWithIgnoreCase('-SNAPSHOT')) {
-            modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}"
-        } else {
-            modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
-        }
+        modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_DEV_VERSION}+${MINECRAFT_VERSION}"
     } else {
         modImplementation "xyz.apex.minecraft.apexcore:apexcore-common:${APEXCORE_VERSION}+${MINECRAFT_VERSION}"
+    }
+
+    if(rootProject.hasProperty('JEI_VERSION')) {
+        modCompileOnlyApi "mezz.jei:jei-${MINECRAFT_VERSION}-common-api:${JEI_VERSION}"
+    }
+
+    if(rootProject.hasProperty('REI_VERSION')) {
+        modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:${REI_VERSION}"
+        modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:${REI_VERSION}"
     }
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'

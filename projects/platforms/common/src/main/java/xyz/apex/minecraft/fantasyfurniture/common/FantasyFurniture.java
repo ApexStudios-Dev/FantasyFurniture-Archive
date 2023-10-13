@@ -6,6 +6,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
@@ -63,6 +64,7 @@ public interface FantasyFurniture
     BlockEntry<FurnitureStationBlock> FURNITURE_STATION_BLOCK = furnitureStation();
     MenuEntry<FurnitureStationMenu> FURNITURE_STATION_MENU = REGISTRAR.menu(FurnitureStationMenu::forNetwork, () -> () -> FurnitureStationMenuScreen::new);
     RecipeEntry<FurnitureStationRecipe> FURNITURE_STATION_RECIPE = REGISTRAR.recipe(FurnitureStationRecipe.CODEC, FurnitureStationRecipe::fromNetwork, FurnitureStationRecipe::toNetwork);
+    Component FURNITURE_STATION_JEI_NAME = Component.translatable("gui.jei.category.furniture_station");
     TagKey<Item> FURNITURE_STATION_BINDING_AGENT = TagHelper.itemTag(ID, "binding_agent");
 
     EntityEntry<SeatEntity> SEAT_ENTITY = seat();
@@ -96,6 +98,7 @@ public interface FantasyFurniture
         ProviderTypes.LANGUAGES.addListener(ID, (provider, lookup) -> provider
                 .enUS()
                     .add(descriptionKey, "Fantasy's Furniture")
+                    .add(((TranslatableContents) FURNITURE_STATION_JEI_NAME.getContents()).getKey(), "Furniture Station")
                 .end()
         );
 

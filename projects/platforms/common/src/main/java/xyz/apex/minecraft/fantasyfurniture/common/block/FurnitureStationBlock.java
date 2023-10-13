@@ -43,6 +43,7 @@ public final class FurnitureStationBlock extends BaseBlockComponentHolder
         registrar.register(BlockComponentTypes.WATERLOGGED);
         registrar.register(BlockComponentTypes.MENU_PROVIDER, component -> component
                 .withMenuConstructor((syncId, inventory, level, pos) -> FurnitureStationMenu.create(syncId, inventory, level instanceof Level lvl ? ContainerLevelAccess.create(lvl, pos) : ContainerLevelAccess.NULL))
+                .withExtraData((level, pos, blockState, buffer) -> buffer.writeBlockPos(pos))
         );
     }
 
