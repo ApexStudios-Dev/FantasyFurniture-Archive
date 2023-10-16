@@ -21,7 +21,9 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
 import xyz.apex.minecraft.apexcore.common.core.ApexTags;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BaseBlockComponentHolder;
 import xyz.apex.minecraft.apexcore.common.lib.component.block.BlockComponentType;
@@ -127,10 +129,10 @@ public interface FurnitureSets
         ;
     }
 
-    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> table(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> tableExt(R registrar, WoodType woodType, BlockFactory<B> blockFactory, @Nullable String extName)
     {
         return registrar
-                .object("table")
+                .object("table" + (extName == null ? "" : StringUtils.prependIfMissing(extName, "_")))
                 .block(blockFactory)
                 .copyInitialPropertiesFrom(() -> Blocks.OAK_PLANKS)
                 .sound(woodType.soundType())
@@ -141,6 +143,11 @@ public interface FurnitureSets
                 .tag(BlockTags.MINEABLE_WITH_AXE)
                 .defaultItem()
         ;
+    }
+
+    static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> table(R registrar, WoodType woodType, BlockFactory<B> blockFactory)
+    {
+        return tableExt(registrar, woodType, blockFactory, null);
     }
 
     static <R extends AbstractRegistrar<R>, B extends Block> BlockBuilder<R, B, R> stool(R registrar, WoodType woodType, BlockFactory<B> blockFactory)

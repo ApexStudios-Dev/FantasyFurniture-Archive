@@ -5,9 +5,10 @@
 	},
 	"elements": [
 		{
-			"name": "1",
+			"name": "frame_1",
 			"from": [0, 0, 14],
 			"to": [16, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0, 15]},
 			"faces": {
 				"north": {"uv": [0, 6, 4, 6.5], "texture": "#painting_small"},
 				"east": {"uv": [1.5, 6.5, 2, 7], "texture": "#painting_small"},
@@ -18,35 +19,38 @@
 			}
 		},
 		{
-			"name": "2",
-			"from": [14, 2, 14],
-			"to": [16, 14, 16],
-			"faces": {
-				"north": {"uv": [6, 3.5, 6.5, 6.5], "texture": "#painting_small"},
-				"east": {"uv": [4, 6, 4.5, 9], "texture": "#painting_small"},
-				"south": {"uv": [4.5, 6, 5, 9], "texture": "#painting_small"},
-				"west": {"uv": [5, 6, 5.5, 9], "texture": "#painting_small"},
-				"up": {"uv": [3, 7, 2.5, 6.5], "texture": "#painting_small"},
-				"down": {"uv": [3.5, 6.5, 3, 7], "texture": "#painting_small"}
-			}
-		},
-		{
-			"name": "3",
+			"name": "frame_2",
 			"from": [0, 14, 14],
 			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 14, 15]},
 			"faces": {
 				"north": {"uv": [6, 1.5, 10, 2], "texture": "#painting_small"},
-				"east": {"uv": [3.5, 6.5, 4, 7], "texture": "#painting_small"},
+				"east": {"uv": [2.5, 6.5, 3, 7], "texture": "#painting_small"},
 				"south": {"uv": [6, 2, 10, 2.5], "texture": "#painting_small"},
-				"west": {"uv": [6.5, 3.5, 7, 4], "texture": "#painting_small"},
+				"west": {"uv": [3, 6.5, 3.5, 7], "texture": "#painting_small"},
 				"up": {"uv": [10, 3, 6, 2.5], "texture": "#painting_small"},
 				"down": {"uv": [10, 3, 6, 3.5], "texture": "#painting_small"}
 			}
 		},
 		{
-			"name": "4",
+			"name": "frame_3",
+			"from": [14, 2, 14],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 12, 15]},
+			"faces": {
+				"north": {"uv": [6, 3.5, 6.5, 6.5], "texture": "#painting_small"},
+				"east": {"uv": [4, 6, 4.5, 9], "texture": "#painting_small"},
+				"south": {"uv": [4.5, 6, 5, 9], "texture": "#painting_small"},
+				"west": {"uv": [5, 6, 5.5, 9], "texture": "#painting_small"},
+				"up": {"uv": [4, 7, 3.5, 6.5], "texture": "#painting_small"},
+				"down": {"uv": [7, 3.5, 6.5, 4], "texture": "#painting_small"}
+			}
+		},
+		{
+			"name": "frame_4",
 			"from": [0, 2, 14],
 			"to": [2, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-15, 12, 15]},
 			"faces": {
 				"north": {"uv": [5.5, 6, 6, 9], "texture": "#painting_small"},
 				"east": {"uv": [0, 6.5, 0.5, 9.5], "texture": "#painting_small"},
@@ -57,9 +61,10 @@
 			}
 		},
 		{
-			"name": "painting",
-			"from": [2, 2, 15],
-			"to": [14, 14, 15],
+			"name": "back",
+			"from": [2, 2, 16],
+			"to": [14, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-13, 12, 15]},
 			"faces": {
 				"north": {"uv": [0, 0, 3, 3], "texture": "#painting_small"},
 				"east": {"uv": [0, 0, 0, 3], "texture": "#painting_small"},
@@ -70,9 +75,10 @@
 			}
 		},
 		{
-			"name": "back",
-			"from": [2, 2, 16],
-			"to": [14, 14, 16],
+			"name": "painting",
+			"from": [2, 2, 15],
+			"to": [14, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, 14]},
 			"faces": {
 				"north": {"uv": [3, 0, 6, 3], "texture": "#painting_small"},
 				"east": {"uv": [0, 0, 0, 3], "texture": "#painting_small"},
@@ -119,7 +125,7 @@
 	},
 	"groups": [
 		{
-			"name": "painting_small",
+			"name": "venthyr_painting_small",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0, 1, 2, 3, 4, 5]

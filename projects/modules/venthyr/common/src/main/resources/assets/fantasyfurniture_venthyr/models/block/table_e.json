@@ -3,47 +3,91 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"particle": "fantasyfurniture_venthyr:block/particle",
-		"table": "fantasyfurniture_venthyr:block/table",
-		"table_combined": "fantasyfurniture_venthyr:block/table_combined"
+		"table": "fantasyfurniture_venthyr:block/table"
 	},
 	"elements": [
 		{
-			"name": "top",
+			"name": "base_1",
+			"from": [1, 0, 1],
+			"to": [4, 2, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [8, 7.25, 8.75, 7.75], "texture": "#table"},
+				"east": {"uv": [8, 7.75, 8.75, 8.25], "texture": "#table"},
+				"south": {"uv": [8, 8.25, 8.75, 8.75], "texture": "#table"},
+				"west": {"uv": [8.5, 1.5, 9.25, 2], "texture": "#table"},
+				"up": {"uv": [7.25, 5, 6.5, 4.25], "texture": "#table"},
+				"down": {"uv": [8, 4.25, 7.25, 5], "texture": "#table"}
+			}
+		},
+		{
+			"name": "base_4",
+			"from": [1, 0, 12],
+			"to": [4, 2, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [8.75, 5, 9.5, 5.5], "texture": "#table"},
+				"east": {"uv": [8.75, 5.5, 9.5, 6], "texture": "#table"},
+				"south": {"uv": [8.75, 6, 9.5, 6.5], "texture": "#table"},
+				"west": {"uv": [8.75, 6.5, 9.5, 7], "texture": "#table"},
+				"up": {"uv": [8.75, 6.5, 8, 5.75], "texture": "#table"},
+				"down": {"uv": [8.75, 6.5, 8, 7.25], "texture": "#table"}
+			}
+		},
+		{
+			"name": "post_1",
+			"from": [1.5, 2, 1.5],
+			"to": [3.5, 13, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [6.5, 1.5, 7, 4.25], "texture": "#table"},
+				"east": {"uv": [4, 6.5, 4.5, 9.25], "texture": "#table"},
+				"south": {"uv": [4.5, 6.5, 5, 9.25], "texture": "#table"},
+				"west": {"uv": [5, 6.5, 5.5, 9.25], "texture": "#table"},
+				"up": {"uv": [4, 8.5, 3.5, 8], "texture": "#table"},
+				"down": {"uv": [4, 8.5, 3.5, 9], "texture": "#table"}
+			}
+		},
+		{
+			"name": "post_2",
+			"from": [1.5, 2, 12.5],
+			"to": [3.5, 13, 14.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"north": {"uv": [5.5, 6.5, 6, 9.25], "texture": "#table"},
+				"east": {"uv": [6, 6.5, 6.5, 9.25], "texture": "#table"},
+				"south": {"uv": [6.5, 6.5, 7, 9.25], "texture": "#table"},
+				"west": {"uv": [7, 1.5, 7.5, 4.25], "texture": "#table"},
+				"up": {"uv": [9.25, 7.5, 8.75, 7], "texture": "#table"},
+				"down": {"uv": [9.25, 7.5, 8.75, 8], "texture": "#table"}
+			}
+		},
+		{
+			"name": "table",
 			"from": [0, 13, 0],
 			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [12, 0, 16, 0.75], "texture": "#table_combined"},
-				"east": {"uv": [12, 0.75, 16, 1.5], "texture": "#table_combined"},
-				"south": {"uv": [12, 1.5, 16, 2.25], "texture": "#table_combined"},
-				"west": {"uv": [12, 0.75, 16, 1.5], "texture": "#table_combined"},
-				"up": {"uv": [0, 4, 4, 0], "texture": "#table_combined"},
-				"down": {"uv": [0, 4, 4, 8], "texture": "#table_combined"}
+				"north": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"east": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"south": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"west": {"uv": [6.5, 0.75, 10.5, 1.5], "texture": "#table"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#table"},
+				"down": {"uv": [4, 0, 0, 4], "texture": "#table"}
 			}
 		},
 		{
-			"name": "leg_1",
-			"from": [1, 0, 1],
-			"to": [3, 13, 3],
+			"name": "cloth_2",
+			"from": [0, 8, 0],
+			"to": [0, 13, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [4, 3, 4.5, 6.25], "texture": "#table"},
-				"east": {"uv": [4.5, 3, 5, 6.25], "texture": "#table"},
-				"south": {"uv": [5, 3, 5.5, 6.25], "texture": "#table"},
-				"west": {"uv": [5.5, 3, 6, 6.25], "texture": "#table"},
-				"up": {"uv": [0.5, 8.5, 0, 8], "texture": "#table"},
-				"down": {"uv": [3, 8, 2.5, 8.5], "texture": "#table"}
-			}
-		},
-		{
-			"name": "leg_2",
-			"from": [1, 0, 13],
-			"to": [3, 13, 15],
-			"faces": {
-				"north": {"uv": [6, 3, 6.5, 6.25], "texture": "#table"},
-				"east": {"uv": [4, 6.25, 4.5, 9.5], "texture": "#table"},
-				"south": {"uv": [4.5, 6.25, 5, 9.5], "texture": "#table"},
-				"west": {"uv": [5, 6.25, 5.5, 9.5], "texture": "#table"},
-				"up": {"uv": [1, 8.5, 0.5, 8], "texture": "#table"},
-				"down": {"uv": [2.5, 8, 2, 8.5], "texture": "#table"}
+				"north": {"uv": [0, 0, 0, 0.625], "texture": "#table"},
+				"east": {"uv": [0, 10.75, 2, 11.375], "texture": "#table"},
+				"south": {"uv": [0, 0, 0, 0.625], "texture": "#table"},
+				"west": {"uv": [0, 10.75, 2, 11.375], "texture": "#table"},
+				"up": {"uv": [6.25, 11.75, 6.25, 9.75], "texture": "#table"},
+				"down": {"uv": [0, 0, 0, 2], "texture": "#table"}
 			}
 		}
 	],
@@ -71,8 +115,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 145, 0],
-			"translation": [0, -0.25, 0],
+			"rotation": [30, 225, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"head": {
@@ -87,10 +130,10 @@
 	},
 	"groups": [
 		{
-			"name": "e",
+			"name": "venthyr_table_e",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2]
+			"children": [0, 1, 2, 3, 4, 5]
 		}
 	]
 }

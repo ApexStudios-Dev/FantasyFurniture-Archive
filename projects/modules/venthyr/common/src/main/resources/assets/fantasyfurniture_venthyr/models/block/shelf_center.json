@@ -5,14 +5,14 @@
 	},
 	"elements": [
 		{
-			"name": "shelf",
-			"from": [0, 14, 0],
+			"name": "top",
+			"from": [0, 13, 0],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [4, 0, 8, 0.5], "texture": "#shelf"},
-				"east": {"uv": [4, 0.5, 8, 1], "texture": "#shelf"},
-				"south": {"uv": [4, 1, 8, 1.5], "texture": "#shelf"},
-				"west": {"uv": [4, 1.5, 8, 2], "texture": "#shelf"},
+				"north": {"uv": [4, 0, 8, 0.75], "texture": "#shelf"},
+				"east": {"uv": [4, 0.75, 8, 1.5], "texture": "#shelf"},
+				"south": {"uv": [4, 1.5, 8, 2.25], "texture": "#shelf"},
+				"west": {"uv": [4, 2.25, 8, 3], "texture": "#shelf"},
 				"up": {"uv": [4, 4, 0, 0], "texture": "#shelf"},
 				"down": {"uv": [4, 4, 0, 8], "texture": "#shelf"}
 			}
@@ -42,8 +42,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 145, 0],
-			"translation": [0, -3.5, 0],
+			"rotation": [30, 225, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"fixed": {
@@ -52,7 +51,7 @@
 	},
 	"groups": [
 		{
-			"name": "venthyr_shelf",
+			"name": "venthyr_shelf_single",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0]

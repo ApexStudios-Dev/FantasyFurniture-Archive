@@ -3,20 +3,21 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"particle": "fantasyfurniture_venthyr:block/particle",
-		"table_combined": "fantasyfurniture_venthyr:block/table_combined"
+		"table": "fantasyfurniture_venthyr:block/table"
 	},
 	"elements": [
 		{
-			"name": "top",
+			"name": "table",
 			"from": [0, 13, 0],
 			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
 			"faces": {
-				"north": {"uv": [12, 2.25, 16, 3], "texture": "#table_combined"},
-				"east": {"uv": [12, 1.5, 16, 2.25], "texture": "#table_combined"},
-				"south": {"uv": [12, 2.25, 16, 3], "texture": "#table_combined"},
-				"west": {"uv": [12, 3, 16, 3.75], "texture": "#table_combined"},
-				"up": {"uv": [12, 4, 8, 0], "texture": "#table_combined"},
-				"down": {"uv": [12, 4, 8, 8], "texture": "#table_combined"}
+				"north": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"east": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"south": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"west": {"uv": [6.5, 0, 10.5, 0.75], "texture": "#table"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#table"},
+				"down": {"uv": [4, 0, 0, 4], "texture": "#table"}
 			}
 		}
 	],
@@ -44,8 +45,7 @@
 			"scale": [0.25, 0.25, 0.25]
 		},
 		"gui": {
-			"rotation": [30, 145, 0],
-			"translation": [0, -0.25, 0],
+			"rotation": [30, 225, 0],
 			"scale": [0.625, 0.625, 0.625]
 		},
 		"head": {
@@ -60,7 +60,7 @@
 	},
 	"groups": [
 		{
-			"name": "ew",
+			"name": "venthyr_table_ew",
 			"origin": [8, 8, 8],
 			"color": 0,
 			"children": [0]

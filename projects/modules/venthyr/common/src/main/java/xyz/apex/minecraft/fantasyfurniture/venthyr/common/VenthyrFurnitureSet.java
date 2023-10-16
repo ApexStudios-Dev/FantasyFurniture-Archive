@@ -51,7 +51,8 @@ public interface VenthyrFurnitureSet
     BlockEntry<CarpetBlock> CARPET = FurnitureSets.carpet(REGISTRAR, CarpetBlock::new, WOOL).lang("en_us", "Venthyr Carpet").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
     BlockEntry<VenthyrWallLightBlock> WALL_LIGHT = FurnitureSets.wallLight(REGISTRAR, WOOD_TYPE, VenthyrWallLightBlock::new).lang("en_us", "Venthyr Wall Light").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).renderType(() -> RenderType::cutout).register();
     BlockEntry<VenthyrFloorLightBlock> FLOOR_LIGHT = FurnitureSets.floorLight(REGISTRAR, WOOD_TYPE, VenthyrFloorLightBlock::new).lang("en_us", "Venthyr Floor Light").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
-    BlockEntry<VenthyrTableBlock> TABLE = FurnitureSets.table(REGISTRAR, WOOD_TYPE, VenthyrTableBlock::new).lang("en_us", "Venthyr Table").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
+    BlockEntry<VenthyrTableBlock> TABLE = FurnitureSets.table(REGISTRAR, WOOD_TYPE, VenthyrTableBlock::new).lang("en_us", "Venthyr Table").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).renderType(() -> RenderType::cutout).register();
+    BlockEntry<VenthyrTableBlock> TABLE_FANCY = FurnitureSets.tableExt(REGISTRAR, WOOD_TYPE, VenthyrTableBlock::new, "fancy").lang("en_us", "Venthyr Table Fancy").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).renderType(() -> RenderType::cutout).register();
     BlockEntry<VenthyrStoolBlock> STOOL = FurnitureSets.stool(REGISTRAR, WOOD_TYPE, VenthyrStoolBlock::new).lang("en_us", "Venthyr Stool").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
     BlockEntry<VenthyrCushionBlock> CUSHION = FurnitureSets.cushion(REGISTRAR, WOOD_TYPE, VenthyrCushionBlock::new).lang("en_us", "Venthyr Cushion").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
     BlockEntry<VenthyrPaintingSmallBlock> PAINTING_SMALL = FurnitureSets.paintingSmall(REGISTRAR, WOOD_TYPE, VenthyrPaintingSmallBlock::new).lang("en_us", "Venthyr Painting Small").recipe(VenthyrFurnitureSet::venthyrFurnitureStationRecipe).register();
@@ -115,9 +116,9 @@ public interface VenthyrFurnitureSet
 
     private static <B extends Block> void venthyrFurnitureStationRecipe(RecipeProvider provider, ProviderLookup lookup, BlockEntry<B> entry)
     {
-        FurnitureStationRecipe.builder(RecipeCategory.MISC, Ingredient.of(Items.OAK_PLANKS), Ingredient.of(Items.BROWN_WOOL), entry)
-                .unlockedBy("has_oak_planks", provider.has(Items.OAK_PLANKS))
-                .unlockedBy("has_brown_wool", provider.has(Items.BROWN_WOOL))
+        FurnitureStationRecipe.builder(RecipeCategory.MISC, Ingredient.of(Items.SPRUCE_PLANKS), Ingredient.of(Items.RED_WOOL), entry)
+                .unlockedBy("has_dark_oak_planks", provider.has(Items.SPRUCE_PLANKS))
+                .unlockedBy("has_red_wool", provider.has(Items.RED_WOOL))
                 .group("furniture_set/venthyr")
                 .save(provider, entry.getRegistryName());
     }
