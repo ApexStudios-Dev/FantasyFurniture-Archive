@@ -62,6 +62,7 @@ def includePlatform = { platform ->
 	includeExt "complete-${platform}", "complete/${platform}"
 
 	includeExt "nordic-${platform}", "modules/nordic/${platform}"
+	includeExt "venthyr-${platform}", "modules/venthyr/${platform}"
 }
 
 includePlatform 'common'

@@ -16,7 +16,7 @@ public class NordicFurnitureSetReiClientPlugin implements REIClientPlugin
     {
         registry.group(
                 new ResourceLocation(NordicFurnitureSet.ID, "rei_group"),
-                Component.literal("Nordic"),
+                Component.literal("Nordic"), // TODO: localize
                 NordicFurnitureSet.REGISTRAR
                         .getAll(Registries.ITEM)
                         .stream()

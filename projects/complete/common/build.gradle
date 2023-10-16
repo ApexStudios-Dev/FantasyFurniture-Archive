@@ -6,4 +6,8 @@ dependencies {
     if(findProject(':nordic-common') != null) {
         compileOnly project(path: ':nordic-common', configuration: 'namedElements')
     }
+
+    if(findProject(':venthyr-common') != null) {
+        compileOnly project(path: ':venthyr-common', configuration: 'namedElements')
+    }
 }

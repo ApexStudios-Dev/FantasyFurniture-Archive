@@ -13,6 +13,12 @@ minecraft {
                         source project(':nordic-mcforge').sourceSets.main
                     }
                 }
+
+                if(findProject(':venthyr-mcforge') != null) {
+                    "${MOD_ID}_venthyr" {
+                        source project(':venthyr-mcforge').sourceSets.main
+                    }
+                }
             }
         }
 
@@ -47,6 +53,14 @@ dependencies {
     if(findProject(':nordic-mcforge') != null) {
         implementation project(':nordic-mcforge')
         jarJar(project(':nordic-mcforge')) {
+            transitive = false
+            jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
+        }
+    }
+
+    if(findProject(':venthyr-mcforge') != null) {
+        implementation project(':venthyr-mcforge')
+        jarJar(project(':venthyr-mcforge')) {
             transitive = false
             jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
         }

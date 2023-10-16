@@ -63,6 +63,13 @@ loom {
                 sourceSet project(':nordic-fabric').sourceSets.main
             }
         }
+
+        if(findProject(':venthyr-fabric') != null) {
+            "${MOD_ID}_venthyr" {
+                sourceSet project(':venthyr-common').sourceSets.main
+                sourceSet project(':venthyr-fabric').sourceSets.main
+            }
+        }
     }
 }
 
@@ -73,6 +80,11 @@ dependencies {
     if(findProject(':nordic-fabric') != null) {
         implementation project(path: ':nordic-fabric', configuration: 'namedElements')
         include project(path: ':nordic-fabric', configuration: 'namedElements')
+    }
+
+    if(findProject(':venthyr-fabric') != null) {
+        implementation project(path: ':venthyr-fabric', configuration: 'namedElements')
+        include project(path: ':venthyr-fabric', configuration: 'namedElements')
     }
 }
 

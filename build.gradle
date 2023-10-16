@@ -368,6 +368,23 @@ publishMods {
 		]
 	}
 
+	if(findProject(':venthyr-fabric') != null) {
+		evaluationDependsOn(':venthyr-fabric')
+		fabricJars += [
+				project(':venthyr-fabric').tasks.remapJar.archiveFile,
+				project(':venthyr-fabric').tasks.remapSourcesJar.archiveFile
+		]
+	}
+
+	if(findProject(':venthyr-mcforge') != null) {
+		evaluationDependsOn(':venthyr-mcforge')
+		mcforgeJars += [
+				project(':venthyr-mcforge').tasks.jar.archiveFile,
+				project(':venthyr-mcforge').tasks.jarJar.archiveFile,
+				project(':venthyr-mcforge').tasks.sourcesJar.archiveFile
+		]
+	}
+
 	changelog = file('changelogs/changelog.md').exists() ? file('changelogs/changelog.md').getText('UTF-8') : ''
 	type = me.modmuss50.mpp.ReleaseType.of("${MOD_RELEASE_TYPE}")
 	maxRetries = 5
@@ -450,7 +467,12 @@ idea.module {
 
 	[ 'fabric', 'neoforge', 'mcforge' ].forEach {
 		if(findProject(":${it}") == null) {
-			excludeDirs += [ file("projects/complete/${it}"), file("projects/modules/nordic/${it}"), file("projects/platforms/${it}") ]
+			excludeDirs += [
+					file("projects/complete/${it}"),
+					file("projects/modules/nordic/${it}"),
+					file("projects/modules/venthyr/${it}"),
+					file("projects/platforms/${it}")
+			]
 		}
 	}
 }

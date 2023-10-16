@@ -1,0 +1,56 @@
+apply from: rootProject.file('scripts/mcforge.gradle')
+
+dependencies {
+    compileOnly project(path: ':venthyr-common', configuration: 'namedElements')
+    implementation project(':mcforge')
+    jarJar(project(':mcforge')) {
+        transitive = false
+        jarJar.ranged(it, "[${MOD_FULL_VERSION},)")
+    }
+}
+
+processResources {
+    from project(':venthyr-common').sourceSets.main.resources
+}
+
+compileJava {
+    source project(':venthyr-common').sourceSets.main.allSource
+}
+
+sourcesJar {
+    from project(':venthyr-common').sourceSets.main.allJava
+}
+
+tasks.jarJar.configure {
+    archiveClassifier.set('')
+}
+
+jar {
+    archiveClassifier.set('slim')
+}
+
+artifacts {
+    archives tasks.jarJar
+}
+
+reobf {
+    jarJar { }
+}
+
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+collectJars {
+    def tasks = [ jar, sourcesJar, tasks.jarJar ]
+    dependsOn tasks
+    from tasks
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            artifact jar
+            artifact sourcesJar
+            artifact tasks.jarJar
+        }
+    }
+}
