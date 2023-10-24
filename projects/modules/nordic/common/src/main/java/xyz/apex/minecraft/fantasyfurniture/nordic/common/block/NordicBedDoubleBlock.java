@@ -70,14 +70,17 @@ public final class NordicBedDoubleBlock extends BaseBlockComponentHolder
 
         var index = MultiBlockComponent.getIndex(getRequiredComponent(MultiBlockComponent.COMPONENT_TYPE).getMultiBlockType(), blockState);
 
-        if(index == 1 || index == 3)
+        if(index == 0 || index == 1)
         {
-            var otherFacing = facing.getClockWise();
-            shape = shape.move(-otherFacing.getStepX(), 0D, -otherFacing.getStepZ());
+            var otherFacing = facing.getOpposite();
+            shape = shape.move(otherFacing.getStepX(), 0D, otherFacing.getStepZ());
         }
 
-        if(!BedComponent.isBedHead(blockState))
-            shape = shape.move(-facing.getStepX(), 0D, -facing.getStepZ());
+        if(index == 0 || index == 2)
+        {
+            var otherFacing = facing.getCounterClockWise();
+            shape = shape.move(otherFacing.getStepX(), 0D, otherFacing.getStepZ());
+        }
 
         return shape;
     }
