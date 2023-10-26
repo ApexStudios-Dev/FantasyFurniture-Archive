@@ -101,7 +101,7 @@ dependencies {
         if(rootProject.hasProperty('RECIPE_PROV_TYPE') && rootProject.property('RECIPE_PROV_TYPE').equalsIgnoreCase('rei')) {
             runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${REI_VERSION}")
             // match fabric
-            // runtimeOnly fg.deobf('me.shedaniel.cloth:cloth-config-forge:12.0.109')
+            runtimeOnly fg.deobf('me.shedaniel.cloth:cloth-config-forge:12.0.109')
         }
     }
 
