@@ -2,8 +2,8 @@
 	"credit": "Made by Fantasy",
 	"texture_size": [128, 128],
 	"textures": {
-		"particle": "fantasyfurniture_nordic:block/particle",
-		"oven": "fantasyfurniture_nordic:block/oven"
+		"oven": "fantasyfurniture_nordic:block/oven",
+		"particle": "fantasyfurniture_nordic:block/particle"
 	},
 	"elements": [
 		{
