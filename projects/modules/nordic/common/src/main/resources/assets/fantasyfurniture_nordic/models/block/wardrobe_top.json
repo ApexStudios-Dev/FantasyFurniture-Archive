@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
 	"textures": {
 		"wardrobe": "fantasyfurniture_nordic:block/wardrobe",
 		"particle": "fantasyfurniture_nordic:block/particle"
@@ -286,58 +288,58 @@
 		},
 		{
 			"name": "iron_end_1",
-			"from": [15, 0, 0],
-			"to": [16, 3, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0, 0]},
+			"from": [15, 0.5, 0.5],
+			"to": [16, 2.5, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0.5, -0.5]},
 			"faces": {
-				"north": {"uv": [5.25, 9.75, 5.375, 10.125], "texture": "#wardrobe"},
-				"east": {"uv": [10.625, 12.375, 11, 12.75], "texture": "#wardrobe"},
-				"south": {"uv": [5.375, 9.75, 5.5, 10.125], "texture": "#wardrobe"},
-				"west": {"uv": [11, 12.375, 11.375, 12.75], "texture": "#wardrobe"},
-				"up": {"uv": [5.375, 10.5, 5.25, 10.125], "texture": "#wardrobe"},
-				"down": {"uv": [5.5, 10.125, 5.375, 10.5], "texture": "#wardrobe"}
+				"north": {"uv": [5.25, 9.75, 5.375, 10], "texture": "#wardrobe"},
+				"east": {"uv": [10.625, 12.375, 10.875, 12.625], "texture": "#wardrobe"},
+				"south": {"uv": [5.375, 9.75, 5.5, 10], "texture": "#wardrobe"},
+				"west": {"uv": [11, 12.375, 11.25, 12.625], "texture": "#wardrobe"},
+				"up": {"uv": [5.375, 10.375, 5.25, 10.125], "texture": "#wardrobe"},
+				"down": {"uv": [5.5, 10.125, 5.375, 10.375], "texture": "#wardrobe"}
 			}
 		},
 		{
 			"name": "iron_end_2",
-			"from": [15, 0, 13],
-			"to": [16, 3, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0, 13]},
+			"from": [15, 0.5, 13.5],
+			"to": [16, 2.5, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 0.5, 12.5]},
 			"faces": {
-				"north": {"uv": [7.875, 11.125, 8, 11.5], "texture": "#wardrobe"},
-				"east": {"uv": [12.375, 11, 12.75, 11.375], "texture": "#wardrobe"},
-				"south": {"uv": [7.875, 11.5, 8, 11.875], "texture": "#wardrobe"},
-				"west": {"uv": [11.375, 12.375, 11.75, 12.75], "texture": "#wardrobe"},
-				"up": {"uv": [8, 12.25, 7.875, 11.875], "texture": "#wardrobe"},
-				"down": {"uv": [8, 12.25, 7.875, 12.625], "texture": "#wardrobe"}
+				"north": {"uv": [7.875, 11.125, 8, 11.375], "texture": "#wardrobe"},
+				"east": {"uv": [12.375, 11, 12.625, 11.25], "texture": "#wardrobe"},
+				"south": {"uv": [7.875, 11.5, 8, 11.75], "texture": "#wardrobe"},
+				"west": {"uv": [11.375, 12.375, 11.625, 12.625], "texture": "#wardrobe"},
+				"up": {"uv": [8, 12.125, 7.875, 11.875], "texture": "#wardrobe"},
+				"down": {"uv": [8, 12.25, 7.875, 12.5], "texture": "#wardrobe"}
 			}
 		},
 		{
 			"name": "iron_end_3",
-			"from": [-16, 0, 13],
-			"to": [-15, 3, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-16, 0, 13]},
+			"from": [-16, 0.5, 13.5],
+			"to": [-15, 2.5, 15.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-16, 0.5, 12.5]},
 			"faces": {
-				"north": {"uv": [12.5, 8.5, 12.625, 8.875], "texture": "#wardrobe"},
-				"east": {"uv": [11.75, 12.375, 12.125, 12.75], "texture": "#wardrobe"},
-				"south": {"uv": [12.5, 8.875, 12.625, 9.25], "texture": "#wardrobe"},
-				"west": {"uv": [12.5, 7.375, 12.875, 7.75], "texture": "#wardrobe"},
-				"up": {"uv": [12.625, 9.625, 12.5, 9.25], "texture": "#wardrobe"},
-				"down": {"uv": [12.625, 9.625, 12.5, 10], "texture": "#wardrobe"}
+				"north": {"uv": [12.5, 8.5, 12.625, 8.75], "texture": "#wardrobe"},
+				"east": {"uv": [11.75, 12.375, 12, 12.625], "texture": "#wardrobe"},
+				"south": {"uv": [12.5, 8.875, 12.625, 9.125], "texture": "#wardrobe"},
+				"west": {"uv": [12.5, 7.375, 12.75, 7.625], "texture": "#wardrobe"},
+				"up": {"uv": [12.625, 9.5, 12.5, 9.25], "texture": "#wardrobe"},
+				"down": {"uv": [12.625, 9.625, 12.5, 9.875], "texture": "#wardrobe"}
 			}
 		},
 		{
 			"name": "iron_end_4",
-			"from": [-16, 0, 0],
-			"to": [-15, 3, 3],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-16, 0, 0]},
+			"from": [-16, 0.5, 0.5],
+			"to": [-15, 2.5, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-16, 0.5, -0.5]},
 			"faces": {
-				"north": {"uv": [12.5, 10, 12.625, 10.375], "texture": "#wardrobe"},
-				"east": {"uv": [12.5, 7.75, 12.875, 8.125], "texture": "#wardrobe"},
-				"south": {"uv": [12.5, 11.375, 12.625, 11.75], "texture": "#wardrobe"},
-				"west": {"uv": [12.5, 8.125, 12.875, 8.5], "texture": "#wardrobe"},
-				"up": {"uv": [12.625, 12.125, 12.5, 11.75], "texture": "#wardrobe"},
-				"down": {"uv": [12.625, 12.125, 12.5, 12.5], "texture": "#wardrobe"}
+				"north": {"uv": [12.5, 10, 12.625, 10.25], "texture": "#wardrobe"},
+				"east": {"uv": [12.5, 7.75, 12.75, 8], "texture": "#wardrobe"},
+				"south": {"uv": [12.5, 11.375, 12.625, 11.625], "texture": "#wardrobe"},
+				"west": {"uv": [12.5, 8.125, 12.75, 8.375], "texture": "#wardrobe"},
+				"up": {"uv": [12.625, 12, 12.5, 11.75], "texture": "#wardrobe"},
+				"down": {"uv": [12.625, 12.125, 12.5, 12.375], "texture": "#wardrobe"}
 			}
 		}
 	],

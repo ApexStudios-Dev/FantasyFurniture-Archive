@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
 	"textures": {
 		"painting_wide": "fantasyfurniture_nordic:block/painting_wide",
 		"particle": "fantasyfurniture_nordic:block/particle"

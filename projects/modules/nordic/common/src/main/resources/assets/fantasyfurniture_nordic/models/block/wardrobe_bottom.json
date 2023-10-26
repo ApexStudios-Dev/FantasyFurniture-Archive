@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
 	"textures": {
 		"wardrobe": "fantasyfurniture_nordic:block/wardrobe",
 		"particle": "fantasyfurniture_nordic:block/particle"
@@ -129,9 +131,9 @@
 		},
 		{
 			"name": "handle_1",
-			"from": [2, 14, 1],
-			"to": [6, 15, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6, -1, 0]},
+			"from": [2.5, 14, 1.25],
+			"to": [6.5, 15, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [5.5, 7.375, 6, 7.5], "texture": "#wardrobe"},
 				"east": {"uv": [6, 7.375, 6.125, 7.5], "texture": "#wardrobe"},
@@ -143,9 +145,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [2, 17, 1],
-			"to": [6, 18, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6, 2, 0]},
+			"from": [2.5, 17, 1.25],
+			"to": [6.5, 18, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [10, 3.875, 10.5, 4], "texture": "#wardrobe"},
 				"east": {"uv": [10.75, 7.25, 10.875, 7.375], "texture": "#wardrobe"},
@@ -157,9 +159,9 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [5, 15, 1],
-			"to": [6, 17, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [6, 1, 0]},
+			"from": [5.5, 15, 1.25],
+			"to": [6.5, 17, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [5.25, 10.5, 5.375, 10.75], "texture": "#wardrobe"},
 				"east": {"uv": [5.375, 10.5, 5.5, 10.75], "texture": "#wardrobe"},
@@ -171,9 +173,9 @@
 		},
 		{
 			"name": "handle_4",
-			"from": [2, 15, 1],
-			"to": [3, 17, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [3, 1, 0]},
+			"from": [2.5, 15, 1.25],
+			"to": [3.5, 17, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [11.75, 3.75, 11.875, 4], "texture": "#wardrobe"},
 				"east": {"uv": [11.875, 3.75, 12, 4], "texture": "#wardrobe"},
@@ -185,9 +187,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [-6, 14, 1],
-			"to": [-2, 15, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-2, -1, 0]},
+			"from": [-6.5, 14, 1.25],
+			"to": [-2.5, 15, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [-0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [10.5, 3.875, 11, 4], "texture": "#wardrobe"},
 				"east": {"uv": [12, 11, 12.125, 11.125], "texture": "#wardrobe"},
@@ -199,9 +201,9 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [-6, 17, 1],
-			"to": [-2, 18, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-2, 2, 0]},
+			"from": [-6.5, 17, 1.25],
+			"to": [-2.5, 18, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [-0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [4.125, 11, 4.625, 11.125], "texture": "#wardrobe"},
 				"east": {"uv": [12.25, 11, 12.375, 11.125], "texture": "#wardrobe"},
@@ -213,9 +215,9 @@
 		},
 		{
 			"name": "handle_4",
-			"from": [-3, 15, 1],
-			"to": [-2, 17, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-2, 1, 0]},
+			"from": [-3.5, 15, 1.25],
+			"to": [-2.5, 17, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [-0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [12.125, 9.25, 12.25, 9.5], "texture": "#wardrobe"},
 				"east": {"uv": [12.25, 3.75, 12.375, 4], "texture": "#wardrobe"},
@@ -227,9 +229,9 @@
 		},
 		{
 			"name": "handle_5",
-			"from": [-6, 15, 1],
-			"to": [-5, 17, 2],
-			"rotation": {"angle": 0, "axis": "y", "origin": [-5, 1, 0]},
+			"from": [-6.5, 15, 1.25],
+			"to": [-5.5, 17, 1.25],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [-0.5, 16, 1.25]},
 			"faces": {
 				"north": {"uv": [12.375, 9.25, 12.5, 9.5], "texture": "#wardrobe"},
 				"east": {"uv": [12.5, 3.75, 12.625, 4], "texture": "#wardrobe"},

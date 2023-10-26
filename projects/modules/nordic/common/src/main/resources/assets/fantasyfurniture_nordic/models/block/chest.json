@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
 	"textures": {
 		"nordic_chest": "fantasyfurniture_nordic:block/chest",
 		"particle": "fantasyfurniture_nordic:block/particle"
@@ -381,8 +383,9 @@
 		},
 		{
 			"name": "handle_1",
-			"from": [-15, 3, 7],
-			"to": [-14, 4, 11],
+			"from": [-14.75, 3.25, 7],
+			"to": [-14.75, 4.25, 11],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [-14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [6.625, 7.875, 6.75, 8], "texture": "#nordic_chest"},
 				"east": {"uv": [7.625, 3.125, 8.125, 3.25], "texture": "#nordic_chest"},
@@ -394,8 +397,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [-15, 6, 7],
-			"to": [-14, 7, 11],
+			"from": [-14.75, 6.25, 7],
+			"to": [-14.75, 7.25, 11],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [-14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [6.875, 7.875, 7, 8], "texture": "#nordic_chest"},
 				"east": {"uv": [7.75, 0.125, 8.25, 0.25], "texture": "#nordic_chest"},
@@ -407,8 +411,9 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [-15, 4, 7],
-			"to": [-14, 6, 8],
+			"from": [-14.75, 4.25, 7],
+			"to": [-14.75, 6.25, 8],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [-14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [7.875, 2.875, 8, 3.125], "texture": "#nordic_chest"},
 				"east": {"uv": [3.5, 7.875, 3.625, 8.125], "texture": "#nordic_chest"},
@@ -420,8 +425,9 @@
 		},
 		{
 			"name": "handle_4",
-			"from": [-15, 4, 10],
-			"to": [-14, 6, 11],
+			"from": [-14.75, 4.25, 10],
+			"to": [-14.75, 6.25, 11],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [-14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [4.875, 7.875, 5, 8.125], "texture": "#nordic_chest"},
 				"east": {"uv": [5, 7.875, 5.125, 8.125], "texture": "#nordic_chest"},
@@ -433,8 +439,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [14, 3, 7],
-			"to": [15, 4, 11],
+			"from": [14.75, 3.25, 7],
+			"to": [14.75, 4.25, 11],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [7.875, 7.5, 8, 7.625], "texture": "#nordic_chest"},
 				"east": {"uv": [7.75, 0.375, 8.25, 0.5], "texture": "#nordic_chest"},
@@ -446,8 +453,9 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [14, 6, 7],
-			"to": [15, 7, 11],
+			"from": [14.75, 6.25, 7],
+			"to": [14.75, 7.25, 11],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [7.875, 7.625, 8, 7.75], "texture": "#nordic_chest"},
 				"east": {"uv": [7.75, 2.375, 8.25, 2.5], "texture": "#nordic_chest"},
@@ -459,8 +467,9 @@
 		},
 		{
 			"name": "handle_4",
-			"from": [14, 4, 7],
-			"to": [15, 6, 8],
+			"from": [14.75, 4.25, 7],
+			"to": [14.75, 6.25, 8],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [5.625, 7.875, 5.75, 8.125], "texture": "#nordic_chest"},
 				"east": {"uv": [5.75, 7.875, 5.875, 8.125], "texture": "#nordic_chest"},
@@ -472,8 +481,9 @@
 		},
 		{
 			"name": "handle_5",
-			"from": [14, 4, 10],
-			"to": [15, 6, 11],
+			"from": [14.75, 4.25, 10],
+			"to": [14.75, 6.25, 11],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [14.75, 5.25, 9]},
 			"faces": {
 				"north": {"uv": [6.125, 7.875, 6.25, 8.125], "texture": "#nordic_chest"},
 				"east": {"uv": [6.25, 7.875, 6.375, 8.125], "texture": "#nordic_chest"},
@@ -484,8 +494,9 @@
 			}
 		},
 		{
-			"from": [-1.5, 7, 1],
-			"to": [1.5, 11, 3],
+			"from": [-1.5, 7, 1.5],
+			"to": [1.5, 11, 3.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [7, 2.75, 7.375, 3.25], "texture": "#nordic_chest"},
 				"east": {"uv": [7.375, 7, 7.625, 7.5], "texture": "#nordic_chest"},

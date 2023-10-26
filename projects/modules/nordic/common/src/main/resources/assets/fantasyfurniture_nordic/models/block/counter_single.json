@@ -1,4 +1,6 @@
 {
+	"credit": "Made by Fantasy",
+	"texture_size": [128, 128],
 	"textures": {
 		"counter_single": "fantasyfurniture_nordic:block/counter",
 		"particle": "fantasyfurniture_nordic:block/particle"
@@ -20,14 +22,27 @@
 		{
 			"name": "doors",
 			"from": [1, 1, 2],
-			"to": [15, 12, 3],
+			"to": [15, 7, 3],
 			"faces": {
-				"north": {"uv": [7.25, 8.125, 9, 9.5], "texture": "#counter_single"},
-				"east": {"uv": [5.625, 9.75, 5.75, 11.125], "texture": "#counter_single"},
+				"north": {"uv": [7.25, 8.75, 9, 9.5], "texture": "#counter_single"},
+				"east": {"uv": [5.625, 10.375, 5.75, 11.125], "texture": "#counter_single"},
 				"south": {"uv": [3.625, 8.5, 5.375, 9.875], "texture": "#counter_single"},
-				"west": {"uv": [5.75, 9.75, 5.875, 11.125], "texture": "#counter_single"},
+				"west": {"uv": [5.75, 10.375, 5.875, 11.125], "texture": "#counter_single"},
 				"up": {"uv": [11, 8.125, 9.25, 8], "texture": "#counter_single"},
 				"down": {"uv": [11.375, 2.75, 9.625, 2.875], "texture": "#counter_single"}
+			}
+		},
+		{
+			"name": "drawer",
+			"from": [1, 8, 2],
+			"to": [15, 12, 3],
+			"faces": {
+				"north": {"uv": [7.25, 8.125, 9, 8.625], "texture": "#counter_single"},
+				"east": {"uv": [0.125, 10.875, 0.25, 11.375], "texture": "#counter_single"},
+				"south": {"uv": [7.25, 8.125, 9, 8.625], "texture": "#counter_single"},
+				"west": {"uv": [0, 10.875, 0.125, 11.375], "texture": "#counter_single"},
+				"up": {"uv": [0, 10.75, 1.75, 10.875], "texture": "#counter_single"},
+				"down": {"uv": [0, 10.625, 1.75, 10.75], "texture": "#counter_single"}
 			}
 		},
 		{
@@ -44,9 +59,22 @@
 			}
 		},
 		{
+			"name": "handle_1",
+			"from": [6, 9.5, 1.5],
+			"to": [10, 10.5, 2.5],
+			"faces": {
+				"north": {"uv": [1.625, 10.25, 2.125, 10.375], "texture": "#counter_single"},
+				"east": {"uv": [2.625, 10.375, 2.75, 10.5], "texture": "#counter_single"},
+				"south": {"uv": [2.125, 10.375, 2.625, 10.5], "texture": "#counter_single"},
+				"west": {"uv": [2.625, 10.25, 2.75, 10.375], "texture": "#counter_single"},
+				"up": {"uv": [2.125, 10.25, 2.625, 10.375], "texture": "#counter_single"},
+				"down": {"uv": [1.625, 10.375, 2.125, 10.5], "texture": "#counter_single"}
+			}
+		},
+		{
 			"name": "handle_2",
-			"from": [5, 5, 1],
-			"to": [6, 8, 2],
+			"from": [6, 2.5, 1.5],
+			"to": [7, 5.5, 2.5],
 			"faces": {
 				"north": {"uv": [5.625, 6.875, 5.75, 7.25], "texture": "#counter_single"},
 				"east": {"uv": [5.75, 6.875, 5.875, 7.25], "texture": "#counter_single"},
@@ -58,8 +86,8 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [10, 5, 1],
-			"to": [11, 8, 2],
+			"from": [9, 2.5, 1.5],
+			"to": [10, 5.5, 2.5],
 			"faces": {
 				"north": {"uv": [3.75, 7.25, 3.875, 7.625], "texture": "#counter_single"},
 				"east": {"uv": [3.875, 7.25, 4, 7.625], "texture": "#counter_single"},
@@ -106,7 +134,7 @@
 			"name": "counter_single",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4]
+			"children": [0, 1, 2, 3, 4, 5, 6]
 		}
 	]
 }

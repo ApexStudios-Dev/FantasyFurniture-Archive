@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
 	"textures": {
 		"bookshelf": "fantasyfurniture_nordic:block/bookshelf",
 		"particle": "fantasyfurniture_nordic:block/particle"

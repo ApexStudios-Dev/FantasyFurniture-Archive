@@ -1,4 +1,6 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [128, 128],
 	"textures": {
 		"dresser": "fantasyfurniture_nordic:block/dresser",
 		"particle": "fantasyfurniture_nordic:block/particle"
@@ -214,8 +216,9 @@
 		},
 		{
 			"name": "handle_1",
-			"from": [5, 10, 1],
-			"to": [8, 11, 2],
+			"from": [5, 10, 1.5],
+			"to": [8, 11, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [3.75, 2.875, 4.125, 3], "texture": "#dresser"},
 				"east": {"uv": [6.375, 2.875, 6.5, 3], "texture": "#dresser"},
@@ -227,8 +230,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [5, 5, 1],
-			"to": [8, 6, 2],
+			"from": [5, 5, 1.5],
+			"to": [8, 6, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [5.25, 2.875, 5.625, 3], "texture": "#dresser"},
 				"east": {"uv": [3.375, 6.75, 3.5, 6.875], "texture": "#dresser"},
@@ -240,8 +244,9 @@
 		},
 		{
 			"name": "handle_2",
-			"from": [-8, 10, 1],
-			"to": [-5, 11, 2],
+			"from": [-8, 10, 1.5],
+			"to": [-5, 11, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [3.75, 2.875, 4.125, 3], "texture": "#dresser"},
 				"east": {"uv": [6.375, 2.875, 6.5, 3], "texture": "#dresser"},
@@ -253,8 +258,9 @@
 		},
 		{
 			"name": "handle_3",
-			"from": [-8, 5, 1],
-			"to": [-5, 6, 2],
+			"from": [-8, 5, 1.5],
+			"to": [-5, 6, 2.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [5.25, 2.875, 5.625, 3], "texture": "#dresser"},
 				"east": {"uv": [3.375, 6.75, 3.5, 6.875], "texture": "#dresser"},
